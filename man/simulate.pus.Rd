@@ -4,8 +4,8 @@
 \alias{simulate.pus}
 \title{Simulate planning units}
 \usage{
-\method{simulate}{pus}(n, xmn = -sqrt(n), xmx = sqrt(n), ymn = -sqrt(n),
-  ymx = sqrt(n), ...)
+\method{simulate}{pus}(n, xmn = -sqrt(n)/2, xmx = sqrt(n)/2,
+  ymn = -sqrt(n)/2, ymx = sqrt(n)/2, ...)
 }
 \arguments{
 \item{n}{\code{integer} number of planning units. \code{sqrt(n)} must yield a valid number.}
