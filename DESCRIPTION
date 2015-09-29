@@ -1,0 +1,69 @@
+Package: raspr
+Type: Package
+Title: raspr: identify prioritisations using the Representative and Adequate
+    Sample Problem (RASP)
+Version: 0.0.0
+Date: 2015-07-12
+Authors@R: c(person(c("Jeffrey", "O"), "Hanson", email='jeffrey.hanson@uqconnect.edu.au', role = c("aut", "cre")),
+	person(c("Jonathon", "R"), "Rhodes", role = c("aut")),
+	person(c("Richard", "A"), "Fuller", role = c("aut")))
+Description: Biodiversity is in crisis. The overarching aim of conservation
+    is to preserve biodiversity patterns and processes. To this end, protected
+    areas are established to buffer species and preserve biodiversity processes.
+    But resources are limited and so protected areas must be cost-effective.
+    This package contains functions to generate plans for protected areas--
+    prioritisations--using the Representatiev and Adequate Sample Problem (RASP).
+    Reserve selection problems are expressed as a mixed linear integer problem
+    (MILP) and solved using exact-algorithm solvers. Prioritisations can be obtained
+    using lp_solve and Gurobi (obtained from <http://www.gurobi.com/>).
+Imports:
+    boot,
+    PBSmapping,
+    lpSolveAPI,
+    Matrix,
+    slam,
+    rgeos,
+    plyr,
+    doSNOW,
+    snow,
+    data.table,
+    hypervolume,
+    sm,
+    dismo,
+    gdalUtils
+Depends:
+    methods,
+    sp,
+    rgdal,
+    raster
+LinkingTo: Rcpp,
+    RcppEigen
+LazyData: true
+License: GPL-3
+VignetteBuilder: knitr
+Suggests:
+    knitr,
+    testthat
+Enhances: gurobi
+SystemRequirements: C++11
+Collate:
+    'dependencies.R'
+    'RcppExports.R'
+    'raspr-internal.R'
+    'generics.R'
+    'DemandPoints.R'
+    'Polygons2Polyset.R'
+    'calcSpeciesAverageInPus.R'
+    'calcBoundaryData.R'
+    'RaspData.R'
+    'RaspOpts.R'
+    'RaspResults.R'
+    'RaspSolved.R'
+    'RaspUnsolved.R'
+    'data.R'
+    'demand.points.R'
+    'misc.R'
+    'rasp.R'
+    'simulate.pus.R'
+    'simulate.space.R'
+    'simulate.species.R'

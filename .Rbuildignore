@@ -1,0 +1,6 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.travis\.yml$
+admin
+admin.R
+NEWS.md
