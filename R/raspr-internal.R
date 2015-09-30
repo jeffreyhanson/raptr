@@ -8,9 +8,10 @@ suppressWarnings(setClassUnion("data.frameOrNULL", c("data.frame", "NULL")))
 
 ## define built-in functions
 # functions to generate demand points
-demand.points.density1d<-function(pts, n, ...) {
+demand.points.density1d<-function(pts, n, quantile=0, ...) {
 	# generate points
-	dp=runif(n, min(pts[,1]), max(pts[,1]))
+	quants=quantile(pts[,1], c((quantile/2), 1-(quantile/2)))
+	dp=runif(n, quants[[1]], quants[[2]])
 	# density kernel
 	est=sm.density(pts[,1], eval.points=dp, display='none', eval.grid=FALSE, ...)
 	return(
@@ -21,9 +22,13 @@ demand.points.density1d<-function(pts, n, ...) {
 	)
 }
 
-demand.points.density2d<-function(pts, n, ...) {
-	# generate points	
-	dp=spsample(gConvexHull(SpatialPoints(coords=pts)), n*1.1, type='random')@coords[seq_len(n),]
+demand.points.density2d<-function(pts, n, quantile=0, ...) {
+	# generate points
+	dp=spsample(
+		mcp(SpatialPoints(coords=pts), percent=(100-quantile), unin = c("m"), unout = c("m2")),
+		n*1.1,
+		type='random'
+	)@coords[seq_len(n),]
 	# fit density kernel
 	est=sm.density(pts, eval.points=dp, display='none', eval.grid=FALSE, ...)
 	# prepare data to return
@@ -35,7 +40,7 @@ demand.points.density2d<-function(pts, n, ...) {
 	)
 }
 
-demand.points.hypervolume<-function(pts, n, ...) {
+demand.points.hypervolume<-function(pts, n, quantile=0, ...) {
 	# fit density kernel
 	repsperpoint=500 # default
 	if (ncol(pts)*repsperpoint < n) {
@@ -46,7 +51,7 @@ demand.points.hypervolume<-function(pts, n, ...) {
 		bandwidth=estimate_bandwidth(pts)
 	}
 	# fit kernel
-	hv=hypervolume(pts, repsperpoint=repsperpoint, bandwidth=bandwidth, ...)
+	hv=hypervolume(pts, repsperpoint=repsperpoint, bandwidth=bandwidth, quantile=quantile, ...)
 	# return demand points
 	rndpos=sample.int(nrow(hv@RandomUniformPointsThresholded), n)
 	return(

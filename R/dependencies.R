@@ -30,7 +30,7 @@
 
 #' @importFrom dismo randomPoints
 
-#' @importFrom rgeos gConvexHull
+#' @importFrom adehabitatHR mcp
 
 #' @importFrom hypervolume estimate_bandwidth
 #' @importFrom hypervolume hypervolume
@@ -39,7 +39,7 @@
 #' @importFrom gdalUtils gdal_setInstallation
 
 #' @importFrom RandomFields RFsimulate
-#' @importFrom RandomFields RPgauss
+#' @importFrom RandomFields RMgauss
 
 #' @import sp
 #' @import rgdal

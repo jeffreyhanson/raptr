@@ -22,7 +22,7 @@ Imports:
     lpSolveAPI,
     Matrix,
     slam,
-    rgeos,
+    adehabitatHR,
     plyr,
     doSNOW,
     snow,
@@ -61,7 +61,7 @@ Collate:
     'RaspSolved.R'
     'RaspUnsolved.R'
     'data.R'
-    'demand.points.R'
+    'make.DemandPoints.R'
     'misc.R'
     'rasp.R'
     'simulate.pus.R'
