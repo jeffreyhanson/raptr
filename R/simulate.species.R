@@ -7,7 +7,7 @@ simulate.species.RasterLayer <- function(x, n=1, model=RPgauss(), ...) {
 	# generate raster layers
 	x<-simulate.space(x, d=n, ...)
 	# convert to logistic values using inv.logit
-	for (i in seq_along(nlayers(x)))
+	for (i in seq_len(nlayers(x)))
 		x[[i]] <- setValues(x[[i]], inv.logit(getValues(x[[i]])))
 	# return RasterStack
 	return(stack(x))

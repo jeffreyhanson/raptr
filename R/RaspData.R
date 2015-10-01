@@ -147,7 +147,7 @@ setClass("RaspData",
 				stop('argument to boundary$id1 and pu$id must share the same values')
 			if (!all(object@boundary$id2 %in% object@pu$id))
 				stop('argument to boundary$id2 and pu$id must share the same values')			
-			if (!all(object@pu.species.probabilities$pu %in% object$pu$id))
+			if (!all(object@pu.species.probabilities$pu %in% object@pu$id))
 				stop('argument to pu.species.probabilities$pu and pu$id must share the same values')
 			if (!all(laply(object@pu.points, function(x) all(rownames(x) %in% object@pu$id))))
 				stop('argument to pu.points must have elements with rownames in pu$id')
@@ -202,177 +202,170 @@ RaspData<-function(pu, pu.species.probabilities, pu.points, species, demand.poin
 	# make object
 	rd<-new("RaspData", polygons=polygons, pu=pu, pu.points=pu.points, species=species, demand.points=demand.points, pu.species.probabilities=pu.species.probabilities, skipchecks=skipchecks,boundary=boundary, .cache=.cache)
 	# test for validity
-	validObject(md, test=FALSE)
+	validObject(rd, test=FALSE)
 	return(rd)
 }
 
-#' Format data for RASP
+#' Make data for RASP using minimal inputs
 #'
-#' This function prepares spatially explicit planning unit and species data for RASP processing.
-#' By default, raw planning unit and species distribution data can be used to generate all RASP inputs from scratch.
+#' This function prepares spatially explicit planning unit, species data, and landscape data layers for RASP processing.
 #'
-#' @usage format.RaspData(polygons, species.points, species.rasters, space.rasters, area.targets = 0.2,
+#' @usage make.RaspData(pus, species.points, species.rasters, space.rasters, area.targets = 0.2,
 #' space.targets = 0.2,  demand.points=1000, kernel.method='guassian', include.geographic.space=TRUE,
 #' pu = NULL, species = NULL, species.coords = NULL, pu.species.probabilities = NULL,
 #' boundary = NULL, ..., verbose = FALSE)
-#' @param polygons \code{SpatialPolygons} with planning unit data.
-#' @param species.rasters \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} with species probability distribution data.
-#' @param space.rasters \code{list} of/or \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} representing projects of attribute space over geographic space. Use a \code{list} to denote seperate attribute spaces.
+#' @param pus \code{SpatialPolygons} with planning unit data.
+#' @param species \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} with species probability distribution data.
+#' @param spaces \code{list} of/or \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} representing projects of attribute space over geographic space. Use a \code{list} to denote seperate attribute spaces.
 #' @param area.targets \code{numeric} vector for area targets (%) for each species. Defaults to 0.2 for each attribute space for each species. 
 #' @param space.targets \code{numeric} vector for attribute space targets (%) for each species. Defaults to 0.2 for each attribute space for each species. Note all attribute spaces have the same targets.
 #' @param n.demand.points \code{integer} number of demand points to use for each attribute space for each species.
 #' @param kernel.method \code{character} name of kernel method to use to generate demand points. Use either \code{'sm.density'} or \code{'hypervolume'}.
+#' @param quantile \code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.2. 
 #' @param include.geographic.space \code{logical} should the geographic space be considered an attribute space?
-#' @param species.points \code{list} of/or \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records. Use a \code{list} of objects to represent different species. Must have the same number of elements as \code{species.rasters}.
+#' @param species.points \code{list} of/or \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records. Use a \code{list} of objects to represent different species. Must have the same number of elements as \code{species.rasters}. If not supplied then use \code{n.species.points} to sample points from the species distributions.
+#  @param n.species.points \code{numeric} vector specfiying the number points to sample the species distributions to use to generate demand points. Defaults to 20% of the distribution.
 #' @param ... additional arguments to \code{calcBoundaryData} and \code{calcPuVsSpeciesData}.
 #' @param verbose \code{logical} print statements during processing?
 #' @seealso \code{\link{RaspData-class}}, \code{\link{RaspData}}.
-#' @export format.RaspData
+#' @export
 #' @examples
-#' data(pus, species.points, species.rasters, space.rasters, demand.points)
-#' x<-RaspData(pus, species.rasters=species.rasters, space.rasters=space.rasters, demand.points=demand.points)
-format.RaspData<-function(polygons, species.rasters, space.rasters,
-	area.targets=0.2, space.targets=0.2, demand.points=1000L, kernel.method=c('density', 'hyperbox')[1],
-	pu=NULL, pu.coords=NULL, species=NULL, species.coords=NULL, pu.species.probabilities=NULL, boundary=NULL, species.points=NULL, ..., verbose=FALSE) {
+#' data(pus, species, space)
+#' x<-RaspData(pus, species, space)
+make.RaspData<-function(pus, species, spaces,
+	area.targets=0.2, space.targets=0.2, n.demand.points=1000L, kernel.method=c('sm.density', 'hyperbox')[1], quantile=0.2,
+	species.points=NULL, n.species.points=ceiling(0.2*cellStats(species, 'sum')), include.geographic.space=TRUE, verbose=FALSE, ...) {
+	
 	## init
-	# coerce non-list items to list
-	if (!inherits(species.points, c('list')))
-		species.points=list(species.points)
-	if (!inherits(space.rasters, c('list', 'NULL')))
-		space.rasters=list(space.rasters)
-		
 	# check inputs for validity
-	if (!inherits(polygons, 'SpatialPolygons'))
-		stop('argument to polygons must be either SpatialPolygons or SpatialPolygonsDataFrame')
-	if (!inherits(species.rasters, 'Raster'))
-		stop('argument to species.rasters must be RasterLayer, RasterStack, or RasterBrick')
-	if (!all(laply(space.rasters, inherits, c('NULL', 'Raster'))))
-		stop('argument to space.rasters must be list of/or NULL, RasterLayer, RasterStack, or RasterBrick')
-	if (!all(laply(species.points, inherits, 'SpatialPoints')))
-		stop('argument to species.points must be list of/or SpatialPoints')
+	stopifnot(inherits(species.points, c('SpatialPoints', 'SpatialPointsDataFrame', 'NULL')))
+	stopifnot(inherits(pus, c('SpatialPolygons')))
+	stopifnot(inherits(species, c('RasterStack')))
+	stopifnot(inherits(spaces, c('RasterStack', 'RasterLayer', 'list')))
 	.cache<-new.env()
 	
+	# coerce non-list items to list
+	if (!inherits(spaces, 'list'))
+		spaces=list(spaces)
+
+	# create species.points from species
+	if (is.null(species.points)) {
+		species.points=llply(
+			seq_len(nlayers(species)),
+			function(i) {
+				SpatialPoints(coords=randomPoints(species[[i]], n=n.species.points[[i]]), proj4string=species[[i]]@crs)
+			}
+		)
+	} else {
+		if (!inherits(species.points, 'list')) {
+			if (inherits(species.points, 'SpatialDataFrame')) {
+				if ('id' %in% names(species.points@data)) {
+					species.points=llply(
+						sort(unique(species@data$id)),
+						function(x) {
+							return(species.points[which(species.points$id==x),])
+						}
+					)
+				} else {
+					species.points=list(SpatialPoints(species.points))
+				}
+			} else {
+				species.points=list(species.points)
+			}
+		} 
+	}
+	
 	# set polygons
-	geoPolygons<-polygons
-	if (!identical(geoPolygons@proj4string, CRS('+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs'))) {
+	geoPolygons<-pus
+	if (!identical(geoPolygons, CRS('+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs'))) {
 		if (verbose)
 			cat('Projecting polygons to WGS1984 for rendering.\n')
 		geoPolygons<-spTransform(geoPolygons, CRS('+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs'))
 	}
 	geoPolygons<-rcpp_Polygons2PolySet(geoPolygons@polygons)
-	
 	## set pu
-	validNames<-c('id','area','cost','status')
-	if (inherits(polygons, "SpatialPolygonsDataFrame") & all(c('id','cost','status') %in% names(polygons@data))) {
-		pu<-polygons@data[,validNames[which(validNames %in% names(polygons@data))],drop=FALSE]
+	validNames<-c('id','area','cost','status', 'area')
+	if (inherits(pus, "SpatialPolygonsDataFrame") & all(c('id','cost','status', 'area') %in% names(pus))) {
+		pu<-pus@data[,validNames,drop=FALSE]
 	} else {
-		warning("argument to polygons@data does not have 'id', 'cost', and 'status' columns, creating default with all costs=1 and status=0")
-		pu<-data.frame(id=seq_along(polygons@polygons), cost=1, status=0L)
+		warning("argument to pus does not have 'id', 'cost', and 'status' columns, creating default with all costs=1 and status=0")
+		pu<-data.frame(id=seq_along(pus@polygons), cost=1, status=0L)
 	} 
 	if (!'area' %in% names(pu)) {
-		if (identical(polygons@proj4string, CRS('+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs')))
+		if (identical(pus@proj4string, CRS('+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs')))
 			warning('Planning unit areas are being calculated in a geographic coordinate system')
-		pu@data$area=gArea(polygons,byid=TRUE)
+		pu$area=gArea(pus,byid=TRUE)
 	}
 	
 	## set pu.points
-	# set pu.points based space.rasters 
-	pu.coords=list()
-	# if space.rasters is not NULL
-	if (!is.null(space.rasters[[1]])) {
-		pu.coords=append(
-			pu.coords,
+	# set pu.points based spaces
+	pu.points=list()
+	# if spaces is not NULL
+	if (!is.null(spaces[[1]])) {
+		pu.points=append(
+			pu.points,
 			llply(
-				space.rasters,
+				spaces,
 				.fun=function(x) {
-					SpatialPoints(coords=extract(x, polygons, fun=mean))
+					extract(x, pus, fun=mean)
 				}
 			)
 		)
 	}
 	# calculate positions in geographic space
 	if (include.geographic.space) {
-		pu.coords=append(
-			pu.coords,
-			gCentroid(pu.coords, byid=TRUE)
+		pu.points=append(
+			pu.points,
+			list(gCentroid(pus, byid=TRUE)@coords)
 		)
 	}
-	if (length(pu.coords)==0) {
-		stop('Attribute spaces must be specified. Either include.geographic.space=TRUE or space.rasters must contain at least one Raster object')
+	if (length(pu.points)==0) {
+		stop('Attribute spaces must be specified. Either include.geographic.space=TRUE or spaces must contain at least one Raster object')
 	}
-	
-	## set species
-	species<-data.frame(
-		id=seq_along(names(species.rasters)),
-		area.target=area.targets,
-		space.target=space.targets,
-		name=names(species.rasters),
-		stringsAsFactors=FALSE
-	)
 	## set demand.points
-	if (!is.null(species.coords)) {
-		# generate pseudo-observations from species distribution data
-		species.coords=llply(seq_len(nlayers(species.rasters)), .fun=function(i) {
-			return(
-				SpatialPoints(
-					coords=randomPoints(
-						species.coords[[i]],
-						n=n.demand.points,
-						prob=TRUE
-					)
-				)
-			) 
-		})
-	}
-	demand.points<-llply(
-		space.rasters,
-		.fun=function(x) {
-			return(
-				merge.DemandPoints(
-					llply(
-						species.points,
-						.fun=demand.points,
-						space.rasters=x,
-						kernel.method=kernel.method,
-						n.demand.points=n.demand.points
-					)
-				)
+	if (include.geographic.space)
+		spaces=append(spaces, list(NULL))
+	demand.points=list()
+	for (i in seq_along(spaces)) {
+		dpLST=list()
+		for (j in seq_along(species.points)) {
+			dpLST[[j]]=make.DemandPoints(
+				species.points[[j]],
+				space.rasters=spaces[[i]],
+				kernel.method=kernel.method,
+				n=n.demand.points,
+				id=j,
+				quantile=quantile,
+				...
 			)
 		}
-	)
-	if (include.geographic.space) {
-		demand.points=append(
-			demand.points,
-			merge.DemandPoints(
-				llply(
-					species.points,
-					.fun=demand.points,
-					space.rasters=NULL,
-					kernel.method=kernel.method,
-					n.demand.points=n.demand.points
-				)
-			)
-		)
+		demand.points[[i]]=merge.DemandPoints(dpLST)
 	}
-	
-	
 	## set boundary
-	if (identical(polygons@proj4string, CRS('+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs')))
-		warning("creating boundary length data from polygons in WGS1984; consider supplying in an object a projected CRS.")
+	if (identical(pus@proj4string, CRS('+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs')))
+		warning("creating boundary length data from pus in WGS1984; consider supplying in an object a projected CRS.")
 	if (verbose)
 		cat("Calculating boundary data.")
-	boundary<-calcBoundaryData(rcpp_Polygons2PolySet(polygons@polygons), ...)
+	boundary<-calcBoundaryData(rcpp_Polygons2PolySet(pus@polygons), ...)
 	## set pu.species.probabilities
-	projPolygons=polygons 
-	if (!identical(projPolygons@proj4string, rasters@crs)) {
+	projPolygons=pus 
+	if (!identical(projPolygons@proj4string, species@crs)) {
 		if (verbose)
 			cat("Projecting polygons to rasters' CRS.")
-		projPolygons<-spTransform(projPolygons, rasters@crs)
+		projPolygons<-spTransform(projPolygons, species@crs)
 	}
 	if (verbose)
 		cat("Calculating average species probability in planning units.")
-	pu.species.probabilities<-calcPuVsSpeciesData(projPolygons, rasters, ...)
-	return(RaspData(pu=pu, pu.coords=pu.coords, species=species, species.coords=species.coords, pu.species.probabilities=pu.species.probabilities, boundary=boundary, polygons=geoPolygons, .cache=.cache))
+	pu.species.probabilities<-calcSpeciesAverageInPus(projPolygons, species, ...)
+	## set species
+	species<-data.frame(
+		id=seq_along(names(species)),
+		area.target=area.targets,
+		space.target=space.targets,
+		name=names(species),
+		stringsAsFactors=FALSE
+	)	
+	return(RaspData(pu=pu, pu.points=pu.points, species=species, demand.points=demand.points, pu.species.probabilities=pu.species.probabilities, boundary=boundary, polygons=geoPolygons, .cache=.cache))
 }
 
 

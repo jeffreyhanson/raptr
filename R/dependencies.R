@@ -28,6 +28,8 @@
 
 #' @importFrom boot inv.logit
 
+#' @importFrom rgeos gCentroid
+
 #' @importFrom dismo randomPoints
 
 #' @importFrom adehabitatHR mcp

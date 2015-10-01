@@ -7,6 +7,51 @@ suppressWarnings(setClassUnion("PolySetOrNULL", c("PolySet", "NULL")))
 suppressWarnings(setClassUnion("data.frameOrNULL", c("data.frame", "NULL"))) 
 
 ## define built-in functions
+
+# function to execute system calls, store and print stdout at same time
+custom.system <- function(command, args, file) {
+	status<-system(paste0(command, ' ', paste(args, collapse=' '), ' | tee ', file))
+	std<-readLines(file)
+	attr(std, 'status')=status
+	return(std)
+}
+
+# function to call gurobi
+call.Gurobi<-function(x, modelfile, outfile, verbose=TRUE) {
+	## construct call
+	gpth<-paste0(Sys.getenv('GUROBI_HOME'), '/bin/gurobi_cl') 
+	gargs<-laply(.fun=paste, collapse='', list(
+		c('ResultFile=',outfile),
+		c('Presolve=',x@PRESOLVE),
+		c('MIPGap=',x@GAP),
+		c('OutputFlag=',x@VERBOSITY),
+		c('Threads=',x@NTHREADS)
+	)) 
+	if (is.finite(x@TIMELIMIT))
+		gargs=append(gargs, list(paste0('TIME_LIMIT=',x@TIMELIMIT)))
+	gargs=append(gargs, modelfile)
+	
+	## run gurobi
+	if (verbose) {
+		if (.Platform$OS.type=='unix') {
+			# linux only - sink and print simultaneously
+			ret=custom.system(gpth, gargs, tempfile())
+		} else {
+			ret=system2(gpth, gargs, stdout="", stderr="")
+			if (is.null(attr(ret, 'status')))
+				attr(ret, 'status')=ret
+		}
+	} else {
+		ret=system2(gpth, gargs, stdout=TRUE, stderr=TRUE)
+		if (is.null(attr(ret, 'status')))
+			attr(ret, 'status')=0
+	}
+	if (attr(ret, 'status')!=0)
+		stop('Error encountered when running Gurobi')
+	return(as.character(ret))
+}
+
+
 # functions to generate demand points
 demand.points.density1d<-function(pts, n, quantile=0, ...) {
 	# generate points

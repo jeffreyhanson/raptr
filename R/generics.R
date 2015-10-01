@@ -37,7 +37,7 @@ calcSpeciesAverageInPus<-function(x, ...) UseMethod("calcSpeciesAverageInPus")
 #' @return \code{RasterStack} with layers for each species.
 #' @seealso \code{\link[RandomFields]{RFsimulate}}
 #' @export
-simulate.species<-function(x, ...) UseMethod('simulate.species',x)
+simulate.species<-function(x, ...) UseMethod('simulate.species')
 
 #' Simulate attribute space data for RASP
 #'
@@ -52,5 +52,157 @@ simulate.species<-function(x, ...) UseMethod('simulate.species',x)
 #' @return \code{RasterStack} with layers for each dimension of the space.
 #' @seealso \code{\link[RandomFields]{RFsimulate}}
 #' @export
-simulate.space<-function(x, ...) UseMethod('simulate.space',x)
+simulate.space<-function(x, ...) UseMethod('simulate.space')
+
+
+#' Solve RASP object
+#'
+#' This function uses Gurobi to find prioritisations using the input parameter and data stored in a \code{RaspUsolved} object, 
+#' and returns a \code{RaspSolved} object with outputs in it.
+#'
+#' @param x \code{RaspUnsolved} or \code{RaspSolved} object.
+#' @param wd \code{character} file path to a working directory, this is a temporary directory by default to avoid pollution.
+#' @param clean \code{logical} delete files once processing completed?
+#' @param force_reset \code{logical} should solutions be recalculated even if \code{RaspSolved} object supplied?
+#' @return \code{RaspSolved} object
+#' @note This function is used to solve a \code{RaspUnsolved} object that has all of its inputs generated. The rasp function (without lower case 'r') provides a more general interface for generating inputs and outputs.
+#' @name solve
+NULL
+
+#' Extract solution score
+#'
+#' Extract solution score from \code{RaspResults} or \code{RaspSolved} object.
+#'
+#' @param x \code{RaspResults} or \code{RaspSolved} object.
+#' @param y "NULL" to return all scores, "integer" 0 to return score for best solution, "integer" value greater than 0 for \code{y}'th solution score.
+#' @return "matrix" or "numeric" vector with solution score(s) depending on arguments.
+#' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved-class}}, \code{\link{rasp}}
+#' @export
+score<-function(x, ...) UseMethod('score')
+
+#' Extract amount targets
+#'
+#' This function returns the amount targets (%) for species in a RASP object.
+#'
+#' @param x any \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
+#' @param ... not used.
+#' @note This generic method does not work on \code{RaspResults} objects because they do not store this information.
+#' @export
+#' @seealso \code{\link{RaspOpts-class}}, \code{\link{RaspData-class}}, \code{\link{RaspUnsolved-class}}, \code{\link{RaspSolved-class}}
+amount.targets<-function(x, ...) UseMethod('amount.targets')
+
+#' Extract space targets
+#'
+#' This function returns the space targets (%) for species in a RASP object.
+#'
+#' @param x any \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
+#' @param ... not used.
+#' @note This generic method does not work on \code{RaspResults} objects because they do not store this information.
+#' @export
+#' @seealso \code{\link{RaspOpts-class}}, \code{\link{RaspData-class}}, \code{\link{RaspUnsolved-class}}, \code{\link{RaspSolved-class}}
+space.targets<-function(x, ...) UseMethod('space.targets')
+
+#' Log file
+#'
+#' This function returns the Gurobi log file associated with solving RASP.
+#'
+#' @param x \code{RaspResults} or \code{RaspSolved} object.
+#' @param ... not used.
+#' @export
+#' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}
+log.file<-function(x, ...) UseMethod('log.file')
+
+#' Modelfile
+#'
+#' This function returns the Gurobi model file associated with solving RASP.
+#'
+#' @param x \code{RaspResults} or \code{RaspSolved} object.
+#' @param ... not used.
+#' @export
+#' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}
+model.file<-function(x, ...) UseMethod('model.file')
+
+
+#' Extract amount held for a solution
+#'
+#' This function returns the amount held for each species in a solution.
+#'
+#' @param x \code{RaspResults} or \code{RaspSolved} object.
+#' @param y \code{NULL} to return all values, \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.
+#' @param ... not used.
+#' @return \code{matrix} or \code{numeric} vector depending on arguments.
+#' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}
+#' @export
+amount.held<-function(x, ...) {UseMethod('amount.held')}
+
+#' Extract attribute space held for a solution
+#'
+#' This function returns the attribute space held for each species in a solution.
+#'
+#' @param x \code{RaspResults} or \code{RaspSolved} object.
+#' @param y \code{NULL} to return all values, \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.
+#' @param ... not used.
+#' @return code{matrix} or code{numeric} vector depending on arguments.
+#' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}
+#' @export
+space.held<-function(x, ...) {UseMethod('space.held')}
+
+#' Extract occurrence held for a solution
+#'
+#' This function returns the number of occurrences held for each species in a solution.
+#'
+#' @param x \code{RaspResults} or \code{RaspSolved} object.
+#' @param y \code{NULL} to return all values, \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.
+#' @param ... not used.
+#' @return \code{matrix} or \code{numeric} vector depending on arguments.
+#' @export
+#' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}
+occ.held<-function(x, ...) {UseMethod('occ.held')}
+
+#' Extract information on whether solutions have met the amount targets
+#'
+#' This function reports whether a solution has met the amount targets for each species in a solution.
+#'
+#' @param x \code{RaspResults} or \code{RaspSolved} object.
+#' @param y \code{NULL} to return all values, \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.
+#' @param ... not used.
+#' @return \code{matrix} or \code{numeric} vector depending on arguments.
+#' @export
+#' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}
+amount.targets.met<-function(x, ...) {UseMethod('amount.targets.met')}
+
+#' Extract information on whether solutions have met the space targets
+#'
+#' This function reports whether a solution has met the amount targets for each species in a solution.
+#'
+#' @param x \code{RaspResults} or \code{RaspSolved} object.
+#' @param y \code{NULL} to return all values, \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.
+#' @param ... not used.
+#' @return \code{matrix} or \code{numeric} vector depending on arguments.
+#' @export
+#' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}
+space.targets.met<-function(x, ...) {UseMethod('space.targets.met')}
+
+#' Extract solution selections
+#'
+#' Extract selections for a given solution from a \code{RaspResults} or \code{RaspSolved} object.
+#'
+#' @param x \code{RaspResults} or \code{RaspSolved} object.
+#' @param y \code{NULL} to return all values, \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.
+#' @param ... not used.
+#' @return \code{matrix} or \code{numeric} vector depending on arguments.
+#' @export
+#' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved-class}}, \code{\link{rasp}}.
+selections<-function(x, ...) {UseMethod('selections')}
+
+#' Compare RASP objects
+#'
+#' This function checks objects to see if they share the same input data.
+#'
+#' @param x \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} objects.
+#' @param y \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} objects.
+#' @return "logical" are the objects based on the same data?
+#' @export
+#' @seealso \code{\link{RaspData-class}}, \code{\link{RaspUnsolved-class}}, \code{\link{RaspSolved-class}}
+setGeneric("is.comparable", function(x, y) standardGeneric("is.comparable"))
 

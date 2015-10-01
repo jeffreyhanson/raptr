@@ -13,6 +13,30 @@ test_that('Error: DemandPoints generator function', {
 	expect_equal(length(dp@species), 50)
 })
 
+test_that('Error: DemandPoints merge function', {
+	# create object
+	dp1<-DemandPoints(
+		coords=matrix(0.1, nrow=50, ncol=2),
+		weights=1:50,
+		species=rep(1L,50)
+	)
+	dp2<-DemandPoints(
+		coords=matrix(0.1, nrow=50, ncol=2),
+		weights=51:100,
+		species=rep(2L,50)
+	)
+	# merge objects
+	dp3<-merge.DemandPoints(list(dp1, dp2))
+	# check object
+	expect_is(dp3, 'DemandPoints')
+	expect_equal(ncol(dp3@coords), 2)
+	expect_equal(nrow(dp3@coords), 100)
+	expect_identical(dp3@weights, 1:100)
+	expect_identical(dp3@species, c(rep(1L,50), rep(2L,50)))
+})
+
+
+
 test_that('Error: demand.points (sm.density, geographic space)', {
 	# load data
 	data(pus, species, space)

@@ -1,6 +1,35 @@
 #' @include RcppExports.R raspr-internal.R
 NULL
 
+#' Test if Gurobi is installed on computer
+#'
+#' This function determines if Gurobi is installed on the computer, check that its licensing is set up, and will store the path in \code{\link[base]{options}}.
+#'
+#' @return "logical" Is it installed and ready to use?
+#' @seealso \code{\link[base]{options}}.
+#' @export
+#' @examples
+#' is.GurobiInstalled()
+#' options()$GurobiInstalled
+is.GurobiInstalled<-function() {
+	# check if installed 
+	gpth=Sys.getenv('GUROBI_HOME')
+	if (nchar(gpth)==0) {
+		options(GurobiInstalled=FALSE)
+		stop('Gorubi is not installed on system')
+	}
+	# try running example problem
+	gpth2=tempfile(fileext='.sol')
+	ret=call.Gurobi(RaspOpts(), file.path(gpth, 'examples/data/coins.lp'), gpth2, verbose=FALSE)
+	if (!file.exists(gpth2)) {
+		cat(GurobiInstalled=FALSE)
+		stop('Gorubi is not setup correctly.')
+	}
+	options(GurobiInstalled=TRUE)
+	return(invisible(TRUE))
+}
+
+
 #' Test if GDAL is installed on computer
 #'
 #' This function tests if GDAL is installed on the computer.
@@ -65,3 +94,5 @@ blank.raster<-function(x, res) {
 	rast<-raster(xmn=min(xpos), xmx=max(xpos), ymn=min(ypos), ymx=max(ypos), nrow=length(ypos)-1, ncol=length(xpos)-1)
 	return(setValues(rast, 1))
 }
+
+

@@ -26,5 +26,6 @@ This function simulates planning units for RASP.
 }
 \details{
 Square planning units are generated in the shape of a square. Default coordinate arguments are such that the planning units will be centered at origin.
+The data slot contains an 'id' (\code{integer}), cost (\code{numeric}), 'status' (\code{integer}), and area (\code{numeric}).
 }
 

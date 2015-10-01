@@ -15,17 +15,15 @@ Description: Biodiversity is in crisis. The overarching aim of conservation
     prioritisations--using the Representatiev and Adequate Sample Problem (RASP).
     Reserve selection problems are expressed as a mixed linear integer problem
     (MILP) and solved using exact-algorithm solvers. Prioritisations can be obtained
-    using lp_solve and Gurobi (obtained from <http://www.gurobi.com/>).
+    using Gurobi (obtained from <http://www.gurobi.com/>).
 Imports:
     boot,
     PBSmapping,
-    lpSolveAPI,
-    Matrix,
-    slam,
     adehabitatHR,
     plyr,
     doSNOW,
     snow,
+    rgeos,
     data.table,
     hypervolume,
     sm,
@@ -44,7 +42,6 @@ VignetteBuilder: knitr
 Suggests:
     knitr,
     testthat
-Enhances: gurobi
 SystemRequirements: C++11
 Collate:
     'dependencies.R'
@@ -52,17 +49,16 @@ Collate:
     'raspr-internal.R'
     'generics.R'
     'DemandPoints.R'
-    'Polygons2Polyset.R'
     'calcSpeciesAverageInPus.R'
     'calcBoundaryData.R'
     'RaspData.R'
+    'misc.R'
     'RaspOpts.R'
     'RaspResults.R'
-    'RaspSolved.R'
     'RaspUnsolved.R'
+    'RaspSolved.R'
+    'SpatialPolygons2PolySet.R'
     'data.R'
-    'make.DemandPoints.R'
-    'misc.R'
     'rasp.R'
     'simulate.pus.R'
     'simulate.space.R'

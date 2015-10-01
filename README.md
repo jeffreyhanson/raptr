@@ -1,11 +1,11 @@
-spThin
+raspr
 ============
 
-[![Build Status](https://travis-ci.org/mlammens/spThin.svg?branch=master)](https://travis-ci.org/mlammens/spThin)
-[![Coverage Status](https://codecov.io/github/mlammens/spThin/coverage.svg?branch=master)](https://codecov.io/github/mlammens/spThin?branch=master)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/spThin)](http://cran.r-project.org/package=spThin)
+[![Build Status](https://travis-ci.org/mlammens/raspr.svg?branch=master)](https://travis-ci.org/paleo13/rapsr)
+[![Coverage Status](https://codecov.io/github/paleo13/rapsr/coverage.svg?branch=master)](https://codecov.io/github/paleo13/rapsr?branch=master)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/raspr)](http://cran.r-project.org/package=raspr)
 
-#### spThin contains functions to spatially rarefy and thin species occurrence data. These procedures can ameliorate sampling bias, and in turn result in better ecological niche models. The package contains functions to thin datasets using exact-algorithm solvers ([lp_solve](http://lpsolve.sourceforge.net/) and [Gurobi](http://www.gurobi.com/)) and a stingy heuristic. This package also contains functions to rarefy datasets using grids.
+#### Biodiversity is in crisis. The overarching aim of conservation is to preserve biodiversity patterns and processes. To this end, protected areas are established to buffer species and preserve biodiversity processes. But resources are limited and so protected areas must be cost-effective. This package contains functions to generate plans for protected areas--prioritisations--using the Representatiev and Adequate Sample Problem (RASP). Reserve selection problems are expressed as a mixed linear integer problem (MILP) and solved using exact-algorithm solvers. Prioritisations can be obtained using lp_solve and Gurobi (obtained from <http://www.gurobi.com/>).
 
 Linux and Mac OSX users will first need to install several dependencies. To install them, type the following code in the bash or the terminal:
 
@@ -15,23 +15,22 @@ sudo apt-get install libgdal-dev
 sudo apt-get install libproj-dev
 ```
 
-To install the spThin R package, execute the following commands in R:
+To install the raspr R package, execute the following commands in R:
 
 ```
 if (!require('devtools'))
 	install.packages('devtools', repo='http://cran.rstudio.com', dep=TRUE)
-devtools:::install_github('mlammens/spThin')
+devtools:::install_github('paleo13/rapsr')
 ```
 
 Once this package has been installed, you can explore the functions of this package by reading through the vignette. You can access it in R by running the code below:
 
 ```
 # open vignette in web browser
-vignette('spThin', package='spThin')
+vignette('raspr', package='raspr')
 ```
 
 **If this R package helped you, please cite it.**
 
-M.E. Aiello-Lammens, R.A. Boria, A. Radosavljevic, B. Vilela, R.P. Anderson (2015). spThin: an R package for spatial thinning of species occurrence records for use in ecological niche models. Ecography, **38**: 541-545.
+Hanson J.O., Rhodes J. R., Fuller R. A. (2015). raspr (version 0.0.0): identify prioritisations using the Representative and Adequate Sample Problem (RASP).
 
-M.E. Aiello-Lammens, J. O. Hanson, R.A. Boria, A. Radosavljevic, B. Vilela, R.P. Anderson (2015). spThin (version 1.0.0): Functions to spatially rarefy and thin species occurrence data.

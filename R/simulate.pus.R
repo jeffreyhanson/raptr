@@ -12,6 +12,7 @@ NULL
 #' @param ymx \code{numeric} value for maximum y-coordinate.
 #' @return \code{SpatialPolygons} with planning units.
 #' @details Square planning units are generated in the shape of a square. Default coordinate arguments are such that the planning units will be centered at origin.
+#' The data slot contains an 'id' (\code{integer}), cost (\code{numeric}), 'status' (\code{integer}), and area (\code{numeric}).
 #' @export
 simulate.pus <- function(n, xmn=-sqrt(n)/2, xmx=sqrt(n)/2, ymn=-sqrt(n)/2, ymx=sqrt(n)/2, ...) {
 	# check n has valid square root
@@ -23,9 +24,11 @@ simulate.pus <- function(n, xmn=-sqrt(n)/2, xmx=sqrt(n)/2, ymn=-sqrt(n)/2, ymx=s
 	# convert to SpatialPolygonsDataFrame
 	ret=as(rst, 'SpatialPolygonsDataFrame')
 	# insert default values 
+	ret@data[[1]]=as.integer(ret@data[[1]])
 	ret@data$cost=1
-	ret@data$status=0
-	names(ret@data)=c('id','cost','status')
+	ret@data$status=0L
+	ret@data$area=prod(res(rst))
+	names(ret@data)=c('id','cost','status', 'area')
 	# return polygons 
 	return(ret)
 }

@@ -1,3 +1,7 @@
+test_that('Gurobi installation checks', {
+	expect_true(is.GurobiInstalled())
+})
+
 test_that('demand.points.density1d', {
 	# make points
 	pts<-matrix(rnorm(100), ncol=1)
