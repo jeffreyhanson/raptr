@@ -16,6 +16,10 @@ boundary = NULL, ..., verbose = FALSE)
 
 \item{spaces}{\code{list} of/or \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} representing projects of attribute space over geographic space. Use a \code{list} to denote seperate attribute spaces.}
 
+\item{area.targets}{\code{numeric} vector for area targets (%) for each species. Defaults to 0.2 for each attribute space for each species.}
+
+\item{space.targets}{\code{numeric} vector for attribute space targets (%) for each species. Defaults to 0.2 for each attribute space for each species. Note all attribute spaces have the same targets.}
+
 \item{n.demand.points}{\code{integer} number of demand points to use for each attribute space for each species.}
 
 \item{kernel.method}{\code{character} name of kernel method to use to generate demand points. Use either \code{'sm.density'} or \code{'hypervolume'}.}
@@ -29,10 +33,6 @@ boundary = NULL, ..., verbose = FALSE)
 \item{verbose}{\code{logical} print statements during processing?}
 
 \item{...}{additional arguments to \code{calcBoundaryData} and \code{calcPuVsSpeciesData}.}
-
-\item{area.target}{\code{numeric} vector for area targets (%) for each species. Defaults to 0.2 for each attribute space for each species.}
-
-\item{space.target}{\code{numeric} vector for attribute space targets (%) for each species. Defaults to 0.2 for each attribute space for each species. Note all attribute spaces have the same targets.}
 }
 \description{
 This function prepares spatially explicit planning unit, species data, and landscape data layers for RASP processing.

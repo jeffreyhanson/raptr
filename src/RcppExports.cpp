@@ -6,6 +6,18 @@
 
 using namespace Rcpp;
 
+// rcpp_append_modelfile
+CharacterVector rcpp_append_modelfile(CharacterVector model, Rcpp::List existing_sols);
+RcppExport SEXP raspr_rcpp_append_modelfile(SEXP modelSEXP, SEXP existing_solsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< CharacterVector >::type model(modelSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type existing_sols(existing_solsSEXP);
+    __result = Rcpp::wrap(rcpp_append_modelfile(model, existing_sols));
+    return __result;
+END_RCPP
+}
 // rcpp_calcBoundaryDF
 Rcpp::List rcpp_calcBoundaryDF(Rcpp::DataFrame df, double tolerance, double lengthFactor, double edgeFactor);
 RcppExport SEXP raspr_rcpp_calcBoundaryDF(SEXP dfSEXP, SEXP toleranceSEXP, SEXP lengthFactorSEXP, SEXP edgeFactorSEXP) {
@@ -17,6 +29,28 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type lengthFactor(lengthFactorSEXP);
     Rcpp::traits::input_parameter< double >::type edgeFactor(edgeFactorSEXP);
     __result = Rcpp::wrap(rcpp_calcBoundaryDF(df, tolerance, lengthFactor, edgeFactor));
+    return __result;
+END_RCPP
+}
+// rcpp_collate_model_results
+Rcpp::S4 rcpp_collate_model_results();
+RcppExport SEXP raspr_rcpp_collate_model_results() {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    __result = Rcpp::wrap(rcpp_collate_model_results());
+    return __result;
+END_RCPP
+}
+// rcpp_generate_modelfile
+Rcpp::CharacterVector rcpp_generate_modelfile(Rcpp::S4 opts, Rcpp::S4 data);
+RcppExport SEXP raspr_rcpp_generate_modelfile(SEXP optsSEXP, SEXP dataSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< Rcpp::S4 >::type opts(optsSEXP);
+    Rcpp::traits::input_parameter< Rcpp::S4 >::type data(dataSEXP);
+    __result = Rcpp::wrap(rcpp_generate_modelfile(opts, data));
     return __result;
 END_RCPP
 }

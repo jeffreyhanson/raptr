@@ -4,7 +4,7 @@
 \alias{RaspUnsolved}
 \title{Create a new RaspUnsolved object}
 \usage{
-RaspUnsolved(opts, data)
+RaspUnsolved(opts, gurobi, data)
 }
 \arguments{
 \item{opts}{\code{RaspOpts} object.}
@@ -18,6 +18,6 @@ RaspUnsolved(opts, data)
 This function creates a \code{RaspUnsolved} object using \code{RaspOpts} and \code{RaspData} objects.
 }
 \seealso{
-\code{\link{RaspOpts-class}}, \code{\link{RaspData-class}}.
+\code{\link{RaspOpts-class}},  \code{\link{GurobiOpts-class}}, \code{\link{RaspData-class}}.
 }
 

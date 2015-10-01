@@ -12,16 +12,8 @@ This class is used to store RASP input parameters.
 \describe{
 \item{\code{BLM}}{\code{numeric} boundary length modifier. Defaults to 0.}
 
+\item{\code{MAXRLEVEL}}{\code{numeric} maximum R failure level for approximation. Defaults to 5L.}
+
 \item{\code{NUMREPS}}{\code{integer} number of replicate runs. Defaults to 1L.}
-
-\item{\code{NTHREADS}}{\code{integer} number of cores to use for processing. Defaults to 1L.}
-
-\item{\code{GAP}}{\code{numeric} MIP gap (lp_solve parameter). Defaults to 0.05.}
-
-\item{\code{PRESOLVE}}{\code{integer} code for level of computation in presolve (lp_solve parameter). Defaults to 2.}
-
-\item{\code{TIMELIMIT}}{\code{integer} number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.}
-
-\item{\code{VERBOSITY}}{\code{integer} code for amount of output to display. Defaults to 1L.}
 }}
 

@@ -12,9 +12,11 @@ This class is used to store RASP input data and input parameters.
 \describe{
 \item{\code{opts}}{\code{RaspOpts} object used to store input parameters.}
 
+\item{\code{gurobi}}{\code{GurobiOpts} object used to store input data.}
+
 \item{\code{data}}{\code{RaspData} object used to store input data.}
 }}
 \seealso{
-\code{\link{RaspOpts-class}}, \code{\link{RaspData-class}}.
+\code{\link{RaspOpts-class}},  \code{\link{GurobiOpts-class}}, \code{\link{RaspData-class}}.
 }
 

@@ -20,7 +20,7 @@ is.GurobiInstalled<-function() {
 	}
 	# try running example problem
 	gpth2=tempfile(fileext='.sol')
-	ret=call.Gurobi(RaspOpts(), file.path(gpth, 'examples/data/coins.lp'), gpth2, verbose=FALSE)
+	ret=call.Gurobi(GurobiOpts(), file.path(gpth, 'examples/data/coins.lp'), gpth2, verbose=FALSE)
 	if (!file.exists(gpth2)) {
 		cat(GurobiInstalled=FALSE)
 		stop('Gorubi is not setup correctly.')

@@ -4,23 +4,14 @@
 \alias{RaspOpts}
 \title{Create RaspOpts object}
 \usage{
-RaspOpts(BLM = 0, NUMREPS = 1L, NTHREADS = 1L, GAP = 0.05,
-  PRESOLVE = 2L, TIMELIMIT = NA_integer_, VERBOSITY = 1L)
+RaspOpts(BLM = 0, MAXRLEVEL = 5L, NUMREPS = 1L)
 }
 \arguments{
 \item{BLM}{\code{numeric} boundary length modifier. Defaults to 0.}
 
+\item{MAXRLEVEL}{\code{numeric} maximum R failure level for approximation. Defaults to 5L.}
+
 \item{NUMREPS}{\code{integer} number of replicate runs. Defaults to 1L.}
-
-\item{NTHREADS}{\code{integer} number of cores to use for processing. Defaults to 1L.}
-
-\item{GAP}{\code{numeric} MIP gap (lp_solve parameter). Defaults to 0.05.}
-
-\item{PRESOLVE}{\code{integer} code for level of computation in presolve (lp_solve parameter). Defaults to 2L.}
-
-\item{TIMELIMIT}{\code{integer} number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.}
-
-\item{VERBOSITY}{\code{integer} code for amount of output to display. Defaults to 1L.}
 }
 \value{
 \code{MarxanOpts} object

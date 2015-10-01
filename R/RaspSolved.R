@@ -13,8 +13,9 @@ NULL
 #' @seealso \code{\link{RaspOpts-class}}, \code{\link{RaspData-class}}, \code{\link{RaspResults-class}}.
 setClass("RaspSolved",
 	representation(
-		data="RaspData",
 		opts="RaspOpts",
+		gurobi="GurobiOpts",
+		data="RaspData",
 		results="RaspResults"
 	)
 )
@@ -32,7 +33,7 @@ setClassUnion("RaspUnsolvedOrSolved", c("RaspSolved", "RaspUnsolved"))
 #' @export
 #' @seealso \code{\link{RaspSolved-class}}, \code{\link{RaspResults-class}}.
 RaspSolved<-function(unsolved, results) {
-	return(new("RaspSolved", opts=unsolved@opts, data=unsolved@data, results=results))
+	return(new("RaspSolved", opts=unsolved@opts, gurobi=unsolved@gurobi, data=unsolved@data, results=results))
 }
 
 #' @rdname solve
@@ -41,7 +42,7 @@ RaspSolved<-function(unsolved, results) {
 solve.RaspSolved<-function(x, wd=tempdir(), clean=TRUE, force_reset=FALSE) {
 	if (!force_reset)
 		stop("This object already has solutions. Use force_reset=TRUE to force recalculation of solutions.")
-	return(solve(RaspUnsolved(opts=x@opts,data=x@data), wd, clean))
+	return(solve(RaspUnsolved(opts=x@opts,gurobi=x@gurobi, data=x@data), wd, clean))
 }
 
 #' @rdname selections

@@ -6,13 +6,15 @@ NULL
 #' This class is used to store RASP input data and input parameters.
 #'
 #' @slot opts \code{RaspOpts} object used to store input parameters.
+#' @slot gurobi \code{GurobiOpts} object used to store input data.
 #' @slot data \code{RaspData} object used to store input data.
 #' @export
-#' @seealso  \code{\link{RaspOpts-class}}, \code{\link{RaspData-class}}.
+#' @seealso  \code{\link{RaspOpts-class}},  \code{\link{GurobiOpts-class}}, \code{\link{RaspData-class}}.
 setClass("RaspUnsolved",
 	representation(
-		data="RaspData",
-		opts="RaspOpts"
+		opts="RaspOpts",
+		gurobi="GurobiOpts",
+		data="RaspData"
 	)
 )
 
@@ -24,9 +26,9 @@ setClass("RaspUnsolved",
 #' @param data \code{RaspData} object.
 #' @return \code{RaspUnsolved} object.
 #' @export
-#' @seealso \code{\link{RaspOpts-class}}, \code{\link{RaspData-class}}.
-RaspUnsolved<-function(opts, data) {
-	return(new("RaspUnsolved", opts=opts, data=data))
+#' @seealso  \code{\link{RaspOpts-class}},  \code{\link{GurobiOpts-class}}, \code{\link{RaspData-class}}.
+RaspUnsolved<-function(opts, gurobi, data) {
+	return(new("RaspUnsolved", opts=opts, gurobi=gurobi, data=data))
 }
 
 #' @rdname solve
@@ -51,7 +53,7 @@ solve.RaspUnsolved=function(x, wd=tempdir(), clean=TRUE) {
 	## first run
 	# run model
 	log.file=system(
-		gurobiSystemCall(x, paste0(pth, '.lp'), paste0(pth, '.sol')),
+		gurobiSystemCall(x@gurobi, paste0(pth, '.lp'), paste0(pth, '.sol')),
 		capture.output=TRUE
 	)
 	
@@ -63,12 +65,12 @@ solve.RaspUnsolved=function(x, wd=tempdir(), clean=TRUE) {
 	for (i in seq_len(x@opts@NUMREPS-1)) {
 		# create new model file, excluding existing solutions as valid solutions to ensure a different solution is obtained
 		pth=tempfile(tempdir=wd)
-		model=rcpp_append_modelfile(x, existing,solutions)
+		model=rcpp_append_modelfile(x, existing.solutions)
 		writeLines(model, paste0(pth,'.lp'))
 		
 		# run model
 		log.file=system(
-			gurobiSystemCall(x, paste0(pth, '.lp'), paste0(pth, '.sol')),
+			gurobiSystemCall(x@gurobi, paste0(pth, '.lp'), paste0(pth, '.sol')),
 			capture.output=TRUE
 		)
 		
@@ -85,6 +87,7 @@ solve.RaspUnsolved=function(x, wd=tempdir(), clean=TRUE) {
 print.RaspUnsolved=function(x) {
 	cat("RaspUnsolved object.\n")
 	print.RaspOpts(x@opts, FALSE)
+	print.RaspOpts(x@gurobi, FALSE)
 	print.RaspData(x@data, FALSE)
 }
 

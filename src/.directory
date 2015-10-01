@@ -1,0 +1,9 @@
+[Dolphin]
+SortRole=type
+Timestamp=2015,10,1,13,19,23
+Version=3
+ViewMode=1
+VisibleRoles=CustomizedDetails,Details_text,Details_size,Details_date,Details_permissions,Details_type
+
+[Settings]
+HiddenFilesShown=true
