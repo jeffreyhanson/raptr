@@ -11,9 +11,22 @@
 #' str(species)
 NULL
 
+#' Simulated species distributions (small dataset)
+#' 
+#' A \code{RasterStack} of containing simulated distributions for one species. Each pixel denotes the probability of occupancy.
+#' 
+#' @docType data
+#' @keywords datasets
+#' @format \code{RasterStack}
+#' @name small.species
+#' @examples
+#' data(small.species)
+#' str(small.species)
+NULL
+
 #' Simulated planning units
 #' 
-#' A \code{SpatialPolygonsDataFrame} of containing simulated planning units. The columns in the data slot are 'id' (\code{integer}), 'cost' (\code{numeric}), and 'status' (\code{integer}).
+#' A \code{SpatialPolygonsDataFrame} of containing simulated planning units. The columns in the data slot are 'cost' (\code{numeric}), and 'status' (\code{integer}).
 #' 
 #' @docType data
 #' @keywords datasets
@@ -22,6 +35,19 @@ NULL
 #' @examples
 #' data(pus)
 #' str(pus)
+NULL
+
+#' Simulated planning units (small dataset)
+#' 
+#' A \code{SpatialPolygonsDataFrame} of containing simulated planning units. The columns in the data slot are 'cost' (\code{numeric}), and 'status' (\code{integer}).
+#' 
+#' @docType data
+#' @keywords datasets
+#' @format \code{SpatialPolygonsDataFrame}
+#' @name small.pus
+#' @examples
+#' data(small.pus)
+#' str(small.pus)
 NULL
 
 #' Simulated space data

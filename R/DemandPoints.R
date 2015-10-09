@@ -5,23 +5,19 @@ NULL
 #'
 #' This class is used to store demand point information.
 #'
-#' @slot coords \code{matrix} coordinates for each demand point in the attribute space.
+#' @slot points \code{SimplePoints} coordinates for each demand point in the attribute space.
 #' @slot weights \code{numeric} weights for each demand poont.
-#' @slot species \code{integer} idenifiers for which species each demand point belongs to.
 #' @seealso \code{\link{DemandPoints}}
 #' @export
 setClass("DemandPoints",
 	representation(
-		coords='matrix',
-		weights='numeric',
-		species='integer'
+		points='SimplePoints',
+		weights='numeric'
 	),
 	validity=function(object) {
 		# coords
-		if (!all(is.matrix(object@coords)))
-			stop('argument to coords must be matrix')
-		if (!all(is.finite(object@coords)))
-			stop('argument to coords contains NA or non-finite values')
+		if (!inherits(object@points, 'SimplePoints'))
+			stop('argument to points must be SimplePoints')
 		
 		# weights
 		if (!all(is.numeric(object@weights)))
@@ -29,17 +25,9 @@ setClass("DemandPoints",
 		if (!all(is.finite(object@weights)))
 			stop('argument to weights contains NA or non-finite values')
 		
-		# species
-		if (!all(is.integer(object@species)))
-			stop('argument to species must be integer')
-		if (!all(is.finite(object@species)))
-			stop('argument to species contains NA or non-finite values')
-
 		# cross-slot dependencies
-		if (nrow(object@coords)!=length(object@species))
-			stop('argument to coords must have have the same number of rows as the length of species')
-		if (nrow(object@coords)!=length(object@weights))
-			stop('argument to coords must have have the same number of rows as the length of weights')
+		if (nrow(object@points@coords)!=length(object@weights))
+			stop('argument to points must have have the same number of rows as the length of weights')
 	}
 )
 
@@ -47,41 +35,15 @@ setClass("DemandPoints",
 #'
 #' This funciton creates a new DemandPoints object
 #'
-#' @slot coords \code{matrix} coordinates for each demand point in the attribute space.
+#' @slot points \code{SimplePoints} coordinates for each demand point in the attribute space.
 #' @slot weights \code{numeric} weights for each demand poont.
-#' @slot species \code{integer} idenifiers for which species each demand point belongs to.
 #' @seealso \code{\link{DemandPoints-class}}
 #' @export
-DemandPoints<-function(coords, weights, species) {
-	# make new dp object
-	dp<-new("DemandPoints", coords=coords, weights=weights, species=species)
-	# test for validity
+DemandPoints<-function(points, weights) {
+	dp<-new("DemandPoints", points=points, weights=weights)
 	validObject(dp, test=FALSE)
 	return(dp)
 }
-
-#' Merge a list of DemandPoints objects togeather
-#'
-#' This is a conviencne function to merge DemandPoints objects togeather.
-#'
-#' @param x \code{list} of \code{DemandPoints} objects.
-#' @seealso \code{DemandPoints}
-#' @export
-merge.DemandPoints<-function(x, ...) {
-	# check all elements have same dimensions
-	x<<-x
-	if (length(unique(laply(x, function(x) {ncol(x@coords)})))!=1)
-		stop('Demand points have different numbers of dimensions in the attribute space')
-	# return new DemandPoints object
-	return(
-		DemandPoints(
-			coords=do.call(rbind, llply(x, slot, 'coords')),
-			species=unlist(sapply(x, slot, 'species', simplify=FALSE, USE.NAMES=FALSE), recursive=FALSE, use.names=FALSE),
-			weights=unlist(sapply(x, slot, 'weights', simplify=FALSE, USE.NAMES=FALSE), recursive=FALSE, use.names=FALSE)
-		)
-	)
-}
-
 
 #' Generate demand points for RASP
 #'
@@ -91,7 +53,6 @@ merge.DemandPoints<-function(x, ...) {
 #' @param space.rasters \code{NULL}, \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} with projections of the attribute space over geographic space. If NULL (default) then geographic space is used.
 #' @param n \code{integer} number of demand points to use for each attribute space for each species. Defaults to 1000L.
 #' @param quantile \code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.2. 
-#' @param id \code{integer} species id. Defaults to 1L.
 #' @param kernel.method \code{character} name of kernel method to use to generate demand points. Defaults to 'sm.density'.
 #' @param ... arguments passed to kernel density estimating functions
 #' @return \code{DemandPoints} object.
@@ -103,7 +64,7 @@ merge.DemandPoints<-function(x, ...) {
 #" 'hypervolume' as an argument, the \code{\link[hypervolume]{hypervolume}} function is used. This can be used for hyer-dimensional data.
 #' @seealso \code{\link[hypervolume]{hypervolume}}, \code{\link[sm]{sm.density}}, \code{\link[rgeos]{gConvex}}.
 #' @export
-make.DemandPoints<-function(species.points, space.rasters=NULL, n=1000L, quantile=0.2, id=1L, kernel.method=c('sm.density', 'hypervolume')[1], ...) {
+make.DemandPoints<-function(species.points, space.rasters=NULL, n=1000L, quantile=0.2, kernel.method=c('sm.density', 'hypervolume')[1], ...) {
 	# check inputs for validityhod
 	match.arg(kernel.method, c('sm.density', 'hypervolume'))
 	if (!is.null(space.rasters))
@@ -131,9 +92,8 @@ make.DemandPoints<-function(species.points, space.rasters=NULL, n=1000L, quantil
 	# return demand points
 	return(
 		DemandPoints(
-			coords=dp$coords,
-			weights=dp$weights,
-			species=rep(id, n)
+			points=SimplePoints(dp$coords),
+			weights=dp$weights
 		)
 	)
 }

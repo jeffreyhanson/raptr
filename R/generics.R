@@ -104,7 +104,7 @@ space.targets<-function(x, ...) UseMethod('space.targets')
 
 #' Log file
 #'
-#' This function returns the Gurobi log file associated with solving RASP.
+#' This function returns the Gurobi log file (*.log) associated with solving RASP.
 #'
 #' @param x \code{RaspResults} or \code{RaspSolved} object.
 #' @param ... not used.
@@ -112,15 +112,25 @@ space.targets<-function(x, ...) UseMethod('space.targets')
 #' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}
 log.file<-function(x, ...) UseMethod('log.file')
 
-#' Modelfile
+#' Model file
 #'
-#' This function returns the Gurobi model file associated with solving RASP.
+#' This function returns the Gurobi model file (*.lp) associated with solving RASP.
 #'
 #' @param x \code{RaspResults} or \code{RaspSolved} object.
 #' @param ... not used.
 #' @export
 #' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}
 model.file<-function(x, ...) UseMethod('model.file')
+
+#' Solution file
+#'
+#' This function returns the Gurobi solution file (*.sol) associated with solving RASP.
+#'
+#' @param x \code{RaspResults} or \code{RaspSolved} object.
+#' @param ... not used.
+#' @export
+#' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}
+solution.file<-function(x, ...) UseMethod('solution.file')
 
 
 #' Extract amount held for a solution
@@ -147,42 +157,6 @@ amount.held<-function(x, ...) {UseMethod('amount.held')}
 #' @export
 space.held<-function(x, ...) {UseMethod('space.held')}
 
-#' Extract occurrence held for a solution
-#'
-#' This function returns the number of occurrences held for each species in a solution.
-#'
-#' @param x \code{RaspResults} or \code{RaspSolved} object.
-#' @param y \code{NULL} to return all values, \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.
-#' @param ... not used.
-#' @return \code{matrix} or \code{numeric} vector depending on arguments.
-#' @export
-#' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}
-occ.held<-function(x, ...) {UseMethod('occ.held')}
-
-#' Extract information on whether solutions have met the amount targets
-#'
-#' This function reports whether a solution has met the amount targets for each species in a solution.
-#'
-#' @param x \code{RaspResults} or \code{RaspSolved} object.
-#' @param y \code{NULL} to return all values, \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.
-#' @param ... not used.
-#' @return \code{matrix} or \code{numeric} vector depending on arguments.
-#' @export
-#' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}
-amount.targets.met<-function(x, ...) {UseMethod('amount.targets.met')}
-
-#' Extract information on whether solutions have met the space targets
-#'
-#' This function reports whether a solution has met the amount targets for each species in a solution.
-#'
-#' @param x \code{RaspResults} or \code{RaspSolved} object.
-#' @param y \code{NULL} to return all values, \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.
-#' @param ... not used.
-#' @return \code{matrix} or \code{numeric} vector depending on arguments.
-#' @export
-#' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}
-space.targets.met<-function(x, ...) {UseMethod('space.targets.met')}
-
 #' Extract solution selections
 #'
 #' Extract selections for a given solution from a \code{RaspResults} or \code{RaspSolved} object.
@@ -195,14 +169,81 @@ space.targets.met<-function(x, ...) {UseMethod('space.targets.met')}
 #' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved-class}}, \code{\link{rasp}}.
 selections<-function(x, ...) {UseMethod('selections')}
 
-#' Compare RASP objects
+#' Compare Rasp objects
 #'
 #' This function checks objects to see if they share the same input data.
 #'
-#' @param x \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} objects.
-#' @param y \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} objects.
-#' @return "logical" are the objects based on the same data?
+#' @param x \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
+#' @param y \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
+#' @return \code{logical} are the objects based on the same data?
 #' @export
 #' @seealso \code{\link{RaspData-class}}, \code{\link{RaspUnsolved-class}}, \code{\link{RaspSolved-class}}
 setGeneric("is.comparable", function(x, y) standardGeneric("is.comparable"))
 
+
+#' Basemap 
+#'
+#' This function retrieves google map data for planning units. The google map data is cached to provide fast plotting capabilities.
+#'
+#' @param x \code{RaspData}, \code{RaspUnsolved}, \code{RaspSolved} object.
+#' @param basemap \code{character} type of base map to display. Valid names are "roadmap", "mobile", "satellite", "terrain", "hybrid", "mapmaker-roadmap", "mapmaker-hybrid".
+#' @param grayscale \code{logical} should base map be gray scale?
+#' @param force_reset \code{logical} ignore data in cache? Setting this as ignore will make function slower but may avoid bugs in cache system.
+#' @return \code{list} with google map data.
+#' @export
+#' @seealso \cite{\link[RgoogleMaps]{GetMap.bbox}}, \cite{\link{plot}}
+basemap<-function(x, ...) {UseMethod("basemap")}
+
+#' Plot Rasp solutions
+#'
+#' This function makes a geoplot displaying Rasp solutions.
+#'
+#' @param x \code{RaspData}, \code{RaspUnsolved}, \code{RaspSolved} object.
+#' @param y See below for details:
+#'	\itemize{ 
+#' 	\item if \code{NULL}: function plots the selection frequency of planning units for all solutions (default).
+#'	\item if \code{integer}: function plots the selection for the n'th solution, use 0 to plot the best solution.
+#'	\item if \code{RaspSolved} plots the difference in solutions: \itemize{
+#'		\item if \code{i} is \code{NULL}: differences in selection frequencies are plotted.
+#'		\item if \code{i} is \code{integer} and \code{j} is \code{integer}, plots differences selection status for solution \code{i} in \code{x}, and solution \code{j} in \code{y}. Set \code{i} or \code{j} to 0 to refer to the best solution in \code{x} or \code{y} respectively.
+#'		}
+#' }
+#' @param colramp \code{character} name of colour palette (see \code{\link[RColorBrewer]{brewer.pal.info}}).
+#' @param xlockedincol \code{character} color to plot locked in planning units in object \code{x}.
+#' @param ylockedincol \code{character} color to plot locked in planning units in object \code{y}.
+#' @param xlockedoutcol \code{character} color to plot locked out planning units in object \code{x}.
+#' @param ylockedoutcol \code{character} color to plot locked out planning units in object \code{y}.
+#' @param alpha \code{numeric} alpha value
+#' @param basemap \code{character} name of basemap to display. Valid names are "roadmap", "mobile", "satellite", "terrain", "hybrid", "mapmaker-roadmap", "mapmaker-hybrid".
+#' @param grayscale \code{logical} should basemap be gray scale?
+#' @param force_reset \code{logical} ignore data in cache? Setting this as ignore will make function slower but may avoid bugs in cache system.
+#' @note This function will return an error if spatial polygons were not supplied during the construction of the Rasp object.
+#' @export
+#' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved-class}}, \code{\link{basemap}} \code{\link{rasp}}, \code{\link{spplot}}
+setGeneric("plotRasp", function(x, y, ...)
+	standardGeneric("plotRasp")
+)
+
+
+#' Test if hash is cached in a Rasp object
+#'
+#' Tests if hash is cached in Rasp object.
+#' 
+#' @param x \code{RaspData} or \code{RaspResults} object
+#' @param name \code{character} hash.
+#' @note caches are implemented using environments, the hash is used as the name of the object in the environment.
+#' @return \code{logical} Is it cached?
+#' @keywords internal
+setGeneric("is.cached", function(x,name) standardGeneric("is.cached"))
+
+#' Get and set cache Methods
+#'
+#' Getter and setter methods for caches in MarxanData and MarxanResults object.
+#' 
+#' @param x \code{RaspData} or \code{RaspResults} object
+#' @param name \code{character} hash.
+#' @param y if \code{ANY} this object gets cached with name, else if \code{missing} the object hashed at name gets returned.
+#' @note caches are implemented using environments, the hash is used as the name of the object in the environment.
+#' @return \code{ANY} or \code{NULL} depends on \code{y} argument.
+#' @keywords internal
+setGeneric("cache", function(x, name, y) standardGeneric("cache"))

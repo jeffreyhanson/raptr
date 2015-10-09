@@ -8,7 +8,7 @@ simulate.space.RasterLayer <- function(x, d=2, model=RMgauss(), ...) {
 	valMTX=RFsimulate(model, as(x, 'SpatialPoints')@coords, n=d, spConform=FALSE, ...)
 	# convert to matrix if not a matrix
 	if (!inherits(valMTX, 'matrix'))
-		valMTX=martix(valMTX, ncol=1)
+		valMTX=matrix(valMTX, ncol=1)
 	# populate rasters with values
 	stk=stack(llply(seq_len(ncol(valMTX)), .fun=function(i) {
 		r=x

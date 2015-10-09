@@ -16,19 +16,15 @@ This class is used to store RASP results.
 
 \item{\code{amount.held}}{\code{matrix} with the amount held for each species in each solution.}
 
-\item{\code{occ.held}}{\code{matrix} with the number of occurrences for each species in each solution.}
-
 \item{\code{space.held}}{\code{matrix} with the poportion of attribute space sampled for each species in each solution.}
-
-\item{\code{amount.targets.met}}{\code{matrix} whether the amount targets have been met for each species in each solution.}
-
-\item{\code{space.targets.met}}{\code{matrix} whether the attribute space targets have been met for each species in each solution.}
 
 \item{\code{best}}{\code{integer} with index of best solution.}
 
+\item{\code{model.file}}{\code{character} with Gurobi model file.}
+
 \item{\code{log.file}}{\code{character} with Gurobi log file.}
 
-\item{\code{model.file}}{\code{character} with Gurobi model file.}
+\item{\code{solution.file}}{\code{character} with Gurobi solution file.}
 }}
 \seealso{
 \code{\link{RaspResults}}, \code{\link{read.RaspResults}}.

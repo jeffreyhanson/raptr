@@ -4,19 +4,17 @@
 \alias{GurobiOpts}
 \title{Create GurobiOpts object}
 \usage{
-GurobiOpts(NTHREADS = 1L, GAP = 0.05, PRESOLVE = 2L,
-  TIMELIMIT = NA_integer_, VERBOSITY = 1L)
+GurobiOpts(Threads = 1L, MIPGap = 0.05, Presolve = 2L,
+  TimeLimit = NA_integer_)
 }
 \arguments{
-\item{NTHREADS}{\code{integer} number of cores to use for processing. Defaults to 1L.}
+\item{Threads}{\code{integer} number of cores to use for processing. Defaults to 1L.}
 
-\item{GAP}{\code{numeric} MIP gap (lp_solve parameter). Defaults to 0.05.}
+\item{MIPGap}{\code{numeric} MIP gap (lp_solve parameter). Defaults to 0.05.}
 
-\item{PRESOLVE}{\code{integer} code for level of computation in presolve (lp_solve parameter). Defaults to 2.}
+\item{Presolve}{\code{integer} code for level of computation in presolve (lp_solve parameter). Defaults to 2.}
 
-\item{TIMELIMIT}{\code{integer} number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.}
-
-\item{VERBOSITY}{\code{integer} code for amount of output to display. Defaults to 1L.}
+\item{TimeLimit}{\code{integer} number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.}
 }
 \value{
 \code{GurobiOpts} object
@@ -25,7 +23,7 @@ GurobiOpts(NTHREADS = 1L, GAP = 0.05, PRESOLVE = 2L,
 This function creates a new GurobiOpts object.
 }
 \examples{
-x<-GurobiOpts(NTHREADS=2)
+x<-GurobiOpts(Threads=2)
 }
 \seealso{
 \code{\link{GurobiOpts-class}}.

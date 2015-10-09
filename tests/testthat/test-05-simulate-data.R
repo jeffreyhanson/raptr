@@ -11,20 +11,6 @@ test_that("simulate planning units functions", {
 	expect_equal(xmax(pus),7.5)
 })
 
-test_that("blank.raster function", {
-# 	generate planning units
-	rst=blank.raster(simulate.pus(n=225L),1)
-# 	check simulated dataset
-	expect_true(inherits(rst, 'RasterLayer'))
-	expect_equal(ncell(rst),225L)
-	expect_equal(xmin(rst),-7.5)
-	expect_equal(ymin(rst),-7.5)
-	expect_equal(xmax(rst),7.5)
-	expect_equal(xmax(rst),7.5)
-	expect_equal(sum(is.na(rst[])), 0)
-})
-
-
 test_that("simulate space functions", {
 # 	generate planning units
 	pus=simulate.pus(n=225L)
@@ -39,7 +25,6 @@ test_that("simulate space functions", {
 	expect_equal(ymax(spaces), 7.5)
 	expect_equal(sum(is.na(spaces[[1]][])),0)
 })
-
 
 test_that("simulate species functions", {
 # 	generate planning units

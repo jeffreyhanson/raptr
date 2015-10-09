@@ -7,12 +7,12 @@
 using namespace Rcpp;
 
 // rcpp_append_modelfile
-CharacterVector rcpp_append_modelfile(CharacterVector model, Rcpp::List existing_sols);
+std::string rcpp_append_modelfile(std::string model, Rcpp::List existing_sols);
 RcppExport SEXP raspr_rcpp_append_modelfile(SEXP modelSEXP, SEXP existing_solsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< CharacterVector >::type model(modelSEXP);
+    Rcpp::traits::input_parameter< std::string >::type model(modelSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type existing_sols(existing_solsSEXP);
     __result = Rcpp::wrap(rcpp_append_modelfile(model, existing_sols));
     return __result;
@@ -32,18 +32,23 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
-// rcpp_collate_model_results
-Rcpp::S4 rcpp_collate_model_results();
-RcppExport SEXP raspr_rcpp_collate_model_results() {
+// rcpp_extract_model_results
+Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, std::vector<std::string> model_file, std::vector<std::string> log_file, std::vector<std::string> solution_file);
+RcppExport SEXP raspr_rcpp_extract_model_results(SEXP optsSEXP, SEXP dataSEXP, SEXP model_fileSEXP, SEXP log_fileSEXP, SEXP solution_fileSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
-    __result = Rcpp::wrap(rcpp_collate_model_results());
+    Rcpp::traits::input_parameter< Rcpp::S4 >::type opts(optsSEXP);
+    Rcpp::traits::input_parameter< Rcpp::S4 >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< std::vector<std::string> >::type model_file(model_fileSEXP);
+    Rcpp::traits::input_parameter< std::vector<std::string> >::type log_file(log_fileSEXP);
+    Rcpp::traits::input_parameter< std::vector<std::string> >::type solution_file(solution_fileSEXP);
+    __result = Rcpp::wrap(rcpp_extract_model_results(opts, data, model_file, log_file, solution_file));
     return __result;
 END_RCPP
 }
 // rcpp_generate_modelfile
-Rcpp::CharacterVector rcpp_generate_modelfile(Rcpp::S4 opts, Rcpp::S4 data);
+std::string rcpp_generate_modelfile(Rcpp::S4 opts, Rcpp::S4 data);
 RcppExport SEXP raspr_rcpp_generate_modelfile(SEXP optsSEXP, SEXP dataSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;

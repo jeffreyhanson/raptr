@@ -6,9 +6,9 @@
 \alias{space.held.RaspSolved}
 \title{Extract attribute space held for a solution}
 \usage{
-\method{space.held}{RaspResults}(x, y = NULL)
+\method{space.held}{RaspResults}(x, y = 0)
 
-\method{space.held}{RaspSolved}(x, y = NULL)
+\method{space.held}{RaspSolved}(x, y = 0)
 
 space.held(x, ...)
 }

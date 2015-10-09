@@ -4,12 +4,18 @@
 \alias{read.RaspResults}
 \title{Read RASP results}
 \usage{
-read.RaspResults(data, path)
+read.RaspResults(opts, data, model.file, log.file, solution.file)
 }
 \arguments{
-\item{data}{\code{RaspData} object containing RASP data.}
+\item{opts}{\code{RaspOpts} object}
 
-\item{path}{\code{character} with file path to the output from Gurobi.}
+\item{data}{\code{RaspData} object}
+
+\item{model.file}{\code{character} object containing Gurobi model file.}
+
+\item{log.file}{\code{character} object containing Gurobi log file.}
+
+\item{solution.file}{\code{character} object containing Gurobi solution file.}
 }
 \value{
 \code{RaspResults} object
@@ -18,6 +24,6 @@ read.RaspResults(data, path)
 This function reads files output from Gurobi and returns a \code{RaspResults} object.
 }
 \seealso{
-\code{\link{RaspResults-class}}, \code{\link{RaspResults}}.
+\code{\link{RaspData}}, \code{\link{RaspData-class}}, \code{\link{RaspResults-class}}, \code{\link{RaspResults}}.
 }
 

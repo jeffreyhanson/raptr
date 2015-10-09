@@ -10,11 +10,9 @@ This class is used to store demand point information.
 \section{Slots}{
 
 \describe{
-\item{\code{coords}}{\code{matrix} coordinates for each demand point in the attribute space.}
+\item{\code{points}}{\code{SimplePoints} coordinates for each demand point in the attribute space.}
 
 \item{\code{weights}}{\code{numeric} weights for each demand poont.}
-
-\item{\code{species}}{\code{integer} idenifiers for which species each demand point belongs to.}
 }}
 \seealso{
 \code{\link{DemandPoints}}

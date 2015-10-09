@@ -48,14 +48,14 @@ solve.RaspSolved<-function(x, wd=tempdir(), clean=TRUE, force_reset=FALSE) {
 #' @rdname selections
 #' @inheritParams selections
 #' @export
-selections.RaspSolved<-function(x, y=NULL) {
-	return(selection.RaspResults(x@results, y))
+selections.RaspSolved<-function(x, y=0) {
+	return(selections.RaspResults(x@results, y))
 }
 
 #' @rdname score
 #' @inheritParams score
 #' @export
-score.RaspSolved<-function(x, y=NULL) {
+score.RaspSolved<-function(x, y=0) {
 	return(score.RaspResults(x@results, y))
 }
 
@@ -78,47 +78,36 @@ model.file.RaspSolved<-function(x) {
 	model.file.RaspResults(x@results)
 }
 
+#' @rdname solution.file
+#' @inheritParams model.file
+#' @export
+solution.file.RaspSolved<-function(x) {
+	solution.file.RaspResults(x@results)
+}
+
 #' @export
 #' @inheritParams amount.held
 #' @rdname amount.held
-amount.held.RaspSolved<-function(x, y=NULL) {
+amount.held.RaspSolved<-function(x, y=0) {
 	return(amount.held.RaspResults(x@results, y))
-}
-
-#' @rdname occ.held
-#' @inheritParams occ.held
-#' @export
-occ.held.RaspSolved<-function(x, y=NULL) {
-	return(occ.held.RaspResults(x@results, y))
 }
 
 #' @rdname space.held
 #' @inheritParams space.held
 #' @export
-space.held.RaspSolved<-function(x, y=NULL) {
+space.held.RaspSolved<-function(x, y=0) {
 	return(space.held.RaspResults(x@results, y))
 }
 
-#' @rdname amount.targets.met
-#' @inheritParams amount.targets.met
-#' @export
-amount.targets.met.RaspSolved<-function(x, y=NULL) {
-	return(amount.targets.met.RaspResults(x@results, y))
-}
-
-#' @rdname space.targets.met
-#' @inheritParams space.targets.met
-#' @export
-space.targets.met.RaspSolved<-function(x, y=NULL) {
-	return(space.targets.met.RaspResults(x@results, y))
-}
-
-
 #' @export
 print.RaspSolved<-function(x) {
-	cat("RaspSolved object.\n")
+	cat("Parameters\n")
 	print.RaspOpts(x@opts, FALSE)
+	cat("Solver settings\n")
+	print.GurobiOpts(x@gurobi, FALSE)
+	cat("Data\n")
 	print.RaspData(x@data, FALSE)
+	cat("Results\n")
 	print.RaspResults(x@results, FALSE)
 }
 
@@ -157,6 +146,172 @@ setMethod(
 	signature(x="RaspUnsolvedOrSolved", y="RaspData"),
 	function(x,y) {
 		return(is.comparable(x@data, y))
+	}
+)
+
+#' @rdname basemap
+#' @export
+basemap.RaspSolved<-function(x, basemap="none", grayscale=FALSE, force_reset=FALSE) {
+	return(basemap.RaspData(x@data, basemap, grayscale, force_reset))
+}
+
+
+#' @export
+plot.RaspSolved<-function(x, ...) {
+	plotRasp(x, ...)
+}
+
+#' @rdname plotRasp
+#' @inheritParams plotRasp
+#' @export
+setMethod(
+	"plotRasp",
+	signature(x="RaspSolved",y="numeric"),
+	function(x, y, basemap="none", colramp="Greens", lockedincol="#000000FF", lockedoutcol="#D7D7D7FF", alpha=ifelse(basemap=="none",1,0.7), grayscale=FALSE, force_reset=FALSE) {
+		# check for issues
+		stopifnot(alpha<=1 & alpha>=0)
+		match.arg(colramp, rownames(brewer.pal.info))
+		stopifnot(inherits(x@data@polygons, "PolySet"))
+		# get basemap data
+		if (basemap!="none")
+			basemap<-basemap.RaspData(x@data, basemap, grayscale, force_reset)
+		# main processing
+		if (y==0)
+			y<-x@results@best
+		if (is.numeric(y))
+			stopifnot(y<=nrow(x@results@selections))
+		values<-x@results@selections[y,]
+		cols<-character(length(values))
+		cols[which(x@data@pu$status==2)]<-lockedincol
+		cols[which(x@data@pu$status==3)]<-lockedoutcol
+		cols[which(x@data@pu$status<2)]<-brewerCols(values[which(x@data@pu$status<2)], colramp, alpha, n=2)
+		prettyGeoplot(
+			x@data@polygons,
+			cols,
+			basemap,
+			ifelse(y==x@results@best, paste0("Best Solution (",y,")"), paste0("Solution (",y,")")),
+			categoricalLegend(c(lockedoutcol,brewerCols(c(0,1),colramp,alpha,n=2),lockedincol),c("Locked Out", "Not Selected", "Selected", "Locked In")),
+			beside=FALSE
+		)
+	}
+)
+
+#' @rdname plotRasp
+#' @inheritParams plotRasp
+#' @export
+setMethod(
+	"plotRasp",
+	signature(x="RaspSolved",y="missing"),
+	function(x, y, basemap="none", colramp="PuBu", lockedincol="#000000FF", lockedoutcol="#D7D7D7FF", alpha=ifelse(basemap=="none",1,0.7), grayscale=FALSE, force_reset=FALSE) {
+		# check for issues
+		match.arg(basemap, c("none", "roadmap", "mobile", "satellite", "terrain", "hybrid", "mapmaker-roadmap", "mapmaker-hybrid"))
+		stopifnot(alpha<=1 & alpha>=0)
+		match.arg(colramp, rownames(brewer.pal.info))
+		stopifnot(inherits(x@data@polygons, "PolySet"))
+		# get basemap data
+		if (basemap!="none")
+			basemap<-basemap.RaspData(x@data, basemap, grayscale, force_reset)	
+		# main processing
+		if (force_reset || !is.cached(x@results, "selectionfreqs")) {
+			cache(x@results, "selectionfreqs", colMeans(x@results@selections))
+		}
+		values<-cache(x@results,"selectionfreqs")[which(x@data@pu$status<2)]
+		cols<-brewerCols(rescale(cache(x@results,"selectionfreqs"),from=range(values),to=c(0,1)), pal=colramp, alpha=alpha)
+		cols[which(x@data@pu$status==2)]<-lockedincol
+		cols[which(x@data@pu$status==3)]<-lockedoutcol
+		prettyGeoplot(
+			x@data@polygons,
+			cols,
+			basemap,
+			"Planning unit selection frequency",
+			continuousLegend(values,colramp,posx=c(0.3, 0.4),posy=c(0.1, 0.9)),
+			beside=TRUE
+		)
+	}
+)
+
+#' @rdname plotRasp
+#' @inheritParams plotRasp
+#' @export
+setMethod(
+	"plotRasp",
+	signature(x="RaspSolved",y="RaspSolved"),
+	function(x, y, i=NULL, j=i, basemap="none", colramp=ifelse(is.null(i), "RdYlBu", "Accent"), xlockedincol="#000000FF", xlockedoutcol="#D7D7D7FF", ylockedincol="#FFFFFFFF", ylockedoutcol="#D7D7D7FF", alpha=ifelse(basemap=="none",1,0.7), grayscale=FALSE, force_reset=FALSE) {
+		# check for issues
+		stopifnot(alpha<=1 & alpha>=0)
+		match.arg(colramp, rownames(brewer.pal.info))
+		stopifnot(inherits(x@data@polygons, "PolySet"))
+		stopifnot(is.comparable(x,y))
+		if (is.numeric(i))
+			stopifnot(i <= nrow(x@results@selections))
+		if (is.numeric(j))
+			stopifnot(j <= nrow(y@results@selections))
+		# get basemap data
+		if (basemap!="none")
+			basemap<-basemap.RaspData(x@data, basemap, grayscale, force_reset)	
+		# main processing
+		cols<-character(nrow(x@data@pu))
+		if (is.null(i) || is.null(j)) {
+			cols[which(x@data@pu$status==2)]<-xlockedincol
+			cols[which(y@data@pu$status==2)]<-ylockedincol
+			cols[which(x@data@pu$status==3)]<-xlockedoutcol
+			cols[which(y@data@pu$status==3)]<-ylockedoutcol
+		
+			if (force_reset || !is.cached(x@results, "selectionfreqs"))
+				cache(x@results, "selectionfreqs", colMeans(x@results@selections))
+			xsc<-cache(x@results, "selectionfreqs")[which(nchar(cols)==0)]
+			if (force_reset || !is.cached(y@results, "selectionfreqs"))
+				cache(y@results, "selectionfreqs", colMeans(y@results@selections))
+			ysc<-cache(y@results, "selectionfreqs")[which(nchar(cols)==0)]
+			values<-xsc-ysc
+			cols[which(nchar(cols)==0)]<-brewerCols(rescale(values,to=c(0,1)), colramp, alpha)
+			prettyGeoplot(
+				x@data@polygons,
+				cols,
+				basemap,
+				"Difference in selection frequencies",
+				fun<-continuousLegend(
+					values,
+					colramp,
+					posx=c(0.3, 0.4),posy=c(0.1, 0.9),
+					center=TRUE,
+					endlabs=c('+X','+Y')
+				),
+				beside=TRUE
+			)
+		} else {
+			if (i==0)
+				i<-x@results@best
+			if (j==0)
+				j<-y@results@best
+			cols2<-brewerCols(seq(0,1,length.out=4),colramp,alpha,n=4)
+			
+			cols[which(x@results@selections[i,]==1 & y@results@selections[j,]==0)]<-cols2[1]
+			cols[which(x@results@selections[i,]==0 & y@results@selections[j,]==1)]<-cols2[2]
+			cols[which(x@results@selections[i,]==1 & y@results@selections[j,]==1)]<-cols2[3]
+			cols[which(x@results@selections[i,]==0 & y@results@selections[j,]==0)]<-cols2[4]
+
+			cols[which(x@data@pu$status==2)]<-xlockedincol
+			cols[which(y@data@pu$status==2)]<-ylockedincol
+			cols[which(x@data@pu$status==3)]<-xlockedoutcol
+			cols[which(y@data@pu$status==3)]<-ylockedoutcol
+			
+			xrepr<-ifelse(i==x@results@best, '(best)', paste0('(',i,')'))
+			yrepr<-ifelse(i==y@results@best, '(best)', paste0('(',j,')'))
+
+			prettyGeoplot(
+				x@data@polygons,
+				cols,
+				basemap,
+				paste0("Difference in X solution ",i,ifelse(i==x@results@best, " (best)", ""), " and Y solution ",j, ifelse(j==y@results@best, " (best)", "")),
+				categoricalLegend(
+					c(cols2,xlockedincol,ylockedincol,xlockedoutcol,ylockedoutcol),
+					c("Selected in X",  "Selected in Y", "Both", "Neither", "Locked in X", "Locked in Y", paste("Locked out X"), paste("Locked out Y")),
+					ncol=4
+				),
+				beside=FALSE
+			)
+		}
 	}
 )
 

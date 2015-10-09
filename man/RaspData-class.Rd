@@ -12,15 +12,13 @@ This class is used to store Marxan input data.
 \describe{
 \item{\code{polygons}}{\code{PolySet} planning unit spatial data or \code{NULL} if data not available.}
 
-\item{\code{pu}}{\code{data.frame} planning unit data. Columns are 'id' (\code{integer}), 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).}
+\item{\code{pu}}{\code{data.frame} planning unit data. Columns are 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).}
 
-\item{\code{pu.points}}{\code{list} of \code{matrix} objects with coordinates of the planning units in the attribute spaces.}
-
-\item{\code{species}}{\code{data.frame} with species data. Columns are 'id' (\code{integer}), 'area.target' (\code{numeric}), 'space.target' (\code{numeric}), and 'name' (\code{character}, optional).}
-
-\item{\code{demand.points}}{\code{list} of \code{DemandPoint} objects with the demand points.}
+\item{\code{species}}{\code{data.frame} with species data. Columns are 'area.target' (\code{numeric}), 'space.target' (\code{numeric}), and 'name' (\code{character}, optional).}
 
 \item{\code{pu.species.probabilities}}{\code{data.frame} with data on the probability of species in each planning unit. Columns are 'species' (\code{integer}), 'pu' (\code{integer}), and 'value' (\code{numeric}) columns.}
+
+\item{\code{attribute.spaces}}{\code{list} of \code{AttributeSpace} objects with the demand points and planning unit coordinates.}
 
 \item{\code{boundary}}{\code{data.frame} with data on the shared boundary length of planning units. Columns are with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'boundary' (\code{integer}).}
 

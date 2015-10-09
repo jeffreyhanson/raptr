@@ -4,8 +4,25 @@
 \alias{RaspData}
 \title{Create new RaspData object}
 \usage{
-RaspData(pu, pu.species.probabilities, pu.points, species, demand.points,
-  boundary, polygons = NULL, skipchecks = FALSE, .cache = new.env(), ...)
+RaspData(pu, species, pu.species.probabilities, attribute.spaces, boundary,
+  polygons = NULL, skipchecks = FALSE, .cache = new.env(), ...)
+}
+\arguments{
+\item{pu}{\code{data.frame} planning unit data. Columns are 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).}
+
+\item{species}{\code{data.frame} with species data. Columns are 'area.target' (\code{numeric}), 'space.target' (\code{numeric}), and 'name' (\code{character}, optional).}
+
+\item{pu.species.probabilities}{\code{data.frame} with data on the probability of species in each planning unit. Columns are 'species' (\code{integer}), 'pu' (\code{integer}), and 'value' (\code{numeric}) columns.}
+
+\item{attribute.spaces}{\code{list} of \code{AttributeSpace} objects with the demand points and planning unit coordinates.}
+
+\item{boundary}{\code{data.frame} with data on the shared boundary length of planning units. Columns are with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'boundary' (\code{integer}).}
+
+\item{polygons}{\code{PolySet} planning unit spatial data or \code{NULL} if data not available.}
+
+\item{skipchecks}{\code{logical} Skip data integrity checks? May improve speed for big data sets.}
+
+\item{.cache}{\code{environment} used to cache calculations.}
 }
 \value{
 RaspData object
@@ -13,27 +30,6 @@ RaspData object
 \description{
 This function creates a "RaspData" object using pre-processed data.
 }
-\section{Slots}{
-
-\describe{
-\item{\code{polygons}}{\code{PolySet} planning unit spatial data or \code{NULL} if data not available.}
-
-\item{\code{pu}}{\code{data.frame} planning unit data. Columns are 'id' (\code{integer}), 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).}
-
-\item{\code{pu.points}}{\code{list} of \code{matrix} objects with coordinates of the planning units in the attribute spaces.}
-
-\item{\code{species}}{\code{data.frame} with species data. Columns are 'id' (\code{integer}), 'area.target' (\code{numeric}), 'space.target' (\code{numeric}), and 'name' (\code{character}, optional).}
-
-\item{\code{demand.points}}{\code{list} of \code{DemandPoint} objects with the demand points.}
-
-\item{\code{pu.species.probabilities}}{\code{data.frame} with data on the probability of species in each planning unit. Columns are 'species' (\code{integer}), 'pu' (\code{integer}), and 'probability' (\code{numeric}) columns.}
-
-\item{\code{boundary}}{\code{data.frame} with data on the shared boundary length of planning units. Columns are with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'boundary' (\code{integer}).}
-
-\item{\code{skipchecks}}{\code{logical} Skip data integrity checks? May improve speed for big data sets.}
-
-\item{\code{.cache}}{\code{environment} used to cache calculations.}
-}}
 \note{
 Generally, users are not encouraged to change arguments to \code{.cache}.
 }

@@ -10,14 +10,12 @@ This class is used to store Gurobi input parameters.
 \section{Slots}{
 
 \describe{
-\item{\code{NTHREADS}}{\code{integer} number of cores to use for processing. Defaults to 1L.}
+\item{\code{Threads}}{\code{integer} number of cores to use for processing. Defaults to 1L.}
 
-\item{\code{GAP}}{\code{numeric} MIP gap (lp_solve parameter). Defaults to 0.05.}
+\item{\code{MIPGap}}{\code{numeric} MIP gap. Defaults to 0.05.}
 
-\item{\code{PRESOLVE}}{\code{integer} code for level of computation in presolve (lp_solve parameter). Defaults to 2.}
+\item{\code{Presolve}}{\code{integer} code for level of computation in presolve. Defaults to 2.}
 
-\item{\code{TIMELIMIT}}{\code{integer} number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.}
-
-\item{\code{VERBOSITY}}{\code{integer} code for amount of output to display. Defaults to 1L.}
+\item{\code{TimeLimit}}{\code{integer} number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.}
 }}
 

@@ -9,8 +9,8 @@ rcpp_calcBoundaryDF <- function(df, tolerance = 0.001, lengthFactor = 1.0, edgeF
     .Call('raspr_rcpp_calcBoundaryDF', PACKAGE = 'raspr', df, tolerance, lengthFactor, edgeFactor)
 }
 
-rcpp_collate_model_results <- function() {
-    .Call('raspr_rcpp_collate_model_results', PACKAGE = 'raspr')
+rcpp_extract_model_results <- function(opts, data, model_file, log_file, solution_file) {
+    .Call('raspr_rcpp_extract_model_results', PACKAGE = 'raspr', opts, data, model_file, log_file, solution_file)
 }
 
 rcpp_generate_modelfile <- function(opts, data) {

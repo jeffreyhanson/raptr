@@ -7,6 +7,92 @@ suppressWarnings(setClassUnion("PolySetOrNULL", c("PolySet", "NULL")))
 suppressWarnings(setClassUnion("data.frameOrNULL", c("data.frame", "NULL"))) 
 
 ## define built-in functions
+# function to hash function call 
+hashCall<-function(expr, skipargs=c(), env=parent.frame()) {
+	expr<-expr[c((skipargs*-1L)-1L)]
+	expr<-expr[which(names(expr)!="force_reset")]
+	for (i in seq_along(names(expr)))
+		if (inherits(expr[[i]], c("name")))
+			expr[[i]]=eval(expr[[i]], envir=env)
+	return(paste(deparse(expr), collapse=";"))
+}
+
+# plotting functions
+prettyGeoplot<-function(polygons, col, basemap, main, fun, beside=TRUE) {
+	# make layout
+	defpar<-par(no.readonly = TRUE)
+	par(mar=c(1,1,1,1),oma=c(0,0,0,0))
+	if (beside) {
+		layout(matrix(c(1,1,3,2),ncol=2,byrow=TRUE), widths=c(0.8,0.2), height=c(0.1,0.9))
+	} else {
+		layout(matrix(c(1,3,2),ncol=1,byrow=TRUE), widths=c(1), height=c(0.1,0.8,0.1))
+	}
+	# make title
+	plot(1,1,type="n", xlim=c(-1,1), ylim=c(-1,1), axes=FALSE, xlab="", ylab="")
+	mtext(side=1, line=-1.5, main, cex=1.5)
+	# make legend
+	plot(1,1,type="n", xlim=c(-1,1), ylim=c(-1,1), axes=FALSE, xlab="", ylab="")
+	fun()
+	# make geoplot
+	if (is.list(basemap)) {
+		PlotOnStaticMap(basemap)
+		suppressWarnings(PlotPolysOnStaticMap(basemap, polygons, col=col, add=TRUE))
+	} else {
+		xdiff<-diff(range(polygons$X))
+		plotPolys(polygons, col=col, axes=FALSE, xlab="", ylab="")
+	}
+	par(defpar)
+	return(invisible())
+}
+
+# color functions
+brewerCols<-function(values, pal, alpha=1, n=NULL) {
+	if (is.null(n))
+		n<-brewer.pal.info$maxcolors[which(rownames(brewer.pal.info)==pal)]
+	suppressWarnings(r<-colorRamp(brewer.pal(n, pal))(values))
+	return(rgb(r, maxColorValue=255, alpha=rescale(alpha, from=c(0,1), to=c(0,255))))
+}
+
+
+# automated legend functions
+continuousLegend<-function(values, pal, posx, posy, center=FALSE, endlabs=NULL) {
+	return(
+		function() {
+			if (center) {
+				vabs<-max(abs(range(values)))
+				values<-seq(-vabs,vabs,length.out=100)
+			}
+			xdiff<-diff(par()$usr[1:2])
+			ydiff<-diff(par()$usr[3:4])
+			zvals<-pretty(values)
+			zvals<-zvals[which(zvals>min(values) & zvals<max(values))]
+			if (max(zvals)<1) {
+				digit<-2
+			} else {
+				digit<-1
+			}
+			# rect(xleft=par()$usr[1]+(xdiff*posx[1]), ybottom=par()$usr[3]+(ydiff*posy[1]), xright=par()$usr[1]+(xdiff*posx[2]), ytop=par()$usr[4]+(ydiff*posy[2]), xpd=TRUE)
+			shape::colorlegend(zlim=range(values), digit=digit, col=brewerCols(seq(0,1,length.out=100), pal), zval=zvals, posx=posx, posy=posy, xpd=TRUE)
+			if (!is.null(endlabs)) {
+				xcoord<-par()$usr[1] + mean(par()$usr[2:1]*posx*2.2)
+				ycoords<-(par()$usr[3] + diff(par()$usr[3:4])*posy) + (diff(par()$usr[3:4]) * c(-0.02,0.02))
+				text(x=rep(xcoord, 2), y=ycoords, rev(endlabs), cex=1.2, ad=c(0.5,0.5))
+			}
+		}
+	)
+}
+
+categoricalLegend<-function(col,labels, ncol=1) {
+	return(
+		function() {
+			if (ncol==1) {
+				legend("top", bg="white", legend=labels, fill=col, bty="n", horiz=TRUE, cex=1.5)
+			} else {
+				legend(y=par()$usr[3]+(diff(par()$usr[3:4])*0.6), x=par()$usr[1]+(diff(par()$usr[1:2])*0.5), bg="white", legend=labels, fill=col, bty="n", ncol=ncol, cex=1.5, xjust=0.5, yjust=0.5, xpd=TRUE)
+			}
+		}
+	)
+}
 
 # function to execute system calls, store and print stdout at same time
 custom.system <- function(command, args, file) {
@@ -17,38 +103,31 @@ custom.system <- function(command, args, file) {
 }
 
 # function to call gurobi
-call.Gurobi<-function(x, modelfile, outfile, verbose=TRUE) {
+call.Gurobi<-function(x, model.file, log.file, out.file, verbose=TRUE) {
 	## construct call
 	gpth<-paste0(Sys.getenv('GUROBI_HOME'), '/bin/gurobi_cl') 
 	gargs<-laply(.fun=paste, collapse='', list(
-		c('ResultFile=',outfile),
-		c('Presolve=',x@PRESOLVE),
-		c('MIPGap=',x@GAP),
-		c('OutputFlag=',x@VERBOSITY),
-		c('Threads=',x@NTHREADS)
+		c('ResultFile=',out.file),
+		c('Presolve=',x@Presolve),
+		c('MIPGap=',x@MIPGap),
+		c('OutputFlag=1'),
+		c('Threads=',x@Threads),
+		c('LogFile=', log.file)
 	)) 
-	if (is.finite(x@TIMELIMIT))
-		gargs=append(gargs, list(paste0('TIME_LIMIT=',x@TIMELIMIT)))
-	gargs=append(gargs, modelfile)
+	if (is.finite(x@TimeLimit))
+		gargs=append(gargs, list(paste0('TimeLimit=',x@TimeLimit)))
+	gargs=append(gargs, model.file)
 	
 	## run gurobi
 	if (verbose) {
-		if (.Platform$OS.type=='unix') {
-			# linux only - sink and print simultaneously
-			ret=custom.system(gpth, gargs, tempfile())
-		} else {
-			ret=system2(gpth, gargs, stdout="", stderr="")
-			if (is.null(attr(ret, 'status')))
-				attr(ret, 'status')=ret
-		}
+		ret=system2(gpth, gargs, stdout="", stderr="")
 	} else {
-		ret=system2(gpth, gargs, stdout=TRUE, stderr=TRUE)
-		if (is.null(attr(ret, 'status')))
-			attr(ret, 'status')=0
+		ret=system2(gpth, gargs, stdout=TRUE, stderr=TRUE)		
 	}
-	if (attr(ret, 'status')!=0)
-		stop('Error encountered when running Gurobi')
-	return(as.character(ret))
+	if (!(file.exists(out.file) && file.exists(log.file))) {
+		stop("Issue running Gurobi")
+	}
+	return(TRUE)
 }
 
 

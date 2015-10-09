@@ -46,48 +46,63 @@ solve.RaspUnsolved=function(x, wd=tempdir(), clean=TRUE) {
 	}
 	
 	# generate model file
-	pth=tempfile(tempdir=wd)
+	pth=tempfile(tmpdir=wd)
 	model=rcpp_generate_modelfile(x@opts, x@data)
 	writeLines(model, paste0(pth,'.lp'))
 	
 	## first run
 	# run model
-	log.file=system(
-		gurobiSystemCall(x@gurobi, paste0(pth, '.lp'), paste0(pth, '.sol')),
-		capture.output=TRUE
-	)
+	call.Gurobi(x@gurobi, paste0(pth, '.lp'), paste0(pth, '.log'), paste0(pth, '.sol'), verbose=TRUE)
 	
 	# store results
-	results=list(rcpp_collate_model_results(paste0(pth, '.out'), x@opts, x@data, log.file))
-	existing.solutions=list(selections(results))
+	results=list(read.RaspResults(x@opts, x@data, readLines(paste0(pth, '.lp')), readLines(paste0(pth, '.log')), readLines(paste0(pth, '.sol'))))
+	existing.solutions=list(selections(results[[1]]))
 	
 	## subsequent runs
 	for (i in seq_len(x@opts@NUMREPS-1)) {
 		# create new model file, excluding existing solutions as valid solutions to ensure a different solution is obtained
-		pth=tempfile(tempdir=wd)
-		model=rcpp_append_modelfile(x, existing.solutions)
+		pth=tempfile(tmpdir=wd)
+		o1<<-existing.solutions
+		o2<<-results[[i]]@model.file
+		model=rcpp_append_modelfile(results[[i]]@model.file, existing.solutions)
 		writeLines(model, paste0(pth,'.lp'))
 		
 		# run model
-		log.file=system(
-			gurobiSystemCall(x@gurobi, paste0(pth, '.lp'), paste0(pth, '.sol')),
-			capture.output=TRUE
-		)
-		
+		call.Gurobi(x@gurobi, paste0(pth, '.lp'), paste0(pth, '.log'), paste0(pth, '.sol'), verbose=TRUE)
+	
+		# load results
+		currResultFile=readLines(paste0(pth, '.sol'))
+		if (length(currResultFile)==0) {
+			warning(paste0('only ',i+1,' solutions found\n'))
+			break
+		}
 		# store results
-		results=append(results, rcpp_collate_model_results(paste0(pth, '.out'), x@opts, x@data, log.file))
-		existing.solutions=list(existing.solutions, list(selections(results)))
+		currResult=read.RaspResults(x@opts,x@data, readLines(paste0(pth, '.lp')), readLines(paste0(pth, '.log')), currResultFile)
+		results=append(results,currResult)
+		existing.solutions=append(existing.solutions, list(selections(currResult)))
 	}
 	
 	# return RaspSolved object
-	return(RaspSolved(data=x@data, opts=x@opts, results=merge.RaspResults(results)))
+	return(RaspSolved(unsolved=x, results=merge.RaspResults(results)))
 }
 
 #' @export
 print.RaspUnsolved=function(x) {
-	cat("RaspUnsolved object.\n")
+	cat("Parameters\n")
 	print.RaspOpts(x@opts, FALSE)
-	print.RaspOpts(x@gurobi, FALSE)
+	cat("Solver settings\n")
+	print.GurobiOpts(x@gurobi, FALSE)
+	cat("Data\n")
 	print.RaspData(x@data, FALSE)
 }
+
+# ' @export
+setMethod(
+	'show',
+	'RaspUnsolved',
+	function(object)
+		print.RaspUnsolved(object)
+)
+
+
 

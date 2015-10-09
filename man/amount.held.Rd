@@ -6,9 +6,9 @@
 \alias{amount.held.RaspSolved}
 \title{Extract amount held for a solution}
 \usage{
-\method{amount.held}{RaspResults}(x, y = NULL)
+\method{amount.held}{RaspResults}(x, y = 0)
 
-\method{amount.held}{RaspSolved}(x, y = NULL)
+\method{amount.held}{RaspSolved}(x, y = 0)
 
 amount.held(x, ...)
 }

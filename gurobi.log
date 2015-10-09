@@ -1,750 +1,756 @@
 
-Gurobi 6.0.5 (linux64) logging started Thu Oct  1 10:32:34 2015
-
-
-Gurobi Optimizer version 6.0.5 build v6.0.5rc1 (linux64)
-Copyright (c) 2015, Gurobi Optimization, Inc.
-
-Read LP format model from file /opt/gurobi605/linux64/examples/data/coins.lp
-Reading time = 0.00 seconds
-(null): 4 rows, 9 columns, 16 nonzeros
-Optimize a model with 4 rows, 9 columns and 16 nonzeros
-Coefficient statistics:
-  Matrix range    [6e-02, 7e+00]
-  Objective range [1e-02, 1e+00]
-  Bounds range    [5e+01, 1e+03]
-  RHS range       [0e+00, 0e+00]
-Found heuristic solution: objective -0
-Presolve removed 1 rows and 5 columns
-Presolve time: 0.01s
-Presolved: 3 rows, 4 columns, 9 nonzeros
-Variable types: 0 continuous, 4 integer (0 binary)
-
-Root relaxation: objective 1.134615e+02, 4 iterations, 0.00 seconds
-
-    Nodes    |    Current Node    |     Objective Bounds      |     Work
- Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-
-     0     0  113.46154    0    1   -0.00000  113.46154      -     -    0s
-H    0     0                     113.4500000  113.46154  0.01%     -    0s
-
-Explored 0 nodes (4 simplex iterations) in 0.02 seconds
-Thread count was 2 (of 2 available processors)
-
-Optimal solution found (tolerance 1.00e-04)
-Best objective 1.134500000000e+02, best bound 1.134500000000e+02, gap 0.0%
-
-Gurobi 6.0.5 (linux64) logging started Thu Oct  1 10:33:28 2015
-
-
-Gurobi Optimizer version 6.0.5 build v6.0.5rc1 (linux64)
-Copyright (c) 2015, Gurobi Optimization, Inc.
-
-Read LP format model from file /opt/gurobi605/linux64/examples/data/coins.lp
-Reading time = 0.00 seconds
-(null): 4 rows, 9 columns, 16 nonzeros
-Optimize a model with 4 rows, 9 columns and 16 nonzeros
-Coefficient statistics:
-  Matrix range    [6e-02, 7e+00]
-  Objective range [1e-02, 1e+00]
-  Bounds range    [5e+01, 1e+03]
-  RHS range       [0e+00, 0e+00]
-Found heuristic solution: objective -0
-Presolve removed 1 rows and 5 columns
-Presolve time: 0.00s
-Presolved: 3 rows, 4 columns, 9 nonzeros
-Variable types: 0 continuous, 4 integer (0 binary)
-
-Root relaxation: objective 1.134615e+02, 4 iterations, 0.00 seconds
-
-    Nodes    |    Current Node    |     Objective Bounds      |     Work
- Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-
-     0     0  113.46154    0    1   -0.00000  113.46154      -     -    0s
-H    0     0                     113.4500000  113.46154  0.01%     -    0s
-
-Explored 0 nodes (4 simplex iterations) in 0.00 seconds
-Thread count was 2 (of 2 available processors)
-
-Optimal solution found (tolerance 1.00e-04)
-Best objective 1.134500000000e+02, best bound 1.134500000000e+02, gap 0.0%
-
-Gurobi 6.0.5 (linux64) logging started Thu Oct  1 10:35:22 2015
-
-
-Gurobi Optimizer version 6.0.5 build v6.0.5rc1 (linux64)
-Copyright (c) 2015, Gurobi Optimization, Inc.
-
-Read LP format model from file /opt/gurobi605/linux64/examples/data/coins.lp
-Reading time = 0.00 seconds
-(null): 4 rows, 9 columns, 16 nonzeros
-Optimize a model with 4 rows, 9 columns and 16 nonzeros
-Coefficient statistics:
-  Matrix range    [6e-02, 7e+00]
-  Objective range [1e-02, 1e+00]
-  Bounds range    [5e+01, 1e+03]
-  RHS range       [0e+00, 0e+00]
-Found heuristic solution: objective -0
-Presolve removed 1 rows and 5 columns
-Presolve time: 0.01s
-Presolved: 3 rows, 4 columns, 9 nonzeros
-Variable types: 0 continuous, 4 integer (0 binary)
-
-Root relaxation: objective 1.134615e+02, 4 iterations, 0.00 seconds
-
-    Nodes    |    Current Node    |     Objective Bounds      |     Work
- Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-
-     0     0  113.46154    0    1   -0.00000  113.46154      -     -    0s
-H    0     0                     113.4500000  113.46154  0.01%     -    0s
-
-Explored 0 nodes (4 simplex iterations) in 0.02 seconds
-Thread count was 2 (of 2 available processors)
-
-Optimal solution found (tolerance 1.00e-04)
-Best objective 1.134500000000e+02, best bound 1.134500000000e+02, gap 0.0%
-
-Gurobi 6.0.5 (linux64) logging started Thu Oct  1 10:35:32 2015
-
-
-Gurobi Optimizer version 6.0.5 build v6.0.5rc1 (linux64)
-Copyright (c) 2015, Gurobi Optimization, Inc.
-
-Read LP format model from file /opt/gurobi605/linux64/examples/data/coins.lp
-Reading time = 0.00 seconds
-(null): 4 rows, 9 columns, 16 nonzeros
-Optimize a model with 4 rows, 9 columns and 16 nonzeros
-Coefficient statistics:
-  Matrix range    [6e-02, 7e+00]
-  Objective range [1e-02, 1e+00]
-  Bounds range    [5e+01, 1e+03]
-  RHS range       [0e+00, 0e+00]
-Found heuristic solution: objective -0
-Presolve removed 1 rows and 5 columns
-Presolve time: 0.00s
-Presolved: 3 rows, 4 columns, 9 nonzeros
-Variable types: 0 continuous, 4 integer (0 binary)
-
-Root relaxation: objective 1.134615e+02, 4 iterations, 0.00 seconds
-
-    Nodes    |    Current Node    |     Objective Bounds      |     Work
- Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-
-     0     0  113.46154    0    1   -0.00000  113.46154      -     -    0s
-H    0     0                     113.4500000  113.46154  0.01%     -    0s
-
-Explored 0 nodes (4 simplex iterations) in 0.00 seconds
-Thread count was 2 (of 2 available processors)
-
-Optimal solution found (tolerance 1.00e-04)
-Best objective 1.134500000000e+02, best bound 1.134500000000e+02, gap 0.0%
-
-Gurobi 6.0.5 (linux64) logging started Thu Oct  1 10:36:20 2015
-
-
-Gurobi Optimizer version 6.0.5 build v6.0.5rc1 (linux64)
-Copyright (c) 2015, Gurobi Optimization, Inc.
-
-Read LP format model from file /opt/gurobi605/linux64/examples/data/coins.lp
-Reading time = 0.00 seconds
-(null): 4 rows, 9 columns, 16 nonzeros
-Optimize a model with 4 rows, 9 columns and 16 nonzeros
-Coefficient statistics:
-  Matrix range    [6e-02, 7e+00]
-  Objective range [1e-02, 1e+00]
-  Bounds range    [5e+01, 1e+03]
-  RHS range       [0e+00, 0e+00]
-Found heuristic solution: objective -0
-Presolve removed 1 rows and 5 columns
-Presolve time: 0.00s
-Presolved: 3 rows, 4 columns, 9 nonzeros
-Variable types: 0 continuous, 4 integer (0 binary)
-
-Root relaxation: objective 1.134615e+02, 4 iterations, 0.00 seconds
-
-    Nodes    |    Current Node    |     Objective Bounds      |     Work
- Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-
-     0     0  113.46154    0    1   -0.00000  113.46154      -     -    0s
-H    0     0                     113.4500000  113.46154  0.01%     -    0s
-
-Explored 0 nodes (4 simplex iterations) in 0.00 seconds
-Thread count was 2 (of 2 available processors)
-
-Optimal solution found (tolerance 1.00e-04)
-Best objective 1.134500000000e+02, best bound 1.134500000000e+02, gap 0.0%
-
-Unknown file type for file '/tmp/RtmpWJ1qKq/file15af31923de4.out'
-
-
-Gurobi 6.0.5 (linux64) logging started Thu Oct  1 10:36:31 2015
-
-
-Gurobi Optimizer version 6.0.5 build v6.0.5rc1 (linux64)
-Copyright (c) 2015, Gurobi Optimization, Inc.
-
-Read LP format model from file /opt/gurobi605/linux64/examples/data/coins.lp
-Reading time = 0.00 seconds
-(null): 4 rows, 9 columns, 16 nonzeros
-Optimize a model with 4 rows, 9 columns and 16 nonzeros
-Coefficient statistics:
-  Matrix range    [6e-02, 7e+00]
-  Objective range [1e-02, 1e+00]
-  Bounds range    [5e+01, 1e+03]
-  RHS range       [0e+00, 0e+00]
-Found heuristic solution: objective -0
-Presolve removed 1 rows and 5 columns
-Presolve time: 0.00s
-Presolved: 3 rows, 4 columns, 9 nonzeros
-Variable types: 0 continuous, 4 integer (0 binary)
-
-Root relaxation: objective 1.134615e+02, 4 iterations, 0.00 seconds
-
-    Nodes    |    Current Node    |     Objective Bounds      |     Work
- Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-
-     0     0  113.46154    0    1   -0.00000  113.46154      -     -    0s
-H    0     0                     113.4500000  113.46154  0.01%     -    0s
-
-Explored 0 nodes (4 simplex iterations) in 0.00 seconds
-Thread count was 2 (of 2 available processors)
-
-Optimal solution found (tolerance 1.00e-04)
-Best objective 1.134500000000e+02, best bound 1.134500000000e+02, gap 0.0%
-
-Wrote result file '/tmp/RtmpWJ1qKq/file15af6428f36b.sol'
-
-
-Gurobi 6.0.5 (linux64) logging started Thu Oct  1 11:40:01 2015
-
-
-ERROR 10008: Invalid value '' for parameter 'Presolve'
-
-
-Gurobi 6.0.5 (linux64) logging started Thu Oct  1 11:42:32 2015
+Gurobi 6.0.5 (linux64) logging started Thu Oct  8 21:40:26 2015
 
 Set parameter Presolve to value 2
 Set parameter MIPGap to value 0.05
 Set parameter OutputFlag to value 1
 Set parameter Threads to value 1
 
-Gurobi Optimizer version 6.0.5 build v6.0.5rc1 (linux64)
-Copyright (c) 2015, Gurobi Optimization, Inc.
-
-Read LP format model from file /opt/gurobi605/linux64/examples/data/coins.lp
-Reading time = 0.01 seconds
-(null): 4 rows, 9 columns, 16 nonzeros
-Optimize a model with 4 rows, 9 columns and 16 nonzeros
-Coefficient statistics:
-  Matrix range    [6e-02, 7e+00]
-  Objective range [1e-02, 1e+00]
-  Bounds range    [5e+01, 1e+03]
-  RHS range       [0e+00, 0e+00]
-Found heuristic solution: objective -0
-Presolve removed 1 rows and 5 columns
-Presolve time: 0.01s
-Presolved: 3 rows, 4 columns, 9 nonzeros
-Variable types: 0 continuous, 4 integer (0 binary)
-Presolved: 3 rows, 4 columns, 9 nonzeros
-
-
-Root relaxation: objective 1.134615e+02, 4 iterations, 0.00 seconds
-
-    Nodes    |    Current Node    |     Objective Bounds      |     Work
- Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-
-     0     0  113.46154    0    1   -0.00000  113.46154      -     -    0s
-H    0     0                     113.4500000  113.46154  0.01%     -    0s
-
-Explored 0 nodes (4 simplex iterations) in 0.02 seconds
-Thread count was 1 (of 2 available processors)
-
-Optimal solution found (tolerance 5.00e-02)
-Best objective 1.134500000000e+02, best bound 1.134600000000e+02, gap 0.0088%
-
-Wrote result file '/tmp/RtmpWJ1qKq/file15af12f0109b.sol'
-
-
-Gurobi 6.0.5 (linux64) logging started Thu Oct  1 12:09:34 2015
+Gurobi 6.0.5 (linux64) logging started Thu Oct  8 22:07:44 2015
 
 Set parameter Presolve to value 2
 Set parameter MIPGap to value 0.05
 Set parameter OutputFlag to value 1
 Set parameter Threads to value 1
 
-Gurobi Optimizer version 6.0.5 build v6.0.5rc1 (linux64)
-Copyright (c) 2015, Gurobi Optimization, Inc.
-
-Read LP format model from file /opt/gurobi605/linux64/examples/data/coins.lp
-Reading time = 0.00 seconds
-(null): 4 rows, 9 columns, 16 nonzeros
-Optimize a model with 4 rows, 9 columns and 16 nonzeros
-Coefficient statistics:
-  Matrix range    [6e-02, 7e+00]
-  Objective range [1e-02, 1e+00]
-  Bounds range    [5e+01, 1e+03]
-  RHS range       [0e+00, 0e+00]
-Found heuristic solution: objective -0
-Presolve removed 1 rows and 5 columns
-Presolve time: 0.01s
-Presolved: 3 rows, 4 columns, 9 nonzeros
-Variable types: 0 continuous, 4 integer (0 binary)
-Presolved: 3 rows, 4 columns, 9 nonzeros
-
-
-Root relaxation: objective 1.134615e+02, 4 iterations, 0.00 seconds
-
-    Nodes    |    Current Node    |     Objective Bounds      |     Work
- Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-
-     0     0  113.46154    0    1   -0.00000  113.46154      -     -    0s
-H    0     0                     113.4500000  113.46154  0.01%     -    0s
-
-Explored 0 nodes (4 simplex iterations) in 0.02 seconds
-Thread count was 1 (of 2 available processors)
-
-Optimal solution found (tolerance 5.00e-02)
-Best objective 1.134500000000e+02, best bound 1.134600000000e+02, gap 0.0088%
-
-Wrote result file '/tmp/RtmpWJ1qKq/file15af114a7528.sol'
-
-
-Gurobi 6.0.5 (linux64) logging started Thu Oct  1 12:10:07 2015
+Gurobi 6.0.5 (linux64) logging started Thu Oct  8 22:07:47 2015
 
 Set parameter Presolve to value 2
 Set parameter MIPGap to value 0.05
 Set parameter OutputFlag to value 1
 Set parameter Threads to value 1
 
-Gurobi Optimizer version 6.0.5 build v6.0.5rc1 (linux64)
-Copyright (c) 2015, Gurobi Optimization, Inc.
-
-Read LP format model from file /opt/gurobi605/linux64/examples/data/coins.lp
-Reading time = 0.00 seconds
-(null): 4 rows, 9 columns, 16 nonzeros
-Optimize a model with 4 rows, 9 columns and 16 nonzeros
-Coefficient statistics:
-  Matrix range    [6e-02, 7e+00]
-  Objective range [1e-02, 1e+00]
-  Bounds range    [5e+01, 1e+03]
-  RHS range       [0e+00, 0e+00]
-Found heuristic solution: objective -0
-Presolve removed 1 rows and 5 columns
-Presolve time: 0.00s
-Presolved: 3 rows, 4 columns, 9 nonzeros
-Variable types: 0 continuous, 4 integer (0 binary)
-Presolved: 3 rows, 4 columns, 9 nonzeros
-
-
-Root relaxation: objective 1.134615e+02, 4 iterations, 0.00 seconds
-
-    Nodes    |    Current Node    |     Objective Bounds      |     Work
- Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-
-     0     0  113.46154    0    1   -0.00000  113.46154      -     -    0s
-H    0     0                     113.4500000  113.46154  0.01%     -    0s
-
-Explored 0 nodes (4 simplex iterations) in 0.00 seconds
-Thread count was 1 (of 2 available processors)
-
-Optimal solution found (tolerance 5.00e-02)
-Best objective 1.134500000000e+02, best bound 1.134600000000e+02, gap 0.0088%
-
-Wrote result file '/tmp/RtmpWJ1qKq/file15af114a7528.sol'
-
-
-Gurobi 6.0.5 (linux64) logging started Thu Oct  1 12:10:26 2015
+Gurobi 6.0.5 (linux64) logging started Thu Oct  8 22:17:48 2015
 
 Set parameter Presolve to value 2
 Set parameter MIPGap to value 0.05
 Set parameter OutputFlag to value 1
 Set parameter Threads to value 1
 
-Gurobi Optimizer version 6.0.5 build v6.0.5rc1 (linux64)
-Copyright (c) 2015, Gurobi Optimization, Inc.
-
-Read LP format model from file /opt/gurobi605/linux64/examples/data/coins.lp
-Reading time = 0.00 seconds
-(null): 4 rows, 9 columns, 16 nonzeros
-Optimize a model with 4 rows, 9 columns and 16 nonzeros
-Coefficient statistics:
-  Matrix range    [6e-02, 7e+00]
-  Objective range [1e-02, 1e+00]
-  Bounds range    [5e+01, 1e+03]
-  RHS range       [0e+00, 0e+00]
-Found heuristic solution: objective -0
-Presolve removed 1 rows and 5 columns
-Presolve time: 0.00s
-Presolved: 3 rows, 4 columns, 9 nonzeros
-Variable types: 0 continuous, 4 integer (0 binary)
-Presolved: 3 rows, 4 columns, 9 nonzeros
-
-
-Root relaxation: objective 1.134615e+02, 4 iterations, 0.00 seconds
-
-    Nodes    |    Current Node    |     Objective Bounds      |     Work
- Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-
-     0     0  113.46154    0    1   -0.00000  113.46154      -     -    0s
-H    0     0                     113.4500000  113.46154  0.01%     -    0s
-
-Explored 0 nodes (4 simplex iterations) in 0.00 seconds
-Thread count was 1 (of 2 available processors)
-
-Optimal solution found (tolerance 5.00e-02)
-Best objective 1.134500000000e+02, best bound 1.134600000000e+02, gap 0.0088%
-
-Wrote result file '/tmp/RtmpWJ1qKq/file15af114a7528.sol'
-
-
-Gurobi 6.0.5 (linux64) logging started Thu Oct  1 12:11:25 2015
+Gurobi 6.0.5 (linux64) logging started Thu Oct  8 22:44:06 2015
 
 Set parameter Presolve to value 2
 Set parameter MIPGap to value 0.05
 Set parameter OutputFlag to value 1
 Set parameter Threads to value 1
 
-Gurobi Optimizer version 6.0.5 build v6.0.5rc1 (linux64)
-Copyright (c) 2015, Gurobi Optimization, Inc.
-
-Read LP format model from file /opt/gurobi605/linux64/examples/data/coins.lp
-Reading time = 0.00 seconds
-(null): 4 rows, 9 columns, 16 nonzeros
-Optimize a model with 4 rows, 9 columns and 16 nonzeros
-Coefficient statistics:
-  Matrix range    [6e-02, 7e+00]
-  Objective range [1e-02, 1e+00]
-  Bounds range    [5e+01, 1e+03]
-  RHS range       [0e+00, 0e+00]
-Found heuristic solution: objective -0
-Presolve removed 1 rows and 5 columns
-Presolve time: 0.01s
-Presolved: 3 rows, 4 columns, 9 nonzeros
-Variable types: 0 continuous, 4 integer (0 binary)
-Presolved: 3 rows, 4 columns, 9 nonzeros
-
-
-Root relaxation: objective 1.134615e+02, 4 iterations, 0.00 seconds
-
-    Nodes    |    Current Node    |     Objective Bounds      |     Work
- Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-
-     0     0  113.46154    0    1   -0.00000  113.46154      -     -    0s
-H    0     0                     113.4500000  113.46154  0.01%     -    0s
-
-Explored 0 nodes (4 simplex iterations) in 0.02 seconds
-Thread count was 1 (of 2 available processors)
-
-Optimal solution found (tolerance 5.00e-02)
-Best objective 1.134500000000e+02, best bound 1.134600000000e+02, gap 0.0088%
-
-Wrote result file '/tmp/RtmpWJ1qKq/file15af114a7528.sol'
-
-
-Gurobi 6.0.5 (linux64) logging started Thu Oct  1 12:11:43 2015
+Gurobi 6.0.5 (linux64) logging started Thu Oct  8 22:53:06 2015
 
 Set parameter Presolve to value 2
 Set parameter MIPGap to value 0.05
 Set parameter OutputFlag to value 1
 Set parameter Threads to value 1
 
-Gurobi Optimizer version 6.0.5 build v6.0.5rc1 (linux64)
-Copyright (c) 2015, Gurobi Optimization, Inc.
-
-Read LP format model from file /opt/gurobi605/linux64/examples/data/coins.lp
-Reading time = 0.00 seconds
-(null): 4 rows, 9 columns, 16 nonzeros
-Optimize a model with 4 rows, 9 columns and 16 nonzeros
-Coefficient statistics:
-  Matrix range    [6e-02, 7e+00]
-  Objective range [1e-02, 1e+00]
-  Bounds range    [5e+01, 1e+03]
-  RHS range       [0e+00, 0e+00]
-Found heuristic solution: objective -0
-Presolve removed 1 rows and 5 columns
-Presolve time: 0.01s
-Presolved: 3 rows, 4 columns, 9 nonzeros
-Variable types: 0 continuous, 4 integer (0 binary)
-Presolved: 3 rows, 4 columns, 9 nonzeros
-
-
-Root relaxation: objective 1.134615e+02, 4 iterations, 0.00 seconds
-
-    Nodes    |    Current Node    |     Objective Bounds      |     Work
- Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-
-     0     0  113.46154    0    1   -0.00000  113.46154      -     -    0s
-H    0     0                     113.4500000  113.46154  0.01%     -    0s
-
-Explored 0 nodes (4 simplex iterations) in 0.02 seconds
-Thread count was 1 (of 2 available processors)
-
-Optimal solution found (tolerance 5.00e-02)
-Best objective 1.134500000000e+02, best bound 1.134600000000e+02, gap 0.0088%
-
-Wrote result file '/tmp/RtmpWJ1qKq/file15af114a7528.sol'
-
-
-Gurobi 6.0.5 (linux64) logging started Thu Oct  1 12:11:57 2015
+Gurobi 6.0.5 (linux64) logging started Thu Oct  8 22:54:39 2015
 
 Set parameter Presolve to value 2
 Set parameter MIPGap to value 0.05
 Set parameter OutputFlag to value 1
 Set parameter Threads to value 1
 
-Gurobi Optimizer version 6.0.5 build v6.0.5rc1 (linux64)
-Copyright (c) 2015, Gurobi Optimization, Inc.
-
-Read LP format model from file /opt/gurobi605/linux64/examples/data/coins.lp
-Reading time = 0.00 seconds
-(null): 4 rows, 9 columns, 16 nonzeros
-Optimize a model with 4 rows, 9 columns and 16 nonzeros
-Coefficient statistics:
-  Matrix range    [6e-02, 7e+00]
-  Objective range [1e-02, 1e+00]
-  Bounds range    [5e+01, 1e+03]
-  RHS range       [0e+00, 0e+00]
-Found heuristic solution: objective -0
-Presolve removed 1 rows and 5 columns
-Presolve time: 0.00s
-Presolved: 3 rows, 4 columns, 9 nonzeros
-Variable types: 0 continuous, 4 integer (0 binary)
-Presolved: 3 rows, 4 columns, 9 nonzeros
-
-
-Root relaxation: objective 1.134615e+02, 4 iterations, 0.00 seconds
-
-    Nodes    |    Current Node    |     Objective Bounds      |     Work
- Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-
-     0     0  113.46154    0    1   -0.00000  113.46154      -     -    0s
-H    0     0                     113.4500000  113.46154  0.01%     -    0s
-
-Explored 0 nodes (4 simplex iterations) in 0.00 seconds
-Thread count was 1 (of 2 available processors)
-
-Optimal solution found (tolerance 5.00e-02)
-Best objective 1.134500000000e+02, best bound 1.134600000000e+02, gap 0.0088%
-
-Wrote result file '/tmp/RtmpWJ1qKq/file15af114a7528.sol'
-
-
-Gurobi 6.0.5 (linux64) logging started Thu Oct  1 12:13:17 2015
+Gurobi 6.0.5 (linux64) logging started Thu Oct  8 23:04:37 2015
 
 Set parameter Presolve to value 2
 Set parameter MIPGap to value 0.05
 Set parameter OutputFlag to value 1
 Set parameter Threads to value 1
 
-Gurobi Optimizer version 6.0.5 build v6.0.5rc1 (linux64)
-Copyright (c) 2015, Gurobi Optimization, Inc.
-
-Read LP format model from file /opt/gurobi605/linux64/examples/data/coins.lp
-Reading time = 0.00 seconds
-(null): 4 rows, 9 columns, 16 nonzeros
-Optimize a model with 4 rows, 9 columns and 16 nonzeros
-Coefficient statistics:
-  Matrix range    [6e-02, 7e+00]
-  Objective range [1e-02, 1e+00]
-  Bounds range    [5e+01, 1e+03]
-  RHS range       [0e+00, 0e+00]
-Found heuristic solution: objective -0
-Presolve removed 1 rows and 5 columns
-Presolve time: 0.00s
-Presolved: 3 rows, 4 columns, 9 nonzeros
-Variable types: 0 continuous, 4 integer (0 binary)
-Presolved: 3 rows, 4 columns, 9 nonzeros
-
-
-Root relaxation: objective 1.134615e+02, 4 iterations, 0.00 seconds
-
-    Nodes    |    Current Node    |     Objective Bounds      |     Work
- Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-
-     0     0  113.46154    0    1   -0.00000  113.46154      -     -    0s
-H    0     0                     113.4500000  113.46154  0.01%     -    0s
-
-Explored 0 nodes (4 simplex iterations) in 0.00 seconds
-Thread count was 1 (of 2 available processors)
-
-Optimal solution found (tolerance 5.00e-02)
-Best objective 1.134500000000e+02, best bound 1.134600000000e+02, gap 0.0088%
-
-Wrote result file '/tmp/RtmpWJ1qKq/file15af114a7528.sol'
-
-
-Gurobi 6.0.5 (linux64) logging started Thu Oct  1 12:13:31 2015
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 09:14:54 2015
 
 Set parameter Presolve to value 2
 Set parameter MIPGap to value 0.05
 Set parameter OutputFlag to value 1
 Set parameter Threads to value 1
 
-Gurobi Optimizer version 6.0.5 build v6.0.5rc1 (linux64)
-Copyright (c) 2015, Gurobi Optimization, Inc.
-
-Read LP format model from file /opt/gurobi605/linux64/examples/data/coins.lp
-Reading time = 0.00 seconds
-(null): 4 rows, 9 columns, 16 nonzeros
-Optimize a model with 4 rows, 9 columns and 16 nonzeros
-Coefficient statistics:
-  Matrix range    [6e-02, 7e+00]
-  Objective range [1e-02, 1e+00]
-  Bounds range    [5e+01, 1e+03]
-  RHS range       [0e+00, 0e+00]
-Found heuristic solution: objective -0
-Presolve removed 1 rows and 5 columns
-Presolve time: 0.00s
-Presolved: 3 rows, 4 columns, 9 nonzeros
-Variable types: 0 continuous, 4 integer (0 binary)
-Presolved: 3 rows, 4 columns, 9 nonzeros
-
-
-Root relaxation: objective 1.134615e+02, 4 iterations, 0.00 seconds
-
-    Nodes    |    Current Node    |     Objective Bounds      |     Work
- Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-
-     0     0  113.46154    0    1   -0.00000  113.46154      -     -    0s
-H    0     0                     113.4500000  113.46154  0.01%     -    0s
-
-Explored 0 nodes (4 simplex iterations) in 0.00 seconds
-Thread count was 1 (of 2 available processors)
-
-Optimal solution found (tolerance 5.00e-02)
-Best objective 1.134500000000e+02, best bound 1.134600000000e+02, gap 0.0088%
-
-Wrote result file '/tmp/RtmpWJ1qKq/file15af114a7528.sol'
-
-
-Gurobi 6.0.5 (linux64) logging started Thu Oct  1 12:13:43 2015
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 09:17:47 2015
 
 Set parameter Presolve to value 2
 Set parameter MIPGap to value 0.05
 Set parameter OutputFlag to value 1
 Set parameter Threads to value 1
 
-Gurobi Optimizer version 6.0.5 build v6.0.5rc1 (linux64)
-Copyright (c) 2015, Gurobi Optimization, Inc.
-
-Read LP format model from file /opt/gurobi605/linux64/examples/data/coins.lp
-Reading time = 0.00 seconds
-(null): 4 rows, 9 columns, 16 nonzeros
-Optimize a model with 4 rows, 9 columns and 16 nonzeros
-Coefficient statistics:
-  Matrix range    [6e-02, 7e+00]
-  Objective range [1e-02, 1e+00]
-  Bounds range    [5e+01, 1e+03]
-  RHS range       [0e+00, 0e+00]
-Found heuristic solution: objective -0
-Presolve removed 1 rows and 5 columns
-Presolve time: 0.00s
-Presolved: 3 rows, 4 columns, 9 nonzeros
-Variable types: 0 continuous, 4 integer (0 binary)
-Presolved: 3 rows, 4 columns, 9 nonzeros
-
-
-Root relaxation: objective 1.134615e+02, 4 iterations, 0.00 seconds
-
-    Nodes    |    Current Node    |     Objective Bounds      |     Work
- Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-
-     0     0  113.46154    0    1   -0.00000  113.46154      -     -    0s
-H    0     0                     113.4500000  113.46154  0.01%     -    0s
-
-Explored 0 nodes (4 simplex iterations) in 0.00 seconds
-Thread count was 1 (of 2 available processors)
-
-Optimal solution found (tolerance 5.00e-02)
-Best objective 1.134500000000e+02, best bound 1.134600000000e+02, gap 0.0088%
-
-Wrote result file '/tmp/RtmpWJ1qKq/file15af114a7528.sol'
-
-
-Gurobi 6.0.5 (linux64) logging started Thu Oct  1 12:14:03 2015
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 09:19:00 2015
 
 Set parameter Presolve to value 2
 Set parameter MIPGap to value 0.05
 Set parameter OutputFlag to value 1
 Set parameter Threads to value 1
 
-Gurobi Optimizer version 6.0.5 build v6.0.5rc1 (linux64)
-Copyright (c) 2015, Gurobi Optimization, Inc.
-
-Read LP format model from file /opt/gurobi605/linux64/examples/data/coins.lp
-Reading time = 0.00 seconds
-(null): 4 rows, 9 columns, 16 nonzeros
-Optimize a model with 4 rows, 9 columns and 16 nonzeros
-Coefficient statistics:
-  Matrix range    [6e-02, 7e+00]
-  Objective range [1e-02, 1e+00]
-  Bounds range    [5e+01, 1e+03]
-  RHS range       [0e+00, 0e+00]
-Found heuristic solution: objective -0
-Presolve removed 1 rows and 5 columns
-Presolve time: 0.00s
-Presolved: 3 rows, 4 columns, 9 nonzeros
-Variable types: 0 continuous, 4 integer (0 binary)
-Presolved: 3 rows, 4 columns, 9 nonzeros
-
-
-Root relaxation: objective 1.134615e+02, 4 iterations, 0.00 seconds
-
-    Nodes    |    Current Node    |     Objective Bounds      |     Work
- Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-
-     0     0  113.46154    0    1   -0.00000  113.46154      -     -    0s
-H    0     0                     113.4500000  113.46154  0.01%     -    0s
-
-Explored 0 nodes (4 simplex iterations) in 0.00 seconds
-Thread count was 1 (of 2 available processors)
-
-Optimal solution found (tolerance 5.00e-02)
-Best objective 1.134500000000e+02, best bound 1.134600000000e+02, gap 0.0088%
-
-Wrote result file '/tmp/RtmpWJ1qKq/file15af6e2a6e1d.sol'
-
-
-Gurobi 6.0.5 (linux64) logging started Thu Oct  1 12:14:08 2015
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 09:19:33 2015
 
 Set parameter Presolve to value 2
 Set parameter MIPGap to value 0.05
 Set parameter OutputFlag to value 1
 Set parameter Threads to value 1
 
-Gurobi Optimizer version 6.0.5 build v6.0.5rc1 (linux64)
-Copyright (c) 2015, Gurobi Optimization, Inc.
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 09:19:48 2015
 
-Read LP format model from file /opt/gurobi605/linux64/examples/data/coins.lp
-Reading time = 0.00 seconds
-(null): 4 rows, 9 columns, 16 nonzeros
-Optimize a model with 4 rows, 9 columns and 16 nonzeros
-Coefficient statistics:
-  Matrix range    [6e-02, 7e+00]
-  Objective range [1e-02, 1e+00]
-  Bounds range    [5e+01, 1e+03]
-  RHS range       [0e+00, 0e+00]
-Found heuristic solution: objective -0
-Presolve removed 1 rows and 5 columns
-Presolve time: 0.00s
-Presolved: 3 rows, 4 columns, 9 nonzeros
-Variable types: 0 continuous, 4 integer (0 binary)
-Presolved: 3 rows, 4 columns, 9 nonzeros
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
 
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 09:24:29 2015
 
-Root relaxation: objective 1.134615e+02, 4 iterations, 0.00 seconds
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
 
-    Nodes    |    Current Node    |     Objective Bounds      |     Work
- Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 09:24:31 2015
 
-     0     0  113.46154    0    1   -0.00000  113.46154      -     -    0s
-H    0     0                     113.4500000  113.46154  0.01%     -    0s
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
 
-Explored 0 nodes (4 simplex iterations) in 0.00 seconds
-Thread count was 1 (of 2 available processors)
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 09:29:44 2015
 
-Optimal solution found (tolerance 5.00e-02)
-Best objective 1.134500000000e+02, best bound 1.134600000000e+02, gap 0.0088%
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
 
-Wrote result file '/tmp/RtmpWJ1qKq/file15af6794dd19.sol'
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 09:44:34 2015
 
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 09:57:58 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 11:37:13 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 11:37:40 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 11:43:02 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 11:43:56 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 11:44:04 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 11:48:33 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 11:49:59 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 11:52:28 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 11:52:33 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 11:54:21 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 11:55:28 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 12:06:30 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 12:54:55 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 12:55:25 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 12:56:08 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 13:58:59 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 13:59:01 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 13:59:01 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 14:08:00 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 14:08:00 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 14:09:13 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 14:13:40 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 14:35:06 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 14:35:50 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 14:37:18 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 14:57:15 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 14:57:15 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 14:57:15 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 15:00:24 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 15:00:27 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 15:00:28 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 15:02:06 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 15:02:07 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 15:02:44 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 15:02:46 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 15:02:48 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 15:02:55 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 15:04:25 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 15:09:19 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 15:09:22 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 15:11:34 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 15:11:37 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 15:11:37 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 15:11:51 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 15:11:53 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 15:12:30 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 15:12:32 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 16:05:17 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 16:06:49 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 16:08:38 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 16:10:10 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 16:12:27 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 16:14:00 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 16:15:49 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 16:17:55 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 16:18:05 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 16:18:05 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 16:18:06 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 16:19:50 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 16:20:01 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 16:20:03 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 16:20:05 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 16:20:06 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 16:44:34 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 16:44:34 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 16:44:35 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 16:44:41 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 16:45:56 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 17:08:18 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 17:08:22 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 17:12:45 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 17:12:48 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 17:12:59 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 17:13:49 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 17:13:51 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.9
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 17:17:53 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 17:17:56 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.9
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 17:20:37 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.9
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 17:22:22 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.9
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 17:22:56 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 17:22:59 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.9
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 17:24:36 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 17:24:39 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.9
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 17:24:54 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 17:24:56 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.9
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 17:25:34 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.05
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 17:25:37 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.9
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 17:25:37 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.9
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 17:25:37 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.9
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1
+
+Gurobi 6.0.5 (linux64) logging started Fri Oct  9 17:25:37 2015
+
+Set parameter Presolve to value 2
+Set parameter MIPGap to value 0.9
+Set parameter OutputFlag to value 1
+Set parameter Threads to value 1

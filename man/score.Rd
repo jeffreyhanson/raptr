@@ -6,9 +6,9 @@
 \alias{score.RaspSolved}
 \title{Extract solution score}
 \usage{
-\method{score}{RaspResults}(x, y = NULL)
+\method{score}{RaspResults}(x, y = 0)
 
-\method{score}{RaspSolved}(x, y = NULL)
+\method{score}{RaspSolved}(x, y = 0)
 
 score(x, ...)
 }

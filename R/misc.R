@@ -19,9 +19,9 @@ is.GurobiInstalled<-function() {
 		stop('Gorubi is not installed on system')
 	}
 	# try running example problem
-	gpth2=tempfile(fileext='.sol')
-	ret=call.Gurobi(GurobiOpts(), file.path(gpth, 'examples/data/coins.lp'), gpth2, verbose=FALSE)
-	if (!file.exists(gpth2)) {
+	gpth2=tempfile()
+	ret=try(call.Gurobi(GurobiOpts(), file.path(gpth, 'examples/data/coins.lp'), paste0(gpth2, '.log'), paste0(gpth2, '.sol'), verbose=FALSE), silent=TRUE)
+	if (!file.exists(paste0(gpth2, '.sol'))) {
 		cat(GurobiInstalled=FALSE)
 		stop('Gorubi is not setup correctly.')
 	}

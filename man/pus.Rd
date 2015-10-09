@@ -6,7 +6,7 @@
 \title{Simulated planning units}
 \format{\code{SpatialPolygonsDataFrame}}
 \description{
-A \code{SpatialPolygonsDataFrame} of containing simulated planning units. The columns in the data slot are 'id' (\code{integer}), 'cost' (\code{numeric}), and 'status' (\code{integer}).
+A \code{SpatialPolygonsDataFrame} of containing simulated planning units. The columns in the data slot are 'cost' (\code{numeric}), and 'status' (\code{integer}).
 }
 \examples{
 data(pus)

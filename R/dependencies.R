@@ -43,6 +43,12 @@
 #' @importFrom RandomFields RFsimulate
 #' @importFrom RandomFields RMgauss
 
+#' @importFrom parallel detectCores
+
+#' @importFrom RgoogleMaps GetMap.bbox
+
+#' @importFrom scales rescale
+
 #' @import sp
 #' @import rgdal
 #' @import raster

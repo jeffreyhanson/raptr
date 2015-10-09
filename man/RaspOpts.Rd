@@ -4,7 +4,8 @@
 \alias{RaspOpts}
 \title{Create RaspOpts object}
 \usage{
-RaspOpts(BLM = 0, MAXRLEVEL = 5L, NUMREPS = 1L)
+RaspOpts(BLM = 0, FAILUREMULTIPLIER = 1000, MAXRLEVEL = 5L,
+  NUMREPS = 1L)
 }
 \arguments{
 \item{BLM}{\code{numeric} boundary length modifier. Defaults to 0.}
@@ -19,6 +20,11 @@ RaspOpts(BLM = 0, MAXRLEVEL = 5L, NUMREPS = 1L)
 \description{
 This function creates a new RaspOpts object.
 }
+\section{Slots}{
+
+\describe{
+\item{\code{FAILUREMULTIPLIER}}{\code{numeric} multiplier for failure planning unit. Defaults to 1000.}
+}}
 \examples{
 x<-RaspOpts(NTHREADS=2, NUMREPS=2)
 }

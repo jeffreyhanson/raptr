@@ -12,6 +12,8 @@ This class is used to store RASP input parameters.
 \describe{
 \item{\code{BLM}}{\code{numeric} boundary length modifier. Defaults to 0.}
 
+\item{\code{FAILUREMULTIPLIER}}{\code{numeric} multiplier for failure planning unit. Defaults to 1000.}
+
 \item{\code{MAXRLEVEL}}{\code{numeric} maximum R failure level for approximation. Defaults to 5L.}
 
 \item{\code{NUMREPS}}{\code{integer} number of replicate runs. Defaults to 1L.}

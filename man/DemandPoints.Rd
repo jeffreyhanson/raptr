@@ -4,7 +4,7 @@
 \alias{DemandPoints}
 \title{Create new DemandPoints object}
 \usage{
-DemandPoints(coords, weights, species)
+DemandPoints(points, weights)
 }
 \description{
 This funciton creates a new DemandPoints object
@@ -12,11 +12,9 @@ This funciton creates a new DemandPoints object
 \section{Slots}{
 
 \describe{
-\item{\code{coords}}{\code{matrix} coordinates for each demand point in the attribute space.}
+\item{\code{points}}{\code{SimplePoints} coordinates for each demand point in the attribute space.}
 
 \item{\code{weights}}{\code{numeric} weights for each demand poont.}
-
-\item{\code{species}}{\code{integer} idenifiers for which species each demand point belongs to.}
 }}
 \seealso{
 \code{\link{DemandPoints-class}}

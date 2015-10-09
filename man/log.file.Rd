@@ -18,7 +18,7 @@ log.file(x, ...)
 \item{...}{not used.}
 }
 \description{
-This function returns the Gurobi log file associated with solving RASP.
+This function returns the Gurobi log file (*.log) associated with solving RASP.
 }
 \seealso{
 \code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}

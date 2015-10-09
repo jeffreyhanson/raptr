@@ -8,13 +8,11 @@ NULL
 #' @slot summary \code{data.frame} with summary information on solutions.
 #' @slot selections \code{matrix} with binary selections.
 #' @slot amount.held \code{matrix} with the amount held for each species in each solution.
-#' @slot occ.held \code{matrix} with the number of occurrences for each species in each solution.
 #' @slot space.held \code{matrix} with the poportion of attribute space sampled for each species in each solution.
-#' @slot amount.targets.met \code{matrix} whether the amount targets have been met for each species in each solution.
-#' @slot space.targets.met \code{matrix} whether the attribute space targets have been met for each species in each solution.
 #' @slot best \code{integer} with index of best solution.
-#' @slot log.file \code{character} with Gurobi log file. 
 #' @slot model.file \code{character} with Gurobi model file. 
+#' @slot log.file \code{character} with Gurobi log file. 
+#' @slot solution.file \code{character} with Gurobi solution file. 
 #' @export
 #' @seealso \code{\link{RaspResults}}, \code{\link{read.RaspResults}}.
 setClass("RaspResults",
@@ -22,21 +20,19 @@ setClass("RaspResults",
 		summary="data.frame",
 		selections="matrix",
 		amount.held="matrix",
-		occ.held="matrix",
 		space.held="matrix",
-		amount.targets.met="matrix",
-		space.targets.met="matrix",
 		best="integer",
-		log.file='character',
 		model.file="character",
+		log.file='character',
+		solution.file="character",
 		.cache='environment'
 	)
 )
 setMethod(
 	"initialize", 
 	"RaspResults", 
-	function(.Object, summary, selections, amount.held, occ.held, space.held, amount.targets.met, space.targets.met, best, model.file, log.file, .cache=new.env()) {
-		callNextMethod(.Object, summary=summary, selections=selections, amount.held=amount.held, occ.held=occ.held, spaceheld=space.held, amount.targets.met=amount.targets.met, space.targets.met=space.targets.met, best=best, mode=model.file, log=log.file, .cache=.cache)
+	function(.Object, summary, selections, amount.held, space.held, best, model.file, log.file, solution.file, .cache=new.env()) {
+		callNextMethod(.Object, summary=summary, selections=selections, amount.held=amount.held,  space.held=space.held, best=best, model.file=model.file, log.file=log.file, solution.file=solution.file, .cache=.cache)
 	}
 )
 
@@ -47,39 +43,40 @@ setMethod(
 #' @param summary \code{data.frame} with summary information on solutions.
 #' @param selections \code{matrix} with binary selections.
 #' @param amount.held \code{matrix} with the amount held for each species in each solution.
-#' @param occ.held \code{matrix} with the number of occurrences for each species in each solution.
 #' @param space.held \code{matrix} with the poportion of attribute space sampled for each species in each solution.
-#' @param amount.targets.met \code{matrix} whether the amount targets have been met for each species in each solution.
-#' @param space.targets.met \code{matrix} whether the attribute space targets have been met for each species in each solution.
-#' @param log \code{character} with Gurobi log file. 
+#' @param model.file \code{character} with Gurobi model file. 
+#' @param log.file \code{character} with Gurobi log file. 
+#' @param solution.file \code{character} with Gurobi solution file. 
 #' @export
 #' @note slot \code{best} is automatically determined based on data in \code{summary}.
 #' @return \code{RaspResults} object
 #' @seealso \code{\link{RaspResults-class}} \code{\link{read.RaspResults}}
-RaspResults=function(summary, selections, amount.held, occ.held, space.held, amount.targets.met, space.targets.met, model.file, log.file) {
-	return(new("RaspResults", summary=summary, selections=selections, amount.held=amount.held, occ.held=occ.held, space.held=space.held, amount.targets.met=amount.targets.met, space.targets.met=space.targets.met, best=which.max(summary$Score), model=model.file, log=log.file))
+RaspResults=function(summary, selections, amount.held, space.held, model.file, log.file, solution.file) {
+	return(new("RaspResults", summary=summary, selections=selections, amount.held=amount.held, space.held=space.held, best=which.min(summary$Score), model.file=model.file, log.file=log.file, solution.file=solution.file))
 }
 
 #' Read RASP results
 #'
 #' This function reads files output from Gurobi and returns a \code{RaspResults} object.
 #'
-#' @param data \code{RaspData} object containing RASP data.
-#' @param path \code{character} with file path to the output from Gurobi.
+#' @param opts \code{RaspOpts} object
+#' @param data \code{RaspData} object
+#' @param model.file \code{character} object containing Gurobi model file.
+#' @param log.file \code{character} object containing Gurobi log file.
+#' @param solution.file \code{character} object containing Gurobi solution file.
 #' @export
 #' @return \code{RaspResults} object
-#' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspResults}}.
-read.RaspResults=function(data, path) {
-	# check for valid inputs
-	stopifnot(inherits(data, 'RaspData'))
-	if (!file.exists(path))
-		stop('File path does not exist.')
-	# load results
-
-	# calculate result data
-	
-	# create object
-	stop()
+#' @seealso \code{\link{RaspData}}, \code{\link{RaspData-class}}, \code{\link{RaspResults-class}}, \code{\link{RaspResults}}.
+read.RaspResults=function(opts, data, model.file, log.file, solution.file) {
+	x<-rcpp_extract_model_results(
+		opts,
+		data,
+		model.file,
+		log.file,
+		solution.file
+	)
+	x@.cache=new.env()
+	return(x)
 }
 
 #' Merge RASP results
@@ -96,12 +93,10 @@ merge.RaspResults<-function(x) {
 		summary=ldply(x, slot, name="summary"),
 		selections=do.call(rbind, llply(x, slot, name="selections")),
 		amount.held=do.call(rbind, llply(x, slot, name="amount.held")),
-		occ.held=do.call(rbind, llply(x, slot, name="occ.held")),
-		space.held=do.call(rbind, llply(x, slot, name="occ.held")),
-		amount.targets.met=do.call(rbind, llply(x, slot, name="amount.targets.met")),
-		space.targets.met=do.call(rbind, llply(x, slot, name="space.targets.met")),
-		log.file=paste(laply(x, slot, name="log.file"), collapse="\n"),
-		model.file=paste(laply(x, slot, name="model.file"), collapse="\n")
+		space.held=do.call(rbind, llply(x, slot, name="space.held")),
+		model.file=laply(x, slot, name="model.file"),
+		log.file=laply(x, slot, name="log.file"),
+		solution.file=laply(x, slot, name="solution.file")
 	)
 	x@summary$Run_Number<-seq_len(nrow(x@summary))
 	return(x)
@@ -110,7 +105,7 @@ merge.RaspResults<-function(x) {
 #' @rdname selections
 #' @inheritParams selections
 #' @export
-selections.RaspResults<-function(x, y=NULL) {
+selections.RaspResults<-function(x, y=0) {
 	if (is.null(y))
 		return(x@selections)
 	if (y==0)
@@ -122,7 +117,7 @@ selections.RaspResults<-function(x, y=NULL) {
 #' @rdname score
 #' @inheritParams score
 #' @export
-score.RaspResults<-function(x, y=NULL) {
+score.RaspResults<-function(x, y=0) {
 	if (is.null(y))
 		return(x@summary$Score)
 	if (y==0)
@@ -139,20 +134,27 @@ summary.RaspResults<-function(x) {
 #' @inheritParams log.ile
 #' @export
 log.file.RaspResults<-function(x) {
-	cat(x@log.file)
+	return(x@log.file)
 }
 
 #' @rdname model.file
 #' @inheritParams model.file
 #' @export
 model.file.RaspResults<-function(x) {
-	cat(x@model.file)
+	return(x@model.file)
+}
+
+#' @rdname solution.file
+#' @inheritParams solution.file
+#' @export
+solution.file.RaspResults<-function(x) {
+	return(x@solution.file)
 }
 
 #' @export
 #' @inheritParams amount.held
 #' @rdname amount.held
-amount.held.RaspResults<-function(x, y=NULL) {
+amount.held.RaspResults<-function(x, y=0) {
 	if (is.null(y))
 		return(x@amount.held)
 	if (y==0)
@@ -160,21 +162,10 @@ amount.held.RaspResults<-function(x, y=NULL) {
 	return(x@amount.held[y,])
 }
 
-#' @rdname occ.held
-#' @inheritParams occ.held
-#' @export
-occ.held.RaspResults<-function(x, y=NULL) {
-	if (is.null(y))
-		return(x@occ.held)
-	if (y==0)
-		return(x@occ.held[x@best,])
-	return(x@occ.held[y,])
-}
-
 #' @rdname space.held
 #' @inheritParams space.held
 #' @export
-space.held.RaspResults<-function(x, y=NULL) {
+space.held.RaspResults<-function(x, y=0) {
 	if (is.null(y))
 		return(x@space.held)
 	if (y==0)
@@ -182,33 +173,12 @@ space.held.RaspResults<-function(x, y=NULL) {
 	return(x@space.held[y,])
 }
 
-#' @rdname amount.targets.met
-#' @inheritParams amount.targets.met
-#' @export
-amount.targets.met.RaspResults<-function(x, y=NULL) {
-	if (is.null(y))
-		return(x@amount.targets.met)
-	if (y==0)
-		return(x@amount.targets.met[x@best,])
-	return(x@amount.targets.met[y,])
-}
-
-#' @rdname space.targets.met
-#' @inheritParams space.targets.met
-#' @export
-space.targets.met.RaspResults<-function(x, y=NULL) {
-	if (is.null(y))
-		return(x@space.targets.met)
-	if (y==0)
-		return(x@space.targets.met[x@best,])
-	return(x@space.targets.met[y,])
-}
-
 #' @export
 print.RaspResults<-function(x, header=TRUE) {
 	if (header)
 		cat("RaspResults object.\n")
-	cat("Number of solutions:",nrow(x@summary),"\n")
+	cat("  Number of solutions:",nrow(x@summary),"\n")
+	cat(paste0("  Best solution score: ", score(x,0), " (",sum(selections(x,0))," planning units)\n"))
 }
 
 #' @export
@@ -216,6 +186,33 @@ setMethod(
 	'show',
 	'RaspResults',
 	function(object)
-		print.RasprResults(object)
+		print.RaspResults(object)
 )
 
+
+#' @describeIn is.cached
+setMethod(
+	f="is.cached", 
+	signature(x="RaspResults", name="character"), 
+	function(x,name) {
+		return(!is.null(x@.cache[[name]]))
+	}
+)
+
+#' @describeIn cache
+setMethod(
+	f="cache", 
+	signature(x="RaspResults", name="character", y="ANY"), 
+	function(x, name, y) {
+		x@.cache[[name]]=y
+	}
+)
+
+#' @describeIn cache
+setMethod(
+	f="cache", 
+	signature(x="RaspResults", name="character", y="missing"), 
+	function(x, name, y) {
+		return(x@.cache[[name]])
+	}
+)

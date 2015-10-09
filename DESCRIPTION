@@ -19,8 +19,11 @@ Description: Biodiversity is in crisis. The overarching aim of conservation
 Imports:
     boot,
     PBSmapping,
+    scales,
     adehabitatHR,
+    RgoogleMaps,
     plyr,
+    parallel,
     doSNOW,
     snow,
     rgeos,
@@ -47,9 +50,11 @@ Collate:
     'dependencies.R'
     'RcppExports.R'
     'raspr-internal.R'
-    'generics.R'
-    'DemandPoints.R'
     'misc.R'
+    'generics.R'
+    'SimplePoints.R'
+    'DemandPoints.R'
+    'AttributeSpace.R'
     'GurobiOpts.R'
     'calcSpeciesAverageInPus.R'
     'calcBoundaryData.R'

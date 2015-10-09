@@ -6,9 +6,9 @@
 \alias{selections.RaspSolved}
 \title{Extract solution selections}
 \usage{
-\method{selections}{RaspResults}(x, y = NULL)
+\method{selections}{RaspResults}(x, y = 0)
 
-\method{selections}{RaspSolved}(x, y = NULL)
+\method{selections}{RaspSolved}(x, y = 0)
 
 selections(x, ...)
 }

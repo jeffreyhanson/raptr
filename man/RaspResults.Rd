@@ -4,8 +4,8 @@
 \alias{RaspResults}
 \title{Create RaspResults object}
 \usage{
-RaspResults(summary, selections, amount.held, occ.held, space.held,
-  amount.targets.met, space.targets.met, model.file, log.file)
+RaspResults(summary, selections, amount.held, space.held, model.file, log.file,
+  solution.file)
 }
 \arguments{
 \item{summary}{\code{data.frame} with summary information on solutions.}
@@ -14,15 +14,13 @@ RaspResults(summary, selections, amount.held, occ.held, space.held,
 
 \item{amount.held}{\code{matrix} with the amount held for each species in each solution.}
 
-\item{occ.held}{\code{matrix} with the number of occurrences for each species in each solution.}
-
 \item{space.held}{\code{matrix} with the poportion of attribute space sampled for each species in each solution.}
 
-\item{amount.targets.met}{\code{matrix} whether the amount targets have been met for each species in each solution.}
+\item{model.file}{\code{character} with Gurobi model file.}
 
-\item{space.targets.met}{\code{matrix} whether the attribute space targets have been met for each species in each solution.}
+\item{log.file}{\code{character} with Gurobi log file.}
 
-\item{log}{\code{character} with Gurobi log file.}
+\item{solution.file}{\code{character} with Gurobi solution file.}
 }
 \value{
 \code{RaspResults} object

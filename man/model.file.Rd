@@ -4,7 +4,7 @@
 \alias{model.file}
 \alias{model.file.RaspResults}
 \alias{model.file.RaspSolved}
-\title{Modelfile}
+\title{Model file}
 \usage{
 \method{model.file}{RaspResults}(x)
 
@@ -18,7 +18,7 @@ model.file(x, ...)
 \item{...}{not used.}
 }
 \description{
-This function returns the Gurobi model file associated with solving RASP.
+This function returns the Gurobi model file (*.lp) associated with solving RASP.
 }
 \seealso{
 \code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}

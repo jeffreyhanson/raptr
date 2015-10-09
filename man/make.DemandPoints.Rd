@@ -5,8 +5,7 @@
 \title{Generate demand points for RASP}
 \usage{
 make.DemandPoints(species.points, space.rasters = NULL, n = 1000L,
-  quantile = 0.2, id = 1L, kernel.method = c("sm.density",
-  "hypervolume")[1], ...)
+  quantile = 0.2, kernel.method = c("sm.density", "hypervolume")[1], ...)
 }
 \arguments{
 \item{species.points}{\code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records.}
@@ -16,8 +15,6 @@ make.DemandPoints(species.points, space.rasters = NULL, n = 1000L,
 \item{n}{\code{integer} number of demand points to use for each attribute space for each species. Defaults to 1000L.}
 
 \item{quantile}{\code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.2.}
-
-\item{id}{\code{integer} species id. Defaults to 1L.}
 
 \item{kernel.method}{\code{character} name of kernel method to use to generate demand points. Defaults to 'sm.density'.}
 

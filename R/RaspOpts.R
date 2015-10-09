@@ -6,29 +6,36 @@ NULL
 #' This class is used to store RASP input parameters.
 #'
 #' @slot BLM \code{numeric} boundary length modifier. Defaults to 0.
+#' @slot FAILUREMULTIPLIER \code{numeric} multiplier for failure planning unit. Defaults to 1000.
 #' @slot MAXRLEVEL \code{numeric} maximum R failure level for approximation. Defaults to 5L.
 #' @slot NUMREPS \code{integer} number of replicate runs. Defaults to 1L.
 #' @export
 setClass("RaspOpts",
 	representation(
 		BLM="numeric",
+		FAILUREMULTIPLIER="numeric",
 		MAXRLEVEL="integer",
 		NUMREPS="integer"
 	),
 	prototype=list(
 		BLM=0,
+		FAILUREMULTIPLIER=1000,
 		MAXRLEVEL=5L,
 		NUMREPS=1L
 	),
 	validity=function(object) {
+		# FAILUREMULTIPLIER
+		if (!is.numeric(object@FAILUREMULTIPLIER)) stop('argument to FAILUREMULTIPLIER is not numeric')
+		if (!is.finite(object@FAILUREMULTIPLIER)) stop('argument to FAILUREMULTIPLIER is NA or non-finite value')
+
 		# BLM
 		if (!is.numeric(object@BLM)) stop('argument to BLM is not numeric')
-		if (!is.finite(object@BLM)) stop('argument to BLM is NA or non-finite values')
+		if (!is.finite(object@BLM)) stop('argument to BLM is NA or non-finite value')
 
 		# MAXRLEVEL
-		if (!is.numeric(object@MAXRLEVEL)) stop('argument to BLM is not numeric')
-		if (!is.finite(object@MAXRLEVEL)) stop('argument to BLM is NA or non-finite values')
-				
+		if (!is.integer(object@MAXRLEVEL)) stop('argument to MAXRLEVEL is not integer')
+		if (!is.finite(object@MAXRLEVEL)) stop('argument to MAXRLEVEL is NA or non-finite value')
+		
 		# NUMREPS
 		if (!is.integer(object@NUMREPS)) stop('argument to NUMREPS is not numeric')
 		if (!is.finite(object@NUMREPS)) stop('argument to NUMREPS is NA or non-finite values')
@@ -40,8 +47,8 @@ setClass("RaspOpts",
 setMethod(
 	"initialize", 
 	"RaspOpts", 
-	function(.Object, BLM, MAXRLEVEL, NUMREPS) {
-		callNextMethod(.Object, BLM=BLM, MAXRLEVEL=MAXRLEVEL, NUMREPS=NUMREPS)
+	function(.Object, BLM, FAILUREMULTIPLIER, MAXRLEVEL, NUMREPS) {
+		callNextMethod(.Object, BLM=BLM, FAILUREMULTIPLIER=FAILUREMULTIPLIER, MAXRLEVEL=MAXRLEVEL, NUMREPS=NUMREPS)
 	}
 )
 
@@ -51,6 +58,7 @@ setMethod(
 #' This function creates a new RaspOpts object.
 #'
 #' @param BLM \code{numeric} boundary length modifier. Defaults to 0.
+#' @slot FAILUREMULTIPLIER \code{numeric} multiplier for failure planning unit. Defaults to 1000.
 #' @param MAXRLEVEL \code{numeric} maximum R failure level for approximation. Defaults to 5L.
 #' @param NUMREPS \code{integer} number of replicate runs. Defaults to 1L.
 #' @return \code{MarxanOpts} object
@@ -59,11 +67,28 @@ setMethod(
 #' @examples
 #' x<-RaspOpts(NTHREADS=2, NUMREPS=2)
 #' @export
-RaspOpts<-function(BLM=0, MAXRLEVEL=5L, NUMREPS=1L) {
-	ro<-new("RaspOpts", BLM=BLM, MAXRLEVEL=MAXRLEVEL, NUMREPS=NUMREPS)
+RaspOpts<-function(BLM=0, FAILUREMULTIPLIER=1000, MAXRLEVEL=5L, NUMREPS=1L) {
+	ro<-new("RaspOpts", BLM=BLM, FAILUREMULTIPLIER=FAILUREMULTIPLIER, MAXRLEVEL=MAXRLEVEL, NUMREPS=NUMREPS)
 	validObject(ro, test=FALSE)
 	return(ro)
 }
 
 
+#' @export
+print.RaspOpts=function(x, header=TRUE) {
+	if (header)
+		cat("RaspOpts object.\n")
+	cat('  BLM:',x@BLM,'\n')
+	cat('  FAILUREMULTIPLIER:',x@FAILUREMULTIPLIER,'\n')
+	cat('  MAXRLEVEL:',x@MAXRLEVEL,'\n')
+	cat('  NUMREPS:',x@NUMREPS,'\n')
+}
+
+# ' @export
+setMethod(
+	'show',
+	'RaspOpts',
+	function(object)
+		print.RaspOpts(object)
+)
 
