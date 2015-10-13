@@ -2,7 +2,7 @@ Package: raspr
 Type: Package
 Title: raspr: identify prioritisations using the Representative and Adequate
     Sample Problem (RASP)
-Version: 0.0.0
+Version: 0.0.1
 Date: 2015-07-12
 Authors@R: c(person(c("Jeffrey", "O"), "Hanson", email='jeffrey.hanson@uqconnect.edu.au', role = c("aut", "cre")),
 	person(c("Jonathon", "R"), "Rhodes", role = c("aut")),
@@ -12,26 +12,30 @@ Description: Biodiversity is in crisis. The overarching aim of conservation
     areas are established to buffer species and preserve biodiversity processes.
     But resources are limited and so protected areas must be cost-effective.
     This package contains functions to generate plans for protected areas--
-    prioritisations--using the Representatiev and Adequate Sample Problem (RASP).
+    prioritisations--using the Representative and Adequate Sample Problem (RASP).
     Reserve selection problems are expressed as a mixed linear integer problem
-    (MILP) and solved using exact-algorithm solvers. Prioritisations can be obtained
+    (MILP) and solved using exact-algorithm methods. Prioritisations can be obtained
     using Gurobi (obtained from <http://www.gurobi.com/>).
 Imports:
     boot,
     PBSmapping,
     scales,
+    shape,
     adehabitatHR,
     RgoogleMaps,
+    RandomFields,
+    RColorBrewer,
+    Rcpp,
     plyr,
     parallel,
     doSNOW,
     snow,
     rgeos,
-    data.table,
     hypervolume,
     sm,
     dismo,
-    gdalUtils
+    gdalUtils,
+    mvtnorm
 Depends:
     methods,
     sp,
@@ -66,6 +70,7 @@ Collate:
     'SpatialPolygons2PolySet.R'
     'data.R'
     'rasp.R'
-    'simulate.pus.R'
-    'simulate.space.R'
-    'simulate.species.R'
+    'raspr.R'
+    'sim.pus.R'
+    'sim.space.R'
+    'sim.species.R'

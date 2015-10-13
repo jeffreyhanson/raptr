@@ -35,8 +35,8 @@ setClass("DemandPoints",
 #'
 #' This funciton creates a new DemandPoints object
 #'
-#' @slot points \code{SimplePoints} coordinates for each demand point in the attribute space.
-#' @slot weights \code{numeric} weights for each demand poont.
+#' @param points \code{SimplePoints} coordinates for each demand point in the attribute space.
+#' @param weights \code{numeric} weights for each demand poont.
 #' @seealso \code{\link{DemandPoints-class}}
 #' @export
 DemandPoints<-function(points, weights) {
@@ -59,10 +59,10 @@ DemandPoints<-function(points, weights) {
 #' @details The values of the species records in the rasters is extracted. A kernel is fit to the points in the attribute space. 
 #' Volumes are then fit to the points in the attribute space(s). Points are randomly generated inside the volume. Demand points are generated
 #' as random points inside the volume. A kernel is fit to the species records and used to predict the density at each of the demand points.
-#' By using 'sm.density' as an argument in \code{kernel.method}, the volume is fit as a minimum convex polygon using \code{\link[rgeos]{gConvex}} and 
+#' By using 'sm.density' as an argument in \code{kernel.method}, the volume is fit as a minimum convex polygon using \code{\link[rgeos]{gConvexHull}} and 
 #' \code{\link[sm]{sm.density}} is used to fit the kernel. Note this can only be used when the data is low-dimensional (d<3). By using
 #" 'hypervolume' as an argument, the \code{\link[hypervolume]{hypervolume}} function is used. This can be used for hyer-dimensional data.
-#' @seealso \code{\link[hypervolume]{hypervolume}}, \code{\link[sm]{sm.density}}, \code{\link[rgeos]{gConvex}}.
+#' @seealso \code{\link[hypervolume]{hypervolume}}, \code{\link[sm]{sm.density}}, \code{\link[rgeos]{gConvexHull}}.
 #' @export
 make.DemandPoints<-function(species.points, space.rasters=NULL, n=1000L, quantile=0.2, kernel.method=c('sm.density', 'hypervolume')[1], ...) {
 	# check inputs for validityhod

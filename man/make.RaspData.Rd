@@ -4,10 +4,11 @@
 \alias{make.RaspData}
 \title{Make data for RASP using minimal inputs}
 \usage{
-make.RaspData(pus, species.points, species.rasters, space.rasters, area.targets = 0.2,
-space.targets = 0.2,  demand.points=1000, kernel.method='guassian', include.geographic.space=TRUE,
-pu = NULL, species = NULL, species.coords = NULL, pu.species.probabilities = NULL,
-boundary = NULL, ..., verbose = FALSE)
+make.RaspData(pus, species, spaces = NULL, area.targets = 0.2,
+  space.targets = 0.2, n.demand.points = 1000L,
+  kernel.method = c("sm.density", "hyperbox")[1], quantile = 0.2,
+  species.points = NULL, n.species.points = ceiling(0.2 * cellStats(species,
+  "sum")), include.geographic.space = TRUE, verbose = FALSE, ...)
 }
 \arguments{
 \item{pus}{\code{SpatialPolygons} with planning unit data.}
@@ -16,17 +17,19 @@ boundary = NULL, ..., verbose = FALSE)
 
 \item{spaces}{\code{list} of/or \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} representing projects of attribute space over geographic space. Use a \code{list} to denote seperate attribute spaces.}
 
-\item{area.targets}{\code{numeric} vector for area targets (%) for each species. Defaults to 0.2 for each attribute space for each species.}
+\item{area.targets}{\code{numeric} vector for area targets (\%) for each species. Defaults to 0.2 for each attribute space for each species.}
 
-\item{space.targets}{\code{numeric} vector for attribute space targets (%) for each species. Defaults to 0.2 for each attribute space for each species. Note all attribute spaces have the same targets.}
+\item{space.targets}{\code{numeric} vector for attribute space targets (\%) for each species. Defaults to 0.2 for each attribute space for each species. Note all attribute spaces have the same targets.}
 
 \item{n.demand.points}{\code{integer} number of demand points to use for each attribute space for each species.}
 
-\item{kernel.method}{\code{character} name of kernel method to use to generate demand points. Use either \code{'sm.density'} or \code{'hypervolume'}.}
+\item{kernel.method}{\code{character} name of kernel method to use to generate demand points. Use either \code{sm.density} or \code{hypervolume}.}
 
 \item{quantile}{\code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.2.}
 
-\item{species.points}{\code{list} of/or \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records. Use a \code{list} of objects to represent different species. Must have the same number of elements as \code{species.rasters}. If not supplied then use \code{n.species.points} to sample points from the species distributions.}
+\item{species.points}{\code{list} of/or \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records. Use a \code{list} of objects to represent different species. Must have the same number of elements as \code{species}. If not supplied then use \code{n.species.points} to sample points from the species distributions.}
+
+\item{n.species.points}{\code{numeric} vector specfiying the number points to sample the species distributions to use to generate demand points. Defaults to 20\% of the distribution.}
 
 \item{include.geographic.space}{\code{logical} should the geographic space be considered an attribute space?}
 

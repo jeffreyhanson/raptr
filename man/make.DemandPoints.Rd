@@ -30,10 +30,10 @@ This function generates demand points for RASP using kernels.
 The values of the species records in the rasters is extracted. A kernel is fit to the points in the attribute space.
 Volumes are then fit to the points in the attribute space(s). Points are randomly generated inside the volume. Demand points are generated
 as random points inside the volume. A kernel is fit to the species records and used to predict the density at each of the demand points.
-By using 'sm.density' as an argument in \code{kernel.method}, the volume is fit as a minimum convex polygon using \code{\link[rgeos]{gConvex}} and
+By using 'sm.density' as an argument in \code{kernel.method}, the volume is fit as a minimum convex polygon using \code{\link[rgeos]{gConvexHull}} and
 \code{\link[sm]{sm.density}} is used to fit the kernel. Note this can only be used when the data is low-dimensional (d<3). By using
 }
 \seealso{
-\code{\link[hypervolume]{hypervolume}}, \code{\link[sm]{sm.density}}, \code{\link[rgeos]{gConvex}}.
+\code{\link[hypervolume]{hypervolume}}, \code{\link[sm]{sm.density}}, \code{\link[rgeos]{gConvexHull}}.
 }
 

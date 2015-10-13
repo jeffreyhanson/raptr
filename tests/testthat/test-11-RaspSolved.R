@@ -2,9 +2,9 @@
 # skip if gurobi not installed
 if (is.GurobiInstalled()) {
 	# create RaspUnsolved object
-	data(small.pus, small.species)
+	data(sim_pus, sim_spp)
 	go<-GurobiOpts(MIPGap=0.9)
-	rd<-make.RaspData(small.pus, small.species, NULL, include.geographic.space=TRUE,n.demand.points=5L)
+	rd<-make.RaspData(sim_pus[1:10,], sim_spp[[1]], NULL, include.geographic.space=TRUE,n.demand.points=5L)
 	rd@pu$status[1]=1
 	rd@pu$status[2]=2
 	ro1<-RaspOpts(NUMREPS=2L)
@@ -66,8 +66,8 @@ if (is.GurobiInstalled()) {
 		expect_identical(summary(rs1), rs1@results@summary)
 	})
 
-	test_that('log.file', {
-		expect_identical(log.file(rs1), rs1@results@log.file)
+	test_that('logging.file', {
+		expect_identical(logging.file(rs1), rs1@results@logging.file)
 	})
 
 

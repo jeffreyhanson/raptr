@@ -9,6 +9,8 @@ RaspUnsolved(opts, gurobi, data)
 \arguments{
 \item{opts}{\code{RaspOpts} object.}
 
+\item{gurobi}{\code{GurobiOpts} object used to store Gurobi parameters.}
+
 \item{data}{\code{RaspData} object.}
 }
 \value{

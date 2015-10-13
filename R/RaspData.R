@@ -28,8 +28,6 @@ setClass("RaspData",
 	),
 	validity=function(object) {
 		if (!object@skipchecks) {
-			assign('object', object, envir=globalenv())
-		
 			### check column names of inputs
 			# pu
 			if (any(!c("cost","area","status") %in% names(object@pu)))
@@ -139,20 +137,6 @@ setClass("RaspData",
 	}
 )
 
-#' @export
-setMethod(
-	"initialize", 
-	"RaspData", 
-	function(.Object, pu, species, pu.species.probabilities, attribute.spaces, boundary, polygons, skipchecks, .cache=new.env()) {
-		# remove extra columns
-		pu<-pu[,which(names(pu) %in% c('cost', 'area', 'status')),drop=FALSE]
-		species<-species[,which(names(species) %in% c('area.target', 'space.target', 'name')),drop=FALSE]
-		pu.species.probabilities<-pu.species.probabilities[,which(names(pu.species.probabilities) %in% c('pu', 'species', 'value')),drop=FALSE]
-		boundary<-boundary[,which(names(boundary) %in% c('id1', 'id2', 'boundary')),drop=FALSE]
-		# create object
-		callNextMethod(.Object, polygons=polygons, pu=pu, species=species, pu.species.probabilities=pu.species.probabilities, attribute.spaces=attribute.spaces, skipchecks=skipchecks,boundary=boundary, .cache=.cache)
-	}
-)
 
 #' Create new RaspData object
 #'
@@ -168,12 +152,17 @@ setMethod(
 #' @param .cache \code{environment} used to cache calculations.
 #' @note Generally, users are not encouraged to change arguments to \code{.cache}.
 #' @return RaspData object
-#' @seealso \code{\link[PBSmapping]{PolySet}}, \code{\link[sp]{SpatialPoints}}, \code{\link[sp]{SpatialPointsDataFrame}}, \code{\link{format.RaspData}}, \code{\link{RaspData-class}}.
+#' @seealso \code{\link[PBSmapping]{PolySet}}, \code{\link[sp]{SpatialPoints}}, \code{\link[sp]{SpatialPointsDataFrame}}, \code{\link{make.RaspData}}, \code{\link{RaspData-class}}.
 #' @export
-RaspData<-function(pu, species, pu.species.probabilities, attribute.spaces, boundary, polygons=NULL, skipchecks=FALSE, .cache=new.env(), ...) {
+RaspData<-function(pu, species, pu.species.probabilities, attribute.spaces, boundary, polygons=NULL, skipchecks=FALSE, .cache=new.env()) {
 	# convert factors to characters
 	if (inherits(species$name, "factor"))
 		species$name<-as.character(species$name)
+	# remove extra columns
+	pu<-pu[,which(names(pu) %in% c('cost', 'area', 'status')),drop=FALSE]
+	species<-species[,which(names(species) %in% c('area.target', 'space.target', 'name')),drop=FALSE]
+	pu.species.probabilities<-pu.species.probabilities[,which(names(pu.species.probabilities) %in% c('pu', 'species', 'value')),drop=FALSE]
+	boundary<-boundary[,which(names(boundary) %in% c('id1', 'id2', 'boundary')),drop=FALSE]
 	# make object
 	rd<-new("RaspData", polygons=polygons, pu=pu, species=species, pu.species.probabilities=pu.species.probabilities, attribute.spaces=attribute.spaces, skipchecks=skipchecks,boundary=boundary, .cache=.cache)
 	# test for validity
@@ -185,25 +174,21 @@ RaspData<-function(pu, species, pu.species.probabilities, attribute.spaces, boun
 #'
 #' This function prepares spatially explicit planning unit, species data, and landscape data layers for RASP processing.
 #'
-#' @usage make.RaspData(pus, species.points, species.rasters, space.rasters, area.targets = 0.2,
-#' space.targets = 0.2,  demand.points=1000, kernel.method='guassian', include.geographic.space=TRUE,
-#' pu = NULL, species = NULL, species.coords = NULL, pu.species.probabilities = NULL,
-#' boundary = NULL, ..., verbose = FALSE)
 #' @param pus \code{SpatialPolygons} with planning unit data.
 #' @param species \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} with species probability distribution data.
 #' @param spaces \code{list} of/or \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} representing projects of attribute space over geographic space. Use a \code{list} to denote seperate attribute spaces.
-#' @param area.targets \code{numeric} vector for area targets (%) for each species. Defaults to 0.2 for each attribute space for each species. 
-#' @param space.targets \code{numeric} vector for attribute space targets (%) for each species. Defaults to 0.2 for each attribute space for each species. Note all attribute spaces have the same targets.
+#' @param area.targets \code{numeric} vector for area targets (\%) for each species. Defaults to 0.2 for each attribute space for each species. 
+#' @param space.targets \code{numeric} vector for attribute space targets (\%) for each species. Defaults to 0.2 for each attribute space for each species. Note all attribute spaces have the same targets.
 #' @param n.demand.points \code{integer} number of demand points to use for each attribute space for each species.
-#' @param kernel.method \code{character} name of kernel method to use to generate demand points. Use either \code{'sm.density'} or \code{'hypervolume'}.
-#' @param quantile \code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.2. 
+#' @param kernel.method \code{character} name of kernel method to use to generate demand points. Use either \code{sm.density} or \code{hypervolume}.
+#' @param quantile \code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.2.
 #' @param include.geographic.space \code{logical} should the geographic space be considered an attribute space?
-#' @param species.points \code{list} of/or \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records. Use a \code{list} of objects to represent different species. Must have the same number of elements as \code{species.rasters}. If not supplied then use \code{n.species.points} to sample points from the species distributions.
-#  @param n.species.points \code{numeric} vector specfiying the number points to sample the species distributions to use to generate demand points. Defaults to 20% of the distribution.
+#' @param species.points \code{list} of/or \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records. Use a \code{list} of objects to represent different species. Must have the same number of elements as \code{species}. If not supplied then use \code{n.species.points} to sample points from the species distributions.
+#' @param n.species.points \code{numeric} vector specfiying the number points to sample the species distributions to use to generate demand points. Defaults to 20\% of the distribution.
 #' @param ... additional arguments to \code{calcBoundaryData} and \code{calcPuVsSpeciesData}.
 #' @param verbose \code{logical} print statements during processing?
 #' @seealso \code{\link{RaspData-class}}, \code{\link{RaspData}}.
-#' @export
+#' @export make.RaspData
 #' @examples
 #' data(pus, species, space)
 #' x<-RaspData(pus, species, space)
@@ -355,20 +340,22 @@ make.RaspData<-function(pus, species, spaces=NULL,
 
 #' @rdname basemap
 #' @export
-basemap.RaspData<-function(x, basemap="hybrid", grayscale=FALSE, force_reset=FALSE) {
+basemap.RaspData<-function(x, basemap="hybrid", grayscale=FALSE, force.reset=FALSE) {
 	callchar<-hashCall(match.call(), 1)
 	match.arg(basemap, c("roadmap", "mobile", "satellite", "terrain", "hybrid", "mapmaker-roadmap", "mapmaker-hybrid"))	
 	if (is.null(x@polygons))
 	stop("Rasp object is not associated with spatially explicit data for the planning units.")
 	# fetch data from google or cache
-	if (force_reset || !is.cached(x, callchar)) {
+	if (force.reset || !is.cached(x, callchar)) {
 		cache(x, callchar, GetMap.bbox(range(x@polygons[["X"]]), range(x@polygons[["Y"]]), destfile=paste0(tempfile(),'.png'), maptype=basemap, GRAYSCALE=grayscale))
 	}
 	return(cache(x, callchar))
 }
 
+#' @method print RaspData
+#' @rdname print
 #' @export
-print.RaspData<-function(x, header=TRUE) {
+print.RaspData<-function(x, ..., header=TRUE) {
 	if (header)
 		cat("RaspData object.\n")
 	cat("  Number of planning units:",nrow(x@pu),"\n")
@@ -376,6 +363,7 @@ print.RaspData<-function(x, header=TRUE) {
 	cat("  Number of attribute spaces:",length(x@attribute.spaces),"\n")
 }
 
+#' @describeIn show
 #' @export
 setMethod(
 	'show',

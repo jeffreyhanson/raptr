@@ -44,28 +44,20 @@ setClass("RaspOpts",
 	}
 )
 
-setMethod(
-	"initialize", 
-	"RaspOpts", 
-	function(.Object, BLM, FAILUREMULTIPLIER, MAXRLEVEL, NUMREPS) {
-		callNextMethod(.Object, BLM=BLM, FAILUREMULTIPLIER=FAILUREMULTIPLIER, MAXRLEVEL=MAXRLEVEL, NUMREPS=NUMREPS)
-	}
-)
-
 
 #' Create RaspOpts object
 #'
 #' This function creates a new RaspOpts object.
 #'
 #' @param BLM \code{numeric} boundary length modifier. Defaults to 0.
-#' @slot FAILUREMULTIPLIER \code{numeric} multiplier for failure planning unit. Defaults to 1000.
+#' @param FAILUREMULTIPLIER \code{numeric} multiplier for failure planning unit. Defaults to 1000.
 #' @param MAXRLEVEL \code{numeric} maximum R failure level for approximation. Defaults to 5L.
 #' @param NUMREPS \code{integer} number of replicate runs. Defaults to 1L.
 #' @return \code{MarxanOpts} object
 #' @seealso \code{\link{RaspOpts-class}}.
 #' @export
 #' @examples
-#' x<-RaspOpts(NTHREADS=2, NUMREPS=2)
+#' x<-RaspOpts(BLM=1, NUMREPS=1L)
 #' @export
 RaspOpts<-function(BLM=0, FAILUREMULTIPLIER=1000, MAXRLEVEL=5L, NUMREPS=1L) {
 	ro<-new("RaspOpts", BLM=BLM, FAILUREMULTIPLIER=FAILUREMULTIPLIER, MAXRLEVEL=MAXRLEVEL, NUMREPS=NUMREPS)
@@ -73,9 +65,10 @@ RaspOpts<-function(BLM=0, FAILUREMULTIPLIER=1000, MAXRLEVEL=5L, NUMREPS=1L) {
 	return(ro)
 }
 
-
+#' @method print RaspOpts
+#' @rdname print
 #' @export
-print.RaspOpts=function(x, header=TRUE) {
+print.RaspOpts=function(x, ..., header=TRUE) {
 	if (header)
 		cat("RaspOpts object.\n")
 	cat('  BLM:',x@BLM,'\n')
@@ -84,7 +77,8 @@ print.RaspOpts=function(x, header=TRUE) {
 	cat('  NUMREPS:',x@NUMREPS,'\n')
 }
 
-# ' @export
+#' @describeIn show
+#' @export
 setMethod(
 	'show',
 	'RaspOpts',

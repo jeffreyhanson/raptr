@@ -31,6 +31,6 @@ is.comparable(x, y)
 This function checks objects to see if they share the same input data.
 }
 \seealso{
-\code{\link{RaspData-class}}, \code{\link{RaspUnsolved-class}}, \code{\link{RaspSolved-class}}
+\code{\link{RaspData-class}}, \code{\link{RaspUnsolved-class}}, \code{\link{RaspSolved-class}}.
 }
 

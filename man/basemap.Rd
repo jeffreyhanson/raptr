@@ -7,12 +7,12 @@
 \title{Basemap}
 \usage{
 \method{basemap}{RaspData}(x, basemap = "hybrid", grayscale = FALSE,
-  force_reset = FALSE)
+  force.reset = FALSE)
 
 \method{basemap}{RaspSolved}(x, basemap = "none", grayscale = FALSE,
-  force_reset = FALSE)
+  force.reset = FALSE)
 
-basemap(x, ...)
+basemap(x, basemap = "hybrid", grayscale = FALSE, force.reset = FALSE)
 }
 \arguments{
 \item{x}{\code{RaspData}, \code{RaspUnsolved}, \code{RaspSolved} object.}
@@ -21,7 +21,7 @@ basemap(x, ...)
 
 \item{grayscale}{\code{logical} should base map be gray scale?}
 
-\item{force_reset}{\code{logical} ignore data in cache? Setting this as ignore will make function slower but may avoid bugs in cache system.}
+\item{force.reset}{\code{logical} ignore data in cache? Setting this as ignore will make function slower but may avoid bugs in cache system.}
 }
 \value{
 \code{list} with google map data.
@@ -30,6 +30,6 @@ basemap(x, ...)
 This function retrieves google map data for planning units. The google map data is cached to provide fast plotting capabilities.
 }
 \seealso{
-\cite{\link[RgoogleMaps]{GetMap.bbox}}, \cite{\link{plot}}
+\code{\link[RgoogleMaps]{GetMap.bbox}}, \code{\link{plot}}.
 }
 

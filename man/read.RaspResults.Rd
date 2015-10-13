@@ -4,7 +4,7 @@
 \alias{read.RaspResults}
 \title{Read RASP results}
 \usage{
-read.RaspResults(opts, data, model.file, log.file, solution.file)
+read.RaspResults(opts, data, model.file, logging.file, solution.file)
 }
 \arguments{
 \item{opts}{\code{RaspOpts} object}
@@ -13,7 +13,7 @@ read.RaspResults(opts, data, model.file, log.file, solution.file)
 
 \item{model.file}{\code{character} object containing Gurobi model file.}
 
-\item{log.file}{\code{character} object containing Gurobi log file.}
+\item{logging.file}{\code{character} object containing Gurobi log file.}
 
 \item{solution.file}{\code{character} object containing Gurobi solution file.}
 }

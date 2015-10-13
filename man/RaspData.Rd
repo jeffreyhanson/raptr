@@ -5,7 +5,7 @@
 \title{Create new RaspData object}
 \usage{
 RaspData(pu, species, pu.species.probabilities, attribute.spaces, boundary,
-  polygons = NULL, skipchecks = FALSE, .cache = new.env(), ...)
+  polygons = NULL, skipchecks = FALSE, .cache = new.env())
 }
 \arguments{
 \item{pu}{\code{data.frame} planning unit data. Columns are 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).}
@@ -34,6 +34,6 @@ This function creates a "RaspData" object using pre-processed data.
 Generally, users are not encouraged to change arguments to \code{.cache}.
 }
 \seealso{
-\code{\link[PBSmapping]{PolySet}}, \code{\link[sp]{SpatialPoints}}, \code{\link[sp]{SpatialPointsDataFrame}}, \code{\link{format.RaspData}}, \code{\link{RaspData-class}}.
+\code{\link[PBSmapping]{PolySet}}, \code{\link[sp]{SpatialPoints}}, \code{\link[sp]{SpatialPointsDataFrame}}, \code{\link{make.RaspData}}, \code{\link{RaspData-class}}.
 }
 

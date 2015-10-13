@@ -4,13 +4,13 @@
 \alias{score}
 \alias{score.RaspResults}
 \alias{score.RaspSolved}
-\title{Extract solution score}
+\title{Solution score}
 \usage{
 \method{score}{RaspResults}(x, y = 0)
 
 \method{score}{RaspSolved}(x, y = 0)
 
-score(x, ...)
+score(x, y)
 }
 \arguments{
 \item{x}{\code{RaspResults} or \code{RaspSolved} object.}
@@ -24,6 +24,6 @@ score(x, ...)
 Extract solution score from \code{RaspResults} or \code{RaspSolved} object.
 }
 \seealso{
-\code{\link{RaspResults-class}}, \code{\link{RaspSolved-class}}, \code{\link{rasp}}
+\code{\link{RaspResults-class}}, \code{\link{RaspSolved-class}}, \code{\link{rasp}}.
 }
 

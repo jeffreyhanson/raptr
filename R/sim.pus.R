@@ -13,8 +13,8 @@ NULL
 #' @return \code{SpatialPolygons} with planning units.
 #' @details Square planning units are generated in the shape of a square. Default coordinate arguments are such that the planning units will be centered at origin.
 #' The data slot contains an 'id' (\code{integer}), cost (\code{numeric}), 'status' (\code{integer}), and area (\code{numeric}).
-#' @export
-simulate.pus <- function(n, xmn=-sqrt(n)/2, xmx=sqrt(n)/2, ymn=-sqrt(n)/2, ymx=sqrt(n)/2, ...) {
+#' @export sim.pus
+sim.pus <- function(n, xmn=-sqrt(n)/2, xmx=sqrt(n)/2, ymn=-sqrt(n)/2, ymx=sqrt(n)/2) {
 	# check n has valid square root
 	if (sqrt(n)!=ceiling(sqrt(n)))
 		stop('sqrt(n) must yield a whole number')

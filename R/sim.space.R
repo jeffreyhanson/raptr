@@ -1,9 +1,10 @@
 #' @include RcppExports.R raspr-internal.R generics.R misc.R
 NULL
 
-#' @export
-#' @rdname simulate.space
-simulate.space.RasterLayer <- function(x, d=2, model=RMgauss(), ...) {
+#' @rdname sim.space
+#' @method sim.space RasterLayer
+#' @export sim.space
+sim.space.RasterLayer<-function(x, d=2, model=RMgauss(), ...) {
 	# generate values for rasters
 	valMTX=RFsimulate(model, as(x, 'SpatialPoints')@coords, n=d, spConform=FALSE, ...)
 	# convert to matrix if not a matrix
@@ -19,9 +20,10 @@ simulate.space.RasterLayer <- function(x, d=2, model=RMgauss(), ...) {
 	return(stack(stk))
 }
 
-#' @export
-#' @rdname simulate.space
-simulate.space.SpatialPolygons <- function(x, res, d=2, model=RMgauss(), ...) {
+#' @rdname sim.space
+#' @method sim.space SpatialPolygons
+#' @export sim.space
+sim.space.SpatialPolygons<-function(x, res, d=2, model=RMgauss(), ...) {
 	# return simulations
-	return(simulate.space.RasterLayer(blank.raster(x, res), d=d, model=model, ...))
+	return(sim.space.RasterLayer(blank.raster(x, res), d=d, model=model, ...))
 }

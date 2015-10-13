@@ -1,6 +1,9 @@
 #' @importFrom snow makeCluster
 #' @importFrom snow stopCluster
 #' @importFrom snow stopCluster.default
+#' @importFrom snow clusterExport
+#' @importFrom snow clusterEvalQ
+
 #' @importFrom doSNOW registerDoSNOW
 
 #' @importFrom RColorBrewer brewer.pal
@@ -13,14 +16,11 @@
 #' @importFrom plyr ldply
 #' @importFrom plyr rbind.fill
 
-#' @importFrom data.table data.table
-#' @importFrom data.table tables
-#' @importFrom data.table setkey
-#' @importFrom data.table setkeyv
-#' @importFrom data.table setnames
-#' @importFrom data.table fread
-
 #' @importFrom PBSmapping plotPolys
+
+#' @importFrom shape colorlegend
+
+#' @importFrom methods setMethod
 
 #' @importFrom Rcpp evalCpp
 
@@ -34,6 +34,8 @@
 
 #' @importFrom adehabitatHR mcp
 
+#' @importFrom mvtnorm dmvnorm
+
 #' @importFrom hypervolume estimate_bandwidth
 #' @importFrom hypervolume hypervolume
 
@@ -42,12 +44,19 @@
 
 #' @importFrom RandomFields RFsimulate
 #' @importFrom RandomFields RMgauss
+#' @importFrom RandomFields RPgauss
 
 #' @importFrom parallel detectCores
 
 #' @importFrom RgoogleMaps GetMap.bbox
+#' @importFrom RgoogleMaps PlotOnStaticMap
+#' @importFrom RgoogleMaps PlotPolysOnStaticMap
+
 
 #' @importFrom scales rescale
+
+#' @importFrom rgeos gArea
+
 
 #' @import sp
 #' @import rgdal

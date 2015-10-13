@@ -1,9 +1,9 @@
 test_that('AttributeSpace generator function', {
 	# load data
-	data(pus, species, space)
+	data(cs_spp, cs_pus, cs_bio12)
 	x=AttributeSpace(
-		pu=SimplePoints(rgeos::gCentroid(pus, byid=TRUE)@coords),
-		dp=list(make.DemandPoints(SpatialPoints(coords=dismo::randomPoints(species[[1]], n=100, prob=TRUE)), NULL))
+		pu=SimplePoints(rgeos::gCentroid(cs_pus, byid=TRUE)@coords),
+		dp=list(make.DemandPoints(SpatialPoints(coords=randomPoints(cs_spp, n=100, prob=TRUE)), NULL))
 	)
 	# checks are internal
 })

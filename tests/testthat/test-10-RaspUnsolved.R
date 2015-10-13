@@ -1,17 +1,17 @@
 
 test_that('RaspUnsolved', {
 	# create RaspUnsolved object
-	data(small.pus, small.species)
+	data(sim_pus, sim_spp)
 	ro<-RaspOpts()
-	rd<-make.RaspData(pus, small.species, NULL, include.geographic.space=TRUE, n.demand.points=5L)
+	rd<-make.RaspData(sim_pus, sim_spp, NULL, include.geographic.space=TRUE, n.demand.points=5L)
 	# validity checks are internal
 })
 
 test_that('Gurobi model compiler', {
 	# create RaspUnsolved object
-	data(small.pus, small.species)
+	data(sim_pus, sim_spp)
 	ro<-RaspOpts()
-	rd<-make.RaspData(pus, small.species, NULL, include.geographic.space=TRUE, n.demand.points=5L)
+	rd<-make.RaspData(sim_pus[1:10,], sim_spp, NULL, include.geographic.space=TRUE, n.demand.points=5L)
 	# generate model code
 	model<-rcpp_generate_modelfile(ro, rd)
 })
@@ -21,11 +21,10 @@ test_that('Gurobi solver', {
 	if (!is.GurobiInstalled()) skip('Gurobi not installed on system')
 	# create RaspUnsolved object
 	pth=file.path(tempdir(), 'gmodel')
-	cat('path = ', pth, '.lp\n')
 	set.seed(500)
-	data(small.pus, small.species)
+	data(sim_pus, sim_spp)
 	ro<-RaspOpts()
-	rd<-make.RaspData(small.pus, small.species, NULL, include.geographic.space=TRUE, n.demand.points=5L)
+	rd<-make.RaspData(sim_pus[1:10,], sim_spp, NULL, include.geographic.space=TRUE, n.demand.points=5L)
 	# generate model code
 	model<-rcpp_generate_modelfile(ro, rd)
 	# solve the model
@@ -37,10 +36,10 @@ test_that('solve.RaspUnsolved (NUMREPS=1)', {
 	# skip if gurobi not installed
 	if (!is.GurobiInstalled()) skip('Gurobi not installed on system')
 	# create RaspUnsolved object
-	data(small.pus, small.species)
+	data(sim_pus, sim_spp)
 	go<-GurobiOpts(MIPGap=0.9)
 	ro<-RaspOpts(NUMREPS=1L)
-	rd<-make.RaspData(small.pus, small.species, NULL, include.geographic.space=TRUE,n.demand.points=5L)
+	rd<-make.RaspData(sim_pus[1:10,], sim_spp, NULL, include.geographic.space=TRUE,n.demand.points=5L)
 	# solve object
 	ru<-RaspUnsolved(ro, go, rd)
 	# solve it
@@ -51,10 +50,10 @@ test_that('solve.RaspUnsolved (NUMREPS=2)', {
 	# skip if gurobi not installed
 	if (!is.GurobiInstalled()) skip('Gurobi not installed on system')
 	# create RaspUnsolved object
-	data(small.pus, small.species)
+	data(sim_pus, sim_spp)
 	go<-GurobiOpts(MIPGap=0.9)
 	ro<-RaspOpts(NUMREPS=2L)
-	rd<-make.RaspData(small.pus, small.species, NULL, include.geographic.space=TRUE,n.demand.points=5L)
+	rd<-make.RaspData(sim_pus[1:10,], sim_spp, NULL, include.geographic.space=TRUE, n.demand.points=5L)
 	# solve object
 	ru<-RaspUnsolved(ro, go, rd)
 	# solve it
@@ -66,10 +65,10 @@ test_that('solve.RaspUnsolved (number of requested solutions > number feasible s
 	# skip if gurobi not installed
 	if (!is.GurobiInstalled()) skip('Gurobi not installed on system')
 	# create RaspUnsolved object
-	data(small.pus, small.species)
+	data(sim_pus, sim_spp)
 	go<-GurobiOpts(MIPGap=0.9)
-	ro<-RaspOpts(NUMREPS=2L)
-	rd<-make.RaspData(small.pus, small.species, area.target=0.99999, NULL, include.geographic.space=TRUE,n.demand.points=5L)
+	ro<-RaspOpts(NUMREPS=5L)
+	rd<-make.RaspData(sim_pus[1:10,], sim_spp, area.target=0.99999, NULL, include.geographic.space=TRUE,n.demand.points=5L)
 	# solve object
 	ru<-RaspUnsolved(ro, go, rd)
 	# solve it
@@ -81,10 +80,10 @@ test_that('solve.RaspUnsolved (STATUS test)', {
 	# skip if gurobi not installed
 	if (!is.GurobiInstalled()) skip('Gurobi not installed on system')
 	# create RaspUnsolved object
-	data(small.pus, small.species)
+	data(sim_pus, sim_spp)
 	go<-GurobiOpts(MIPGap=0.9)
 	ro<-RaspOpts(NUMREPS=1L)
-	rd<-make.RaspData(small.pus, small.species, NULL, include.geographic.space=TRUE,n.demand.points=5L)
+	rd<-make.RaspData(sim_pus[1:10,], sim_spp, NULL, include.geographic.space=TRUE,n.demand.points=10L)
 	rd@pu$status[1]=0
 	rd@pu$status[2]=2
 	rd@pu$status[3]=3
@@ -101,10 +100,10 @@ test_that('solve.RaspUnsolved (BLM test)', {
 	# skip if gurobi not installed
 	if (!is.GurobiInstalled()) skip('Gurobi not installed on system')
 	# create RaspUnsolved object
-	data(small.pus, small.species)
+	data(sim_pus, sim_spp)
 	go<-GurobiOpts(MIPGap=0.9)
 	ro<-RaspOpts(NUMREPS=1L, BLM=100)
-	rd<-make.RaspData(small.pus, small.species, NULL, include.geographic.space=TRUE,n.demand.points=5L)
+	rd<-make.RaspData(sim_pus[1:10,], sim_spp, NULL, include.geographic.space=TRUE,n.demand.points=5L)
 	# solve object
 	ru<-RaspUnsolved(ro, go, rd)
 	# solve it

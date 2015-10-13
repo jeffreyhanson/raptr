@@ -22,9 +22,11 @@ This class is used to store RASP results.
 
 \item{\code{model.file}}{\code{character} with Gurobi model file.}
 
-\item{\code{log.file}}{\code{character} with Gurobi log file.}
+\item{\code{logging.file}}{\code{character} with Gurobi log file.}
 
 \item{\code{solution.file}}{\code{character} with Gurobi solution file.}
+
+\item{\code{.cache}}{\code{environment} used to store extra data.}
 }}
 \seealso{
 \code{\link{RaspResults}}, \code{\link{read.RaspResults}}.

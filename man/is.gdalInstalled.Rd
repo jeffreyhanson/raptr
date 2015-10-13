@@ -7,7 +7,7 @@
 is.gdalInstalled()
 }
 \value{
-"logical" is GDAL installed?
+\code{logical} is GDAL installed?
 }
 \description{
 This function tests if GDAL is installed on the computer.

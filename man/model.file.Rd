@@ -10,17 +10,18 @@
 
 \method{model.file}{RaspSolved}(x)
 
-model.file(x, ...)
+model.file(x)
 }
 \arguments{
 \item{x}{\code{RaspResults} or \code{RaspSolved} object.}
-
-\item{...}{not used.}
+}
+\value{
+\code{character} object.
 }
 \description{
 This function returns the Gurobi model file (*.lp) associated with solving RASP.
 }
 \seealso{
-\code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}
+\code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}.
 }
 

@@ -7,7 +7,7 @@
 is.GurobiInstalled()
 }
 \value{
-"logical" Is it installed and ready to use?
+\code{logical} Is it installed and ready to use?
 }
 \description{
 This function determines if Gurobi is installed on the computer, check that its licensing is set up, and will store the path in \code{\link[base]{options}}.

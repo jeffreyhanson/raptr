@@ -7,10 +7,43 @@ suppressWarnings(setClassUnion("PolySetOrNULL", c("PolySet", "NULL")))
 suppressWarnings(setClassUnion("data.frameOrNULL", c("data.frame", "NULL"))) 
 
 ## define built-in functions
+# affine transformation
+affineTrans=function(OldValue, OldMax, OldMin, NewMax, NewMin) {
+    OldRange = (OldMax - OldMin)
+    NewRange = (NewMax - NewMin)
+    NewValue = (((OldValue - OldMin) * NewRange) / OldRange) + NewMin
+    return(NewValue)
+}
+
+# niche simulation functions
+normal_niche=function(x, y) {
+	return(dmvnorm(x=matrix(c(x,y), ncol=2), mean=c(0,0), sigma=matrix(c(12.5,0,0,12.5), ncol=2))*70)
+}
+
+constant_niche=function(x, y) {
+	return(rep(0.5, length(x)))
+}
+
+bimodal_niche=function(x, y) {
+	return(
+		apply(
+			matrix(
+				c(
+					dmvnorm(x=matrix(c(x,y), ncol=2), mean=c(-3.75,-3.75), sigma=matrix(c(10,0,0,10), ncol=2))*60,
+					dmvnorm(x=matrix(c(x,y), ncol=2), mean=c(3.75,3.75), sigma=matrix(c(8,0,0,8), ncol=2))*30
+				),
+				ncol=2
+			),
+			1,
+			max
+		)
+	)
+}
+
 # function to hash function call 
 hashCall<-function(expr, skipargs=c(), env=parent.frame()) {
 	expr<-expr[c((skipargs*-1L)-1L)]
-	expr<-expr[which(names(expr)!="force_reset")]
+	expr<-expr[which(names(expr)!="force.reset")]
 	for (i in seq_along(names(expr)))
 		if (inherits(expr[[i]], c("name")))
 			expr[[i]]=eval(expr[[i]], envir=env)
@@ -23,9 +56,9 @@ prettyGeoplot<-function(polygons, col, basemap, main, fun, beside=TRUE) {
 	defpar<-par(no.readonly = TRUE)
 	par(mar=c(1,1,1,1),oma=c(0,0,0,0))
 	if (beside) {
-		layout(matrix(c(1,1,3,2),ncol=2,byrow=TRUE), widths=c(0.8,0.2), height=c(0.1,0.9))
+		layout(matrix(c(1,1,3,2),ncol=2,byrow=TRUE), widths=c(0.8,0.2), heights=c(0.1,0.9))
 	} else {
-		layout(matrix(c(1,3,2),ncol=1,byrow=TRUE), widths=c(1), height=c(0.1,0.8,0.1))
+		layout(matrix(c(1,3,2),ncol=1,byrow=TRUE), widths=c(1), heights=c(0.1,0.8,0.1))
 	}
 	# make title
 	plot(1,1,type="n", xlim=c(-1,1), ylim=c(-1,1), axes=FALSE, xlab="", ylab="")
@@ -72,7 +105,7 @@ continuousLegend<-function(values, pal, posx, posy, center=FALSE, endlabs=NULL) 
 				digit<-1
 			}
 			# rect(xleft=par()$usr[1]+(xdiff*posx[1]), ybottom=par()$usr[3]+(ydiff*posy[1]), xright=par()$usr[1]+(xdiff*posx[2]), ytop=par()$usr[4]+(ydiff*posy[2]), xpd=TRUE)
-			shape::colorlegend(zlim=range(values), digit=digit, col=brewerCols(seq(0,1,length.out=100), pal), zval=zvals, posx=posx, posy=posy, xpd=TRUE)
+			colorlegend(zlim=range(values), digit=digit, col=brewerCols(seq(0,1,length.out=100), pal), zval=zvals, posx=posx, posy=posy, xpd=TRUE)
 			if (!is.null(endlabs)) {
 				xcoord<-par()$usr[1] + mean(par()$usr[2:1]*posx*2.2)
 				ycoords<-(par()$usr[3] + diff(par()$usr[3:4])*posy) + (diff(par()$usr[3:4]) * c(-0.02,0.02))
@@ -180,7 +213,7 @@ demand.points.hypervolume<-function(pts, n, quantile=0, ...) {
 	rndpos=sample.int(nrow(hv@RandomUniformPointsThresholded), n)
 	return(
 		list(
-			coords=hv@RandomUniformPointsThresholded[rndpos,],
+			coords=hv@RandomUniformPointsThresholded[rndpos,,drop=FALSE],
 			weights=hv@ProbabilityDensityAtRandomUniformPoints[rndpos]
 		)
 	)
@@ -202,7 +235,7 @@ zonalMean <- function(x, y, ids=names(y), ncores=1) {
 			registerDoSNOW(clust)
 		}
 		x<-rbind.fill(llply(seq_len(nlayers(y)), function(l) {
-			return(zonalMean.RasterLayerNotInMemory(bs, x, y[[l]], ids[l], registered=ncores>1))
+			return(zonalMean.RasterLayerNotInMemory(bs, x, y[[l]], ids[l], registered=ncores>1, clust))
 		}))
 		if (ncores>1)
 			clust<-stopCluster(clust)
@@ -217,7 +250,7 @@ zonalMean.RasterLayerInMemory <- function(polys, rast, speciesName) {
 	return(tmp[which(tmp$value>0),,drop=FALSE])
 }
 
-zonalMean.RasterLayerNotInMemory <- function(bs, polys, rast, speciesName, ncores, registered) {
+zonalMean.RasterLayerNotInMemory <- function(bs, polys, rast, speciesName, ncores, registered, clust) {
 	if (registered & .Platform$OS.type=="windows")
 		clusterExport(clust, c("bs","polys", "rast", "rcpp_groupmean"))
 	tmp<-rcpp_groupcombine(llply(seq_len(bs$n), .parallel=registered, function(i) {
@@ -524,3 +557,17 @@ findGdalInstallationPaths<-function (search_path = NULL, rescan = FALSE, ignore.
 	}
 }
 
+# merge list of RaspResults into a single object
+mergeRaspResults<-function(x) {
+	x=RaspResults(
+		summary=ldply(x, slot, name="summary"),
+		selections=do.call(rbind, llply(x, slot, name="selections")),
+		amount.held=do.call(rbind, llply(x, slot, name="amount.held")),
+		space.held=do.call(rbind, llply(x, slot, name="space.held")),
+		model.file=laply(x, slot, name="model.file"),
+		logging.file=laply(x, slot, name="logging.file"),
+		solution.file=laply(x, slot, name="solution.file")
+	)
+	x@summary$Run_Number<-seq_len(nrow(x@summary))
+	return(x)
+}

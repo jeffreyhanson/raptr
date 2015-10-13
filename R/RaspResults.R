@@ -11,8 +11,9 @@ NULL
 #' @slot space.held \code{matrix} with the poportion of attribute space sampled for each species in each solution.
 #' @slot best \code{integer} with index of best solution.
 #' @slot model.file \code{character} with Gurobi model file. 
-#' @slot log.file \code{character} with Gurobi log file. 
+#' @slot logging.file \code{character} with Gurobi log file. 
 #' @slot solution.file \code{character} with Gurobi solution file. 
+#' @slot .cache \code{environment} used to store extra data. 
 #' @export
 #' @seealso \code{\link{RaspResults}}, \code{\link{read.RaspResults}}.
 setClass("RaspResults",
@@ -23,17 +24,10 @@ setClass("RaspResults",
 		space.held="matrix",
 		best="integer",
 		model.file="character",
-		log.file='character',
+		logging.file='character',
 		solution.file="character",
 		.cache='environment'
 	)
-)
-setMethod(
-	"initialize", 
-	"RaspResults", 
-	function(.Object, summary, selections, amount.held, space.held, best, model.file, log.file, solution.file, .cache=new.env()) {
-		callNextMethod(.Object, summary=summary, selections=selections, amount.held=amount.held,  space.held=space.held, best=best, model.file=model.file, log.file=log.file, solution.file=solution.file, .cache=.cache)
-	}
 )
 
 #' Create RaspResults object
@@ -45,14 +39,14 @@ setMethod(
 #' @param amount.held \code{matrix} with the amount held for each species in each solution.
 #' @param space.held \code{matrix} with the poportion of attribute space sampled for each species in each solution.
 #' @param model.file \code{character} with Gurobi model file. 
-#' @param log.file \code{character} with Gurobi log file. 
+#' @param logging.file \code{character} with Gurobi log file. 
 #' @param solution.file \code{character} with Gurobi solution file. 
 #' @export
 #' @note slot \code{best} is automatically determined based on data in \code{summary}.
 #' @return \code{RaspResults} object
 #' @seealso \code{\link{RaspResults-class}} \code{\link{read.RaspResults}}
-RaspResults=function(summary, selections, amount.held, space.held, model.file, log.file, solution.file) {
-	return(new("RaspResults", summary=summary, selections=selections, amount.held=amount.held, space.held=space.held, best=which.min(summary$Score), model.file=model.file, log.file=log.file, solution.file=solution.file))
+RaspResults=function(summary, selections, amount.held, space.held, model.file, logging.file, solution.file) {
+	return(new("RaspResults", summary=summary, selections=selections, amount.held=amount.held, space.held=space.held, best=which.min(summary$Score), model.file=model.file, logging.file=logging.file, solution.file=solution.file))
 }
 
 #' Read RASP results
@@ -62,43 +56,20 @@ RaspResults=function(summary, selections, amount.held, space.held, model.file, l
 #' @param opts \code{RaspOpts} object
 #' @param data \code{RaspData} object
 #' @param model.file \code{character} object containing Gurobi model file.
-#' @param log.file \code{character} object containing Gurobi log file.
+#' @param logging.file \code{character} object containing Gurobi log file.
 #' @param solution.file \code{character} object containing Gurobi solution file.
 #' @export
 #' @return \code{RaspResults} object
 #' @seealso \code{\link{RaspData}}, \code{\link{RaspData-class}}, \code{\link{RaspResults-class}}, \code{\link{RaspResults}}.
-read.RaspResults=function(opts, data, model.file, log.file, solution.file) {
+read.RaspResults=function(opts, data, model.file, logging.file, solution.file) {
 	x<-rcpp_extract_model_results(
 		opts,
 		data,
 		model.file,
-		log.file,
+		logging.file,
 		solution.file
 	)
 	x@.cache=new.env()
-	return(x)
-}
-
-#' Merge RASP results
-#'
-#' This function merges a list of \code{RaspResults} objects into a single \code{RaspResults} object. 
-#' It is used for collating results from multiple runs.
-#'
-#' @param x \code{list} of \code{RaspResults} objects.
-#' @export
-#' @return \code{RaspResults} object
-#' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspResults}}.
-merge.RaspResults<-function(x) {
-	x=RaspResults(
-		summary=ldply(x, slot, name="summary"),
-		selections=do.call(rbind, llply(x, slot, name="selections")),
-		amount.held=do.call(rbind, llply(x, slot, name="amount.held")),
-		space.held=do.call(rbind, llply(x, slot, name="space.held")),
-		model.file=laply(x, slot, name="model.file"),
-		log.file=laply(x, slot, name="log.file"),
-		solution.file=laply(x, slot, name="solution.file")
-	)
-	x@summary$Run_Number<-seq_len(nrow(x@summary))
 	return(x)
 }
 
@@ -125,28 +96,26 @@ score.RaspResults<-function(x, y=0) {
 	return(x@summary$Score[y])
 }
 
-#' @export
-summary.RaspResults<-function(x) {
-	return(x@summary)
+#' @method summary RaspResults
+#' @export summary
+summary.RaspResults<-function(object) {
+	return(object@summary)
 }
 
-#' @rdname log.file
-#' @inheritParams log.ile
-#' @export
-log.file.RaspResults<-function(x) {
-	return(x@log.file)
+#' @rdname logging.file
+#' @export logging.file
+logging.file.RaspResults<-function(x) {
+	return(x@logging.file)
 }
 
 #' @rdname model.file
-#' @inheritParams model.file
-#' @export
+#' @export model.file
 model.file.RaspResults<-function(x) {
 	return(x@model.file)
 }
 
 #' @rdname solution.file
-#' @inheritParams solution.file
-#' @export
+#' @export solution.file
 solution.file.RaspResults<-function(x) {
 	return(x@solution.file)
 }
@@ -172,15 +141,19 @@ space.held.RaspResults<-function(x, y=0) {
 		return(x@space.held[x@best,])
 	return(x@space.held[y,])
 }
+	
 
+#' @method print RaspResults
+#' @rdname print
 #' @export
-print.RaspResults<-function(x, header=TRUE) {
+print.RaspResults<-function(x, ..., header=TRUE) {
 	if (header)
 		cat("RaspResults object.\n")
 	cat("  Number of solutions:",nrow(x@summary),"\n")
 	cat(paste0("  Best solution score: ", score(x,0), " (",sum(selections(x,0))," planning units)\n"))
 }
 
+#' @describeIn show
 #' @export
 setMethod(
 	'show',

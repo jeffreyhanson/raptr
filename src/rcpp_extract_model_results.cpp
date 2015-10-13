@@ -97,7 +97,6 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, std::vector<st
 	Environment cacheENV = Environment::base_env();
 	const double boundary_threshold=1.0e-05;
 	
-	
 	//// Preliminary processing	
 	// extract opts
 	double failure_multiplier=Rcpp::as<double>(opts.slot("FAILUREMULTIPLIER"));
@@ -170,11 +169,11 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, std::vector<st
 	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> currCoordinates;
 	Rcpp::NumericVector currWeights;
 	std::vector<std::size_t> species_ndp(n_species);
-	for (std::size_t i=0; i<n_attribute_spaces; ++i) {
-		currLST=Rcpp::as<Rcpp::S4>(attributespaceLST[i]).slot("dp");
-		for (std::size_t j=0; j<n_species; ++j) {
+	for (std::size_t j=0; j<n_attribute_spaces; ++j) {
+		currLST=Rcpp::as<Rcpp::S4>(attributespaceLST[j]).slot("dp");
+		for (std::size_t i=0; i<n_species; ++i) {
 			// extract species i demand points for space j
-			currS4=Rcpp::as<Rcpp::S4>(currLST[j]);
+			currS4=Rcpp::as<Rcpp::S4>(currLST[i]);
 			currS4_2=Rcpp::as<Rcpp::S4>(currS4.slot("points"));
 			
 			// coords
@@ -345,7 +344,7 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, std::vector<st
 				}
 				// caculate values for failure pu
 				tmpval+= currProb*weightdistMTX(i,j)(k,species_npu[i]);
-			}			
+			}
 			spaceheldMTX(0, currCol) = (tmpval / extract_param<double>("\\species_best_spaceheld_"+intSTR[i]+"_"+intSTR[j], model_file)) - 1.0;
 		}
 	}
@@ -371,7 +370,7 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, std::vector<st
 	ret.slot("amount.held") = amountheldMTX;
 	ret.slot("space.held") = Rcpp::wrap(spaceheldMTX);
 	ret.slot("best") = 1;
-	ret.slot("log.file") = Rcpp::wrap(collapse(log_file));
+	ret.slot("logging.file") = Rcpp::wrap(collapse(log_file));
 	ret.slot("model.file") = Rcpp::wrap(collapse(model_file));
 	ret.slot("solution.file") = Rcpp::wrap(collapse(solution_file));
 	ret.slot(".cache") = cacheENV;

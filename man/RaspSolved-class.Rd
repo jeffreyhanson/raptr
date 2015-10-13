@@ -12,7 +12,9 @@ This class is used to store RASP input and output data in addition to input para
 \describe{
 \item{\code{opts}}{\code{RaspOpts} object used to store input parameters.}
 
-\item{\code{data}}{\code{RasprData} object used to store input data.}
+\item{\code{gurobi}}{\code{GurobiOpts} object used to store Gurobi parameters.}
+
+\item{\code{data}}{\code{RaspData} object used to store input data.}
 
 \item{\code{results}}{\code{RaspResults} object used to store results.}
 }}

@@ -49,15 +49,6 @@ setClass("GurobiOpts",
 	}
 )
 
-setMethod(
-	"initialize", 
-	"GurobiOpts", 
-	function(.Object, Threads, MIPGap, Presolve, TimeLimit) {
-		callNextMethod(.Object, Threads=Threads, MIPGap=MIPGap, Presolve=Presolve, TimeLimit=TimeLimit)
-	}
-)
-
-
 #' Create GurobiOpts object
 #'
 #' This function creates a new GurobiOpts object.
@@ -70,7 +61,7 @@ setMethod(
 #' @seealso \code{\link{GurobiOpts-class}}.
 #' @export
 #' @examples
-#' x<-GurobiOpts(Threads=2)
+#' x<-GurobiOpts(Threads=2L)
 #' @export
 GurobiOpts<-function(Threads=1L, MIPGap=0.05, Presolve=2L, TimeLimit=NA_integer_) {
 	go<-new("GurobiOpts", Threads=Threads, MIPGap=MIPGap, Presolve=Presolve, TimeLimit=TimeLimit)
@@ -78,9 +69,10 @@ GurobiOpts<-function(Threads=1L, MIPGap=0.05, Presolve=2L, TimeLimit=NA_integer_
 	return(go)
 }
 
-
+#' @method print GurobiOpts
+#' @rdname print
 #' @export
-print.GurobiOpts=function(x, header=TRUE) {
+print.GurobiOpts=function(x, ..., header=TRUE) {
 	if (header)
 		cat("GurobiOpts object.\n")
 	cat('  Threads:',x@Threads,'\n')
@@ -89,7 +81,8 @@ print.GurobiOpts=function(x, header=TRUE) {
 	cat('  TimeLimit:',x@TimeLimit,'\n')
 }
 
-# ' @export
+#' @describeIn show
+#' @export
 setMethod(
 	'show',
 	'GurobiOpts',

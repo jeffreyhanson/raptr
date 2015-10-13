@@ -6,14 +6,12 @@
 \usage{
 SimplePoints(coords)
 }
+\arguments{
+\item{coords}{\code{matrix} coordinates for each point.}
+}
 \description{
 This function creates a new \code{SimplePoints} object.
 }
-\section{Slots}{
-
-\describe{
-\item{\code{coords}}{\code{matrix} coordinates for each point.}
-}}
 \seealso{
 \code{\link{DemandPoints-class}}, \code{\link{AttributeSpace-class}}.
 }

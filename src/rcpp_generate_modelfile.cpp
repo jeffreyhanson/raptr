@@ -105,7 +105,7 @@ std::string rcpp_generate_modelfile(Rcpp::S4 opts, Rcpp::S4 data) {
 		pupointsMTX[i] = tmpmat;
 		
 	}
-
+	
 	// demand points
 // 	Rcpp::Rcout << "\tdemand points data" << std::endl;
 	Eigen::Matrix<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> demandpoints_coords_MTX(n_species, n_attribute_spaces);
@@ -113,11 +113,11 @@ std::string rcpp_generate_modelfile(Rcpp::S4 opts, Rcpp::S4 data) {
 	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> currCoordinates;
 	Rcpp::NumericVector currWeights;
 	std::vector<std::size_t> species_ndp(n_species);
-	for (std::size_t i=0; i<n_attribute_spaces; ++i) {
-		currLST=Rcpp::as<Rcpp::S4>(attributespaceLST[i]).slot("dp");
-		for (std::size_t j=0; j<n_species; ++j) {
+	for (std::size_t j=0; j<n_attribute_spaces; ++j) {
+		currLST=Rcpp::as<Rcpp::S4>(attributespaceLST[j]).slot("dp");
+		for (std::size_t i=0; i<n_species; ++i) {
 			// extract species i demand points for space j
-			currS4=Rcpp::as<Rcpp::S4>(currLST[j]);
+			currS4=Rcpp::as<Rcpp::S4>(currLST[i]);
 			currS4_2=Rcpp::as<Rcpp::S4>(currS4.slot("points"));
 			
 			// coords
@@ -131,6 +131,8 @@ std::string rcpp_generate_modelfile(Rcpp::S4 opts, Rcpp::S4 data) {
 		
 			// store number dp for species i
 			species_ndp[i]=demandpoints_weights_MTX(i,j).size();
+			
+// 			Rcout << "species_ndp[i] = " << species_ndp[i] << std::endl;
 		}
 	}
 		
@@ -155,7 +157,7 @@ std::string rcpp_generate_modelfile(Rcpp::S4 opts, Rcpp::S4 data) {
 		// calculate area
 		currArea=puvspeciesDF_value[i] * puDF_area[puvspeciesDF_pu[i]];
 		// generate target strings for model
-		puvspeciesSTR[puvspeciesDF_species[i]]+=std::to_string(currArea) + " " +  puDF_id_CHR[i] + " + ";
+		puvspeciesSTR[puvspeciesDF_species[i]]+=std::to_string(currArea) + " " +  puDF_id_CHR[puvspeciesDF_pu[i]] + " + ";
 		// sum area occupied by species
 		speciesareaDBL[puvspeciesDF_species[i]]+=currArea;
 		// assign pu to species vector
@@ -206,10 +208,10 @@ std::string rcpp_generate_modelfile(Rcpp::S4 opts, Rcpp::S4 data) {
 			for (std::size_t k=0; k<species_ndp[i]; ++k) {
 				weightdistMTX(i,j)(k,species_npu[i]) = currFailDist;
 			}
+			
+// 			Rcpp::Rcout << "currFailDist; i=" << i << "; j=" << j << "; " << currFailDist << std::endl;
 		}
 	}
-	
-	
 	
 	/// calculate spacetargets
 // 	Rcpp::Rcout << "\tspace targets" << std::endl;
@@ -237,8 +239,6 @@ std::string rcpp_generate_modelfile(Rcpp::S4 opts, Rcpp::S4 data) {
 			}
 		}
 	}
-	
-	// Rcout << "best case space representation = " << speciesspaceMTX(0,0) << std::endl;	
 	
 	// cache integer string conversions
 	std::size_t maxINT;

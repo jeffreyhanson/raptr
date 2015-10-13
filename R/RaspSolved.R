@@ -7,7 +7,8 @@ NULL
 #' This class is used to store RASP input and output data in addition to input parameters.
 #'
 #' @slot opts \code{RaspOpts} object used to store input parameters.
-#' @slot data \code{RasprData} object used to store input data.
+#' @slot gurobi \code{GurobiOpts} object used to store Gurobi parameters.
+#' @slot data \code{RaspData} object used to store input data.
 #' @slot results \code{RaspResults} object used to store results.
 #' @export
 #' @seealso \code{\link{RaspOpts-class}}, \code{\link{RaspData-class}}, \code{\link{RaspResults-class}}.
@@ -36,14 +37,17 @@ RaspSolved<-function(unsolved, results) {
 	return(new("RaspSolved", opts=unsolved@opts, gurobi=unsolved@gurobi, data=unsolved@data, results=results))
 }
 
-#' @rdname solve
-#' @inheritParams solve
+#' @describeIn solve
 #' @export
-solve.RaspSolved<-function(x, wd=tempdir(), clean=TRUE, force_reset=FALSE) {
-	if (!force_reset)
-		stop("This object already has solutions. Use force_reset=TRUE to force recalculation of solutions.")
-	return(solve(RaspUnsolved(opts=x@opts,gurobi=x@gurobi, data=x@data), wd, clean))
-}
+setMethod(
+	'solve',
+	'RaspSolved',
+	function(x, wd=tempdir(), clean=TRUE, force.reset=FALSE) {
+		if (!force.reset)
+			stop("This object already has solutions. Use force.reset=TRUE to force recalculation of solutions.")
+		return(solve(RaspUnsolved(opts=x@opts,gurobi=x@gurobi, data=x@data), wd, clean))
+	}
+)
 
 #' @rdname selections
 #' @inheritParams selections
@@ -59,28 +63,29 @@ score.RaspSolved<-function(x, y=0) {
 	return(score.RaspResults(x@results, y))
 }
 
+#' @method summary RaspSolved
 #' @export
-summary.RaspSolved<-function(x) {
-	return(summary.RaspResults(x@results))
+summary.RaspSolved<-function(object, ...) {
+	return(summary.RaspResults(object@results))
 }
 
-#' @rdname log.file
-#' @inheritParams log.file
+#' @rdname logging.file
+#' @inheritParams logging.file
 #' @export
-log.file.RaspSolved<-function(x) {
-	log.file.RaspResults(x@results)
+logging.file.RaspSolved<-function(x) {
+	logging.file(x@results)
 }
 
 #' @rdname model.file
 #' @inheritParams model.file
-#' @export
+#' @export model.file
 model.file.RaspSolved<-function(x) {
 	model.file.RaspResults(x@results)
 }
 
 #' @rdname solution.file
 #' @inheritParams model.file
-#' @export
+#' @export solution.file
 solution.file.RaspSolved<-function(x) {
 	solution.file.RaspResults(x@results)
 }
@@ -99,8 +104,10 @@ space.held.RaspSolved<-function(x, y=0) {
 	return(space.held.RaspResults(x@results, y))
 }
 
+#' @method print RaspSolved
+#' @rdname print
 #' @export
-print.RaspSolved<-function(x) {
+print.RaspSolved<-function(x, ...) {
 	cat("Parameters\n")
 	print.RaspOpts(x@opts, FALSE)
 	cat("Solver settings\n")
@@ -111,7 +118,8 @@ print.RaspSolved<-function(x) {
 	print.RaspResults(x@results, FALSE)
 }
 
-# ' @export
+#' @describeIn show
+#' @export
 setMethod(
 	'show',
 	'RaspSolved',
@@ -151,30 +159,23 @@ setMethod(
 
 #' @rdname basemap
 #' @export
-basemap.RaspSolved<-function(x, basemap="none", grayscale=FALSE, force_reset=FALSE) {
-	return(basemap.RaspData(x@data, basemap, grayscale, force_reset))
+basemap.RaspSolved<-function(x, basemap="none", grayscale=FALSE, force.reset=FALSE) {
+	return(basemap.RaspData(x@data, basemap, grayscale, force.reset))
 }
 
-
-#' @export
-plot.RaspSolved<-function(x, ...) {
-	plotRasp(x, ...)
-}
-
-#' @rdname plotRasp
-#' @inheritParams plotRasp
+#' @describeIn plot
 #' @export
 setMethod(
-	"plotRasp",
+	"plot",
 	signature(x="RaspSolved",y="numeric"),
-	function(x, y, basemap="none", colramp="Greens", lockedincol="#000000FF", lockedoutcol="#D7D7D7FF", alpha=ifelse(basemap=="none",1,0.7), grayscale=FALSE, force_reset=FALSE) {
+	function(x, y, basemap="none", color.palette="Greens", locked.in.color="#000000FF", locked.out.color="#D7D7D7FF", alpha=ifelse(basemap=="none",1,0.7), grayscale=FALSE, force.reset=FALSE) {
 		# check for issues
 		stopifnot(alpha<=1 & alpha>=0)
-		match.arg(colramp, rownames(brewer.pal.info))
+		match.arg(color.palette, rownames(brewer.pal.info))
 		stopifnot(inherits(x@data@polygons, "PolySet"))
 		# get basemap data
 		if (basemap!="none")
-			basemap<-basemap.RaspData(x@data, basemap, grayscale, force_reset)
+			basemap<-basemap.RaspData(x@data, basemap, grayscale, force.reset)
 		# main processing
 		if (y==0)
 			y<-x@results@best
@@ -182,64 +183,62 @@ setMethod(
 			stopifnot(y<=nrow(x@results@selections))
 		values<-x@results@selections[y,]
 		cols<-character(length(values))
-		cols[which(x@data@pu$status==2)]<-lockedincol
-		cols[which(x@data@pu$status==3)]<-lockedoutcol
-		cols[which(x@data@pu$status<2)]<-brewerCols(values[which(x@data@pu$status<2)], colramp, alpha, n=2)
+		cols[which(x@data@pu$status==2)]<-locked.in.color
+		cols[which(x@data@pu$status==3)]<-locked.out.color
+		cols[which(x@data@pu$status<2)]<-brewerCols(values[which(x@data@pu$status<2)], color.palette, alpha, n=2)
 		prettyGeoplot(
 			x@data@polygons,
 			cols,
 			basemap,
 			ifelse(y==x@results@best, paste0("Best Solution (",y,")"), paste0("Solution (",y,")")),
-			categoricalLegend(c(lockedoutcol,brewerCols(c(0,1),colramp,alpha,n=2),lockedincol),c("Locked Out", "Not Selected", "Selected", "Locked In")),
+			categoricalLegend(c(locked.out.color,brewerCols(c(0,1),color.palette,alpha,n=2),locked.in.color),c("Locked Out", "Not Selected", "Selected", "Locked In")),
 			beside=FALSE
 		)
 	}
 )
 
-#' @rdname plotRasp
-#' @inheritParams plotRasp
+#' @describeIn plot
 #' @export
 setMethod(
-	"plotRasp",
+	"plot",
 	signature(x="RaspSolved",y="missing"),
-	function(x, y, basemap="none", colramp="PuBu", lockedincol="#000000FF", lockedoutcol="#D7D7D7FF", alpha=ifelse(basemap=="none",1,0.7), grayscale=FALSE, force_reset=FALSE) {
+	function(x, y, basemap="none", color.palette="PuBu", locked.in.color="#000000FF", locked.out.color="#D7D7D7FF", alpha=ifelse(basemap=="none",1,0.7), grayscale=FALSE, force.reset=FALSE) {
 		# check for issues
 		match.arg(basemap, c("none", "roadmap", "mobile", "satellite", "terrain", "hybrid", "mapmaker-roadmap", "mapmaker-hybrid"))
 		stopifnot(alpha<=1 & alpha>=0)
-		match.arg(colramp, rownames(brewer.pal.info))
+		match.arg(color.palette, rownames(brewer.pal.info))
 		stopifnot(inherits(x@data@polygons, "PolySet"))
 		# get basemap data
 		if (basemap!="none")
-			basemap<-basemap.RaspData(x@data, basemap, grayscale, force_reset)	
+			basemap<-basemap.RaspData(x@data, basemap, grayscale, force.reset)	
 		# main processing
-		if (force_reset || !is.cached(x@results, "selectionfreqs")) {
+		if (force.reset || !is.cached(x@results, "selectionfreqs")) {
 			cache(x@results, "selectionfreqs", colMeans(x@results@selections))
 		}
 		values<-cache(x@results,"selectionfreqs")[which(x@data@pu$status<2)]
-		cols<-brewerCols(rescale(cache(x@results,"selectionfreqs"),from=range(values),to=c(0,1)), pal=colramp, alpha=alpha)
-		cols[which(x@data@pu$status==2)]<-lockedincol
-		cols[which(x@data@pu$status==3)]<-lockedoutcol
+		cols<-brewerCols(rescale(cache(x@results,"selectionfreqs"),from=range(values),to=c(0,1)), pal=color.palette, alpha=alpha)
+		cols[which(x@data@pu$status==2)]<-locked.in.color
+		cols[which(x@data@pu$status==3)]<-locked.out.color
 		prettyGeoplot(
 			x@data@polygons,
 			cols,
 			basemap,
 			"Planning unit selection frequency",
-			continuousLegend(values,colramp,posx=c(0.3, 0.4),posy=c(0.1, 0.9)),
+			continuousLegend(values,color.palette,posx=c(0.3, 0.4),posy=c(0.1, 0.9)),
 			beside=TRUE
 		)
 	}
 )
 
-#' @rdname plotRasp
-#' @inheritParams plotRasp
+#' @describeIn plot
 #' @export
 setMethod(
-	"plotRasp",
+	"plot",
 	signature(x="RaspSolved",y="RaspSolved"),
-	function(x, y, i=NULL, j=i, basemap="none", colramp=ifelse(is.null(i), "RdYlBu", "Accent"), xlockedincol="#000000FF", xlockedoutcol="#D7D7D7FF", ylockedincol="#FFFFFFFF", ylockedoutcol="#D7D7D7FF", alpha=ifelse(basemap=="none",1,0.7), grayscale=FALSE, force_reset=FALSE) {
+	function(x, y, i=NULL, j=i, basemap="none", color.palette=ifelse(is.null(i), "RdYlBu", "Accent"), x.locked.in.color="#000000FF", x.locked.out.color="#D7D7D7FF", y.locked.in.color="#FFFFFFFF", y.locked.out.color="#D7D7D7FF", alpha=ifelse(basemap=="none",1,0.7), grayscale=FALSE, force.reset=FALSE) {
 		# check for issues
 		stopifnot(alpha<=1 & alpha>=0)
-		match.arg(colramp, rownames(brewer.pal.info))
+		match.arg(color.palette, rownames(brewer.pal.info))
 		stopifnot(inherits(x@data@polygons, "PolySet"))
 		stopifnot(is.comparable(x,y))
 		if (is.numeric(i))
@@ -248,53 +247,86 @@ setMethod(
 			stopifnot(j <= nrow(y@results@selections))
 		# get basemap data
 		if (basemap!="none")
-			basemap<-basemap.RaspData(x@data, basemap, grayscale, force_reset)	
+			basemap<-basemap.RaspData(x@data, basemap, grayscale, force.reset)	
 		# main processing
 		cols<-character(nrow(x@data@pu))
 		if (is.null(i) || is.null(j)) {
-			cols[which(x@data@pu$status==2)]<-xlockedincol
-			cols[which(y@data@pu$status==2)]<-ylockedincol
-			cols[which(x@data@pu$status==3)]<-xlockedoutcol
-			cols[which(y@data@pu$status==3)]<-ylockedoutcol
+			cols[which(x@data@pu$status==2)]<-x.locked.in.color
+			cols[which(y@data@pu$status==2)]<-y.locked.in.color
+			cols[which(x@data@pu$status==3)]<-x.locked.out.color
+			cols[which(y@data@pu$status==3)]<-y.locked.out.color
 		
-			if (force_reset || !is.cached(x@results, "selectionfreqs"))
+			if (force.reset || !is.cached(x@results, "selectionfreqs"))
 				cache(x@results, "selectionfreqs", colMeans(x@results@selections))
 			xsc<-cache(x@results, "selectionfreqs")[which(nchar(cols)==0)]
-			if (force_reset || !is.cached(y@results, "selectionfreqs"))
+			if (force.reset || !is.cached(y@results, "selectionfreqs"))
 				cache(y@results, "selectionfreqs", colMeans(y@results@selections))
 			ysc<-cache(y@results, "selectionfreqs")[which(nchar(cols)==0)]
 			values<-xsc-ysc
-			cols[which(nchar(cols)==0)]<-brewerCols(rescale(values,to=c(0,1)), colramp, alpha)
+			col.pos=which(nchar(cols)==0)
+			cols[col.pos]<-brewerCols(rescale(values,to=c(0,1)), color.palette, alpha)
+			# determine legend function
+			if (length(unique(round(values, 5)))>1) {
+				legend.fun=continuousLegend(
+					values,
+					color.palette,
+					posx=c(0.3, 0.4),posy=c(0.1, 0.9),
+					center=TRUE,
+					endlabs=c('+X','+Y')
+				)
+				beside=TRUE
+			} else {
+				# create legend entries
+				leg.cols=c(cols[col.pos[1]])
+				leg.labs=c(values[1])
+				if (any(x@data@pu$status==2)) {
+					leg.cols=c(leg.cols, x.locked.in.color)
+					leg.labs=c(leg.labs, "Locked in X")
+				}
+				if (any(x@data@pu$status==3)) {
+					leg.cols=c(leg.cols, x.locked.out.color)
+					leg.labs=c(leg.labs, "Locked out X")
+				}
+				if (any(y@data@pu$status==2)) {
+					leg.cols=c(leg.cols, y.locked.in.color)
+					leg.labs=c(leg.labs, "Locked in Y")
+				}
+				if (any(y@data@pu$status==3)) {
+					leg.cols=c(leg.cols, y.locked.out.color)
+					leg.labs=c(leg.labs, "Locked out Y")
+				}
+				# create legend function
+				legend.fun=categoricalLegend(
+					leg.cols,
+					leg.labs,
+					ncol=1
+				)
+				beside=FALSE
+			}
 			prettyGeoplot(
 				x@data@polygons,
 				cols,
 				basemap,
 				"Difference in selection frequencies",
-				fun<-continuousLegend(
-					values,
-					colramp,
-					posx=c(0.3, 0.4),posy=c(0.1, 0.9),
-					center=TRUE,
-					endlabs=c('+X','+Y')
-				),
-				beside=TRUE
+				fun=legend.fun,
+				beside=beside
 			)
 		} else {
 			if (i==0)
 				i<-x@results@best
 			if (j==0)
 				j<-y@results@best
-			cols2<-brewerCols(seq(0,1,length.out=4),colramp,alpha,n=4)
+			cols2<-brewerCols(seq(0,1,length.out=4),color.palette,alpha,n=4)
 			
 			cols[which(x@results@selections[i,]==1 & y@results@selections[j,]==0)]<-cols2[1]
 			cols[which(x@results@selections[i,]==0 & y@results@selections[j,]==1)]<-cols2[2]
 			cols[which(x@results@selections[i,]==1 & y@results@selections[j,]==1)]<-cols2[3]
 			cols[which(x@results@selections[i,]==0 & y@results@selections[j,]==0)]<-cols2[4]
 
-			cols[which(x@data@pu$status==2)]<-xlockedincol
-			cols[which(y@data@pu$status==2)]<-ylockedincol
-			cols[which(x@data@pu$status==3)]<-xlockedoutcol
-			cols[which(y@data@pu$status==3)]<-ylockedoutcol
+			cols[which(x@data@pu$status==2)]<-x.locked.in.color
+			cols[which(y@data@pu$status==2)]<-y.locked.in.color
+			cols[which(x@data@pu$status==3)]<-x.locked.out.color
+			cols[which(y@data@pu$status==3)]<-y.locked.out.color
 			
 			xrepr<-ifelse(i==x@results@best, '(best)', paste0('(',i,')'))
 			yrepr<-ifelse(i==y@results@best, '(best)', paste0('(',j,')'))
@@ -305,7 +337,7 @@ setMethod(
 				basemap,
 				paste0("Difference in X solution ",i,ifelse(i==x@results@best, " (best)", ""), " and Y solution ",j, ifelse(j==y@results@best, " (best)", "")),
 				categoricalLegend(
-					c(cols2,xlockedincol,ylockedincol,xlockedoutcol,ylockedoutcol),
+					c(cols2,x.locked.in.color,y.locked.in.color,x.locked.out.color,y.locked.out.color),
 					c("Selected in X",  "Selected in Y", "Both", "Neither", "Locked in X", "Locked in Y", paste("Locked out X"), paste("Locked out Y")),
 					ncol=4
 				),
@@ -314,4 +346,6 @@ setMethod(
 		}
 	}
 )
+
+
 

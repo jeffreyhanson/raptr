@@ -5,7 +5,7 @@ NULL
 #'
 #' This function determines if Gurobi is installed on the computer, check that its licensing is set up, and will store the path in \code{\link[base]{options}}.
 #'
-#' @return "logical" Is it installed and ready to use?
+#' @return \code{logical} Is it installed and ready to use?
 #' @seealso \code{\link[base]{options}}.
 #' @export
 #' @examples
@@ -35,7 +35,7 @@ is.GurobiInstalled<-function() {
 #' This function tests if GDAL is installed on the computer.
 #' If not, download it here: \url{http://download.osgeo.org/gdal}.
 #'
-#' @return "logical" is GDAL installed?
+#' @return \code{logical} is GDAL installed?
 #' @seealso \code{\link[gdalUtils]{gdal_setInstallation}}.
 #' @export
 #' @examples
@@ -47,34 +47,29 @@ is.gdalInstalled<-function() {
 
 #' Rasterize polygon data using GDAL
 #'
-#' This function converts a "SpatialPolygonsDataFrame" to a "RasterLayer" using GDAL.
+#' This function converts a \code{SpatialPolygonsDataFrame} to a \code{RasterLayer} using GDAL.
 #' It is expected to be faster than \code{\link[raster]{rasterize}} for large datasets.
 #' However, it will be significantly slower for small datasets because the data will need to be written and read from disk.
-#' @param x "SpatialPolygonsDataFrame" object.
-#' @param y "RasterLayer" with dimensions, extent, and resolution to be used as a template for new raster.
-#' @param field "character" column name with values to burn into the output raster. If not supplied, default behaviour is to burn polygon indices into the "RasterLayer".
+#' @param x \code{SpatialPolygonsDataFrame} object.
+#' @param y \code{RasterLayer} with dimensions, extent, and resolution to be used as a template for new raster.
+#' @param field \code{character} column name with values to burn into the output raster. If not supplied, default behaviour is to burn polygon indices into the \code{	RasterLayer}.
 #' @export
-#' @return "RasterLayer" object.
+#' @return \code{RasterLayer} object.
 #' @seealso \code{\link[raster]{rasterize}}, \code{\link{is.gdalInstalled}}.
 #' @examples
 #' data(species,planningunits)
-#' x<-rasterize.gdal(planningunits[1:5,],species[[1]])
-setGeneric('rasterize.gdal', function(x,y, ...) standardGeneric('rasterize.gdal'))
-setMethod(
-	'rasterize.gdal',
-	signature(x="SpatialPolygonsDataFrame", y="RasterLayer"),
-	function(x, y, field=NULL) {
-		if (is.null(field)) {
-			x@data$id<-seq_len(nrow(x@data))
-			field<-'id'
-		}
-		if (!field %in% names(x@data))
-			stop(paste0("x@data does not have a field called ",field, "."))
-		writeOGR(x, tempdir(), 'polys', driver='ESRI Shapefile', overwrite=TRUE)
-		writeRaster(setValues(y, NA), file.path(tempdir(), 'rast.tif'), NAflag=-9999, overwrite=TRUE)
-		return(gdal_rasterize(file.path(tempdir(), 'polys.shp'), file.path(tempdir(), 'rast.tif'), l="polys", a=field, output_Raster=TRUE)[[1]])
+#' x<-rasterizeGDAL(planningunits[1:5,],species[[1]])
+rasterizeGDAL<-function(x,y, field=NULL) {
+	if (is.null(field)) {
+		x@data$id<-seq_len(nrow(x@data))
+		field<-'id'
 	}
-)
+	if (!field %in% names(x@data))
+		stop(paste0("x@data does not have a field called ",field, "."))
+	writeOGR(x, tempdir(), 'polys', driver='ESRI Shapefile', overwrite_layer=TRUE)
+	writeRaster(setValues(y, NA), file.path(tempdir(), 'rast.tif'), NAflag=-9999, overwrite=TRUE)
+	return(gdal_rasterize(file.path(tempdir(), 'polys.shp'), file.path(tempdir(), 'rast.tif'), l="polys", a=field, output_Raster=TRUE)[[1]])
+}
 
 
 #' Blank raster 

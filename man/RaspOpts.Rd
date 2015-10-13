@@ -10,6 +10,8 @@ RaspOpts(BLM = 0, FAILUREMULTIPLIER = 1000, MAXRLEVEL = 5L,
 \arguments{
 \item{BLM}{\code{numeric} boundary length modifier. Defaults to 0.}
 
+\item{FAILUREMULTIPLIER}{\code{numeric} multiplier for failure planning unit. Defaults to 1000.}
+
 \item{MAXRLEVEL}{\code{numeric} maximum R failure level for approximation. Defaults to 5L.}
 
 \item{NUMREPS}{\code{integer} number of replicate runs. Defaults to 1L.}
@@ -20,13 +22,8 @@ RaspOpts(BLM = 0, FAILUREMULTIPLIER = 1000, MAXRLEVEL = 5L,
 \description{
 This function creates a new RaspOpts object.
 }
-\section{Slots}{
-
-\describe{
-\item{\code{FAILUREMULTIPLIER}}{\code{numeric} multiplier for failure planning unit. Defaults to 1000.}
-}}
 \examples{
-x<-RaspOpts(NTHREADS=2, NUMREPS=2)
+x<-RaspOpts(BLM=1, NUMREPS=1L)
 }
 \seealso{
 \code{\link{RaspOpts-class}}.

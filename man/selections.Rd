@@ -10,7 +10,7 @@
 
 \method{selections}{RaspSolved}(x, y = 0)
 
-selections(x, ...)
+selections(x, y)
 }
 \arguments{
 \item{x}{\code{RaspResults} or \code{RaspSolved} object.}

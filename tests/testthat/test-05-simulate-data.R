@@ -1,7 +1,7 @@
 
 test_that("simulate planning units functions", {
 # 	generate planning units
-	pus=simulate.pus(n=225L)
+	pus=sim.pus(n=225L)
 # 	check simulated dataset
 	expect_true(inherits(pus, 'SpatialPolygonsDataFrame'))
 	expect_equal(nrow(pus@data),225L)
@@ -13,9 +13,9 @@ test_that("simulate planning units functions", {
 
 test_that("simulate space functions", {
 # 	generate planning units
-	pus=simulate.pus(n=225L)
+	pus=sim.pus(n=225L)
 # 	generate spaces
-	spaces=simulate.space(pus, res=1, d=5)
+	spaces=sim.space(pus, res=1, d=5)
 # 	check simulated dataset
 	expect_true(inherits(spaces, 'RasterStack'))
 	expect_equal(nlayers(spaces),5)
@@ -28,9 +28,9 @@ test_that("simulate space functions", {
 
 test_that("simulate species functions", {
 # 	generate planning units
-	pus=simulate.pus(n=225L)
+	pus=sim.pus(n=225L)
 # 	generate spaces
-	species=simulate.species(pus, res=1, n=5)
+	species=sim.species(pus, res=1, n=5)
 # 	check simulated dataset
 	expect_true(inherits(species, 'RasterStack'))
 	expect_equal(nlayers(species),5)

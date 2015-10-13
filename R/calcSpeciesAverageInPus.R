@@ -1,14 +1,15 @@
 #' @include RcppExports.R
 NULL
 
-#' @export
+#' @method calcSpeciesAverageInPus SpatialPolygons
 #' @rdname calcSpeciesAverageInPus
+#' @export
 calcSpeciesAverageInPus.SpatialPolygons<-function(x,y,ids=seq_len(nlayers(y)), ncores=1, gdal=FALSE, ...) {
 	# check for invalid inputs
 	stopifnot(inherits(y, "Raster"))
 	stopifnot(nlayers(y)!=length(ids))
 	return(
-		calcPuVsSpeciesData.SpatialPolygonsDataFrame(
+		calcSpeciesAverageInPus.SpatialPolygonsDataFrame(
 			x=SpatialPolygonsDataFrame(x@polygons, data=data.frame(id=seq_len(nrow(x@data)), row.names=laply(x@polygons, slot, name="ID"))),
 			y=y,
 			ids=ids,
@@ -19,8 +20,9 @@ calcSpeciesAverageInPus.SpatialPolygons<-function(x,y,ids=seq_len(nlayers(y)), n
 	)
 }
 
-#' @export
+#' @method calcSpeciesAverageInPus SpatialPolygonsDataFrame
 #' @rdname calcSpeciesAverageInPus
+#' @export
 calcSpeciesAverageInPus.SpatialPolygonsDataFrame<-function(x,y,ids=seq_len(nlayers(y)), ncores=1, gdal=FALSE, field=NULL, ...) {
 	# check for invalid inputs
 	stopifnot(inherits(y, "Raster"))
@@ -40,7 +42,7 @@ calcSpeciesAverageInPus.SpatialPolygonsDataFrame<-function(x,y,ids=seq_len(nlaye
 	}
 	# generate raster layer with polygons
 	if (gdal & is.gdalInstalled()) {
-		x<-rasterize.gdal(x, y[[1]], "id")
+		x<-rasterizeGDAL(x, y[[1]], "id")
 	} else {
 		if (gdal & !is.gdalInstalled())
 			warning('GDAL is not installed on this computer, using raster::rasterize for processing')

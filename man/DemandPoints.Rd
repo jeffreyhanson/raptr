@@ -6,16 +6,14 @@
 \usage{
 DemandPoints(points, weights)
 }
+\arguments{
+\item{points}{\code{SimplePoints} coordinates for each demand point in the attribute space.}
+
+\item{weights}{\code{numeric} weights for each demand poont.}
+}
 \description{
 This funciton creates a new DemandPoints object
 }
-\section{Slots}{
-
-\describe{
-\item{\code{points}}{\code{SimplePoints} coordinates for each demand point in the attribute space.}
-
-\item{\code{weights}}{\code{numeric} weights for each demand poont.}
-}}
 \seealso{
 \code{\link{DemandPoints-class}}
 }

@@ -25,7 +25,7 @@ setClass("SimplePoints",
 #'
 #' This function creates a new \code{SimplePoints} object.
 #'
-#' @slot coords \code{matrix} coordinates for each point.
+#' @param coords \code{matrix} coordinates for each point.
 #' @seealso \code{\link{DemandPoints-class}}, \code{\link{AttributeSpace-class}}.
 #' @export
 SimplePoints<-function(coords) {

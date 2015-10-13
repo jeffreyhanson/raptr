@@ -4,8 +4,8 @@
 \alias{RaspResults}
 \title{Create RaspResults object}
 \usage{
-RaspResults(summary, selections, amount.held, space.held, model.file, log.file,
-  solution.file)
+RaspResults(summary, selections, amount.held, space.held, model.file,
+  logging.file, solution.file)
 }
 \arguments{
 \item{summary}{\code{data.frame} with summary information on solutions.}
@@ -18,7 +18,7 @@ RaspResults(summary, selections, amount.held, space.held, model.file, log.file,
 
 \item{model.file}{\code{character} with Gurobi model file.}
 
-\item{log.file}{\code{character} with Gurobi log file.}
+\item{logging.file}{\code{character} with Gurobi log file.}
 
 \item{solution.file}{\code{character} with Gurobi solution file.}
 }

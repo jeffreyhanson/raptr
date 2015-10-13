@@ -10,14 +10,12 @@
 
 \method{amount.held}{RaspSolved}(x, y = 0)
 
-amount.held(x, ...)
+amount.held(x, y)
 }
 \arguments{
 \item{x}{\code{RaspResults} or \code{RaspSolved} object.}
 
 \item{y}{\code{NULL} to return all values, \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.}
-
-\item{...}{not used.}
 }
 \value{
 \code{matrix} or \code{numeric} vector depending on arguments.
@@ -26,6 +24,6 @@ amount.held(x, ...)
 This function returns the amount held for each species in a solution.
 }
 \seealso{
-\code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}
+\code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}.
 }
 

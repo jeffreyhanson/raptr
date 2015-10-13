@@ -23,7 +23,7 @@ GurobiOpts(Threads = 1L, MIPGap = 0.05, Presolve = 2L,
 This function creates a new GurobiOpts object.
 }
 \examples{
-x<-GurobiOpts(Threads=2)
+x<-GurobiOpts(Threads=2L)
 }
 \seealso{
 \code{\link{GurobiOpts-class}}.
