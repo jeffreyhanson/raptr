@@ -8,7 +8,7 @@ env:
 
 before_install: 
   - echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
-  - sudo apt-get install libgeos-c1
+  - sudo apt-get install -y libgeos-c1
   
 r_binary_packages:
   - boot
@@ -24,7 +24,6 @@ r_binary_packages:
   - plyr
   - doSNOW
   - snow
-  - rgeos
   - hypervolume
   - sm
   - dismo
