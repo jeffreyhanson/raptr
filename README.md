@@ -5,7 +5,7 @@ raspr
 [![Coverage Status](https://codecov.io/github/paleo13/rapsr/coverage.svg?branch=master)](https://codecov.io/github/paleo13/rapsr?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/raspr)](http://cran.r-project.org/package=raspr)
 
-Biodiversity is in crisis. The overarching aim of conservation is to preserve biodiversity patterns and processes. To this end, protected areas are established to buffer species and preserve biodiversity processes. But resources are limited and so protected areas must be cost-effective. This package contains functions to generate plans for protected areas--prioritisations--using the Representative and Adequate Sample Problem (RASP). Reserve selection problems are expressed as a mixed linear integer problem (MILP) and solved using exact-algorithm methods. Prioritisations can be obtained using \Gurobi (obtained from <http://www.gurobi.com/>).
+Biodiversity is in crisis. The overarching aim of conservation is to preserve biodiversity patterns and processes. To this end, protected areas are established to buffer species and preserve biodiversity processes. But resources are limited and so protected areas must be cost-effective. This package contains functions to generate plans for protected areas--prioritisations--using the Representative and Adequate Sample Problem (RASP). Reserve selection problems are expressed as a mixed linear integer problem (MILP) and solved using exact-algorithm methods. Prioritisations can be obtained using [Gurobi](http://www.gurobi.com/).
 
 Linux and Mac OSX users will first need to install several dependencies. To install them, type the following code in the bash or the terminal:
 
