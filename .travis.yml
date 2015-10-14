@@ -6,8 +6,10 @@ env:
   global:
     - NOT_CRAN=true
 
-before_install: echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
-
+before_install: 
+  - echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
+  - sudo apt-get install libgeos-c1
+  
 r_binary_packages:
   - boot
   - PBSmapping
