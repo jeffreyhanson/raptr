@@ -5,10 +5,14 @@ warnings_are_errors: true
 env:
   global:
     - NOT_CRAN=true
+    - _R_CHECK_FORCE_SUGGESTS_=False
 
+apt_packages:
+  - libgeos-dev
+  - libgeos-c1    
+    
 before_install: 
   - echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
-  - sudo apt-get install -y libgeos-c1
   
 r_binary_packages:
   - boot
@@ -24,6 +28,7 @@ r_binary_packages:
   - plyr
   - doSNOW
   - snow
+  - rgeos
   - hypervolume
   - sm
   - dismo

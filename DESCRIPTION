@@ -1,6 +1,6 @@
 Package: raspr
 Type: Package
-Title: raspr: identify prioritisations using the Representative and Adequate
+Title: Identify Prioritisations using the Representative and Adequate
     Sample Problem (RASP)
 Version: 0.0.2
 Date: 2015-07-12
@@ -15,7 +15,7 @@ Description: Biodiversity is in crisis. The overarching aim of conservation
     prioritisations--using the Representative and Adequate Sample Problem (RASP).
     Reserve selection problems are expressed as a mixed linear integer problem
     (MILP) and solved using exact-algorithm methods. Prioritisations can be obtained
-    using Gurobi (obtained from <http://www.gurobi.com/>).
+    using 'Gurobi' (obtained from <http://www.gurobi.com/>).
 Imports:
     boot,
     PBSmapping,
@@ -48,10 +48,7 @@ LinkingTo: Rcpp,
 LazyData: true
 License: GPL-3
 VignetteBuilder: knitr
-Suggests:
-    knitr,
-    testthat,
-    gurobi
+Suggests: knitr, testthat, gurobi
 SystemRequirements: C++11
 Collate:
     'dependencies.R'
