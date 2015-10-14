@@ -28,7 +28,6 @@ r_binary_packages:
   - plyr
   - doSNOW
   - snow
-  - rgeos
   - hypervolume
   - sm
   - dismo
