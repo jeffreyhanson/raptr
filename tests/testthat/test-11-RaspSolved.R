@@ -13,8 +13,8 @@ if (is.GurobiInstalled()) {
 	ru1<-RaspUnsolved(ro1, go, rd)
 	ru2<-RaspUnsolved(ro2, go, rd)
 	# solve it
-	rs1<-solve(ru1)
-	rs2<-solve(ru2)
+	rs1<-raspr::solve(ru1)
+	rs2<-raspr::solve(ru2)
 
 	### tests
 	test_that('plotting function (x=RaspSolved, y=NULL)', {
@@ -67,17 +67,9 @@ if (is.GurobiInstalled()) {
 	})
 
 	test_that('logging.file', {
-		expect_identical(logging.file(rs1), rs1@results@logging.file)
-	})
-
-
-	test_that('model.file', {
-		expect_identical(model.file(rs1), rs1@results@model.file)
-	})
-
-
-	test_that('solution.file', {
-		expect_identical(solution.file(rs1), rs1@results@solution.file)
+		expect_identical(logging.file(rs1), rs1@results@logging.file[rs1@results@best])
+		expect_identical(logging.file(rs1, NULL), rs1@results@logging.file)
+		expect_identical(logging.file(rs1, 1), rs1@results@logging.file[1])
 	})
 }
 

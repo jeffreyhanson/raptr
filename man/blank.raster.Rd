@@ -14,4 +14,9 @@ blank.raster(x, res)
 \description{
 This functions creates a blank raster based on the spatial extent of a Spatial object.
 }
+\examples{
+data(sim_pus)
+x <- blank.raster(sim_pus, 1)
+print(x)
+}
 

@@ -9,11 +9,29 @@ env:
 before_install: echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
 
 r_binary_packages:
-  - NMF
-  - igraph
+  - boot
+  - PBSmapping
+  - scales
+  - shape
+  - Matrix
+  - adehabitatHR
+  - RgoogleMaps
+  - RandomFields
+  - RColorBrewer
+  - Rcpp
+  - plyr
+  - parallel
+  - doSNOW
+  - snow
+  - rgeos
+  - hypervolume
+  - sm
+  - dismo
+  - gdalUtils
+  - mvtnorm
+  - sp
   - rgdal
   - raster
-  - lpSolveAPI
 
 r_github_packages:
   - rstudio/rmarkdown

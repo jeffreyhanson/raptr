@@ -61,7 +61,10 @@ setClass("GurobiOpts",
 #' @seealso \code{\link{GurobiOpts-class}}.
 #' @export
 #' @examples
-#' x<-GurobiOpts(Threads=2L)
+#' # create GurobiOpts object using default parameters
+#' x <- GurobiOpts(Threads=1L, MIPGap=0.05, Presolve=2L, TimeLimit=NA_integer_)
+#' # print object
+#' print(x)
 #' @export
 GurobiOpts<-function(Threads=1L, MIPGap=0.05, Presolve=2L, TimeLimit=NA_integer_) {
 	go<-new("GurobiOpts", Threads=Threads, MIPGap=MIPGap, Presolve=Presolve, TimeLimit=TimeLimit)
@@ -90,6 +93,18 @@ setMethod(
 		print.GurobiOpts(object)
 )
 
-
+#' @method as.list GurobiOpts
+#' @rdname as.list
+#' @export
+as.list.GurobiOpts<-function(x, ...) {
+	y=list(	
+		Threads=x@Threads,
+		MIPGap=x@MIPGap,
+		Presolve=x@Presolve
+	)
+	if (is.finite(x@TimeLimit))
+		y=append(y, list(TimeLimit=x@TimeLimit))
+	return(y)
+}
 
 

@@ -5,3 +5,5 @@ admin
 admin.R
 NEWS.md
 gurobi.log
+cran-comments.md
+^revdep$

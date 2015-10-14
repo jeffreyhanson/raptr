@@ -20,11 +20,14 @@
 
 #' @importFrom shape colorlegend
 
-#' @importFrom methods setMethod
+#' @importFrom methods setOldClass
+#' @importFrom methods setClassUnion
 
 #' @importFrom Rcpp evalCpp
 
 #' @importFrom sm sm.density
+
+#' @importFrom Matrix sparseMatrix
 
 #' @importFrom boot inv.logit
 

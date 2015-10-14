@@ -1,6 +1,6 @@
 test_that('RaspData', {
 	# load data
-	data(cs_pus, cs_spp, cs_bio12)
+	data(cs_pus, cs_spp, cs_space)
 	# preliminary processing
 	attribute.spaces=list(
 		AttributeSpace(
@@ -8,8 +8,8 @@ test_that('RaspData', {
 			dp=list(make.DemandPoints(SpatialPoints(coords=dismo::randomPoints(cs_spp, n=100, prob=TRUE)), NULL))
 		),
 		AttributeSpace(
-			pu=SimplePoints(extract(cs_bio12,cs_pus[1:10,],fun=mean)),
-			dp=list(make.DemandPoints(SpatialPoints(coords=dismo::randomPoints(cs_spp, n=100, prob=TRUE)), cs_bio12))
+			pu=SimplePoints(extract(cs_space[[1]],cs_pus[1:10,],fun=mean)),
+			dp=list(make.DemandPoints(SpatialPoints(coords=dismo::randomPoints(cs_spp, n=100, prob=TRUE)), cs_space[[1]]))
 		)
 	)
 	pu.species.probabilities=calcSpeciesAverageInPus(cs_pus[1:10,], cs_spp)
@@ -35,9 +35,10 @@ test_that('RaspData', {
 
 test_that('make.RaspData', {
 	# load data
-	data(cs_pus, cs_spp, cs_bio12)
+	data(cs_pus, cs_spp, cs_space)
 	# create object
-	x<-make.RaspData(cs_pus[1:10,], cs_spp, cs_bio12, include.geographic.space=TRUE)
+	x<-make.RaspData(cs_pus[1:10,], cs_spp, cs_space, include.geographic.space=TRUE)
 	# tests are implicit in the validity method when creating the object
 	
 })
+

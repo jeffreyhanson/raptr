@@ -2,7 +2,7 @@ Package: raspr
 Type: Package
 Title: raspr: identify prioritisations using the Representative and Adequate
     Sample Problem (RASP)
-Version: 0.0.1
+Version: 0.0.2
 Date: 2015-07-12
 Authors@R: c(person(c("Jeffrey", "O"), "Hanson", email='jeffrey.hanson@uqconnect.edu.au', role = c("aut", "cre")),
 	person(c("Jonathon", "R"), "Rhodes", role = c("aut")),
@@ -21,6 +21,7 @@ Imports:
     PBSmapping,
     scales,
     shape,
+    Matrix,
     adehabitatHR,
     RgoogleMaps,
     RandomFields,
@@ -37,6 +38,7 @@ Imports:
     gdalUtils,
     mvtnorm
 Depends:
+    R(>= 3.1.0),
     methods,
     sp,
     rgdal,
@@ -48,7 +50,8 @@ License: GPL-3
 VignetteBuilder: knitr
 Suggests:
     knitr,
-    testthat
+    testthat,
+    gurobi
 SystemRequirements: C++11
 Collate:
     'dependencies.R'

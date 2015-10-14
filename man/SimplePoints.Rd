@@ -12,6 +12,22 @@ SimplePoints(coords)
 \description{
 This function creates a new \code{SimplePoints} object.
 }
+\examples{
+# create 150 1d points
+x1 <- SimplePoints(
+	matrix(rnorm(150), ncol=1)
+)
+
+# create 100 2d points
+x2 <- SimplePoints(
+	matrix(rnorm(200), ncol=2)
+)
+
+# create 200 3d points
+x3 <- SimplePoints(
+	matrix(runif(600), ncol=3)
+)
+}
 \seealso{
 \code{\link{DemandPoints-class}}, \code{\link{AttributeSpace-class}}.
 }

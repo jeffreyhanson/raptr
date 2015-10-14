@@ -6,15 +6,27 @@
 
 using namespace Rcpp;
 
-// rcpp_append_modelfile
-std::string rcpp_append_modelfile(std::string model, Rcpp::List existing_sols);
-RcppExport SEXP raspr_rcpp_append_modelfile(SEXP modelSEXP, SEXP existing_solsSEXP) {
+// rcpp_Polygons2PolySet
+Rcpp::DataFrame rcpp_Polygons2PolySet(Rcpp::List polys, std::size_t n_preallocate);
+RcppExport SEXP raspr_rcpp_Polygons2PolySet(SEXP polysSEXP, SEXP n_preallocateSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< std::string >::type model(modelSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type polys(polysSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type n_preallocate(n_preallocateSEXP);
+    __result = Rcpp::wrap(rcpp_Polygons2PolySet(polys, n_preallocate));
+    return __result;
+END_RCPP
+}
+// rcpp_append_model_object
+Rcpp::List rcpp_append_model_object(Rcpp::List model, Rcpp::List existing_sols);
+RcppExport SEXP raspr_rcpp_append_model_object(SEXP modelSEXP, SEXP existing_solsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< Rcpp::List >::type model(modelSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type existing_sols(existing_solsSEXP);
-    __result = Rcpp::wrap(rcpp_append_modelfile(model, existing_sols));
+    __result = Rcpp::wrap(rcpp_append_model_object(model, existing_sols));
     return __result;
 END_RCPP
 }
@@ -33,29 +45,29 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_extract_model_results
-Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, std::vector<std::string> model_file, std::vector<std::string> log_file, std::vector<std::string> solution_file);
-RcppExport SEXP raspr_rcpp_extract_model_results(SEXP optsSEXP, SEXP dataSEXP, SEXP model_fileSEXP, SEXP log_fileSEXP, SEXP solution_fileSEXP) {
+Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List model, std::vector<std::string> logging_file, Rcpp::List solution);
+RcppExport SEXP raspr_rcpp_extract_model_results(SEXP optsSEXP, SEXP dataSEXP, SEXP modelSEXP, SEXP logging_fileSEXP, SEXP solutionSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< Rcpp::S4 >::type opts(optsSEXP);
     Rcpp::traits::input_parameter< Rcpp::S4 >::type data(dataSEXP);
-    Rcpp::traits::input_parameter< std::vector<std::string> >::type model_file(model_fileSEXP);
-    Rcpp::traits::input_parameter< std::vector<std::string> >::type log_file(log_fileSEXP);
-    Rcpp::traits::input_parameter< std::vector<std::string> >::type solution_file(solution_fileSEXP);
-    __result = Rcpp::wrap(rcpp_extract_model_results(opts, data, model_file, log_file, solution_file));
+    Rcpp::traits::input_parameter< Rcpp::List >::type model(modelSEXP);
+    Rcpp::traits::input_parameter< std::vector<std::string> >::type logging_file(logging_fileSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type solution(solutionSEXP);
+    __result = Rcpp::wrap(rcpp_extract_model_results(opts, data, model, logging_file, solution));
     return __result;
 END_RCPP
 }
-// rcpp_generate_modelfile
-std::string rcpp_generate_modelfile(Rcpp::S4 opts, Rcpp::S4 data);
-RcppExport SEXP raspr_rcpp_generate_modelfile(SEXP optsSEXP, SEXP dataSEXP) {
+// rcpp_generate_model_object
+Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data);
+RcppExport SEXP raspr_rcpp_generate_model_object(SEXP optsSEXP, SEXP dataSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< Rcpp::S4 >::type opts(optsSEXP);
     Rcpp::traits::input_parameter< Rcpp::S4 >::type data(dataSEXP);
-    __result = Rcpp::wrap(rcpp_generate_modelfile(opts, data));
+    __result = Rcpp::wrap(rcpp_generate_model_object(opts, data));
     return __result;
 END_RCPP
 }
@@ -79,18 +91,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< IntegerVector >::type cat_vec(cat_vecSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type val_vec(val_vecSEXP);
     __result = Rcpp::wrap(rcpp_groupmean(cat_vec, val_vec));
-    return __result;
-END_RCPP
-}
-// rcpp_Polygons2PolySet
-Rcpp::DataFrame rcpp_Polygons2PolySet(Rcpp::List polys, std::size_t n_preallocate);
-RcppExport SEXP raspr_rcpp_Polygons2PolySet(SEXP polysSEXP, SEXP n_preallocateSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< Rcpp::List >::type polys(polysSEXP);
-    Rcpp::traits::input_parameter< std::size_t >::type n_preallocate(n_preallocateSEXP);
-    __result = Rcpp::wrap(rcpp_Polygons2PolySet(polys, n_preallocate));
     return __result;
 END_RCPP
 }

@@ -19,6 +19,16 @@ RaspUnsolved(opts, gurobi, data)
 \description{
 This function creates a \code{RaspUnsolved} object using \code{RaspOpts} and \code{RaspData} objects.
 }
+\examples{
+data(sim_pus, sim_spp)
+# create inputs for RaspUnsolved
+go <- GurobiOpts(MIPGap=0.9)
+ro <- RaspOpts(NUMREPS=1L, FAILUREMULTIPLIER=1.1)
+rd <- make.RaspData(sim_pus[1:10,], sim_spp, NULL, include.geographic.space=TRUE,n.demand.points=5L)
+# create RaspUnsolved object
+ru <- RaspUnsolved(ro, go, rd)
+print(ru)
+}
 \seealso{
 \code{\link{RaspOpts-class}},  \code{\link{GurobiOpts-class}}, \code{\link{RaspData-class}}.
 }

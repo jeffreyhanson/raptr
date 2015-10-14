@@ -13,50 +13,63 @@
 #' The objects contained in this dataset are:
 #' \itemize{
 #'	\item sim_pus: A \code{SpatialPolygonsDataFrame} with 225 planning units.
-#'	\item sim_species: A \code{RasterStack} containg probability distribution data for each of the species.
-#'	\item sim_demandpoints: A \code{list} of \code{DemandPoints} for each species.
+#'	\item sim_spp: A \code{RasterStack} containg probability distribution data for each of the species.
+#'	\item sim_dps: A \code{list} of \code{DemandPoints} for each species.
 #' }
 #'
 #' @docType data
-#' @aliases sim_pus
-#' @aliases sim_spp
-#' @aliases sim_dps
+#' @format \code{SpatialPolyognsDataFrame}, \code{RasterStack}, \code{list} of \code{DemandPoint} objects.
+#' @aliases sim_pus sim_spp sim_dps
 #' @keywords datasets
-#' @name simulated_data
+#' @name simulated_data 
 #' @examples
 #' # load data
-#' data(sim_plus)
-#' data(sim_spp)
-#' data(sim_dps)
+#' data(sim_pus, sim_spp, sim_dps)
 #' # plot data
-#' plot(sim_plus)
+#' plot(sim_pus)
 #' plot(sim_spp)
 NULL
+
+#' @rdname simulated_data
+"sim_pus"
+
+#' @rdname simulated_data
+"sim_spp"
+
+#' @rdname simulated_data
+"sim_dps"
 
 
 #' Case-study dataset for a conservation planning exercise
 #' 
-#' This dataset contains data to generate example prioritisations for the pale-headed Rosella (\textit{Platycercus adscitus}). Specific objects in the dataset include:
+#' This dataset contains data to generate example prioritisations for the pale-headed Rosella (\emph{Platycercus adscitus}) in Queensland, Australia. Specific objects in the dataset include:
 #' \itemize{
-#'	\item cs_spp: \code{RasterLayer} probability distribution map for the \textit{P. adscitus} dervived from records in the BirdLife Altas Database (\url{http://birdata.com.au/}).
-#'	\item cs_pus: \code{SpatialPolygonsDataFrame} planning units. The units were generated as $10km^2$ squares across the species' range, and then clipped to the coast-line. They were then overliad with Australia's protected area network (obtained from the World Database on Protected Areas (WDPA) at \url{http://www.protectedplanet.net/}). This attribute table has 3 fields. The 'area' field contains the units' area, the 'cost' field is set to 1 for all units, and the 'status' filed indicates if 50\% or moer of the units' extent is covered by protected areas.
-#'	\item cs_bio12: \code{RasterLayer} containing annual precipitation data across the species range (obtained from \url{http://www.worldclim.org/} as BIO12, and resampled ot $10km^2$ resolution).
+#'	\item cs_pus: \code{SpatialPolygonsDataFrame} planning units. The units were generated as \eqn{10km^2} squares across the species' range, and then clipped to the Queensland, Australia (using data obtained from the \href{Australia Bureau of Statistics}{http://www.abs.gov.au/ausstats/abs@@.nsf/mf/1259.0.30.001?OpenDocument}). They were then overliad with Australia's protected area network (obtained from the World Database on Protected Areas (WDPA) at \url{http://www.protectedplanet.net/}). This attribute table has 3 fields. The 'area' field contains the units' area, the 'cost' field is set to 1 for all units, and the 'status' filed indicates if 50\% or more of the units' extent is covered by protected areas.
+#'	\item cs_spp: \code{RasterLayer} probability distribution map for the \emph{P. adscitus} clipped to Queensland, Australia. This map was dervived from records in the BirdLife Altas Database (\url{http://birdata.com.au/}).
+#'	\item cs_space: \code{RasterStack} describing broad-scale variation across Queensland. containing the projections of the first two axes from a annual precipitation data across the species range (obtained from \url{http://www.worldclim.org/} as BIO12, and resampled ot \eqn{10km^2} resolution).
 #' }
 #'
 #' @docType data
-#' @aliases cs_pus
-#' @aliases cs_spp
-#' @aliases cs_bio12
+#' @aliases cs_pus cs_spp cs_space
+#' @format \code{SpatialPolyognsDataFrame}, \code{RasterLayer}, \code{RasterLayer}.
 #' @keywords datasets
 #' @name casestudy_data
 #' @examples
 #' # load data
-#' data(cs_pus)
-#' data(cs_spp)
-#' data(cs_bio12)
+#' data(cs_pus, cs_spp, cs_space)
 #' # plot data
-#' spplot(cs_pus, field=status)
+#' \dontrun{
+#' plot(cs_pus)
 #' plot(cs_spp)
-#' plot(cs_bio12)
+#' plot(cs_space)
+#' }
 NULL
 
+#' @rdname casestudy_data
+"cs_pus"
+
+#' @rdname casestudy_data
+"cs_space"
+
+#' @rdname casestudy_data
+"cs_spp"

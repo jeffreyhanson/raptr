@@ -11,4 +11,7 @@
 \description{
 Extracts summary of solutions in a \code{RaspResults} or \code{RaspSolved} object.
 }
+\seealso{
+\code{RaspResults}, \code{RaspSolved}.
+}
 

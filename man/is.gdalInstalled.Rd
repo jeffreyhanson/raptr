@@ -14,7 +14,10 @@ This function tests if GDAL is installed on the computer.
 If not, download it here: \url{http://download.osgeo.org/gdal}.
 }
 \examples{
+# check if gdal is installed on system
+\dontrun{
 is.gdalInstalled()
+}
 }
 \seealso{
 \code{\link[gdalUtils]{gdal_setInstallation}}.

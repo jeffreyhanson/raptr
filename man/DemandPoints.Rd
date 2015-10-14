@@ -14,6 +14,12 @@ DemandPoints(points, weights)
 \description{
 This funciton creates a new DemandPoints object
 }
+\examples{
+dps <- DemandPoints(
+	SimplePoints(matrix(rnorm(100), ncol=2)),
+	runif(50)
+)
+}
 \seealso{
 \code{\link{DemandPoints-class}}
 }

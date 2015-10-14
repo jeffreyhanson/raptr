@@ -35,7 +35,7 @@ using namespace Rcpp;
       inline std::string num2str(T number, int precision=10)
       {
 	std::ostringstream ss;
-	ss << std::setprecision(precision) << number;
+	ss << std::fixed << std::setprecision(precision) << number;
 	return(ss.str());
       }
       
@@ -54,8 +54,8 @@ using namespace Rcpp;
 	  LINE(){};
 	  LINE(int pid, int pos0, int pos1, double x0, double y0, double x1, double y1, int tol) 
 	    : _pid(pid), _pos0(pos0), _pos1(pos1), _x0(x0), _y0(y0), _x1(x1), _y1(y1) {
-	      if (_x0 > _x1 || _y0 > _y1) {
-		_key = num2str<double>(_x0,tol) + "," + num2str<double>(_y0,tol) + ";" +num2str<double>(_x1,tol) + "," + num2str<double>(_y1,tol);
+	      if (_x0 > _x1 || (_x0 == _x1 && _y0 > _y1)) {
+		   _key = num2str<double>(_x0,tol) + "," + num2str<double>(_y0,tol) + ";" +num2str<double>(_x1,tol) + "," + num2str<double>(_y1,tol);
 	      } else {
 		_key = num2str<double>(_x1,tol) + "," + num2str<double>(_y1,tol) + ";" +num2str<double>(_x0,tol) + "," + num2str<double>(_y0,tol);
 	      }
@@ -122,7 +122,7 @@ using namespace Rcpp;
 
 
 		// calculation vars
-		int tol=(1.0/tolerance);
+		int tol = round(log10(1.0 / tolerance));
 		std::vector<int> pos_VINT(PID.size());
 		std::iota(pos_VINT.begin(), pos_VINT.end(), 1);
 		std::vector<std::string> line_key_VSTR;

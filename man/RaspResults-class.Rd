@@ -20,11 +20,7 @@ This class is used to store RASP results.
 
 \item{\code{best}}{\code{integer} with index of best solution.}
 
-\item{\code{model.file}}{\code{character} with Gurobi model file.}
-
-\item{\code{logging.file}}{\code{character} with Gurobi log file.}
-
-\item{\code{solution.file}}{\code{character} with Gurobi solution file.}
+\item{\code{logging.file}}{\code{character} Gurobi log files.}
 
 \item{\code{.cache}}{\code{environment} used to store extra data.}
 }}

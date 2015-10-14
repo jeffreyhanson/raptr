@@ -68,4 +68,7 @@ units contained in a single \code{RaspSolved} object. Additionally, two \code{Ra
 
 \item \code{x = RaspSolved,y = RaspSolved}: 
 }}
+\seealso{
+\code{RaspSolved}.
+}
 

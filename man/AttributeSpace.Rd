@@ -14,6 +14,19 @@ AttributeSpace(pu, dp)
 \description{
 This function creates a new \code{AttributeSpace} object.
 }
+\examples{
+space <- AttributeSpace(
+	pu <- SimplePoints(
+		matrix(rnorm(100), ncol=2)
+	),
+	dp <- list(
+	DemandPoints(
+			SimplePoints(matrix(rnorm(100), ncol=2)),
+			runif(50)
+		)
+	)
+)
+}
 \seealso{
 \code{\link{SimplePoints-class}}, \code{\link{DemandPoints-class}}.
 }

@@ -10,7 +10,7 @@
 \S4method{solve}{RaspSolved}(x, wd = tempdir(), clean = TRUE,
   force.reset = FALSE)
 
-\S4method{solve}{RaspUnsolved}(x, wd = tempdir(), clean = TRUE)
+\S4method{solve}{RaspUnsolved}(x)
 
 solve(x, ...)
 }
@@ -40,5 +40,8 @@ and returns a \code{RaspSolved} object with outputs in it.
 }}
 \note{
 This function is used to solve a \code{RaspUnsolved} object that has all of its inputs generated. The rasp function (without lower case 'r') provides a more general interface for generating inputs and outputs.
+}
+\seealso{
+\code{RaspUnsolved}, \code{RaspSolved}.
 }
 

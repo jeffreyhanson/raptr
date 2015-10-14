@@ -28,6 +28,16 @@ setClass("RaspUnsolved",
 #' @return \code{RaspUnsolved} object.
 #' @export
 #' @seealso  \code{\link{RaspOpts-class}},  \code{\link{GurobiOpts-class}}, \code{\link{RaspData-class}}.
+#' @examples
+#' data(sim_pus, sim_spp)
+#' # create inputs for RaspUnsolved
+#' go <- GurobiOpts(MIPGap=0.9)
+#' ro <- RaspOpts(NUMREPS=1L, FAILUREMULTIPLIER=1.1)
+#' rd <- make.RaspData(sim_pus[1:10,], sim_spp, NULL, include.geographic.space=TRUE,n.demand.points=5L)
+#' # create RaspUnsolved object
+#' ru <- RaspUnsolved(ro, go, rd)
+#' print(ru)
+
 RaspUnsolved<-function(opts, gurobi, data) {
 	return(new("RaspUnsolved", opts=opts, gurobi=gurobi, data=data))
 }
@@ -37,48 +47,47 @@ RaspUnsolved<-function(opts, gurobi, data) {
 setMethod(
 	'solve',
 	'RaspUnsolved',
-	function(x, wd=tempdir(), clean=TRUE) {
+	function(x) {
 		## init
 		# check that gurobi is installed
 		if (!is.null(options()$GurobiInstalled)) {
 			if (!options()$GurobiInstalled) {
-				stop('Gurobi is either not installed, or the licensing information has not been configured.')
+				stop('The gurobi R package has not been installed, or Girobi has not been installation has not been completed')
 			}
 		} else {
 			is.GurobiInstalled()
 		}
 		
-		# generate model file
-		pth=tempfile(tmpdir=wd)
-		model=rcpp_generate_modelfile(x@opts, x@data)
-		writeLines(model, paste0(pth,'.lp'))
+		# generate model object
+		model=rcpp_generate_model_object(x@opts, x@data)
+		model$A=sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value)
 		
 		## first run
 		# run model
-		call.Gurobi(x@gurobi, paste0(pth, '.lp'), paste0(pth, '.log'), paste0(pth, '.sol'), verbose=TRUE)
+		log.pth=tempfile(fileext='.log')
+		gparams=append(as.list(x@gurobi), list("LogFile"=log.pth))
+		solution<-gurobi::gurobi(model, gparams)
 		
 		# store results
-		results=list(read.RaspResults(x@opts, x@data, readLines(paste0(pth, '.lp')), readLines(paste0(pth, '.log')), readLines(paste0(pth, '.sol'))))
+		results=list(read.RaspResults(x@opts, x@data, model, paste(readLines(log.pth), collapse="\n"), solution))
 		existing.solutions=list(selections(results[[1]]))
 		
 		## subsequent runs
 		for (i in seq_len(x@opts@NUMREPS-1)) {
-			# create new model file, excluding existing solutions as valid solutions to ensure a different solution is obtained
-			pth=tempfile(tmpdir=wd)
-			model=rcpp_append_modelfile(results[[i]]@model.file, existing.solutions)
-			writeLines(model, paste0(pth,'.lp'))
+			# create new model object, excluding existing solutions as valid solutions to ensure a different solution is obtained
+			model=rcpp_append_model_object(model, existing.solutions[length(existing.solutions)])
+			model$A=sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value)
 			
 			# run model
-			call.Gurobi(x@gurobi, paste0(pth, '.lp'), paste0(pth, '.log'), paste0(pth, '.sol'), verbose=TRUE)
+			solution=gurobi::gurobi(model, gparams)
 		
 			# load results
-			currResultFile=readLines(paste0(pth, '.sol'))
-			if (length(currResultFile)==0) {
+			if (solution$status=="INFEASIBLE") {
 				warning(paste0('only ',i,' solutions found\n'))
 				break
 			}
 			# store results
-			currResult=read.RaspResults(x@opts,x@data, readLines(paste0(pth, '.lp')), readLines(paste0(pth, '.log')), currResultFile)
+			currResult=read.RaspResults(x@opts,x@data, model, paste(readLines(log.pth), collapse="\n"), solution)
 			results=append(results,currResult)
 			existing.solutions=append(existing.solutions, list(selections(currResult)))
 		}

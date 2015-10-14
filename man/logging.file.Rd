@@ -6,19 +6,26 @@
 \alias{logging.file.RaspSolved}
 \title{Log file}
 \usage{
-\method{logging.file}{RaspResults}(x)
+\method{logging.file}{RaspResults}(x, y = 0)
 
-\method{logging.file}{RaspSolved}(x)
+\method{logging.file}{RaspSolved}(x, y = 0)
 
-logging.file(x)
+logging.file(x, y)
 }
 \arguments{
 \item{x}{\code{RaspResults} or \code{RaspSolved} object.}
+
+\item{y}{\code{NULL} to return all values, \code{integer} 0 to return the log file for best solution, \code{integer} value greater than 0 for log file for the \code{y}'th solution.}
 }
 \description{
 This function returns the Gurobi log file (*.log) associated with solving RASP.
 }
+\note{
+The term logging file was used due to collisions with the \code{log} function in base R.
+}
 \seealso{
 \code{\link{RaspResults-class}}, \code{\link{RaspSolved-class}}, \code{\link{rasp}}.
+
+\code{RaspResults}, \code{RaspSolved}.
 }
 

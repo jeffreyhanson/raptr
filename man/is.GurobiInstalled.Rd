@@ -4,17 +4,24 @@
 \alias{is.GurobiInstalled}
 \title{Test if Gurobi is installed on computer}
 \usage{
-is.GurobiInstalled()
+is.GurobiInstalled(verbose = TRUE)
+}
+\arguments{
+\item{verbose}{\code{logical} should messages be printed?}
 }
 \value{
 \code{logical} Is it installed and ready to use?
 }
 \description{
-This function determines if Gurobi is installed on the computer, check that its licensing is set up, and will store the path in \code{\link[base]{options}}.
+This function determines if the Gurobi R package is installed on the computer and that it can be used \code{\link[base]{options}}.
 }
 \examples{
+\dontrun{
+# check if Gurobi is installed
 is.GurobiInstalled()
+# print cached status of installation
 options()$GurobiInstalled
+}
 }
 \seealso{
 \code{\link[base]{options}}.

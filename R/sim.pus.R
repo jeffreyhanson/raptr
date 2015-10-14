@@ -14,6 +14,16 @@ NULL
 #' @details Square planning units are generated in the shape of a square. Default coordinate arguments are such that the planning units will be centered at origin.
 #' The data slot contains an 'id' (\code{integer}), cost (\code{numeric}), 'status' (\code{integer}), and area (\code{numeric}).
 #' @export sim.pus
+#' @examples
+#' # generate 225 sqauare planning units arranged in a square with 1 unit height/width
+#' x <- sim.pus(225)
+#' # generate 225 rectangular pus arranged in a square 
+#' y <- sim.pus(225, xmn=-5, xmx=10, ymn=-5, ymx=5)
+#' \dontrun{
+#' par(mfrow=c(1,2))
+#' plot(x, main='x')
+#' plot(y, main='y')
+#' }
 sim.pus <- function(n, xmn=-sqrt(n)/2, xmx=sqrt(n)/2, ymn=-sqrt(n)/2, ymx=sqrt(n)/2) {
 	# check n has valid square root
 	if (sqrt(n)!=ceiling(sqrt(n)))

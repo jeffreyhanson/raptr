@@ -23,7 +23,10 @@ GurobiOpts(Threads = 1L, MIPGap = 0.05, Presolve = 2L,
 This function creates a new GurobiOpts object.
 }
 \examples{
-x<-GurobiOpts(Threads=2L)
+# create GurobiOpts object using default parameters
+x <- GurobiOpts(Threads=1L, MIPGap=0.05, Presolve=2L, TimeLimit=NA_integer_)
+# print object
+print(x)
 }
 \seealso{
 \code{\link{GurobiOpts-class}}.

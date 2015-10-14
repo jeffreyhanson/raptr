@@ -39,9 +39,11 @@ Be aware that using polygons with overlaps will result in inaccuracies.
 By default all polygons will be treated as having separate ids.
 }
 \examples{
-data(species, pus)
-puvspr1.dat<-calcSpeciesAverageInPus(pus, species[[1]])
-puvspr2.dat<-calcSpeciesAverageInPus(pus, species)
+data(sim_pus, sim_spp)
+# calculate average for 1 species
+puvspr1.dat<-calcSpeciesAverageInPus(sim_pus[1:10,], sim_spp[[1]])
+# calculate average for multiple species
+puvspr2.dat<-calcSpeciesAverageInPus(sim_pus[1:10,], sim_spp)
 }
 \seealso{
 \code{\link{is.gdalInstalled}}, \url{http://www.gdal.org/}, \url{http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries}.

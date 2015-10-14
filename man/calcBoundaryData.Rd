@@ -35,8 +35,8 @@ function is used improperly, then it will crash R. Furthermore, multipart polygo
 If argument set to SpatialPolygons or SpatialPolygonsDataFrame, this will be converted to PolySet before processing.
 }
 \examples{
-data(pus)
-bound.dat <- calcBoundaryData(pus)
+data(sim_pus)
+bound.dat <- calcBoundaryData(sim_pus)
 summary(bound.dat)
 }
 \seealso{

@@ -17,6 +17,34 @@ RaspSolved(unsolved, results)
 \description{
 This function creates a \code{RaspSolved} object using a \code{RaspUnsolved} object and a \code{RaspResults} object.
 }
+\examples{
+\dontrun{
+data(sim_pus, sim_spp)
+# create inputs for a RaspUnsolved  object
+go <- GurobiOpts(MIPGap=0.9)
+rd <- make.RaspData(
+	sim_pus[1:10,],
+	sim_spp[[1]],
+	NULL,
+	include.geographic.space=TRUE,
+	n.demand.points=5L
+)
+ro <- RaspOpts(NUMREPS=1L)
+# create RaspUnsolved object
+ru <- RaspUnsolved(ro1, go, rd)
+# solve it to return a RaspSolved object
+rs1 <- (ru)
+# methods for RaspSolved
+print(rs)
+summary(rs)
+selections(rs)
+score(rs)
+amount.held(rs)
+space.held(rs)
+logging.file(rs)
+plot(rs)
+}
+}
 \seealso{
 \code{\link{RaspSolved-class}}, \code{\link{RaspResults-class}}.
 }

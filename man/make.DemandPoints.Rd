@@ -4,7 +4,7 @@
 \alias{make.DemandPoints}
 \title{Generate demand points for RASP}
 \usage{
-make.DemandPoints(species.points, space.rasters = NULL, n = 1000L,
+make.DemandPoints(species.points, space.rasters = NULL, n = 100L,
   quantile = 0.2, kernel.method = c("sm.density", "hypervolume")[1], ...)
 }
 \arguments{
@@ -12,7 +12,7 @@ make.DemandPoints(species.points, space.rasters = NULL, n = 1000L,
 
 \item{space.rasters}{\code{NULL}, \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} with projections of the attribute space over geographic space. If NULL (default) then geographic space is used.}
 
-\item{n}{\code{integer} number of demand points to use for each attribute space for each species. Defaults to 1000L.}
+\item{n}{\code{integer} number of demand points to use for each attribute space for each species. Defaults to 100L.}
 
 \item{quantile}{\code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.2.}
 
@@ -32,6 +32,23 @@ Volumes are then fit to the points in the attribute space(s). Points are randoml
 as random points inside the volume. A kernel is fit to the species records and used to predict the density at each of the demand points.
 By using 'sm.density' as an argument in \code{kernel.method}, the volume is fit as a minimum convex polygon using \code{\link[rgeos]{gConvexHull}} and
 \code{\link[sm]{sm.density}} is used to fit the kernel. Note this can only be used when the data is low-dimensional (d<3). By using
+}
+\examples{
+data(cs_spp, cs_space)
+# generate species points
+ species.points <- dismo::randomPoints(cs_spp, n=100, prob=TRUE, lonlatCorrection=FALSE)
+# generate demand points for a 1d space using sm.density
+dps1 <- make.DemandPoints(
+	species.points=species.points,
+	space.rasters=cs_space[[1]],
+	kernel.method='sm.density'
+)
+# generate demand points for a 2d space using hypervolume
+dps12 <- make.DemandPoints(
+	species.points=species.points,
+	space.rasters=cs_space,
+	kernel.method='hypervolume'
+)
 }
 \seealso{
 \code{\link[hypervolume]{hypervolume}}, \code{\link[sm]{sm.density}}, \code{\link[rgeos]{gConvexHull}}.

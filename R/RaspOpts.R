@@ -6,7 +6,7 @@ NULL
 #' This class is used to store RASP input parameters.
 #'
 #' @slot BLM \code{numeric} boundary length modifier. Defaults to 0.
-#' @slot FAILUREMULTIPLIER \code{numeric} multiplier for failure planning unit. Defaults to 1000.
+#' @slot FAILUREMULTIPLIER \code{numeric} multiplier for failure planning unit. Defaults to 1.1.
 #' @slot MAXRLEVEL \code{numeric} maximum R failure level for approximation. Defaults to 5L.
 #' @slot NUMREPS \code{integer} number of replicate runs. Defaults to 1L.
 #' @export
@@ -19,7 +19,7 @@ setClass("RaspOpts",
 	),
 	prototype=list(
 		BLM=0,
-		FAILUREMULTIPLIER=1000,
+		FAILUREMULTIPLIER=1.1,
 		MAXRLEVEL=5L,
 		NUMREPS=1L
 	),
@@ -50,16 +50,18 @@ setClass("RaspOpts",
 #' This function creates a new RaspOpts object.
 #'
 #' @param BLM \code{numeric} boundary length modifier. Defaults to 0.
-#' @param FAILUREMULTIPLIER \code{numeric} multiplier for failure planning unit. Defaults to 1000.
+#' @param FAILUREMULTIPLIER \code{numeric} multiplier for failure planning unit. Defaults to 1.1.
 #' @param MAXRLEVEL \code{numeric} maximum R failure level for approximation. Defaults to 5L.
 #' @param NUMREPS \code{integer} number of replicate runs. Defaults to 1L.
 #' @return \code{MarxanOpts} object
 #' @seealso \code{\link{RaspOpts-class}}.
 #' @export
 #' @examples
-#' x<-RaspOpts(BLM=1, NUMREPS=1L)
+#' # create RaspOpts using defaults
+#' x <- RaspOpts(BLM=0, FAILUREMULTIPLIER=1.1, MAXRLEVEL=5L, NUMREPS=1L)
+#' print(x)
 #' @export
-RaspOpts<-function(BLM=0, FAILUREMULTIPLIER=1000, MAXRLEVEL=5L, NUMREPS=1L) {
+RaspOpts<-function(BLM=0, FAILUREMULTIPLIER=1.1, MAXRLEVEL=5L, NUMREPS=1L) {
 	ro<-new("RaspOpts", BLM=BLM, FAILUREMULTIPLIER=FAILUREMULTIPLIER, MAXRLEVEL=MAXRLEVEL, NUMREPS=NUMREPS)
 	validObject(ro, test=FALSE)
 	return(ro)

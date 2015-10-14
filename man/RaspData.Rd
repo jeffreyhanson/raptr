@@ -33,6 +33,57 @@ This function creates a "RaspData" object using pre-processed data.
 \note{
 Generally, users are not encouraged to change arguments to \code{.cache}.
 }
+\examples{
+\dontrun{
+# create data for RaspData object
+data(cs_pus, cs_spp, cs_space)
+attribute.spaces=list(
+	AttributeSpace(
+		pu=SimplePoints(rgeos::gCentroid(cs_pus[1:10,], byid=TRUE)@coords),
+		dp=list(
+			make.DemandPoints(
+				SpatialPoints(
+					coords=dismo::randomPoints(
+						cs_spp,
+						n=10,
+						prob=TRUE
+					)
+				),
+				NULL
+			)
+		)
+	),
+	AttributeSpace(
+		pu=SimplePoints(extract(cs_space[[1]],cs_pus[1:10,],fun=mean)),
+		dp=list(
+			make.DemandPoints(
+				SpatialPoints(
+					coords=dismo::randomPoints(
+						cs_spp,
+						n=10,
+						prob=TRUE
+					)
+				),
+				cs_space[[1]]
+			)
+		)
+	)
+)
+pu.species.probabilities=calcSpeciesAverageInPus(cs_pus[1:10,], cs_spp)
+polygons=SpatialPolygons2PolySet(cs_pus[1:10,])
+boundary=calcBoundaryData(cs_pus[1:10,])
+
+x<-RaspData(
+	pu=cs_pus@data[1:10,],
+	species=data.frame(area.target=0.2, space.target=0.2, name='test'),
+	pu.species.probabilities=pu.species.probabilities,
+	attribute.spaces=attribute.spaces,
+	polygons=polygons,
+	boundary=boundary
+)
+print(x)
+}
+}
 \seealso{
 \code{\link[PBSmapping]{PolySet}}, \code{\link[sp]{SpatialPoints}}, \code{\link[sp]{SpatialPointsDataFrame}}, \code{\link{make.RaspData}}, \code{\link{RaspData-class}}.
 }

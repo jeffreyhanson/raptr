@@ -4,13 +4,12 @@
 \alias{RaspOpts}
 \title{Create RaspOpts object}
 \usage{
-RaspOpts(BLM = 0, FAILUREMULTIPLIER = 1000, MAXRLEVEL = 5L,
-  NUMREPS = 1L)
+RaspOpts(BLM = 0, FAILUREMULTIPLIER = 1.1, MAXRLEVEL = 5L, NUMREPS = 1L)
 }
 \arguments{
 \item{BLM}{\code{numeric} boundary length modifier. Defaults to 0.}
 
-\item{FAILUREMULTIPLIER}{\code{numeric} multiplier for failure planning unit. Defaults to 1000.}
+\item{FAILUREMULTIPLIER}{\code{numeric} multiplier for failure planning unit. Defaults to 1.1.}
 
 \item{MAXRLEVEL}{\code{numeric} maximum R failure level for approximation. Defaults to 5L.}
 
@@ -23,7 +22,9 @@ RaspOpts(BLM = 0, FAILUREMULTIPLIER = 1000, MAXRLEVEL = 5L,
 This function creates a new RaspOpts object.
 }
 \examples{
-x<-RaspOpts(BLM=1, NUMREPS=1L)
+# create RaspOpts using defaults
+x <- RaspOpts(BLM=0, FAILUREMULTIPLIER=1.1, MAXRLEVEL=5L, NUMREPS=1L)
+print(x)
 }
 \seealso{
 \code{\link{RaspOpts-class}}.

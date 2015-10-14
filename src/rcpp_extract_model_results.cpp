@@ -15,44 +15,6 @@ using namespace Rcpp;
 #include <RcppEigen.h>
 #include <Rcpp.h>
 
-template<class T>
-T convert_to_numeric(std::string x) {
-	T value;
-	std::istringstream reader(x);
-	reader >> value;
-	return(value);
-}
-
-template<class T>
-T extract_param(std::string x, std::vector<std::string> &file) {
-	// init
-	T ret=-9999;
-	// find x in file
-	for (std::size_t i=0; i<file.size(); ++i) {
-		if (!file[i].compare(0, x.size(), x)) {
-			return(
-				convert_to_numeric<T>(file[i].substr(x.size()+1, file[i].size()))
-			);
-		}
-	}
-	// return result
-	return(ret);
-}
-
-template<class T>
-T extract_param(std::size_t x, std::vector<std::string> &file) {
-	return(convert_to_numeric<T>(file[x].substr(file[x].find(' ')+1, file[x].size())));
-}
-
-std::size_t find_param(std::string x, std::vector<std::string> &file) {
-	for (std::size_t i=0; i<file.size(); ++i) {
-		if (!file[i].compare(0, x.size(), x)) {
-			return(i);
-		}
-	}
-	return(9999);
-}
-
 
 std::string collapse(std::vector<std::string> &x) {
 	std::string s;
@@ -76,7 +38,7 @@ std::vector<double> calculateConnectivity(std::vector<std::size_t> &id1, std::ve
 }
 
 // [[Rcpp::export]]
-Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, std::vector<std::string> model_file, std::vector<std::string> log_file, std::vector<std::string> solution_file) {
+Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List model, std::vector<std::string> logging_file, Rcpp::List solution) {
 	//// Initialization	
 	// variables to store model data
 	std::size_t n_attribute_spaces;
@@ -216,25 +178,27 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, std::vector<st
 	/// simple vars
 	// extract selections
 	Rcpp::IntegerMatrix selectionsMTX(1, n_pu);
-	std::size_t start_pos = find_param("pu_0", solution_file);
-	for (std::size_t i=0; i<n_pu; ++i, ++start_pos) {
-		selectionsMTX(0, i)=extract_param<std::size_t>(start_pos, solution_file);
+	Rcpp::IntegerVector solutions=solution["x"];
+	for (std::size_t i=0; i<n_pu; ++i) {
+		selectionsMTX(0, i)=solutions[i];
 		Planning_Units+=selectionsMTX(0, i);
 		Cost+=(selectionsMTX(0, i) * puDF_cost[i]);
-	}	
+	}
 	
 	//  extract amountheld
 	Rcpp::NumericMatrix amountheldMTX(1, n_species);
+	Rcpp::List cacheLST=model["cache"];
+	std::vector<std::string> cacheSTR = cacheLST["name"];
+	std::vector<double> cacheDBL = cacheLST["value"];
+	
 	for (std::size_t i=0; i<puvspeciesDF_pu.size(); ++i)
 		if (selectionsMTX(0, puvspeciesDF_pu[i])>0)
 			amountheldMTX(0, puvspeciesDF_species[i]) = amountheldMTX(0, puvspeciesDF_species[i]) + puvspeciesDF_value[i] * puDF_area[puvspeciesDF_pu[i]];
 	for (std::size_t i=0; i<n_species; ++i)
-		amountheldMTX(0, i)=amountheldMTX(0, i)  / extract_param<double>("\\species_best_areaamountheld_"+intSTR[i], model_file);
-	
+		amountheldMTX(0, i)=amountheldMTX(0, i)  / cacheDBL[std::find(cacheSTR.begin(), cacheSTR.end(), "species_best_areaamountheld_"+intSTR[i])-cacheSTR.begin()];
 	// extract spaceheld
 	// ini
 // 	Rcpp::Rcout << "\t\tinit" << std::endl;	
-	double currArea;
 	std::vector<std::vector<std::size_t>> species_pu_ids(n_species);
 	std::vector<std::vector<std::size_t>> selected_species_pu_ids(n_species);
 	std::vector<std::vector<double>> species_pu_probs(n_species);
@@ -345,7 +309,7 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, std::vector<st
 				// caculate values for failure pu
 				tmpval+= currProb*weightdistMTX(i,j)(k,species_npu[i]);
 			}
-			spaceheldMTX(0, currCol) = (tmpval / extract_param<double>("\\species_best_spaceheld_"+intSTR[i]+"_"+intSTR[j], model_file)) - 1.0;
+			spaceheldMTX(0, currCol) = (tmpval / cacheDBL[std::find(cacheSTR.begin(), cacheSTR.end(), "species_best_spaceheld_"+intSTR[i]+"_"+intSTR[j])-cacheSTR.begin()]) - 1.0;
 		}
 	}
 	
@@ -357,7 +321,7 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, std::vector<st
 	Rcpp::S4 ret("RaspResults");
 	ret.slot("summary") = Rcpp::DataFrame::create(
 		Rcpp::Named("Run_Number") = Rcpp::wrap(1),
-		Rcpp::Named("Score")= Rcpp::wrap(extract_param<double>("# Objective value =", solution_file)),
+		Rcpp::Named("Score")= Rcpp::wrap(solution["objval"]),
 		Rcpp::Named("Cost")= Rcpp::wrap(Cost),
 		Rcpp::Named("Planning_Units")= Rcpp::wrap(Planning_Units),
 		Rcpp::Named("Connectivity_Total")= std::accumulate(Connectivity.begin(), Connectivity.end(), 0.0),
@@ -369,10 +333,8 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, std::vector<st
 	ret.slot("selections") = selectionsMTX;
 	ret.slot("amount.held") = amountheldMTX;
 	ret.slot("space.held") = Rcpp::wrap(spaceheldMTX);
+	ret.slot("logging.file") = Rcpp::wrap(logging_file);
 	ret.slot("best") = 1;
-	ret.slot("logging.file") = Rcpp::wrap(collapse(log_file));
-	ret.slot("model.file") = Rcpp::wrap(collapse(model_file));
-	ret.slot("solution.file") = Rcpp::wrap(collapse(solution_file));
 	ret.slot(".cache") = cacheENV;
 	return(ret);
 }

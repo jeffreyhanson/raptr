@@ -1,11 +1,6 @@
 #' @include RcppExports.R dependencies.R
 NULL
 
-# set union classes
-suppressWarnings(setOldClass("PolySet"))
-suppressWarnings(setClassUnion("PolySetOrNULL", c("PolySet", "NULL")))
-suppressWarnings(setClassUnion("data.frameOrNULL", c("data.frame", "NULL"))) 
-
 ## define built-in functions
 # affine transformation
 affineTrans=function(OldValue, OldMax, OldMin, NewMax, NewMin) {
@@ -126,43 +121,6 @@ categoricalLegend<-function(col,labels, ncol=1) {
 		}
 	)
 }
-
-# function to execute system calls, store and print stdout at same time
-custom.system <- function(command, args, file) {
-	status<-system(paste0(command, ' ', paste(args, collapse=' '), ' | tee ', file))
-	std<-readLines(file)
-	attr(std, 'status')=status
-	return(std)
-}
-
-# function to call gurobi
-call.Gurobi<-function(x, model.file, log.file, out.file, verbose=TRUE) {
-	## construct call
-	gpth<-paste0(Sys.getenv('GUROBI_HOME'), '/bin/gurobi_cl') 
-	gargs<-laply(.fun=paste, collapse='', list(
-		c('ResultFile=',out.file),
-		c('Presolve=',x@Presolve),
-		c('MIPGap=',x@MIPGap),
-		c('OutputFlag=1'),
-		c('Threads=',x@Threads),
-		c('LogFile=', log.file)
-	)) 
-	if (is.finite(x@TimeLimit))
-		gargs=append(gargs, list(paste0('TimeLimit=',x@TimeLimit)))
-	gargs=append(gargs, model.file)
-	
-	## run gurobi
-	if (verbose) {
-		ret=system2(gpth, gargs, stdout="", stderr="")
-	} else {
-		ret=system2(gpth, gargs, stdout=TRUE, stderr=TRUE)		
-	}
-	if (!(file.exists(out.file) && file.exists(log.file))) {
-		stop("Issue running Gurobi")
-	}
-	return(TRUE)
-}
-
 
 # functions to generate demand points
 demand.points.density1d<-function(pts, n, quantile=0, ...) {
@@ -564,10 +522,81 @@ mergeRaspResults<-function(x) {
 		selections=do.call(rbind, llply(x, slot, name="selections")),
 		amount.held=do.call(rbind, llply(x, slot, name="amount.held")),
 		space.held=do.call(rbind, llply(x, slot, name="space.held")),
-		model.file=laply(x, slot, name="model.file"),
-		logging.file=laply(x, slot, name="logging.file"),
-		solution.file=laply(x, slot, name="solution.file")
+		logging.file=sapply(x, slot, name="logging.file")
 	)
 	x@summary$Run_Number<-seq_len(nrow(x@summary))
 	return(x)
 }
+
+
+#' Read RASP results
+#'
+#' This function reads files output from Gurobi and returns a \code{RaspResults} object.
+#'
+#' @param opts \code{RaspOpts} object
+#' @param data \code{RaspData} object
+#' @param model.list \code{list} object containing Gurobi model data
+#' @param logging.file \code{character} Gurobi log files.
+#' @param solution.list \code{list} object containing Gurobi solution data.
+#' @keywords internal
+#' @return \code{RaspResults} object
+#' @seealso \code{\link{RaspData}}, \code{\link{RaspData-class}}, \code{\link{RaspResults-class}}, \code{\link{RaspResults}}.
+read.RaspResults=function(opts, data, model.list, logging.file, solution.list) {
+	x<-rcpp_extract_model_results(
+		opts,
+		data,
+		model.list,
+		logging.file,
+		solution.list
+	)
+	x@.cache=new.env()
+	return(x)
+}
+
+#' Compare Rasp objects
+#'
+#' This function checks objects to see if they share the same input data.
+#'
+#' @param x \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
+#' @param y \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
+#' @return \code{logical} are the objects based on the same data?
+#' @keywords internal
+#' @seealso \code{\link{RaspData-class}}, \code{\link{RaspUnsolved-class}}, \code{\link{RaspSolved-class}}.
+setGeneric("is.comparable", function(x, y) standardGeneric("is.comparable"))
+
+#' Basemap 
+#'
+#' This function retrieves google map data for planning units. The google map data is cached to provide fast plotting capabilities.
+#'
+#' @param x \code{RaspData}, \code{RaspUnsolved}, \code{RaspSolved} object.
+#' @param basemap \code{character} type of base map to display. Valid names are "roadmap", "mobile", "satellite", "terrain", "hybrid", "mapmaker-roadmap", "mapmaker-hybrid".
+#' @param grayscale \code{logical} should base map be gray scale?
+#' @param force.reset \code{logical} ignore data in cache? Setting this as ignore will make function slower but may avoid bugs in cache system.
+#' @return \code{list} with google map data.
+#' @keywords internal
+#' @seealso \code{\link[RgoogleMaps]{GetMap.bbox}}, \code{\link{plot}}.
+basemap<-function(x, basemap="hybrid", grayscale=FALSE, force.reset=FALSE) {UseMethod("basemap")}
+
+#' Test if hash is cached in a Rasp object
+#'
+#' Tests if hash is cached in Rasp object.
+#' 
+#' @param x \code{RaspData} or \code{RaspResults} object
+#' @param name \code{character} hash.
+#' @note caches are implemented using environments, the hash is used as the name of the object in the environment.
+#' @return \code{logical} Is it cached?
+#' @keywords internal
+setGeneric("is.cached", function(x,name) standardGeneric("is.cached"))
+
+#' Get and set cache Methods
+#'
+#' Getter and setter methods for caches in MarxanData and MarxanResults object.
+#' 
+#' @param x \code{RaspData} or \code{RaspResults} object
+#' @param name \code{character} hash.
+#' @param y if \code{ANY} this object gets cached with name, else if \code{missing} the object hashed at name gets returned.
+#' @note caches are implemented using environments, the hash is used as the name of the object in the environment.
+#' @return \code{ANY} or \code{NULL} depends on \code{y} argument.
+#' @keywords internal
+setGeneric("cache", function(x, name, y) standardGeneric("cache"))
+

@@ -33,6 +33,33 @@ setClassUnion("RaspUnsolvedOrSolved", c("RaspSolved", "RaspUnsolved"))
 #' @return \code{RaspSolved} object.
 #' @export
 #' @seealso \code{\link{RaspSolved-class}}, \code{\link{RaspResults-class}}.
+#' @examples
+#' \dontrun{
+#' data(sim_pus, sim_spp)
+#' # create inputs for a RaspUnsolved  object
+#' go <- GurobiOpts(MIPGap=0.9)
+#' rd <- make.RaspData(
+#' 	sim_pus[1:10,],
+#' 	sim_spp[[1]],
+#' 	NULL,
+#' 	include.geographic.space=TRUE,
+#' 	n.demand.points=5L
+#' )
+#' ro <- RaspOpts(NUMREPS=1L)
+#' # create RaspUnsolved object
+#' ru <- RaspUnsolved(ro1, go, rd)
+#' # solve it to return a RaspSolved object
+#' rs1 <- (ru)
+#' # methods for RaspSolved
+#' print(rs)
+#' summary(rs)
+#' selections(rs)
+#' score(rs)
+#' amount.held(rs)
+#' space.held(rs)
+#' logging.file(rs)
+#' plot(rs)
+#' }
 RaspSolved<-function(unsolved, results) {
 	return(new("RaspSolved", opts=unsolved@opts, gurobi=unsolved@gurobi, data=unsolved@data, results=results))
 }
@@ -69,27 +96,6 @@ summary.RaspSolved<-function(object, ...) {
 	return(summary.RaspResults(object@results))
 }
 
-#' @rdname logging.file
-#' @inheritParams logging.file
-#' @export
-logging.file.RaspSolved<-function(x) {
-	logging.file(x@results)
-}
-
-#' @rdname model.file
-#' @inheritParams model.file
-#' @export model.file
-model.file.RaspSolved<-function(x) {
-	model.file.RaspResults(x@results)
-}
-
-#' @rdname solution.file
-#' @inheritParams model.file
-#' @export solution.file
-solution.file.RaspSolved<-function(x) {
-	solution.file.RaspResults(x@results)
-}
-
 #' @export
 #' @inheritParams amount.held
 #' @rdname amount.held
@@ -103,6 +109,14 @@ amount.held.RaspSolved<-function(x, y=0) {
 space.held.RaspSolved<-function(x, y=0) {
 	return(space.held.RaspResults(x@results, y))
 }
+
+#' @rdname logging.file
+#' @inheritParams logging.file
+#' @export
+logging.file.RaspSolved<-function(x, y=0) {
+	return(logging.file.RaspResults(x@results, y))
+}
+
 
 #' @method print RaspSolved
 #' @rdname print
@@ -169,6 +183,7 @@ setMethod(
 	"plot",
 	signature(x="RaspSolved",y="numeric"),
 	function(x, y, basemap="none", color.palette="Greens", locked.in.color="#000000FF", locked.out.color="#D7D7D7FF", alpha=ifelse(basemap=="none",1,0.7), grayscale=FALSE, force.reset=FALSE) {
+		oldpar <- par()
 		# check for issues
 		stopifnot(alpha<=1 & alpha>=0)
 		match.arg(color.palette, rownames(brewer.pal.info))
@@ -194,6 +209,7 @@ setMethod(
 			categoricalLegend(c(locked.out.color,brewerCols(c(0,1),color.palette,alpha,n=2),locked.in.color),c("Locked Out", "Not Selected", "Selected", "Locked In")),
 			beside=FALSE
 		)
+		par(oldpar)
 	}
 )
 
@@ -203,6 +219,7 @@ setMethod(
 	"plot",
 	signature(x="RaspSolved",y="missing"),
 	function(x, y, basemap="none", color.palette="PuBu", locked.in.color="#000000FF", locked.out.color="#D7D7D7FF", alpha=ifelse(basemap=="none",1,0.7), grayscale=FALSE, force.reset=FALSE) {
+		oldpar <- par()
 		# check for issues
 		match.arg(basemap, c("none", "roadmap", "mobile", "satellite", "terrain", "hybrid", "mapmaker-roadmap", "mapmaker-hybrid"))
 		stopifnot(alpha<=1 & alpha>=0)
@@ -227,6 +244,7 @@ setMethod(
 			continuousLegend(values,color.palette,posx=c(0.3, 0.4),posy=c(0.1, 0.9)),
 			beside=TRUE
 		)
+		par(oldpar)
 	}
 )
 
@@ -236,6 +254,7 @@ setMethod(
 	"plot",
 	signature(x="RaspSolved",y="RaspSolved"),
 	function(x, y, i=NULL, j=i, basemap="none", color.palette=ifelse(is.null(i), "RdYlBu", "Accent"), x.locked.in.color="#000000FF", x.locked.out.color="#D7D7D7FF", y.locked.in.color="#FFFFFFFF", y.locked.out.color="#D7D7D7FF", alpha=ifelse(basemap=="none",1,0.7), grayscale=FALSE, force.reset=FALSE) {
+		oldpar <- par()
 		# check for issues
 		stopifnot(alpha<=1 & alpha>=0)
 		match.arg(color.palette, rownames(brewer.pal.info))
@@ -344,6 +363,7 @@ setMethod(
 				beside=FALSE
 			)
 		}
+		par(oldpar)
 	}
 )
 

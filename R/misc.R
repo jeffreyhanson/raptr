@@ -3,30 +3,49 @@ NULL
 
 #' Test if Gurobi is installed on computer
 #'
-#' This function determines if Gurobi is installed on the computer, check that its licensing is set up, and will store the path in \code{\link[base]{options}}.
+#' This function determines if the Gurobi R package is installed on the computer and that it can be used \code{\link[base]{options}}.
 #'
+#' @param verbose \code{logical} should messages be printed?
 #' @return \code{logical} Is it installed and ready to use?
 #' @seealso \code{\link[base]{options}}.
 #' @export
 #' @examples
+#' \dontrun{
+#' # check if Gurobi is installed
 #' is.GurobiInstalled()
+#' # print cached status of installation
 #' options()$GurobiInstalled
-is.GurobiInstalled<-function() {
+#' }
+is.GurobiInstalled<-function(verbose=TRUE) {
 	# check if installed 
-	gpth=Sys.getenv('GUROBI_HOME')
-	if (nchar(gpth)==0) {
+	if (!'gurobi' %in% unlist(sapply(.libPaths(), dir), recursive=FALSE, use.names=TRUE)) {
+		if (verbose)
+			cat('The gorubi R package is not installed\n')
 		options(GurobiInstalled=FALSE)
-		stop('Gorubi is not installed on system')
+		return(FALSE)
 	}
-	# try running example problem
-	gpth2=tempfile()
-	ret=try(call.Gurobi(GurobiOpts(), file.path(gpth, 'examples/data/coins.lp'), paste0(gpth2, '.log'), paste0(gpth2, '.sol'), verbose=FALSE), silent=TRUE)
-	if (!file.exists(paste0(gpth2, '.sol'))) {
-		cat(GurobiInstalled=FALSE)
-		stop('Gorubi is not setup correctly.')
+	# try running example problem - from the gurobi help file
+	tmp<-capture.output(
+		{
+		result<-gurobi::gurobi(
+			list(
+				A=matrix(c(1, 2, 3, 1, 1, 0), nrow = 2, ncol=3, byrow=TRUE),
+				obj=c(1, 1, 2),
+				sense=c("<=", ">="),
+				rhs=c(4, 1),
+				vtype="B"
+			),
+			list(Presolve=2, TimeLimit=10.0)
+		)
+		}
+	)
+	if (result$status!="OPTIMAL") {
+		if (verbose)
+			cat('The gurobi R package is installed, but R is having issues using it\n')
+		options(GurobiInstalled=FALSE)
+		return(FALSE)		
 	}
-	options(GurobiInstalled=TRUE)
-	return(invisible(TRUE))
+	return(TRUE)
 }
 
 
@@ -39,7 +58,10 @@ is.GurobiInstalled<-function() {
 #' @seealso \code{\link[gdalUtils]{gdal_setInstallation}}.
 #' @export
 #' @examples
+#' # check if gdal is installed on system
+#' \dontrun{
 #' is.gdalInstalled()
+#' }
 is.gdalInstalled<-function() {
 	suppressWarnings(findGdalInstallationPaths())
 	return(!is.null(getOption("gdalUtils_gdalPath")))
@@ -57,8 +79,10 @@ is.gdalInstalled<-function() {
 #' @return \code{RasterLayer} object.
 #' @seealso \code{\link[raster]{rasterize}}, \code{\link{is.gdalInstalled}}.
 #' @examples
-#' data(species,planningunits)
-#' x<-rasterizeGDAL(planningunits[1:5,],species[[1]])
+#' \dontrun{
+#' data(sim_pu,sim_spp)
+#' x <- rasterizeGDAL(sim_pu[1:5,],sim_spp[[1]])
+#' }
 rasterizeGDAL<-function(x,y, field=NULL) {
 	if (is.null(field)) {
 		x@data$id<-seq_len(nrow(x@data))
@@ -79,6 +103,10 @@ rasterizeGDAL<-function(x,y, field=NULL) {
 #' @param res \code{numeric vector} specifying resolution of the output raster in the x and y dimensions. If \code{vector} is of length one, then the pixels are assumed to be square.
 #' @export
 #' @rdname blank.raster
+#' @examples
+#' data(sim_pus)
+#' x <- blank.raster(sim_pus, 1)
+#' print(x)
 blank.raster<-function(x, res) {
 	# init
 	if (length(res)==1)
@@ -90,4 +118,30 @@ blank.raster<-function(x, res) {
 	return(setValues(rast, 1))
 }
 
+#' PolySet
+#'
+#' Object contains PolySet data.
+#'
+#' @seealso \code{\link[PBSmapping]{PolySet}}.
+#' @name PolySet-class
+#' @aliases PolySet
+#' @exportClass PolySet
+setClass("PolySet", contains='data.frame')
 
+#' PolySetOrNULL class
+#'
+#' Object is either \code{PolySet} or \code{NULL}.
+#'
+#' @name PolySetOrNULL-class
+#' @aliases PolySetOrNULL
+#' @exportClass PolySetOrNULL
+setClassUnion("PolySetOrNULL", c("PolySet", "NULL"))
+
+#' data.frameOrNULL class
+#'
+#' Object is either \code{data.frame} or \code{NULL}.
+#'
+#' @name data.frameOrNULL-class
+#' @aliases data.frameOrNULL
+#' @exportClass data.frameOrNULL
+setClassUnion("data.frameOrNULL", c("data.frame", "NULL"))

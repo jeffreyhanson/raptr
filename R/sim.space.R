@@ -3,7 +3,7 @@ NULL
 
 #' @rdname sim.space
 #' @method sim.space RasterLayer
-#' @export sim.space
+#' @export
 sim.space.RasterLayer<-function(x, d=2, model=RMgauss(), ...) {
 	# generate values for rasters
 	valMTX=RFsimulate(model, as(x, 'SpatialPoints')@coords, n=d, spConform=FALSE, ...)
@@ -22,7 +22,7 @@ sim.space.RasterLayer<-function(x, d=2, model=RMgauss(), ...) {
 
 #' @rdname sim.space
 #' @method sim.space SpatialPolygons
-#' @export sim.space
+#' @export
 sim.space.SpatialPolygons<-function(x, res, d=2, model=RMgauss(), ...) {
 	# return simulations
 	return(sim.space.RasterLayer(blank.raster(x, res), d=d, model=model, ...))

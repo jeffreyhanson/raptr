@@ -41,8 +41,11 @@ make.RaspData(pus, species, spaces = NULL, area.targets = 0.2,
 This function prepares spatially explicit planning unit, species data, and landscape data layers for RASP processing.
 }
 \examples{
-data(pus, species, space)
-x<-RaspData(pus, species, space)
+\dontrun{
+data(cs_pus, cs_spp, cs_space)
+x <- make.RaspData(cs_pus[1:10,], cs_spp, cs_space, include.geographic.space=TRUE)
+print(x)
+}
 }
 \seealso{
 \code{\link{RaspData-class}}, \code{\link{RaspData}}.

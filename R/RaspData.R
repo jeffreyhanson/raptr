@@ -126,7 +126,6 @@ setClass("RaspData",
 				stop('argument to pu.species.probabilities$pu must have values that correspond to rows in argument to pu')
 			if (!all(laply(object@attribute.spaces, function(x) {nrow(x@pu@coords)==nrow(object@pu)})))
 				stop('arguments to attribute.space and pu must have the same number of planning units')
-			
 			# check all species match 
 			if (!all(object@pu.species.probabilities$species %in% seq_len(nrow(object@species)))) 
 				stop('argument to pu.species.probabilities$species must have values that correspond to rows in argument to species')
@@ -154,6 +153,57 @@ setClass("RaspData",
 #' @return RaspData object
 #' @seealso \code{\link[PBSmapping]{PolySet}}, \code{\link[sp]{SpatialPoints}}, \code{\link[sp]{SpatialPointsDataFrame}}, \code{\link{make.RaspData}}, \code{\link{RaspData-class}}.
 #' @export
+#' @examples
+#' \dontrun{
+#' # create data for RaspData object
+#' data(cs_pus, cs_spp, cs_space)
+#' attribute.spaces=list(
+#' 	AttributeSpace(
+#' 		pu=SimplePoints(rgeos::gCentroid(cs_pus[1:10,], byid=TRUE)@@coords),
+#' 		dp=list(
+#'			make.DemandPoints(
+#'				SpatialPoints(
+#'					coords=dismo::randomPoints(
+#'						cs_spp,
+#'						n=10,
+#'						prob=TRUE
+#'					)
+#'				),
+#'				NULL
+#'			)
+#'		)
+#' 	),
+#' 	AttributeSpace(
+#' 		pu=SimplePoints(extract(cs_space[[1]],cs_pus[1:10,],fun=mean)),
+#' 		dp=list(
+#'			make.DemandPoints(
+#'				SpatialPoints(
+#'					coords=dismo::randomPoints(
+#'						cs_spp,
+#'						n=10,
+#'						prob=TRUE
+#'					)
+#'				),
+#'				cs_space[[1]]
+#'			)
+#'		)
+#' 	)
+#' )
+#' pu.species.probabilities=calcSpeciesAverageInPus(cs_pus[1:10,], cs_spp)
+#' polygons=SpatialPolygons2PolySet(cs_pus[1:10,])
+#' boundary=calcBoundaryData(cs_pus[1:10,])
+#' 
+# # create RaspData object
+#' x<-RaspData(
+#' 	pu=cs_pus@@data[1:10,],
+#' 	species=data.frame(area.target=0.2, space.target=0.2, name='test'),
+#' 	pu.species.probabilities=pu.species.probabilities,
+#' 	attribute.spaces=attribute.spaces,
+#' 	polygons=polygons,
+#' 	boundary=boundary
+#' )
+#' print(x)
+#' }
 RaspData<-function(pu, species, pu.species.probabilities, attribute.spaces, boundary, polygons=NULL, skipchecks=FALSE, .cache=new.env()) {
 	# convert factors to characters
 	if (inherits(species$name, "factor"))
@@ -190,8 +240,11 @@ RaspData<-function(pu, species, pu.species.probabilities, attribute.spaces, boun
 #' @seealso \code{\link{RaspData-class}}, \code{\link{RaspData}}.
 #' @export make.RaspData
 #' @examples
-#' data(pus, species, space)
-#' x<-RaspData(pus, species, space)
+#' \dontrun{
+#' data(cs_pus, cs_spp, cs_space)
+#' x <- make.RaspData(cs_pus[1:10,], cs_spp, cs_space, include.geographic.space=TRUE)
+#' print(x)
+#' }
 make.RaspData<-function(pus, species, spaces=NULL,
 	area.targets=0.2, space.targets=0.2, n.demand.points=1000L, kernel.method=c('sm.density', 'hyperbox')[1], quantile=0.2,
 	species.points=NULL, n.species.points=ceiling(0.2*cellStats(species, 'sum')), include.geographic.space=TRUE, verbose=FALSE, ...) {
@@ -257,6 +310,7 @@ make.RaspData<-function(pus, species, spaces=NULL,
 		pu$area=gArea(pus,byid=TRUE)
 	}
 	
+	#### Attribute space data
 	## set pu.points
 	# set pu.points based spaces
 	pu.points=list()

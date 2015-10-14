@@ -25,5 +25,7 @@ Extract solution score from \code{RaspResults} or \code{RaspSolved} object.
 }
 \seealso{
 \code{\link{RaspResults-class}}, \code{\link{RaspSolved-class}}, \code{\link{rasp}}.
+
+\code{RaspResults}, \code{RaspSolved}.
 }
 

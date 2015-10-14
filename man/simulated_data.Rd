@@ -2,9 +2,19 @@
 % Please edit documentation in R/data.R
 \docType{data}
 \name{simulated_data}
+\alias{sim_dps}
 \alias{sim_pus}
+\alias{sim_spp}
 \alias{simulated_data}
 \title{Simulated dataset for a conservation planning exercise}
+\format{\code{SpatialPolyognsDataFrame}, \code{RasterStack}, \code{list} of \code{DemandPoint} objects.}
+\usage{
+sim_pus
+
+sim_spp
+
+sim_dps
+}
 \description{
 This dataset contains all the data needed to generate prioritisations for three simulated species. This dataset contains planning units, species distribution
 maps, and demand points for each species. For the purposes of exploring the behaviour of the problem, demand points were generated using the centroids of planning units
@@ -20,17 +30,15 @@ The species were simulated to represent different simplified versions of species
 The objects contained in this dataset are:
 \itemize{
 	\item sim_pus: A \code{SpatialPolygonsDataFrame} with 225 planning units.
-	\item sim_species: A \code{RasterStack} containg probability distribution data for each of the species.
-	\item sim_demandpoints: A \code{list} of \code{DemandPoints} for each species.
+	\item sim_spp: A \code{RasterStack} containg probability distribution data for each of the species.
+	\item sim_dps: A \code{list} of \code{DemandPoints} for each species.
 }
 }
 \examples{
 # load data
-data(sim_plus)
-data(sim_spp)
-data(sim_dps)
+data(sim_pus, sim_spp, sim_dps)
 # plot data
-plot(sim_plus)
+plot(sim_pus)
 plot(sim_spp)
 }
 \keyword{datasets}

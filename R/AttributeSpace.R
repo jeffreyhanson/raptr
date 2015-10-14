@@ -30,6 +30,18 @@ setClass("AttributeSpace",
 #' @param dp \code{list} of \code{DemandPoints} for each species.
 #' @seealso \code{\link{SimplePoints-class}}, \code{\link{DemandPoints-class}}.
 #' @export
+#' @examples
+#' space <- AttributeSpace(
+#'	pu <- SimplePoints(
+#'		matrix(rnorm(100), ncol=2)
+#'	),
+#'	dp <- list(
+#'	DemandPoints(
+#'			SimplePoints(matrix(rnorm(100), ncol=2)),
+#'			runif(50)
+#'		)
+#'	)
+#' )
 AttributeSpace<-function(pu, dp) {
 	as<-new("AttributeSpace", pu=pu, dp=dp)
 	validObject(as, test=FALSE)

@@ -27,5 +27,7 @@ Extract selections for a given solution from a \code{RaspResults} or \code{RaspS
 }
 \seealso{
 \code{\link{RaspResults-class}}, \code{\link{RaspSolved-class}}, \code{\link{rasp}}.
+
+\code{RaspResults}, \code{RaspSolved}.
 }
 

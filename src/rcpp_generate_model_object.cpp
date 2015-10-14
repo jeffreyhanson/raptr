@@ -16,11 +16,11 @@ using namespace Rcpp;
 
 
 // [[Rcpp::export]]
-std::string rcpp_generate_modelfile(Rcpp::S4 opts, Rcpp::S4 data) {
+Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 	//// Initialization
 // 	Rcpp::Rcout << "Initialization" << std::endl;
 	// create variables
-	std::string model = "";
+	std::size_t counter=0;
 	std::size_t n_attribute_spaces;
 	std::size_t n_pu;
 	std::size_t n_edges;
@@ -28,6 +28,7 @@ std::string rcpp_generate_modelfile(Rcpp::S4 opts, Rcpp::S4 data) {
 	std::vector<std::size_t> n_demand_points;
 	bool boundary;
 	double boundary_threshold=1.0e-05;
+	
 	
 	//// Preliminary processing
 // 	Rcpp::Rcout << "Preliminary processing" << std::endl;
@@ -52,9 +53,9 @@ std::string rcpp_generate_modelfile(Rcpp::S4 opts, Rcpp::S4 data) {
 	std::vector<double> puDF_cost = puDF["cost"];
 	std::vector<std::size_t> puDF_status = puDF["status"];
 	n_pu=puDF_area.size();
-	std::vector<std::string> puDF_id_CHR(n_pu+1);
+	std::vector<std::string> puDF_id_STR(n_pu+1);
 	for (std::size_t i=0; i<(n_pu+1); ++i)
-		puDF_id_CHR[i]="pu_"+std::to_string(i);
+		puDF_id_STR[i]="pu_"+std::to_string(i);
 	
 	
 	// pu.species.probabilities
@@ -80,7 +81,7 @@ std::string rcpp_generate_modelfile(Rcpp::S4 opts, Rcpp::S4 data) {
 		boundaryDF_idpair_CHR.reserve(n_edges);
 		for (std::size_t i=0; i<n_edges; ++i) {
 			boundaryDF_idpair_CHR.push_back(
-				"pu" + std::to_string(boundaryDF_id1[i]-1) + "_" + std::to_string(boundaryDF_id2[i]-1)
+				"pu_" + std::to_string(boundaryDF_id1[i]-1) + "_" + std::to_string(boundaryDF_id2[i]-1)
 			);
 		}
 	}
@@ -141,7 +142,6 @@ std::string rcpp_generate_modelfile(Rcpp::S4 opts, Rcpp::S4 data) {
 	// ini
 // 	Rcpp::Rcout << "\t\tinit" << std::endl;	
 	double currArea;
-	std::vector<std::string> puvspeciesSTR(n_species, "");
 	std::vector<double> speciesareaDBL(n_species, 0.0);
 	std::vector<std::vector<std::size_t>> species_pu_ids(n_species);
 	std::vector<std::vector<double>> species_pu_probs(n_species);
@@ -156,8 +156,6 @@ std::string rcpp_generate_modelfile(Rcpp::S4 opts, Rcpp::S4 data) {
 	for (std::size_t i=0; i<puvspeciesDF_pu.size(); ++i) {
 		// calculate area
 		currArea=puvspeciesDF_value[i] * puDF_area[puvspeciesDF_pu[i]];
-		// generate target strings for model
-		puvspeciesSTR[puvspeciesDF_species[i]]+=std::to_string(currArea) + " " +  puDF_id_CHR[puvspeciesDF_pu[i]] + " + ";
 		// sum area occupied by species
 		speciesareaDBL[puvspeciesDF_species[i]]+=currArea;
 		// assign pu to species vector
@@ -167,7 +165,6 @@ std::string rcpp_generate_modelfile(Rcpp::S4 opts, Rcpp::S4 data) {
 	}
 // 	Rcpp::Rcout << "\t\tresize vectors" << std::endl;
 	for (std::size_t i=0; i<n_species; ++i) {
-		puvspeciesSTR[i].erase(puvspeciesSTR[i].size()-3);
 		species_pu_ids[i].push_back(n_pu);
 		species_pu_ids[i].shrink_to_fit();
 		species_pu_probs[i].push_back(1.0);
@@ -209,7 +206,6 @@ std::string rcpp_generate_modelfile(Rcpp::S4 opts, Rcpp::S4 data) {
 				weightdistMTX(i,j)(k,species_npu[i]) = currFailDist;
 			}
 			
-// 			Rcpp::Rcout << "currFailDist; i=" << i << "; j=" << j << "; " << currFailDist << std::endl;
 		}
 	}
 	
@@ -257,111 +253,241 @@ std::string rcpp_generate_modelfile(Rcpp::S4 opts, Rcpp::S4 data) {
 	) + 2;
 	
 	std::vector<std::string> intSTR(maxINT);
-// 	Rcout << "maxINT = " << maxINT << std::endl;
 	for (std::size_t i=0; i<maxINT; i++)
 		intSTR[i] = std::to_string(i);
 	
+	/// create unordered map with variable names
+	std::unordered_map<std::string, std::size_t> variableMAP;
+	std::string currSTR;
+	// pu vars
+	for (std::size_t i=0; i<n_pu; ++i) {
+		variableMAP[puDF_id_STR[i]] = counter;
+		++counter;
+	}
+		
+	// pu_pu boundary vars
+	if (boundary) {
+		for (std::size_t i=0; i<n_edges; ++i) {
+			variableMAP[boundaryDF_idpair_CHR[i]] = counter;
+			++counter;
+		}
+	}
+	
+	// space vars
+	for (std::size_t i=0; i<n_species; ++i) {
+		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
+			for (std::size_t k=0; k<species_ndp[i]; ++k) {
+				for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
+					for (std::size_t r=0; r<(maxrlevelINT+1); ++r) {
+						// Y_var
+						currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
+						variableMAP[currSTR] = counter;
+						++counter;
+						
+						// P_var
+						currSTR="P_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
+						variableMAP[currSTR] = counter;
+						++counter;
+						
+						// W_var
+						currSTR="W_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
+						variableMAP[currSTR] = counter;
+						++counter;
+					}
+				}
+			}
+		}
+	}
+	
 	//// Main processing
 // 	Rcpp::Rcout << "Main processing" << std::endl;
+	
 	/// comments to cache variable values
 // 	Rcpp::Rcout << "\tcaching variables" << std::endl;
+	std::vector<std::string> cacheSTR;
+	cacheSTR.reserve(n_species + (n_species * n_attribute_spaces));
+	std::vector<double> cacheDBL;
+	cacheDBL.reserve(n_species + (n_species * n_attribute_spaces));
 	for (std::size_t i=0; i<n_species; ++i) {
-		model+="\\species_best_areaamountheld_"+intSTR[i]+" "+std::to_string(speciesareaDBL[i]) + "\n";
+		cacheSTR.push_back("species_best_areaamountheld_"+intSTR[i]);
+		cacheDBL.push_back(speciesareaDBL[i]);
 	}
 	for (std::size_t i=0; i<n_species; ++i) {
 		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-			model+="\\species_best_spaceheld_"+intSTR[i]+"_"+intSTR[j]+" "+std::to_string(speciesspaceMTX(i,j)) + "\n";
+			cacheSTR.push_back("species_best_spaceheld_"+intSTR[i]+"_"+intSTR[j]);
+			cacheDBL.push_back(speciesspaceMTX(i,j));
 		}
 	}
 	
 	/// objective function
-	model+="Minimize\n";
 // 	Rcpp::Rcout << "\tobjective function" << std::endl;
+	std::vector<double> objDBL(variableMAP.size());
+	
 	// cost variables
 // 	Rcpp::Rcout << "\t\tcost variables" << std::endl;
 	for (std::size_t i=0; i<n_pu; ++i) {
-		model+=std::to_string(puDF_cost[i]) + " " + puDF_id_CHR[i] + " + ";
+		objDBL[variableMAP[puDF_id_STR[i]]] = puDF_cost[i];
 	}
 	
 	// boundary variables
 // 	Rcpp::Rcout << "\t\tboundary variables" << std::endl;
 	if (boundary) {
 		for (std::size_t i=0; i<n_edges; ++i) {
-			model+=std::to_string(blmDBL * boundaryDF_boundary[i]) + " " + boundaryDF_idpair_CHR[i] + " + ";
+			objDBL[variableMAP[boundaryDF_idpair_CHR[i]]] = blmDBL * boundaryDF_boundary[i];
 		}
 	}
-	model.erase(model.size()-3);
-	// add new line
-	model+="\n";
 	
 	/// constraints
 // 	Rcpp::Rcout << "\tconstraints" << std::endl;
+	std::vector<std::size_t> model_rows_INT;
+	model_rows_INT.reserve(n_pu * n_species * n_attribute_spaces * std::accumulate(species_ndp.begin(), species_ndp.end(), 0) * maxrlevelINT);
+	std::vector<std::size_t> model_cols_INT;
+	model_cols_INT.reserve(n_pu * n_species * n_attribute_spaces * std::accumulate(species_ndp.begin(), species_ndp.end(), 0) * maxrlevelINT);
+	std::vector<double> model_vals_DBL;
+	model_vals_DBL.reserve(n_pu * n_species * n_attribute_spaces * std::accumulate(species_ndp.begin(), species_ndp.end(), 0) * maxrlevelINT);
+	std::vector<std::string> senseSTR;
+	senseSTR.reserve(n_pu * n_species * n_attribute_spaces * std::accumulate(species_ndp.begin(), species_ndp.end(), 0) * maxrlevelINT);
+	std::vector<double> rhsDBL;
+	rhsDBL.reserve(n_pu * n_species * n_attribute_spaces * std::accumulate(species_ndp.begin(), species_ndp.end(), 0) * maxrlevelINT);
 	
-	model+="\nSubject To\n";
 	// area target constraints
+	counter=0;
 // 	Rcpp::Rcout << "\t\tarea constraints" << std::endl;
 	for (std::size_t i=0; i<n_species; ++i) {
-		model+=puvspeciesSTR[i]+" >= " + std::to_string(speciesareaDBL[i] * speciesDF_areatarget[i]) + "\n";
+		for (std::size_t j=0; j<species_pu_ids[i].size(); ++j) {
+			model_rows_INT.push_back(counter);
+			model_cols_INT.push_back(variableMAP[puDF_id_STR[species_pu_ids[i][j]]]);
+			model_vals_DBL.push_back(species_pu_probs[i][j] * puDF_area[species_pu_ids[i][j]]);
+		}
+		senseSTR.push_back(">=");
+		rhsDBL.push_back(speciesareaDBL[i] * speciesDF_areatarget[i]);
+		++counter;
 	}
+	
+// 	Rcout << "rhsDBL.size() = " << rhsDBL.size() << "; counter = " << counter << std::endl; 
 	
 	// space target constraints
 // 	Rcpp::Rcout << "\t\tspace constraints" << std::endl;
-	std::string tempSTR;
 	for (std::size_t i=0; i<n_species; ++i) {
 		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
 			for (std::size_t k=0; k<species_ndp[i]; ++k) {
 				for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
-					tempSTR=std::to_string(weightdistMTX(i,j)(k,l));
 					for (std::size_t r=0; r<(maxrlevelINT+1); ++r) {
-						model+=tempSTR+" W_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r]+" + "; 
+						currSTR="W_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
+						model_rows_INT.push_back(counter);
+						model_cols_INT.push_back(variableMAP[currSTR]);
+						model_vals_DBL.push_back(weightdistMTX(i,j)(k,l));
 					}
 				}
 			}
-			model.erase(model.size()-2);
-			model+="<= "+std::to_string(speciesspaceMTX(i,j) * (1.0+speciesDF_spacetarget[i])) + "\n";
+			senseSTR.push_back("<=");
+			rhsDBL.push_back(speciesspaceMTX(i,j) * (1.0+speciesDF_spacetarget[i]));
+			++counter;
 		}
 	}
+
+// 	Rcout << "rhsDBL.size() = " << rhsDBL.size() << "; counter = " << counter << std::endl; 
+	
 	
 	// pu status constraints
 // 	Rcpp::Rcout << "\t\tpu status constraints" << std::endl;
 	for (std::size_t i=0; i<n_pu; ++i) {
 		if (puDF_status[i]==2) {
 			// locked in
-			model+=puDF_id_CHR[i] + " = 1\n";
+			model_rows_INT.push_back(counter);
+			model_cols_INT.push_back(variableMAP[puDF_id_STR[i]]);
+			model_vals_DBL.push_back(1);
+			senseSTR.push_back("=");
+			rhsDBL.push_back(1.0);
+			++counter;
 		} else if (puDF_status[i]==3) {
 			// locked  out
-			model+=puDF_id_CHR[i] + " = 0\n";
+			model_rows_INT.push_back(counter);
+			model_cols_INT.push_back(variableMAP[puDF_id_STR[i]]);
+			model_vals_DBL.push_back(1);
+			senseSTR.push_back("=");
+			rhsDBL.push_back(0.0);
+			++counter;
 		}
 	}
-	
+
+// 	Rcout << "rhsDBL.size() = " << rhsDBL.size() << "; counter = " << counter << std::endl; 
+
+		
 	// boundary constraints
 // 	Rcpp::Rcout << "\t\tboundary constraints" << std::endl;
 	if (boundary) {
 		for (std::size_t i=0; i<n_edges; ++i) {
-			model+=boundaryDF_idpair_CHR[i] + " - " + puDF_id_CHR[boundaryDF_id1[i]] + " <= 0\n";
-			model+=boundaryDF_idpair_CHR[i] + " - " + puDF_id_CHR[boundaryDF_id2[i]] + " <= 0\n";
-			model+=boundaryDF_idpair_CHR[i] + " - " + 
-				puDF_id_CHR[boundaryDF_id1[i]] + " - " +
-				puDF_id_CHR[boundaryDF_id2[i]] + " >= -1\n";
+			// model+=boundaryDF_idpair_CHR[i] + " - " + puDF_id_STR[boundaryDF_id1[i]] + " <= 0\n";
+			model_rows_INT.push_back(counter);
+			model_rows_INT.push_back(counter);
+			model_cols_INT.push_back(variableMAP[boundaryDF_idpair_CHR[i]]);
+			model_cols_INT.push_back(variableMAP[puDF_id_STR[boundaryDF_id1[i]]]);
+			model_vals_DBL.push_back(1.0);
+			model_vals_DBL.push_back(-1.0);
+			senseSTR.push_back("<=");
+			rhsDBL.push_back(0.0);
+			++counter;
+
+			// model+=boundaryDF_idpair_CHR[i] + " - " + puDF_id_STR[boundaryDF_id2[i]] + " <= 0\n";
+			model_rows_INT.push_back(counter);
+			model_rows_INT.push_back(counter);
+			model_cols_INT.push_back(variableMAP[boundaryDF_idpair_CHR[i]]);
+			model_cols_INT.push_back(variableMAP[puDF_id_STR[boundaryDF_id2[i]]]);
+			model_vals_DBL.push_back(1.0);
+			model_vals_DBL.push_back(-1.0);
+			senseSTR.push_back("<=");
+			rhsDBL.push_back(0.0);
+			++counter;
+			
+			// model+=boundaryDF_idpair_CHR[i] + " - " + 
+				// puDF_id_STR[boundaryDF_id1[i]] + " - " +
+				// puDF_id_STR[boundaryDF_id2[i]] + " >= -1\n";
+			model_rows_INT.push_back(counter);
+			model_rows_INT.push_back(counter);
+			model_rows_INT.push_back(counter);
+			model_cols_INT.push_back(variableMAP[boundaryDF_idpair_CHR[i]]);
+			model_cols_INT.push_back(variableMAP[puDF_id_STR[boundaryDF_id1[i]]]);
+			model_cols_INT.push_back(variableMAP[puDF_id_STR[boundaryDF_id2[i]]]);
+			model_vals_DBL.push_back(1);
+			model_vals_DBL.push_back(-1);
+			model_vals_DBL.push_back(-1);
+			senseSTR.push_back(">=");
+			rhsDBL.push_back(-1.0);
+			++counter;
 		}
 	}
 
+// 	Rcout << "rhsDBL.size() = " << rhsDBL.size() << "; counter = " << counter << std::endl; 
+	
+	
 	// 1b
 // 	Rcpp::Rcout << "\t\t1b constraints" << std::endl;	
 	for (std::size_t i=0; i<n_species; ++i) {
 		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
 			for (std::size_t k=0; k<species_ndp[i]; ++k) {
 				for (std::size_t r=0; r<(maxrlevelINT+1); ++r) {
-					for (std::size_t l=0; l<(species_npu[i]+1); ++l)
-						model+="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r]+" + ";  
-					for (std::size_t r2=0; r2<r; ++r2)
-						model+="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[species_npu[i]]+"_"+intSTR[r2]+" + ";
-					model.erase(model.size()-3);
-					model+=" = 1\n";
+					for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
+						currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
+						model_rows_INT.push_back(counter);
+						model_cols_INT.push_back(variableMAP[currSTR]);
+						model_vals_DBL.push_back(1.0);
+					}
+					for (std::size_t r2=0; r2<r; ++r2) {
+						currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[species_npu[i]]+"_"+intSTR[r2];
+						model_rows_INT.push_back(counter);
+						model_cols_INT.push_back(variableMAP[currSTR]);
+						model_vals_DBL.push_back(1.0);
+					}
+					senseSTR.push_back("=");
+					rhsDBL.push_back(1.0);
+					++counter;
 				}
 			}
 		}
 	}
+
+// 	Rcout << "rhsDBL.size() = " << rhsDBL.size() << "; counter = " << counter << std::endl; 
 	
 	// 1c
 // 	Rcpp::Rcout << "\t\t1c constraints" << std::endl;
@@ -370,42 +496,74 @@ std::string rcpp_generate_modelfile(Rcpp::S4 opts, Rcpp::S4 data) {
 			for (std::size_t k=0; k<species_ndp[i]; ++k) {
 				for (std::size_t l=0; l<species_npu[i]; ++l) {
 					for (std::size_t r=0; r<(maxrlevelINT+1); ++r) {
-						model+="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r]+" + ";  
+						currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
+						model_rows_INT.push_back(counter);
+						model_cols_INT.push_back(variableMAP[currSTR]);
+						model_vals_DBL.push_back(1.0);
 					}
-					model.erase(model.size()-3);
-					model+=" - " +puDF_id_CHR[l]+" <= 0\n";
+					model_rows_INT.push_back(counter);
+					model_cols_INT.push_back(variableMAP[puDF_id_STR[l]]);
+					model_vals_DBL.push_back(-1.0);
+					senseSTR.push_back("<=");
+					rhsDBL.push_back(0.0);
+					++counter;	
 				}
 			}
 		}
 	}
+
+// 	Rcout << "rhsDBL.size() = " << rhsDBL.size() << "; counter = " << counter << std::endl; 
 
 	// 1d
 // 	Rcpp::Rcout << "\t\t1d constraints" << std::endl;
 	for (std::size_t i=0; i<n_species; ++i) {
 		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
 			for (std::size_t k=0; k<species_ndp[i]; ++k) {
-				for (std::size_t r=0; r<(maxrlevelINT+1); ++r)
-					model+="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[species_npu[i]]+"_"+intSTR[r]+" + ";
-				model.erase(model.size()-3);
-				model+=" = 1\n";
+				for (std::size_t r=0; r<(maxrlevelINT+1); ++r) {
+					currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[species_npu[i]]+"_"+intSTR[r];
+					model_rows_INT.push_back(counter);
+					model_cols_INT.push_back(variableMAP[currSTR]);
+					model_vals_DBL.push_back(1.0);
+				}
+				senseSTR.push_back("=");
+				rhsDBL.push_back(1.0);
+				++counter;
 			}
 		}
 	}
+	
+// 	Rcout << "rhsDBL.size() = " << rhsDBL.size() << "; counter = " << counter << std::endl; 
 	
 	// 1e
 // 	Rcpp::Rcout << "\t\t1e constraints" << std::endl;
 	for (std::size_t i=0; i<n_species; ++i) {
 		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
 			for (std::size_t k=0; k<species_ndp[i]; ++k) {
-				// real pu
 				for (std::size_t l=0; l<species_npu[i]; ++l) {
-					model+="P_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_0 = "+std::to_string(species_pu_probs[i][l]) + "\n";
+					// real pu
+					currSTR="P_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_0";
+					model_rows_INT.push_back(counter);
+					model_cols_INT.push_back(variableMAP[currSTR]);
+					model_vals_DBL.push_back(1.0);
+					senseSTR.push_back("=");
+					rhsDBL.push_back(species_pu_probs[i][l]);
+					++counter;
 				}
+				
 				// failure pu
-				model+="P_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[species_npu[i]]+"_0 = 1.0\n";
+				currSTR="P_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[species_npu[i]]+"_0";
+				model_rows_INT.push_back(counter);
+				model_cols_INT.push_back(variableMAP[currSTR]);
+				model_vals_DBL.push_back(1.0);
+				
+				senseSTR.push_back("=");
+				rhsDBL.push_back(1.0);
+				++counter;
 			}
 		}
 	}
+
+// 	Rcout << "rhsDBL.size() = " << rhsDBL.size() << "; counter = " << counter << std::endl; 
 
 	// 1f
 // 	Rcpp::Rcout << "\t\t1f constraints" << std::endl;	
@@ -414,20 +572,30 @@ std::string rcpp_generate_modelfile(Rcpp::S4 opts, Rcpp::S4 data) {
 			for (std::size_t k=0; k<species_ndp[i]; ++k) {
 				for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
 					for (std::size_t r=1, r2=0; r<(maxrlevelINT+1); ++r, ++r2) {
-						model+="P_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r]+" - ";
+
+						currSTR="P_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
+						model_rows_INT.push_back(counter);
+						model_cols_INT.push_back(variableMAP[currSTR]);
+						model_vals_DBL.push_back(1.0);
+						
 						for (std::size_t l2=0; l2<species_npu[i]; ++l2) {
-							model+=std::to_string(species_pu_probs[i][l] * species_pu_tprobs[i][l2]) + " " +
-							"W_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l2]+"_"+intSTR[r2]+
-							" - ";
+							currSTR="W_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l2]+"_"+intSTR[r2];
+							model_rows_INT.push_back(counter);
+							model_cols_INT.push_back(variableMAP[currSTR]);
+							model_vals_DBL.push_back(-(species_pu_probs[i][l] * species_pu_tprobs[i][l2]));
 						}
-						model.erase(model.size()-3);
-						model+=" = 0\n";
+					
+						senseSTR.push_back("=");
+						rhsDBL.push_back(0.0);
+						++counter;
 					}
 				}
 			}
 		}
 	}
-	
+
+// 	Rcout << "rhsDBL.size() = " << rhsDBL.size() << "; counter = " << counter << std::endl; 
+
 	/// W variables
 // 	Rcpp::Rcout << "\t\t2 constraints" << std::endl;	
 	std::string currW;
@@ -443,34 +611,80 @@ std::string rcpp_generate_modelfile(Rcpp::S4 opts, Rcpp::S4 data) {
 						currP="P_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
 						currY="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
 						// 2a 
-						model+=currW + " - " + currP + " <= 0\n";
+						//model+=currW + " - " + currP + " <= 0\n";
+						model_rows_INT.push_back(counter);
+						model_rows_INT.push_back(counter);
+						model_cols_INT.push_back(variableMAP[currW]);
+						model_cols_INT.push_back(variableMAP[currP]);
+						model_vals_DBL.push_back(1.0);
+						model_vals_DBL.push_back(-1.0);
+						senseSTR.push_back("<=");
+						rhsDBL.push_back(0.0);
+						++counter;
+						
+						
 						// 2b
-						model+=currW + " - " + currY + " <= 0\n";
+						//model+=currW + " - " + currY + " <= 0\n";						
+						model_rows_INT.push_back(counter);
+						model_rows_INT.push_back(counter);
+						model_cols_INT.push_back(variableMAP[currW]);
+						model_cols_INT.push_back(variableMAP[currY]);
+						model_vals_DBL.push_back(1.0);
+						model_vals_DBL.push_back(-1.0);
+						senseSTR.push_back("<=");
+						rhsDBL.push_back(0.0);
+						++counter;
+						
 						// 2c
-						model+=currW + " >= 0\n";
+						//model+=currW + " >= 0\n";
+						model_rows_INT.push_back(counter);
+						model_cols_INT.push_back(variableMAP[currW]);
+						model_vals_DBL.push_back(1.0);
+						senseSTR.push_back(">=");
+						rhsDBL.push_back(0.0);
+						++counter;
+						
+						
 						// 2d
-						model+= currW + " - " + currP + " - " + currY + " >= -1\n";
+						//model+= currW + " - " + currP + " - " + currY + " >= -1\n";
 // 						model+= currW + " >= " + currP + " + " + currY + " - 1\n";
+						model_rows_INT.push_back(counter);
+						model_rows_INT.push_back(counter);
+						model_rows_INT.push_back(counter);
+						model_cols_INT.push_back(variableMAP[currW]);
+						model_cols_INT.push_back(variableMAP[currP]);
+						model_cols_INT.push_back(variableMAP[currY]);
+						model_vals_DBL.push_back(1.0);
+						model_vals_DBL.push_back(-1.0);
+						model_vals_DBL.push_back(-1.0);
+						senseSTR.push_back(">=");
+						rhsDBL.push_back(-1.0);
+						++counter;
 					}
 				}
 			}
 		}
 	}
-	
+
+// 	Rcout << "rhsDBL.size() = " << rhsDBL.size() << "; counter = " << counter << std::endl; 
+
+		
 	////// variable types
 // 	Rcpp::Rcout << "\tvariable types" << std::endl;	
+	std::vector<std::string> vtypeSTR(objDBL.size());
+
 	///// binary
 // 	Rcpp::Rcout << "\t\t binary vars" << std::endl;	
-	model+="\nBinary\n";
-
-	// 1g
-	for (std::size_t i=0; i<n_pu; ++i)
-		model+=puDF_id_CHR[i] + " ";
 	
+	// 1g
+	for (std::size_t i=0; i<n_pu; ++i) {
+		vtypeSTR[variableMAP[puDF_id_STR[i]]]="B";
+	}
+		
 	// boundary variables
 	if (boundary) {
 		for (std::size_t i=0; i<n_edges; ++i)
-			model+=boundaryDF_idpair_CHR[i] + " ";
+			vtypeSTR[variableMAP[boundaryDF_idpair_CHR[i]]]="B";
 	}
 	
 	// 1g
@@ -479,38 +693,53 @@ std::string rcpp_generate_modelfile(Rcpp::S4 opts, Rcpp::S4 data) {
 			for (std::size_t k=0; k<species_ndp[i]; ++k) {
 				for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
 					for (std::size_t r=0; r<(maxrlevelINT+1); ++r) {
-						model+="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r]+" ";
+						currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
+						vtypeSTR[variableMAP[currSTR]]="B";
 					}
 				}
 			}
 		}
 	}
-	model.erase(model.size()-1);
 	
 	///// semi-continuous
 // 	Rcpp::Rcout << "\t\tsemi-continuous vars" << std::endl;	
-
-	model+="\nSemi-continuous\n";
 	for (std::size_t i=0; i<n_species; ++i) {
 		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
 			for (std::size_t k=0; k<species_ndp[i]; ++k) {
 				for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
 					for (std::size_t r=0; r<(maxrlevelINT+1); ++r) {
 						// w variables
-						model+="W_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r]+" ";
+						currW="W_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
+						vtypeSTR[variableMAP[currW]]="S";
 						// p variables
-						model+="P_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r]+" ";
+						currP="P_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
+						vtypeSTR[variableMAP[currP]]="S";
 					}
 				}
 			}
 		}
 	}
-	model.erase(model.size()-1);
 	
 	//// Exports
 // 	Rcpp::Rcout << "Exports" << std::endl;
-	model+="\nEnd\n";
-	return(model);
+	return(
+		Rcpp::List::create(
+			Rcpp::Named("Ar") = Rcpp::List::create(
+				Rcpp::Named("row") = Rcpp::wrap(model_rows_INT),
+				Rcpp::Named("col") = Rcpp::wrap(model_cols_INT),
+				Rcpp::Named("value") = Rcpp::wrap(model_vals_DBL)
+			),
+			Rcpp::Named("obj") = Rcpp::wrap(objDBL),
+			Rcpp::Named("sense") = Rcpp::wrap(senseSTR),
+			Rcpp::Named("rhs") = Rcpp::wrap(rhsDBL),
+			Rcpp::Named("vtype") = Rcpp::wrap(vtypeSTR),
+			Rcpp::Named("cache") = Rcpp::List::create(
+				Rcpp::Named("name") = Rcpp::wrap(cacheSTR),
+				Rcpp::Named("value") = Rcpp::wrap(cacheDBL)
+			),
+			Rcpp::Named("modelsense") = "min"
+		)
+	);
 }
 
 

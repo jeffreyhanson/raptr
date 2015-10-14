@@ -1,0 +1,3372 @@
+
+Gurobi 6.0.5 (linux64) logging started Tue 13 Oct 2015 05:47:57 PM AEST
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.01s
+
+Explored 0 nodes (0 simplex iterations) in 0.01 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 17:48:21 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 17:48:24 2015
+
+Optimize a model with 5211 rows, 2980 columns and 20535 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-03, 6e+02]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [2e-03, 2e+02]
+Presolve removed 2930 rows and 1130 columns
+Presolve time: 0.39s
+Presolved: 2281 rows, 1850 columns, 13630 nonzeros
+Variable types: 1020 continuous, 830 integer (830 binary)
+Presolve removed 10 rows and 5 columns
+Presolved: 2271 rows, 1845 columns, 13610 nonzeros
+
+
+Root relaxation: objective 4.797717e+00, 1087 iterations, 0.18 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    4.79772    0   59          -    4.79772      -     -    0s
+H    0     0                       5.0000000    4.79772  4.05%     -    0s
+
+Explored 0 nodes (1688 simplex iterations) in 0.76 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 9.00e-01)
+Best objective 5.000000000000e+00, best bound 5.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 17:48:25 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 17:48:28 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 17:48:28 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 17:48:33 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 17:48:36 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 17:48:36 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 17:48:37 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 17:48:40 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 17:48:40 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 17:48:42 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 17:48:45 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 17:48:45 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 17:48:57 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 17:49:00 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 17:49:00 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 17:49:01 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 17:49:03 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 17:49:03 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:00:08 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.01s
+
+Explored 0 nodes (0 simplex iterations) in 0.01 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:00:33 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:00:36 2015
+
+Optimize a model with 5211 rows, 2980 columns and 20535 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-03, 6e+02]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [2e-03, 2e+02]
+Presolve removed 2930 rows and 1130 columns
+Presolve time: 0.33s
+Presolved: 2281 rows, 1850 columns, 13630 nonzeros
+Variable types: 1020 continuous, 830 integer (830 binary)
+Presolve removed 10 rows and 5 columns
+Presolved: 2271 rows, 1845 columns, 13610 nonzeros
+
+
+Root relaxation: objective 4.797717e+00, 1087 iterations, 0.18 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    4.79772    0   59          -    4.79772      -     -    0s
+H    0     0                       5.0000000    4.79772  4.05%     -    0s
+
+Explored 0 nodes (1688 simplex iterations) in 0.69 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 9.00e-01)
+Best objective 5.000000000000e+00, best bound 5.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:00:36 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:00:39 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:00:39 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:00:44 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:00:47 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:00:47 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:00:48 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:00:50 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:00:51 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:00:52 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:00:55 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:00:55 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:01:06 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:01:09 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:01:09 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:01:10 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:01:12 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:01:12 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:06:54 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:07:17 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:07:20 2015
+
+Optimize a model with 5211 rows, 2980 columns and 20535 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-03, 6e+02]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [2e-03, 2e+02]
+Presolve removed 2930 rows and 1130 columns
+Presolve time: 0.35s
+Presolved: 2281 rows, 1850 columns, 13630 nonzeros
+Variable types: 1020 continuous, 830 integer (830 binary)
+Presolve removed 10 rows and 5 columns
+Presolved: 2271 rows, 1845 columns, 13610 nonzeros
+
+
+Root relaxation: objective 4.797717e+00, 1087 iterations, 0.17 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    4.79772    0   59          -    4.79772      -     -    0s
+H    0     0                       5.0000000    4.79772  4.05%     -    0s
+
+Explored 0 nodes (1688 simplex iterations) in 0.68 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 9.00e-01)
+Best objective 5.000000000000e+00, best bound 5.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:07:20 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:07:23 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:07:23 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:07:28 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:07:31 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:07:31 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:07:32 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:07:35 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:07:35 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:07:37 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:07:39 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:07:40 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:07:51 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:07:54 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:07:54 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:07:54 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:07:57 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:07:57 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:10:57 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:11:20 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:11:23 2015
+
+Optimize a model with 5211 rows, 2980 columns and 20535 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-03, 6e+02]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [2e-03, 2e+02]
+Presolve removed 2930 rows and 1130 columns
+Presolve time: 0.32s
+Presolved: 2281 rows, 1850 columns, 13630 nonzeros
+Variable types: 1020 continuous, 830 integer (830 binary)
+Presolve removed 10 rows and 5 columns
+Presolved: 2271 rows, 1845 columns, 13610 nonzeros
+
+
+Root relaxation: objective 4.797717e+00, 1087 iterations, 0.17 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    4.79772    0   59          -    4.79772      -     -    0s
+H    0     0                       5.0000000    4.79772  4.05%     -    0s
+
+Explored 0 nodes (1688 simplex iterations) in 0.65 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 9.00e-01)
+Best objective 5.000000000000e+00, best bound 5.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:11:24 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:11:27 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:11:27 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:11:32 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:11:35 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:11:35 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:11:36 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:11:36 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:11:39 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:11:39 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:11:41 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:11:41 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:11:44 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:11:44 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:11:55 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:11:58 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:11:58 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:11:59 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:12:01 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:12:01 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:12:01 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:18:54 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:18 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:20 2015
+
+Optimize a model with 5211 rows, 2980 columns and 20535 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-03, 6e+02]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [2e-03, 2e+02]
+Presolve removed 2930 rows and 1130 columns
+Presolve time: 0.34s
+Presolved: 2281 rows, 1850 columns, 13630 nonzeros
+Variable types: 1020 continuous, 830 integer (830 binary)
+Presolve removed 10 rows and 5 columns
+Presolved: 2271 rows, 1845 columns, 13610 nonzeros
+
+
+Root relaxation: objective 4.797717e+00, 1087 iterations, 0.17 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    4.79772    0   59          -    4.79772      -     -    0s
+H    0     0                       5.0000000    4.79772  4.05%     -    0s
+
+Explored 0 nodes (1688 simplex iterations) in 0.67 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 9.00e-01)
+Best objective 5.000000000000e+00, best bound 5.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:21 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:24 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:24 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:29 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:32 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:32 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:32 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:33 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:36 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:36 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:38 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:38 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:41 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:41 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:52 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:55 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:55 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:56 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:59 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:59 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:59 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:59 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:59 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:19:59 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:21:49 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:14 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:17 2015
+
+Optimize a model with 5211 rows, 2980 columns and 20535 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-03, 6e+02]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [2e-03, 2e+02]
+Presolve removed 2930 rows and 1130 columns
+Presolve time: 0.33s
+Presolved: 2281 rows, 1850 columns, 13630 nonzeros
+Variable types: 1020 continuous, 830 integer (830 binary)
+Presolve removed 10 rows and 5 columns
+Presolved: 2271 rows, 1845 columns, 13610 nonzeros
+
+
+Root relaxation: objective 4.797717e+00, 1087 iterations, 0.17 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    4.79772    0   59          -    4.79772      -     -    0s
+H    0     0                       5.0000000    4.79772  4.05%     -    0s
+
+Explored 0 nodes (1688 simplex iterations) in 0.66 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 9.00e-01)
+Best objective 5.000000000000e+00, best bound 5.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:18 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:21 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:21 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:25 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:28 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:28 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:29 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:30 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:33 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:33 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:34 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:34 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:37 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:37 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:49 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:52 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:52 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:52 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:55 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:55 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:55 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:55 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:55 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Tue Oct 13 18:22:55 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed 14 Oct 2015 03:26:23 PM AEST
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.01s
+
+Explored 0 nodes (0 simplex iterations) in 0.01 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:26:54 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.01s
+
+Explored 0 nodes (0 simplex iterations) in 0.01 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:26:58 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:27:01 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:27:01 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:27:06 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:27:09 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:27:09 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:27:14 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:27:42 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:27:45 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:27:45 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:27:46 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:27:46 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:27:49 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:27:49 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:28:37 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:28:40 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:28:40 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:29:06 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:29:09 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:29:09 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:29:09 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:29:09 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:29:09 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:29:09 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:32:57 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.01s
+
+Explored 0 nodes (0 simplex iterations) in 0.01 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:33:30 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.01s
+
+Explored 0 nodes (0 simplex iterations) in 0.01 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:33:34 2015
+
+Optimize a model with 5211 rows, 2980 columns and 20535 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-03, 6e+02]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [2e-03, 1e+00]
+Presolve removed 2265 rows and 780 columns
+Presolve time: 0.46s
+Presolved: 2946 rows, 2200 columns, 17390 nonzeros
+Variable types: 1350 continuous, 850 integer (850 binary)
+Presolved: 2946 rows, 2200 columns, 17390 nonzeros
+
+
+Root relaxation: objective 2.000000e+00, 728 iterations, 0.20 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    2.00000    0   43          -    2.00000      -     -    1s
+     0     0    2.00000    0   59          -    2.00000      -     -    1s
+     0     0    2.00000    0   58          -    2.00000      -     -    1s
+     0     0    2.00000    0   43          -    2.00000      -     -    2s
+     0     0    2.00000    0   22          -    2.00000      -     -    2s
+     0     0    2.00000    0   32          -    2.00000      -     -    2s
+     0     0    2.00000    0   16          -    2.00000      -     -    3s
+     0     0    2.00000    0   24          -    2.00000      -     -    3s
+     0     0    2.00000    0   45          -    2.00000      -     -    3s
+     0     0    2.00000    0   41          -    2.00000      -     -    3s
+     0     0    2.00000    0   43          -    2.00000      -     -    4s
+     0     0    2.00000    0   43          -    2.00000      -     -    4s
+     0     2    2.00000    0   43          -    2.00000      -     -    4s
+     3     5    2.00000    3   47          -    2.00000      -   115    5s
+H   34    12                       3.0000000    2.00000  33.3%  24.1    5s
+
+Cutting planes:
+  Clique: 1
+  MIR: 1
+  Flow cover: 9
+
+Explored 34 nodes (14781 simplex iterations) in 5.15 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 9.00e-01)
+Best objective 3.000000000000e+00, best bound 2.000000000000e+00, gap 33.3333%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:33:39 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:33:43 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:33:43 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:33:48 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:33:51 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:33:51 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:33:56 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:34:25 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:34:29 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:34:29 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:34:29 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:34:29 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:34:33 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:34:33 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:35:35 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.01 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:35:39 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:35:39 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:36:06 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:36:08 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:36:08 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:36:08 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:36:09 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:36:09 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 15:36:09 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:07:31 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.01s
+
+Explored 0 nodes (0 simplex iterations) in 0.01 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:07:59 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:08:02 2015
+
+Optimize a model with 5211 rows, 2980 columns and 20535 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-03, 6e+02]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [2e-03, 1e+00]
+Presolve removed 2265 rows and 780 columns
+Presolve time: 0.39s
+Presolved: 2946 rows, 2200 columns, 17390 nonzeros
+Variable types: 1350 continuous, 850 integer (850 binary)
+Presolved: 2946 rows, 2200 columns, 17390 nonzeros
+
+
+Root relaxation: objective 2.000000e+00, 728 iterations, 0.19 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    2.00000    0   43          -    2.00000      -     -    1s
+     0     0    2.00000    0   59          -    2.00000      -     -    1s
+     0     0    2.00000    0   58          -    2.00000      -     -    1s
+     0     0    2.00000    0   43          -    2.00000      -     -    2s
+     0     0    2.00000    0   22          -    2.00000      -     -    2s
+     0     0    2.00000    0   32          -    2.00000      -     -    2s
+     0     0    2.00000    0   16          -    2.00000      -     -    2s
+     0     0    2.00000    0   24          -    2.00000      -     -    3s
+     0     0    2.00000    0   45          -    2.00000      -     -    3s
+     0     0    2.00000    0   41          -    2.00000      -     -    3s
+     0     0    2.00000    0   43          -    2.00000      -     -    3s
+     0     0    2.00000    0   43          -    2.00000      -     -    3s
+     0     2    2.00000    0   43          -    2.00000      -     -    4s
+H   34    12                       3.0000000    2.00000  33.3%  24.1    4s
+
+Cutting planes:
+  Clique: 1
+  MIR: 1
+  Flow cover: 9
+
+Explored 34 nodes (14781 simplex iterations) in 4.79 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 9.00e-01)
+Best objective 3.000000000000e+00, best bound 2.000000000000e+00, gap 33.3333%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:08:07 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:08:10 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:08:10 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:08:15 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:08:18 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:08:18 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:08:23 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:08:52 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:09:01 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.01 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:09:01 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:09:01 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:09:02 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:09:05 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:09:05 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:09:52 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:09:56 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:09:56 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:10:23 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:10:26 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:10:26 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:10:26 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:10:26 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:10:26 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 16:10:26 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed 14 Oct 2015 07:38:55 PM AEST
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.01s
+
+Explored 0 nodes (0 simplex iterations) in 0.01 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:39:20 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:39:23 2015
+
+Optimize a model with 5211 rows, 2980 columns and 20535 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-03, 6e+02]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [2e-03, 1e+00]
+Presolve removed 2265 rows and 780 columns
+Presolve time: 0.56s
+Presolved: 2946 rows, 2200 columns, 17390 nonzeros
+Variable types: 1350 continuous, 850 integer (850 binary)
+Presolved: 2946 rows, 2200 columns, 17390 nonzeros
+
+
+Root relaxation: objective 2.000000e+00, 728 iterations, 0.23 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    2.00000    0   43          -    2.00000      -     -    1s
+     0     0    2.00000    0   59          -    2.00000      -     -    1s
+     0     0    2.00000    0   58          -    2.00000      -     -    2s
+     0     0    2.00000    0   43          -    2.00000      -     -    2s
+     0     0    2.00000    0   22          -    2.00000      -     -    2s
+     0     0    2.00000    0   32          -    2.00000      -     -    3s
+     0     0    2.00000    0   16          -    2.00000      -     -    3s
+     0     0    2.00000    0   24          -    2.00000      -     -    3s
+     0     0    2.00000    0   45          -    2.00000      -     -    4s
+     0     0    2.00000    0   41          -    2.00000      -     -    4s
+     0     0    2.00000    0   43          -    2.00000      -     -    4s
+     0     0    2.00000    0   43          -    2.00000      -     -    5s
+     0     2    2.00000    0   43          -    2.00000      -     -    6s
+H   34    12                       3.0000000    2.00000  33.3%  24.1    6s
+
+Cutting planes:
+  Clique: 1
+  MIR: 1
+  Flow cover: 9
+
+Explored 34 nodes (14781 simplex iterations) in 6.76 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 9.00e-01)
+Best objective 3.000000000000e+00, best bound 2.000000000000e+00, gap 33.3333%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:39:30 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:39:34 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:39:34 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:39:39 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:39:42 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:39:42 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:39:47 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:40:17 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:40:20 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:40:20 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:40:21 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:40:21 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:40:24 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:40:24 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:41:10 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:41:13 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:41:13 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:41:40 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:41:43 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:41:43 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:41:43 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:41:43 2015
+
+Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 1
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 2 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.000000000000e+00, best bound 1.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:41:43 2015
+
+
+Gurobi 6.0.5 (linux64) logging started Wed Oct 14 19:41:43 2015
+

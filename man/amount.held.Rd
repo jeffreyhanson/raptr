@@ -25,5 +25,7 @@ This function returns the amount held for each species in a solution.
 }
 \seealso{
 \code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}.
+
+\code{RaspResults}, \code{RaspSolved}.
 }
 

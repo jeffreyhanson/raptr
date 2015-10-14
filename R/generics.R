@@ -18,9 +18,11 @@ NULL
 #' @seealso \code{\link{is.gdalInstalled}}, \url{http://www.gdal.org/}, \url{http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries}.
 #' @export
 #' @examples
-#' data(species, pus)
-#' puvspr1.dat<-calcSpeciesAverageInPus(pus, species[[1]])
-#' puvspr2.dat<-calcSpeciesAverageInPus(pus, species)
+#' data(sim_pus, sim_spp)
+#' # calculate average for 1 species
+#' puvspr1.dat<-calcSpeciesAverageInPus(sim_pus[1:10,], sim_spp[[1]])
+#' # calculate average for multiple species
+#' puvspr2.dat<-calcSpeciesAverageInPus(sim_pus[1:10,], sim_spp)
 calcSpeciesAverageInPus<-function(x, ...) UseMethod("calcSpeciesAverageInPus")
 
 #' Simulate species distribution data for RASP
@@ -36,6 +38,32 @@ calcSpeciesAverageInPus<-function(x, ...) UseMethod("calcSpeciesAverageInPus")
 #' @return \code{RasterStack} with layers for each species.
 #' @seealso \code{\link[RandomFields]{RFsimulate}}.
 #' @export sim.species
+#' @examples
+#' data(sim_pus)
+#' # simulate 1 constant species distribution using RasterLayer
+#' s1 <- sim.species(blank.raster(sim_pus, 1), n=1, model='constant') 
+#' 
+#' # simulate 1 constant species distribution based on SpatialPolygons
+#' s2 <- sim.species(sim_pus, res=1, n=1, model='constant') 
+#' 
+#' # simulate 1 normal species distributions
+#' s3 <- sim.species(sim_pus, res=1, n=1, model='normal') 
+#' 
+#' # simulate 1 bimodal species distribution
+#' s4 <- sim.species(sim_pus, res=1, n=1, model='bimodal') 
+#' 
+#' # simulate 1 species distribution using a RModel object from RandomFields
+#' s5 <- sim.species(sim_pus, res=1, n=1, model=RandomFields::RPgauss()) 
+#' 
+#' # simulate 5 species distribution using a RModel object from RandomFields
+#' s6 <- sim.species(sim_pus, res=1, n=5, model=RandomFields::RPgauss())
+#' 
+#' # plot simulations
+#' par(mfrow=c(2,2))
+#' plot(s2, main='constant')
+#' plot(s3, main='normal')
+#' plot(s4, main='bimodal')
+#' plot(s5, main='RPgauss()')
 sim.species<-function(x, ...) UseMethod('sim.species')
 
 #' Simulate attribute space data for RASP
@@ -52,6 +80,24 @@ sim.species<-function(x, ...) UseMethod('sim.species')
 #' @seealso \code{\link[RandomFields]{RFsimulate}}.
 #' @export sim.space
 #' @name sim.space
+#' @examples
+#' data(sim_pus)
+#'
+#' # simulate 1d space using RasterLayer
+#' s1 <- sim.space(blank.raster(sim_pus, 1), d=1)
+#'
+#' # simulate 1d space using SpatialPolygons
+#' s2 <- sim.space(sim_pus, res=1, d=1)
+#'
+#' # simulate 2d space using SpatialPolygons
+#' s3 <- sim.space(sim_pus, res=1, d=2)
+#'
+#' # plot simulated spaces
+#' par(mfrow=c(2,2))
+#' plot(s1, main='s1')
+#' plot(s2, main='s2')
+#' plot(s3[[1]], main='s3: first dimension')
+#' plot(s3[[2]], main='s3: second dimension')
 sim.space<-function(x, ...) UseMethod('sim.space')
 
 #' Solve RASP object
@@ -66,6 +112,7 @@ sim.space<-function(x, ...) UseMethod('sim.space')
 #' @param ... not used.
 #' @return \code{RaspSolved} object
 #' @note This function is used to solve a \code{RaspUnsolved} object that has all of its inputs generated. The rasp function (without lower case 'r') provides a more general interface for generating inputs and outputs.
+#' @seealso \code{RaspUnsolved}, \code{RaspSolved}.
 setGeneric('solve', function(x, ...) standardGeneric('solve'))
 
 #' Plot RASP object
@@ -89,6 +136,7 @@ setGeneric('solve', function(x, ...) standardGeneric('solve'))
 #' @param grayscale \code{logical} should the basemap be gray-scaled?
 #' @param force.reset \code{logical} if basemap data has been cached, should it be re-downloaded?
 #' @name plot
+#' @seealso \code{RaspSolved}.
 NULL
 
 #' Print objects
@@ -99,6 +147,7 @@ NULL
 #' @param header \code{logical} should object header be included?
 #' @param ... not used.
 #' @name print
+#' @seealso \code{GurobiOpts}, \code{RaspOpts}, \code{RaspData}, \code{RaspUnsolved}, \code{RaspResults}, \code{RaspSolved}.
 NULL
 
 #' Show objects
@@ -107,6 +156,17 @@ NULL
 #'
 #' @param object \code{GurobiOpts}, \code{RaspOpts}, \code{RaspData}, \code{RaspUnsolved}, \code{RaspResults}, or \code{RaspSolved} object.
 #' @name show
+#' @seealso \code{GurobiOpts}, \code{RaspOpts}, \code{RaspData}, \code{RaspUnsolved}, \code{RaspResults}, \code{RaspSolved}.
+NULL
+
+#' Convert object to list.
+#'
+#' Convert objects to list.
+#'
+#' @param x \code{GurobiOpts} object.
+#' @param ... not used.
+#' @name as.list
+#' @seealso \code{GurobiOpts}.
 NULL
 
 #' Summary of solutions
@@ -116,6 +176,7 @@ NULL
 #' @param object \code{RaspResults}, or \code{RaspSolved} object.
 #' @param ... not used.
 #' @name summary
+#' @seealso \code{RaspResults}, \code{RaspSolved}.
 NULL
 
 #' Solution score
@@ -127,6 +188,7 @@ NULL
 #' @return "matrix" or "numeric" vector with solution score(s) depending on arguments.
 #' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved-class}}, \code{\link{rasp}}.
 #' @export
+#' @seealso \code{RaspResults}, \code{RaspSolved}.
 score<-function(x, y) UseMethod('score')
 
 #' Log file
@@ -134,29 +196,12 @@ score<-function(x, y) UseMethod('score')
 #' This function returns the Gurobi log file (*.log) associated with solving RASP.
 #'
 #' @param x \code{RaspResults} or \code{RaspSolved} object.
+#' @param y \code{NULL} to return all values, \code{integer} 0 to return the log file for best solution, \code{integer} value greater than 0 for log file for the \code{y}'th solution.
+#' @note The term logging file was used due to collisions with the \code{log} function in base R.
 #' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved-class}}, \code{\link{rasp}}.
 #' @export
-logging.file<-function(x) UseMethod('logging.file')
-
-#' Model file
-#'
-#' This function returns the Gurobi model file (*.lp) associated with solving RASP.
-#'
-#' @param x \code{RaspResults} or \code{RaspSolved} object.
-#' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}.
-#' @return \code{character} object.
-#' @export model.file
-model.file<-function(x) UseMethod('model.file')
-
-#' Solution file
-#'
-#' This function returns the Gurobi solution file (*.sol) associated with solving RASP.
-#'
-#' @param x \code{RaspResults} or \code{RaspSolved} object.
-#' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}.
-#' @return \code{character} object.
-#' @export solution.file
-solution.file<-function(x) UseMethod('solution.file')
+#' @seealso \code{RaspResults}, \code{RaspSolved}.
+logging.file<-function(x,y) UseMethod('logging.file')
 
 #' Extract amount held for a solution
 #'
@@ -167,6 +212,7 @@ solution.file<-function(x) UseMethod('solution.file')
 #' @return \code{matrix} or \code{numeric} vector depending on arguments.
 #' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}.
 #' @export amount.held
+#' @seealso \code{RaspResults}, \code{RaspSolved}.
 amount.held<-function(x,y) {UseMethod('amount.held')}
 
 #' Extract attribute space held for a solution
@@ -178,6 +224,7 @@ amount.held<-function(x,y) {UseMethod('amount.held')}
 #' @return code{matrix} or code{numeric} vector depending on arguments.
 #' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}.
 #' @export space.held
+#' @seealso \code{RaspResults}, \code{RaspSolved}.
 space.held<-function(x,y) {UseMethod('space.held')}
 
 #' Extract solution selections
@@ -190,54 +237,8 @@ space.held<-function(x,y) {UseMethod('space.held')}
 #' @return \code{matrix} or \code{numeric} vector depending on arguments.
 #' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved-class}}, \code{\link{rasp}}.
 #' @export
+#' @seealso \code{RaspResults}, \code{RaspSolved}.
 selections<-function(x, y) {UseMethod('selections')}
-
-#' Compare Rasp objects
-#'
-#' This function checks objects to see if they share the same input data.
-#'
-#' @param x \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
-#' @param y \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
-#' @return \code{logical} are the objects based on the same data?
-#' @export
-#' @seealso \code{\link{RaspData-class}}, \code{\link{RaspUnsolved-class}}, \code{\link{RaspSolved-class}}.
-setGeneric("is.comparable", function(x, y) standardGeneric("is.comparable"))
-
-#' Basemap 
-#'
-#' This function retrieves google map data for planning units. The google map data is cached to provide fast plotting capabilities.
-#'
-#' @param x \code{RaspData}, \code{RaspUnsolved}, \code{RaspSolved} object.
-#' @param basemap \code{character} type of base map to display. Valid names are "roadmap", "mobile", "satellite", "terrain", "hybrid", "mapmaker-roadmap", "mapmaker-hybrid".
-#' @param grayscale \code{logical} should base map be gray scale?
-#' @param force.reset \code{logical} ignore data in cache? Setting this as ignore will make function slower but may avoid bugs in cache system.
-#' @return \code{list} with google map data.
-#' @export
-#' @seealso \code{\link[RgoogleMaps]{GetMap.bbox}}, \code{\link{plot}}.
-basemap<-function(x, basemap="hybrid", grayscale=FALSE, force.reset=FALSE) {UseMethod("basemap")}
-
-#' Test if hash is cached in a Rasp object
-#'
-#' Tests if hash is cached in Rasp object.
-#' 
-#' @param x \code{RaspData} or \code{RaspResults} object
-#' @param name \code{character} hash.
-#' @note caches are implemented using environments, the hash is used as the name of the object in the environment.
-#' @return \code{logical} Is it cached?
-#' @keywords internal
-setGeneric("is.cached", function(x,name) standardGeneric("is.cached"))
-
-#' Get and set cache Methods
-#'
-#' Getter and setter methods for caches in MarxanData and MarxanResults object.
-#' 
-#' @param x \code{RaspData} or \code{RaspResults} object
-#' @param name \code{character} hash.
-#' @param y if \code{ANY} this object gets cached with name, else if \code{missing} the object hashed at name gets returned.
-#' @note caches are implemented using environments, the hash is used as the name of the object in the environment.
-#' @return \code{ANY} or \code{NULL} depends on \code{y} argument.
-#' @keywords internal
-setGeneric("cache", function(x, name, y) standardGeneric("cache"))
 
 #' Convert SpatialPolygons to PolySet data
 #'
@@ -250,6 +251,6 @@ setGeneric("cache", function(x, name, y) standardGeneric("cache"))
 #' @seealso For a slower, more stable equivalent see \code{\link[maptools]{SpatialPolygons2PolySet}}.
 #' @export
 #' @examples 
-#' data(pus)
-#' x <- SpatialPolygons2PolySet(pus)
+#' data(sim_pus)
+#' x <- SpatialPolygons2PolySet(sim_pus)
 SpatialPolygons2PolySet<-function(x, n_preallocate) UseMethod("SpatialPolygons2PolySet")

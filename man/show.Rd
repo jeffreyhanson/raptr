@@ -43,4 +43,7 @@ Shows objects.
 
 \item \code{RaspUnsolved}: 
 }}
+\seealso{
+\code{GurobiOpts}, \code{RaspOpts}, \code{RaspData}, \code{RaspUnsolved}, \code{RaspResults}, \code{RaspSolved}.
+}
 
