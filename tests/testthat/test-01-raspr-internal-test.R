@@ -170,30 +170,26 @@ test_that("boundary length data functions", {
 		n=4
 	)
 	# make boundary length files
-	print(1)
 	bldf1<-calcBoundaryData(polys)
-	print(2)
-	bldf1[[3]]<-as.integer(bldf1[[3]]) # convert to integer for floating point comparisons
-	print(3)
 	bldf2<-structure(list(id1 = c(1L, 2L, 2L, 3L, 3L, 4L, 4L, 5L, 5L, 6L, 
 		6L, 6L, 7L, 7L, 8L, 8L, 8L, 9L, 9L, 9L), id2 = c(1L, 1L, 2L, 
 		2L, 3L, 1L, 4L, 2L, 4L, 3L, 5L, 6L, 4L, 7L, 5L, 7L, 8L, 6L, 8L, 
 		9L), boundary = c(2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 
 		1, 1, 1, 1, 2)), .Names = c("id1", "id2", "boundary"), row.names = c(NA, 
 		-20L), class = "data.frame")
-	print(4)
-	bldf2[[3]]<-as.integer(bldf2[[3]]) # convert to integer for floating point comparisons
-	print(5)
-	# tests
-	print("bldf1")
-	dput(bldf1)
-	cat("\n\n")
-	
-	print("bldf2")
-	dput(bldf2)
-	cat("\n\n")
-	
-	expect_identical(bldf1[[1]], bldf2[[1]])
-	expect_identical(bldf1[[2]], bldf2[[2]])
-	expect_identical(bldf1[[3]], bldf2[[3]])
+	bldf2[[2]]<-as.integer(bldf2[[2]]) # convert to integer for floating point comparisons
+
+	# sort by ids
+	bldf1$ids=apply(as.matrix(bldf1[,1:2,drop=FALSE]), 1, function(x) {
+		return(paste(sort(x), collapse='_'))
+	})
+	bldf2$ids=apply(as.matrix(bldf2[,1:2,drop=FALSE]), 1, function(x) {
+		return(paste(sort(x), collapse='_'))
+	})
+	bldf1=bldf1[order(bldf1$ids),]
+	bldf2=bldf2[order(bldf2$ids),]
+
+	# check that values are correct
+	expect_equal(bldf1$ids, bldf2$ids)
+	expect_equal(bldf1[[3]], bldf2[[3]])
 })
