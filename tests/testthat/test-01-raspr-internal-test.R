@@ -186,11 +186,11 @@ test_that("boundary length data functions", {
 	print(5)
 	# tests
 	print("bldf1")
-	print(dput(bldf1), '\n')
+	dput(bldf1)
 	cat("\n\n")
 	
 	print("bldf2")
-	cat(dput(bldf2),'\n')
+	dput(bldf2)
 	cat("\n\n")
 	
 	expect_identical(bldf1[[1]], bldf2[[1]])
