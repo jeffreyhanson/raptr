@@ -31,7 +31,7 @@ test_that('Gurobi solver', {
 	model<-rcpp_generate_model_object(ro, rd)
 	model$A<-sparseMatrix(i=model$Ar[[1]]+1, j=model$Ar[[2]]+1, x=model$Ar[[3]])
 	# solve the model
-	result<-gurobi::gurobi(model, as.list(go))
+	result<-gurobi::gurobi(model, append(as.list(go), list('LogFile'=tempfile(fileext='.log'))))
 })
 
 test_that('solve.RaspUnsolved (NUMREPS=1)', {
