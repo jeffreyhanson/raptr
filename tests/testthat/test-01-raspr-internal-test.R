@@ -163,22 +163,17 @@ test_that("boundary length data functions", {
 	polys<-rasterToPolygons(
 		raster(
 			matrix(1:9, ncol=3), 
-			xmn=0, xmx=1, ymn=0, ymx=1, 
+			xmn=0, xmx=3, ymn=0, ymx=3, 
 			crs=CRS('+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ')
 		),
 		n=4
 	)
 	bldf1<-calcBoundaryData(polys)
 	bldf2<-structure(list(id1 = c(1L, 2L, 2L, 3L, 3L, 4L, 4L, 5L, 5L, 6L, 
-6L, 6L, 7L, 7L, 8L, 8L, 8L, 9L, 9L, 9L), id2 = c(1L, 1L, 2L, 
-2L, 3L, 1L, 4L, 2L, 4L, 3L, 5L, 6L, 4L, 7L, 5L, 7L, 8L, 6L, 8L, 
-9L), boundary = c(0.666666666666, 0.333333333333, 0.333333333334, 
-0.333333333333, 0.666666666666, 0.333333333333, 0.333333333334, 
-0.333333333334, 0.333333333334, 0.333333333333, 0.333333333334, 
-0.333333333334, 0.333333333333, 0.666666666666, 0.333333333334, 
-0.333333333333, 0.333333333334, 0.333333333333, 0.333333333333, 
-0.666666666666)), .Names = c("id1", "id2", "boundary"), row.names = c(NA, 
--20L), class = "data.frame")
-
+		6L, 6L, 7L, 7L, 8L, 8L, 8L, 9L, 9L, 9L), id2 = c(1L, 1L, 2L, 
+		2L, 3L, 1L, 4L, 2L, 4L, 3L, 5L, 6L, 4L, 7L, 5L, 7L, 8L, 6L, 8L, 
+		9L), boundary = c(2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 
+		1, 1, 1, 1, 2)), .Names = c("id1", "id2", "boundary"), row.names = c(NA, 
+		-20L), class = "data.frame")
 	expect_equal(bldf1, bldf2)
 })

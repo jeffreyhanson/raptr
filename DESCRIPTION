@@ -34,7 +34,6 @@ Imports:
     rgeos,
     hypervolume,
     sm,
-    dismo,
     gdalUtils,
     mvtnorm
 Depends:
@@ -48,7 +47,10 @@ LinkingTo: Rcpp,
 LazyData: true
 License: GPL-3
 VignetteBuilder: knitr
-Suggests: knitr, testthat, gurobi
+Suggests:
+    knitr,
+    testthat,
+    gurobi
 SystemRequirements: C++11
 Collate:
     'dependencies.R'

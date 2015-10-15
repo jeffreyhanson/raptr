@@ -1,6 +1,6 @@
 ### create RaspSolved object
 # skip if gurobi not installed
-if (is.GurobiInstalled()) {
+if (is.GurobiInstalled(FALSE)) {
 	# create RaspUnsolved object
 	data(sim_pus, sim_spp)
 	go<-GurobiOpts(MIPGap=0.9)

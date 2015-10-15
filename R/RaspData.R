@@ -163,7 +163,7 @@ setClass("RaspData",
 #' 		dp=list(
 #'			make.DemandPoints(
 #'				SpatialPoints(
-#'					coords=dismo::randomPoints(
+#'					coords=randomPoints(
 #'						cs_spp,
 #'						n=10,
 #'						prob=TRUE
@@ -178,7 +178,7 @@ setClass("RaspData",
 #' 		dp=list(
 #'			make.DemandPoints(
 #'				SpatialPoints(
-#'					coords=dismo::randomPoints(
+#'					coords=randomPoints(
 #'						cs_spp,
 #'						n=10,
 #'						prob=TRUE

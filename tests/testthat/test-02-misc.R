@@ -3,7 +3,7 @@ test_that('gdal installation checks', {
 })
 
 test_that('Gurobi installation checks', {
-	expect_true(is.GurobiInstalled())
+	is.GurobiInstalled(FALSE)
 })
 
 test_that("blank.raster function", {
@@ -19,3 +19,10 @@ test_that("blank.raster function", {
 	expect_equal(sum(is.na(rst[])), 0)
 })
 
+test_that("randomPoints function", {
+	data(sim_spp)
+	pts <- randomPoints(sim_spp[[1]], 10)
+	expect_equal(ncol(pts), 2)
+	expect_equal(nrow(pts), 10)
+	expect_equal(sum(is.na(c(pts))), 0)
+})

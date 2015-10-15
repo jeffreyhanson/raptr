@@ -6,33 +6,33 @@
 \alias{calcBoundaryData.SpatialPolygons}
 \title{Calculate boundary data for planning units}
 \usage{
-calcBoundaryData(x, ...)
+calcBoundaryData(x, tol, length.factor, edge.factor)
 
-\method{calcBoundaryData}{PolySet}(x, tolerance = 0.001, lengthFactor = 1,
-  edgeFactor = 1, ...)
+\method{calcBoundaryData}{PolySet}(x, tol = 0.001, length.factor = 1,
+  edge.factor = 1)
 
-\method{calcBoundaryData}{SpatialPolygons}(x, tolerance = 0.001,
-  lengthFactor = 1, edgeFactor = 1, ...)
+\method{calcBoundaryData}{SpatialPolygons}(x, tol = 0.001,
+  length.factor = 1, edge.factor = 1)
 }
 \arguments{
-\item{x}{"PolySet", "SpatialPolygons" or "SpatialPolyognsDataFrame" object.}
+\item{x}{\code{PolySet}, \code{SpatialPolygons} or \code{SpatialPolyognsDataFrame} object.}
+
+\item{tol}{\code{numeric} to specify precision of calculations (ie. how far apart do vertices have to be to be considered different).}
+
+\item{length.factor}{\code{numeric} to scale boundary lengths.}
+
+\item{edge.factor}{\code{numeric} to scale boundary lengths for edges that do not have any neighbors, such as those that occur along the margins.}
 
 \item{...}{not used.}
-
-\item{tolerance}{"numeric" to specify precision of calculations (ie. how far apart do vertices have to be to be considered different).}
-
-\item{lengthFactor}{"numeric" to scale boundary lengths.}
-
-\item{edgeFactor}{"numeric" to scale boundary lengths for edges that do not have any neighbors, such as those that occur along the margins.}
 }
 \value{
-"data.frame" with "integer" 'id1', "integer" 'id2', and "numeric" 'amount' columns.
+\code{data.frame} with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'amount' (\code{numeric}) columns.
 }
 \description{
-This function calculates boundary length data for "PolySet", "SpatialPolygons", and "SpatialPolygonsDataFrame" objects.
+This function calculates boundary length data for \code{PolySet}, \code{SpatialPolygons}, and \code{SpatialPolygonsDataFrame} objects.
 Be aware that this function is designed to be as fast as possible, as a result it depends on C++ code and if this
 function is used improperly, then it will crash R. Furthermore, multipart polygons with touching edges will likely result in inaccuracies.
-If argument set to SpatialPolygons or SpatialPolygonsDataFrame, this will be converted to PolySet before processing.
+If argument set to \code{SpatialPolygons} or \code{SpatialPolygonsDataFrame}, this will be converted to PolySet before processing.
 }
 \examples{
 data(sim_pus)
@@ -40,6 +40,6 @@ bound.dat <- calcBoundaryData(sim_pus)
 summary(bound.dat)
 }
 \seealso{
-this function is based on the algorithm on by QMARXAN \url{http://aproposinfosystems.com/products/qmarxan/} for calculating boundary length.
+This function is based on the algorithm in QMARXAN \url{http://aproposinfosystems.com/products/qmarxan/} for calculating boundary length.
 }
 

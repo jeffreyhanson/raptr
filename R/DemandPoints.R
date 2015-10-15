@@ -72,7 +72,7 @@ DemandPoints<-function(points, weights) {
 #' @examples
 #' data(cs_spp, cs_space)
 #' # generate species points
-#'  species.points <- dismo::randomPoints(cs_spp, n=100, prob=TRUE, lonlatCorrection=FALSE)
+#'  species.points <- randomPoints(cs_spp, n=100, prob=TRUE)
 #' # generate demand points for a 1d space using sm.density
 #' dps1 <- make.DemandPoints(
 #'	species.points=species.points,

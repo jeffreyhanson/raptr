@@ -33,8 +33,6 @@
 
 #' @importFrom rgeos gCentroid
 
-#' @importFrom dismo randomPoints
-
 #' @importFrom adehabitatHR mcp
 
 #' @importFrom mvtnorm dmvnorm

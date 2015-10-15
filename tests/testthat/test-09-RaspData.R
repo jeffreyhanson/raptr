@@ -5,11 +5,11 @@ test_that('RaspData', {
 	attribute.spaces=list(
 		AttributeSpace(
 			pu=SimplePoints(rgeos::gCentroid(cs_pus[1:10,], byid=TRUE)@coords),
-			dp=list(make.DemandPoints(SpatialPoints(coords=dismo::randomPoints(cs_spp, n=100, prob=TRUE)), NULL))
+			dp=list(make.DemandPoints(SpatialPoints(coords=randomPoints(cs_spp, n=100, prob=TRUE)), NULL))
 		),
 		AttributeSpace(
 			pu=SimplePoints(extract(cs_space[[1]],cs_pus[1:10,],fun=mean)),
-			dp=list(make.DemandPoints(SpatialPoints(coords=dismo::randomPoints(cs_spp, n=100, prob=TRUE)), cs_space[[1]]))
+			dp=list(make.DemandPoints(SpatialPoints(coords=randomPoints(cs_spp, n=100, prob=TRUE)), cs_space[[1]]))
 		)
 	)
 	pu.species.probabilities=calcSpeciesAverageInPus(cs_pus[1:10,], cs_spp)

@@ -43,7 +43,7 @@ attribute.spaces=list(
 		dp=list(
 			make.DemandPoints(
 				SpatialPoints(
-					coords=dismo::randomPoints(
+					coords=randomPoints(
 						cs_spp,
 						n=10,
 						prob=TRUE
@@ -58,7 +58,7 @@ attribute.spaces=list(
 		dp=list(
 			make.DemandPoints(
 				SpatialPoints(
-					coords=dismo::randomPoints(
+					coords=randomPoints(
 						cs_spp,
 						n=10,
 						prob=TRUE

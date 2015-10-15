@@ -145,3 +145,41 @@ setClassUnion("PolySetOrNULL", c("PolySet", "NULL"))
 #' @aliases data.frameOrNULL
 #' @exportClass data.frameOrNULL
 setClassUnion("data.frameOrNULL", c("data.frame", "NULL"))
+
+
+#' Sample random points from a RasterLayer
+#'
+#' This function generates random points in a \code{RasterLayer} object.
+#' 
+#' @param mask \code{RasterLayer} object
+#' @param n \code{integer} number of points to sample
+#' @param prob \code{logical} should the raster values be used as weights? Defaults to \code{FALSE}.
+#' @return code{matrix} with x-coordinates, y-coordinates, and cell values.
+#' @seealso \code{\link[dismo]{randomPoints}}.
+#' @export
+#' @examples
+#' data(sim_spp)
+#' # generate points
+#' pts <- randomPoints(sim_spp[[1]])
+#' # plot points
+#' plot(sim_spp[[1]])
+#' points(pts)
+randomPoints <- function(mask, n, prob=FALSE) {
+	# check that data can be processed in memory
+	stopifnot(canProcessInMemory(mask, n=3))
+	# extract cells
+	validPos<-which(is.finite(mask[]))
+	if (length(validPos) < n)
+		stop('argument to n is greater than the number of cells with finite values')
+	if (prob) {
+		randomCells <- sample(validPos, n, prob=mask[validPos], replace=FALSE)
+	} else {
+		randomCells <- sample(validPos, n, , replace=FALSE)
+	}
+	# get coordinates of the cell centres 
+	return(
+		xyFromCell(mask, randomCells)
+	)
+}
+
+
