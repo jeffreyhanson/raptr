@@ -22,10 +22,12 @@ This function generates random points in a \code{RasterLayer} object.
 \examples{
 data(sim_spp)
 # generate points
-pts <- randomPoints(sim_spp[[1]])
+pts1 <- randomPoints(sim_spp[[1]], n=5)
+pts2 <- randomPoints(sim_spp[[1]], n=5, prob=TRUE)
 # plot points
 plot(sim_spp[[1]])
-points(pts)
+points(pts1, col='red')
+points(pts2, col='black')
 }
 \seealso{
 \code{\link[dismo]{randomPoints}}.
