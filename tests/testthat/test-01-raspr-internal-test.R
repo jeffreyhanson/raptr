@@ -160,6 +160,7 @@ test_that("PolySet conversion function", {
 })
 
 test_that("boundary length data functions", {
+	# generate polygons
 	polys<-rasterToPolygons(
 		raster(
 			matrix(1:9, ncol=3), 
@@ -168,14 +169,18 @@ test_that("boundary length data functions", {
 		),
 		n=4
 	)
+	# make boundary length files
 	bldf1<-calcBoundaryData(polys)
-	bldf1[[3]] = as.integer(bldf1[[3]]) # convert to integer for floating point comparisons
+	bldf1[[3]]<-as.integer(bldf1[[3]]) # convert to integer for floating point comparisons
 	bldf2<-structure(list(id1 = c(1L, 2L, 2L, 3L, 3L, 4L, 4L, 5L, 5L, 6L, 
 		6L, 6L, 7L, 7L, 8L, 8L, 8L, 9L, 9L, 9L), id2 = c(1L, 1L, 2L, 
 		2L, 3L, 1L, 4L, 2L, 4L, 3L, 5L, 6L, 4L, 7L, 5L, 7L, 8L, 6L, 8L, 
 		9L), boundary = c(2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 
 		1, 1, 1, 1, 2)), .Names = c("id1", "id2", "boundary"), row.names = c(NA, 
 		-20L), class = "data.frame")
-	bldf2[[3]] = as.integer(bldf2[[3]]) # convert to integer for floating point comparisons
-	expect_equal(bldf1, bldf2)
+	bldf2[[3]]<-as.integer(bldf2[[3]]) # convert to integer for floating point comparisons
+	# tests
+	expect_identical(bldf1[[1]], bldf2[[1]])
+	expect_identical(bldf1[[2]], bldf2[[2]])
+	expect_identical(bldf1[[3]], bldf2[[3]])
 })
