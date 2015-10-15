@@ -23,8 +23,6 @@
 #' @importFrom methods setOldClass
 #' @importFrom methods setClassUnion
 
-#' @importFrom Rcpp evalCpp
-
 #' @importFrom sm sm.density
 
 #' @importFrom Matrix sparseMatrix
@@ -52,7 +50,6 @@
 #' @importFrom RgoogleMaps GetMap.bbox
 #' @importFrom RgoogleMaps PlotOnStaticMap
 #' @importFrom RgoogleMaps PlotPolysOnStaticMap
-
 
 #' @importFrom scales rescale
 

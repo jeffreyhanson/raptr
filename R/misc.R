@@ -160,10 +160,12 @@ setClassUnion("data.frameOrNULL", c("data.frame", "NULL"))
 #' @examples
 #' data(sim_spp)
 #' # generate points
-#' pts <- randomPoints(sim_spp[[1]])
+#' pts1 <- randomPoints(sim_spp[[1]], n=5)
+#' pts2 <- randomPoints(sim_spp[[1]], n=5, prob=TRUE)
 #' # plot points
 #' plot(sim_spp[[1]])
-#' points(pts)
+#' points(pts1, col='red')
+#' points(pts2, col='black')
 randomPoints <- function(mask, n, prob=FALSE) {
 	# check that data can be processed in memory
 	stopifnot(canProcessInMemory(mask, n=3))

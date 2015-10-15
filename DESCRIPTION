@@ -26,7 +26,6 @@ Imports:
     RgoogleMaps,
     RandomFields,
     RColorBrewer,
-    Rcpp,
     plyr,
     parallel,
     doSNOW,

@@ -180,6 +180,14 @@ test_that("boundary length data functions", {
 		-20L), class = "data.frame")
 	bldf2[[3]]<-as.integer(bldf2[[3]]) # convert to integer for floating point comparisons
 	# tests
+	print("bldf1")
+	print(dput(bldf1), '\n')
+	cat("\n\n")
+	
+	print("bldf2")
+	cat(dput(bldf2),'\n')
+	cat("\n\n")
+	
 	expect_identical(bldf1[[1]], bldf2[[1]])
 	expect_identical(bldf1[[2]], bldf2[[2]])
 	expect_identical(bldf1[[3]], bldf2[[3]])
