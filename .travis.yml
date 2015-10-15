@@ -35,12 +35,12 @@ r_binary_packages:
   - sp
   - rgdal
   - raster
+  - lintr
 
 r_github_packages:
   - rstudio/rmarkdown
   - hadley/testthat
   - jimhester/covr
-  - jimhester/lintr
   
 after_success:
   - Rscript -e 'covr::codecov()'
