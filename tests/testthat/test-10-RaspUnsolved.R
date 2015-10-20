@@ -1,13 +1,4 @@
 
-test_that('RaspUnsolved', {
-	# create RaspUnsolved object
-	set.seed(500)
-	data(sim_pus, sim_spp)
-	ro<-RaspOpts()
-	rd<-make.RaspData(sim_pus, sim_spp, NULL, include.geographic.space=TRUE, n.demand.points=5L)
-	# validity checks are internal
-})
-
 test_that('Gurobi model compiler', {
 	# create RaspUnsolved object
 	set.seed(500)
@@ -116,4 +107,3 @@ test_that('solve.RaspUnsolved (BLM test)', {
 	# solve it
 	rs<-raspr::solve(ru)
 })
-

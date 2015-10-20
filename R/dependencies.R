@@ -9,6 +9,19 @@
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom RColorBrewer brewer.pal.info
 
+#' @importFrom ggplot2 ggplot
+#' @importFrom ggplot2 geom_point
+#' @importFrom ggplot2 theme_classic
+#' @importFrom ggplot2 scale_fill_continuous
+#' @importFrom ggplot2 scale_color_brewer
+#' @importFrom ggplot2 theme
+#' @importFrom ggplot2 ggtitle
+#' @importFrom ggplot2 stat_binhex
+#' @importFrom ggplot2 aes
+#' @importFrom ggplot2 scale_colour_gradientn
+#' @importFrom ggplot2 scale_fill_manual
+#' @importFrom ggplot2 coord_equal
+
 #' @importFrom plyr llply
 #' @importFrom plyr laply
 #' @importFrom plyr alply
@@ -52,6 +65,7 @@
 #' @importFrom RgoogleMaps PlotPolysOnStaticMap
 
 #' @importFrom scales rescale
+#' @importFrom scales alpha
 
 #' @importFrom rgeos gArea
 
@@ -62,4 +76,4 @@
 NULL
 
 #' @useDynLib raspr
-NULL 
+NULL

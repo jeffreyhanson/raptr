@@ -7,21 +7,18 @@
 \alias{solve,RaspUnsolved-method}
 \title{Solve RASP object}
 \usage{
-\S4method{solve}{RaspSolved}(x, wd = tempdir(), clean = TRUE,
-  force.reset = FALSE)
+\S4method{solve}{RaspSolved}(x, verbose = FALSE, force.reset = FALSE)
 
-\S4method{solve}{RaspUnsolved}(x)
+\S4method{solve}{RaspUnsolved}(x, verbose = FALSE)
 
 solve(x, ...)
 }
 \arguments{
 \item{x}{\code{RaspUnsolved} or \code{RaspSolved} object.}
 
-\item{wd}{\code{character} file path to a working directory, this is a temporary directory by default to avoid pollution.}
+\item{verbose}{\code{logical} should messages be printed during creation of the initial model matrix?.}
 
-\item{clean}{\code{logical} delete files once processing completed?}
-
-\item{force.reset}{\code{logical} should solutions be recalculated even if \code{RaspSolved} object supplied?}
+\item{force.reset}{\code{logical} if \code{x} already has solutions, should this be discarded and a new solution(s) obtained?}
 
 \item{...}{not used.}
 }

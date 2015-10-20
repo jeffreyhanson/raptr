@@ -1,8 +1,7 @@
 Package: raspr
 Type: Package
-Title: Identify Prioritisations using the Representative and Adequate
-    Sample Problem (RASP)
-Version: 0.0.2
+Title: Identify Representative and Adequate Prioritisations in R
+Version: 1.0.0
 Date: 2015-07-12
 Authors@R: c(person(c("Jeffrey", "O"), "Hanson", email='jeffrey.hanson@uqconnect.edu.au', role = c("aut", "cre")),
 	person(c("Jonathon", "R"), "Rhodes", role = c("aut")),
@@ -34,7 +33,8 @@ Imports:
     hypervolume,
     sm,
     gdalUtils,
-    mvtnorm
+    mvtnorm,
+    ggplot2
 Depends:
     R(>= 3.1.0),
     methods,
@@ -49,7 +49,8 @@ VignetteBuilder: knitr
 Suggests:
     knitr,
     testthat,
-    gurobi
+    gurobi,
+    rgl
 SystemRequirements: C++11
 Collate:
     'dependencies.R'

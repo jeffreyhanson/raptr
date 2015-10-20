@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="author" content="Jeffrey O. Hanson" />
+
+<meta name="date" content="2015-10-19" />
+
+<title>raspr: Identify Representative and Adequate Prioritisations in R</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<link href="data:text/css,body%20%7B%0A%20%20background%2Dcolor%3A%20%23fff%3B%0A%20%20margin%3A%201em%20auto%3B%0A%20%20max%2Dwidth%3A%20700px%3B%0A%20%20overflow%3A%20visible%3B%0A%20%20padding%2Dleft%3A%202em%3B%0A%20%20padding%2Dright%3A%202em%3B%0A%20%20font%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0A%20%20font%2Dsize%3A%2014px%3B%0A%20%20line%2Dheight%3A%201%2E35%3B%0A%7D%0A%0A%23header%20%7B%0A%20%20text%2Dalign%3A%20center%3B%0A%7D%0A%0A%23TOC%20%7B%0A%20%20clear%3A%20both%3B%0A%20%20margin%3A%200%200%2010px%2010px%3B%0A%20%20padding%3A%204px%3B%0A%20%20width%3A%20400px%3B%0A%20%20border%3A%201px%20solid%20%23CCCCCC%3B%0A%20%20border%2Dradius%3A%205px%3B%0A%0A%20%20background%2Dcolor%3A%20%23f6f6f6%3B%0A%20%20font%2Dsize%3A%2013px%3B%0A%20%20line%2Dheight%3A%201%2E3%3B%0A%7D%0A%20%20%23TOC%20%2Etoctitle%20%7B%0A%20%20%20%20font%2Dweight%3A%20bold%3B%0A%20%20%20%20font%2Dsize%3A%2015px%3B%0A%20%20%20%20margin%2Dleft%3A%205px%3B%0A%20%20%7D%0A%0A%20%20%23TOC%20ul%20%7B%0A%20%20%20%20padding%2Dleft%3A%2040px%3B%0A%20%20%20%20margin%2Dleft%3A%20%2D1%2E5em%3B%0A%20%20%20%20margin%2Dtop%3A%205px%3B%0A%20%20%20%20margin%2Dbottom%3A%205px%3B%0A%20%20%7D%0A%20%20%23TOC%20ul%20ul%20%7B%0A%20%20%20%20margin%2Dleft%3A%20%2D2em%3B%0A%20%20%7D%0A%20%20%23TOC%20li%20%7B%0A%20%20%20%20line%2Dheight%3A%2016px%3B%0A%20%20%7D%0A%0Atable%20%7B%0A%20%20margin%3A%201em%20auto%3B%0A%20%20border%2Dwidth%3A%201px%3B%0A%20%20border%2Dcolor%3A%20%23DDDDDD%3B%0A%20%20border%2Dstyle%3A%20outset%3B%0A%20%20border%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0A%20%20border%2Dwidth%3A%202px%3B%0A%20%20padding%3A%205px%3B%0A%20%20border%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0A%20%20border%2Dwidth%3A%201px%3B%0A%20%20border%2Dstyle%3A%20inset%3B%0A%20%20line%2Dheight%3A%2018px%3B%0A%20%20padding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0A%20%20border%2Dleft%2Dstyle%3A%20none%3B%0A%20%20border%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0A%0Ap%20%7B%0A%20%20margin%3A%200%2E5em%200%3B%0A%7D%0A%0Ablockquote%20%7B%0A%20%20background%2Dcolor%3A%20%23f6f6f6%3B%0A%20%20padding%3A%200%2E25em%200%2E75em%3B%0A%7D%0A%0Ahr%20%7B%0A%20%20border%2Dstyle%3A%20solid%3B%0A%20%20border%3A%20none%3B%0A%20%20border%2Dtop%3A%201px%20solid%20%23777%3B%0A%20%20margin%3A%2028px%200%3B%0A%7D%0A%0Adl%20%7B%0A%20%20margin%2Dleft%3A%200%3B%0A%7D%0A%20%20dl%20dd%20%7B%0A%20%20%20%20margin%2Dbottom%3A%2013px%3B%0A%20%20%20%20margin%2Dleft%3A%2013px%3B%0A%20%20%7D%0A%20%20dl%20dt%20%7B%0A%20%20%20%20font%2Dweight%3A%20bold%3B%0A%20%20%7D%0A%0Aul%20%7B%0A%20%20margin%2Dtop%3A%200%3B%0A%7D%0A%20%20ul%20li%20%7B%0A%20%20%20%20list%2Dstyle%3A%20circle%20outside%3B%0A%20%20%7D%0A%20%20ul%20ul%20%7B%0A%20%20%20%20margin%2Dbottom%3A%200%3B%0A%20%20%7D%0A%0Apre%2C%20code%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20color%3A%20%23333%3B%0A%7D%0Apre%20%7B%0A%20%20white%2Dspace%3A%20pre%2Dwrap%3B%20%20%20%20%2F%2A%20Wrap%20long%20lines%20%2A%2F%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20margin%3A%205px%200px%2010px%200px%3B%0A%20%20padding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0A%0Acode%20%7B%0A%20%20font%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0A%20%20font%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0A%20%20padding%3A%202px%200px%3B%0A%7D%0A%0Adiv%2Efigure%20%7B%0A%20%20text%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0A%20%20background%2Dcolor%3A%20%23FFFFFF%3B%0A%20%20padding%3A%202px%3B%0A%20%20border%3A%201px%20solid%20%23DDDDDD%3B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20border%3A%201px%20solid%20%23CCCCCC%3B%0A%20%20margin%3A%200%205px%3B%0A%7D%0A%0Ah1%20%7B%0A%20%20margin%2Dtop%3A%200%3B%0A%20%20font%2Dsize%3A%2035px%3B%0A%20%20line%2Dheight%3A%2040px%3B%0A%7D%0A%0Ah2%20%7B%0A%20%20border%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0A%20%20padding%2Dtop%3A%2010px%3B%0A%20%20padding%2Dbottom%3A%202px%3B%0A%20%20font%2Dsize%3A%20145%25%3B%0A%7D%0A%0Ah3%20%7B%0A%20%20border%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0A%20%20padding%2Dtop%3A%2010px%3B%0A%20%20font%2Dsize%3A%20120%25%3B%0A%7D%0A%0Ah4%20%7B%0A%20%20border%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0A%20%20margin%2Dleft%3A%208px%3B%0A%20%20font%2Dsize%3A%20105%25%3B%0A%7D%0A%0Ah5%2C%20h6%20%7B%0A%20%20border%2Dbottom%3A%201px%20solid%20%23ccc%3B%0A%20%20font%2Dsize%3A%20105%25%3B%0A%7D%0A%0Aa%20%7B%0A%20%20color%3A%20%230033dd%3B%0A%20%20text%2Ddecoration%3A%20none%3B%0A%7D%0A%20%20a%3Ahover%20%7B%0A%20%20%20%20color%3A%20%236666ff%3B%20%7D%0A%20%20a%3Avisited%20%7B%0A%20%20%20%20color%3A%20%23800080%3B%20%7D%0A%20%20a%3Avisited%3Ahover%20%7B%0A%20%20%20%20color%3A%20%23BB00BB%3B%20%7D%0A%20%20a%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20underline%3B%20%7D%0A%20%20a%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20underline%3B%20%7D%0A%0A%2F%2A%20Class%20described%20in%20https%3A%2F%2Fbenjeffrey%2Ecom%2Fposts%2Fpandoc%2Dsyntax%2Dhighlighting%2Dcss%0A%20%20%20Colours%20from%20https%3A%2F%2Fgist%2Egithub%2Ecom%2Frobsimmons%2F1172277%20%2A%2F%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20Keyword%20%2A%2F%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%2F%2A%20DataType%20%2A%2F%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%2F%2A%20DecVal%20%28decimal%20values%29%20%2A%2F%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20BaseN%20%2A%2F%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20Float%20%2A%2F%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20Char%20%2A%2F%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20String%20%2A%2F%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%2F%2A%20Comment%20%2A%2F%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%2F%2A%20OtherToken%20%2A%2F%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20AlertToken%20%2A%2F%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20Function%20calls%20%2A%2F%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%2F%2A%20ErrorTok%20%2A%2F%0A%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div id="header">
+<h1 class="title">raspr: Identify Representative and Adequate Prioritisations in R</h1>
+<h4 class="author"><em>Jeffrey O. Hanson</em></h4>
+<h4 class="date"><em>2015-10-19</em></h4>
+</div>
+
+
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>A central aim in conservation is to maximise the long-term persistence of biodiversity. To achieve this, reserve networks must be sited in places that safeguard biodiversity patterns and processes. Here, we present a novel formulation of the reserve-selection problem to identify prioritisations that fulfill this objective. The representative and adequate sample problem (RASP) is a general multi-objective optimisation problem that can identify prioritisations that are adequate–in terms of how much of the feature is secured–and also representative–in terms of the spatial variation at locations where the feature is protected. Here, we present an R package to develop prioritisations using this formulation of the reserve-selection problem. We examine the behaviour of this formulation using several simulated species and a case-study species.</p>
+</div>
+<div id="problem-formulation" class="section level2">
+<h2>Problem formulation</h2>
+</div>
+<div id="classes" class="section level2">
+<h2>Classes</h2>
+</div>
+<div id="simulated-examples" class="section level2">
+<h2>Simulated examples</h2>
+<div id="data" class="section level3">
+<h3>Data</h3>
+<p>To investigate the behaviour of the problem, we will use a three simulated species. The first species (termed ‘constant’) will represent a hyper-generalist. This species will inhabit all areas with equal probability. The second species (termed ‘normal’) will represent a species with a single range core. The third species (termed ‘bimodal’) will represent a species with two distinct ecotypes, each with their own range core. To reduce computational time for this example, we will use a <span class="math">\(15 \times 15\)</span> grid of square planning units.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make planning units</span>
+sim_pus &lt;-<span class="st"> </span><span class="kw">sim.pus</span>(225L)
+
+<span class="co"># simulate species distributions</span>
+sim_spp &lt;-<span class="st"> </span><span class="kw">lapply</span>(
+    <span class="kw">c</span>(<span class="st">'constant'</span>, <span class="st">'normal'</span>, <span class="st">'bimodal'</span>),
+    sim.species,
+  <span class="dt">n=</span><span class="dv">1</span>,
+  <span class="dt">x=</span>sim_pus,
+  <span class="dt">res=</span><span class="dv">1</span>
+)</code></pre>
+<p>Let’s see what these species’ distributions look like. Each square represents a planning unit, and the color of each denotes square denotes the probability of the species in the planning unit.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># change the plot parameters, so we can plot the distributions side by side</span>
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))
+
+<span class="co"># constant species</span>
+<span class="kw">plot</span>(sim_spp[[<span class="dv">1</span>]], <span class="dt">main=</span><span class="st">'constant species'</span>)
+<span class="kw">lines</span>(sim_pus)
+
+<span class="co"># normal species</span>
+<span class="kw">plot</span>(sim_spp[[<span class="dv">2</span>]], <span class="dt">main=</span><span class="st">'normal species'</span>)
+<span class="kw">lines</span>(sim_pus)
+
+<span class="co"># bimodal species</span>
+<span class="kw">plot</span>(sim_spp[[<span class="dv">3</span>]], <span class="dt">main=</span><span class="st">'bimodal species'</span>)
+<span class="kw">lines</span>(sim_pus)
+
+<span class="co"># reset plot parameters</span>
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</code></pre>
+<p>Next, we will generate a set of demand points. To understand the effects of probabilities and weights on the demand points, we will generate the demand points in geographic space. These demand points will be the centroids of the planning units. Additionally, we will use the same set of demand points for each species and only vary the weights of the demand points between species.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># generate coordinates for pus/demand points</span>
+pu_coords &lt;-<span class="st"> </span>rgeos::<span class="kw">gCentroid</span>(sim_pus, <span class="dt">byid=</span><span class="ot">TRUE</span>)
+
+<span class="co"># calculate weights</span>
+sim_dps &lt;-<span class="st"> </span><span class="kw">lapply</span>(
+    sim_spp,
+    function(x) {
+        <span class="kw">return</span>(<span class="kw">extract</span>(x, pu_coords))
+    }
+)
+
+<span class="co"># create demand point objects</span>
+sim_dps &lt;-<span class="st"> </span><span class="kw">lapply</span>(
+    sim_dps,
+    function(x) {
+        <span class="kw">return</span>(
+            <span class="kw">DemandPoints</span>(
+                <span class="kw">SimplePoints</span>(pu_coords@coords),
+                <span class="kw">c</span>(x)
+            )
+        )
+    }
+)</code></pre>
+<p>Now, we will construct a <code>RaspUnsolved</code> object which will store all our input data and parameters to generate prioritisations.</p>
+<pre class="sourceCode r"><code class="sourceCode r">## create RaspOpts object
+<span class="co"># this stores parameters for the problem (eg. BLM)</span>
+sim_ro &lt;-<span class="st"> </span><span class="kw">RaspOpts</span>()
+
+## create GurobiOpts object
+<span class="co"># this stores parameters for solving the problem (eg. MIPGap)</span>
+sim_go &lt;-<span class="st"> </span><span class="kw">GurobiOpts</span>()
+
+## create RaspData object
+<span class="co"># create data.frame with species targets</span>
+<span class="co"># area targets at 20% and space targets at 0%</span>
+spp_targets &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
+    <span class="dt">area.target=</span><span class="kw">rep</span>(<span class="fl">0.2</span>, <span class="dv">3</span>),
+    <span class="dt">space.target=</span><span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">3</span>),
+    <span class="dt">name=</span><span class="kw">c</span>(<span class="st">'constant'</span>, <span class="st">'normal'</span>, <span class="st">'bimodal'</span>)
+)
+
+<span class="co"># calculate probability of each species in each pu</span>
+pu_probabilities &lt;-<span class="st"> </span><span class="kw">calcSpeciesAverageInPus</span>(sim_pus, <span class="kw">stack</span>(sim_spp))
+
+## create AttributeSpace object
+<span class="co"># this stores the coordinates of the planning units in an attribute space</span>
+<span class="co"># and the coordinates and weights of demand points in the space</span>
+attr_space &lt;-<span class="st"> </span><span class="kw">AttributeSpace</span>(
+    <span class="kw">SimplePoints</span>(pu_coords@coords),
+    sim_dps
+)
+
+<span class="co"># generate boundary data information</span>
+boundary &lt;-<span class="st"> </span><span class="kw">calcBoundaryData</span>(sim_pus)
+
+## create RaspData object
+<span class="co"># this store all the input data for the prioritisation</span>
+sim_rd &lt;-<span class="st"> </span><span class="kw">RaspData</span>(
+    sim_pus@data,
+    spp_targets,
+    pu_probabilities,
+    <span class="kw">list</span>(attr_space),
+  boundary,
+  <span class="kw">SpatialPolygons2PolySet</span>(sim_pus)
+)
+
+## create RaspUnsolved object
+<span class="co"># this store all the input data and parameters needed to generate prioritisations</span>
+sim_ru_area &lt;-<span class="st"> </span><span class="kw">RaspUnsolved</span>(sim_ro, sim_go, sim_rd)</code></pre>
+</div>
+<div id="single-species-prioritisations" class="section level3">
+<h3>Single-species prioritisations</h3>
+<p>Let’s keep things simple to start off with. First, we will generate a set of prioritisations that secure 20% of the species range for minimal cost.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make prioritisations for each species using area targets</span>
+sp1_area &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">spp.subset</span>(sim_ru_area, <span class="st">'constant'</span>))
+sp2_area &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">spp.subset</span>(sim_ru_area, <span class="st">'normal'</span>))
+sp3_area &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">spp.subset</span>(sim_ru_area, <span class="st">'bimodal'</span>))
+
+<span class="co"># plot prioritisations</span>
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))
+<span class="kw">plot</span>(sp1_area)
+<span class="kw">plot</span>(sp2_area)
+<span class="kw">plot</span>(sp3_area)
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</code></pre>
+<p>Here, we can see that the prioritisation for the uniform species appears to be random. This is because all planning units have equal probability of occupancy and so any XXX planning units can be preserved to secure 20% of its distribution. The prioritisation for the normal species focusses on the planning units in the species range core. This prioritisation, however, fails to secure any peripheral parts of the species’ distribution. Finally, the prioritisation for the bimodally distributed species only selects planning units in the bottom left corner of the study area. As a consequence, this prioritisation would only preserve individuals from a single eco-type. All of these priotitisations fail to secure a representative portion of the species’ geographic distributions because they only prioritise the parts of the species range with the highest occupancy probabilities.</p>
+<p>Now, we will generate prioritisations for each species that aim to preserve a rerepresent different parts of the species’ geographic distributions explicitly consider their</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># set 20% space targets in sim_ru</span>
+sim_ru_space&lt;-<span class="kw">update</span>(sim_ru_area, <span class="dt">space.targets=</span><span class="fl">0.2</span>)
+
+<span class="co"># make prioritisations for each species</span>
+sp1_space &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">spp.subset</span>(sim_ru_space, <span class="st">'constant'</span>))
+sp2_space &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">spp.subset</span>(sim_ru_space, <span class="st">'normal'</span>))
+sp3_space &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">spp.subset</span>(sim_ru_space, <span class="st">'bimodal'</span>))
+
+<span class="co"># plot prioritisations</span>
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))
+<span class="kw">plot</span>(sp1_space)
+<span class="kw">plot</span>(sp2_space)
+<span class="kw">plot</span>(sp3_space)
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))<span class="er">)</span></code></pre>
+<p>Here, we can see that the prioritisations that explictly consider the space targets do a much better job at preserving different parts of the species’ distributions. Before, when only considering area targets, the prioritisation for the constant species was seemingly random. But now, the prioritisation is spread out across the species’ distribution. The prioritisaiton for the normal species now captures the core distribution of the species and also parts of its range margin. Lastly, the prioritisation for the bimodally species captures both of eco-types. These results show that the inclusion of space targets in the reserve selection process can significantly change the resulting prioritisation.</p>
+</div>
+<div id="multi-species-prioritisations" class="section level3">
+<h3>Multi-species prioritisations</h3>
+<p>Thus far we have generated prioritisations for only one species at a time. However, real-world prioritisations are often generated for multiple-species. Here, we will generate prioritisations for all three of the simulated species. First, we will generate a prioritisation that only aims to preserve 20% of their area they occupy. Then, we will generate a prioritisation that also aims to preserve a representative portion of their geographic distribution. After doing this we will compare the two prioritisations.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make prioritisations</span>
+sim_mru_area&lt;-<span class="kw">solve</span>(sim_ru_area)
+sim_mru_space&lt;-<span class="kw">solve</span>(sim_ru_space)
+
+<span class="co"># plot prioritisations</span>
+<span class="kw">plot</span>(sim_mru_area)
+<span class="kw">plot</span>(sim_mru_space)</code></pre>
+</div>
+</div>
+<div id="case-study-examples" class="section level2">
+<h2>Case-study examples</h2>
+<div id="data-1" class="section level3">
+<h3>Data</h3>
+</div>
+<div id="prioritisations" class="section level3">
+<h3>Prioritisations</h3>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

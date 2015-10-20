@@ -35,7 +35,7 @@ bimodal_niche=function(x, y) {
 	)
 }
 
-# function to hash function call 
+# function to hash function call
 hashCall<-function(expr, skipargs=c(), env=parent.frame()) {
 	expr<-expr[c((skipargs*-1L)-1L)]
 	expr<-expr[which(names(expr)!="force.reset")]
@@ -218,7 +218,7 @@ zonalMean.RasterLayerNotInMemory <- function(bs, polys, rast, speciesName, ncore
 	return(tmp[which(tmp$value>0),,drop=FALSE])
 }
 
-# find gdal installation 
+# find gdal installation
 # this function is basically the same as gdalUtils:::set_gdalInstallation,
 # it has addiitonal functionality to be compatible with Ubuntu 14.04 Trusty
 findGdalInstallationPaths<-function (search_path = NULL, rescan = FALSE, ignore.full_scan = TRUE, verbose = FALSE) {
@@ -228,7 +228,7 @@ findGdalInstallationPaths<-function (search_path = NULL, rescan = FALSE, ignore.
 		sapply(path, list.files, pattern = "\\.py")
 	}
 	gdal_drivers <- function(path, verbose = FALSE) {
-		if (missing(path)) 
+		if (missing(path))
 			path <- gdal_path(checkValidity = TRUE)
 		cmd <- file.path(path, "gdalinfo")
 		cmd <- paste0("\"", cmd, "\"", " --formats")
@@ -248,8 +248,8 @@ findGdalInstallationPaths<-function (search_path = NULL, rescan = FALSE, ignore.
 			u[grep(driver_perm, pattern = "\\+")] <- TRUE
 			v[grep(driver_perm, pattern = "v")] <- TRUE
 			s[grep(driver_perm, pattern = "s")] <- TRUE
-			result[[i]] <- data.frame(format_code = driver_codes, 
-				read = r, write = w, update = u, virtualIO = v, 
+			result[[i]] <- data.frame(format_code = driver_codes,
+				read = r, write = w, update = u, virtualIO = v,
 				subdatasets = s, format_name = driver_names
 			)
 		}
@@ -341,9 +341,9 @@ findGdalInstallationPaths<-function (search_path = NULL, rescan = FALSE, ignore.
 			}
 		)
 	}
-  gdal_path <- function(search_path = NULL, ignore.options = FALSE, 
-						ignore.which = FALSE, ignore.common = FALSE, ignore.full_scan = FALSE, 
-						force_full_scan = FALSE, checkValidity, search_path_recursive = FALSE, 
+  gdal_path <- function(search_path = NULL, ignore.options = FALSE,
+						ignore.which = FALSE, ignore.common = FALSE, ignore.full_scan = FALSE,
+						force_full_scan = FALSE, checkValidity, search_path_recursive = FALSE,
 						verbose = FALSE) {
 		owarn <- getOption("warn")
 		options(warn = -2)
@@ -358,7 +358,7 @@ findGdalInstallationPaths<-function (search_path = NULL, rescan = FALSE, ignore.
 		path <- NULL
 		if (!force_full_scan) {
 			if (!ignore.options) {
-				if (verbose) 
+				if (verbose)
 					message("Checking the gdalUtils_gdalPath option...")
 				option_paths <- unlist(sapply(getOption("gdalUtils_gdalPath"), function(x) return(x$path)))
 				if (!is.null(option_paths) && checkValidity) {
@@ -368,13 +368,13 @@ findGdalInstallationPaths<-function (search_path = NULL, rescan = FALSE, ignore.
 				path <- c(path, option_paths)
 			}
 			if (!is.null(search_path) && length(path) == 0) {
-				if (verbose) 
+				if (verbose)
 					message("Checking the search path...")
 				if (.Platform$OS == "unix") {
 					search_paths <- list.files(path = search_path, pattern = "^gdalinfo$|^gdalinfo\\.exe$", recursive = search_path_recursive, full.names = TRUE)
 				} else {
-					search_paths <- list.files(path = search_path, 
-								 pattern = "^gdalinfo$|^gdalinfo\\.exe$", 
+					search_paths <- list.files(path = search_path,
+								 pattern = "^gdalinfo$|^gdalinfo\\.exe$",
 								 recursive = search_path_recursive, full.names = TRUE)
 				}
 				if (length(search_paths) == 0) {
@@ -389,7 +389,7 @@ findGdalInstallationPaths<-function (search_path = NULL, rescan = FALSE, ignore.
 				path <- c(path, search_paths)
 			}
 			if (!ignore.which && length(path) == 0) {
-				if (verbose) 
+				if (verbose)
 					message("Checking Sys.which...")
 				Sys.which_path <- dirname(Sys.which("gdalinfo"))
 				if (Sys.which_path == "")
@@ -401,7 +401,7 @@ findGdalInstallationPaths<-function (search_path = NULL, rescan = FALSE, ignore.
 				path <- c(path, Sys.which_path)
 			}
 			if (!ignore.common && length(path) == 0) {
-				if (verbose) 
+				if (verbose)
 					message("Checking common locations...")
 				if (.Platform$OS == "unix") {
 					common_locations <- c("/usr/bin", "/usr/local/bin", "/Library/Frameworks/GDAL.framework", "/opt/local/bin")
@@ -409,7 +409,7 @@ findGdalInstallationPaths<-function (search_path = NULL, rescan = FALSE, ignore.
 				common_locations <- c("C:\\Program Files", "C:\\Program Files (x86)", "C:\\OSGeo4W")
 				}
 				if (length(common_locations != 0)) {
-					common_paths <- unlist(sapply(common_locations, 
+					common_paths <- unlist(sapply(common_locations,
 						function(x) {
 							if (.Platform$OS == "unix") {
 								search_common_paths <- list.files(path = x, pattern = "^gdalinfo$|^gdalinfo\\.exe$", recursive = TRUE, full.names = TRUE)
@@ -436,7 +436,7 @@ findGdalInstallationPaths<-function (search_path = NULL, rescan = FALSE, ignore.
 			}
 		}
 		if (force_full_scan) {
-			if (verbose) 
+			if (verbose)
 				message("Scanning your root-dir for available GDAL installations,... This could take some time...")
 			if (.Platform$OS == "unix") {
 				root_dir <- "/"
@@ -466,12 +466,12 @@ findGdalInstallationPaths<-function (search_path = NULL, rescan = FALSE, ignore.
 			return(correctPath(unique(path)))
 		}
 	}
-	gdal_installation <- function(return_versions = TRUE, return_drivers = TRUE, 
-									return_python_utilities = TRUE, sort_most_current = TRUE, 
-									rescan = FALSE, search_path = NULL, ignore.full_scan = FALSE, 
+	gdal_installation <- function(return_versions = TRUE, return_drivers = TRUE,
+									return_python_utilities = TRUE, sort_most_current = TRUE,
+									rescan = FALSE, search_path = NULL, ignore.full_scan = FALSE,
 									verbose = FALSE)
 	{
-		if (verbose) 
+		if (verbose)
 			message("Scanning for GDAL installations...")
 		path <- gdal_path(ignore.options = rescan, search_path = search_path, ignore.full_scan = ignore.full_scan, verbose = verbose)
 		if (is.null(path))
@@ -499,18 +499,18 @@ findGdalInstallationPaths<-function (search_path = NULL, rescan = FALSE, ignore.
 	}
 	if (is.null(getOption("gdalUtils_gdalPath")))
 		rescan = TRUE
-	gdal_installation_out <- gdal_installation(search_path = search_path, 
-												rescan = rescan, 
-												ignore.full_scan = ignore.full_scan, 
+	gdal_installation_out <- gdal_installation(search_path = search_path,
+												rescan = rescan,
+												ignore.full_scan = ignore.full_scan,
 												verbose = verbose
 	)
 	options(gdalUtils_gdalPath = gdal_installation_out)
 	if (is.null(getOption("gdalUtils_gdalPath"))) {
 		warning("No GDAL installation found. Please install 'gdal' before continuing:\n\t- www.gdal.org (no HDF4 support!)\n\t- www.trac.osgeo.org/osgeo4w/ (with HDF4 support RECOMMENDED)\n\t- www.fwtools.maptools.org (with HDF4 support)\n")
-		if (ignore.full_scan) 
+		if (ignore.full_scan)
 			warning("If you think GDAL is installed, please run:\ngdal_setInstallation(ignore.full_scan=FALSE)")
 	} else {
-		if (verbose) 
+		if (verbose)
 		message("GDAL version ", unlist(getOption("gdalUtils_gdalPath")[[1]]$version))
 	}
 }
@@ -564,7 +564,7 @@ read.RaspResults=function(opts, data, model.list, logging.file, solution.list) {
 #' @seealso \code{\link{RaspData-class}}, \code{\link{RaspUnsolved-class}}, \code{\link{RaspSolved-class}}.
 setGeneric("is.comparable", function(x, y) standardGeneric("is.comparable"))
 
-#' Basemap 
+#' Basemap
 #'
 #' This function retrieves google map data for planning units. The google map data is cached to provide fast plotting capabilities.
 #'
@@ -580,7 +580,7 @@ basemap<-function(x, basemap="hybrid", grayscale=FALSE, force.reset=FALSE) {UseM
 #' Test if hash is cached in a Rasp object
 #'
 #' Tests if hash is cached in Rasp object.
-#' 
+#'
 #' @param x \code{RaspData} or \code{RaspResults} object
 #' @param name \code{character} hash.
 #' @note caches are implemented using environments, the hash is used as the name of the object in the environment.
@@ -591,7 +591,7 @@ setGeneric("is.cached", function(x,name) standardGeneric("is.cached"))
 #' Get and set cache Methods
 #'
 #' Getter and setter methods for caches in MarxanData and MarxanResults object.
-#' 
+#'
 #' @param x \code{RaspData} or \code{RaspResults} object
 #' @param name \code{character} hash.
 #' @param y if \code{ANY} this object gets cached with name, else if \code{missing} the object hashed at name gets returned.
@@ -600,3 +600,129 @@ setGeneric("is.cached", function(x,name) standardGeneric("is.cached"))
 #' @keywords internal
 setGeneric("cache", function(x, name, y) standardGeneric("cache"))
 
+## space plotting functions
+spacePlot.1d<-function(pu, dp, pu.color.palette, locked.in.color, locked.out.color, main) {
+  # create X2 vars
+  pu$X2<-0
+  dp$X2<-0
+  # create colors
+  cols<-brewerCols(c(0,1), pu.color.palette, 1)
+  not.selected.col=cols[1]
+  selected.col=cols[length(cols)]
+  # make plot
+  ggplot() +
+  geom_point(
+		aes(x=X1, y=X2, alpha=weights),
+    data=dp,
+    color='black',
+    size=5,
+    position=position_jitter(width=0, height=5)
+  ) +
+  scale_alpha_continuous(
+    name='Demand point weight'
+  ) +
+  geom_point(
+		aes(x=X1, y=X2, color=status, size=status),
+    data=pu,
+    position=position_jitter(width=0, height=5)
+  ) +
+  scale_color_manual(
+    name='Planning unit',
+    values=c(
+      "Locked Out"=locked.out.color,
+      "Not Selected"=not.selected.col,
+      "Selected"=selected.col,
+      "Locked In"=locked.in.color
+    )
+  ) +
+  scale_size_manual(
+    values=c(
+      "Locked Out"=2,
+      "Not Selected"=2,
+      "Selected"=5,
+      "Locked In"=5
+    ),
+    guide=FALSE
+  ) +
+  theme_classic() +
+  coord_equal() +
+  theme(
+    legend.position='right',
+    axis.title.y=element_blank(),
+    axis.ticks.y=element_blank(),
+    axis.text.y=element_blank(),
+    axis.line.y=element_blank()
+  ) +
+  ggtitle(main) +
+  xlab('Dimension 1') +
+  ylab('')
+}
+
+spacePlot.2d<-function(pu, dp, pu.color.palette, locked.in.color, locked.out.color, main) {
+  # create colors
+  cols<-brewerCols(c(0,1), pu.color.palette, 1)
+  not.selected.col=cols[1]
+  selected.col=cols[length(cols)]
+  # make plot
+  ggplot() +
+  geom_point(
+		aes(x=X1, y=X2, alpha=weights),
+    data=dp,
+    color='black',
+    size=5
+  ) +
+  scale_alpha_continuous(
+    name='Demand point weight'
+  ) +
+  geom_point(
+		aes(x=X1, y=X2, color=status, size=status),
+    data=pu
+  ) +
+  scale_color_manual(
+    name='Planning unit',
+    values=c(
+      "Locked Out"=locked.out.color,
+      "Not Selected"=not.selected.col,
+      "Selected"=selected.col,
+      "Locked In"=locked.in.color
+    )
+  ) +
+  scale_size_manual(
+    values=c(
+      "Locked Out"=2,
+      "Not Selected"=2,
+      "Selected"=5,
+      "Locked In"=5
+    ),
+    guide=FALSE
+  ) +
+  theme_classic() +
+  coord_equal() +
+  theme(
+    legend.position='right'
+  ) +
+  ggtitle(main) +
+  xlab('Dimension 1') +
+  ylab('Dimension 2')
+}
+
+spacePlot.3d<-function(pu, dp, pu.color.palette, locked.in.color, locked.out.color, main) {
+  # check if rgl is installed
+  if (!'rgl' %in% unlist(lapply(.libPaths(), dir), recursive=FALSE, use.names=FALSE))
+    stop('The rgl R package must be installed to visualise 3d attribute spaces')
+  # create frame
+  rgl::open3d()
+  # add pu points
+  cols<-brewerCols(c(0,1), pu.color.palette, 1)
+  pu.cols<-character(nrow(pu))
+  pu.cols[which(pu$status=='Not Selected')]<-cols[1]
+  pu.cols[which(pu$status=='Selected')]<-cols[length(cols)]
+  pu.cols[which(pu$status=='Locked In')]<-locked.in.color
+  pu.cols[which(pu$status=='Locked Out')]<-locked.out.color
+  rgl::points3d(as.matrix(pu[,1:3]), col=pu.cols)
+  # add dp points
+  dp.cols<-alpha(rep('black', nrow(dp)), affineTrans(dp$weights, min(dp$weights), max(dp$weights), 0.1, 1))
+  rgl::points3d(as.matrix(dp[,1:3]), col=dp.cols)
+  # add title
+  rgl::title3d(main)
+}

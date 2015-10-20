@@ -32,7 +32,7 @@ setClass("RaspData",
 			# pu
 			if (any(!c("cost","area","status") %in% names(object@pu)))
 				stop("argument to pu is missing one of these columns: 'cost', 'area', or 'status'")
-							
+
 			if (!inherits(object@pu$cost, 'numeric'))
 				stop('argument to pu$cost is not numeric')
 			if (any(!is.finite(object@pu$cost)))
@@ -56,14 +56,14 @@ setClass("RaspData",
 			# species
 			if (any(!c('area.target', 'space.target') %in% names(object@species)))
 				stop("argument to species is missing one of these columns: 'area.target', or 'space.target'")
-			
+
 			if (!inherits(object@species$area.target, c('numeric')))
 				stop('argument to species$area.target is not numeric or character')
 			if (any(is.na(object@species$area.target)))
 				stop('argument to species$area.target contains NA or non-finite values')
 			if (any(object@species$area.target<0 | object@species$area.target>1))
 				stop('argument to species$area.target contains values >1 or <0')
-				
+
 			if (!inherits(object@species$space.target, c('numeric')))
 				stop('argument to species$space.target is not numeric or character')
 			if (any(is.na(object@species$space.target)))
@@ -80,7 +80,7 @@ setClass("RaspData",
 				if (any(is.na(object@species$name)))
 					stop('argument to species$name contains NA values')
 			}
-				
+
 			# pu.species.probabilities
 			if (any(!c('species','pu','value') %in% names(object@pu.species.probabilities)))
 				stop("argument to pu.species.probabilities is missing one of these columns: 'species', 'pu', or 'value'")
@@ -92,10 +92,10 @@ setClass("RaspData",
 				stop('argument to pu.species.probabilities$value contains NA or non-finite values')
 			if (any(object@pu.species.probabilities$value<0 | object@pu.species.probabilities$value>1))
 				stop('argument to pu.species.probabilities$value contains values >1 or <0')
-			
+
 			# attribute.space
 				# all validity checks are internal in the object
-			
+
 			# boundary
 			if (!is.null(object@boundary)) {
 				if (any(!c('id1','id2','boundary') %in% names(object@boundary)))
@@ -115,7 +115,7 @@ setClass("RaspData",
 				if (any(!is.finite(object@boundary$boundary)))
 					stop('argument to boundary$boundary contains NA or non-finite values')
 			}
-			
+
 			## cross table dependencies
 			# check all planning units match
 			if (!all(object@boundary$id1 %in% seq_len(nrow(object@pu))))
@@ -126,12 +126,12 @@ setClass("RaspData",
 				stop('argument to pu.species.probabilities$pu must have values that correspond to rows in argument to pu')
 			if (!all(laply(object@attribute.spaces, function(x) {nrow(x@pu@coords)==nrow(object@pu)})))
 				stop('arguments to attribute.space and pu must have the same number of planning units')
-			# check all species match 
-			if (!all(object@pu.species.probabilities$species %in% seq_len(nrow(object@species)))) 
+			# check all species match
+			if (!all(object@pu.species.probabilities$species %in% seq_len(nrow(object@species))))
 				stop('argument to pu.species.probabilities$species must have values that correspond to rows in argument to species')
 			if (!all(laply(object@attribute.spaces, function(x) {length(x@dp)==nrow(object@species)})))
 				stop('arguments to attribute.space and species must have the same number of species')
-		} 
+		}
 		return(TRUE)
 	}
 )
@@ -192,7 +192,7 @@ setClass("RaspData",
 #' pu.species.probabilities=calcSpeciesAverageInPus(cs_pus[1:10,], cs_spp)
 #' polygons=SpatialPolygons2PolySet(cs_pus[1:10,])
 #' boundary=calcBoundaryData(cs_pus[1:10,])
-#' 
+#'
 # # create RaspData object
 #' x<-RaspData(
 #' 	pu=cs_pus@@data[1:10,],
@@ -227,7 +227,7 @@ RaspData<-function(pu, species, pu.species.probabilities, attribute.spaces, boun
 #' @param pus \code{SpatialPolygons} with planning unit data.
 #' @param species \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} with species probability distribution data.
 #' @param spaces \code{list} of/or \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} representing projects of attribute space over geographic space. Use a \code{list} to denote seperate attribute spaces.
-#' @param area.targets \code{numeric} vector for area targets (\%) for each species. Defaults to 0.2 for each attribute space for each species. 
+#' @param area.targets \code{numeric} vector for area targets (\%) for each species. Defaults to 0.2 for each attribute space for each species.
 #' @param space.targets \code{numeric} vector for attribute space targets (\%) for each species. Defaults to 0.2 for each attribute space for each species. Note all attribute spaces have the same targets.
 #' @param n.demand.points \code{integer} number of demand points to use for each attribute space for each species.
 #' @param kernel.method \code{character} name of kernel method to use to generate demand points. Use either \code{sm.density} or \code{hypervolume}.
@@ -248,7 +248,7 @@ RaspData<-function(pu, species, pu.species.probabilities, attribute.spaces, boun
 make.RaspData<-function(pus, species, spaces=NULL,
 	area.targets=0.2, space.targets=0.2, n.demand.points=1000L, kernel.method=c('sm.density', 'hyperbox')[1], quantile=0.2,
 	species.points=NULL, n.species.points=ceiling(0.2*cellStats(species, 'sum')), include.geographic.space=TRUE, verbose=FALSE, ...) {
-	
+
 	## init
 	# check inputs for validity
 	stopifnot(inherits(species.points, c('SpatialPoints', 'SpatialPointsDataFrame', 'NULL')))
@@ -256,7 +256,7 @@ make.RaspData<-function(pus, species, spaces=NULL,
 	stopifnot(inherits(species, c('RasterStack', 'RasterLayer')))
 	stopifnot(inherits(spaces, c('NULL', 'RasterStack', 'RasterLayer', 'list')))
 	.cache<-new.env()
-	
+
 	# coerce non-list items to list
 	if (!inherits(spaces, 'list'))
 		spaces=list(spaces)
@@ -285,9 +285,9 @@ make.RaspData<-function(pus, species, spaces=NULL,
 			} else {
 				species.points=list(species.points)
 			}
-		} 
+		}
 	}
-	
+
 	# set polygons
 	geoPolygons<-pus
 	if (!identical(geoPolygons, CRS('+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs'))) {
@@ -303,13 +303,13 @@ make.RaspData<-function(pus, species, spaces=NULL,
 	} else {
 		warning("argument to pus does not have 'cost', and 'status' columns, creating default with all costs=1 and status=0")
 		pu<-data.frame(cost=rep(1, length(pus@polygons)), status=rep(0L, length(pus@polygons)))
-	} 
+	}
 	if (!'area' %in% names(pu)) {
 		if (identical(pus@proj4string, CRS('+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs')))
 			warning('Planning unit areas are being calculated in a geographic coordinate system')
 		pu$area=gArea(pus,byid=TRUE)
 	}
-	
+
 	#### Attribute space data
 	## set pu.points
 	# set pu.points based spaces
@@ -356,7 +356,7 @@ make.RaspData<-function(pus, species, spaces=NULL,
 			)
 		}
 		demand.points[[i]]=dpLST
-	}	
+	}
 	# create AttributeSpace objects
 	attribute.spaces=llply(seq_along(spaces), function(i) {
 		return(
@@ -373,7 +373,7 @@ make.RaspData<-function(pus, species, spaces=NULL,
 		cat("Calculating boundary data.")
 	boundary<-calcBoundaryData(rcpp_Polygons2PolySet(pus@polygons), ...)
 	## set pu.species.probabilities
-	projPolygons=pus 
+	projPolygons=pus
 	if (!identical(projPolygons@proj4string, species@crs)) {
 		if (verbose)
 			cat("Projecting polygons to rasters' CRS.")
@@ -388,7 +388,7 @@ make.RaspData<-function(pus, species, spaces=NULL,
 		space.target=space.targets,
 		name=names(species),
 		stringsAsFactors=FALSE
-	)	
+	)
 	return(RaspData(pu=pu, species=species, pu.species.probabilities=pu.species.probabilities, attribute.spaces=attribute.spaces, boundary=boundary, polygons=geoPolygons, .cache=.cache))
 }
 
@@ -396,7 +396,7 @@ make.RaspData<-function(pus, species, spaces=NULL,
 #' @export
 basemap.RaspData<-function(x, basemap="hybrid", grayscale=FALSE, force.reset=FALSE) {
 	callchar<-hashCall(match.call(), 1)
-	match.arg(basemap, c("roadmap", "mobile", "satellite", "terrain", "hybrid", "mapmaker-roadmap", "mapmaker-hybrid"))	
+	match.arg(basemap, c("roadmap", "mobile", "satellite", "terrain", "hybrid", "mapmaker-roadmap", "mapmaker-hybrid"))
 	if (is.null(x@polygons))
 	stop("Rasp object is not associated with spatially explicit data for the planning units.")
 	# fetch data from google or cache
@@ -428,8 +428,8 @@ setMethod(
 
 #' @describeIn is.cached
 setMethod(
-	f="is.cached", 
-	signature(x="RaspData", name="character"), 
+	f="is.cached",
+	signature(x="RaspData", name="character"),
 	function(x,name) {
 		return(!is.null(x@.cache[[name]]))
 	}
@@ -437,8 +437,8 @@ setMethod(
 
 #' @describeIn cache
 setMethod(
-	f="cache", 
-	signature(x="RaspData", name="character", y="ANY"), 
+	f="cache",
+	signature(x="RaspData", name="character", y="ANY"),
 	function(x, name, y) {
 		x@.cache[[name]]=y
 	}
@@ -446,8 +446,8 @@ setMethod(
 
 #' @describeIn cache
 setMethod(
-	f="cache", 
-	signature(x="RaspData", name="character", y="missing"), 
+	f="cache",
+	signature(x="RaspData", name="character", y="missing"),
 	function(x, name, y) {
 		return(x@.cache[[name]])
 	}
@@ -468,3 +468,211 @@ setMethod(
 		)
 	}
 )
+
+#' @rdname spp.subset
+#' @method spp.subset RaspData
+#' @export
+spp.subset.RaspData<-function(x, species) {
+	# convert species names to integers
+	if (inherits(species, 'character')) {
+		if (!'name' %in% names(x@species))
+			stop('argument to x does not have names for species.')
+		species <- match(species, x@species)
+		if (any(is.na(species)))
+			stop('argument to species contains names not present in object.')
+	}
+	pu <- x@pu.species.probabilities$pu[which(x@pu.species.probabilities$species %in% species)]
+	# create new objects
+	pu.species.probabilities<-x@pu.species.probabilities[which(
+			x@pu.species.probabilities$pu %in% pu &
+			x@pu.species.probabilities$species %in% species
+	),]
+	pu.species.probabilities$species<-match(pu.species.probabilities$species, species)
+	pu.species.probabilities$pu<-match(pu.species.probabilities$pu, pu)
+	boundary<-x@boundary[which(x@boundary$id1 %in% pu & x@boundary$id2 %in% pu),]
+	boundary$id1<-match(boundary$id1, pu)
+	boundary$id1<-match(boundary$id2, pu)
+	polygons<-x@polygons[which(x@polygons$PID %in% pu),]
+	polygons$PID<-match(polygons$PID, pu)
+	# return new object
+	return(
+		RaspData(
+			pu=x@pu[pu,],
+			species=x@species[species,],
+			pu.species.probabilities=pu.species.probabilities,
+			attribute.spaces=lapply(
+				x@attribute.spaces,
+				function(x) {
+						AttributeSpace(
+							SimplePoints(x@pu@coords[pu,]),
+							x@dp[species]
+					  )
+				}
+			),
+			boundary=boundary,
+			polygons=polygons
+	  )
+	)
+}
+
+#' @rdname pu.subset
+#' @method pu.subset RaspData
+#' @export
+pu.subset.RaspData<-function(x, pu) {
+	# create objects
+	pu.species.probabilities<-x@pu.species.probabilities[which(
+			x@pu.species.probabilities$pu %in% pu
+	),]
+	species=unique(pu.species.probabilities$species)
+	pu.species.probabilities$species<-match(pu.species.probabilities$species, species)
+	pu.species.probabilities$pu<-match(pu.species.probabilities$pu, pu)
+	boundary<-x@boundary[which(x@boundary$id1 %in% pu & x@boundary$id2 %in% pu),]
+	boundary$id1<-match(boundary$id1, pu)
+	boundary$id1<-match(boundary$id2, pu)
+	polygons<-x@polygons[x@polygons$PID %in% pu,]
+	polygons$PID<-match(polygons$PID, pu)
+	# return new object
+	return(
+		RaspData(
+			pu=x@pu[pu,],
+			species=x@species,
+			pu.species.probabilities=pu.species.probabilities,
+			attribute.spaces=lapply(
+				x@attribute.spaces,
+				function(x) {
+						AttributeSpace(
+							SimplePoints(x@pu@coords[pu,]),
+							x@dp[species]
+					  )
+				}
+			),
+			boundary=boundary,
+			polygons=polygons
+	  )
+	)
+}
+
+
+#' @rdname update
+#' @export
+#' @method update RaspData
+update.RaspData<-function(object, ...) {
+	# deparse arguments
+	params<-as.list(substitute(list(...)))[-1L]
+	params<-params[which(names(params) %in% slotNames('RaspOpts'))]
+	# update parameters
+	for (i in seq_along(params)) {
+		for (j in c('pu', 'species')) {
+			if (names(params)[i] %in% names(slot(object, j))) {
+				slot(object, j)[[names(params)[i]]] <- params[[i]]
+			}
+		}
+	}
+	# check object for validity
+	validObject(object, test=FALSE)
+	# return object
+	return(object)
+}
+
+#' @rdname spp.plot
+#' @method spp.plot RaspData
+#' @export
+spp.plot.RaspData<-function(x, y, basemap, color.palette, alpha, grayscale, force.reset) {
+	# data checks
+	stopifnot(length(y)==1)
+	if (!inherits(x@polygons, "PolySet")	)
+			stop("Spatial data for planning units not present in object")
+	if (is.character(y)) {
+		if (!y %in% x@species$name)
+			stop('argument to y is not a species name in argument to x')
+		ypos<-match(y, x@species$name)
+	}
+	if (is.numeric(y)) {
+		if (!y %in% seq_along(x@species$name))
+			stop('argument to y is not a valid index for species in argument to x')
+		ypos <- y
+	}
+	# get basemap
+	if (basemap!="none")
+		basemap<-basemap.MarxanData(x, basemap, grayscale, force.reset)
+	## main processing
+	# extract planning unit colors
+	values<-numeric(nrow(x@pu))
+	rows<-which(x@pu.species.probabilities$species == ypos)
+	values[x@pu.species.probabilities$pu[rows]]<-x@pu.species.probabilities$value[rows]
+	if (length(unique(values))>1) {
+		cols<-brewerCols(rescale(values, to=c(0,1)), color.palette, alpha)
+	} else {
+		cols<-brewerCols(rep(values[1], length(values)), color.palette, alpha)
+		values<-c(0,values[1])
+	}
+	# set title
+	if (!is.null(x@species$name)) {
+		main=paste0(x@species$name[ypos], " in planning units (%)")
+	} else {
+		main=paste0("Species ",y, " in planning units (%)")
+	}
+	# make plot
+	plot(1,1)
+	prettyGeoplot(
+		x@polygons,
+		cols,
+		basemap,
+		main,
+		continuousLegend(values,color.palette,posx=c(0.3, 0.4),posy=c(0.1, 0.9)),
+		beside=TRUE
+	)
+}
+
+#' @rdname space.plot
+#' @method space.plot RaspData
+#' @export
+space.plot.RaspData<-function(
+		x,
+		y,
+		space=1,
+		pu.color.palette='RdYlGn',
+		locked.in.color="#000000FF",
+		locked.out.color="#D7D7D7FF"
+	) {
+	# data checks
+	stopifnot(length(y)==1)
+	if (is.character(y)) {
+		if (!y %in% x@species$name)
+			stop('argument to y is not a species name in argument to x')
+		ypos<-match(y, x@species$name)
+	}
+	if (is.numeric(y)) {
+		if (!y %in% seq_along(x@species$name))
+			stop('argument to y is not a valid index for species in argument to x')
+		ypos <- y
+	}
+	# set title
+	if (!is.null(x@species$name)) {
+		main=x@species$name[ypos]
+	} else {
+		main=paste0("Species ",y)
+	}
+	# extract pu data
+	pu<-as.data.frame(x@attribute.spaces[[space]]@pu@coords)
+	names(pu)<-paste0('X',seq_len(ncol(pu)))
+	pu$status<-'Not Selected'
+	pu$status[which(x@pu$status==2)]<-'Locked In'
+	pu$status[which(x@pu$status==3)]<-'Locked Out'
+	# extract dp data
+	dp<-as.data.frame(x@attribute.spaces[[space]]@dp[[ypos]]@points@coords)
+	names(dp)<-paste0('X',seq_len(ncol(dp)))
+	dp$weights=x@attribute.spaces[[space]]@dp[[ypos]]@weights
+	# make plots
+	do.call(
+		paste0('spacePlot.',ncol(x@attribute.spaces[[space]]@pu@coords),'d'),
+		list(
+			pu,
+			dp,
+			pu.color.palette,
+			locked.in.color,
+			locked.out.color,
+			main
+		)
+	)
+}

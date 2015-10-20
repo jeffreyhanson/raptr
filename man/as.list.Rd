@@ -12,6 +12,9 @@
 
 \item{...}{not used.}
 }
+\value{
+\code{list}
+}
 \description{
 Convert objects to list.
 }

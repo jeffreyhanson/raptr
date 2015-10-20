@@ -16,9 +16,9 @@ using namespace Rcpp;
 
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
+Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data, bool verbose) {
 	//// Initialization
-// 	Rcpp::Rcout << "Initialization" << std::endl;
+	if (verbose) Rcpp::Rcout << "Initialization" << std::endl;
 	// create variables
 	std::size_t counter=0;
 	std::size_t n_attribute_spaces;
@@ -28,10 +28,11 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 	std::vector<std::size_t> n_demand_points;
 	bool boundary;
 	double boundary_threshold=1.0e-05;
-	
-	
+
+
 	//// Preliminary processing
-// 	Rcpp::Rcout << "Preliminary processing" << std::endl;
+	if (verbose) Rcpp::Rcout << "Preliminary processing" << std::endl;
+	Rcpp::checkUserInterrupt();
 	/// extract parameters from Rcpp::S4 opts
 	double failure_multiplier=Rcpp::as<double>(opts.slot("FAILUREMULTIPLIER"));
 	std::size_t maxrlevelINT=Rcpp::as<double>(opts.slot("MAXRLEVEL"));
@@ -40,14 +41,14 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 
 	/// extract data from Rcpp::S4 data
 	// species data
-// 	Rcpp::Rcout << "\tSpecies data" << std::endl;
+	if (verbose) Rcpp::Rcout << "\tSpecies data" << std::endl;
 	Rcpp::DataFrame speciesDF=Rcpp::as<Rcpp::DataFrame>(data.slot("species"));
 	std::vector<double> speciesDF_areatarget = speciesDF["area.target"];
 	std::vector<double> speciesDF_spacetarget = speciesDF["space.target"];
 	n_species=speciesDF_areatarget.size();
-	
+
 	// planning unit data
-// 	Rcpp::Rcout << "\tpu data" << std::endl;
+	if (verbose) Rcpp::Rcout << "\tpu data" << std::endl;
 	Rcpp::DataFrame puDF=Rcpp::as<Rcpp::DataFrame>(data.slot("pu"));
 	std::vector<double> puDF_area = puDF["area"];
 	std::vector<double> puDF_cost = puDF["cost"];
@@ -56,10 +57,10 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 	std::vector<std::string> puDF_id_STR(n_pu+1);
 	for (std::size_t i=0; i<(n_pu+1); ++i)
 		puDF_id_STR[i]="pu_"+std::to_string(i);
-	
-	
+
+
 	// pu.species.probabilities
-// 	Rcpp::Rcout << "\tpuvspecies data" << std::endl;
+	if (verbose) Rcpp::Rcout << "\tpuvspecies data" << std::endl;
 	Rcpp::DataFrame puvspeciesDF=Rcpp::as<Rcpp::DataFrame>(data.slot("pu.species.probabilities"));
 	std::vector<std::size_t> puvspeciesDF_pu = puvspeciesDF["pu"];
 	std::vector<std::size_t> puvspeciesDF_species = puvspeciesDF["species"];
@@ -70,7 +71,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 	}
 
 	// boundary
-// 	Rcpp::Rcout << "\tboundary data" << std::endl;
+	if (verbose) Rcpp::Rcout << "\tboundary data" << std::endl;
 	Rcpp::DataFrame boundaryDF=Rcpp::as<Rcpp::DataFrame>(data.slot("boundary"));
 	std::vector<std::size_t> boundaryDF_id1 = boundaryDF["id1"];
 	std::vector<std::size_t> boundaryDF_id2 = boundaryDF["id2"];
@@ -87,15 +88,15 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 	}
 
 	/// attribute.space
-// 	Rcpp::Rcout << "\tattribute space data" << std::endl;
+	if (verbose) Rcpp::Rcout << "\tattribute space data" << std::endl;
 	Rcpp::List attributespaceLST=Rcpp::as<Rcpp::List>(data.slot("attribute.spaces"));
 	n_attribute_spaces=attributespaceLST.size();
 	Rcpp::S4 currS4;
 	Rcpp::S4 currS4_2;
 	Rcpp::List currLST;
-	
+
 	// planning unit points
-// 	Rcpp::Rcout << "\tpu points data" << std::endl;
+	if (verbose) Rcpp::Rcout << "\tpu points data" << std::endl;
 	Rcpp::NumericMatrix tmp;
 	std::vector<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>> pupointsMTX(n_attribute_spaces);
 	for (std::size_t i=0; i<n_attribute_spaces; ++i) {
@@ -104,11 +105,11 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 		double *pcv = &tmp(0,0);
 		Eigen::Map<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor>> tmpmat(pcv, tmp.nrow(), tmp.ncol());
 		pupointsMTX[i] = tmpmat;
-		
+
 	}
-	
+
 	// demand points
-// 	Rcpp::Rcout << "\tdemand points data" << std::endl;
+	if (verbose) Rcpp::Rcout << "\tdemand points data" << std::endl;
 	Eigen::Matrix<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> demandpoints_coords_MTX(n_species, n_attribute_spaces);
 	Eigen::Matrix<NumericVector, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> demandpoints_weights_MTX(n_species, n_attribute_spaces);
 	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> currCoordinates;
@@ -120,27 +121,27 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 			// extract species i demand points for space j
 			currS4=Rcpp::as<Rcpp::S4>(currLST[i]);
 			currS4_2=Rcpp::as<Rcpp::S4>(currS4.slot("points"));
-			
+
 			// coords
 			tmp=Rcpp::as<Rcpp::NumericMatrix>(currS4_2.slot("coords"));
 			double *pcv = &tmp(0,0);
 			Eigen::Map<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor>> tmpmat(pcv, tmp.nrow(), tmp.ncol());
 			demandpoints_coords_MTX(i,j) = tmpmat;
-			
+
 			// weights
 			demandpoints_weights_MTX(i,j) = Rcpp::as<NumericVector>(currS4.slot("weights"));
-		
+
 			// store number dp for species i
 			species_ndp[i]=demandpoints_weights_MTX(i,j).size();
-			
+
 // 			Rcout << "species_ndp[i] = " << species_ndp[i] << std::endl;
 		}
 	}
-		
+
 	/// preprocessing for area targets
-// 	Rcpp::Rcout << "\tpre-process area targets" << std::endl;
+	if (verbose) Rcpp::Rcout << "\tpre-process area targets" << std::endl;
 	// ini
-// 	Rcpp::Rcout << "\t\tinit" << std::endl;	
+	if (verbose) Rcpp::Rcout << "\t\tinitializing" << std::endl;
 	double currArea;
 	std::vector<double> speciesareaDBL(n_species, 0.0);
 	std::vector<std::vector<std::size_t>> species_pu_ids(n_species);
@@ -150,9 +151,9 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 		species_pu_ids[i].reserve(puvspeciesDF_pu.size());
 		species_pu_probs[i].reserve(puvspeciesDF_pu.size());
 	}
-	
+
 	// calcs
-// 	Rcpp::Rcout << "\t\tcalculate numbers" << std::endl;
+	if (verbose) Rcpp::Rcout << "\t\tcalculate numbers" << std::endl;
 	for (std::size_t i=0; i<puvspeciesDF_pu.size(); ++i) {
 		// calculate area
 		currArea=puvspeciesDF_value[i] * puDF_area[puvspeciesDF_pu[i]];
@@ -163,7 +164,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 		// assign prob to species vector
 		species_pu_probs[puvspeciesDF_species[i]].push_back(puvspeciesDF_value[i]);
 	}
-// 	Rcpp::Rcout << "\t\tresize vectors" << std::endl;
+	if (verbose) Rcpp::Rcout << "\t\tresize vectors" << std::endl;
 	for (std::size_t i=0; i<n_species; ++i) {
 		species_pu_ids[i].push_back(n_pu);
 		species_pu_ids[i].shrink_to_fit();
@@ -171,9 +172,9 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 		species_pu_probs[i].shrink_to_fit();
 		species_npu[i]=species_pu_ids[i].size()-1;
 	}
-	
+
 	/// transitional probabilities
-// 	Rcpp::Rcout << "\ttransitional probs" << std::endl;
+	if (verbose) Rcpp::Rcout << "\ttransitional probs" << std::endl;
 	std::vector<std::vector<double>> species_pu_tprobs(n_species);
 	for (std::size_t i=0; i<n_species; ++i) {
 		species_pu_tprobs[i].reserve(species_npu[i]);
@@ -181,9 +182,9 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 			species_pu_tprobs[i][j] = (1.0 - species_pu_probs[i][j]) / species_pu_probs[i][j];
 		}
 	}
-	
+
 	/// create distance variables
-// 	Rcpp::Rcout << "\tdistance vars" << std::endl;
+	if (verbose) 	Rcpp::Rcout << "\tdistance vars" << std::endl;
 	double currFailDist;
 	Eigen::ArrayXXd currArray;
 	Eigen::Matrix<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> weightdistMTX(n_species, n_attribute_spaces);
@@ -205,12 +206,12 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 			for (std::size_t k=0; k<species_ndp[i]; ++k) {
 				weightdistMTX(i,j)(k,species_npu[i]) = currFailDist;
 			}
-			
+
 		}
 	}
-	
+
 	/// calculate spacetargets
-// 	Rcpp::Rcout << "\tspace targets" << std::endl;
+	if (verbose) Rcpp::Rcout << "\tspace targets" << std::endl;
 	double currProb;
 	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> speciesspaceMTX(n_species, n_attribute_spaces);
 	std::vector<std::size_t> currPUs;
@@ -223,7 +224,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 				std::partial_sort(currPUs.begin(), currPUs.begin()+(maxrlevelINT+1), currPUs.end(), [&](const std::size_t p1, const std::size_t p2) {
 					return(weightdistMTX(i,j)(k,p1) < weightdistMTX(i,j)(k,p2));
 				});
-				
+
 				// calculate values for real pus
 				currProb=1.0;
 				for (std::size_t r=0; r < maxrlevelINT; ++r) {
@@ -235,8 +236,9 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 			}
 		}
 	}
-	
+
 	// cache integer string conversions
+	if (verbose) Rcout << "\tcaching intege/string conversions" << std::endl;
 	std::size_t maxINT;
 	maxINT=std::max(
 		n_pu,
@@ -251,12 +253,13 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 			)
 		)
 	) + 2;
-	
+
 	std::vector<std::string> intSTR(maxINT);
 	for (std::size_t i=0; i<maxINT; i++)
 		intSTR[i] = std::to_string(i);
-	
+
 	/// create unordered map with variable names
+	if (verbose) Rcout << "\tcreating undordered_map with variable names" << std::endl;
 	std::unordered_map<std::string, std::size_t> variableMAP;
 	std::string currSTR;
 	// pu vars
@@ -264,7 +267,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 		variableMAP[puDF_id_STR[i]] = counter;
 		++counter;
 	}
-		
+
 	// pu_pu boundary vars
 	if (boundary) {
 		for (std::size_t i=0; i<n_edges; ++i) {
@@ -272,7 +275,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 			++counter;
 		}
 	}
-	
+
 	// space vars
 	for (std::size_t i=0; i<n_species; ++i) {
 		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
@@ -283,12 +286,12 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 						currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
 						variableMAP[currSTR] = counter;
 						++counter;
-						
+
 						// P_var
 						currSTR="P_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
 						variableMAP[currSTR] = counter;
 						++counter;
-						
+
 						// W_var
 						currSTR="W_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
 						variableMAP[currSTR] = counter;
@@ -298,12 +301,12 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 			}
 		}
 	}
-	
+
 	//// Main processing
-// 	Rcpp::Rcout << "Main processing" << std::endl;
-	
+	if (verbose) Rcpp::Rcout << "Main processing" << std::endl;
+	Rcpp::checkUserInterrupt();
 	/// comments to cache variable values
-// 	Rcpp::Rcout << "\tcaching variables" << std::endl;
+	if (verbose) Rcpp::Rcout << "\tcaching variables" << std::endl;
 	std::vector<std::string> cacheSTR;
 	cacheSTR.reserve(n_species + (n_species * n_attribute_spaces));
 	std::vector<double> cacheDBL;
@@ -318,27 +321,29 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 			cacheDBL.push_back(speciesspaceMTX(i,j));
 		}
 	}
-	
+
 	/// objective function
-// 	Rcpp::Rcout << "\tobjective function" << std::endl;
+	Rcpp::checkUserInterrupt();
+	if (verbose) Rcpp::Rcout << "\tobjective function" << std::endl;
 	std::vector<double> objDBL(variableMAP.size());
-	
+
 	// cost variables
-// 	Rcpp::Rcout << "\t\tcost variables" << std::endl;
+	if (verbose) Rcpp::Rcout << "\t\tcost variables" << std::endl;
 	for (std::size_t i=0; i<n_pu; ++i) {
 		objDBL[variableMAP[puDF_id_STR[i]]] = puDF_cost[i];
 	}
-	
+
 	// boundary variables
-// 	Rcpp::Rcout << "\t\tboundary variables" << std::endl;
+	if (verbose) Rcpp::Rcout << "\t\tboundary variables" << std::endl;
 	if (boundary) {
 		for (std::size_t i=0; i<n_edges; ++i) {
 			objDBL[variableMAP[boundaryDF_idpair_CHR[i]]] = blmDBL * boundaryDF_boundary[i];
 		}
 	}
-	
+
 	/// constraints
-// 	Rcpp::Rcout << "\tconstraints" << std::endl;
+	Rcpp::checkUserInterrupt();
+	if (verbose) Rcpp::Rcout << "\tconstraints" << std::endl;
 	std::vector<std::size_t> model_rows_INT;
 	model_rows_INT.reserve(n_pu * n_species * n_attribute_spaces * std::accumulate(species_ndp.begin(), species_ndp.end(), 0) * maxrlevelINT);
 	std::vector<std::size_t> model_cols_INT;
@@ -349,10 +354,11 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 	senseSTR.reserve(n_pu * n_species * n_attribute_spaces * std::accumulate(species_ndp.begin(), species_ndp.end(), 0) * maxrlevelINT);
 	std::vector<double> rhsDBL;
 	rhsDBL.reserve(n_pu * n_species * n_attribute_spaces * std::accumulate(species_ndp.begin(), species_ndp.end(), 0) * maxrlevelINT);
-	
+
 	// area target constraints
+	Rcpp::checkUserInterrupt();
+	if (verbose) Rcpp::Rcout << "\t\tarea constraints" << std::endl;
 	counter=0;
-// 	Rcpp::Rcout << "\t\tarea constraints" << std::endl;
 	for (std::size_t i=0; i<n_species; ++i) {
 		for (std::size_t j=0; j<species_pu_ids[i].size(); ++j) {
 			model_rows_INT.push_back(counter);
@@ -363,11 +369,12 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 		rhsDBL.push_back(speciesareaDBL[i] * speciesDF_areatarget[i]);
 		++counter;
 	}
-	
-// 	Rcout << "rhsDBL.size() = " << rhsDBL.size() << "; counter = " << counter << std::endl; 
-	
+
+// 	Rcout << "rhsDBL.size() = " << rhsDBL.size() << "; counter = " << counter << std::endl;
+
 	// space target constraints
-// 	Rcpp::Rcout << "\t\tspace constraints" << std::endl;
+	Rcpp::checkUserInterrupt();
+	if (verbose) Rcpp::Rcout << "\t\tspace constraints" << std::endl;
 	for (std::size_t i=0; i<n_species; ++i) {
 		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
 			for (std::size_t k=0; k<species_ndp[i]; ++k) {
@@ -386,11 +393,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 		}
 	}
 
-// 	Rcout << "rhsDBL.size() = " << rhsDBL.size() << "; counter = " << counter << std::endl; 
-	
-	
 	// pu status constraints
-// 	Rcpp::Rcout << "\t\tpu status constraints" << std::endl;
+	if (verbose) Rcpp::Rcout << "\t\tpu status constraints" << std::endl;
 	for (std::size_t i=0; i<n_pu; ++i) {
 		if (puDF_status[i]==2) {
 			// locked in
@@ -411,11 +415,9 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 		}
 	}
 
-// 	Rcout << "rhsDBL.size() = " << rhsDBL.size() << "; counter = " << counter << std::endl; 
-
-		
 	// boundary constraints
-// 	Rcpp::Rcout << "\t\tboundary constraints" << std::endl;
+	Rcpp::checkUserInterrupt();
+	if (verbose) Rcpp::Rcout << "\t\tboundary constraints" << std::endl;
 	if (boundary) {
 		for (std::size_t i=0; i<n_edges; ++i) {
 			// model+=boundaryDF_idpair_CHR[i] + " - " + puDF_id_STR[boundaryDF_id1[i]] + " <= 0\n";
@@ -439,8 +441,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 			senseSTR.push_back("<=");
 			rhsDBL.push_back(0.0);
 			++counter;
-			
-			// model+=boundaryDF_idpair_CHR[i] + " - " + 
+
+			// model+=boundaryDF_idpair_CHR[i] + " - " +
 				// puDF_id_STR[boundaryDF_id1[i]] + " - " +
 				// puDF_id_STR[boundaryDF_id2[i]] + " >= -1\n";
 			model_rows_INT.push_back(counter);
@@ -458,11 +460,9 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 		}
 	}
 
-// 	Rcout << "rhsDBL.size() = " << rhsDBL.size() << "; counter = " << counter << std::endl; 
-	
-	
 	// 1b
-// 	Rcpp::Rcout << "\t\t1b constraints" << std::endl;	
+	Rcpp::checkUserInterrupt();
+	if (verbose) Rcpp::Rcout << "\t\teqn. 1b constraints" << std::endl;
 	for (std::size_t i=0; i<n_species; ++i) {
 		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
 			for (std::size_t k=0; k<species_ndp[i]; ++k) {
@@ -487,10 +487,9 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 		}
 	}
 
-// 	Rcout << "rhsDBL.size() = " << rhsDBL.size() << "; counter = " << counter << std::endl; 
-	
 	// 1c
-// 	Rcpp::Rcout << "\t\t1c constraints" << std::endl;
+	Rcpp::checkUserInterrupt();
+	if (verbose) Rcpp::Rcout << "\t\teqn. 1c constraints" << std::endl;
 	for (std::size_t i=0; i<n_species; ++i) {
 		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
 			for (std::size_t k=0; k<species_ndp[i]; ++k) {
@@ -506,16 +505,15 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 					model_vals_DBL.push_back(-1.0);
 					senseSTR.push_back("<=");
 					rhsDBL.push_back(0.0);
-					++counter;	
+					++counter;
 				}
 			}
 		}
 	}
 
-// 	Rcout << "rhsDBL.size() = " << rhsDBL.size() << "; counter = " << counter << std::endl; 
-
 	// 1d
-// 	Rcpp::Rcout << "\t\t1d constraints" << std::endl;
+	Rcpp::checkUserInterrupt();
+	if (verbose) Rcpp::Rcout << "\t\teqn. 1d constraints" << std::endl;
 	for (std::size_t i=0; i<n_species; ++i) {
 		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
 			for (std::size_t k=0; k<species_ndp[i]; ++k) {
@@ -531,11 +529,10 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 			}
 		}
 	}
-	
-// 	Rcout << "rhsDBL.size() = " << rhsDBL.size() << "; counter = " << counter << std::endl; 
-	
+
 	// 1e
-// 	Rcpp::Rcout << "\t\t1e constraints" << std::endl;
+	Rcpp::checkUserInterrupt();
+	if (verbose) Rcpp::Rcout << "\t\teqn. 1e constraints" << std::endl;
 	for (std::size_t i=0; i<n_species; ++i) {
 		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
 			for (std::size_t k=0; k<species_ndp[i]; ++k) {
@@ -549,13 +546,13 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 					rhsDBL.push_back(species_pu_probs[i][l]);
 					++counter;
 				}
-				
+
 				// failure pu
 				currSTR="P_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[species_npu[i]]+"_0";
 				model_rows_INT.push_back(counter);
 				model_cols_INT.push_back(variableMAP[currSTR]);
 				model_vals_DBL.push_back(1.0);
-				
+
 				senseSTR.push_back("=");
 				rhsDBL.push_back(1.0);
 				++counter;
@@ -563,13 +560,13 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 		}
 	}
 
-// 	Rcout << "rhsDBL.size() = " << rhsDBL.size() << "; counter = " << counter << std::endl; 
-
 	// 1f
-// 	Rcpp::Rcout << "\t\t1f constraints" << std::endl;	
+	Rcpp::checkUserInterrupt();
+	if (verbose) Rcpp::Rcout << "\t\teqn. 1f constraints" << std::endl;
 	for (std::size_t i=0; i<n_species; ++i) {
 		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
 			for (std::size_t k=0; k<species_ndp[i]; ++k) {
+				Rcout << "k = " << k << std::endl; 
 				for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
 					for (std::size_t r=1, r2=0; r<(maxrlevelINT+1); ++r, ++r2) {
 
@@ -577,14 +574,14 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 						model_rows_INT.push_back(counter);
 						model_cols_INT.push_back(variableMAP[currSTR]);
 						model_vals_DBL.push_back(1.0);
-						
+
 						for (std::size_t l2=0; l2<species_npu[i]; ++l2) {
 							currSTR="W_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l2]+"_"+intSTR[r2];
 							model_rows_INT.push_back(counter);
 							model_cols_INT.push_back(variableMAP[currSTR]);
 							model_vals_DBL.push_back(-(species_pu_probs[i][l] * species_pu_tprobs[i][l2]));
 						}
-					
+
 						senseSTR.push_back("=");
 						rhsDBL.push_back(0.0);
 						++counter;
@@ -594,10 +591,9 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 		}
 	}
 
-// 	Rcout << "rhsDBL.size() = " << rhsDBL.size() << "; counter = " << counter << std::endl; 
-
 	/// W variables
-// 	Rcpp::Rcout << "\t\t2 constraints" << std::endl;	
+	Rcpp::checkUserInterrupt();
+	if (verbose) Rcpp::Rcout << "\t\teqn 2. constraints" << std::endl;
 	std::string currW;
 	std::string currP;
 	std::string currY;
@@ -610,7 +606,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 						currW="W_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
 						currP="P_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
 						currY="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
-						// 2a 
+						// 2a
 						//model+=currW + " - " + currP + " <= 0\n";
 						model_rows_INT.push_back(counter);
 						model_rows_INT.push_back(counter);
@@ -621,10 +617,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 						senseSTR.push_back("<=");
 						rhsDBL.push_back(0.0);
 						++counter;
-						
-						
 						// 2b
-						//model+=currW + " - " + currY + " <= 0\n";						
+						//model+=currW + " - " + currY + " <= 0\n";
 						model_rows_INT.push_back(counter);
 						model_rows_INT.push_back(counter);
 						model_cols_INT.push_back(variableMAP[currW]);
@@ -634,7 +628,6 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 						senseSTR.push_back("<=");
 						rhsDBL.push_back(0.0);
 						++counter;
-						
 						// 2c
 						//model+=currW + " >= 0\n";
 						model_rows_INT.push_back(counter);
@@ -643,11 +636,9 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 						senseSTR.push_back(">=");
 						rhsDBL.push_back(0.0);
 						++counter;
-						
-						
 						// 2d
 						//model+= currW + " - " + currP + " - " + currY + " >= -1\n";
-// 						model+= currW + " >= " + currP + " + " + currY + " - 1\n";
+ 						//model+= currW + " >= " + currP + " + " + currY + " - 1\n";
 						model_rows_INT.push_back(counter);
 						model_rows_INT.push_back(counter);
 						model_rows_INT.push_back(counter);
@@ -666,28 +657,29 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 		}
 	}
 
-// 	Rcout << "rhsDBL.size() = " << rhsDBL.size() << "; counter = " << counter << std::endl; 
-
-		
 	////// variable types
-// 	Rcpp::Rcout << "\tvariable types" << std::endl;	
+	Rcpp::checkUserInterrupt();
+	if (verbose) Rcpp::Rcout << "\tvariable types" << std::endl;
 	std::vector<std::string> vtypeSTR(objDBL.size());
 
 	///// binary
-// 	Rcpp::Rcout << "\t\t binary vars" << std::endl;	
-	
+	if (verbose) Rcpp::Rcout << "\t\t binary vars" << std::endl;
+
 	// 1g
+	Rcpp::checkUserInterrupt();
 	for (std::size_t i=0; i<n_pu; ++i) {
 		vtypeSTR[variableMAP[puDF_id_STR[i]]]="B";
 	}
-		
+
 	// boundary variables
+	Rcpp::checkUserInterrupt();
 	if (boundary) {
 		for (std::size_t i=0; i<n_edges; ++i)
 			vtypeSTR[variableMAP[boundaryDF_idpair_CHR[i]]]="B";
 	}
-	
+
 	// 1g
+	Rcpp::checkUserInterrupt();
 	for (std::size_t i=0; i<n_species; ++i) {
 		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
 			for (std::size_t k=0; k<species_ndp[i]; ++k) {
@@ -700,9 +692,10 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 			}
 		}
 	}
-	
+
 	///// semi-continuous
-// 	Rcpp::Rcout << "\t\tsemi-continuous vars" << std::endl;	
+	Rcpp::checkUserInterrupt();
+	if (verbose) Rcpp::Rcout << "\t\tsemi-continuous vars" << std::endl;
 	for (std::size_t i=0; i<n_species; ++i) {
 		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
 			for (std::size_t k=0; k<species_ndp[i]; ++k) {
@@ -719,9 +712,10 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 			}
 		}
 	}
-	
+
 	//// Exports
-// 	Rcpp::Rcout << "Exports" << std::endl;
+	Rcpp::checkUserInterrupt();
+	if (verbose) Rcpp::Rcout << "Sending data to R" << std::endl;
 	return(
 		Rcpp::List::create(
 			Rcpp::Named("Ar") = Rcpp::List::create(
@@ -741,5 +735,3 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data) {
 		)
 	);
 }
-
-

@@ -35,11 +35,11 @@ setClass("RaspOpts",
 		# MAXRLEVEL
 		if (!is.integer(object@MAXRLEVEL)) stop('argument to MAXRLEVEL is not integer')
 		if (!is.finite(object@MAXRLEVEL)) stop('argument to MAXRLEVEL is NA or non-finite value')
-		
+
 		# NUMREPS
 		if (!is.integer(object@NUMREPS)) stop('argument to NUMREPS is not numeric')
 		if (!is.finite(object@NUMREPS)) stop('argument to NUMREPS is NA or non-finite values')
-		
+
 		return(TRUE)
 	}
 )
@@ -88,3 +88,18 @@ setMethod(
 		print.RaspOpts(object)
 )
 
+#' @rdname update
+#' @method update RaspOpts
+#' @export
+update.RaspOpts<-function(object, ...) {
+	# deparse arguments
+	params<-as.list(substitute(list(...)))[-1L]
+	params<-params[which(names(params) %in% slotNames('RaspOpts'))]
+	# update parameters
+	for (i in seq_along(params))
+		slot(object, names(params)[i]) <- params[[i]]
+	# check object for validity
+	validObject(object, test=FALSE)
+	# return object
+	return(object)
+}

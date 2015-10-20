@@ -8,6 +8,9 @@
 
 \item{...}{not used.}
 }
+\value{
+\code{data.frame}
+}
 \description{
 Extracts summary of solutions in a \code{RaspResults} or \code{RaspSolved} object.
 }

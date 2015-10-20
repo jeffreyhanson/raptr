@@ -25,7 +25,7 @@ if (!require('devtools'))
 devtools:::install_github('paleo13/rapsr')
 ```
 
-Once this package has been installed, you can explore the functions of this package by reading through the vignette. You can access it in R by running the code below:
+Once this package has been installed, you can explore its functions by reading through the vignette. You can access it in R by running the code below:
 
 ```
 # open vignette in web browser
@@ -35,4 +35,3 @@ vignette('raspr', package='raspr')
 **If this R package helped you, please cite it.**
 
 Hanson J.O., Rhodes J. R., Fuller R. A. (2015). raspr (version 0.0.1): identify prioritisations using the Representative and Adequate Sample Problem (RASP).
-

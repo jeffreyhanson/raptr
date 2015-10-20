@@ -1,7 +1,6 @@
 #' @include RcppExports.R raspr-internal.R misc.R generics.R RaspOpts.R RaspData.R RaspUnsolved.R RaspResults.R
 NULL
 
-
 #' RaspSolved: An S4 class to represent RASP inputs and outputs
 #'
 #' This class is used to store RASP input and output data in addition to input parameters.
@@ -69,7 +68,7 @@ RaspSolved<-function(unsolved, results) {
 setMethod(
 	'solve',
 	'RaspSolved',
-	function(x, wd=tempdir(), clean=TRUE, force.reset=FALSE) {
+	function(x, verbose=FALSE, force.reset=FALSE) {
 		if (!force.reset)
 			stop("This object already has solutions. Use force.reset=TRUE to force recalculation of solutions.")
 		return(solve(RaspUnsolved(opts=x@opts,gurobi=x@gurobi, data=x@data), wd, clean))
@@ -123,13 +122,49 @@ logging.file.RaspSolved<-function(x, y=0) {
 #' @export
 print.RaspSolved<-function(x, ...) {
 	cat("Parameters\n")
-	print.RaspOpts(x@opts, FALSE)
+	print.RaspOpts(x@opts, header=FALSE)
 	cat("Solver settings\n")
-	print.GurobiOpts(x@gurobi, FALSE)
+	print.GurobiOpts(x@gurobi, header=FALSE)
 	cat("Data\n")
-	print.RaspData(x@data, FALSE)
+	print.RaspData(x@data, header=FALSE)
 	cat("Results\n")
-	print.RaspResults(x@results, FALSE)
+	print.RaspResults(x@results, header=FALSE)
+}
+
+#' @rdname spp.subset
+#' @method spp.subset RaspSolved
+#' @export
+spp.subset.RaspSolved<-function(x, species) {
+	return(
+		spp.subset(
+			RaspUnsolved(
+				pu=x@pu,
+				species=x@species,
+				attriubte.spaces=x@attriubte.spaces,
+				boundary=x@boundary,
+				polygons=x@polygons
+			),
+			species
+		)
+	)
+}
+
+#' @rdname pu.subset
+#' @method pu.subset RaspSolved
+#' @export
+pu.subset.RaspSolved<-function(x, pu) {
+	return(
+		pu.subset(
+			RaspUnsolved(
+				pu=x@pu,
+				species=x@species,
+				attriubte.spaces=x@attriubte.spaces,
+				boundary=x@boundary,
+				polygons=x@polygons
+			),
+			pu
+		)
+	)
 }
 
 #' @describeIn show
@@ -227,7 +262,7 @@ setMethod(
 		stopifnot(inherits(x@data@polygons, "PolySet"))
 		# get basemap data
 		if (basemap!="none")
-			basemap<-basemap.RaspData(x@data, basemap, grayscale, force.reset)	
+			basemap<-basemap.RaspData(x@data, basemap, grayscale, force.reset)
 		# main processing
 		if (force.reset || !is.cached(x@results, "selectionfreqs")) {
 			cache(x@results, "selectionfreqs", colMeans(x@results@selections))
@@ -266,7 +301,7 @@ setMethod(
 			stopifnot(j <= nrow(y@results@selections))
 		# get basemap data
 		if (basemap!="none")
-			basemap<-basemap.RaspData(x@data, basemap, grayscale, force.reset)	
+			basemap<-basemap.RaspData(x@data, basemap, grayscale, force.reset)
 		# main processing
 		cols<-character(nrow(x@data@pu))
 		if (is.null(i) || is.null(j)) {
@@ -274,7 +309,7 @@ setMethod(
 			cols[which(y@data@pu$status==2)]<-y.locked.in.color
 			cols[which(x@data@pu$status==3)]<-x.locked.out.color
 			cols[which(y@data@pu$status==3)]<-y.locked.out.color
-		
+
 			if (force.reset || !is.cached(x@results, "selectionfreqs"))
 				cache(x@results, "selectionfreqs", colMeans(x@results@selections))
 			xsc<-cache(x@results, "selectionfreqs")[which(nchar(cols)==0)]
@@ -336,7 +371,7 @@ setMethod(
 			if (j==0)
 				j<-y@results@best
 			cols2<-brewerCols(seq(0,1,length.out=4),color.palette,alpha,n=4)
-			
+
 			cols[which(x@results@selections[i,]==1 & y@results@selections[j,]==0)]<-cols2[1]
 			cols[which(x@results@selections[i,]==0 & y@results@selections[j,]==1)]<-cols2[2]
 			cols[which(x@results@selections[i,]==1 & y@results@selections[j,]==1)]<-cols2[3]
@@ -346,7 +381,7 @@ setMethod(
 			cols[which(y@data@pu$status==2)]<-y.locked.in.color
 			cols[which(x@data@pu$status==3)]<-x.locked.out.color
 			cols[which(y@data@pu$status==3)]<-y.locked.out.color
-			
+
 			xrepr<-ifelse(i==x@results@best, '(best)', paste0('(',i,')'))
 			yrepr<-ifelse(i==y@results@best, '(best)', paste0('(',j,')'))
 
@@ -367,5 +402,36 @@ setMethod(
 	}
 )
 
+#' @rdname update
+#' @method update RaspSolved
+#' @export
+update.RaspSolved<-function(object, ...) {
+	return(
+		RaspUnsolved(
+			opts=update(object@opts, ...),
+			gurobi=update(object@gurobi, ...),
+			data=update(object@opts, ...)
+		)
+	)
+}
 
+#' @rdname spp.plot
+#' @method spp.plot RaspSolved
+#' @export
+spp.plot.RaspSolved<-function(x, y, basemap="none", color.palette="YlGnBu", alpha=ifelse(basemap=="none", 1, 0.7), grayscale=FALSE, force.reset=FALSE) {
+	spp.plot(x@data, y, basemap, color.palette, alpha, grayscale, force.reset)
+}
 
+#' @rdname space.plot
+#' @method space.plot RaspSolved
+#' @export
+space.plot.RaspSolved<-function(
+	x,
+	y,
+	space=1,
+	pu.color.palette='RdYlGn',
+	locked.in.color="#000000FF",
+	locked.out.color="#D7D7D7FF"
+) {
+	stop('Function not finished')
+}

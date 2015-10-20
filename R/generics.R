@@ -6,10 +6,10 @@ NULL
 #' This function calculates the average of species values in each planning unit.
 #' Be aware that using polygons with overlaps will result in inaccuracies.
 #' By default all polygons will be treated as having separate ids.
-#' 
+#'
 #' @param x "SpatialPolygons" or "SpatialPolygonsDataFrame" object.
 #' @param y "RasterLayer", "RasterStack", or "RasterBrick" object.
-#' @param ids "integer" vector of ids. Defaults to indices of layers in the \code{y}. 
+#' @param ids "integer" vector of ids. Defaults to indices of layers in the \code{y}.
 #' @param ncores "integer" Number of cores to use for processing. Defaults to 1.
 #' @param gdal "logical" Should raster processing be performed using GDAL libraries? Defaults to \code{FALSE}.
 #' @param field "character" "integer" index or "character" name of column with planning unit ids. Valid only for "SpatialPolygonsDataFrame" objects. Default behaviour is to treat each polygon as a different planning unit.
@@ -41,23 +41,23 @@ calcSpeciesAverageInPus<-function(x, ...) UseMethod("calcSpeciesAverageInPus")
 #' @examples
 #' data(sim_pus)
 #' # simulate 1 constant species distribution using RasterLayer
-#' s1 <- sim.species(blank.raster(sim_pus, 1), n=1, model='constant') 
-#' 
+#' s1 <- sim.species(blank.raster(sim_pus, 1), n=1, model='constant')
+#'
 #' # simulate 1 constant species distribution based on SpatialPolygons
-#' s2 <- sim.species(sim_pus, res=1, n=1, model='constant') 
-#' 
+#' s2 <- sim.species(sim_pus, res=1, n=1, model='constant')
+#'
 #' # simulate 1 normal species distributions
-#' s3 <- sim.species(sim_pus, res=1, n=1, model='normal') 
-#' 
+#' s3 <- sim.species(sim_pus, res=1, n=1, model='normal')
+#'
 #' # simulate 1 bimodal species distribution
-#' s4 <- sim.species(sim_pus, res=1, n=1, model='bimodal') 
-#' 
+#' s4 <- sim.species(sim_pus, res=1, n=1, model='bimodal')
+#'
 #' # simulate 1 species distribution using a RModel object from RandomFields
-#' s5 <- sim.species(sim_pus, res=1, n=1, model=RandomFields::RPgauss()) 
-#' 
+#' s5 <- sim.species(sim_pus, res=1, n=1, model=RandomFields::RPgauss())
+#'
 #' # simulate 5 species distribution using a RModel object from RandomFields
 #' s6 <- sim.species(sim_pus, res=1, n=5, model=RandomFields::RPgauss())
-#' 
+#'
 #' # plot simulations
 #' par(mfrow=c(2,2))
 #' plot(s2, main='constant')
@@ -102,13 +102,12 @@ sim.space<-function(x, ...) UseMethod('sim.space')
 
 #' Solve RASP object
 #'
-#' This function uses Gurobi to find prioritisations using the input parameter and data stored in a \code{RaspUsolved} object, 
+#' This function uses Gurobi to find prioritisations using the input parameter and data stored in a \code{RaspUsolved} object,
 #' and returns a \code{RaspSolved} object with outputs in it.
 #'
 #' @param x \code{RaspUnsolved} or \code{RaspSolved} object.
-#' @param wd \code{character} file path to a working directory, this is a temporary directory by default to avoid pollution.
-#' @param clean \code{logical} delete files once processing completed?
-#' @param force.reset \code{logical} should solutions be recalculated even if \code{RaspSolved} object supplied?
+#' @param verbose \code{logical} should messages be printed during creation of the initial model matrix?.
+#' @param force.reset \code{logical} if \code{x} already has solutions, should this be discarded and a new solution(s) obtained?
 #' @param ... not used.
 #' @return \code{RaspSolved} object
 #' @note This function is used to solve a \code{RaspUnsolved} object that has all of its inputs generated. The rasp function (without lower case 'r') provides a more general interface for generating inputs and outputs.
@@ -121,7 +120,7 @@ setGeneric('solve', function(x, ...) standardGeneric('solve'))
 #' units contained in a single \code{RaspSolved} object. Additionally, two \code{RaspSolved} objects can be supplied to plot the differences between them.
 #'
 #' @param x \code{RaspSolved} object.
-#' @param y \code{NULL} to plot selection frequencies. \code{numeric} to plot the i'th solution, or 0 to plot the best solution. \code{RaspSolved} object to plot differences in solutions between objects. Defaults to \code{ULL}. 
+#' @param y \code{NULL} to plot selection frequencies. \code{numeric} to plot the i'th solution, or 0 to plot the best solution. \code{RaspSolved} object to plot differences in solutions between objects. Defaults to \code{ULL}.
 #' @param i \code{NULL} to plot selection frequencies. \code{numeric} to plot the i'th solution, or 0 to plot the best solution. Only used when \code{y} is a \code{RaspSolved} object. Defaults to \code{NULL}.
 #' @param j \code{NULL} to plot selection frequencies. \code{numeric} to plot the i'th solution, or 0 to plot the best solution. Only used when \code{y} is a \code{RaspSolved} object. Defaults to \code{j}.
 #' @param basemap \code{character} object indicating the type of basemap to use (see \code{link{basemap}}). Use either 'none', 'roadmap', 'mobile', 'satellite', 'terrain', 'hybrid', 'mapmaker-roadmap', 'mapmaker-hybrid'. Defaults to 'none'.
@@ -166,6 +165,7 @@ NULL
 #' @param x \code{GurobiOpts} object.
 #' @param ... not used.
 #' @name as.list
+#' @return \code{list}
 #' @seealso \code{GurobiOpts}.
 NULL
 
@@ -176,8 +176,46 @@ NULL
 #' @param object \code{RaspResults}, or \code{RaspSolved} object.
 #' @param ... not used.
 #' @name summary
+#' @return \code{data.frame}
 #' @seealso \code{RaspResults}, \code{RaspSolved}.
 NULL
+
+#' Update object
+#'
+#' This function updates parameters or data stored in an existing
+#' \code{GurobiOpts}, \code{RaspOpts}, \code{RaspData},
+#' \code{RaspUnsolved}, or \code{RaspSolved} object.
+#'
+#' @param object \code{GurobiOpts}, \code{RaspOpts}, \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object..
+#' @param ... parameters to update.
+#' @name update
+#' @return \code{GurobiOpts}, \code{RaspOpts}, \code{RaspData}, or \code{RaspUnsolved} object depending on \code{x}.
+#' @seealso \code{GurobiOpts}, \code{RaspOpts}, \code{RaspData}, or \code{RaspUnsolved}.
+NULL
+
+#' Subset species
+#'
+#' Subset species from a \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
+#'
+#' @param x \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
+#' @param species \code{integer}, or \code{character} vectors to specify the index or species names to subset.
+#' @return \code{RaspData} or \code{RaspUnsolved} object depending on input object.
+#' @seealso \code{RaspData}, \code{RaspUnsolved}, \code{RaspSolved}.
+#' @rdname spp.subset
+#' @export
+spp.subset<-function(x, species) UseMethod('spp.subset')
+
+#' Subset planning units
+#'
+#' Subset planning units from a \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
+#'
+#' @param x \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
+#' @param pu \code{integer} vector to specify the index of planning units to subset.
+#' @return \code{RaspData} or \code{RaspUnsolved} object depending on input object.
+#' @seealso \code{RaspData}, \code{RaspUnsolved}, \code{RaspSolved}.
+#' @rdname pu.subset
+#' @export
+pu.subset<-function(x, pu) UseMethod('pu.subset')
 
 #' Solution score
 #'
@@ -243,14 +281,49 @@ selections<-function(x, y) {UseMethod('selections')}
 #' Convert SpatialPolygons to PolySet data
 #'
 #' This function converts spatial \code{SpatialPolygons} and \code{SpatialPolygonsDataFrame} objects to \code{PolySet} objects.
-#' 
+#'
 #' @param x \code{SpatialPolygons} or \code{SpatialPolygonsDataFrame} object.
 #' @param n_preallocate \code{integer} How much memory should be preallocated for processing? Ideally, this number should equal the number of vertices in the \code{SpatialPolygons} object. If data processing is taking too long consider increasing this value.
 #' @return \code{PolySet} object.
 #' @note Be aware that this function is designed to be as fast as possible, but as a result it depends on C++ code and if used inappropriately this function will crash R.
 #' @seealso For a slower, more stable equivalent see \code{\link[maptools]{SpatialPolygons2PolySet}}.
 #' @export
-#' @examples 
+#' @examples
 #' data(sim_pus)
 #' x <- SpatialPolygons2PolySet(sim_pus)
 SpatialPolygons2PolySet<-function(x, n_preallocate) UseMethod("SpatialPolygons2PolySet")
+
+#' Plot species
+#'
+#' This function plots the distribution of species across the study area.
+#'
+#' @param x \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
+#' @param y \code{character} name of species, or \code{integer} index for species.
+#' @param basemap \code{character} object indicating the type of basemap to use (see \code{link{basemap}}). Use either 'none', 'roadmap', 'mobile', 'satellite', 'terrain', 'hybrid', 'mapmaker-roadmap', 'mapmaker-hybrid'. Defaults to 'none'.
+#' @param color.palette \code{character} name of colour palette to use for planning units (see \code{\link[RColorBrewer]{brewer.pal}}). Defaults to 'YlGnBu'.
+#' @param alpha \code{numeric} value to indicate how transparent the planning unit colors shoud be.
+#' @param grayscale \code{logical} should the basemap be gray-scaled?
+#' @param force.reset \code{logical} if basemap data has been cached, should it be re-downloaded?
+spp.plot<-function(x, y, basemap, color.palette, alpha, grayscale, force.reset) UseMethod('spp.plot')
+
+#' Plot space
+#'
+#' This function plots the distribution of planning units and the distribution of demand points for a particular species in an attribute space.
+#' Note that this function only works for attribute spaces with one, two, or three dimensions.
+#'
+#' @param x \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
+#' @param y \code{character} name of species, or \code{integer} index for species.
+#' @param space \code{integer} index of attribute space.
+#' @param pu.color.palette \code{character} name of color palette to use for planning units (see \code{\link[RColorBrewer]{brewer.pal}}). Defaults to 'RdYlGn'.
+#' @param locked.in.color \code{character} color to denote locked in planning units. Used when \code{y} is \code{NULL}. Defaults to '#000000FF'.
+#' @param locked.out.color \code{character} color to denote locked in planning units. Used when \code{y} is \code{NULL}. Defaults to '#D7D7D7FF'.
+space.plot<-function(
+  x,
+	y,
+	space,
+	pu.color.palette,
+	locked.in.color,
+	locked.out.color
+) {
+  UseMethod('space.plot')
+}
