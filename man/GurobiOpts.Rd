@@ -5,7 +5,7 @@
 \title{Create GurobiOpts object}
 \usage{
 GurobiOpts(Threads = 1L, MIPGap = 0.05, Presolve = 2L,
-  TimeLimit = NA_integer_)
+  TimeLimit = NA_integer_, NumberSolutions = 1L)
 }
 \arguments{
 \item{Threads}{\code{integer} number of cores to use for processing. Defaults to 1L.}
@@ -15,6 +15,8 @@ GurobiOpts(Threads = 1L, MIPGap = 0.05, Presolve = 2L,
 \item{Presolve}{\code{integer} code for level of computation in presolve (lp_solve parameter). Defaults to 2.}
 
 \item{TimeLimit}{\code{integer} number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.}
+
+\item{NumberSolutions}{\code{integer} number of solutions to generate. Defaults to 1L.}
 }
 \value{
 \code{GurobiOpts} object
@@ -24,9 +26,7 @@ This function creates a new GurobiOpts object.
 }
 \examples{
 # create GurobiOpts object using default parameters
-x <- GurobiOpts(Threads=1L, MIPGap=0.05, Presolve=2L, TimeLimit=NA_integer_)
-# print object
-print(x)
+GurobiOpts(Threads=1L, MIPGap=0.05, Presolve=2L, TimeLimit=NA_integer_, NumberSolutions=1L)
 }
 \seealso{
 \code{\link{GurobiOpts-class}}.

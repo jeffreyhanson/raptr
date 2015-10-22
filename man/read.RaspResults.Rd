@@ -7,7 +7,7 @@
 read.RaspResults(opts, data, model.list, logging.file, solution.list)
 }
 \arguments{
-\item{opts}{\code{RaspOpts} object}
+\item{opts}{\code{RaspReliableOpts} or \code{RaspUnreliableOpts} object}
 
 \item{data}{\code{RaspData} object}
 
@@ -24,7 +24,7 @@ read.RaspResults(opts, data, model.list, logging.file, solution.list)
 This function reads files output from Gurobi and returns a \code{RaspResults} object.
 }
 \seealso{
-\code{\link{RaspData}}, \code{\link{RaspData-class}}, \code{\link{RaspResults-class}}, \code{\link{RaspResults}}.
+\code{\link{RaspReliableOpts}}, \code{\link{RaspUnreliableOpts}}, \code{\link{RaspData}}, \code{\link{RaspResults}}.
 }
 \keyword{internal}
 

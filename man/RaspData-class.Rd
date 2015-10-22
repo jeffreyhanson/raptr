@@ -5,7 +5,7 @@
 \alias{RaspData-class}
 \title{RaspData: An S4 class to represent RASP input data}
 \description{
-This class is used to store Marxan input data.
+This class is used to store RASP input data.
 }
 \section{Slots}{
 

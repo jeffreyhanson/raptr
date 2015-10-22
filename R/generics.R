@@ -20,9 +20,9 @@ NULL
 #' @examples
 #' data(sim_pus, sim_spp)
 #' # calculate average for 1 species
-#' puvspr1.dat<-calcSpeciesAverageInPus(sim_pus[1:10,], sim_spp[[1]])
+#' puvspr1.dat<-calcSpeciesAverageInPus(sim_pus, sim_spp[[1]])
 #' # calculate average for multiple species
-#' puvspr2.dat<-calcSpeciesAverageInPus(sim_pus[1:10,], sim_spp)
+#' puvspr2.dat<-calcSpeciesAverageInPus(sim_pus, sim_spp)
 calcSpeciesAverageInPus<-function(x, ...) UseMethod("calcSpeciesAverageInPus")
 
 #' Simulate species distribution data for RASP
@@ -112,6 +112,13 @@ sim.space<-function(x, ...) UseMethod('sim.space')
 #' @return \code{RaspSolved} object
 #' @note This function is used to solve a \code{RaspUnsolved} object that has all of its inputs generated. The rasp function (without lower case 'r') provides a more general interface for generating inputs and outputs.
 #' @seealso \code{RaspUnsolved}, \code{RaspSolved}.
+#' @examples
+#' \dontrun{
+#' # load RaspUnsolved object
+#' data(sim_ru)
+#' # solve it
+#' sim_rs <- solve(ru)
+#' }
 setGeneric('solve', function(x, ...) standardGeneric('solve'))
 
 #' Plot RASP object
@@ -136,37 +143,94 @@ setGeneric('solve', function(x, ...) standardGeneric('solve'))
 #' @param force.reset \code{logical} if basemap data has been cached, should it be re-downloaded?
 #' @name plot
 #' @seealso \code{RaspSolved}.
+#' @examples
+#' # load data
+#' data(cs_rs_area, cs_rs_space)
+#' # plot selection frequencies
+#' plot(cs_rs_area)
+#' # plot best solution with basemap
+#' plot(cs_rs_area, 0, basemap='satellite')
+#' # plot second solution
+#' plot(cs_rs_area, 2, basemap='satellite', grayscale=TRUE)
+#' # plot different between first and second solutions
+#' plot(cs_rs_area, 1, 2)
+#' # plot difference in selection frequencies between two RaspSolved objects
+#' plot(cs_rs_area, cs_rs_space)
+#' # plot difference between best solutions in two RaspSolved objects
+#' plot(cs_rs_area, cs_rs_space, 0, 0)
 NULL
 
 #' Print objects
 #'
 #' Prints objects.
 #'
-#' @param x \code{GurobiOpts}, \code{RaspOpts}, \code{RaspData}, \code{RaspUnsolved}, \code{RaspResults}, or \code{RaspSolved} object.
+#' @param x \code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, \code{RaspUnsolved}, \code{RaspResults}, or \code{RaspSolved} object.
 #' @param header \code{logical} should object header be included?
 #' @param ... not used.
 #' @name print
-#' @seealso \code{GurobiOpts}, \code{RaspOpts}, \code{RaspData}, \code{RaspUnsolved}, \code{RaspResults}, \code{RaspSolved}.
+#' @seealso \code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, \code{RaspUnsolved}, \code{RaspResults}, \code{RaspSolved}.
+#' @examples
+#' # load data
+#' data(sim_ru, sim_rs)
+#' ## print classes in package
+#' # GurobiOpts
+#' print(GurobiOpts())
+#' # RaspReliableOpts
+#' print(RaspReliableOpts())
+#' # RaspUnreliableOpts
+#' print(RaspUnreliableOpts())
+#' # RaspData
+#' print(sim_ru@@data)
+#' # RaspUnsolved
+#' print(sim_ru)
+#' # RaspResults
+#' print(sim_rs@@results)
+#' # RaspSolved
+#' print(sim_rs)
 NULL
 
 #' Show objects
 #'
 #' Shows objects.
 #'
-#' @param object \code{GurobiOpts}, \code{RaspOpts}, \code{RaspData}, \code{RaspUnsolved}, \code{RaspResults}, or \code{RaspSolved} object.
+#' @param object \code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, \code{RaspUnsolved}, \code{RaspResults}, or \code{RaspSolved} object.
 #' @name show
-#' @seealso \code{GurobiOpts}, \code{RaspOpts}, \code{RaspData}, \code{RaspUnsolved}, \code{RaspResults}, \code{RaspSolved}.
+#' @seealso \code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, \code{RaspUnsolved}, \code{RaspResults}, \code{RaspSolved}.
+#' @examples
+#' # load data
+#' data(sim_ru, sim_rs)
+#' ## show methods for classes in package
+#' # GurobiOpts
+#' GurobiOpts()
+#' # RaspReliableOpts
+#' RaspReliableOpts()
+#' # RaspUnreliableOpts
+#' RaspUnreliableOpts()
+#' # RaspData
+#' sim_ru@@data
+#' # RaspUnsolved
+#' sim_ru
+#' # RaspResults
+#' sim_rs@@results
+#' # RaspSolved
+#' sim_rs
 NULL
 
 #' Convert object to list.
 #'
-#' Convert objects to list.
+#' Convert \code{GurobiOpts} object to list.
 #'
 #' @param x \code{GurobiOpts} object.
 #' @param ... not used.
 #' @name as.list
 #' @return \code{list}
+#' @note This function will not include the \code{NumberSolutions} slot or the \code{TimeLimit} slot if it is not finite.
 #' @seealso \code{GurobiOpts}.
+#' @examples
+#' # make GuboriOpts object
+#' x <- GurobiOpts()
+#' # convert to list
+#' as.list(x)
 NULL
 
 #' Summary of solutions
@@ -178,19 +242,68 @@ NULL
 #' @name summary
 #' @return \code{data.frame}
 #' @seealso \code{RaspResults}, \code{RaspSolved}.
+#' @examples
+#' # load data
+#' load(sim_rs)
+#' # show summary
+#' summary(sim_rs)
 NULL
 
 #' Update object
 #'
-#' This function updates parameters or data stored in an existing
-#' \code{GurobiOpts}, \code{RaspOpts}, \code{RaspData},
-#' \code{RaspUnsolved}, or \code{RaspSolved} object.
+#' This function updates parameters or data stored in an existing \code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
 #'
-#' @param object \code{GurobiOpts}, \code{RaspOpts}, \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object..
+#' @param object \code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object..
 #' @param ... parameters to update.
+#' @param ignore.extra \code{logical} should extra invalid arguments be ignored? Defaults to \code{FALSE}.
+#' @param solve \code{logical} should the problem be solved? This argument is only valid for \code{RaspUnsolved} and \code{RaspSolved} objects. Defaults to \code{TRUE}.
 #' @name update
-#' @return \code{GurobiOpts}, \code{RaspOpts}, \code{RaspData}, or \code{RaspUnsolved} object depending on \code{x}.
-#' @seealso \code{GurobiOpts}, \code{RaspOpts}, \code{RaspData}, or \code{RaspUnsolved}.
+#' @return \code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, or \code{RaspUnsolved} object depending on \code{x}.
+#' @seealso \code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, or \code{RaspUnsolved}.
+#' @export
+#' @examples
+#' # load data
+#' data(sim_ru, sim_rs)
+#'
+#' # GurobiOpts
+#' x <- GurobiOpts(MIPGap=0.7)
+#' y <- update(x, MIPGap=0.1)
+#' print(x)
+#' print(y)
+#'
+#' # RaspUnreliableOpts
+#' x <- RaspUnreliableOpts(BLM=10)
+#' y <- update(x, BLM=2)
+#' print(x)
+#' print(y)
+#'
+#' # RaspReliableOpts
+#' x <- RaspReliableOpts(FAILUREMULTIPLIER=2)
+#' y <- update(x, FAILUREMULTIPLIER=4)
+#' print(x)
+#' print(y)
+#'
+#' # RaspData
+#' x <- sim_ru@@data
+#' y <- update(x, space.targets=c(0.4, 0.7, 0.1))
+#' print(x@@data$space.targets)
+#' print(y@@data$space.targets)
+#'
+#' ## RaspUnsolved
+#' x <- sim_ru
+#' y <- update(x, area.targets=c(0.1, 0.2, 0.3), BLM=3, Presolve=0L)
+#' # print x parameters
+#' print(x@@opts@@BLM); print(x@@solver@@Presolve); print(x@@data@@species$area.targets)
+#' # print y parameters
+#' print(y@@opts@@BLM); print(y@@solver@@Presolve); print(y@@data@@species$area.targets)
+#'
+#' ## RaspSolved
+#' x <- sim_rs
+#' y <- update(x, space.targets=c(0.4, 0.6, 0.9), BLM=100, Presolve=1L)
+#' # print x parameters
+#' print(x@@opts@@BLM); print(x@@solver@@Presolve); print(x@@data@@species$area.targets)
+#' # print y parameters
+#' print(y@@opts@@BLM); print(y@@solver@@Presolve); print(y@@data@@species$area.targets)
 NULL
 
 #' Subset species
@@ -203,6 +316,11 @@ NULL
 #' @seealso \code{RaspData}, \code{RaspUnsolved}, \code{RaspSolved}.
 #' @rdname spp.subset
 #' @export
+#' @examples
+#' # load data
+#' load(sim_ru)
+#' # generate new object with only species 1
+#' sim_ru2 <- spp.subset(sim_ru, 1)
 spp.subset<-function(x, species) UseMethod('spp.subset')
 
 #' Subset planning units
@@ -215,6 +333,11 @@ spp.subset<-function(x, species) UseMethod('spp.subset')
 #' @seealso \code{RaspData}, \code{RaspUnsolved}, \code{RaspSolved}.
 #' @rdname pu.subset
 #' @export
+#' @examples
+#' # load data
+#' load(sim_ru)
+#' # generate new object with first 10 planning units
+#' sim_ru2 <- pu.subset(sim_ru, 1:10)
 pu.subset<-function(x, pu) UseMethod('pu.subset')
 
 #' Solution score
@@ -224,9 +347,17 @@ pu.subset<-function(x, pu) UseMethod('pu.subset')
 #' @param x \code{RaspResults} or \code{RaspSolved} object.
 #' @param y "NULL" to return all scores, "integer" 0 to return score for best solution, "integer" value greater than 0 for \code{y}'th solution score.
 #' @return "matrix" or "numeric" vector with solution score(s) depending on arguments.
-#' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved-class}}, \code{\link{rasp}}.
-#' @export
 #' @seealso \code{RaspResults}, \code{RaspSolved}.
+#' @export
+#' @examples
+#' # load data
+#' load(sim_rs)
+#' # score for best solution
+#' score(sim_rs, 0)
+#' # score for second solution
+#' score(sim_rs, 2)
+#' # score for all solutions
+#' score(sim_rs, NULL)
 score<-function(x, y) UseMethod('score')
 
 #' Log file
@@ -236,9 +367,16 @@ score<-function(x, y) UseMethod('score')
 #' @param x \code{RaspResults} or \code{RaspSolved} object.
 #' @param y \code{NULL} to return all values, \code{integer} 0 to return the log file for best solution, \code{integer} value greater than 0 for log file for the \code{y}'th solution.
 #' @note The term logging file was used due to collisions with the \code{log} function in base R.
-#' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved-class}}, \code{\link{rasp}}.
-#' @export
 #' @seealso \code{RaspResults}, \code{RaspSolved}.
+#' @export
+#' @examples
+#' load(sim_rs)
+#' # log file for best solution
+#' logging.file(sim_rs, 0)
+#' # log file for second solution
+#' logging.file(sim_rs, 2)
+#' # log files for all solutions
+#' logging.file(sim_rs, NULL)
 logging.file<-function(x,y) UseMethod('logging.file')
 
 #' Extract amount held for a solution
@@ -248,10 +386,32 @@ logging.file<-function(x,y) UseMethod('logging.file')
 #' @param x \code{RaspResults} or \code{RaspSolved} object.
 #' @param y \code{NULL} to return all values, \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.
 #' @return \code{matrix} or \code{numeric} vector depending on arguments.
-#' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}.
-#' @export amount.held
 #' @seealso \code{RaspResults}, \code{RaspSolved}.
+#' @export
+#' @examples
+#' load(sim_rs)
+#' # amount held (%) for each species in best solution
+#' amount.held(sim_rs, 0)
+#' # amount held (%) for each species in second solution
+#' amount.held(sim_rs, 2)
+#' # amount held (%) for each species in each solution
+#' amount.held(sim_rs, NULL)
 amount.held<-function(x,y) {UseMethod('amount.held')}
+
+#' Extract amount targets
+#'
+#' This function returns the amount targets for each species.
+#'
+#' @param x \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
+#' @return code{numeric} vector.
+#' @seealso \code{RaspData}, \code{RaspResults}, \code{RaspSolved}.
+#' @export
+#' @examples
+#' # load data
+#' load(sim_rs)
+#' # extract amount targets
+#' amount.target(sim_rs)
+amount.target<-function(x) {UseMethod('amount.target')}
 
 #' Extract attribute space held for a solution
 #'
@@ -260,10 +420,32 @@ amount.held<-function(x,y) {UseMethod('amount.held')}
 #' @param x \code{RaspResults} or \code{RaspSolved} object.
 #' @param y \code{NULL} to return all values, \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.
 #' @return code{matrix} or code{numeric} vector depending on arguments.
-#' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}.
-#' @export space.held
 #' @seealso \code{RaspResults}, \code{RaspSolved}.
+#' @export
+#' @examples
+#' load(sim_rs)
+#' # space held (%) for each species in best solution
+#' space.held(sim_rs, 0)
+#' # space held (%) for each species in second solution
+#' space.held(sim_rs, 2)
+#' # space held (%) for each species in each solution
+#' space.held(sim_rs, NULL)
 space.held<-function(x,y) {UseMethod('space.held')}
+
+#' Extract attribute space targets
+#'
+#' This function returns the attribute space targets for each species.
+#'
+#' @param x \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
+#' @return code{numeric} vector.
+#' @seealso \code{RaspData}, \code{RaspResults}, \code{RaspSolved}.
+#' @export
+#' @examples
+#' # load data
+#' load(sim_rs)
+#' # extract space targets
+#' space.target(sim_rs)
+space.target<-function(x) {UseMethod('space.target')}
 
 #' Extract solution selections
 #'
@@ -273,9 +455,16 @@ space.held<-function(x,y) {UseMethod('space.held')}
 #' @param y \code{NULL} to return all values, \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.
 #' @param ... not used.
 #' @return \code{matrix} or \code{numeric} vector depending on arguments.
-#' @seealso \code{\link{RaspResults-class}}, \code{\link{RaspSolved-class}}, \code{\link{rasp}}.
-#' @export
 #' @seealso \code{RaspResults}, \code{RaspSolved}.
+#' @export
+#' @examples
+#' load(sim_rs)
+#' # selections for best solution
+#' selections(sim_rs, 0)
+#' # selections for second solution
+#' selections(sim_rs, 2)
+#' #selections for each solution
+#' selections(sim_rs, NULL)
 selections<-function(x, y) {UseMethod('selections')}
 
 #' Convert SpatialPolygons to PolySet data
@@ -289,7 +478,9 @@ selections<-function(x, y) {UseMethod('selections')}
 #' @seealso For a slower, more stable equivalent see \code{\link[maptools]{SpatialPolygons2PolySet}}.
 #' @export
 #' @examples
+#' # load SpatialPolygons object
 #' data(sim_pus)
+#' # convert to PolySet
 #' x <- SpatialPolygons2PolySet(sim_pus)
 SpatialPolygons2PolySet<-function(x, n_preallocate) UseMethod("SpatialPolygons2PolySet")
 
@@ -304,6 +495,14 @@ SpatialPolygons2PolySet<-function(x, n_preallocate) UseMethod("SpatialPolygons2P
 #' @param alpha \code{numeric} value to indicate how transparent the planning unit colors shoud be.
 #' @param grayscale \code{logical} should the basemap be gray-scaled?
 #' @param force.reset \code{logical} if basemap data has been cached, should it be re-downloaded?
+#' @export
+#' @examples
+#' # load RaspSolved objects
+#' data(sim_rs, cs_rs)
+#' # plot first species in sim_rs
+#' spp.plot(sim_rs)
+#' # plot species in cs_rs with basemap
+#' spp.plot(cs_rs, basemap='satellite')
 spp.plot<-function(x, y, basemap, color.palette, alpha, grayscale, force.reset) UseMethod('spp.plot')
 
 #' Plot space
@@ -317,6 +516,12 @@ spp.plot<-function(x, y, basemap, color.palette, alpha, grayscale, force.reset) 
 #' @param pu.color.palette \code{character} name of color palette to use for planning units (see \code{\link[RColorBrewer]{brewer.pal}}). Defaults to 'RdYlGn'.
 #' @param locked.in.color \code{character} color to denote locked in planning units. Used when \code{y} is \code{NULL}. Defaults to '#000000FF'.
 #' @param locked.out.color \code{character} color to denote locked in planning units. Used when \code{y} is \code{NULL}. Defaults to '#D7D7D7FF'.
+#' @export
+#' @examples
+#' # load RaspSolved objects
+#' data(sim_rs)
+#' # plot distribution of first species in first attribute space
+#' space.plot(sim_rs, 1, 1)
 space.plot<-function(
   x,
 	y,

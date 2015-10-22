@@ -68,6 +68,22 @@ units contained in a single \code{RaspSolved} object. Additionally, two \code{Ra
 
 \item \code{x = RaspSolved,y = RaspSolved}: 
 }}
+\examples{
+# load data
+data(cs_rs_area, cs_rs_space)
+# plot selection frequencies
+plot(cs_rs_area)
+# plot best solution with basemap
+plot(cs_rs_area, 0, basemap='satellite')
+# plot second solution
+plot(cs_rs_area, 2, basemap='satellite', grayscale=TRUE)
+# plot different between first and second solutions
+plot(cs_rs_area, 1, 2)
+# plot difference in selection frequencies between two RaspSolved objects
+plot(cs_rs_area, cs_rs_space)
+# plot difference between best solutions in two RaspSolved objects
+plot(cs_rs_area, cs_rs_space, 0, 0)
+}
 \seealso{
 \code{RaspSolved}.
 }

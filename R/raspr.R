@@ -13,15 +13,16 @@
 #' The main classes used in this package are used to store input data and prioritisations:
 #' \itemize{
 #'   \item \code{\link{GurobiOpts-class}}: parameters for solving optimisation problems using Gurobi.
-#'   \item \code{\link{RaspOpts-class}}: parameters to for the RASP.
+#'   \item \code{\link{RaspReliableOpts-class}}: parameters for the reliable formulation of RASP.
+#'   \item \code{\link{RaspUnreliableOpts-class}}: parameters for the unreliable formulation of RASP.
 #'   \item \code{\link{RaspData-class}}: planning unit, species data, and demand points for RASP.
-#'   \item \code{\link{RaspUnsolved-class}}: contains all the data and input parameters required to generate prioritisations using RASP. This class contains a collection of \code{\link{GurobiOpts-class}}, \code{\link{RaspOpts-class}}, \code{\link{RaspData-class}} objects. 
+#'   \item \code{\link{RaspUnsolved-class}}: contains all the data and input parameters required to generate prioritisations using RASP. This class contains a \code{\link{GurobiOpts-class}} object, a \code{\link{RaspReliableOpts-class}} or \code{\link{RaspUnreliableOpts-class}} object, and a \code{\link{RaspData-class}} object.
 #'   \item \code{\link{RaspResults-class}}: prioritisations and summary statistics on their performance.
-#'   \item \code{\link{RaspSolved-class}}: contains all the input data, parameters and output data. This class contains a collection of \code{\link{GurobiOpts-class}}, \code{\link{RaspOpts-class}}, \code{\link{RaspData-class}}, and \code{\link{RaspResults-class}} objects. 
+#'   \item \code{\link{RaspSolved-class}}: contains all the input data, parameters and output data. This class contains all the objects in a \code{\link{RaspUnsolved}} object and also a \code{\link{RaspResults-class}} object.
 #' }
-#' 
+#'
 #' Type \code{vignette('raspr')} for a tutorial on how to use this package to generate prioritisations.
 #'
 #' @docType package
 #' @name raspr
-NULL 
+NULL

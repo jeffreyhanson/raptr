@@ -15,8 +15,9 @@ blank.raster(x, res)
 This functions creates a blank raster based on the spatial extent of a Spatial object.
 }
 \examples{
+# load data
 data(sim_pus)
-x <- blank.raster(sim_pus, 1)
-print(x)
+# make RasterLayer from SpatialPolygons
+blank.raster(sim_pus, 1)
 }
 

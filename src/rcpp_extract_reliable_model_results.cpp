@@ -4,8 +4,8 @@
 
 using namespace Rcpp;
 
-
 #include <vector>
+
 #include <string>
 #include <algorithm>
 #include <unordered_map>
@@ -14,39 +14,19 @@ using namespace Rcpp;
 #include <sstream>
 #include <RcppEigen.h>
 #include <Rcpp.h>
+#include "functions.h"
 
-
-std::string collapse(std::vector<std::string> &x) {
-	std::string s;
-	for (std::size_t i=0; i<x.size(); ++i)
-		s+=x[i]+"\n";
-	return(s);
-}
-
-std::vector<double> calculateConnectivity(std::vector<std::size_t> &id1, std::vector<std::size_t> &id2, std::vector<double> &boundary, IntegerMatrix &selection) {
-	std::vector<double> x(3,0.0);
-	for (std::size_t i=0; i<id1.size(); ++i) {
-		if (selection(0,id1[i]) + selection(0,id2[i]) == 2) {
-			x[0]+=boundary[i];
-		} else if (selection(0,id1[i]) + selection(0,id2[i]) == 0) {
-			x[1]+=boundary[i];
-		} else {
-			x[2]+=boundary[i];
-		}
-	}
-	return(x);	
-}
 
 // [[Rcpp::export]]
-Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List model, std::vector<std::string> logging_file, Rcpp::List solution) {
-	//// Initialization	
+Rcpp::S4 rcpp_extract_reliable_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List model, std::vector<std::string> logging_file, Rcpp::List solution) {
+	//// Initialization
 	// variables to store model data
 	std::size_t n_attribute_spaces;
 	std::size_t n_pu;
 	std::size_t n_edges;
 	std::size_t n_species;
 	std::vector<std::size_t> n_demand_points;
-	
+
 	// return variables
 	double Score;
 	double Cost;
@@ -58,12 +38,12 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List mod
 	double Connectivity_In_Fraction;
 	Environment cacheENV = Environment::base_env();
 	const double boundary_threshold=1.0e-05;
-	
-	//// Preliminary processing	
+
+	//// Preliminary processing
 	// extract opts
 	double failure_multiplier=Rcpp::as<double>(opts.slot("FAILUREMULTIPLIER"));
 	std::size_t maxrlevelINT=Rcpp::as<double>(opts.slot("MAXRLEVEL"));
-		
+
 	/// extract data from Rcpp::S4 data
 	// species data
 // 	Rcpp::Rcout << "\tSpecies data" << std::endl;
@@ -71,7 +51,7 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List mod
 	std::vector<double> speciesDF_areatarget = speciesDF["area.target"];
 	std::vector<double> speciesDF_spacetarget = speciesDF["space.target"];
 	n_species=speciesDF_areatarget.size();
-	
+
 	// planning unit data
 // 	Rcpp::Rcout << "\tpu data" << std::endl;
 	Rcpp::DataFrame puDF=Rcpp::as<Rcpp::DataFrame>(data.slot("pu"));
@@ -79,7 +59,7 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List mod
 	std::vector<double> puDF_cost = puDF["cost"];
 	std::vector<std::size_t> puDF_status = puDF["status"];
 	n_pu=puDF_area.size();
-	
+
 	// pu.species.probabilities
 // 	Rcpp::Rcout << "\tpuvspecies data" << std::endl;
 	Rcpp::DataFrame puvspeciesDF=Rcpp::as<Rcpp::DataFrame>(data.slot("pu.species.probabilities"));
@@ -110,7 +90,7 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List mod
 	Rcpp::S4 currS4;
 	Rcpp::S4 currS4_2;
 	Rcpp::List currLST;
-	
+
 	// planning unit points
 // 	Rcpp::Rcout << "\tpu points data" << std::endl;
 	Rcpp::NumericMatrix tmp;
@@ -121,7 +101,7 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List mod
 		double *pcv = &tmp(0,0);
 		Eigen::Map<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor>> tmpmat(pcv, tmp.nrow(), tmp.ncol());
 		pupointsMTX[i] = tmpmat;
-		
+
 	}
 
 	// demand points
@@ -137,17 +117,17 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List mod
 			// extract species i demand points for space j
 			currS4=Rcpp::as<Rcpp::S4>(currLST[i]);
 			currS4_2=Rcpp::as<Rcpp::S4>(currS4.slot("points"));
-			
+
 			// coords
 			tmp=Rcpp::as<Rcpp::NumericMatrix>(currS4_2.slot("coords"));
 			double *pcv = &tmp(0,0);
 			Eigen::Map<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor>> tmpmat(pcv, tmp.nrow(), tmp.ncol());
 			demandpoints_coords_MTX(i,j) = tmpmat;
-			
-			
+
+
 			// weights
 			demandpoints_weights_MTX(i,j) = Rcpp::as<NumericVector>(currS4.slot("weights"));
-		
+
 			// store number dp for species i
 			species_ndp[i]=demandpoints_weights_MTX(i,j).size();
 		}
@@ -168,12 +148,12 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List mod
 			)
 		)
 	) + 2;
-	
+
 	std::vector<std::string> intSTR(maxINT);
 // 	Rcout << "maxINT = " << maxINT << std::endl;
 	for (std::size_t i=0; i<maxINT; i++)
 		intSTR[i] = std::to_string(i);
-	
+
 	//// Main processing
 	/// simple vars
 	// extract selections
@@ -184,13 +164,13 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List mod
 		Planning_Units+=selectionsMTX(0, i);
 		Cost+=(selectionsMTX(0, i) * puDF_cost[i]);
 	}
-	
+
 	//  extract amountheld
 	Rcpp::NumericMatrix amountheldMTX(1, n_species);
 	Rcpp::List cacheLST=model["cache"];
 	std::vector<std::string> cacheSTR = cacheLST["name"];
 	std::vector<double> cacheDBL = cacheLST["value"];
-	
+
 	for (std::size_t i=0; i<puvspeciesDF_pu.size(); ++i)
 		if (selectionsMTX(0, puvspeciesDF_pu[i])>0)
 			amountheldMTX(0, puvspeciesDF_species[i]) = amountheldMTX(0, puvspeciesDF_species[i]) + puvspeciesDF_value[i] * puDF_area[puvspeciesDF_pu[i]];
@@ -198,7 +178,7 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List mod
 		amountheldMTX(0, i)=amountheldMTX(0, i)  / cacheDBL[std::find(cacheSTR.begin(), cacheSTR.end(), "species_best_areaamountheld_"+intSTR[i])-cacheSTR.begin()];
 	// extract spaceheld
 	// ini
-// 	Rcpp::Rcout << "\t\tinit" << std::endl;	
+// 	Rcpp::Rcout << "\t\tinit" << std::endl;
 	std::vector<std::vector<std::size_t>> species_pu_ids(n_species);
 	std::vector<std::vector<std::size_t>> selected_species_pu_ids(n_species);
 	std::vector<std::vector<double>> species_pu_probs(n_species);
@@ -208,7 +188,7 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List mod
 		selected_species_pu_ids[i].reserve(std::accumulate(selectionsMTX.begin(), selectionsMTX.end(), 0));
 		species_pu_probs[i].reserve(puvspeciesDF_pu.size());
 	}
-	
+
 	// calcs
 // 	Rcpp::Rcout << "\t\tcalculate numbers" << std::endl;
 	for (std::size_t i=0; i<puvspeciesDF_pu.size(); ++i) {
@@ -221,7 +201,7 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List mod
 		species_pu_ids[i].shrink_to_fit();
 		species_pu_probs[i].shrink_to_fit();
 	}
-	
+
 	// create pu species selections
 	for (std::size_t i=0; i<n_species; ++i) {
 		for (std::size_t j=0; j<species_pu_ids[i].size(); ++j) {
@@ -240,7 +220,7 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List mod
 		species_pu_probs[i].shrink_to_fit();
 		species_npu[i]=species_pu_ids[i].size()-1;
 	}
-	
+
 	/// transitional probabilities
 // 	Rcpp::Rcout << "\ttransitional probs" << std::endl;
 	std::vector<std::vector<double>> species_pu_tprobs(n_species);
@@ -249,7 +229,7 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List mod
 		for (std::size_t j=0; j<species_npu[i]; ++j)
 			species_pu_tprobs[i][j] = (1.0 - species_pu_probs[i][j]) / species_pu_probs[i][j];
 	}
-	
+
 	/// create distance variables
 // 	Rcpp::Rcout << "\tdistance vars" << std::endl;
 	double currFailDist;
@@ -275,13 +255,14 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List mod
 			}
 		}
 	}
-	
+
 
 	/// calculate spatial representation metrics
 // 	Rcpp::Rcout << "\tspaceheld vars" << std::endl;
 	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> spaceheldMTX(1, n_species*n_attribute_spaces);
 	double currProb;
 	double tmpval;
+  double currmax;
 	std::size_t currR;
 	std::vector<std::size_t> currPUs;
 	std::size_t currCol=-1;
@@ -295,7 +276,7 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List mod
 			for (std::size_t k=0; k<species_ndp[i]; ++k) {
 				// get indices for first Rlevel planning units
 				currPUs=selected_species_pu_ids[i];
-				
+
 				std::partial_sort(currPUs.begin(), currPUs.begin()+currR, currPUs.end(), [&](const std::size_t p1, const std::size_t p2) {
 					return(weightdistMTX(i,j)(k,p1) < weightdistMTX(i,j)(k,p2));
 				});
@@ -309,14 +290,15 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List mod
 				// caculate values for failure pu
 				tmpval+= currProb*weightdistMTX(i,j)(k,species_npu[i]);
 			}
-			spaceheldMTX(0, currCol) = (tmpval / cacheDBL[std::find(cacheSTR.begin(), cacheSTR.end(), "species_best_spaceheld_"+intSTR[i]+"_"+intSTR[j])-cacheSTR.begin()]) - 1.0;
+      currmax=cacheDBL[std::find(cacheSTR.begin(), cacheSTR.end(), "species_best_spaceheld_"+intSTR[i]+"_"+intSTR[j])-cacheSTR.begin()];
+      spaceheldMTX(0, currCol)=(1.0e-5/(tmpval+1.0e-1))  / (1.0e-5/currmax);
 		}
 	}
-	
+
 	/// calculated vars
 	// extract summaryDF
 	std::vector<double>Connectivity=calculateConnectivity(boundaryDF_id1, boundaryDF_id2, boundaryDF_boundary, selectionsMTX);
-	
+
 	//// Exports
 	Rcpp::S4 ret("RaspResults");
 	ret.slot("summary") = Rcpp::DataFrame::create(
@@ -338,6 +320,3 @@ Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List mod
 	ret.slot(".cache") = cacheENV;
 	return(ret);
 }
-
- 
-

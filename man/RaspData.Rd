@@ -35,8 +35,9 @@ Generally, users are not encouraged to change arguments to \code{.cache}.
 }
 \examples{
 \dontrun{
-# create data for RaspData object
+# load data
 data(cs_pus, cs_spp, cs_space)
+# create data for RaspData object
 attribute.spaces=list(
 	AttributeSpace(
 		pu=SimplePoints(rgeos::gCentroid(cs_pus[1:10,], byid=TRUE)@coords),

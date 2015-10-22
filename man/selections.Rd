@@ -25,9 +25,16 @@ selections(x, y)
 \description{
 Extract selections for a given solution from a \code{RaspResults} or \code{RaspSolved} object.
 }
+\examples{
+load(sim_rs)
+# selections for best solution
+selections(sim_rs, 0)
+# selections for second solution
+selections(sim_rs, 2)
+#selections for each solution
+selections(sim_rs, NULL)
+}
 \seealso{
-\code{\link{RaspResults-class}}, \code{\link{RaspSolved-class}}, \code{\link{rasp}}.
-
 \code{RaspResults}, \code{RaspSolved}.
 }
 

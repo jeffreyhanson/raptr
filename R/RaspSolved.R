@@ -1,27 +1,26 @@
-#' @include RcppExports.R raspr-internal.R misc.R generics.R RaspOpts.R RaspData.R RaspUnsolved.R RaspResults.R
+#' @include RcppExports.R raspr-internal.R misc.R generics.R RaspReliableOpts.R RaspUnreliableOpts.R RaspData.R RaspUnsolved.R RaspResults.R
 NULL
 
 #' RaspSolved: An S4 class to represent RASP inputs and outputs
 #'
 #' This class is used to store RASP input and output data in addition to input parameters.
 #'
-#' @slot opts \code{RaspOpts} object used to store input parameters.
-#' @slot gurobi \code{GurobiOpts} object used to store Gurobi parameters.
+#' @slot opts \code{RaspReliableOpts} or \code{RaspUnreliableOpts} object used to store input parameters.
+#' @slot sovler \code{GurobiOpts} object used to store Gurobi parameters.
 #' @slot data \code{RaspData} object used to store input data.
 #' @slot results \code{RaspResults} object used to store results.
 #' @export
-#' @seealso \code{\link{RaspOpts-class}}, \code{\link{RaspData-class}}, \code{\link{RaspResults-class}}.
+#' @seealso \code{\link{RaspReliableOpts-class}}, \code{\link{RaspUnreliableOpts-class}}, \code{\link{RaspData-class}}, \code{\link{RaspResults-class}}.
 setClass("RaspSolved",
 	representation(
 		opts="RaspOpts",
-		gurobi="GurobiOpts",
+		solver="SolverOpts",
 		data="RaspData",
 		results="RaspResults"
 	)
 )
 
 setClassUnion("RaspUnsolvedOrSolved", c("RaspSolved", "RaspUnsolved"))
-
 
 #' Create new RaspSolved object
 #'
@@ -34,33 +33,13 @@ setClassUnion("RaspUnsolvedOrSolved", c("RaspSolved", "RaspUnsolved"))
 #' @seealso \code{\link{RaspSolved-class}}, \code{\link{RaspResults-class}}.
 #' @examples
 #' \dontrun{
-#' data(sim_pus, sim_spp)
-#' # create inputs for a RaspUnsolved  object
-#' go <- GurobiOpts(MIPGap=0.9)
-#' rd <- make.RaspData(
-#' 	sim_pus[1:10,],
-#' 	sim_spp[[1]],
-#' 	NULL,
-#' 	include.geographic.space=TRUE,
-#' 	n.demand.points=5L
-#' )
-#' ro <- RaspOpts(NUMREPS=1L)
-#' # create RaspUnsolved object
-#' ru <- RaspUnsolved(ro1, go, rd)
-#' # solve it to return a RaspSolved object
-#' rs1 <- (ru)
-#' # methods for RaspSolved
-#' print(rs)
-#' summary(rs)
-#' selections(rs)
-#' score(rs)
-#' amount.held(rs)
-#' space.held(rs)
-#' logging.file(rs)
-#' plot(rs)
+#' # load data
+#' data(sim_ru)
+#' # make RaspSolved object
+#' sim_rs <- raspr::solve(sim_ru)
 #' }
 RaspSolved<-function(unsolved, results) {
-	return(new("RaspSolved", opts=unsolved@opts, gurobi=unsolved@gurobi, data=unsolved@data, results=results))
+	return(new("RaspSolved", opts=unsolved@opts, solver=unsolved@solver, data=unsolved@data, results=results))
 }
 
 #' @describeIn solve
@@ -71,7 +50,7 @@ setMethod(
 	function(x, verbose=FALSE, force.reset=FALSE) {
 		if (!force.reset)
 			stop("This object already has solutions. Use force.reset=TRUE to force recalculation of solutions.")
-		return(solve(RaspUnsolved(opts=x@opts,gurobi=x@gurobi, data=x@data), wd, clean))
+		return(solve(RaspUnsolved(opts=x@opts,solver=x@sovler, data=x@data), wd, clean))
 	}
 )
 
@@ -122,9 +101,9 @@ logging.file.RaspSolved<-function(x, y=0) {
 #' @export
 print.RaspSolved<-function(x, ...) {
 	cat("Parameters\n")
-	print.RaspOpts(x@opts, header=FALSE)
+	print(x@opts, header=FALSE)
 	cat("Solver settings\n")
-	print.GurobiOpts(x@gurobi, header=FALSE)
+	print(x@solver, header=FALSE)
 	cat("Data\n")
 	print.RaspData(x@data, header=FALSE)
 	cat("Results\n")
@@ -218,7 +197,6 @@ setMethod(
 	"plot",
 	signature(x="RaspSolved",y="numeric"),
 	function(x, y, basemap="none", color.palette="Greens", locked.in.color="#000000FF", locked.out.color="#D7D7D7FF", alpha=ifelse(basemap=="none",1,0.7), grayscale=FALSE, force.reset=FALSE) {
-		oldpar <- par()
 		# check for issues
 		stopifnot(alpha<=1 & alpha>=0)
 		match.arg(color.palette, rownames(brewer.pal.info))
@@ -244,7 +222,6 @@ setMethod(
 			categoricalLegend(c(locked.out.color,brewerCols(c(0,1),color.palette,alpha,n=2),locked.in.color),c("Locked Out", "Not Selected", "Selected", "Locked In")),
 			beside=FALSE
 		)
-		par(oldpar)
 	}
 )
 
@@ -254,7 +231,6 @@ setMethod(
 	"plot",
 	signature(x="RaspSolved",y="missing"),
 	function(x, y, basemap="none", color.palette="PuBu", locked.in.color="#000000FF", locked.out.color="#D7D7D7FF", alpha=ifelse(basemap=="none",1,0.7), grayscale=FALSE, force.reset=FALSE) {
-		oldpar <- par()
 		# check for issues
 		match.arg(basemap, c("none", "roadmap", "mobile", "satellite", "terrain", "hybrid", "mapmaker-roadmap", "mapmaker-hybrid"))
 		stopifnot(alpha<=1 & alpha>=0)
@@ -268,7 +244,8 @@ setMethod(
 			cache(x@results, "selectionfreqs", colMeans(x@results@selections))
 		}
 		values<-cache(x@results,"selectionfreqs")[which(x@data@pu$status<2)]
-		cols<-brewerCols(rescale(cache(x@results,"selectionfreqs"),from=range(values),to=c(0,1)), pal=color.palette, alpha=alpha)
+		cols<-character(length(cache(x@results,"selectionfreqs")))
+		cols[which(x@data@pu$status<2)]<-brewerCols(rescale(values,from=range(values),to=c(0,1)), pal=color.palette, alpha=alpha)
 		cols[which(x@data@pu$status==2)]<-locked.in.color
 		cols[which(x@data@pu$status==3)]<-locked.out.color
 		prettyGeoplot(
@@ -279,7 +256,6 @@ setMethod(
 			continuousLegend(values,color.palette,posx=c(0.3, 0.4),posy=c(0.1, 0.9)),
 			beside=TRUE
 		)
-		par(oldpar)
 	}
 )
 
@@ -289,7 +265,6 @@ setMethod(
 	"plot",
 	signature(x="RaspSolved",y="RaspSolved"),
 	function(x, y, i=NULL, j=i, basemap="none", color.palette=ifelse(is.null(i), "RdYlBu", "Accent"), x.locked.in.color="#000000FF", x.locked.out.color="#D7D7D7FF", y.locked.in.color="#FFFFFFFF", y.locked.out.color="#D7D7D7FF", alpha=ifelse(basemap=="none",1,0.7), grayscale=FALSE, force.reset=FALSE) {
-		oldpar <- par()
 		# check for issues
 		stopifnot(alpha<=1 & alpha>=0)
 		match.arg(color.palette, rownames(brewer.pal.info))
@@ -398,21 +373,21 @@ setMethod(
 				beside=FALSE
 			)
 		}
-		par(oldpar)
 	}
 )
 
 #' @rdname update
 #' @method update RaspSolved
 #' @export
-update.RaspSolved<-function(object, ...) {
-	return(
-		RaspUnsolved(
-			opts=update(object@opts, ...),
-			gurobi=update(object@gurobi, ...),
-			data=update(object@opts, ...)
-		)
+update.RaspSolved<-function(object, ..., solve=TRUE) {
+	object<-RaspUnsolved(
+		opts=update(object@opts, ..., ignore.extra=TRUE),
+		solver=update(object@solver, ..., ignore.extra=TRUE),
+		data=update(object@data, ..., ignore.extra=TRUE)
 	)
+	if (solve)
+		object<-solve(object)
+	return(object)
 }
 
 #' @rdname spp.plot
@@ -434,4 +409,18 @@ space.plot.RaspSolved<-function(
 	locked.out.color="#D7D7D7FF"
 ) {
 	stop('Function not finished')
+}
+
+#' @rdname amount.target
+#' @method amount.target RaspSolved
+#' @export
+amount.target.RaspSolved<-function(x) {
+	amount.target.RaspData(x@data)
+}
+
+#' @rdname space.target
+#' @method space.target RaspSolved
+#' @export
+space.target.RaspSolved<-function(x) {
+	space.target.RaspData(x@data)
 }

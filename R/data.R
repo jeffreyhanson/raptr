@@ -1,33 +1,36 @@
 #' Simulated dataset for a conservation planning exercise
-#' 
+#'
 #' This dataset contains all the data needed to generate prioritisations for three simulated species. This dataset contains planning units, species distribution
 #' maps, and demand points for each species. For the purposes of exploring the behaviour of the problem, demand points were generated using the centroids of planning units
 #' and the probability that they are occupied by the species. Note that methodology is not encouraged for real-world conservation planning.
 #' The species were simulated to represent different simplified versions of species distributions encountered:
 #' \itemize{
-#'	\item constant: This species has an equal probability (0.5) of occuring in all planning units.  
+#'	\item constant: This species has an equal probability (0.5) of occuring in all planning units.
 #'	\item normal: This species has a single range-core where it is most likely to be found. It is less likely to be found in areas further away from the centre of its range.
 #'	\item bimodal: This species has two distinct ecotypes. Each ecotype has its own range cores and range marginal areas.
 #' }
-#' 
+#'
 #' The objects contained in this dataset are:
 #' \itemize{
 #'	\item sim_pus: A \code{SpatialPolygonsDataFrame} with 225 planning units.
 #'	\item sim_spp: A \code{RasterStack} containg probability distribution data for each of the species.
 #'	\item sim_dps: A \code{list} of \code{DemandPoints} for each species.
+#'	\item sim_ru: A \code{RaspUnsolved} object with all the simulated data.
+#'	\item sim_rs: A \code{RaspSolved} object with the optimal solution.
 #' }
 #'
 #' @docType data
 #' @format \code{SpatialPolyognsDataFrame}, \code{RasterStack}, \code{list} of \code{DemandPoint} objects.
 #' @aliases sim_pus sim_spp sim_dps
 #' @keywords datasets
-#' @name simulated_data 
+#' @name simulated_data
 #' @examples
 #' # load data
-#' data(sim_pus, sim_spp, sim_dps)
+#' data(sim_pus, sim_spp, sim_dps, sim_ru, sim_rs)
 #' # plot data
 #' plot(sim_pus)
 #' plot(sim_spp)
+#' plot(sim_rs)
 NULL
 
 #' @rdname simulated_data
@@ -39,9 +42,14 @@ NULL
 #' @rdname simulated_data
 "sim_dps"
 
+#' @rdname simulated_data
+"sim_ru"
+
+#' @rdname simulated_data
+"sim_rs"
 
 #' Case-study dataset for a conservation planning exercise
-#' 
+#'
 #' This dataset contains data to generate example prioritisations for the pale-headed Rosella (\emph{Platycercus adscitus}) in Queensland, Australia. Specific objects in the dataset include:
 #' \itemize{
 #'	\item cs_pus: \code{SpatialPolygonsDataFrame} planning units. The units were generated as \eqn{10km^2} squares across the species' range, and then clipped to the Queensland, Australia (using data obtained from the \href{Australia Bureau of Statistics}{http://www.abs.gov.au/ausstats/abs@@.nsf/mf/1259.0.30.001?OpenDocument}). They were then overliad with Australia's protected area network (obtained from the World Database on Protected Areas (WDPA) at \url{http://www.protectedplanet.net/}). This attribute table has 3 fields. The 'area' field contains the units' area, the 'cost' field is set to 1 for all units, and the 'status' filed indicates if 50\% or more of the units' extent is covered by protected areas.

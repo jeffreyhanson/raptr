@@ -23,9 +23,17 @@ score(x, y)
 \description{
 Extract solution score from \code{RaspResults} or \code{RaspSolved} object.
 }
+\examples{
+# load data
+load(sim_rs)
+# score for best solution
+score(sim_rs, 0)
+# score for second solution
+score(sim_rs, 2)
+# score for all solutions
+score(sim_rs, NULL)
+}
 \seealso{
-\code{\link{RaspResults-class}}, \code{\link{RaspSolved-class}}, \code{\link{rasp}}.
-
 \code{RaspResults}, \code{RaspSolved}.
 }
 

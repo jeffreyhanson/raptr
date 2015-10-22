@@ -10,15 +10,15 @@ This class is used to store RASP input and output data in addition to input para
 \section{Slots}{
 
 \describe{
-\item{\code{opts}}{\code{RaspOpts} object used to store input parameters.}
+\item{\code{opts}}{\code{RaspReliableOpts} or \code{RaspUnreliableOpts} object used to store input parameters.}
 
-\item{\code{gurobi}}{\code{GurobiOpts} object used to store Gurobi parameters.}
+\item{\code{sovler}}{\code{GurobiOpts} object used to store Gurobi parameters.}
 
 \item{\code{data}}{\code{RaspData} object used to store input data.}
 
 \item{\code{results}}{\code{RaspResults} object used to store results.}
 }}
 \seealso{
-\code{\link{RaspOpts-class}}, \code{\link{RaspData-class}}, \code{\link{RaspResults-class}}.
+\code{\link{RaspReliableOpts-class}}, \code{\link{RaspUnreliableOpts-class}}, \code{\link{RaspData-class}}, \code{\link{RaspResults-class}}.
 }
 

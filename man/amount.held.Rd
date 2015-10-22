@@ -23,9 +23,16 @@ amount.held(x, y)
 \description{
 This function returns the amount held for each species in a solution.
 }
+\examples{
+load(sim_rs)
+# amount held (\%) for each species in best solution
+amount.held(sim_rs, 0)
+# amount held (\%) for each species in second solution
+amount.held(sim_rs, 2)
+# amount held (\%) for each species in each solution
+amount.held(sim_rs, NULL)
+}
 \seealso{
-\code{\link{RaspResults-class}}, \code{\link{RaspSolved}}, \code{\link{rasp}}.
-
 \code{RaspResults}, \code{RaspSolved}.
 }
 

@@ -37,6 +37,7 @@ y <- sim.pus(225, xmn=-5, xmx=10, ymn=-5, ymx=5)
 par(mfrow=c(1,2))
 plot(x, main='x')
 plot(y, main='y')
+par(mfrow=c(1,1))
 }
 }
 

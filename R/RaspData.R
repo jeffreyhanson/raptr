@@ -3,7 +3,7 @@ NULL
 
 #' RaspData: An S4 class to represent RASP input data
 #'
-#' This class is used to store Marxan input data.
+#' This class is used to store RASP input data.
 #'
 #' @slot polygons \code{PolySet} planning unit spatial data or \code{NULL} if data not available.
 #' @slot pu \code{data.frame} planning unit data. Columns are 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).
@@ -155,8 +155,9 @@ setClass("RaspData",
 #' @export
 #' @examples
 #' \dontrun{
-#' # create data for RaspData object
+#' # load data
 #' data(cs_pus, cs_spp, cs_space)
+#' # create data for RaspData object
 #' attribute.spaces=list(
 #' 	AttributeSpace(
 #' 		pu=SimplePoints(rgeos::gCentroid(cs_pus[1:10,], byid=TRUE)@@coords),
@@ -229,7 +230,7 @@ RaspData<-function(pu, species, pu.species.probabilities, attribute.spaces, boun
 #' @param spaces \code{list} of/or \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} representing projects of attribute space over geographic space. Use a \code{list} to denote seperate attribute spaces.
 #' @param area.targets \code{numeric} vector for area targets (\%) for each species. Defaults to 0.2 for each attribute space for each species.
 #' @param space.targets \code{numeric} vector for attribute space targets (\%) for each species. Defaults to 0.2 for each attribute space for each species. Note all attribute spaces have the same targets.
-#' @param n.demand.points \code{integer} number of demand points to use for each attribute space for each species.
+#' @param n.demand.points \code{integer} number of demand points to use for each attribute space for each species. Defaults to 100L.
 #' @param kernel.method \code{character} name of kernel method to use to generate demand points. Use either \code{sm.density} or \code{hypervolume}.
 #' @param quantile \code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.2.
 #' @param include.geographic.space \code{logical} should the geographic space be considered an attribute space?
@@ -241,12 +242,13 @@ RaspData<-function(pu, species, pu.species.probabilities, attribute.spaces, boun
 #' @export make.RaspData
 #' @examples
 #' \dontrun{
+#' # load data
 #' data(cs_pus, cs_spp, cs_space)
-#' x <- make.RaspData(cs_pus[1:10,], cs_spp, cs_space, include.geographic.space=TRUE)
+#' x <- make.RaspData(cs_pus, cs_spp, cs_space, include.geographic.space=TRUE)
 #' print(x)
 #' }
 make.RaspData<-function(pus, species, spaces=NULL,
-	area.targets=0.2, space.targets=0.2, n.demand.points=1000L, kernel.method=c('sm.density', 'hyperbox')[1], quantile=0.2,
+	area.targets=0.2, space.targets=0.2, n.demand.points=100L, kernel.method=c('sm.density', 'hyperbox')[1], quantile=0.2,
 	species.points=NULL, n.species.points=ceiling(0.2*cellStats(species, 'sum')), include.geographic.space=TRUE, verbose=FALSE, ...) {
 
 	## init
@@ -313,15 +315,40 @@ make.RaspData<-function(pus, species, spaces=NULL,
 	#### Attribute space data
 	## set pu.points
 	# set pu.points based spaces
-	pu.points=list()
+	pu.points<-list()
 	# if spaces is not NULL
 	if (!is.null(spaces[[1]])) {
-		pu.points=append(
+		# create initial rasterized version of the pus
+		pus@data$id<-seq_len(nrow(pus@data))
+		pu.rast<-rasterize(pus, spaces[[1]], field='id')
+		# extract means
+		pu.points<-append(
 			pu.points,
 			llply(
 				spaces,
 				.fun=function(x) {
-					SimplePoints(coords=extract(x, pus, fun=mean))
+					# generate new raster if needed
+					if (
+						xmin(pu.rast) != xmin(x) ||
+						xmax(pu.rast) != xmax(x) ||
+						ymin(pu.rast) != ymin(x) ||
+						ymax(pu.rast) != ymax(x) ||
+						res(pu.rast)[1] != res(x)[1] ||
+						res(pu.rast)[2] != res(x)[2]
+					) {
+						pu.rast<-rasterize(pus, x)
+					}
+					# extract points
+					coordMTX<-matrix(NA, nrow=nrow(pus@data), ncol=nlayers(x))
+					for (i in seq_len(ncol(coordMTX))) {
+						vals<-rcpp_groupmean(getValues(pu.rast), getValues(x[[i]]))
+						coordMTX[attr(vals, 'ids'),i]<-c(vals)
+						# vals<-sapply(split(getValues(x[[i]]),getValues(pu.rast)),mean, na.rm=TRUE)
+						# coordMTX[as.integer(names(vals)),i]<-c(vals)
+					}
+					if (any(is.na(coordMTX[])))
+						stop('Some planning units do not intersect with an attribute space layer.')
+					return(SimplePoints(coords=coordMTX))
 				}
 			)
 		)
@@ -352,7 +379,6 @@ make.RaspData<-function(pus, species, spaces=NULL,
 				n=n.demand.points,
 				id=j,
 				quantile=quantile
-# 				...
 			)
 		}
 		demand.points[[i]]=dpLST
@@ -491,7 +517,7 @@ spp.subset.RaspData<-function(x, species) {
 	pu.species.probabilities$pu<-match(pu.species.probabilities$pu, pu)
 	boundary<-x@boundary[which(x@boundary$id1 %in% pu & x@boundary$id2 %in% pu),]
 	boundary$id1<-match(boundary$id1, pu)
-	boundary$id1<-match(boundary$id2, pu)
+	boundary$id2<-match(boundary$id2, pu)
 	polygons<-x@polygons[which(x@polygons$PID %in% pu),]
 	polygons$PID<-match(polygons$PID, pu)
 	# return new object
@@ -528,7 +554,7 @@ pu.subset.RaspData<-function(x, pu) {
 	pu.species.probabilities$pu<-match(pu.species.probabilities$pu, pu)
 	boundary<-x@boundary[which(x@boundary$id1 %in% pu & x@boundary$id2 %in% pu),]
 	boundary$id1<-match(boundary$id1, pu)
-	boundary$id1<-match(boundary$id2, pu)
+	boundary$id2<-match(boundary$id2, pu)
 	polygons<-x@polygons[x@polygons$PID %in% pu,]
 	polygons$PID<-match(polygons$PID, pu)
 	# return new object
@@ -556,18 +582,26 @@ pu.subset.RaspData<-function(x, pu) {
 #' @rdname update
 #' @export
 #' @method update RaspData
-update.RaspData<-function(object, ...) {
+update.RaspData<-function(object, ..., ignore.extra=FALSE) {
 	# deparse arguments
 	params<-as.list(substitute(list(...)))[-1L]
-	params<-params[which(names(params) %in% slotNames('RaspOpts'))]
+	# check if invalid arguments supplied
+	if (!ignore.extra & any(!names(params) %in% c(names(object@pu), names(object@species))))
+		stop(
+			paste0(
+				paste(names(params)[!names(params) %in% c(names(object@pu), names(object@species))], collapse=', '),
+				' are not column names in the pu or speices slots'
+			)
+		)
 	# update parameters
 	for (i in seq_along(params)) {
 		for (j in c('pu', 'species')) {
 			if (names(params)[i] %in% names(slot(object, j))) {
-				slot(object, j)[[names(params)[i]]] <- params[[i]]
+				slot(object, j)[[names(params)[i]]] <- eval(params[[i]])
 			}
 		}
 	}
+
 	# check object for validity
 	validObject(object, test=FALSE)
 	# return object
@@ -577,7 +611,7 @@ update.RaspData<-function(object, ...) {
 #' @rdname spp.plot
 #' @method spp.plot RaspData
 #' @export
-spp.plot.RaspData<-function(x, y, basemap, color.palette, alpha, grayscale, force.reset) {
+spp.plot.RaspData<-function(x, y,	basemap='none', color.palette='YlGnBu', alpha=ifelse(basemap=="none", 1, 0.7), grayscale=FALSE, force.reset=FALSE) {
 	# data checks
 	stopifnot(length(y)==1)
 	if (!inherits(x@polygons, "PolySet")	)
@@ -594,7 +628,7 @@ spp.plot.RaspData<-function(x, y, basemap, color.palette, alpha, grayscale, forc
 	}
 	# get basemap
 	if (basemap!="none")
-		basemap<-basemap.MarxanData(x, basemap, grayscale, force.reset)
+		basemap<-basemap.RaspData(x, basemap, grayscale, force.reset)
 	## main processing
 	# extract planning unit colors
 	values<-numeric(nrow(x@pu))
@@ -675,4 +709,18 @@ space.plot.RaspData<-function(
 			main
 		)
 	)
+}
+
+#' @rdname amount.target
+#' @method amount.target RaspData
+#' @export
+amount.target.RaspData<-function(x) {
+	return(x@species$amount.target)
+}
+
+#' @rdname space.target
+#' @method space.target RaspData
+#' @export
+space.target.RaspData<-function(x) {
+	return(x@species$space.target)
 }

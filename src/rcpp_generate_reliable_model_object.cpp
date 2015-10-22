@@ -16,7 +16,7 @@ using namespace Rcpp;
 
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data, bool verbose) {
+Rcpp::List rcpp_generate_reliable_model_object(Rcpp::S4 opts, Rcpp::S4 data, bool verbose) {
 	//// Initialization
 	if (verbose) Rcpp::Rcout << "Initialization" << std::endl;
 	// create variables
@@ -238,7 +238,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data, bool verbose
 	}
 
 	// cache integer string conversions
-	if (verbose) Rcout << "\tcaching intege/string conversions" << std::endl;
+	if (verbose) Rcout << "\tcaching integer/string conversions" << std::endl;
 	std::size_t maxINT;
 	maxINT=std::max(
 		n_pu,
@@ -388,7 +388,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data, bool verbose
 				}
 			}
 			senseSTR.push_back("<=");
-			rhsDBL.push_back(speciesspaceMTX(i,j) * (1.0+speciesDF_spacetarget[i]));
+			rhsDBL.push_back(1e-5/((1.0e-5/(speciesspaceMTX(i,j)+1.0e-1)) * speciesDF_spacetarget[i]));
 			++counter;
 		}
 	}
@@ -566,7 +566,6 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data, bool verbose
 	for (std::size_t i=0; i<n_species; ++i) {
 		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
 			for (std::size_t k=0; k<species_ndp[i]; ++k) {
-				Rcout << "k = " << k << std::endl; 
 				for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
 					for (std::size_t r=1, r2=0; r<(maxrlevelINT+1); ++r, ++r2) {
 

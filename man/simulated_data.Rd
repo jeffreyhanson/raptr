@@ -4,6 +4,8 @@
 \name{simulated_data}
 \alias{sim_dps}
 \alias{sim_pus}
+\alias{sim_rs}
+\alias{sim_ru}
 \alias{sim_spp}
 \alias{simulated_data}
 \title{Simulated dataset for a conservation planning exercise}
@@ -14,6 +16,10 @@ sim_pus
 sim_spp
 
 sim_dps
+
+sim_ru
+
+sim_rs
 }
 \description{
 This dataset contains all the data needed to generate prioritisations for three simulated species. This dataset contains planning units, species distribution
@@ -32,14 +38,17 @@ The objects contained in this dataset are:
 	\item sim_pus: A \code{SpatialPolygonsDataFrame} with 225 planning units.
 	\item sim_spp: A \code{RasterStack} containg probability distribution data for each of the species.
 	\item sim_dps: A \code{list} of \code{DemandPoints} for each species.
+	\item sim_ru: A \code{RaspUnsolved} object with all the simulated data.
+	\item sim_rs: A \code{RaspSolved} object with the optimal solution.
 }
 }
 \examples{
 # load data
-data(sim_pus, sim_spp, sim_dps)
+data(sim_pus, sim_spp, sim_dps, sim_ru, sim_rs)
 # plot data
 plot(sim_pus)
 plot(sim_spp)
+plot(sim_rs)
 }
 \keyword{datasets}
 

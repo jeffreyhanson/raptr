@@ -30,7 +30,7 @@ cache(x, name, y)
 \code{ANY} or \code{NULL} depends on \code{y} argument.
 }
 \description{
-Getter and setter methods for caches in MarxanData and MarxanResults object.
+Getter and setter methods for caches in RaspData and RaspResults object.
 }
 \section{Methods (by class)}{
 \itemize{

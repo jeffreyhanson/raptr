@@ -17,7 +17,7 @@ NULL
 #' options()$GurobiInstalled
 #' }
 is.GurobiInstalled<-function(verbose=TRUE) {
-	# check if installed 
+	# check if installed
 	if (!'gurobi' %in% unlist(sapply(.libPaths(), dir), recursive=FALSE, use.names=TRUE)) {
 		if (verbose)
 			cat('The gorubi R package is not installed\n')
@@ -43,7 +43,7 @@ is.GurobiInstalled<-function(verbose=TRUE) {
 		if (verbose)
 			cat('The gurobi R package is installed, but R is having issues using it\n')
 		options(GurobiInstalled=FALSE)
-		return(FALSE)		
+		return(FALSE)
 	}
 	return(TRUE)
 }
@@ -65,7 +65,7 @@ is.GurobiInstalled<-function(verbose=TRUE) {
 is.gdalInstalled<-function() {
 	suppressWarnings(findGdalInstallationPaths())
 	return(!is.null(getOption("gdalUtils_gdalPath")))
-} 
+}
 
 #' Rasterize polygon data using GDAL
 #'
@@ -96,17 +96,18 @@ rasterizeGDAL<-function(x,y, field=NULL) {
 }
 
 
-#' Blank raster 
+#' Blank raster
 #'
 #' This functions creates a blank raster based on the spatial extent of a Spatial object.
-#' @param x \code{Spatial*} object. 
+#' @param x \code{Spatial*} object.
 #' @param res \code{numeric vector} specifying resolution of the output raster in the x and y dimensions. If \code{vector} is of length one, then the pixels are assumed to be square.
 #' @export
 #' @rdname blank.raster
 #' @examples
+#' # load data
 #' data(sim_pus)
-#' x <- blank.raster(sim_pus, 1)
-#' print(x)
+#' # make RasterLayer from SpatialPolygons
+#' blank.raster(sim_pus, 1)
 blank.raster<-function(x, res) {
 	# init
 	if (length(res)==1)
@@ -146,11 +147,36 @@ setClassUnion("PolySetOrNULL", c("PolySet", "NULL"))
 #' @exportClass data.frameOrNULL
 setClassUnion("data.frameOrNULL", c("data.frame", "NULL"))
 
+#' RaspOpts class
+#'
+#' Object is either \code{RaspReliableOpts} or \code{RaspUnreliableOpts}.
+#'
+#' @name RaspOpts-class
+#' @aliases RaspOpts
+#' @exportClass RaspOpts
+setClass("RaspOpts",
+	representation(
+		BLM="numeric"
+	),
+	prototype=list(
+		BLM=0
+	)
+)
+
+#' SolverOpts class
+#'
+#' Object stores parameters used to solve problems.
+#'
+#' @name SolverOpts-class
+#' @seealso \code{GurobiOpts}.
+#' @aliases SolverOpts
+#' @exportClass SolverOpts
+setClass("SolverOpts")
 
 #' Sample random points from a RasterLayer
 #'
 #' This function generates random points in a \code{RasterLayer} object.
-#' 
+#'
 #' @param mask \code{RasterLayer} object
 #' @param n \code{integer} number of points to sample
 #' @param prob \code{logical} should the raster values be used as weights? Defaults to \code{FALSE}.
@@ -158,6 +184,7 @@ setClassUnion("data.frameOrNULL", c("data.frame", "NULL"))
 #' @seealso \code{\link[dismo]{randomPoints}}.
 #' @export
 #' @examples
+#' # load data
 #' data(sim_spp)
 #' # generate points
 #' pts1 <- randomPoints(sim_spp[[1]], n=5)
@@ -178,10 +205,8 @@ randomPoints <- function(mask, n, prob=FALSE) {
 	} else {
 		randomCells <- sample(validPos, n, , replace=FALSE)
 	}
-	# get coordinates of the cell centres 
+	# get coordinates of the cell centres
 	return(
 		xyFromCell(mask, randomCells)
 	)
 }
-
-

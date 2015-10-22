@@ -1,28 +1,25 @@
 #' @include RcppExports.R raspr-internal.R misc.R
 NULL
 
-#' RaspOpts: An S4 class to represent RASP input parameters
+#' RaspReliableOpts: An S4 class to represent input parameters for the reliable formulation of RASP.
 #'
-#' This class is used to store RASP input parameters.
+#' This class is used to store input parameters for the reliable formulation of RASP.
 #'
 #' @slot BLM \code{numeric} boundary length modifier. Defaults to 0.
 #' @slot FAILUREMULTIPLIER \code{numeric} multiplier for failure planning unit. Defaults to 1.1.
 #' @slot MAXRLEVEL \code{numeric} maximum R failure level for approximation. Defaults to 5L.
 #' @slot NUMREPS \code{integer} number of replicate runs. Defaults to 1L.
 #' @export
-setClass("RaspOpts",
+setClass("RaspReliableOpts",
 	representation(
-		BLM="numeric",
 		FAILUREMULTIPLIER="numeric",
-		MAXRLEVEL="integer",
-		NUMREPS="integer"
+		MAXRLEVEL="integer"
 	),
 	prototype=list(
-		BLM=0,
 		FAILUREMULTIPLIER=1.1,
-		MAXRLEVEL=5L,
-		NUMREPS=1L
+		MAXRLEVEL=5L
 	),
+	contains='RaspOpts',
 	validity=function(object) {
 		# FAILUREMULTIPLIER
 		if (!is.numeric(object@FAILUREMULTIPLIER)) stop('argument to FAILUREMULTIPLIER is not numeric')
@@ -36,68 +33,69 @@ setClass("RaspOpts",
 		if (!is.integer(object@MAXRLEVEL)) stop('argument to MAXRLEVEL is not integer')
 		if (!is.finite(object@MAXRLEVEL)) stop('argument to MAXRLEVEL is NA or non-finite value')
 
-		# NUMREPS
-		if (!is.integer(object@NUMREPS)) stop('argument to NUMREPS is not numeric')
-		if (!is.finite(object@NUMREPS)) stop('argument to NUMREPS is NA or non-finite values')
 
 		return(TRUE)
 	}
 )
 
 
-#' Create RaspOpts object
+#' Create RaspReliableOpts object
 #'
-#' This function creates a new RaspOpts object.
+#' This function creates a new RaspReliableOpts object.
 #'
 #' @param BLM \code{numeric} boundary length modifier. Defaults to 0.
 #' @param FAILUREMULTIPLIER \code{numeric} multiplier for failure planning unit. Defaults to 1.1.
 #' @param MAXRLEVEL \code{numeric} maximum R failure level for approximation. Defaults to 5L.
-#' @param NUMREPS \code{integer} number of replicate runs. Defaults to 1L.
-#' @return \code{MarxanOpts} object
-#' @seealso \code{\link{RaspOpts-class}}.
+#' @return \code{RaspReliableOpts} object
+#' @seealso \code{\link{RaspReliableOpts-class}}.
 #' @export
 #' @examples
-#' # create RaspOpts using defaults
-#' x <- RaspOpts(BLM=0, FAILUREMULTIPLIER=1.1, MAXRLEVEL=5L, NUMREPS=1L)
-#' print(x)
+#' # create RaspReliableOpts using defaults
+#' RaspReliableOpts(BLM=0, FAILUREMULTIPLIER=1.1, MAXRLEVEL=5L)
 #' @export
-RaspOpts<-function(BLM=0, FAILUREMULTIPLIER=1.1, MAXRLEVEL=5L, NUMREPS=1L) {
-	ro<-new("RaspOpts", BLM=BLM, FAILUREMULTIPLIER=FAILUREMULTIPLIER, MAXRLEVEL=MAXRLEVEL, NUMREPS=NUMREPS)
+RaspReliableOpts<-function(BLM=0, FAILUREMULTIPLIER=1.1, MAXRLEVEL=5L) {
+	ro<-new("RaspReliableOpts", BLM=BLM, FAILUREMULTIPLIER=FAILUREMULTIPLIER, MAXRLEVEL=MAXRLEVEL)
 	validObject(ro, test=FALSE)
 	return(ro)
 }
 
-#' @method print RaspOpts
+#' @method print RaspReliableOpts
 #' @rdname print
 #' @export
-print.RaspOpts=function(x, ..., header=TRUE) {
+print.RaspReliableOpts=function(x, ..., header=TRUE) {
 	if (header)
-		cat("RaspOpts object.\n")
+		cat("RaspReliableOpts object.\n")
 	cat('  BLM:',x@BLM,'\n')
 	cat('  FAILUREMULTIPLIER:',x@FAILUREMULTIPLIER,'\n')
 	cat('  MAXRLEVEL:',x@MAXRLEVEL,'\n')
-	cat('  NUMREPS:',x@NUMREPS,'\n')
 }
 
 #' @describeIn show
 #' @export
 setMethod(
 	'show',
-	'RaspOpts',
+	'RaspReliableOpts',
 	function(object)
-		print.RaspOpts(object)
+		print.RaspReliableOpts(object)
 )
 
 #' @rdname update
-#' @method update RaspOpts
+#' @method update RaspReliableOpts
 #' @export
-update.RaspOpts<-function(object, ...) {
+update.RaspReliableOpts<-function(object, ..., ignore.extra=FALSE) {
 	# deparse arguments
 	params<-as.list(substitute(list(...)))[-1L]
-	params<-params[which(names(params) %in% slotNames('RaspOpts'))]
+	if (!ignore.extra & any(!names(params) %in% slotNames('RaspReliableOpts')))
+		stop(
+			paste0(
+				paste(names(params)[!names(params) %in% slotNames('RaspReliableOpts')], collapse=', '),
+				' is not a slot(s) in RaspReliableOpts'
+			)
+		)
+	params<-params[which(names(params) %in% slotNames('RaspReliableOpts'))]
 	# update parameters
 	for (i in seq_along(params))
-		slot(object, names(params)[i]) <- params[[i]]
+		slot(object, names(params)[i]) <- eval(params[[i]])
 	# check object for validity
 	validObject(object, test=FALSE)
 	# return object

@@ -26,6 +26,12 @@ spp.subset(x, species)
 \description{
 Subset species from a \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
 }
+\examples{
+# load data
+load(sim_ru)
+# generate new object with only species 1
+sim_ru2 <- spp.subset(sim_ru, 1)
+}
 \seealso{
 \code{RaspData}, \code{RaspUnsolved}, \code{RaspSolved}.
 }

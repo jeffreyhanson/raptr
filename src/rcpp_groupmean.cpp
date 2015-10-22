@@ -20,23 +20,21 @@ using namespace Rcpp;
 		cpp_ids_vec.reserve(ids_vec.size());
 		std::vector<double> cpp_counts_vec;
 		cpp_counts_vec.reserve(ids_vec.size());
-		
+
 		/// main
 		// calculate sums
 		for (int i=0; i<cat_vec.size(); ++i) {
-			if (!IntegerVector::is_na(cat_vec[i])) {
-				count_vec[levels_vec[i]]+=1.0;
-			}
 			if (!IntegerVector::is_na(cat_vec[i]) && !NumericVector::is_na(val_vec[i])) {
+				count_vec[levels_vec[i]]+=1.0;
 				sum_vec[levels_vec[i]]+=val_vec[i];
 			}
 		}
-				
+
 		// calculate means
 		for (int i=0; i<sum_vec.size(); ++i) {
 			if (count_vec[i]>0) {
 				cpp_mean_vec.push_back(sum_vec[i]/count_vec[i]);
-				cpp_ids_vec.push_back(i+1);
+				cpp_ids_vec.push_back(ids_vec[i]);
 				cpp_counts_vec.push_back(count_vec[i]);
 			}
 		}
@@ -50,4 +48,3 @@ using namespace Rcpp;
 		ret_vec.attr("counts") = wrap(cpp_counts_vec);
 		return(ret_vec);
 	}
- 

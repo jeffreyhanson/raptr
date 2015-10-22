@@ -15,15 +15,22 @@ setClass("GurobiOpts",
 		Threads="integer",
 		MIPGap="numeric",
 		Presolve="integer",
-		TimeLimit="integer"
+		TimeLimit="integer",
+		NumberSolutions="integer"
 	),
 	prototype=list(
 		Threads=1L,
 		MIPGap=0.05,
 		Presolve=2L,
-		TimeLimit=NA_integer_
+		TimeLimit=NA_integer_,
+		NumberSolutions=1L
 	),
+	contains='SolverOpts',
 	validity=function(object) {
+
+		# NumberSolutions
+		if (!is.integer(object@NumberSolutions)) stop('argument to NumberSolutionsEPS is not integer')
+		if (!is.finite(object@NumberSolutions)) stop('argument to NumberSolutions is NA or non-finite values')
 
 		# TimeLimit
 		if (!is.integer(object@TimeLimit)) stop('argument to TimeLimit is not integer')
@@ -33,7 +40,7 @@ setClass("GurobiOpts",
 		if (!is.finite(object@Threads)) stop('argument to Threads is NA or non-finite values')
 		if (object@Threads > detectCores(logical=TRUE)) {
 			warning(paste0('argument Threads greater than number of threads on the system, changing Threads to ',object@Threads))
-			object@Threads<-detectCores(logcal=TRUE)
+			object@Threads<-detectCores(logical=TRUE)
 		}
 
 		# Presolve
@@ -57,17 +64,16 @@ setClass("GurobiOpts",
 #' @param MIPGap \code{numeric} MIP gap (lp_solve parameter). Defaults to 0.05.
 #' @param Presolve \code{integer} code for level of computation in presolve (lp_solve parameter). Defaults to 2.
 #' @param TimeLimit \code{integer} number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.
+#' @param NumberSolutions \code{integer} number of solutions to generate. Defaults to 1L.
 #' @return \code{GurobiOpts} object
 #' @seealso \code{\link{GurobiOpts-class}}.
 #' @export
 #' @examples
 #' # create GurobiOpts object using default parameters
-#' x <- GurobiOpts(Threads=1L, MIPGap=0.05, Presolve=2L, TimeLimit=NA_integer_)
-#' # print object
-#' print(x)
+#' GurobiOpts(Threads=1L, MIPGap=0.05, Presolve=2L, TimeLimit=NA_integer_, NumberSolutions=1L)
 #' @export
-GurobiOpts<-function(Threads=1L, MIPGap=0.05, Presolve=2L, TimeLimit=NA_integer_) {
-	go<-new("GurobiOpts", Threads=Threads, MIPGap=MIPGap, Presolve=Presolve, TimeLimit=TimeLimit)
+GurobiOpts<-function(Threads=1L, MIPGap=0.05, Presolve=2L, TimeLimit=NA_integer_, NumberSolutions=1L) {
+	go<-new("GurobiOpts", Threads=Threads, MIPGap=MIPGap, Presolve=Presolve, TimeLimit=TimeLimit, NumberSolutions=NumberSolutions)
 	validObject(go, test=FALSE)
 	return(go)
 }
@@ -82,6 +88,7 @@ print.GurobiOpts=function(x, ..., header=TRUE) {
 	cat('  MIPGap:',x@MIPGap,'\n')
 	cat('  Presolve:',x@Presolve,'\n')
 	cat('  TimeLimit:',x@TimeLimit,'\n')
+	cat('  NumberSolutions:',x@NumberSolutions,'\n')
 }
 
 #' @describeIn show
@@ -111,13 +118,20 @@ as.list.GurobiOpts<-function(x, ...) {
 #' @rdname update
 #' @method update GurobiOpts
 #' @export
-update.GurobiOpts<-function(object, ...) {
+update.GurobiOpts<-function(object, ..., ignore.extra=FALSE) {
 	# deparse arguments
 	params<-as.list(substitute(list(...)))[-1L]
+	if (!ignore.extra & any(!names(params) %in% slotNames('GurobiOpts')))
+		stop(
+			paste0(
+				paste(names(params)[!names(params) %in% slotNames('GurobiOpts')], collapse=', '),
+				' is not a slot(s) in GurobiOpts'
+			)
+		)
 	params<-params[which(names(params) %in% slotNames('GurobiOpts'))]
 	# update parameters
 	for (i in seq_along(params))
-		slot(object, names(params)[i]) <- params[[i]]
+		slot(object, names(params)[i]) <- eval(params[[i]])
 	# check object for validity
 	validObject(object, test=FALSE)
 	# return object

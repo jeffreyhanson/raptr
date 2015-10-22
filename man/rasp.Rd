@@ -4,14 +4,16 @@
 \alias{rasp}
 \title{Generate prioritisations using RASP}
 \usage{
-rasp(pus, species, ..., solve = TRUE)
+rasp(pus, species, ..., formulation = "unreliable", solve = TRUE)
 }
 \arguments{
 \item{pus}{\code{SpatialPolyogns} object representing planning units.}
 
 \item{species}{\code{Raster} object with species distribution data.}
 
-\item{...}{arguments are passed to GurobiOpts, RaspData, and RaspOpts functions.}
+\item{...}{arguments are passed to \code{GurobiOpts}, \code{RaspData}, and \code{RaspReliableOpts} or \code{RaspUnreliableOpts} functions.}
+
+\item{formulation}{\code{character}  to indicate if 'unreliable' or 'reliable' formulation should be used to generate prioritisations. Defaults to 'unreliable'.}
 
 \item{solve}{\code{logical} should solutions be generated?}
 }
@@ -25,6 +27,6 @@ This is a general function to create Rasp objects from scratch and solve them to
 Type \code{vignette('raspr')} tpo see the package vignette for help.
 }
 \seealso{
-\code{\link{GurobiOpts}}, \code{\link{RaspOpts}}, \code{\link{RaspData}}, \code{\link{RaspResults}}, \code{\link{RaspUnsolved}}, \code{\link{RaspSolved}}.
+\code{\link{GurobiOpts}}, \code{\link{RaspReliableOpts}}, \code{\link{RaspUnreliableOpts}} \code{\link{RaspData}}, \code{\link{RaspResults}}, \code{\link{RaspUnsolved}}, \code{\link{RaspSolved}}.
 }
 

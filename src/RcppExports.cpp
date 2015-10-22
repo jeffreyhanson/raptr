@@ -32,9 +32,9 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
-// rcpp_extract_model_results
-Rcpp::S4 rcpp_extract_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List model, std::vector<std::string> logging_file, Rcpp::List solution);
-RcppExport SEXP raspr_rcpp_extract_model_results(SEXP optsSEXP, SEXP dataSEXP, SEXP modelSEXP, SEXP logging_fileSEXP, SEXP solutionSEXP) {
+// rcpp_extract_reliable_model_results
+Rcpp::S4 rcpp_extract_reliable_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List model, std::vector<std::string> logging_file, Rcpp::List solution);
+RcppExport SEXP raspr_rcpp_extract_reliable_model_results(SEXP optsSEXP, SEXP dataSEXP, SEXP modelSEXP, SEXP logging_fileSEXP, SEXP solutionSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
@@ -43,20 +43,48 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::List >::type model(modelSEXP);
     Rcpp::traits::input_parameter< std::vector<std::string> >::type logging_file(logging_fileSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type solution(solutionSEXP);
-    __result = Rcpp::wrap(rcpp_extract_model_results(opts, data, model, logging_file, solution));
+    __result = Rcpp::wrap(rcpp_extract_reliable_model_results(opts, data, model, logging_file, solution));
     return __result;
 END_RCPP
 }
-// rcpp_generate_model_object
-Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, Rcpp::S4 data, bool verbose);
-RcppExport SEXP raspr_rcpp_generate_model_object(SEXP optsSEXP, SEXP dataSEXP, SEXP verboseSEXP) {
+// rcpp_extract_unreliable_model_results
+Rcpp::S4 rcpp_extract_unreliable_model_results(Rcpp::S4 opts, Rcpp::S4 data, Rcpp::List model, std::vector<std::string> logging_file, Rcpp::List solution);
+RcppExport SEXP raspr_rcpp_extract_unreliable_model_results(SEXP optsSEXP, SEXP dataSEXP, SEXP modelSEXP, SEXP logging_fileSEXP, SEXP solutionSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< Rcpp::S4 >::type opts(optsSEXP);
+    Rcpp::traits::input_parameter< Rcpp::S4 >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type model(modelSEXP);
+    Rcpp::traits::input_parameter< std::vector<std::string> >::type logging_file(logging_fileSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type solution(solutionSEXP);
+    __result = Rcpp::wrap(rcpp_extract_unreliable_model_results(opts, data, model, logging_file, solution));
+    return __result;
+END_RCPP
+}
+// rcpp_generate_reliable_model_object
+Rcpp::List rcpp_generate_reliable_model_object(Rcpp::S4 opts, Rcpp::S4 data, bool verbose);
+RcppExport SEXP raspr_rcpp_generate_reliable_model_object(SEXP optsSEXP, SEXP dataSEXP, SEXP verboseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< Rcpp::S4 >::type opts(optsSEXP);
     Rcpp::traits::input_parameter< Rcpp::S4 >::type data(dataSEXP);
     Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
-    __result = Rcpp::wrap(rcpp_generate_model_object(opts, data, verbose));
+    __result = Rcpp::wrap(rcpp_generate_reliable_model_object(opts, data, verbose));
+    return __result;
+END_RCPP
+}
+// rcpp_generate_unreliable_model_object
+Rcpp::List rcpp_generate_unreliable_model_object(Rcpp::S4 opts, Rcpp::S4 data, bool verbose);
+RcppExport SEXP raspr_rcpp_generate_unreliable_model_object(SEXP optsSEXP, SEXP dataSEXP, SEXP verboseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< Rcpp::S4 >::type opts(optsSEXP);
+    Rcpp::traits::input_parameter< Rcpp::S4 >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
+    __result = Rcpp::wrap(rcpp_generate_unreliable_model_object(opts, data, verbose));
     return __result;
 END_RCPP
 }

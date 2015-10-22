@@ -9,12 +9,20 @@ rcpp_calcBoundaryDF <- function(df, tolerance = 0.001, lengthFactor = 1.0, edgeF
     .Call('raspr_rcpp_calcBoundaryDF', PACKAGE = 'raspr', df, tolerance, lengthFactor, edgeFactor)
 }
 
-rcpp_extract_model_results <- function(opts, data, model, logging_file, solution) {
-    .Call('raspr_rcpp_extract_model_results', PACKAGE = 'raspr', opts, data, model, logging_file, solution)
+rcpp_extract_reliable_model_results <- function(opts, data, model, logging_file, solution) {
+    .Call('raspr_rcpp_extract_reliable_model_results', PACKAGE = 'raspr', opts, data, model, logging_file, solution)
 }
 
-rcpp_generate_model_object <- function(opts, data, verbose) {
-    .Call('raspr_rcpp_generate_model_object', PACKAGE = 'raspr', opts, data, verbose)
+rcpp_extract_unreliable_model_results <- function(opts, data, model, logging_file, solution) {
+    .Call('raspr_rcpp_extract_unreliable_model_results', PACKAGE = 'raspr', opts, data, model, logging_file, solution)
+}
+
+rcpp_generate_reliable_model_object <- function(opts, data, verbose) {
+    .Call('raspr_rcpp_generate_reliable_model_object', PACKAGE = 'raspr', opts, data, verbose)
+}
+
+rcpp_generate_unreliable_model_object <- function(opts, data, verbose) {
+    .Call('raspr_rcpp_generate_unreliable_model_object', PACKAGE = 'raspr', opts, data, verbose)
 }
 
 rcpp_groupcombine <- function(group_means) {

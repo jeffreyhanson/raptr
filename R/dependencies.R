@@ -21,6 +21,13 @@
 #' @importFrom ggplot2 scale_colour_gradientn
 #' @importFrom ggplot2 scale_fill_manual
 #' @importFrom ggplot2 coord_equal
+#' @importFrom ggplot2 position_jitter
+#' @importFrom ggplot2 scale_alpha_continuous
+#' @importFrom ggplot2 scale_color_manual
+#' @importFrom ggplot2 scale_size_manual
+#' @importFrom ggplot2 xlab
+#' @importFrom ggplot2 ylab
+#' @importFrom ggplot2 element_blank
 
 #' @importFrom plyr llply
 #' @importFrom plyr laply
@@ -35,6 +42,7 @@
 
 #' @importFrom methods setOldClass
 #' @importFrom methods setClassUnion
+#' @importFrom methods setClass
 
 #' @importFrom sm sm.density
 

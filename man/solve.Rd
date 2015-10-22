@@ -38,6 +38,14 @@ and returns a \code{RaspSolved} object with outputs in it.
 \note{
 This function is used to solve a \code{RaspUnsolved} object that has all of its inputs generated. The rasp function (without lower case 'r') provides a more general interface for generating inputs and outputs.
 }
+\examples{
+\dontrun{
+# load RaspUnsolved object
+data(sim_ru)
+# solve it
+sim_rs <- solve(ru)
+}
+}
 \seealso{
 \code{RaspUnsolved}, \code{RaspSolved}.
 }

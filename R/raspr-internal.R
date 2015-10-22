@@ -533,21 +533,29 @@ mergeRaspResults<-function(x) {
 #'
 #' This function reads files output from Gurobi and returns a \code{RaspResults} object.
 #'
-#' @param opts \code{RaspOpts} object
+#' @param opts \code{RaspReliableOpts} or \code{RaspUnreliableOpts} object
 #' @param data \code{RaspData} object
 #' @param model.list \code{list} object containing Gurobi model data
 #' @param logging.file \code{character} Gurobi log files.
 #' @param solution.list \code{list} object containing Gurobi solution data.
 #' @keywords internal
 #' @return \code{RaspResults} object
-#' @seealso \code{\link{RaspData}}, \code{\link{RaspData-class}}, \code{\link{RaspResults-class}}, \code{\link{RaspResults}}.
+#' @seealso \code{\link{RaspReliableOpts}}, \code{\link{RaspUnreliableOpts}}, \code{\link{RaspData}}, \code{\link{RaspResults}}.
 read.RaspResults=function(opts, data, model.list, logging.file, solution.list) {
-	x<-rcpp_extract_model_results(
-		opts,
-		data,
-		model.list,
-		logging.file,
-		solution.list
+  if (inherits(opts, 'RaspReliableResults')) {
+    fun<-'rcpp_extract_reliable_model_results'
+  } else {
+    fun<-'rcpp_extract_unreliable_model_results'
+  }
+  x<-do.call(
+    fun,
+    list(
+  		opts,
+  		data,
+  		model.list,
+  		logging.file,
+  		solution.list
+    )
 	)
 	x@.cache=new.env()
 	return(x)
@@ -590,7 +598,7 @@ setGeneric("is.cached", function(x,name) standardGeneric("is.cached"))
 
 #' Get and set cache Methods
 #'
-#' Getter and setter methods for caches in MarxanData and MarxanResults object.
+#' Getter and setter methods for caches in RaspData and RaspResults object.
 #'
 #' @param x \code{RaspData} or \code{RaspResults} object
 #' @param name \code{character} hash.
@@ -614,7 +622,7 @@ spacePlot.1d<-function(pu, dp, pu.color.palette, locked.in.color, locked.out.col
   geom_point(
 		aes(x=X1, y=X2, alpha=weights),
     data=dp,
-    color='black',
+    color='darkblue',
     size=5,
     position=position_jitter(width=0, height=5)
   ) +
@@ -624,16 +632,18 @@ spacePlot.1d<-function(pu, dp, pu.color.palette, locked.in.color, locked.out.col
   geom_point(
 		aes(x=X1, y=X2, color=status, size=status),
     data=pu,
-    position=position_jitter(width=0, height=5)
+    position=position_jitter(width=0, height=5),
+    alpha=0.1
   ) +
   scale_color_manual(
-    name='Planning unit',
+    name='Planning unit status',
     values=c(
       "Locked Out"=locked.out.color,
       "Not Selected"=not.selected.col,
       "Selected"=selected.col,
       "Locked In"=locked.in.color
-    )
+    ),
+    guide=guide_legend(override.aes=list(alpha=1))    
   ) +
   scale_size_manual(
     values=c(
@@ -668,7 +678,7 @@ spacePlot.2d<-function(pu, dp, pu.color.palette, locked.in.color, locked.out.col
   geom_point(
 		aes(x=X1, y=X2, alpha=weights),
     data=dp,
-    color='black',
+    color='darkblue',
     size=5
   ) +
   scale_alpha_continuous(
@@ -676,16 +686,18 @@ spacePlot.2d<-function(pu, dp, pu.color.palette, locked.in.color, locked.out.col
   ) +
   geom_point(
 		aes(x=X1, y=X2, color=status, size=status),
-    data=pu
+    data=pu,
+    alpha=0.1
   ) +
   scale_color_manual(
-    name='Planning unit',
+    name='Planning unit status',
     values=c(
       "Locked Out"=locked.out.color,
       "Not Selected"=not.selected.col,
       "Selected"=selected.col,
       "Locked In"=locked.in.color
-    )
+    ),
+    guide=guide_legend(override.aes=list(alpha=1))
   ) +
   scale_size_manual(
     values=c(
@@ -721,7 +733,7 @@ spacePlot.3d<-function(pu, dp, pu.color.palette, locked.in.color, locked.out.col
   pu.cols[which(pu$status=='Locked Out')]<-locked.out.color
   rgl::points3d(as.matrix(pu[,1:3]), col=pu.cols)
   # add dp points
-  dp.cols<-alpha(rep('black', nrow(dp)), affineTrans(dp$weights, min(dp$weights), max(dp$weights), 0.1, 1))
+  dp.cols<-alpha(rep('darkblue', nrow(dp)), affineTrans(dp$weights, min(dp$weights), max(dp$weights), 0.1, 1))
   rgl::points3d(as.matrix(dp[,1:3]), col=dp.cols)
   # add title
   rgl::title3d(main)

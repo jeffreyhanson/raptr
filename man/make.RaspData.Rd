@@ -5,7 +5,7 @@
 \title{Make data for RASP using minimal inputs}
 \usage{
 make.RaspData(pus, species, spaces = NULL, area.targets = 0.2,
-  space.targets = 0.2, n.demand.points = 1000L,
+  space.targets = 0.2, n.demand.points = 100L,
   kernel.method = c("sm.density", "hyperbox")[1], quantile = 0.2,
   species.points = NULL, n.species.points = ceiling(0.2 * cellStats(species,
   "sum")), include.geographic.space = TRUE, verbose = FALSE, ...)
@@ -21,7 +21,7 @@ make.RaspData(pus, species, spaces = NULL, area.targets = 0.2,
 
 \item{space.targets}{\code{numeric} vector for attribute space targets (\%) for each species. Defaults to 0.2 for each attribute space for each species. Note all attribute spaces have the same targets.}
 
-\item{n.demand.points}{\code{integer} number of demand points to use for each attribute space for each species.}
+\item{n.demand.points}{\code{integer} number of demand points to use for each attribute space for each species. Defaults to 100L.}
 
 \item{kernel.method}{\code{character} name of kernel method to use to generate demand points. Use either \code{sm.density} or \code{hypervolume}.}
 
@@ -42,8 +42,9 @@ This function prepares spatially explicit planning unit, species data, and lands
 }
 \examples{
 \dontrun{
+# load data
 data(cs_pus, cs_spp, cs_space)
-x <- make.RaspData(cs_pus[1:10,], cs_spp, cs_space, include.geographic.space=TRUE)
+x <- make.RaspData(cs_pus, cs_spp, cs_space, include.geographic.space=TRUE)
 print(x)
 }
 }

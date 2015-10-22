@@ -7,8 +7,9 @@
 \alias{spp.plot.RaspUnsolved}
 \title{Plot species}
 \usage{
-\method{spp.plot}{RaspData}(x, y, basemap, color.palette, alpha, grayscale,
-  force.reset)
+\method{spp.plot}{RaspData}(x, y, basemap = "none",
+  color.palette = "YlGnBu", alpha = ifelse(basemap == "none", 1, 0.7),
+  grayscale = FALSE, force.reset = FALSE)
 
 \method{spp.plot}{RaspSolved}(x, y, basemap = "none",
   color.palette = "YlGnBu", alpha = ifelse(basemap == "none", 1, 0.7),
@@ -37,5 +38,13 @@ spp.plot(x, y, basemap, color.palette, alpha, grayscale, force.reset)
 }
 \description{
 This function plots the distribution of species across the study area.
+}
+\examples{
+# load RaspSolved objects
+data(sim_rs, cs_rs)
+# plot first species in sim_rs
+spp.plot(sim_rs)
+# plot species in cs_rs with basemap
+spp.plot(cs_rs, basemap='satellite')
 }
 

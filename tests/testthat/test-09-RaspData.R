@@ -40,11 +40,11 @@ test_that('make.RaspData (1 species)', {
 	# tests are implicit in the validity method when creating the object
 })
 
-test_that('male.RaspData (multiple species)', {
+test_that('make.RaspData (multiple species)', {
 	# create RaspUnsolved object
 	set.seed(500)
 	data(sim_pus, sim_spp)
-	ro<-RaspOpts()
+	ro<-RaspUnreliableOpts()
 	rd<-make.RaspData(sim_pus, sim_spp, NULL, include.geographic.space=TRUE, n.demand.points=5L)
 	# validity checks are internal
 })
@@ -53,7 +53,7 @@ test_that('pu.subset.RaspData', {
 	# create RaspUnsolved object
 	set.seed(500)
 	data(sim_pus, sim_spp)
-	ro<-RaspOpts()
+	ro<-RaspUnreliableOpts()
 	rd<-make.RaspData(sim_pus, sim_spp, NULL, include.geographic.space=TRUE, n.demand.points=5L)
 	rd2<-pu.subset(rd, 1:10)
 	# tests
@@ -69,11 +69,32 @@ test_that('spp.subset.RaspData', {
 	# create RaspUnsolved object
 	set.seed(500)
 	data(sim_pus, sim_spp)
-	ro<-RaspOpts()
+	ro<-RaspUnreliableOpts()
 	rd<-make.RaspData(sim_pus, sim_spp, NULL, include.geographic.space=TRUE, n.demand.points=5L)
 	rd2<-spp.subset(rd, 1)
 	# tests
 	expect_equal(nrow(rd2@species), 1)
 	expect_true(all(rd2@pu.species.probabilities$species==1L))
 	expect_equal(length(rd2@attribute.spaces[[1]]@dp), 1)
+})
+
+test_that('update.RaspData', {
+	# generate objects
+	data(sim_ru)
+	x=sim_ru@data
+	y=update(x, name=c('a', 'b', 'c'), area.target=c(0.1,0.2,0.3), space.target=c(0.4,0.5,0.6))
+	# tests
+	expect_equal(y@species$name, c('a', 'b', 'c'))
+	expect_equal(y@species$area.target, c(0.1,0.2,0.3))
+	expect_equal(y@species$space.target, c(0.4,0.5,0.6))
+})
+
+test_that('amount.target.RaspData', {
+	data(sim_rs)
+	expect_equal(amount.target(sim_rs@data), sim_rs@data@species$amount.target)
+})
+
+test_that('space.target.RaspData', {
+	data(sim_rs)
+	expect_equal(space.target(sim_rs@data), sim_rs@data@species$space.target)
 })

@@ -37,4 +37,10 @@ space.plot(x, y, space, pu.color.palette, locked.in.color, locked.out.color)
 This function plots the distribution of planning units and the distribution of demand points for a particular species in an attribute space.
 Note that this function only works for attribute spaces with one, two, or three dimensions.
 }
+\examples{
+# load RaspSolved objects
+data(sim_rs)
+# plot distribution of first species in first attribute space
+space.plot(sim_rs, 1, 1)
+}
 

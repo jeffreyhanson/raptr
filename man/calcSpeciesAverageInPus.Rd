@@ -41,9 +41,9 @@ By default all polygons will be treated as having separate ids.
 \examples{
 data(sim_pus, sim_spp)
 # calculate average for 1 species
-puvspr1.dat<-calcSpeciesAverageInPus(sim_pus[1:10,], sim_spp[[1]])
+puvspr1.dat<-calcSpeciesAverageInPus(sim_pus, sim_spp[[1]])
 # calculate average for multiple species
-puvspr2.dat<-calcSpeciesAverageInPus(sim_pus[1:10,], sim_spp)
+puvspr2.dat<-calcSpeciesAverageInPus(sim_pus, sim_spp)
 }
 \seealso{
 \code{\link{is.gdalInstalled}}, \url{http://www.gdal.org/}, \url{http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries}.

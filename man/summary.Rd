@@ -14,6 +14,12 @@
 \description{
 Extracts summary of solutions in a \code{RaspResults} or \code{RaspSolved} object.
 }
+\examples{
+# load data
+load(sim_rs)
+# show summary
+summary(sim_rs)
+}
 \seealso{
 \code{RaspResults}, \code{RaspSolved}.
 }
