@@ -66,6 +66,7 @@ setMethod(
 		log.pth=tempfile(fileext='.log')
 		gparams=append(as.list(x@solver), list("LogFile"=log.pth))
 		solution<-gurobi::gurobi(model, gparams)
+		if (file.exists('gurobi.log')) unlink('gurobi.log')
 
 		# check solution object
 		if (!is.null(solution$status))
@@ -88,6 +89,7 @@ setMethod(
 
 			# run model
 			solution=gurobi::gurobi(model, gparams)
+			if (file.exists('gurobi.log')) unlink('gurobi.log')
 
 			# load results
 			if (!is.null(solution$status))

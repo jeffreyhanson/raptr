@@ -58,7 +58,7 @@ test_that('solve.RaspUnsolved (unreliable - NUMREPS=1)', {
 	# make unsolved object
 	ru<-RaspUnsolved(RaspUnreliableOpts(), GurobiOpts(MIPGap=0.99, Presolve=2L), sim_ru@data)
 	# solve it
-	rs<-raspr::solve(ru, verbose=TRUE)
+	rs<-raspr::solve(ru)
 })
 
 test_that('solve.RaspUnsolved (reliable - NUMREPS=1)', {
