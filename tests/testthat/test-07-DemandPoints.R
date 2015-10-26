@@ -13,9 +13,9 @@ test_that('DemandPoints generator function', {
 
 test_that('demand.points (sm.density, geographic space)', {
 	# load data
-	data(sim_spp)
+	sim_spp <- sim.species(sim.pus(225L), model='normal', res=1)
 	# generate points
-	pts<-SpatialPoints(coords=randomPoints(sim_spp[[1]], n=10, prob=TRUE))
+	pts<-SpatialPoints(coords=randomPoints(sim_spp, n=10, prob=TRUE))
 	# create demand points
 	dp<-make.DemandPoints(
 		species.points=pts,
@@ -94,4 +94,3 @@ test_that('demand.points (hypervolume, attribute space)', {
 	expect_equal(length(dp@weights), 100)
 	expect_equal(sum(is.na((dp@weights))), 0)
 })
-

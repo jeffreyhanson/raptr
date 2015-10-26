@@ -39,7 +39,9 @@ Be aware that using polygons with overlaps will result in inaccuracies.
 By default all polygons will be treated as having separate ids.
 }
 \examples{
-data(sim_pus, sim_spp)
+# simulate data
+sim_pus <- sim.pus(225L)
+sim_spp <- lapply(c('uniform','normal','bimodal'), sim.species, n=1)
 # calculate average for 1 species
 puvspr1.dat<-calcSpeciesAverageInPus(sim_pus, sim_spp[[1]])
 # calculate average for multiple species

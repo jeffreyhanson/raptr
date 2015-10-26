@@ -10,7 +10,7 @@ GurobiOpts(Threads = 1L, MIPGap = 0.05, Presolve = 2L,
 \arguments{
 \item{Threads}{\code{integer} number of cores to use for processing. Defaults to 1L.}
 
-\item{MIPGap}{\code{numeric} MIP gap (lp_solve parameter). Defaults to 0.05.}
+\item{MIPGap}{\code{numeric} MIP gap specifying minimum solution quality. Defaults to 0.05.}
 
 \item{Presolve}{\code{integer} code for level of computation in presolve (lp_solve parameter). Defaults to 2.}
 

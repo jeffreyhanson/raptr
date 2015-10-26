@@ -14,7 +14,9 @@ This class is used to store RASP input data.
 
 \item{\code{pu}}{\code{data.frame} planning unit data. Columns are 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).}
 
-\item{\code{species}}{\code{data.frame} with species data. Columns are 'area.target' (\code{numeric}), 'space.target' (\code{numeric}), and 'name' (\code{character}, optional).}
+\item{\code{species}}{\code{data.frame} with species data. Columns are 'name' (\code{character}.}
+
+\item{\code{targets}}{\code{data.frame} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), and 'proportion' (\code{character}).}
 
 \item{\code{pu.species.probabilities}}{\code{data.frame} with data on the probability of species in each planning unit. Columns are 'species' (\code{integer}), 'pu' (\code{integer}), and 'value' (\code{numeric}) columns.}
 

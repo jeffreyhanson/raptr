@@ -15,7 +15,7 @@ normal_niche=function(x, y) {
 	return(dmvnorm(x=matrix(c(x,y), ncol=2), mean=c(0,0), sigma=matrix(c(12.5,0,0,12.5), ncol=2))*70)
 }
 
-constant_niche=function(x, y) {
+uniform_niche=function(x, y) {
 	return(rep(0.5, length(x)))
 }
 
@@ -542,21 +542,10 @@ mergeRaspResults<-function(x) {
 #' @return \code{RaspResults} object
 #' @seealso \code{\link{RaspReliableOpts}}, \code{\link{RaspUnreliableOpts}}, \code{\link{RaspData}}, \code{\link{RaspResults}}.
 read.RaspResults=function(opts, data, model.list, logging.file, solution.list) {
-  if (inherits(opts, 'RaspReliableResults')) {
-    fun<-'rcpp_extract_reliable_model_results'
-  } else {
-    fun<-'rcpp_extract_unreliable_model_results'
-  }
-  x<-do.call(
-    fun,
-    list(
-  		opts,
-  		data,
-  		model.list,
-  		logging.file,
-  		solution.list
-    )
-	)
+  x=rcpp_extract_model_object(
+    opts, inherits(opts, 'RaspUnreliableOpts'),
+    data, model.list, logging.file, solution.list
+  )
 	x@.cache=new.env()
 	return(x)
 }
@@ -643,7 +632,7 @@ spacePlot.1d<-function(pu, dp, pu.color.palette, locked.in.color, locked.out.col
       "Selected"=selected.col,
       "Locked In"=locked.in.color
     ),
-    guide=guide_legend(override.aes=list(alpha=1))    
+    guide=guide_legend(override.aes=list(alpha=1))
   ) +
   scale_size_manual(
     values=c(
@@ -737,4 +726,16 @@ spacePlot.3d<-function(pu, dp, pu.color.palette, locked.in.color, locked.out.col
   rgl::points3d(as.matrix(dp[,1:3]), col=dp.cols)
   # add title
   rgl::title3d(main)
+}
+
+
+# parse arguments function
+parseArgs<-function(fn, object, ...) {
+  ellipses.args<-list(...)
+  return(
+    ellipses.args[intersect(
+      names(ellipses.args),
+      names(as.list(args(paste0(fn, '.', class(object)))))
+    )]
+  )
 }

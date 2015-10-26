@@ -33,7 +33,8 @@ This function simulates attribute space data for RASP.
 Distributions are simulated by passing \code{model} to \code{\link[RandomFields]{RFsimulate}}.
 }
 \examples{
-data(sim_pus)
+# simulate plannign units
+sim_pus <- sim.pus(225L)
 
 # simulate 1d space using RasterLayer
 s1 <- sim.space(blank.raster(sim_pus, 1), d=1)

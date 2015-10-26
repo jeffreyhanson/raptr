@@ -28,8 +28,8 @@ This function converts spatial \code{SpatialPolygons} and \code{SpatialPolygonsD
 Be aware that this function is designed to be as fast as possible, but as a result it depends on C++ code and if used inappropriately this function will crash R.
 }
 \examples{
-# load SpatialPolygons object
-data(sim_pus)
+# generate SpatialPolygons object
+sim_pus <- sim.pus(225L)
 # convert to PolySet
 x <- SpatialPolygons2PolySet(sim_pus)
 }

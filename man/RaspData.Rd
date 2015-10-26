@@ -4,13 +4,15 @@
 \alias{RaspData}
 \title{Create new RaspData object}
 \usage{
-RaspData(pu, species, pu.species.probabilities, attribute.spaces, boundary,
-  polygons = NULL, skipchecks = FALSE, .cache = new.env())
+RaspData(pu, species, targets, pu.species.probabilities, attribute.spaces,
+  boundary, polygons = NULL, skipchecks = FALSE, .cache = new.env())
 }
 \arguments{
 \item{pu}{\code{data.frame} planning unit data. Columns are 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).}
 
-\item{species}{\code{data.frame} with species data. Columns are 'area.target' (\code{numeric}), 'space.target' (\code{numeric}), and 'name' (\code{character}, optional).}
+\item{species}{\code{data.frame} with species data. Columns are 'name' (\code{character}).}
+
+\item{targets}{\code{data.frame} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), and 'proportion' (\code{character}).}
 
 \item{pu.species.probabilities}{\code{data.frame} with data on the probability of species in each planning unit. Columns are 'species' (\code{integer}), 'pu' (\code{integer}), and 'value' (\code{numeric}) columns.}
 
@@ -76,7 +78,8 @@ boundary=calcBoundaryData(cs_pus[1:10,])
 
 x<-RaspData(
 	pu=cs_pus@data[1:10,],
-	species=data.frame(area.target=0.2, space.target=0.2, name='test'),
+	species=data.frame(name='test'),
+ target=data.frame(species=1, target=0:2, proportion=0.2),
 	pu.species.probabilities=pu.species.probabilities,
 	attribute.spaces=attribute.spaces,
 	polygons=polygons,

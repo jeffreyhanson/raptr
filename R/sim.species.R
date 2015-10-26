@@ -4,7 +4,7 @@ NULL
 #' @rdname sim.species
 #' @method sim.species RasterLayer
 #' @export
-sim.species.RasterLayer <- function(x, n=1, model=list('normal', 'constant', 'bimodal', RPgauss())[[1]], ...) {
+sim.species.RasterLayer <- function(x, n=1, model=list('uniform', 'normal', 'bimodal', RPgauss())[[1]], ...) {
 	ret=list()
 	# generate raster layers
 	if (inherits(model, 'RMmodel')) {
@@ -28,4 +28,3 @@ sim.species.SpatialPolygons <- function(x, res, n=1, model=list('normal', 'unifo
 	# return simulations
 	return(sim.species.RasterLayer(x=blank.raster(x, res), n=n, model=model, ...))
 }
-

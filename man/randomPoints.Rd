@@ -20,13 +20,14 @@ code{matrix} with x-coordinates, y-coordinates, and cell values.
 This function generates random points in a \code{RasterLayer} object.
 }
 \examples{
-# load data
-data(sim_spp)
+# simulate data
+sim_pus <- sim.pus(225L)
+sim_spp <- sim.species(sim_pus, model='normal')
 # generate points
-pts1 <- randomPoints(sim_spp[[1]], n=5)
-pts2 <- randomPoints(sim_spp[[1]], n=5, prob=TRUE)
+pts1 <- randomPoints(sim_spp, n=5)
+pts2 <- randomPoints(sim_spp, n=5, prob=TRUE)
 # plot points
-plot(sim_spp[[1]])
+plot(sim_spp)
 points(pts1, col='red')
 points(pts2, col='black')
 }

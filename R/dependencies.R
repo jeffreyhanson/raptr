@@ -28,6 +28,7 @@
 #' @importFrom ggplot2 xlab
 #' @importFrom ggplot2 ylab
 #' @importFrom ggplot2 element_blank
+#' @importFrom ggplot2 guide_legend
 
 #' @importFrom plyr llply
 #' @importFrom plyr laply

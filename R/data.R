@@ -5,48 +5,32 @@
 #' and the probability that they are occupied by the species. Note that methodology is not encouraged for real-world conservation planning.
 #' The species were simulated to represent different simplified versions of species distributions encountered:
 #' \itemize{
-#'	\item constant: This species has an equal probability (0.5) of occuring in all planning units.
+#'	\item uniform: This species has an equal probability (0.5) of occuring in all planning units.
 #'	\item normal: This species has a single range-core where it is most likely to be found. It is less likely to be found in areas further away from the centre of its range.
 #'	\item bimodal: This species has two distinct ecotypes. Each ecotype has its own range cores and range marginal areas.
 #' }
 #'
 #' The objects contained in this dataset are:
 #' \itemize{
-#'	\item sim_pus: A \code{SpatialPolygonsDataFrame} with 225 planning units.
-#'	\item sim_spp: A \code{RasterStack} containg probability distribution data for each of the species.
-#'	\item sim_dps: A \code{list} of \code{DemandPoints} for each species.
 #'	\item sim_ru: A \code{RaspUnsolved} object with all the simulated data.
-#'	\item sim_rs: A \code{RaspSolved} object with the optimal solution.
+#'	\item sim_rs: A \code{RaspSolved} object with 5 near-optimal solutions.
 #' }
 #'
 #' @docType data
 #' @format \code{SpatialPolyognsDataFrame}, \code{RasterStack}, \code{list} of \code{DemandPoint} objects.
-#' @aliases sim_pus sim_spp sim_dps
+#' @aliases sim_ru sim_rs
 #' @keywords datasets
 #' @name simulated_data
 #' @examples
 #' # load data
-#' data(sim_pus, sim_spp, sim_dps, sim_ru, sim_rs)
+#' data(sim_ru, sim_rs)
 #' # plot data
-#' plot(sim_pus)
-#' plot(sim_spp)
+#' plot(sim_ru)
 #' plot(sim_rs)
 NULL
 
 #' @rdname simulated_data
-"sim_pus"
-
-#' @rdname simulated_data
-"sim_spp"
-
-#' @rdname simulated_data
-"sim_dps"
-
-#' @rdname simulated_data
 "sim_ru"
-
-#' @rdname simulated_data
-"sim_rs"
 
 #' Case-study dataset for a conservation planning exercise
 #'

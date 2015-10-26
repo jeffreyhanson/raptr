@@ -12,7 +12,7 @@ This class is used to store Gurobi input parameters.
 \describe{
 \item{\code{Threads}}{\code{integer} number of cores to use for processing. Defaults to 1L.}
 
-\item{\code{MIPGap}}{\code{numeric} MIP gap. Defaults to 0.05.}
+\item{\code{MIPGap}}{\code{numeric} MIP gap specifying minimum solution quality. Defaults to 0.05.}
 
 \item{\code{Presolve}}{\code{integer} code for level of computation in presolve. Defaults to 2.}
 

@@ -104,10 +104,10 @@ rasterizeGDAL<-function(x,y, field=NULL) {
 #' @export
 #' @rdname blank.raster
 #' @examples
-#' # load data
-#' data(sim_pus)
+#' # make SpatialPolygons
+#' polys <- sim.pus(225L)
 #' # make RasterLayer from SpatialPolygons
-#' blank.raster(sim_pus, 1)
+#' blank.raster(polys, 1)
 blank.raster<-function(x, res) {
 	# init
 	if (length(res)==1)
@@ -184,13 +184,14 @@ setClass("SolverOpts")
 #' @seealso \code{\link[dismo]{randomPoints}}.
 #' @export
 #' @examples
-#' # load data
-#' data(sim_spp)
+#' # simulate data
+#' sim_pus <- sim.pus(225L)
+#' sim_spp <- sim.species(sim_pus, model='normal')
 #' # generate points
-#' pts1 <- randomPoints(sim_spp[[1]], n=5)
-#' pts2 <- randomPoints(sim_spp[[1]], n=5, prob=TRUE)
+#' pts1 <- randomPoints(sim_spp, n=5)
+#' pts2 <- randomPoints(sim_spp, n=5, prob=TRUE)
 #' # plot points
-#' plot(sim_spp[[1]])
+#' plot(sim_spp)
 #' points(pts1, col='red')
 #' points(pts2, col='black')
 randomPoints <- function(mask, n, prob=FALSE) {

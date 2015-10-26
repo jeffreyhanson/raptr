@@ -1,17 +1,26 @@
 test_that('Model compiler (unreliable)', {
 	# load RaspUnsolved object
 	data(sim_ru)
-	sim_ru <- pu.subset(sim_ru, 1:10)
+	sim_ru <- pu.subset(spp.subset(sim_ru, 1), 1:10)
+	sim_ru@data@attribute.spaces[[1]] = AttributeSpace(
+		pu=sim_ru@data@attribute.spaces[[1]]@pu,
+		dp=list(DemandPoints(
+			SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[1]]@points@coords[1:10,]),
+			sim_ru@data@attribute.spaces[[1]]@dp[[1]]@weights[1:10]
+		))
+	)
 	# generate model code
-	model<-rcpp_generate_unreliable_model_object(RaspUnreliableOpts(), sim_ru@data, FALSE)
+	model<-rcpp_generate_model_object(RaspUnreliableOpts(), TRUE, sim_ru@data, FALSE)
+	model$A<-Matrix::sparseMatrix(i=model$Ar[[1]]+1, j=model$Ar[[2]]+1, x=model$Ar[[3]])
 })
 
 test_that('Model compiler (reliable)', {
 	# load RaspUnsolved object
 	data(sim_ru)
-	sim_ru <- pu.subset(sim_ru, 1:10)
+	sim_ru <- pu.subset(spp.subset(sim_ru, 1), 1:10)
 	# generate model code
-	model<-rcpp_generate_reliable_model_object(RaspReliableOpts(), sim_ru@data, FALSE)
+	model<-rcpp_generate_model_object(RaspReliableOpts(), FALSE, sim_ru@data, FALSE)
+	model$A<-Matrix::sparseMatrix(i=model$Ar[[1]]+1, j=model$Ar[[2]]+1, x=model$Ar[[3]])
 })
 
 test_that('Gurobi solver (unreliable)', {
@@ -21,7 +30,7 @@ test_that('Gurobi solver (unreliable)', {
 	data(sim_ru)
 	sim_ru <- pu.subset(sim_ru, 1:10)
 	# generate model matrix
-	model<-rcpp_generate_unreliable_model_object(RaspUnreliableOpts(), sim_ru@data, FALSE)
+	model<-rcpp_generate_model_object(RaspUnreliableOpts(), TRUE, sim_ru@data, FALSE)
 	model$A<-Matrix::sparseMatrix(i=model$Ar[[1]]+1, j=model$Ar[[2]]+1, x=model$Ar[[3]])
 	# solve the model
 	result<-gurobi::gurobi(model, append(as.list(GurobiOpts(MIPGap=0.99, Presolve=2L)), list('LogFile'=tempfile(fileext='.log'))))
@@ -34,7 +43,7 @@ test_that('Gurobi solver (reliable)', {
 	data(sim_ru)
 	sim_ru <- pu.subset(sim_ru, 1:10)
 	# generate model code
-	model<-rcpp_generate_reliable_model_object(RaspReliableOpts(), sim_ru@data, FALSE)
+	model<-rcpp_generate_model_object(RaspReliableOpts(), FALSE, sim_ru@data, FALSE)
 	model$A<-Matrix::sparseMatrix(i=model$Ar[[1]]+1, j=model$Ar[[2]]+1, x=model$Ar[[3]])
 	# solve the model
 	result<-gurobi::gurobi(model, append(as.list(GurobiOpts(MIPGap=0.99, Presolve=2L)), list('LogFile'=tempfile(fileext='.log'))))
@@ -183,16 +192,54 @@ test_that('update.RaspUnsolved', {
 	sim_ru2 <- update(sim_ru, BLM=100, MIPGap=0.4, name=letters[1:3], solve=FALSE)
 	# checks
 	expect_equal(sim_ru2@opts@BLM, 100)
-	expect_equal(sim_ru2@gurobi@MIPGap, 0.4)
+	expect_equal(sim_ru2@solver@MIPGap, 0.4)
 	expect_equal(sim_ru2@data@species$name, letters[1:3])
 })
 
-test_that('amount.target.RaspUnsolved', {
+test_that('amount.target.RaspData', {
 	data(sim_ru)
-	expect_equal(amount.target(sim_ru), sim_ru@data@species$amount.target)
+	expect_equal(
+		unname(amount.target(sim_ru)),
+		rep(0.2, 3)
+	)
+	expect_equal(
+		unname(amount.target(sim_ru, 1)),
+		0.2
+	)
 })
 
-test_that('space.target.RaspUnsolved', {
+test_that('amount.target<-.RaspUnsolved', {
 	data(sim_ru)
-	expect_equal(space.target(sim_ru), sim_ru@data@species$space.target)
+	amount.target(sim_ru)<-0.3
+	expect_equal(unname(amount.target(sim_ru)), rep(0.3, 3))
+	amount.target(sim_ru, 1)<-0.5
+	expect_equal(unname(amount.target(sim_ru)), c(0.5, 0.3, 0.3))
+})
+
+test_that('space.target.RaspData', {
+	data(sim_ru)
+	expect_equal(
+		unname(space.target(sim_ru@data)[,1]),
+		rep(0.2, 3)
+	)
+	expect_equal(
+		unname(space.target(sim_ru@data, species=1)[,1]),
+		rep(0.2)
+	)
+	expect_equal(
+		unname(space.target(sim_ru@data, space=1)[,1]),
+		rep(0.2, 3)
+	)
+	expect_equal(
+		unname(space.target(sim_ru@data, species=1, space=1)[,1]),
+		0.2
+	)
+})
+
+test_that('space.target<-.RaspUnsolved', {
+	data(sim_ru)
+	space.target(sim_ru)<-0.3
+	expect_equal(unname(space.target(sim_ru)[,1]), rep(0.3, 3))
+	space.target(sim_ru, 1)<-0.5
+	expect_equal(unname(space.target(sim_ru)[,1]), c(0.5, 0.3, 0.3))
 })

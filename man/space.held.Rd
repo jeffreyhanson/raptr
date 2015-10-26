@@ -30,7 +30,7 @@ space.held(sim_rs, 0)
 # space held (\%) for each species in second solution
 space.held(sim_rs, 2)
 # space held (\%) for each species in each solution
-space.held(sim_rs, NULL)
+space.held(sim_rs)
 }
 \seealso{
 \code{RaspResults}, \code{RaspSolved}.

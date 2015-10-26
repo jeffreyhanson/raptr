@@ -6,7 +6,7 @@ NULL
 #' This class is used to store Gurobi input parameters.
 #'
 #' @slot Threads \code{integer} number of cores to use for processing. Defaults to 1L.
-#' @slot MIPGap \code{numeric} MIP gap. Defaults to 0.05.
+#' @slot MIPGap \code{numeric} MIP gap specifying minimum solution quality. Defaults to 0.05.
 #' @slot Presolve \code{integer} code for level of computation in presolve. Defaults to 2.
 #' @slot TimeLimit \code{integer} number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.
 #' @export
@@ -61,7 +61,7 @@ setClass("GurobiOpts",
 #' This function creates a new GurobiOpts object.
 #'
 #' @param Threads \code{integer} number of cores to use for processing. Defaults to 1L.
-#' @param MIPGap \code{numeric} MIP gap (lp_solve parameter). Defaults to 0.05.
+#' @param MIPGap \code{numeric} MIP gap specifying minimum solution quality. Defaults to 0.05.
 #' @param Presolve \code{integer} code for level of computation in presolve (lp_solve parameter). Defaults to 2.
 #' @param TimeLimit \code{integer} number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.
 #' @param NumberSolutions \code{integer} number of solutions to generate. Defaults to 1L.
@@ -118,20 +118,18 @@ as.list.GurobiOpts<-function(x, ...) {
 #' @rdname update
 #' @method update GurobiOpts
 #' @export
-update.GurobiOpts<-function(object, ..., ignore.extra=FALSE) {
-	# deparse arguments
-	params<-as.list(substitute(list(...)))[-1L]
-	if (!ignore.extra & any(!names(params) %in% slotNames('GurobiOpts')))
-		stop(
-			paste0(
-				paste(names(params)[!names(params) %in% slotNames('GurobiOpts')], collapse=', '),
-				' is not a slot(s) in GurobiOpts'
-			)
-		)
-	params<-params[which(names(params) %in% slotNames('GurobiOpts'))]
-	# update parameters
-	for (i in seq_along(params))
-		slot(object, names(params)[i]) <- eval(params[[i]])
+update.GurobiOpts<-function(object, Threads=NULL, MIPGap=NULL, Presolve=NULL, TimeLimit=NULL, NumberSolutions=NULL) {
+	# update arguments
+	if (!is.null(Threads))
+		object@Threads<-Threads
+	if (!is.null(MIPGap))
+		object@MIPGap<-MIPGap
+	if (!is.null(Presolve))
+		object@Presolve<-Presolve
+	if (!is.null(TimeLimit))
+		object@TimeLimit<-TimeLimit
+	if (!is.null(NumberSolutions))
+		object@NumberSolutions<-NumberSolutions
 	# check object for validity
 	validObject(object, test=FALSE)
 	# return object

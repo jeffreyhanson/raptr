@@ -4,7 +4,7 @@
 #  
 #  # simulate species distributions
 #  sim_spp <- lapply(
-#  	c('constant', 'normal', 'bimodal'),
+#  	c('uniform', 'normal', 'bimodal'),
 #  	sim.species,
 #    n=1,
 #    x=sim_pus,
@@ -15,8 +15,8 @@
 #  # change the plot parameters, so we can plot the distributions side by side
 #  par(mfrow=c(1,3))
 #  
-#  # constant species
-#  plot(sim_spp[[1]], main='constant species')
+#  # uniform species
+#  plot(sim_spp[[1]], main='uniform species')
 #  lines(sim_pus)
 #  
 #  # normal species
@@ -56,21 +56,27 @@
 #  )
 
 ## ---- eval=FALSE---------------------------------------------------------
-#  ## create RaspOpts object
+#  ## create RaspUnreliableOpts object
 #  # this stores parameters for the problem (eg. BLM)
-#  sim_ro <- RaspOpts()
+#  sim_ro <- RaspUnreliableOpts()
 #  
 #  ## create GurobiOpts object
 #  # this stores parameters for solving the problem (eg. MIPGap)
 #  sim_go <- GurobiOpts()
 #  
 #  ## create RaspData object
-#  # create data.frame with species targets
-#  # area targets at 20% and space targets at 0%
-#  spp_targets <- data.frame(
-#  	area.target=rep(0.2, 3),
-#  	space.target=rep(0, 3),
-#  	name=c('constant', 'normal', 'bimodal')
+#  # create data.frame with species info
+#  species <- data.frame(
+#    name=c('uniform', 'normal', 'bimodal')
+#  )
+#  
+#  ## create data.frame with species and space targets
+#  # amount targets at 20% (denoted with target=0)
+#  # space targets at 20% (denoted with target=1)
+#  targets <- expand.grid(
+#    species=1:3,
+#    target=0:1,
+#    proportion=0.2
 #  )
 #  
 #  # calculate probability of each species in each pu
@@ -80,8 +86,8 @@
 #  # this stores the coordinates of the planning units in an attribute space
 #  # and the coordinates and weights of demand points in the space
 #  attr_space <- AttributeSpace(
-#  	SimplePoints(pu_coords@coords),
-#  	sim_dps
+#    SimplePoints(pu_coords@coords),
+#    sim_dps
 #  )
 #  
 #  # generate boundary data information
@@ -90,54 +96,93 @@
 #  ## create RaspData object
 #  # this store all the input data for the prioritisation
 #  sim_rd <- RaspData(
-#  	sim_pus@data,
-#  	spp_targets,
-#  	pu_probabilities,
-#  	list(attr_space),
+#    sim_pus@data,
+#    species,
+#    targets,
+#    pu_probabilities,
+#    list(attr_space),
 #    boundary,
 #    SpatialPolygons2PolySet(sim_pus)
 #  )
 #  
 #  ## create RaspUnsolved object
 #  # this store all the input data and parameters needed to generate prioritisations
-#  sim_ru_area <- RaspUnsolved(sim_ro, sim_go, sim_rd)
-#  
+#  sim_ru <- RaspUnsolved(sim_ro, sim_go, sim_rd)
 
 ## ---- eval=FALSE---------------------------------------------------------
-#  # make prioritisations for each species using area targets
-#  sp1_area <- solve(spp.subset(sim_ru_area, 'constant'))
+#  # update space targets to 0%
+#  sim_ru <- update(sim_ru, space.target=0)
+#  
+#  # generate prioritisations for each species
+#  sp1_area <- solve(spp.subset(sim_ru_area, 'uniform'))
 #  sp2_area <- solve(spp.subset(sim_ru_area, 'normal'))
 #  sp3_area <- solve(spp.subset(sim_ru_area, 'bimodal'))
 #  
 #  # plot prioritisations
-#  par(mfrow=c(1,3))
 #  plot(sp1_area)
 #  plot(sp2_area)
 #  plot(sp3_area)
-#  par(mfrow=c(1,1))
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  # set 20% space targets in sim_ru
 #  sim_ru_space<-update(sim_ru_area, space.targets=0.2)
 #  
 #  # make prioritisations for each species
-#  sp1_space <- solve(spp.subset(sim_ru_space, 'constant'))
+#  sp1_space <- solve(spp.subset(sim_ru_space, 'uniform'))
 #  sp2_space <- solve(spp.subset(sim_ru_space, 'normal'))
 #  sp3_space <- solve(spp.subset(sim_ru_space, 'bimodal'))
 #  
 #  # plot prioritisations
-#  par(mfrow=c(1,3))
 #  plot(sp1_space)
 #  plot(sp2_space)
 #  plot(sp3_space)
-#  par(mfrow=c(1,1)))
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  # make prioritisations
-#  sim_mru_area<-solve(sim_ru_area)
-#  sim_mru_space<-solve(sim_ru_space)
+#  sim_mrs_area <- solve(sim_ru_area)
+#  sim_mrs_space <- solve(sim_ru_space)
 #  
 #  # plot prioritisations
-#  plot(sim_mru_area)
-#  plot(sim_mru_space)
+#  plot(sim_mrs_area)
+#  plot(sim_mrs_space)
+
+## ---- eval=FALSE---------------------------------------------------------
+#  # load data
+#  data(cs_spp)
+#  
+#  # plot species distribution
+#  plot(cs_spp)
+
+## ---- eval=FALSE---------------------------------------------------------
+#  # load data
+#  data(cs_pu)
+#  
+#  ## plot planning units
+#  # denote units not inside a protected area with white
+#  plot(cs_pu[which(cs_pu$status==0),], col='white')
+#  
+#  # denote units inside a protected area with green
+#  plot(cs_pu[which(cs_pu$status==2),], col='white')
+
+## ---- eval=FALSE---------------------------------------------------------
+#  # set up plotting window
+#  par(mfrow=c(1,2))
+#  # plot first variable
+#  plot(cs_space[[1]])
+#  
+#  # plot second variable
+#  plot(cs_space[[2]])
+#  
+#  # reset window
+#  par(mfrow=c(1,1))
+
+## ---- eval=FALSE---------------------------------------------------------
+#  # make area-based prioritisation
+#  cs_rs_area <- rasp(cs_pus, cs_species, cs_spaces, area.targets=0.2, space.targets=0.2, n.demand.points=100L, include.geographic.space=TRUE, formulation='unreliable')
+#  
+#  # plot prioritisation
+#  plot(cs_rs_area)
+#  
+#  # plot prioritisation in environmental space
+#  space.plot(cs_rs_area)
 

@@ -7,7 +7,8 @@ NULL
 #'
 #' @slot polygons \code{PolySet} planning unit spatial data or \code{NULL} if data not available.
 #' @slot pu \code{data.frame} planning unit data. Columns are 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).
-#' @slot species \code{data.frame} with species data. Columns are 'area.target' (\code{numeric}), 'space.target' (\code{numeric}), and 'name' (\code{character}, optional).
+#' @slot species \code{data.frame} with species data. Columns are 'name' (\code{character}.
+#' @slot targets \code{data.frame} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), and 'proportion' (\code{character}).
 #' @slot pu.species.probabilities \code{data.frame} with data on the probability of species in each planning unit. Columns are 'species' (\code{integer}), 'pu' (\code{integer}), and 'value' (\code{numeric}) columns.
 #' @slot attribute.spaces \code{list} of \code{AttributeSpace} objects with the demand points and planning unit coordinates.
 #' @slot boundary \code{data.frame} with data on the shared boundary length of planning units. Columns are with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'boundary' (\code{integer}).
@@ -20,6 +21,7 @@ setClass("RaspData",
 		polygons="PolySetOrNULL",
 		pu="data.frame",
 		species="data.frame",
+		targets="data.frame",
 		pu.species.probabilities="data.frame",
 		attribute.spaces="list",
 		boundary="data.frameOrNULL",
@@ -54,23 +56,6 @@ setClass("RaspData",
 				stop('argument to pu has columns starting with "coords" that are not numeric')
 
 			# species
-			if (any(!c('area.target', 'space.target') %in% names(object@species)))
-				stop("argument to species is missing one of these columns: 'area.target', or 'space.target'")
-
-			if (!inherits(object@species$area.target, c('numeric')))
-				stop('argument to species$area.target is not numeric or character')
-			if (any(is.na(object@species$area.target)))
-				stop('argument to species$area.target contains NA or non-finite values')
-			if (any(object@species$area.target<0 | object@species$area.target>1))
-				stop('argument to species$area.target contains values >1 or <0')
-
-			if (!inherits(object@species$space.target, c('numeric')))
-				stop('argument to species$space.target is not numeric or character')
-			if (any(is.na(object@species$space.target)))
-				stop('argument to species$space.target contains NA or non-finite values')
-			if (any(object@species$space.target<0 | object@species$space.target>1))
-				stop('argument to species$space.target contains values >1 or <0')
-
 			if (!is.null(object@species$name)) {
 				object@species$name<-gsub("[[:punct:]]", "", object@species$name)
 				if (is.factor(object@species$name))
@@ -80,6 +65,27 @@ setClass("RaspData",
 				if (any(is.na(object@species$name)))
 					stop('argument to species$name contains NA values')
 			}
+
+			# targets
+			if (any(!c('species','target','proportion') %in% names(object@targets)))
+				stop("argument to targets is missing one of these columns: 'species', 'target', or 'proportion'")
+
+			if (!inherits(object@targets$species, c('integer')))
+				stop('argument to targets$species is not integer')
+			if (any(is.na(object@targets$species)))
+				stop('argument to targets$species contains NA or non-finite values')
+
+			if (!inherits(object@targets$target, c('integer')))
+				stop('argument to targets$target is not integer')
+			if (any(is.na(object@targets$target)))
+				stop('argument to targets$target contains NA or non-finite values')
+
+			if (!inherits(object@targets$proportion, c('numeric')))
+				stop('argument to targets$proportion is not numeric')
+			if (any(is.na(object@targets$proportion)))
+				stop('argument to targets$proportion contains NA or non-finite values')
+			if (any(object@targets$proportion<0 | object@targets$proportion>1))
+				stop('argument to targets$proportion contains values >1 or <0')
 
 			# pu.species.probabilities
 			if (any(!c('species','pu','value') %in% names(object@pu.species.probabilities)))
@@ -131,6 +137,11 @@ setClass("RaspData",
 				stop('argument to pu.species.probabilities$species must have values that correspond to rows in argument to species')
 			if (!all(laply(object@attribute.spaces, function(x) {length(x@dp)==nrow(object@species)})))
 				stop('arguments to attribute.space and species must have the same number of species')
+			if (!all(object@targets$species %in% seq_len(nrow(object@species))))
+				stop('arguments to targets must have species present in argument to species')
+			# check that attribute spaces match
+			if (!all(object@targets$target %in% 0:length(object@attribute.spaces)))
+				stop('argument to targets must have values in values that are zero or correspond to elements in argument to attribute.spaces')
 		}
 		return(TRUE)
 	}
@@ -143,7 +154,8 @@ setClass("RaspData",
 #'
 #' @param polygons \code{PolySet} planning unit spatial data or \code{NULL} if data not available.
 #' @param pu \code{data.frame} planning unit data. Columns are 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).
-#' @param species \code{data.frame} with species data. Columns are 'area.target' (\code{numeric}), 'space.target' (\code{numeric}), and 'name' (\code{character}, optional).
+#' @param species \code{data.frame} with species data. Columns are 'name' (\code{character}).
+#' @param targets \code{data.frame} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), and 'proportion' (\code{character}).
 #' @param pu.species.probabilities \code{data.frame} with data on the probability of species in each planning unit. Columns are 'species' (\code{integer}), 'pu' (\code{integer}), and 'value' (\code{numeric}) columns.
 #' @param attribute.spaces \code{list} of \code{AttributeSpace} objects with the demand points and planning unit coordinates.
 #' @param boundary \code{data.frame} with data on the shared boundary length of planning units. Columns are with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'boundary' (\code{integer}).
@@ -197,7 +209,8 @@ setClass("RaspData",
 # # create RaspData object
 #' x<-RaspData(
 #' 	pu=cs_pus@@data[1:10,],
-#' 	species=data.frame(area.target=0.2, space.target=0.2, name='test'),
+#' 	species=data.frame(name='test'),
+#'  target=data.frame(species=1, target=0:2, proportion=0.2),
 #' 	pu.species.probabilities=pu.species.probabilities,
 #' 	attribute.spaces=attribute.spaces,
 #' 	polygons=polygons,
@@ -205,17 +218,18 @@ setClass("RaspData",
 #' )
 #' print(x)
 #' }
-RaspData<-function(pu, species, pu.species.probabilities, attribute.spaces, boundary, polygons=NULL, skipchecks=FALSE, .cache=new.env()) {
+RaspData<-function(pu, species, targets, pu.species.probabilities, attribute.spaces, boundary, polygons=NULL, skipchecks=FALSE, .cache=new.env()) {
 	# convert factors to characters
 	if (inherits(species$name, "factor"))
 		species$name<-as.character(species$name)
 	# remove extra columns
 	pu<-pu[,which(names(pu) %in% c('cost', 'area', 'status')),drop=FALSE]
-	species<-species[,which(names(species) %in% c('area.target', 'space.target', 'name')),drop=FALSE]
+	species<-species[,which(names(species) %in% c('name')),drop=FALSE]
+	targets<-targets[,which(names(targets) %in% c('species','target','proportion')),drop=FALSE]
 	pu.species.probabilities<-pu.species.probabilities[,which(names(pu.species.probabilities) %in% c('pu', 'species', 'value')),drop=FALSE]
 	boundary<-boundary[,which(names(boundary) %in% c('id1', 'id2', 'boundary')),drop=FALSE]
 	# make object
-	rd<-new("RaspData", polygons=polygons, pu=pu, species=species, pu.species.probabilities=pu.species.probabilities, attribute.spaces=attribute.spaces, skipchecks=skipchecks,boundary=boundary, .cache=.cache)
+	rd<-new("RaspData", polygons=polygons, pu=pu, species=species, targets=targets, pu.species.probabilities=pu.species.probabilities, attribute.spaces=attribute.spaces, skipchecks=skipchecks,boundary=boundary, .cache=.cache)
 	# test for validity
 	validObject(rd, test=FALSE)
 	return(rd)
@@ -228,8 +242,8 @@ RaspData<-function(pu, species, pu.species.probabilities, attribute.spaces, boun
 #' @param pus \code{SpatialPolygons} with planning unit data.
 #' @param species \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} with species probability distribution data.
 #' @param spaces \code{list} of/or \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} representing projects of attribute space over geographic space. Use a \code{list} to denote seperate attribute spaces.
-#' @param area.targets \code{numeric} vector for area targets (\%) for each species. Defaults to 0.2 for each attribute space for each species.
-#' @param space.targets \code{numeric} vector for attribute space targets (\%) for each species. Defaults to 0.2 for each attribute space for each species. Note all attribute spaces have the same targets.
+#' @param amount.targets \code{numeric} vector for area targets (\%) for each species. Defaults to 0.2 for each attribute space for each species.
+#' @param space.targets \code{numeric} vector for attribute space targets (\%) for each species. Defaults to 0.2 for each attribute space for each species and each space.
 #' @param n.demand.points \code{integer} number of demand points to use for each attribute space for each species. Defaults to 100L.
 #' @param kernel.method \code{character} name of kernel method to use to generate demand points. Use either \code{sm.density} or \code{hypervolume}.
 #' @param quantile \code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.2.
@@ -248,7 +262,7 @@ RaspData<-function(pu, species, pu.species.probabilities, attribute.spaces, boun
 #' print(x)
 #' }
 make.RaspData<-function(pus, species, spaces=NULL,
-	area.targets=0.2, space.targets=0.2, n.demand.points=100L, kernel.method=c('sm.density', 'hyperbox')[1], quantile=0.2,
+	amount.targets=0.2, space.targets=0.2, n.demand.points=100L, kernel.method=c('sm.density', 'hyperbox')[1], quantile=0.2,
 	species.points=NULL, n.species.points=ceiling(0.2*cellStats(species, 'sum')), include.geographic.space=TRUE, verbose=FALSE, ...) {
 
 	## init
@@ -410,12 +424,24 @@ make.RaspData<-function(pus, species, spaces=NULL,
 	pu.species.probabilities<-calcSpeciesAverageInPus(projPolygons, species, ...)
 	## set species
 	species<-data.frame(
-		area.target=area.targets,
-		space.target=space.targets,
 		name=names(species),
 		stringsAsFactors=FALSE
 	)
-	return(RaspData(pu=pu, species=species, pu.species.probabilities=pu.species.probabilities, attribute.spaces=attribute.spaces, boundary=boundary, polygons=geoPolygons, .cache=.cache))
+	## set targets
+	targets<-rbind(
+		expand.grid(
+			species=seq_len(nrow(species)),
+			target=0L,
+			proportion=amount.targets
+		),
+		expand.grid(
+			species=seq_len(nrow(species)),
+			target=seq(1L, length(attribute.spaces)),
+			proportion=space.targets
+		)
+	)
+	## return object
+	return(RaspData(pu=pu, species=species, targets=targets, pu.species.probabilities=pu.species.probabilities, attribute.spaces=attribute.spaces, boundary=boundary, polygons=geoPolygons, .cache=.cache))
 }
 
 #' @rdname basemap
@@ -520,11 +546,14 @@ spp.subset.RaspData<-function(x, species) {
 	boundary$id2<-match(boundary$id2, pu)
 	polygons<-x@polygons[which(x@polygons$PID %in% pu),]
 	polygons$PID<-match(polygons$PID, pu)
+	targets<-x@targets[which(x@targets$species %in% species),,drop=FALSE]
+	targets$species<-match(targets$species, species)
 	# return new object
 	return(
 		RaspData(
 			pu=x@pu[pu,],
-			species=x@species[species,],
+			species=x@species[species,,drop=FALSE],
+			targets=targets,
 			pu.species.probabilities=pu.species.probabilities,
 			attribute.spaces=lapply(
 				x@attribute.spaces,
@@ -562,6 +591,7 @@ pu.subset.RaspData<-function(x, pu) {
 		RaspData(
 			pu=x@pu[pu,],
 			species=x@species,
+			targets=x@targets,
 			pu.species.probabilities=pu.species.probabilities,
 			attribute.spaces=lapply(
 				x@attribute.spaces,
@@ -582,26 +612,33 @@ pu.subset.RaspData<-function(x, pu) {
 #' @rdname update
 #' @export
 #' @method update RaspData
-update.RaspData<-function(object, ..., ignore.extra=FALSE) {
-	# deparse arguments
-	params<-as.list(substitute(list(...)))[-1L]
-	# check if invalid arguments supplied
-	if (!ignore.extra & any(!names(params) %in% c(names(object@pu), names(object@species))))
-		stop(
-			paste0(
-				paste(names(params)[!names(params) %in% c(names(object@pu), names(object@species))], collapse=', '),
-				' are not column names in the pu or speices slots'
-			)
-		)
-	# update parameters
-	for (i in seq_along(params)) {
-		for (j in c('pu', 'species')) {
-			if (names(params)[i] %in% names(slot(object, j))) {
-				slot(object, j)[[names(params)[i]]] <- eval(params[[i]])
-			}
-		}
+update.RaspData<-function(object, species=NULL, space=NULL, name=NULL, amount.target=NULL, space.target=NULL, pu=NULL, cost=NULL, status=NULL) {
+	# deparse species
+	if (is.null(species)) {
+		species<-seq_len(nrow(object@species))
+	} else {
+		if (is.character(species))
+			species<-match(species, object@species$name)
+		if (is.na(species) | !species %in% seq_len(nrow(object@species)))
+			stop('argument to species not found')
 	}
-
+	# deparse space
+	if (is.null(space))
+		space<-seq_along(object@attribute.spaces)
+	# update species
+	if (!is.null(name))
+		object@species$name[species] <-name
+	# update pu
+	if (!is.null(pu) & is.null(status))
+	if (!is.null(pu) & is.null(cost))
+		object@pu$status[pu] <- status
+		object@pu$cost[pu] <- cost
+	# update amount targets
+	if (!is.null(amount.target))
+		object@targets$proportion[which(object@targets$target==0 & object@targets$species %in% species)]<-amount.target
+	# update space targets
+	if (!is.null(space.target))
+		object@targets$proportion[which(object@targets$target %in% space & object@targets$species %in% species)]<-space.target
 	# check object for validity
 	validObject(object, test=FALSE)
 	# return object
@@ -714,13 +751,87 @@ space.plot.RaspData<-function(
 #' @rdname amount.target
 #' @method amount.target RaspData
 #' @export
-amount.target.RaspData<-function(x) {
-	return(x@species$amount.target)
+amount.target.RaspData<-function(x, species=NULL) {
+	if (is.null(species))
+		return(
+			structure(
+				x@targets$proportion[which(x@targets$target==0)],
+				.Names = x@species$name[x@targets$species[which(x@targets$target==0)]]
+			)
+		)
+	if (is.character(species))
+		species<-match(species, x@species$name)
+	return(
+		structure(
+			x@targets$proportion[which(x@targets$target==0 & x@targets$species==species)],
+			.Names = x@species$name[x@targets$species[which(x@targets$target==0 & x@targets$species==species)]]
+		)
+	)
+}
+
+#' @rdname amount.target
+#' @method amount.target<- RaspData
+#' @export
+`amount.target<-.RaspData`<-function(x, species=NULL, value) {
+	if (is.null(species)) {
+		x@targets$proportion[which(x@targets$target==0)]<-value
+	} else {
+		if (is.character(species))
+			species<-match(species, x@species$name)
+		x@targets$proportion[which(x@targets$target==0 & x@targets$species %in% species)]<-value
+	}
+	# check of validity
+	validObject(x, test=FALSE)
+	return(x)
 }
 
 #' @rdname space.target
 #' @method space.target RaspData
 #' @export
-space.target.RaspData<-function(x) {
-	return(x@species$space.target)
+space.target.RaspData<-function(x, species=NULL, space=NULL) {
+	rows <- seq_len(nrow(x@targets))
+	if (!is.null(species)) {
+		if (is.character(species))
+			species<-match(species, x@species$name)
+		rows<-rows[which(x@targets$species %in% species)]
+	}
+	if (is.null(space)) {
+		rows<-rows[which(x@targets$target[rows] > 0)]
+	} else{
+		rows<-rows[which(x@targets$target[rows] %in% space)]
+	}
+	return(
+		structure(
+			x@targets$proportion[rows],
+ 			.Dim = c(
+				length(unique(x@targets$species[rows])),
+				length(unique(x@targets$target[rows]))
+			),
+			.Dimnames = list(
+					unique(x@species$name[x@targets$species[rows]]),
+					unique(x@targets$target[rows])
+			)
+		)
+	)
+}
+#' @rdname space.target
+#' @method space.target<- RaspData
+#' @export
+`space.target<-.RaspData`<-function(x, species=NULL, space=NULL, value) {
+	rows <- seq_len(nrow(x@targets))
+	if (!is.null(species)) {
+		if (is.character(species))
+			species<-match(species, x@species$name)
+		rows<-rows[which(x@targets$species %in% species)]
+	}
+	if (is.null(space)) {
+		rows<-rows[which(x@targets$target[rows] > 0)]
+	} else{
+		rows<-rows[which(x@targets$target[rows] %in% space)]
+	}
+	# assign new targets
+	x@targets$proportion[rows]<-value
+	# check of validity
+	validObject(x, test=FALSE)
+	return(x)
 }

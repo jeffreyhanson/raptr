@@ -4,7 +4,7 @@ NULL
 #' Calculate boundary data for planning units
 #'
 #' This function calculates boundary length data for \code{PolySet}, \code{SpatialPolygons}, and \code{SpatialPolygonsDataFrame} objects.
-#' Be aware that this function is designed to be as fast as possible, as a result it depends on C++ code and if this 
+#' Be aware that this function is designed to be as fast as possible, as a result it depends on C++ code and if this
 #' function is used improperly, then it will crash R. Furthermore, multipart polygons with touching edges will likely result in inaccuracies.
 #' If argument set to \code{SpatialPolygons} or \code{SpatialPolygonsDataFrame}, this will be converted to PolySet before processing.
 #'
@@ -16,8 +16,10 @@ NULL
 #' @return \code{data.frame} with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'amount' (\code{numeric}) columns.
 #' @seealso This function is based on the algorithm in QMARXAN \url{http://aproposinfosystems.com/products/qmarxan/} for calculating boundary length.
 #' @export
-#' @examples 
-#' data(sim_pus)
+#' @examples
+#' # simulate planning units
+#' sim.pud <- sim.pus(225L)
+#' # calculate boundary data
 #' bound.dat <- calcBoundaryData(sim_pus)
 #' summary(bound.dat)
 calcBoundaryData<-function(x, tol, length.factor, edge.factor) UseMethod("calcBoundaryData")
@@ -43,5 +45,3 @@ calcBoundaryData.PolySet<-function(x, tol=0.001, length.factor=1.0, edge.factor=
 calcBoundaryData.SpatialPolygons<-function(x, tol=0.001, length.factor=1.0, edge.factor=1.0) {
 	return(calcBoundaryData(rcpp_Polygons2PolySet(x@polygons), tol, length.factor, edge.factor))
 }
-
- 

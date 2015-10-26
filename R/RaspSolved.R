@@ -376,19 +376,6 @@ setMethod(
 	}
 )
 
-#' @rdname update
-#' @method update RaspSolved
-#' @export
-update.RaspSolved<-function(object, ..., solve=TRUE) {
-	object<-RaspUnsolved(
-		opts=update(object@opts, ..., ignore.extra=TRUE),
-		solver=update(object@solver, ..., ignore.extra=TRUE),
-		data=update(object@data, ..., ignore.extra=TRUE)
-	)
-	if (solve)
-		object<-solve(object)
-	return(object)
-}
 
 #' @rdname spp.plot
 #' @method spp.plot RaspSolved
@@ -411,16 +398,65 @@ space.plot.RaspSolved<-function(
 	stop('Function not finished')
 }
 
-#' @rdname amount.target
-#' @method amount.target RaspSolved
+
+#' @rdname update
+#' @method update RaspUnsolvedOrSolved
 #' @export
-amount.target.RaspSolved<-function(x) {
-	amount.target.RaspData(x@data)
+update.RaspUnsolvedOrSolved<-function(object, ..., solve=TRUE) {
+	object<-RaspUnsolved(
+		opts=do.call(
+			'update',
+			append(
+					list(object=object@opts),
+					parseArgs('update', object@opts, ...)
+			)
+		),
+		solver=do.call(
+			'update',
+			append(
+					list(object=object@solver),
+					parseArgs('update', object@solver, ...)
+			)
+		),
+		data=do.call(
+			'update',
+			append(
+					list(object=object@data),
+					parseArgs('update', object@data, ...)
+			)
+		)
+	)
+	if (solve)
+		object<-raspr::solve(object)
+	return(object)
+}
+
+#' @rdname amount.target
+#' @method amount.target RaspUnsolvedOrSolved
+#' @export
+amount.target.RaspUnsolvedOrSolved<-function(x,species=NULL) {
+	amount.target.RaspData(x@data, species)
 }
 
 #' @rdname space.target
-#' @method space.target RaspSolved
+#' @method space.target RaspUnsolvedOrSolved
 #' @export
-space.target.RaspSolved<-function(x) {
-	space.target.RaspData(x@data)
+space.target.RaspUnsolvedOrSolved<-function(x, species=NULL, space=NULL) {
+	space.target.RaspData(x@data, species, space)
+}
+
+#' @rdname amount.target
+#' @method amount.target<- RaspUnsolvedOrSolved
+#' @export
+`amount.target<-.RaspUnsolvedOrSolved`<-function(x,species=NULL, value) {
+	x@data<-`amount.target<-.RaspData`(x@data, species, value)
+	return(x)
+}
+
+#' @rdname space.target
+#' @method space.target<- RaspUnsolvedOrSolved
+#' @export
+`space.target<-.RaspUnsolvedOrSolved`<-function(x, species=NULL, space=NULL, value) {
+	x@data<-`space.target<-.RaspData`(x@data, species, space, value)
+	return(x)
 }

@@ -57,20 +57,9 @@ setMethod(
 #' @rdname update
 #' @method update RaspUnreliableOpts
 #' @export
-update.RaspUnreliableOpts<-function(object, ..., ignore.extra=FALSE) {
-	# deparse arguments
-	params<-as.list(substitute(list(...)))[-1L]
-	if (!ignore.extra & any(!names(params) %in% slotNames('RaspUnreliableOpts')))
-		stop(
-			paste0(
-					paste(names(params)[!names(params) %in% slotNames('RaspUnreliableOpts')], collapse=', '),
-				' is not a slot(s) in RaspUnreliableOpts'
-			)
-		)
-	params<-params[which(names(params) %in% slotNames('RaspUnreliableOpts'))]
-	# update parameters
-	for (i in seq_along(params))
-		slot(object, names(params)[i]) <- eval(params[[i]])
+update.RaspUnreliableOpts<-function(object, BLM=NULL) {
+	if (!is.null(BLM))
+		object@BLM<-BLM
 	# check object for validity
 	validObject(object, test=FALSE)
 	# return object

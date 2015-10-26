@@ -10,7 +10,7 @@
 
 <meta name="author" content="Jeffrey O. Hanson" />
 
-<meta name="date" content="2015-10-19" />
+<meta name="date" content="2015-10-23" />
 
 <title>raspr: Identify Representative and Adequate Prioritisations in R</title>
 
@@ -54,7 +54,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <div id="header">
 <h1 class="title">raspr: Identify Representative and Adequate Prioritisations in R</h1>
 <h4 class="author"><em>Jeffrey O. Hanson</em></h4>
-<h4 class="date"><em>2015-10-19</em></h4>
+<h4 class="date"><em>2015-10-23</em></h4>
 </div>
 
 
@@ -72,13 +72,13 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <h2>Simulated examples</h2>
 <div id="data" class="section level3">
 <h3>Data</h3>
-<p>To investigate the behaviour of the problem, we will use a three simulated species. The first species (termed ‘constant’) will represent a hyper-generalist. This species will inhabit all areas with equal probability. The second species (termed ‘normal’) will represent a species with a single range core. The third species (termed ‘bimodal’) will represent a species with two distinct ecotypes, each with their own range core. To reduce computational time for this example, we will use a <span class="math">\(15 \times 15\)</span> grid of square planning units.</p>
+<p>To investigate the behaviour of the problem, we will generate prioritisations for three simulated species. To reduce computational effort, we will use the unreliable formulation of the problem. The first species (termed ‘uniform’) will represent a hyper-generalist. This species will inhabit all areas with equal probability. The second species (termed ‘normal’) will represent a species with a single range core. The third species (termed ‘bimodal’) will represent a species with two distinct ecotypes, each with their own range core. To reduce computational time for this example, we will use a <span class="math">\(15 \times 15\)</span> grid of square planning units.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make planning units</span>
 sim_pus &lt;-<span class="st"> </span><span class="kw">sim.pus</span>(225L)
 
 <span class="co"># simulate species distributions</span>
 sim_spp &lt;-<span class="st"> </span><span class="kw">lapply</span>(
-    <span class="kw">c</span>(<span class="st">'constant'</span>, <span class="st">'normal'</span>, <span class="st">'bimodal'</span>),
+    <span class="kw">c</span>(<span class="st">'uniform'</span>, <span class="st">'normal'</span>, <span class="st">'bimodal'</span>),
     sim.species,
   <span class="dt">n=</span><span class="dv">1</span>,
   <span class="dt">x=</span>sim_pus,
@@ -88,8 +88,8 @@ sim_spp &lt;-<span class="st"> </span><span class="kw">lapply</span>(
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># change the plot parameters, so we can plot the distributions side by side</span>
 <span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))
 
-<span class="co"># constant species</span>
-<span class="kw">plot</span>(sim_spp[[<span class="dv">1</span>]], <span class="dt">main=</span><span class="st">'constant species'</span>)
+<span class="co"># uniform species</span>
+<span class="kw">plot</span>(sim_spp[[<span class="dv">1</span>]], <span class="dt">main=</span><span class="st">'uniform species'</span>)
 <span class="kw">lines</span>(sim_pus)
 
 <span class="co"># normal species</span>
@@ -127,21 +127,27 @@ sim_dps &lt;-<span class="st"> </span><span class="kw">lapply</span>(
     }
 )</code></pre>
 <p>Now, we will construct a <code>RaspUnsolved</code> object which will store all our input data and parameters to generate prioritisations.</p>
-<pre class="sourceCode r"><code class="sourceCode r">## create RaspOpts object
+<pre class="sourceCode r"><code class="sourceCode r">## create RaspUnreliableOpts object
 <span class="co"># this stores parameters for the problem (eg. BLM)</span>
-sim_ro &lt;-<span class="st"> </span><span class="kw">RaspOpts</span>()
+sim_ro &lt;-<span class="st"> </span><span class="kw">RaspUnreliableOpts</span>()
 
 ## create GurobiOpts object
 <span class="co"># this stores parameters for solving the problem (eg. MIPGap)</span>
 sim_go &lt;-<span class="st"> </span><span class="kw">GurobiOpts</span>()
 
 ## create RaspData object
-<span class="co"># create data.frame with species targets</span>
-<span class="co"># area targets at 20% and space targets at 0%</span>
-spp_targets &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
-    <span class="dt">area.target=</span><span class="kw">rep</span>(<span class="fl">0.2</span>, <span class="dv">3</span>),
-    <span class="dt">space.target=</span><span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">3</span>),
-    <span class="dt">name=</span><span class="kw">c</span>(<span class="st">'constant'</span>, <span class="st">'normal'</span>, <span class="st">'bimodal'</span>)
+<span class="co"># create data.frame with species info</span>
+species &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
+  <span class="dt">name=</span><span class="kw">c</span>(<span class="st">'uniform'</span>, <span class="st">'normal'</span>, <span class="st">'bimodal'</span>)
+)
+
+## create data.frame with species and space targets
+<span class="co"># amount targets at 20% (denoted with target=0)</span>
+<span class="co"># space targets at 20% (denoted with target=1)</span>
+targets &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(
+  <span class="dt">species=</span><span class="dv">1</span>:<span class="dv">3</span>,
+  <span class="dt">target=</span><span class="dv">0</span>:<span class="dv">1</span>,
+  <span class="dt">proportion=</span><span class="fl">0.2</span>
 )
 
 <span class="co"># calculate probability of each species in each pu</span>
@@ -151,8 +157,8 @@ pu_probabilities &lt;-<span class="st"> </span><span class="kw">calcSpeciesAvera
 <span class="co"># this stores the coordinates of the planning units in an attribute space</span>
 <span class="co"># and the coordinates and weights of demand points in the space</span>
 attr_space &lt;-<span class="st"> </span><span class="kw">AttributeSpace</span>(
-    <span class="kw">SimplePoints</span>(pu_coords@coords),
-    sim_dps
+  <span class="kw">SimplePoints</span>(pu_coords@coords),
+  sim_dps
 )
 
 <span class="co"># generate boundary data information</span>
@@ -161,69 +167,113 @@ boundary &lt;-<span class="st"> </span><span class="kw">calcBoundaryData</span>(
 ## create RaspData object
 <span class="co"># this store all the input data for the prioritisation</span>
 sim_rd &lt;-<span class="st"> </span><span class="kw">RaspData</span>(
-    sim_pus@data,
-    spp_targets,
-    pu_probabilities,
-    <span class="kw">list</span>(attr_space),
+  sim_pus@data,
+  species,
+  targets,
+  pu_probabilities,
+  <span class="kw">list</span>(attr_space),
   boundary,
   <span class="kw">SpatialPolygons2PolySet</span>(sim_pus)
 )
 
 ## create RaspUnsolved object
 <span class="co"># this store all the input data and parameters needed to generate prioritisations</span>
-sim_ru_area &lt;-<span class="st"> </span><span class="kw">RaspUnsolved</span>(sim_ro, sim_go, sim_rd)</code></pre>
+sim_ru &lt;-<span class="st"> </span><span class="kw">RaspUnsolved</span>(sim_ro, sim_go, sim_rd)</code></pre>
 </div>
 <div id="single-species-prioritisations" class="section level3">
 <h3>Single-species prioritisations</h3>
 <p>Let’s keep things simple to start off with. First, we will generate a set of prioritisations that secure 20% of the species range for minimal cost.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make prioritisations for each species using area targets</span>
-sp1_area &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">spp.subset</span>(sim_ru_area, <span class="st">'constant'</span>))
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># update space targets to 0%</span>
+sim_ru &lt;-<span class="st"> </span><span class="kw">update</span>(sim_ru, <span class="dt">space.target=</span><span class="dv">0</span>)
+
+<span class="co"># generate prioritisations for each species</span>
+sp1_area &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">spp.subset</span>(sim_ru_area, <span class="st">'uniform'</span>))
 sp2_area &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">spp.subset</span>(sim_ru_area, <span class="st">'normal'</span>))
 sp3_area &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">spp.subset</span>(sim_ru_area, <span class="st">'bimodal'</span>))
 
 <span class="co"># plot prioritisations</span>
-<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))
 <span class="kw">plot</span>(sp1_area)
 <span class="kw">plot</span>(sp2_area)
-<span class="kw">plot</span>(sp3_area)
-<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</code></pre>
-<p>Here, we can see that the prioritisation for the uniform species appears to be random. This is because all planning units have equal probability of occupancy and so any XXX planning units can be preserved to secure 20% of its distribution. The prioritisation for the normal species focusses on the planning units in the species range core. This prioritisation, however, fails to secure any peripheral parts of the species’ distribution. Finally, the prioritisation for the bimodally distributed species only selects planning units in the bottom left corner of the study area. As a consequence, this prioritisation would only preserve individuals from a single eco-type. All of these priotitisations fail to secure a representative portion of the species’ geographic distributions because they only prioritise the parts of the species range with the highest occupancy probabilities.</p>
+<span class="kw">plot</span>(sp3_area)</code></pre>
+<p>Here, we can see that the optimal prioritisation for the uniform species is just a random selection of XXX planning units. This is because all planning units have equal probability of occupancy and so XXXX can be used to secure 20% of its distribution. The prioritisation for the normal species focuses on the planning units in the species’ range core. This prioritisation, however, fails to secure any peripheral parts of the species’ distribution. Finally, the prioritisation for the bimodally distributed species only selects planning units in the bottom left corner of the study area. As a consequence, this prioritisation only preserves individuals belonging to one eco-type. All of these priotitisations fail to secure a representative portion of the species’ geographic distributions because they only prioritise the parts of the species’ ranges with the highest occupancy probabilities.</p>
 <p>Now, we will generate prioritisations for each species that aim to preserve a rerepresent different parts of the species’ geographic distributions explicitly consider their</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># set 20% space targets in sim_ru</span>
 sim_ru_space&lt;-<span class="kw">update</span>(sim_ru_area, <span class="dt">space.targets=</span><span class="fl">0.2</span>)
 
 <span class="co"># make prioritisations for each species</span>
-sp1_space &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">spp.subset</span>(sim_ru_space, <span class="st">'constant'</span>))
+sp1_space &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">spp.subset</span>(sim_ru_space, <span class="st">'uniform'</span>))
 sp2_space &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">spp.subset</span>(sim_ru_space, <span class="st">'normal'</span>))
 sp3_space &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">spp.subset</span>(sim_ru_space, <span class="st">'bimodal'</span>))
 
 <span class="co"># plot prioritisations</span>
-<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))
 <span class="kw">plot</span>(sp1_space)
 <span class="kw">plot</span>(sp2_space)
-<span class="kw">plot</span>(sp3_space)
-<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))<span class="er">)</span></code></pre>
-<p>Here, we can see that the prioritisations that explictly consider the space targets do a much better job at preserving different parts of the species’ distributions. Before, when only considering area targets, the prioritisation for the constant species was seemingly random. But now, the prioritisation is spread out across the species’ distribution. The prioritisaiton for the normal species now captures the core distribution of the species and also parts of its range margin. Lastly, the prioritisation for the bimodally species captures both of eco-types. These results show that the inclusion of space targets in the reserve selection process can significantly change the resulting prioritisation.</p>
+<span class="kw">plot</span>(sp3_space)</code></pre>
+<p>Here, we can see that the prioritisations that explictly consider the space targets do a much better job at preserving different parts of the species’ distributions. Before, when only considering area targets, the prioritisation for the uniform species was seemingly random. But now, the prioritisation is spread out across the species’ distribution. The prioritisaiton for the normal species now captures the core distribution of the species and also parts of its range margin. Lastly, the prioritisation for the bimodally species captures both of eco-types. These results show that the inclusion of space targets in the reserve selection process can significantly change the resulting prioritisation.</p>
 </div>
 <div id="multi-species-prioritisations" class="section level3">
 <h3>Multi-species prioritisations</h3>
-<p>Thus far we have generated prioritisations for only one species at a time. However, real-world prioritisations are often generated for multiple-species. Here, we will generate prioritisations for all three of the simulated species. First, we will generate a prioritisation that only aims to preserve 20% of their area they occupy. Then, we will generate a prioritisation that also aims to preserve a representative portion of their geographic distribution. After doing this we will compare the two prioritisations.</p>
+<p>Previously, we have generated prioritisations for only one species at a time. However, real-world prioritisations are often generated for multiple-species. Here, we will generate prioritisations for all three of the simulated species. First, we will generate a prioritisation that only aims to preserve 20% of the area they occupy. Then, we will generate a prioritisation that also aims to preserve a representative portion of their geographic distribution. After doing this we will compare the two prioritisations.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make prioritisations</span>
-sim_mru_area&lt;-<span class="kw">solve</span>(sim_ru_area)
-sim_mru_space&lt;-<span class="kw">solve</span>(sim_ru_space)
+sim_mrs_area &lt;-<span class="st"> </span><span class="kw">solve</span>(sim_ru_area)
+sim_mrs_space &lt;-<span class="st"> </span><span class="kw">solve</span>(sim_ru_space)
 
 <span class="co"># plot prioritisations</span>
-<span class="kw">plot</span>(sim_mru_area)
-<span class="kw">plot</span>(sim_mru_space)</code></pre>
+<span class="kw">plot</span>(sim_mrs_area)
+<span class="kw">plot</span>(sim_mrs_space)</code></pre>
+<p>Here we can see that the inclusion of space-based targets to ensure that prioritisations secure a representative portion of the species’ range changes the both the selection of planning units and also the number of planning units that are selected. The area-based prioritistion is comprised of <code>sum(sim_mrs_area@results@selections[1,])</code> units, and the space-based prioritisation is comprised of <code>sum(sim_mrs_space@results@selections[1,])</code> units. These simulated species demonstrate that under the simplest of distributions the inclusion of space-based targets can result in different prioritisations. However, real world planning exercises may use attribute spaces that have a complex relationship with geographic space, and this will affect the difference of including space-based targets.</p>
 </div>
 </div>
 <div id="case-study-examples" class="section level2">
 <h2>Case-study examples</h2>
+<div id="overview-1" class="section level3">
+<h3>Overview</h3>
+<p>Here we will investigate how including space-based targets can affect prioritisations using a real-world dataset. We will generate prioritisations for the pale-headed rosella (<em>Platycercus adscitus</em>). This Australian bird species persists across broad environmental gradients across north-eastern Australia. Firstly, we will generate a typical area-based prioritisation that aims to capture 20% of its distribution. Then we will generate a prioritisation that aims to capture the neutral evolutionary processes acting on this species. To do this we will generate a prioritisation that secures indiviudals in different parts of its geographic range. Next, we will generate a prioritisation that aims to capture the adaptive evolutionary processes acting on this species, by securing individuals in different environmental conditions. Lastly, we will also generate a prioritisation that secures both of these processes and see how this prioritisations compares to the previous prioritisations.</p>
+</div>
 <div id="data-1" class="section level3">
 <h3>Data</h3>
+<p>Survey data for this species was obtained from <a href="http://birdlife.org.au/projects/atlas-and-birdata">BirdLife Australia</a>. This was used to generate a probability map (1km^2 resolution) of its distribution across Australia. To improve the accuracy of this map, areas well outside of its known distribution were set to 0. This was acheived by masking out <a href="https://www.environment.gov.au/land/nrs/science/ibra">biogeographic regions</a> where the species was not observed and did not have a neighboring region where the species was observed. The resulting map is stored in the <code>cs_spp</code> object.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load data</span>
+<span class="kw">data</span>(cs_spp)
+
+<span class="co"># plot species distribution</span>
+<span class="kw">plot</span>(cs_spp)</code></pre>
+<p>Planning units (10km^2 resolution) were generated across Australia, and then clipped to the (Queensland state borders and coastline)[<a href="http://www.abs.gov.au/ausstats/abs">http://www.abs.gov.au/ausstats/abs</a>@.nsf/mf/1259.0.30.001?OpenDocument]. To ensure our prioritisations include information on the distribution of existing protected areas, <a href="http://www.protectedplanet.net/">Australia’s current protected area network</a> were intersected with the planning units. Planning units with more than 50% of their area inside a protected area had their status set to two (following conventions in (Marxan)[<a href="http://www.uq.edu.au/marxan/tutorial/module4.html">http://www.uq.edu.au/marxan/tutorial/module4.html</a>]). Since we do not have cost data, the prioritisations will aim to select the minimum number of planning units required to meet the targets. The planning units are in the <code>cs_pu</code> object.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load data</span>
+<span class="kw">data</span>(cs_pu)
+
+## plot planning units
+<span class="co"># denote units not inside a protected area with white</span>
+<span class="kw">plot</span>(cs_pu[<span class="kw">which</span>(cs_pu$status==<span class="dv">0</span>),], <span class="dt">col=</span><span class="st">'white'</span>)
+
+<span class="co"># denote units inside a protected area with green</span>
+<span class="kw">plot</span>(cs_pu[<span class="kw">which</span>(cs_pu$status==<span class="dv">2</span>),], <span class="dt">col=</span><span class="st">'white'</span>)</code></pre>
+<p>To map the distribution of environmental conditions across the species’ range, 21 <a href="http://www.worldclim.org/bioclim">bioclimatic layers</a> were obtained. These layers were cropped to Australia and subject to <a href="http://cc.oulu.fi/~jarioksa/softhelp/vegan/html/decorana.html">detrended correspondance analysis</a> to produce two new variables (explaning XX percent of the variation). These layers are stored in the <code>cs_space</code> object.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># set up plotting window</span>
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
+<span class="co"># plot first variable</span>
+<span class="kw">plot</span>(cs_space[[<span class="dv">1</span>]])
+
+<span class="co"># plot second variable</span>
+<span class="kw">plot</span>(cs_space[[<span class="dv">2</span>]])
+
+<span class="co"># reset window</span>
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</code></pre>
 </div>
 <div id="prioritisations" class="section level3">
 <h3>Prioritisations</h3>
+<p>To simplify the process of formatting data and generating prioritisations, we can use the <code>rasp</code> function. First, we will generate an area-based prioritisation that aims to capture 20% of the rosella’s range. We will use 100 demand points to map the geographic and environmental spaces.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make area-based prioritisation</span>
+cs_rs_area &lt;-<span class="st"> </span><span class="kw">rasp</span>(cs_pus, cs_species, cs_spaces, <span class="dt">area.targets=</span><span class="fl">0.2</span>, <span class="dt">space.targets=</span><span class="fl">0.2</span>, <span class="dt">n.demand.points=</span>100L, <span class="dt">include.geographic.space=</span><span class="ot">TRUE</span>, <span class="dt">formulation=</span><span class="st">'unreliable'</span>)
+
+<span class="co"># plot prioritisation</span>
+<span class="kw">plot</span>(cs_rs_area)
+
+<span class="co"># plot prioritisation in environmental space</span>
+<span class="kw">space.plot</span>(cs_rs_area)</code></pre>
+</div>
+<div id="fragmentation" class="section level3">
+<h3>Fragmentation</h3>
 </div>
 </div>
 

@@ -19,7 +19,8 @@ test_that('RaspData', {
 	# create object
 	x<-RaspData(
 		pu=cs_pus@data[1:10,],
-		species=data.frame(area.target=0.2, space.target=0.2, name='test'),
+		targets=data.frame(species=1L, target=c(0L,1L), proportion=0.2),
+		species=data.frame(name='test'),
 		pu.species.probabilities=pu.species.probabilities,
 		attribute.spaces=attribute.spaces,
 		polygons=polygons,
@@ -43,18 +44,17 @@ test_that('make.RaspData (1 species)', {
 test_that('make.RaspData (multiple species)', {
 	# create RaspUnsolved object
 	set.seed(500)
-	data(sim_pus, sim_spp)
-	ro<-RaspUnreliableOpts()
-	rd<-make.RaspData(sim_pus, sim_spp, NULL, include.geographic.space=TRUE, n.demand.points=5L)
+	pus<-sim.pus(225L)
+	spp<-lapply(c('uniform', 'normal', 'bimodal'), sim.species, n=1, res=1, x=pus)
+	rd<-make.RaspData(pus,stack(spp), NULL, include.geographic.space=TRUE, n.demand.points=5L)
 	# validity checks are internal
 })
 
 test_that('pu.subset.RaspData', {
 	# create RaspUnsolved object
 	set.seed(500)
-	data(sim_pus, sim_spp)
-	ro<-RaspUnreliableOpts()
-	rd<-make.RaspData(sim_pus, sim_spp, NULL, include.geographic.space=TRUE, n.demand.points=5L)
+	data(sim_ru)
+	rd<-sim_ru@data
 	rd2<-pu.subset(rd, 1:10)
 	# tests
 	expect_equal(nrow(rd2@pu), 10)
@@ -67,34 +67,79 @@ test_that('pu.subset.RaspData', {
 
 test_that('spp.subset.RaspData', {
 	# create RaspUnsolved object
-	set.seed(500)
-	data(sim_pus, sim_spp)
-	ro<-RaspUnreliableOpts()
-	rd<-make.RaspData(sim_pus, sim_spp, NULL, include.geographic.space=TRUE, n.demand.points=5L)
+	data(sim_ru)
+	rd<-sim_ru@data
 	rd2<-spp.subset(rd, 1)
 	# tests
 	expect_equal(nrow(rd2@species), 1)
 	expect_true(all(rd2@pu.species.probabilities$species==1L))
 	expect_equal(length(rd2@attribute.spaces[[1]]@dp), 1)
+	expect_true(all(rd2@targets$species==1L))
+	expect_equal(nrow(rd2@targets), 2)
 })
 
 test_that('update.RaspData', {
 	# generate objects
 	data(sim_ru)
 	x=sim_ru@data
-	y=update(x, name=c('a', 'b', 'c'), area.target=c(0.1,0.2,0.3), space.target=c(0.4,0.5,0.6))
-	# tests
+	y=update(x, name=c('a', 'b', 'c'), amount.target=c(0.1,0.2,0.3), space.target=c(0.4,0.5,0.6))
+	z=update(y, species=1, name='a1', amount.target=0.9, space.target=0.8)
+	# y tests
 	expect_equal(y@species$name, c('a', 'b', 'c'))
-	expect_equal(y@species$area.target, c(0.1,0.2,0.3))
-	expect_equal(y@species$space.target, c(0.4,0.5,0.6))
+	expect_equal(y@targets$proportion[which(y@targets$target==0)], c(0.1,0.2,0.3))
+	expect_equal(y@targets$proportion[which(y@targets$target==1)], c(0.4,0.5,0.6))
+	# z tests
+	expect_equal(z@species$name, c('a1', 'b', 'c'))
+	expect_equal(z@targets$proportion[which(z@targets$target==0)], c(0.9,0.2,0.3))
+	expect_equal(z@targets$proportion[which(z@targets$target==1)], c(0.8,0.5,0.6))
 })
 
 test_that('amount.target.RaspData', {
-	data(sim_rs)
-	expect_equal(amount.target(sim_rs@data), sim_rs@data@species$amount.target)
+	data(sim_ru)
+	expect_equal(
+		unname(amount.target(sim_ru@data)),
+		rep(0.2, 3)
+	)
+	expect_equal(
+		unname(amount.target(sim_ru@data, 1)),
+		0.2
+	)
+})
+
+test_that('amount.target<-.RaspData', {
+	data(sim_ru)
+	sim_rd<-sim_ru@data
+	amount.target(sim_rd)<-0.3
+	expect_equal(unname(amount.target(sim_rd)), rep(0.3, 3))
+	amount.target(sim_rd, 1)<-0.5
+	expect_equal(unname(amount.target(sim_rd)), c(0.5, 0.3, 0.3))
 })
 
 test_that('space.target.RaspData', {
-	data(sim_rs)
-	expect_equal(space.target(sim_rs@data), sim_rs@data@species$space.target)
+	data(sim_ru)
+	expect_equal(
+		unname(space.target(sim_ru@data)[,1]),
+		rep(0.2, 3)
+	)
+	expect_equal(
+		unname(space.target(sim_ru@data, species=1)[,1]),
+		rep(0.2)
+	)
+	expect_equal(
+		unname(space.target(sim_ru@data, space=1)[,1]),
+		rep(0.2, 3)
+	)
+	expect_equal(
+		unname(space.target(sim_ru@data, species=1, space=1)[,1]),
+		0.2
+	)
+})
+
+test_that('space.target<-.RaspData', {
+	data(sim_ru)
+	sim_rd<-sim_ru@data
+	space.target(sim_rd)<-0.3
+	expect_equal(unname(space.target(sim_rd)[,1]), rep(0.3, 3))
+	space.target(sim_rd, 1)<-0.5
+	expect_equal(unname(space.target(sim_rd)[,1]), c(0.5, 0.3, 0.3))
 })

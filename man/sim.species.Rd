@@ -8,8 +8,8 @@
 \usage{
 sim.species(x, ...)
 
-\method{sim.species}{RasterLayer}(x, n = 1, model = list("normal",
-  "constant", "bimodal", RPgauss())[[1]], ...)
+\method{sim.species}{RasterLayer}(x, n = 1, model = list("uniform",
+  "normal", "bimodal", RPgauss())[[1]], ...)
 
 \method{sim.species}{SpatialPolygons}(x, res, n = 1, model = list("normal",
   "uniform", "bimodal", RPgauss())[[1]], ...)
@@ -35,12 +35,13 @@ This function simulates species distributions for RASP.
 Distributions are simulated by passing \code{model} to \code{\link[RandomFields]{RFsimulate}} and converting to logistic values using \code{\link[boot]{inv.logit}}.
 }
 \examples{
-data(sim_pus)
-# simulate 1 constant species distribution using RasterLayer
-s1 <- sim.species(blank.raster(sim_pus, 1), n=1, model='constant')
+# make polygons
+sim_pus <- sim.pus(225L)
+# simulate 1 uniform species distribution using RasterLayer
+s1 <- sim.species(blank.raster(sim_pus, 1), n=1, model='uniform')
 
-# simulate 1 constant species distribution based on SpatialPolygons
-s2 <- sim.species(sim_pus, res=1, n=1, model='constant')
+# simulate 1 uniform species distribution based on SpatialPolygons
+s2 <- sim.species(sim_pus, res=1, n=1, model='uniform')
 
 # simulate 1 normal species distributions
 s3 <- sim.species(sim_pus, res=1, n=1, model='normal')

@@ -33,13 +33,6 @@ calcSpeciesAverageInPus.SpatialPolygonsDataFrame<-function(x,y,ids=seq_len(nlaye
 	} else {
 		x@data<-data.frame(id=x@data[[field]], row.names=row.names(x@data))
 	}
-	# set zero values in raster to NA to speed up processing
-	if (inherits(y,c('RasterStack','RasterBrick'))) {
-		for (i in seq_len(nlayers(y)))
-			y[[i]][Which(y[[i]]==0)]<-NA
- 	} else { 
-		y[Which(y==0)]<-NA
-	}
 	# generate raster layer with polygons
 	if (gdal & is.gdalInstalled()) {
 		x<-rasterizeGDAL(x, y[[1]], "id")
@@ -50,4 +43,4 @@ calcSpeciesAverageInPus.SpatialPolygonsDataFrame<-function(x,y,ids=seq_len(nlaye
 	}
 	# main processing
 	return(zonalMean(x, y, ids, ncores))
-} 
+}

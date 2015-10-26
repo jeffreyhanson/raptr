@@ -11,7 +11,7 @@ NULL
 #' @slot space.held \code{matrix} with the poportion of attribute space sampled for each species in each solution.
 #' @slot best \code{integer} with index of best solution.
 #' @slot logging.file \code{character} Gurobi log files.
-#' @slot .cache \code{environment} used to store extra data. 
+#' @slot .cache \code{environment} used to store extra data.
 #' @export
 #' @seealso \code{\link{RaspResults}}, \code{\link{read.RaspResults}}.
 setClass("RaspResults",
@@ -95,7 +95,7 @@ space.held.RaspResults<-function(x, y=0) {
 		return(x@space.held[x@best,])
 	return(x@space.held[y,])
 }
-	
+
 #' @rdname logging.file
 #' @inheritParams logging.file
 #' @export
@@ -129,8 +129,8 @@ setMethod(
 
 #' @describeIn is.cached
 setMethod(
-	f="is.cached", 
-	signature(x="RaspResults", name="character"), 
+	f="is.cached",
+	signature(x="RaspResults", name="character"),
 	function(x,name) {
 		return(!is.null(x@.cache[[name]]))
 	}
@@ -138,8 +138,8 @@ setMethod(
 
 #' @describeIn cache
 setMethod(
-	f="cache", 
-	signature(x="RaspResults", name="character", y="ANY"), 
+	f="cache",
+	signature(x="RaspResults", name="character", y="ANY"),
 	function(x, name, y) {
 		x@.cache[[name]]=y
 	}
@@ -147,8 +147,8 @@ setMethod(
 
 #' @describeIn cache
 setMethod(
-	f="cache", 
-	signature(x="RaspResults", name="character", y="missing"), 
+	f="cache",
+	signature(x="RaspResults", name="character", y="missing"),
 	function(x, name, y) {
 		return(x@.cache[[name]])
 	}

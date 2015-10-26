@@ -31,8 +31,8 @@ load(sim_rs)
 selections(sim_rs, 0)
 # selections for second solution
 selections(sim_rs, 2)
-#selections for each solution
-selections(sim_rs, NULL)
+# selections for each solution
+selections(sim_rs)
 }
 \seealso{
 \code{RaspResults}, \code{RaspSolved}.

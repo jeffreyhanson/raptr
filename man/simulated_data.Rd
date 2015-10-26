@@ -2,24 +2,13 @@
 % Please edit documentation in R/data.R
 \docType{data}
 \name{simulated_data}
-\alias{sim_dps}
-\alias{sim_pus}
 \alias{sim_rs}
 \alias{sim_ru}
-\alias{sim_spp}
 \alias{simulated_data}
 \title{Simulated dataset for a conservation planning exercise}
 \format{\code{SpatialPolyognsDataFrame}, \code{RasterStack}, \code{list} of \code{DemandPoint} objects.}
 \usage{
-sim_pus
-
-sim_spp
-
-sim_dps
-
 sim_ru
-
-sim_rs
 }
 \description{
 This dataset contains all the data needed to generate prioritisations for three simulated species. This dataset contains planning units, species distribution
@@ -27,7 +16,7 @@ maps, and demand points for each species. For the purposes of exploring the beha
 and the probability that they are occupied by the species. Note that methodology is not encouraged for real-world conservation planning.
 The species were simulated to represent different simplified versions of species distributions encountered:
 \itemize{
-	\item constant: This species has an equal probability (0.5) of occuring in all planning units.
+	\item uniform: This species has an equal probability (0.5) of occuring in all planning units.
 	\item normal: This species has a single range-core where it is most likely to be found. It is less likely to be found in areas further away from the centre of its range.
 	\item bimodal: This species has two distinct ecotypes. Each ecotype has its own range cores and range marginal areas.
 }
@@ -35,19 +24,15 @@ The species were simulated to represent different simplified versions of species
 \details{
 The objects contained in this dataset are:
 \itemize{
-	\item sim_pus: A \code{SpatialPolygonsDataFrame} with 225 planning units.
-	\item sim_spp: A \code{RasterStack} containg probability distribution data for each of the species.
-	\item sim_dps: A \code{list} of \code{DemandPoints} for each species.
 	\item sim_ru: A \code{RaspUnsolved} object with all the simulated data.
-	\item sim_rs: A \code{RaspSolved} object with the optimal solution.
+	\item sim_rs: A \code{RaspSolved} object with 5 near-optimal solutions.
 }
 }
 \examples{
 # load data
-data(sim_pus, sim_spp, sim_dps, sim_ru, sim_rs)
+data(sim_ru, sim_rs)
 # plot data
-plot(sim_pus)
-plot(sim_spp)
+plot(sim_ru)
 plot(sim_rs)
 }
 \keyword{datasets}

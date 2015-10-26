@@ -8,7 +8,6 @@ NULL
 #' @slot BLM \code{numeric} boundary length modifier. Defaults to 0.
 #' @slot FAILUREMULTIPLIER \code{numeric} multiplier for failure planning unit. Defaults to 1.1.
 #' @slot MAXRLEVEL \code{numeric} maximum R failure level for approximation. Defaults to 5L.
-#' @slot NUMREPS \code{integer} number of replicate runs. Defaults to 1L.
 #' @export
 setClass("RaspReliableOpts",
 	representation(
@@ -82,20 +81,14 @@ setMethod(
 #' @rdname update
 #' @method update RaspReliableOpts
 #' @export
-update.RaspReliableOpts<-function(object, ..., ignore.extra=FALSE) {
-	# deparse arguments
-	params<-as.list(substitute(list(...)))[-1L]
-	if (!ignore.extra & any(!names(params) %in% slotNames('RaspReliableOpts')))
-		stop(
-			paste0(
-				paste(names(params)[!names(params) %in% slotNames('RaspReliableOpts')], collapse=', '),
-				' is not a slot(s) in RaspReliableOpts'
-			)
-		)
-	params<-params[which(names(params) %in% slotNames('RaspReliableOpts'))]
-	# update parameters
-	for (i in seq_along(params))
-		slot(object, names(params)[i]) <- eval(params[[i]])
+update.RaspReliableOpts<-function(object, BLM=NULL, FAILUREMULTIPLIER=NULL, MAXRLEVEL=NULL) {
+	# update params
+	if (!is.null(BLM))
+		object@BLM<-BLM
+	if (!is.null(FAILUREMULTIPLIER))
+		object@FAILUREMULTIPLIER<-FAILUREMULTIPLIER
+	if (!is.null(MAXRLEVEL))
+		object@MAXRLEVEL<-MAXRLEVEL
 	# check object for validity
 	validObject(object, test=FALSE)
 	# return object

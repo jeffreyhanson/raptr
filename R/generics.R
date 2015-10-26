@@ -18,7 +18,9 @@ NULL
 #' @seealso \code{\link{is.gdalInstalled}}, \url{http://www.gdal.org/}, \url{http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries}.
 #' @export
 #' @examples
-#' data(sim_pus, sim_spp)
+#' # simulate data
+#' sim_pus <- sim.pus(225L)
+#' sim_spp <- lapply(c('uniform','normal','bimodal'), sim.species, n=1)
 #' # calculate average for 1 species
 #' puvspr1.dat<-calcSpeciesAverageInPus(sim_pus, sim_spp[[1]])
 #' # calculate average for multiple species
@@ -39,12 +41,13 @@ calcSpeciesAverageInPus<-function(x, ...) UseMethod("calcSpeciesAverageInPus")
 #' @seealso \code{\link[RandomFields]{RFsimulate}}.
 #' @export sim.species
 #' @examples
-#' data(sim_pus)
-#' # simulate 1 constant species distribution using RasterLayer
-#' s1 <- sim.species(blank.raster(sim_pus, 1), n=1, model='constant')
+#' # make polygons
+#' sim_pus <- sim.pus(225L)
+#' # simulate 1 uniform species distribution using RasterLayer
+#' s1 <- sim.species(blank.raster(sim_pus, 1), n=1, model='uniform')
 #'
-#' # simulate 1 constant species distribution based on SpatialPolygons
-#' s2 <- sim.species(sim_pus, res=1, n=1, model='constant')
+#' # simulate 1 uniform species distribution based on SpatialPolygons
+#' s2 <- sim.species(sim_pus, res=1, n=1, model='uniform')
 #'
 #' # simulate 1 normal species distributions
 #' s3 <- sim.species(sim_pus, res=1, n=1, model='normal')
@@ -81,7 +84,8 @@ sim.species<-function(x, ...) UseMethod('sim.species')
 #' @export sim.space
 #' @name sim.space
 #' @examples
-#' data(sim_pus)
+#' # simulate plannign units
+#' sim_pus <- sim.pus(225L)
 #'
 #' # simulate 1d space using RasterLayer
 #' s1 <- sim.space(blank.raster(sim_pus, 1), d=1)
@@ -253,13 +257,28 @@ NULL
 #'
 #' This function updates parameters or data stored in an existing \code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
 #'
-#' @param object \code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object..
-#' @param ... parameters to update.
-#' @param ignore.extra \code{logical} should extra invalid arguments be ignored? Defaults to \code{FALSE}.
+#' @param object \code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
+#' @param Threads \code{integer} number of cores to use for processing.
+#' @param MIPGap \code{numeric} MIP gap specifying minimum solution quality.
+#' @param Presolve \code{integer} code for level of computation in presolve.
+#' @param TimeLimit \code{integer} number of seconds to allow for solving.
+#' @param NumberSolutions \code{integer} number of solutions to generate.
+#' @param BLM \code{numeric} boundary length modifier.
+#' @param FAILUREMULTIPLIER \code{numeric} multiplier for failure planning unit.
+#' @param MAXRLEVEL \code{numeric} maximum R failure level for approximation.
+#' @param species \code{integer} or \code{character} denoting species for which targets or name should be updated.
+#' @param space \code{integer} denoting space for which targets should be updated.
+#' @param name \code{character} to rename species.
+#' @param amount.target \code{numeric} vector for new area targets (\%) for the specified species.
+#' @param space.target \code{numeric} vector for new attribute space targets (\%) for the specified species and attribute spaces.
+#' @param pu \code{integer} planning unit indices that need to be updated.
+#' @param status \code{integer} new statuses for specified planning units.
+#' @param cost \code{numeric} new costs for spcified planning units.
+#' @param ... parameters passed to \code{update.RaspReliableOpts}, \code{update.RaspUnreliableOpts}, or \code{update.RaspData}.
 #' @param solve \code{logical} should the problem be solved? This argument is only valid for \code{RaspUnsolved} and \code{RaspSolved} objects. Defaults to \code{TRUE}.
 #' @name update
-#' @return \code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, or \code{RaspUnsolved} object depending on \code{x}.
-#' @seealso \code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, or \code{RaspUnsolved}.
+#' @return \code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object depending on \code{x}.
+#' @seealso \code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, \code{RaspUnsolved}, \code{RaspSolved}.
 #' @export
 #' @examples
 #' # load data
@@ -398,20 +417,33 @@ logging.file<-function(x,y) UseMethod('logging.file')
 #' amount.held(sim_rs, NULL)
 amount.held<-function(x,y) {UseMethod('amount.held')}
 
-#' Extract amount targets
+#' Amount targets
 #'
-#' This function returns the amount targets for each species.
+#' This function sets or returns the target amounts for each species.
 #'
 #' @param x \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
+#' @param species \code{NULL} for all species or \code{integer} indicating species.
+#' @param value \code{numeric} new target.
 #' @return code{numeric} vector.
 #' @seealso \code{RaspData}, \code{RaspResults}, \code{RaspSolved}.
 #' @export
+#' @name amount.target
 #' @examples
 #' # load data
 #' load(sim_rs)
-#' # extract amount targets
+#' # extract amount targets for all species
 #' amount.target(sim_rs)
-amount.target<-function(x) {UseMethod('amount.target')}
+#' # set amount targets for all species
+#' amount.target(sim_rs) <- 0.1
+#' # extract amount targets for first species
+#' amount.target(sim_rs, 1)
+#' # set amount targets for for first species
+#' amount.target(sim_rs, 1) <- 0.5
+amount.target<-function(x, species) {UseMethod('amount.target')}
+
+#' @rdname amount.target
+#' @export
+`amount.target<-`<-function(x, species, value) {UseMethod('amount.target<-')}
 
 #' Extract attribute space held for a solution
 #'
@@ -429,23 +461,37 @@ amount.target<-function(x) {UseMethod('amount.target')}
 #' # space held (%) for each species in second solution
 #' space.held(sim_rs, 2)
 #' # space held (%) for each species in each solution
-#' space.held(sim_rs, NULL)
+#' space.held(sim_rs)
 space.held<-function(x,y) {UseMethod('space.held')}
 
-#' Extract attribute space targets
+#' Attribute space targets
 #'
-#' This function returns the attribute space targets for each species.
+#' This function sets or returns the attribute space targets for each species.
 #'
 #' @param x \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
-#' @return code{numeric} vector.
+#' @param species \code{NULL} for all species or \code{integer} indicating species.
+#' @param space \code{NULL} for all spaces or \code{integer} indicating a specific space.
+#' @param value \code{numeric} new target..
+#' @return \code{numeric matrix}.
 #' @seealso \code{RaspData}, \code{RaspResults}, \code{RaspSolved}.
 #' @export
+#' @name space.target
 #' @examples
 #' # load data
 #' load(sim_rs)
-#' # extract space targets
+#' # extract space targets for all species
 #' space.target(sim_rs)
-space.target<-function(x) {UseMethod('space.target')}
+#' # set space targets for all species
+#' space.target(sim_rs) <- 0.1
+#' # extract target for first species for first space
+#' space.target(sim_rs, 1, 1)
+#' # set space targets for first species for first space
+#' space.target(sim_rs, 1, 1) <- 0.5
+space.target<-function(x, species, space) {UseMethod('space.target')}
+
+#' @rdname space.target
+#' @export
+`space.target<-`<-function(x, species, space, value) {UseMethod('space.target<-')}
 
 #' Extract solution selections
 #'
@@ -463,8 +509,8 @@ space.target<-function(x) {UseMethod('space.target')}
 #' selections(sim_rs, 0)
 #' # selections for second solution
 #' selections(sim_rs, 2)
-#' #selections for each solution
-#' selections(sim_rs, NULL)
+#' # selections for each solution
+#' selections(sim_rs)
 selections<-function(x, y) {UseMethod('selections')}
 
 #' Convert SpatialPolygons to PolySet data
@@ -478,8 +524,8 @@ selections<-function(x, y) {UseMethod('selections')}
 #' @seealso For a slower, more stable equivalent see \code{\link[maptools]{SpatialPolygons2PolySet}}.
 #' @export
 #' @examples
-#' # load SpatialPolygons object
-#' data(sim_pus)
+#' # generate SpatialPolygons object
+#' sim_pus <- sim.pus(225L)
 #' # convert to PolySet
 #' x <- SpatialPolygons2PolySet(sim_pus)
 SpatialPolygons2PolySet<-function(x, n_preallocate) UseMethod("SpatialPolygons2PolySet")

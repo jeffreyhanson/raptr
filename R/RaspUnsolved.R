@@ -59,12 +59,7 @@ setMethod(
 		}
 
 		# generate model object
-		rcpp_function_name<-ifelse(
-			inherits(x@opts, 'RaspReliableOpts'),
-			'rcpp_generate_reliable_model_object',
-			'rcpp_generate_unreliable_model_object'
-		)
-		model=do.call(rcpp_function_name, list(x@opts, x@data, verbose))
+		model=rcpp_generate_model_object(x@opts, inherits(x@opts, 'RaspUnreliableOpts'), x@data, verbose)
 		model$A=sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value)
 		## first run
 		# run model
@@ -181,33 +176,4 @@ space.plot.RaspUnsolved<-function(
 	locked.out.color="#D7D7D7FF"
 ) {
 	space.plot.RaspData(x@data, y, space, pu.color.palette, locked.in.color, locked.out.color)
-}
-
-
-#' @rdname update
-#' @method update RaspUnsolved
-#' @export
-update.RaspUnsolved<-function(object, ..., solve=TRUE) {
-	object<-RaspUnsolved(
-		opts=update(object@opts, ..., ignore.extra=TRUE),
-		solver=update(object@solver, ..., ignore.extra=TRUE),
-		data=update(object@data, ..., ignore.extra=TRUE)
-	)
-	if (solve)
-		object<-solve(object)
-	return(object)
-}
-
-#' @rdname amount.target
-#' @method amount.target RaspUnsolved
-#' @export
-amount.target.RaspUnsolved<-function(x) {
-	amount.target.RaspData(x@data)
-}
-
-#' @rdname space.target
-#' @method space.target RaspUnsolved
-#' @export
-space.target.RaspUnsolved<-function(x) {
-	space.target.RaspData(x@data)
 }
