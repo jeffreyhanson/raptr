@@ -1,5 +1,9 @@
-# *.o
-# *.so
-# *.dll
+# C++ compiled files
+*.o
+*.so
+*.dll
+
+# R profile files
 *.Rproj.user
 *.Rhistory
+
