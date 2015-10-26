@@ -538,13 +538,14 @@ mergeRaspResults<-function(x) {
 #' @param model.list \code{list} object containing Gurobi model data
 #' @param logging.file \code{character} Gurobi log files.
 #' @param solution.list \code{list} object containing Gurobi solution data.
+#' @param verbose \code{logical} print progress messages? Defaults to \code{FALSE}.
 #' @keywords internal
 #' @return \code{RaspResults} object
 #' @seealso \code{\link{RaspReliableOpts}}, \code{\link{RaspUnreliableOpts}}, \code{\link{RaspData}}, \code{\link{RaspResults}}.
-read.RaspResults=function(opts, data, model.list, logging.file, solution.list) {
+read.RaspResults=function(opts, data, model.list, logging.file, solution.list, verbose=FALSE) {
   x=rcpp_extract_model_object(
     opts, inherits(opts, 'RaspUnreliableOpts'),
-    data, model.list, logging.file, solution.list
+    data, model.list, logging.file, solution.list, verbose
   )
 	x@.cache=new.env()
 	return(x)

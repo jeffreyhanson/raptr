@@ -77,7 +77,7 @@ setMethod(
 		}
 
 		# store results
-		results=list(read.RaspResults(x@opts, x@data, model, paste(readLines(log.pth), collapse="\n"), solution))
+		results=list(read.RaspResults(x@opts, x@data, model, paste(readLines(log.pth), collapse="\n"), solution, verbose))
 		existing.solutions=list(selections(results[[1]]))
 
 		## subsequent runs
@@ -101,7 +101,7 @@ setMethod(
 			}
 
 			# store results
-			currResult=read.RaspResults(x@opts,x@data, model, paste(readLines(log.pth), collapse="\n"), solution)
+			currResult=read.RaspResults(x@opts,x@data, model, paste(readLines(log.pth), collapse="\n"), solution, verbose)
 			results=append(results,currResult)
 			existing.solutions=append(existing.solutions, list(selections(currResult)))
 		}

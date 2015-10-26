@@ -7,3 +7,5 @@
 *.Rproj.user
 *.Rhistory
 
+# log files
+gurobi.log

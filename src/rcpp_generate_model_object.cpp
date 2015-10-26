@@ -892,7 +892,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 				Rcpp::Named("best_amount_values") = Rcpp::wrap(speciesareaDBL),
 				Rcpp::Named("space_targets") = Rcpp::wrap(speciesspaceMTX),
 				Rcpp::Named("best_space_values") = Rcpp::wrap(best_speciesspaceMTX),
-				Rcpp::Named("worse_space_values") = Rcpp::wrap(worst_speciesspaceMTX),
+				Rcpp::Named("worst_space_values") = Rcpp::wrap(worst_speciesspaceMTX),
 
 				Rcpp::Named("variables") = Rcpp::wrap(variablesSTR)
 			),

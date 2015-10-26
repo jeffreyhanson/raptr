@@ -1,8 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.travis\.yml$
-admin
-admin.R
 NEWS.md
 gurobi.log
 cran-comments.md
