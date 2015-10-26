@@ -8,4 +8,4 @@
 *.Rhistory
 
 # log files
-# gurobi.log
+gurobi.log
