@@ -7,6 +7,11 @@
 \alias{simulated_data}
 \title{Simulated dataset for a conservation planning exercise}
 \format{\code{SpatialPolyognsDataFrame}, \code{RasterStack}, \code{list} of \code{DemandPoint} objects.}
+\usage{
+sim_ru
+
+sim_rs
+}
 \description{
 This dataset contains all the data needed to generate prioritisations for three simulated species. This dataset contains planning units, species distribution
 maps, and demand points for each species. For the purposes of exploring the behaviour of the problem, demand points were generated using the centroids of planning units

@@ -13,7 +13,7 @@
 \method{update}{GurobiOpts}(object, Threads = NULL, MIPGap = NULL,
   Presolve = NULL, TimeLimit = NULL, NumberSolutions = NULL)
 
-\method{update}{ManualOpts}(object, NumberSolutions)
+\method{update}{ManualOpts}(object, NumberSolutions = NULL)
 
 \method{update}{RaspData}(object, species = NULL, space = NULL,
   name = NULL, amount.target = NULL, space.target = NULL, pu = NULL,

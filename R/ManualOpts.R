@@ -65,6 +65,8 @@ setMethod(
 #' @rdname update
 #' @method update ManualOpts
 #' @export
-update.ManualOpts<-function(object, NumberSolutions) {
-	stop('Solver parameters cannot be updated for manually specified solutions.')
+update.ManualOpts<-function(object, NumberSolutions=NULL) {
+	if (!is.null(NumberSolutions))
+		stop('Solver parameters cannot be updated for manually specified solutions.')
+	return(object)
 }

@@ -4,10 +4,23 @@
 \name{casestudy_data}
 \alias{casestudy_data}
 \alias{cs_pus}
+\alias{cs_rs}
+\alias{cs_ru}
 \alias{cs_space}
 \alias{cs_spp}
 \title{Case-study dataset for a conservation planning exercise}
 \format{\code{SpatialPolyognsDataFrame}, \code{RasterLayer}, \code{RasterLayer}.}
+\usage{
+cs_pus
+
+cs_space
+
+cs_spp
+
+cs_ru
+
+cs_rs
+}
 \description{
 This dataset contains data to generate example prioritisations for the pale-headed Rosella (\emph{Platycercus adscitus}) in Queensland, Australia. Specific objects in the dataset include:
 \itemize{
