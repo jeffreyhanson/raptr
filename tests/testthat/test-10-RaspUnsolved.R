@@ -56,9 +56,9 @@ test_that('solve.RaspUnsolved (unreliable - NUMREPS=1)', {
 	data(sim_ru)
 	sim_ru <- pu.subset(sim_ru, 1:10)
 	# make unsolved object
-	ru<-RaspUnsolved(RaspUnreliableOpts(), GurobiOpts(MIPGap=0.99, Presolve=2L), sim_ru@data)
+	ru<-RaspUnsolved(RaspUnreliableOpts(), sim_ru@data)
 	# solve it
-	rs<-raspr::solve(ru)
+	rs<-raspr::solve(ru, GurobiOpts(MIPGap=0.99, Presolve=2L))
 })
 
 test_that('solve.RaspUnsolved (reliable - NUMREPS=1)', {
@@ -68,9 +68,9 @@ test_that('solve.RaspUnsolved (reliable - NUMREPS=1)', {
 	data(sim_ru)
 	sim_ru <- pu.subset(sim_ru, 1:10)
 	# make unsolved object
-	ru<-RaspUnsolved(RaspReliableOpts(), GurobiOpts(MIPGap=0.99, Presolve=2L), sim_ru@data)
+	ru<-RaspUnsolved(RaspReliableOpts(), sim_ru@data)
 	# solve it
-	rs<-raspr::solve(ru)
+	rs<-raspr::solve(ru, GurobiOpts(MIPGap=0.99, Presolve=2L))
 })
 
 test_that('solve.RaspUnsolved (unreliable - NumberSolutions=2)', {
@@ -80,9 +80,9 @@ test_that('solve.RaspUnsolved (unreliable - NumberSolutions=2)', {
 	data(sim_ru)
 	sim_ru <- pu.subset(sim_ru, 1:10)
 	# make unsolved object
-	ru<-RaspUnsolved(RaspUnreliableOpts(), GurobiOpts(MIPGap=0.99, Presolve=2L,NumberSolutions=2L), sim_ru@data)
+	ru<-RaspUnsolved(RaspUnreliableOpts(), sim_ru@data)
 	# solve it
-	rs<-raspr::solve(ru)
+	rs<-raspr::solve(ru, GurobiOpts(MIPGap=0.99, Presolve=2L,NumberSolutions=2L))
 })
 
 test_that('solve.RaspUnsolved (reliable - NUMREPS=2)', {
@@ -92,9 +92,9 @@ test_that('solve.RaspUnsolved (reliable - NUMREPS=2)', {
 	data(sim_ru)
 	sim_ru <- pu.subset(sim_ru, 1:10)
 	# make unsolved object
-	ru<-RaspUnsolved(RaspReliableOpts(), GurobiOpts(MIPGap=0.99, Presolve=2L,NumberSolutions=2L), sim_ru@data)
+	ru<-RaspUnsolved(RaspReliableOpts(), sim_ru@data)
 	# solve it
-	rs<-raspr::solve(ru)
+	rs<-raspr::solve(ru, GurobiOpts(MIPGap=0.99, Presolve=2L,NumberSolutions=2L))
 })
 
 
@@ -105,9 +105,9 @@ test_that('solve.RaspUnsolved (unreliable - number of requested solutions > numb
 	data(sim_ru)
 	sim_ru <- pu.subset(sim_ru, 1:10)
 	# make unsolved object
-	ru<-RaspUnsolved(RaspUnreliableOpts(), GurobiOpts(MIPGap=0.99, Presolve=2L,NumberSolutions=10L), sim_ru@data)
+	ru<-RaspUnsolved(RaspUnreliableOpts(), sim_ru@data)
 	# solve it
-	rs<-raspr::solve(ru)
+	rs<-raspr::solve(ru, GurobiOpts(MIPGap=0.99, Presolve=2L,NumberSolutions=10L))
 })
 
 test_that('solve.RaspUnsolved (reliable - number of requested solutions > number feasible solutions)', {
@@ -117,9 +117,9 @@ test_that('solve.RaspUnsolved (reliable - number of requested solutions > number
 	data(sim_ru)
 	sim_ru <- pu.subset(sim_ru, 1:10)
 	# make unsolved object
-	ru<-RaspUnsolved(RaspReliableOpts(), GurobiOpts(MIPGap=0.99, Presolve=2L,NumberSolutions=10L), sim_ru@data)
+	ru<-RaspUnsolved(RaspReliableOpts(), sim_ru@data)
 	# solve it
-	rs<-raspr::solve(ru)
+	rs<-raspr::solve(ru, GurobiOpts(MIPGap=0.99, Presolve=2L,NumberSolutions=10L))
 })
 
 
@@ -134,9 +134,9 @@ test_that('solve.RaspUnsolved (unreliable - STATUS test)', {
 	sim_ru@data@pu$status[2]=2
 	sim_ru@data@pu$status[3]=3
 	# make unsolved object
-	ru<-RaspUnsolved(RaspUnreliableOpts(), GurobiOpts(MIPGap=0.99, Presolve=2L), sim_ru@data)
+	ru<-RaspUnsolved(RaspUnreliableOpts(), sim_ru@data)
 	# solve it
-	rs<-raspr::solve(ru)
+	rs<-raspr::solve(ru, GurobiOpts(MIPGap=0.99, Presolve=2L))
 	# check that planning units locked in and out are set accordingly
 	expect_identical(selections(rs)[2], 1L)
 	expect_identical(selections(rs)[3], 0L)
@@ -153,9 +153,9 @@ test_that('solve.RaspUnsolved (reliable - STATUS test)', {
 	sim_ru@data@pu$status[2]=2
 	sim_ru@data@pu$status[3]=3
 	# make unsolved object
-	ru<-RaspUnsolved(RaspReliableOpts(), GurobiOpts(MIPGap=0.99, Presolve=2L), sim_ru@data)
+	ru<-RaspUnsolved(RaspReliableOpts(), sim_ru@data)
 	# solve it
-	rs<-raspr::solve(ru)
+	rs<-raspr::solve(ru, GurobiOpts(MIPGap=0.99, Presolve=2L))
 	# check that planning units locked in and out are set accordingly
 	expect_identical(selections(rs)[2], 1L)
 	expect_identical(selections(rs)[3], 0L)
@@ -168,9 +168,9 @@ test_that('solve.RaspUnsolved (unreliable - BLM test)', {
 	data(sim_ru)
 	sim_ru <- pu.subset(sim_ru, 1:10)
 	# make unsolved object
-	ru<-RaspUnsolved(RaspUnreliableOpts(BLM=100), GurobiOpts(MIPGap=0.99, Presolve=2L), sim_ru@data)
+	ru<-RaspUnsolved(RaspUnreliableOpts(BLM=100), sim_ru@data)
 	# solve it
-	rs<-raspr::solve(ru)
+	rs<-raspr::solve(ru, GurobiOpts(MIPGap=0.99, Presolve=2L))
 })
 
 test_that('solve.RaspUnsolved (reliable - BLM test)', {
@@ -180,9 +180,9 @@ test_that('solve.RaspUnsolved (reliable - BLM test)', {
 	data(sim_ru)
 	sim_ru <- pu.subset(sim_ru, 1:10)
 	# make unsolved object
-	ru<-RaspUnsolved(RaspReliableOpts(BLM=100), GurobiOpts(MIPGap=0.99, Presolve=2L), sim_ru@data)
+	ru<-RaspUnsolved(RaspReliableOpts(BLM=100), sim_ru@data)
 	# solve it
-	rs<-raspr::solve(ru)
+	rs<-raspr::solve(ru, GurobiOpts(MIPGap=0.99, Presolve=2L))
 })
 
 test_that('update.RaspUnsolved', {

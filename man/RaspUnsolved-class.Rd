@@ -12,11 +12,9 @@ This class is used to store RASP input data and input parameters.
 \describe{
 \item{\code{opts}}{\code{RaspReliableOpts} or \code{RaspUnreliableOpts} object used to store input parameters.}
 
-\item{\code{solver}}{\code{GurobiOpts} object used to store Gurobi parameters.}
-
 \item{\code{data}}{\code{RaspData} object used to store input data.}
 }}
 \seealso{
-\code{\link{RaspReliableOpts-class}}, \code{\link{RaspUnreliableOpts-class}},  \code{\link{GurobiOpts-class}}, \code{\link{RaspData-class}}.
+\code{\link{RaspReliableOpts-class}}, \code{\link{RaspUnreliableOpts-class}}, \code{\link{RaspData-class}}.
 }
 

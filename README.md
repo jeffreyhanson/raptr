@@ -9,12 +9,13 @@ raspr
 
 #### Biodiversity is in crisis. The overarching aim of conservation is to preserve biodiversity patterns and processes. To this end, protected areas are established to buffer species and preserve biodiversity processes. But resources are limited and so protected areas must be cost-effective. This package contains functions to generate plans for protected areas--prioritisations--using the Representatiev and Adequate Sample Problem (RASP). Reserve selection problems are expressed as a mixed linear integer problem (MILP) and solved using exact-algorithm solvers. Prioritisations can be obtained using [Gurobi](http://www.gurobi.com/).
 
-Linux and Mac OSX users will first need to install several dependencies. To install them, type the following code in the bash or the terminal:
+Linux and Mac OSX users will first need to install several dependencies. Mac OSX and Ubuntu users can install them by typing the following code in to the terminal:
 
 ```
 sudo apt-get update
 sudo apt-get install libgdal-dev
 sudo apt-get install libproj-dev
+sudo apt-get install r-cran-rgl
 ```
 
 To install the raspr R package, execute the following commands in R:
@@ -34,4 +35,4 @@ vignette('raspr', package='raspr')
 
 **If this R package helped you, please cite it.**
 
-Hanson J.O., Rhodes J. R., Fuller R. A. (2015). raspr (version 0.0.1): identify prioritisations using the Representative and Adequate Sample Problem (RASP).
+Hanson J.O., Rhodes J. R., Fuller R. A. (2015). raspr: Identify Representative and Adequate Prioritisations in R. Version 0.0.1.

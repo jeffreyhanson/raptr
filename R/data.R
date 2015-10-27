@@ -32,6 +32,10 @@ NULL
 #' @rdname simulated_data
 "sim_ru"
 
+#' @rdname simulated_data
+"sim_rs"
+
+
 #' Case-study dataset for a conservation planning exercise
 #'
 #' This dataset contains data to generate example prioritisations for the pale-headed Rosella (\emph{Platycercus adscitus}) in Queensland, Australia. Specific objects in the dataset include:
@@ -65,3 +69,9 @@ NULL
 
 #' @rdname casestudy_data
 "cs_spp"
+
+#' @rdname casestudy_data
+"cs_ru"
+
+#' @rdname casestudy_data
+"cs_rs"

@@ -109,21 +109,27 @@ sim.space<-function(x, ...) UseMethod('sim.space')
 #' This function uses Gurobi to find prioritisations using the input parameter and data stored in a \code{RaspUsolved} object,
 #' and returns a \code{RaspSolved} object with outputs in it.
 #'
-#' @param x \code{RaspUnsolved} or \code{RaspSolved} object.
+#' @param a \code{RaspUnsolved} or \code{RaspSolved} object.
+#' @param b \code{missing} to generate solutions using Gurobi. Prioritisations can be specified using  \code{logical}, \code{numeric}, or \code{matrix} objects. This may be useful for evaluating the performance of solutions obtained using other software.
 #' @param verbose \code{logical} should messages be printed during creation of the initial model matrix?.
-#' @param force.reset \code{logical} if \code{x} already has solutions, should this be discarded and a new solution(s) obtained?
 #' @param ... not used.
 #' @return \code{RaspSolved} object
 #' @note This function is used to solve a \code{RaspUnsolved} object that has all of its inputs generated. The rasp function (without lower case 'r') provides a more general interface for generating inputs and outputs.
 #' @seealso \code{RaspUnsolved}, \code{RaspSolved}.
 #' @examples
-#' \dontrun{
 #' # load RaspUnsolved object
 #' data(sim_ru)
-#' # solve it
+#' \dontrun{
+#' # solve it using Gurobi
 #' sim_rs <- solve(ru)
 #' }
-setGeneric('solve', function(x, ...) standardGeneric('solve'))
+#' # evaluate manually specified solution using planning unit indices
+#' sim_rs2 <- solve(ru, 1:10)
+#' # evaluate manually specifed solution using binary selections
+#' sim_rs3 <- solve(ru, c(rep(TRUE,10), rep(FALSE, 245)))
+#' # evlauate multiple manually specified solutions
+#' sim_rs4 <- solve(ru, matrix(sample(c(0,1), size=1275 replace=TRUE), ncol=255, nrow=5))
+setGeneric('solve', function(a, b, ...) standardGeneric('solve'))
 
 #' Plot RASP object
 #'

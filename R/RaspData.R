@@ -770,7 +770,6 @@ amount.target.RaspData<-function(x, species=NULL) {
 }
 
 #' @rdname amount.target
-#' @method amount.target<- RaspData
 #' @export
 `amount.target<-.RaspData`<-function(x, species=NULL, value) {
 	if (is.null(species)) {
@@ -814,8 +813,8 @@ space.target.RaspData<-function(x, species=NULL, space=NULL) {
 		)
 	)
 }
+
 #' @rdname space.target
-#' @method space.target<- RaspData
 #' @export
 `space.target<-.RaspData`<-function(x, species=NULL, space=NULL, value) {
 	rows <- seq_len(nrow(x@targets))

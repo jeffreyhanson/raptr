@@ -9,6 +9,7 @@ NULL
 #' @slot MIPGap \code{numeric} MIP gap specifying minimum solution quality. Defaults to 0.05.
 #' @slot Presolve \code{integer} code for level of computation in presolve. Defaults to 2.
 #' @slot TimeLimit \code{integer} number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.
+#' @slot NumberSolutions \code{integer} number of solutions to generate. Defaults to 1L.
 #' @export
 setClass("GurobiOpts",
 	representation(
@@ -82,8 +83,11 @@ GurobiOpts<-function(Threads=1L, MIPGap=0.05, Presolve=2L, TimeLimit=NA_integer_
 #' @rdname print
 #' @export
 print.GurobiOpts=function(x, ..., header=TRUE) {
-	if (header)
+	if (header) {
 		cat("GurobiOpts object.\n")
+	} else {
+		cat('  Solver Method: Gurobi\n')
+	}
 	cat('  Threads:',x@Threads,'\n')
 	cat('  MIPGap:',x@MIPGap,'\n')
 	cat('  Presolve:',x@Presolve,'\n')

@@ -4,12 +4,10 @@
 \alias{RaspUnsolved}
 \title{Create a new RaspUnsolved object}
 \usage{
-RaspUnsolved(opts, solver, data)
+RaspUnsolved(opts, data)
 }
 \arguments{
 \item{opts}{\code{RaspReliableOpts} or \code{RaspUnreliableOpts} object.}
-
-\item{solver}{\code{GurobiOpts} object used to store Gurobi parameters.}
 
 \item{data}{\code{RaspData} object.}
 }
@@ -23,14 +21,13 @@ This function creates a \code{RaspUnsolved} object using a \code{GurobiOpts}, a 
 # load data
 data(sim_pus, sim_spp)
 # create inputs for RaspUnsolved
-go <- GurobiOpts(MIPGap=0.9)
 ro <- RaspUnreliableOpts()
 rd <- make.RaspData(sim_pus[1:10,], sim_spp, NULL, include.geographic.space=TRUE,n.demand.points=5L)
 # create RaspUnsolved object
-ru <- RaspUnsolved(ro, go, rd)
+ru <- RaspUnsolved(ro, rd)
 print(ru)
 }
 \seealso{
-\code{\link{RaspReliableOpts-class}}, \code{\link{RaspUnreliableOpts-class}}, \code{\link{GurobiOpts-class}}, \code{\link{RaspData-class}}.
+\code{\link{RaspReliableOpts-class}}, \code{\link{RaspUnreliableOpts-class}}, \code{\link{RaspData-class}}.
 }
 

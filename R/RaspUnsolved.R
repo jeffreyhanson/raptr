@@ -6,14 +6,12 @@ NULL
 #' This class is used to store RASP input data and input parameters.
 #'
 #' @slot opts \code{RaspReliableOpts} or \code{RaspUnreliableOpts} object used to store input parameters.
-#' @slot solver \code{GurobiOpts} object used to store Gurobi parameters.
 #' @slot data \code{RaspData} object used to store input data.
 #' @export
-#' @seealso  \code{\link{RaspReliableOpts-class}}, \code{\link{RaspUnreliableOpts-class}},  \code{\link{GurobiOpts-class}}, \code{\link{RaspData-class}}.
+#' @seealso  \code{\link{RaspReliableOpts-class}}, \code{\link{RaspUnreliableOpts-class}}, \code{\link{RaspData-class}}.
 setClass("RaspUnsolved",
 	representation(
 		opts="RaspOpts",
-		solver="SolverOpts",
 		data="RaspData"
 	)
 )
@@ -23,94 +21,22 @@ setClass("RaspUnsolved",
 #' This function creates a \code{RaspUnsolved} object using a \code{GurobiOpts}, a \code{RaspReliableOpts} or \code{RaspUnreliableOpts} object, and a \code{RaspData} object.
 #'
 #' @param opts \code{RaspReliableOpts} or \code{RaspUnreliableOpts} object.
-#' @param solver \code{GurobiOpts} object used to store Gurobi parameters.
 #' @param data \code{RaspData} object.
 #' @return \code{RaspUnsolved} object.
 #' @export
-#' @seealso \code{\link{RaspReliableOpts-class}}, \code{\link{RaspUnreliableOpts-class}}, \code{\link{GurobiOpts-class}}, \code{\link{RaspData-class}}.
+#' @seealso \code{\link{RaspReliableOpts-class}}, \code{\link{RaspUnreliableOpts-class}}, \code{\link{RaspData-class}}.
 #' @examples
 #' # load data
 #' data(sim_pus, sim_spp)
 #' # create inputs for RaspUnsolved
-#' go <- GurobiOpts(MIPGap=0.9)
 #' ro <- RaspUnreliableOpts()
 #' rd <- make.RaspData(sim_pus[1:10,], sim_spp, NULL, include.geographic.space=TRUE,n.demand.points=5L)
 #' # create RaspUnsolved object
-#' ru <- RaspUnsolved(ro, go, rd)
+#' ru <- RaspUnsolved(ro, rd)
 #' print(ru)
-RaspUnsolved<-function(opts, solver, data) {
-	return(new("RaspUnsolved", opts=opts, solver=solver, data=data))
+RaspUnsolved<-function(opts, data) {
+	return(new("RaspUnsolved", opts=opts, data=data))
 }
-
-#' @describeIn solve
-#' @export
-setMethod(
-	'solve',
-	'RaspUnsolved',
-	function(x, verbose=FALSE) {
-		## init
-		# check that gurobi is installed
-		if (!is.null(options()$GurobiInstalled)) {
-			if (!options()$GurobiInstalled) {
-				stop('The gurobi R package has not been installed, or Girobi has not been installation has not been completed')
-			}
-		} else {
-			is.GurobiInstalled()
-		}
-
-		# generate model object
-		model=rcpp_generate_model_object(x@opts, inherits(x@opts, 'RaspUnreliableOpts'), x@data, verbose)
-		model$A=sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value)
-		## first run
-		# run model
-		log.pth=tempfile(fileext='.log')
-		gparams=append(as.list(x@solver), list("LogFile"=log.pth))
-		solution<-gurobi::gurobi(model, gparams)
-		if (file.exists('gurobi.log')) unlink('gurobi.log')
-
-		# check solution object
-		if (!is.null(solution$status))
-			if (solution$status=="INFEASIBLE") {
-				stop('No solution found because model is not feasible.')
-			}
-		if (is.null(solution$x)) {
-			stop('No solution found because Gurobi parameters do not allow sufficient time.')
-		}
-
-		# store results
-		results=list(read.RaspResults(x@opts, x@data, model, paste(readLines(log.pth), collapse="\n"), solution, verbose))
-		existing.solutions=list(selections(results[[1]]))
-
-		## subsequent runs
-		for (i in seq_len(x@solver@NumberSolutions-1)) {
-			# create new model object, excluding existing solutions as valid solutions to ensure a different solution is obtained
-			model=rcpp_append_model_object(model, existing.solutions[length(existing.solutions)])
-			model$A=sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value)
-
-			# run model
-			solution=gurobi::gurobi(model, gparams)
-			if (file.exists('gurobi.log')) unlink('gurobi.log')
-
-			# load results
-			if (!is.null(solution$status))
-				if (solution$status=="INFEASIBLE") {
-					warning(paste0('only ',i,' solutions found\n'))
-					break
-				}
-			if (is.null(solution$x)) {
-				warning(paste0('only ',i,' solutions found\n'))
-				break
-			}
-
-			# store results
-			currResult=read.RaspResults(x@opts,x@data, model, paste(readLines(log.pth), collapse="\n"), solution, verbose)
-			results=append(results,currResult)
-			existing.solutions=append(existing.solutions, list(selections(currResult)))
-		}
-		# return RaspSolved object
-		return(RaspSolved(unsolved=x, results=mergeRaspResults(results)))
-	}
-)
 
 #' @method print RaspUnsolved
 #' @rdname print
@@ -118,8 +44,6 @@ setMethod(
 print.RaspUnsolved=function(x, ...) {
 	cat("Parameters\n")
 	print(x@opts, header=FALSE)
-	cat("Solver settings\n")
-	print(x@solver, header=FALSE)
 	cat("Data\n")
 	print.RaspData(x@data, header=FALSE)
 }
@@ -140,7 +64,6 @@ spp.subset.RaspUnsolved<-function(x, species) {
 	return(
 		RaspUnsolved(
 			opts=x@opts,
-			solver=x@solver,
 			data=spp.subset(x@data, species)
 			)
 	 )
@@ -153,7 +76,6 @@ pu.subset.RaspUnsolved<-function(x, pu) {
 	return(
 		RaspUnsolved(
 			opts=x@opts,
-			solver=x@solver,
 			data=pu.subset(x@data, pu)
 			)
 	 )

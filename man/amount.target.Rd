@@ -3,19 +3,19 @@
 \name{amount.target.RaspData}
 \alias{amount.target}
 \alias{amount.target.RaspData}
-\alias{amount.target.RaspUnsolvedOrSolved}
+\alias{amount.target.RaspUnsolOrSol}
 \alias{amount.target<-}
 \alias{amount.target<-.RaspData}
-\alias{amount.target<-.RaspUnsolvedOrSolved}
+\alias{amount.target<-.RaspUnsolOrSol}
 \title{Amount targets}
 \usage{
 \method{amount.target}{RaspData}(x, species = NULL)
 
 \method{amount.target}{RaspData}(x, species = NULL) <- value
 
-\method{amount.target}{RaspUnsolvedOrSolved}(x, species = NULL)
+\method{amount.target}{RaspUnsolOrSol}(x, species = NULL)
 
-\method{amount.target}{RaspUnsolvedOrSolved}(x, species = NULL) <- value
+\method{amount.target}{RaspUnsolOrSol}(x, species = NULL) <- value
 
 amount.target(x, species)
 

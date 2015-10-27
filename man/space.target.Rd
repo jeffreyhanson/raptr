@@ -3,20 +3,20 @@
 \name{space.target.RaspData}
 \alias{space.target}
 \alias{space.target.RaspData}
-\alias{space.target.RaspUnsolvedOrSolved}
+\alias{space.target.RaspUnsolOrSol}
 \alias{space.target<-}
 \alias{space.target<-.RaspData}
-\alias{space.target<-.RaspUnsolvedOrSolved}
+\alias{space.target<-.RaspUnsolOrSol}
 \title{Attribute space targets}
 \usage{
 \method{space.target}{RaspData}(x, species = NULL, space = NULL)
 
 \method{space.target}{RaspData}(x, species = NULL, space = NULL) <- value
 
-\method{space.target}{RaspUnsolvedOrSolved}(x, species = NULL, space = NULL)
+\method{space.target}{RaspUnsolOrSol}(x, species = NULL, space = NULL)
 
-\method{space.target}{RaspUnsolvedOrSolved}(x, species = NULL, space = NULL)
-  <- value
+\method{space.target}{RaspUnsolOrSol}(x, species = NULL, space = NULL) <-
+  value
 
 space.target(x, species, space)
 

@@ -4,10 +4,12 @@
 \alias{RaspSolved}
 \title{Create new RaspSolved object}
 \usage{
-RaspSolved(unsolved, results)
+RaspSolved(unsolved, solver, results)
 }
 \arguments{
 \item{unsolved}{\code{RaspUnsolved} object.}
+
+\item{solver}{\code{GurobiOpts} or \code{ManualOpts} object.}
 
 \item{results}{\code{RaspResults} object.}
 }
@@ -15,17 +17,9 @@ RaspSolved(unsolved, results)
 \code{RaspSolved} object.
 }
 \description{
-This function creates a \code{RaspSolved} object using a \code{RaspUnsolved} object and a \code{RaspResults} object.
-}
-\examples{
-\dontrun{
-# load data
-data(sim_ru)
-# make RaspSolved object
-sim_rs <- raspr::solve(sim_ru)
-}
+This function creates a \code{RaspSolved} object.
 }
 \seealso{
-\code{\link{RaspSolved-class}}, \code{\link{RaspResults-class}}.
+\code{\link{RaspSolved-class}}, \code{\link{RaspResults-class}}, \code{link{solve}}.
 }
 

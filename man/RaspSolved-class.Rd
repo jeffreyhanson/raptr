@@ -12,7 +12,7 @@ This class is used to store RASP input and output data in addition to input para
 \describe{
 \item{\code{opts}}{\code{RaspReliableOpts} or \code{RaspUnreliableOpts} object used to store input parameters.}
 
-\item{\code{sovler}}{\code{GurobiOpts} object used to store Gurobi parameters.}
+\item{\code{solver}}{\code{GurobiOpts} or \code{ManualOpts} object used to store solver information/parameters.}
 
 \item{\code{data}}{\code{RaspData} object used to store input data.}
 

@@ -4,7 +4,8 @@
 \alias{read.RaspResults}
 \title{Read RASP results}
 \usage{
-read.RaspResults(opts, data, model.list, logging.file, solution.list)
+read.RaspResults(opts, data, model.list, logging.file, solution.list,
+  verbose = FALSE)
 }
 \arguments{
 \item{opts}{\code{RaspReliableOpts} or \code{RaspUnreliableOpts} object}
@@ -16,6 +17,8 @@ read.RaspResults(opts, data, model.list, logging.file, solution.list)
 \item{logging.file}{\code{character} Gurobi log files.}
 
 \item{solution.list}{\code{list} object containing Gurobi solution data.}
+
+\item{verbose}{\code{logical} print progress messages? Defaults to \code{FALSE}.}
 }
 \value{
 \code{RaspResults} object

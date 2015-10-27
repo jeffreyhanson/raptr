@@ -4,18 +4,18 @@
 \name{is.comparable,RaspData,RaspData-method}
 \alias{is.comparable}
 \alias{is.comparable,RaspData,RaspData-method}
-\alias{is.comparable,RaspData,RaspUnsolvedOrSolved-method}
-\alias{is.comparable,RaspUnsolvedOrSolved,RaspData-method}
-\alias{is.comparable,RaspUnsolvedOrSolved,RaspUnsolvedOrSolved-method}
+\alias{is.comparable,RaspData,RaspUnsolOrSol-method}
+\alias{is.comparable,RaspUnsolOrSol,RaspData-method}
+\alias{is.comparable,RaspUnsolOrSol,RaspUnsolOrSol-method}
 \title{Compare Rasp objects}
 \usage{
 \S4method{is.comparable}{RaspData,RaspData}(x, y)
 
-\S4method{is.comparable}{RaspUnsolvedOrSolved,RaspUnsolvedOrSolved}(x, y)
+\S4method{is.comparable}{RaspUnsolOrSol,RaspUnsolOrSol}(x, y)
 
-\S4method{is.comparable}{RaspData,RaspUnsolvedOrSolved}(x, y)
+\S4method{is.comparable}{RaspData,RaspUnsolOrSol}(x, y)
 
-\S4method{is.comparable}{RaspUnsolvedOrSolved,RaspData}(x, y)
+\S4method{is.comparable}{RaspUnsolOrSol,RaspData}(x, y)
 
 is.comparable(x, y)
 }

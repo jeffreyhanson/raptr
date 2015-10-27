@@ -62,6 +62,7 @@ Collate:
     'DemandPoints.R'
     'AttributeSpace.R'
     'GurobiOpts.R'
+    'ManualOpts.R'
     'calcSpeciesAverageInPus.R'
     'calcBoundaryData.R'
     'RaspData.R'
