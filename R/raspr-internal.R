@@ -740,3 +740,13 @@ parseArgs<-function(fn, object, ...) {
     )]
   )
 }
+
+parseArgs2<-function(args, ...) {
+  ellipses.args<-list(...)
+  return(
+    ellipses.args[intersect(
+      names(ellipses.args),
+      args
+    )]
+  )
+}

@@ -66,8 +66,8 @@ setMethod(
 		}
 
 		# generate model object
-		model=rcpp_generate_model_object(b, inherits(a@opts, 'RaspUnreliableOpts'), a@data, verbose)
-		model$A=sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, a=model$Ar$value)
+		model=rcpp_generate_model_object(a@opts, inherits(a@opts, 'RaspUnreliableOpts'), a@data, verbose)
+		model$A=Matrix::sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value)
 		## first run
 		# run model
 		log.pth=tempfile(fileext='.log')
@@ -92,7 +92,7 @@ setMethod(
 		for (i in seq_len(b@NumberSolutions-1)) {
 			# create new model object, eacluding existing solutions as valid solutions to ensure a different solution is obtained
 			model=rcpp_append_model_object(model, existing.solutions[length(existing.solutions)])
-			model$A=sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, a=model$Ar$value)
+			model$A=Matrix::sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value)
 
 			# run model
 			solution=gurobi::gurobi(model, gparams)
@@ -534,13 +534,6 @@ update.RaspUnsolOrSol<-function(object, ..., solve=TRUE) {
 					parseArgs('update', object@opts, ...)
 			)
 		),
-		solver=do.call(
-			'update',
-			append(
-					list(object=object@solver),
-					parseArgs('update', object@solver, ...)
-			)
-		),
 		data=do.call(
 			'update',
 			append(
@@ -549,8 +542,17 @@ update.RaspUnsolOrSol<-function(object, ..., solve=TRUE) {
 			)
 		)
 	)
-	if (solve)
-		object<-raspr::solve(object)
+	if (solve) {
+		object<-do.call(
+				raspr::solve,
+				append(
+					list(a=object),
+					parseArgs2(c('b', 'Threads',
+						'MIPGap', 'NumberSolutions', 'TimeLimit', 'Presolve', 'verbose'
+					), ...)
+			)
+		)
+	}
 	return(object)
 }
 
