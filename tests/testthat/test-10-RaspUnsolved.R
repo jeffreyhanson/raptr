@@ -2,13 +2,6 @@ test_that('Model compiler (unreliable)', {
 	# load RaspUnsolved object
 	data(sim_ru)
 	sim_ru <- pu.subset(spp.subset(sim_ru, 1), 1:10)
-	sim_ru@data@attribute.spaces[[1]] = AttributeSpace(
-		pu=sim_ru@data@attribute.spaces[[1]]@pu,
-		dp=list(DemandPoints(
-			SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[1]]@points@coords[1:10,]),
-			sim_ru@data@attribute.spaces[[1]]@dp[[1]]@weights[1:10]
-		))
-	)
 	# generate model code
 	model<-rcpp_generate_model_object(RaspUnreliableOpts(), TRUE, sim_ru@data, FALSE)
 	model$A<-Matrix::sparseMatrix(i=model$Ar[[1]]+1, j=model$Ar[[2]]+1, x=model$Ar[[3]])
@@ -29,6 +22,23 @@ test_that('Gurobi solver (unreliable)', {
 	# load RaspUnsolved object
 	data(sim_ru)
 	sim_ru <- pu.subset(sim_ru, 1:10)
+	sim_ru@data@attribute.spaces[[1]] = AttributeSpace(
+		pu=sim_ru@data@attribute.spaces[[1]]@pu,
+		dp=list(
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[1]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[1]]@weights[1:10]
+			),
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[2]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[2]]@weights[1:10]
+			),
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[3]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[3]]@weights[1:10]
+			)
+		)
+	)
 	# generate model matrix
 	model<-rcpp_generate_model_object(RaspUnreliableOpts(), TRUE, sim_ru@data, FALSE)
 	model$A<-Matrix::sparseMatrix(i=model$Ar[[1]]+1, j=model$Ar[[2]]+1, x=model$Ar[[3]])
@@ -42,6 +52,23 @@ test_that('Gurobi solver (reliable)', {
 	# load RaspUnsolved object
 	data(sim_ru)
 	sim_ru <- pu.subset(sim_ru, 1:10)
+	sim_ru@data@attribute.spaces[[1]] = AttributeSpace(
+		pu=sim_ru@data@attribute.spaces[[1]]@pu,
+		dp=list(
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[1]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[1]]@weights[1:10]
+			),
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[2]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[2]]@weights[1:10]
+			),
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[3]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[3]]@weights[1:10]
+			)
+		)
+	)
 	# generate model code
 	model<-rcpp_generate_model_object(RaspReliableOpts(), FALSE, sim_ru@data, FALSE)
 	model$A<-Matrix::sparseMatrix(i=model$Ar[[1]]+1, j=model$Ar[[2]]+1, x=model$Ar[[3]])
@@ -55,6 +82,23 @@ test_that('solve.RaspUnsolved (unreliable - NUMREPS=1)', {
 	# load RaspUnsolved object
 	data(sim_ru)
 	sim_ru <- pu.subset(sim_ru, 1:10)
+	sim_ru@data@attribute.spaces[[1]] = AttributeSpace(
+		pu=sim_ru@data@attribute.spaces[[1]]@pu,
+		dp=list(
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[1]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[1]]@weights[1:10]
+			),
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[2]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[2]]@weights[1:10]
+			),
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[3]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[3]]@weights[1:10]
+			)
+		)
+	)
 	# make unsolved object
 	ru<-RaspUnsolved(RaspUnreliableOpts(), sim_ru@data)
 	# solve it
@@ -67,6 +111,23 @@ test_that('solve.RaspUnsolved (reliable - NUMREPS=1)', {
 	# load RaspUnsolved object
 	data(sim_ru)
 	sim_ru <- pu.subset(sim_ru, 1:10)
+	sim_ru@data@attribute.spaces[[1]] = AttributeSpace(
+		pu=sim_ru@data@attribute.spaces[[1]]@pu,
+		dp=list(
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[1]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[1]]@weights[1:10]
+			),
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[2]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[2]]@weights[1:10]
+			),
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[3]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[3]]@weights[1:10]
+			)
+		)
+	)
 	# make unsolved object
 	ru<-RaspUnsolved(RaspReliableOpts(), sim_ru@data)
 	# solve it
@@ -79,6 +140,23 @@ test_that('solve.RaspUnsolved (unreliable - NumberSolutions=2)', {
 	# load RaspUnsolved object
 	data(sim_ru)
 	sim_ru <- pu.subset(sim_ru, 1:10)
+	sim_ru@data@attribute.spaces[[1]] = AttributeSpace(
+		pu=sim_ru@data@attribute.spaces[[1]]@pu,
+		dp=list(
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[1]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[1]]@weights[1:10]
+			),
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[2]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[2]]@weights[1:10]
+			),
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[3]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[3]]@weights[1:10]
+			)
+		)
+	)
 	# make unsolved object
 	ru<-RaspUnsolved(RaspUnreliableOpts(), sim_ru@data)
 	# solve it
@@ -91,37 +169,28 @@ test_that('solve.RaspUnsolved (reliable - NUMREPS=2)', {
 	# load RaspUnsolved object
 	data(sim_ru)
 	sim_ru <- pu.subset(sim_ru, 1:10)
+	sim_ru@data@attribute.spaces[[1]] = AttributeSpace(
+		pu=sim_ru@data@attribute.spaces[[1]]@pu,
+		dp=list(
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[1]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[1]]@weights[1:10]
+			),
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[2]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[2]]@weights[1:10]
+			),
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[3]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[3]]@weights[1:10]
+			)
+		)
+	)
 	# make unsolved object
 	ru<-RaspUnsolved(RaspReliableOpts(), sim_ru@data)
 	# solve it
 	rs<-raspr::solve(ru, GurobiOpts(MIPGap=0.99, Presolve=2L,NumberSolutions=2L))
 })
-
-
-test_that('solve.RaspUnsolved (unreliable - number of requested solutions > number feasible solutions)', {
-	# skip if gurobi not installed
-	if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')
-	# load RaspUnsolved object
-	data(sim_ru)
-	sim_ru <- pu.subset(sim_ru, 1:10)
-	# make unsolved object
-	ru<-RaspUnsolved(RaspUnreliableOpts(), sim_ru@data)
-	# solve it
-	rs<-raspr::solve(ru, GurobiOpts(MIPGap=0.99, Presolve=2L,NumberSolutions=10L))
-})
-
-test_that('solve.RaspUnsolved (reliable - number of requested solutions > number feasible solutions)', {
-	# skip if gurobi not installed
-	if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')
-	# load RaspUnsolved object
-	data(sim_ru)
-	sim_ru <- pu.subset(sim_ru, 1:10)
-	# make unsolved object
-	ru<-RaspUnsolved(RaspReliableOpts(), sim_ru@data)
-	# solve it
-	rs<-raspr::solve(ru, GurobiOpts(MIPGap=0.99, Presolve=2L,NumberSolutions=10L))
-})
-
 
 test_that('solve.RaspUnsolved (unreliable - STATUS test)', {
 	# skip if gurobi not installed
@@ -129,6 +198,23 @@ test_that('solve.RaspUnsolved (unreliable - STATUS test)', {
 	# load RaspUnsolved object
 	data(sim_ru)
 	sim_ru <- pu.subset(sim_ru, 1:10)
+	sim_ru@data@attribute.spaces[[1]] = AttributeSpace(
+		pu=sim_ru@data@attribute.spaces[[1]]@pu,
+		dp=list(
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[1]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[1]]@weights[1:10]
+			),
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[2]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[2]]@weights[1:10]
+			),
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[3]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[3]]@weights[1:10]
+			)
+		)
+	)
 	# lock in and lock out planning units
 	sim_ru@data@pu$status[1]=0
 	sim_ru@data@pu$status[2]=2
@@ -148,6 +234,23 @@ test_that('solve.RaspUnsolved (reliable - STATUS test)', {
 	# load RaspUnsolved object
 	data(sim_ru)
 	sim_ru <- pu.subset(sim_ru, 1:10)
+	sim_ru@data@attribute.spaces[[1]] = AttributeSpace(
+		pu=sim_ru@data@attribute.spaces[[1]]@pu,
+		dp=list(
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[1]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[1]]@weights[1:10]
+			),
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[2]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[2]]@weights[1:10]
+			),
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[3]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[3]]@weights[1:10]
+			)
+		)
+	)
 	# lock in and lock out planning units
 	sim_ru@data@pu$status[1]=0
 	sim_ru@data@pu$status[2]=2
@@ -167,6 +270,23 @@ test_that('solve.RaspUnsolved (unreliable - BLM test)', {
 	# load RaspUnsolved object
 	data(sim_ru)
 	sim_ru <- pu.subset(sim_ru, 1:10)
+	sim_ru@data@attribute.spaces[[1]] = AttributeSpace(
+		pu=sim_ru@data@attribute.spaces[[1]]@pu,
+		dp=list(
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[1]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[1]]@weights[1:10]
+			),
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[2]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[2]]@weights[1:10]
+			),
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[3]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[3]]@weights[1:10]
+			)
+		)
+	)
 	# make unsolved object
 	ru<-RaspUnsolved(RaspUnreliableOpts(BLM=100), sim_ru@data)
 	# solve it
@@ -179,6 +299,23 @@ test_that('solve.RaspUnsolved (reliable - BLM test)', {
 	# load RaspUnsolved object
 	data(sim_ru)
 	sim_ru <- pu.subset(sim_ru, 1:10)
+	sim_ru@data@attribute.spaces[[1]] = AttributeSpace(
+		pu=sim_ru@data@attribute.spaces[[1]]@pu,
+		dp=list(
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[1]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[1]]@weights[1:10]
+			),
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[2]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[2]]@weights[1:10]
+			),
+			DemandPoints(
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[3]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@dp[[3]]@weights[1:10]
+			)
+		)
+	)
 	# make unsolved object
 	ru<-RaspUnsolved(RaspReliableOpts(BLM=100), sim_ru@data)
 	# solve it

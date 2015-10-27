@@ -127,7 +127,7 @@ blank.raster<-function(x, res) {
 #' @name PolySet-class
 #' @aliases PolySet
 #' @exportClass PolySet
-setClass("PolySet", contains='data.frame')
+setClass("PolySet")
 
 #' PolySetOrNULL class
 #'
