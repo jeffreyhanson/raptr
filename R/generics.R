@@ -254,7 +254,7 @@ NULL
 #' @seealso \code{RaspResults}, \code{RaspSolved}.
 #' @examples
 #' # load data
-#' load(sim_rs)
+#' data(sim_rs)
 #' # show summary
 #' summary(sim_rs)
 NULL
@@ -376,7 +376,7 @@ pu.subset<-function(x, pu) UseMethod('pu.subset')
 #' @export
 #' @examples
 #' # load data
-#' load(sim_rs)
+#' data(sim_rs)
 #' # score for best solution
 #' score(sim_rs, 0)
 #' # score for second solution
@@ -395,7 +395,7 @@ score<-function(x, y) UseMethod('score')
 #' @seealso \code{RaspResults}, \code{RaspSolved}.
 #' @export
 #' @examples
-#' load(sim_rs)
+#' data(sim_rs)
 #' # log file for best solution
 #' logging.file(sim_rs, 0)
 #' # log file for second solution
@@ -414,7 +414,7 @@ logging.file<-function(x,y) UseMethod('logging.file')
 #' @seealso \code{RaspResults}, \code{RaspSolved}.
 #' @export
 #' @examples
-#' load(sim_rs)
+#' data(sim_rs)
 #' # amount held (%) for each species in best solution
 #' amount.held(sim_rs, 0)
 #' # amount held (%) for each species in second solution
@@ -436,7 +436,7 @@ amount.held<-function(x,y) {UseMethod('amount.held')}
 #' @name amount.target
 #' @examples
 #' # load data
-#' load(sim_rs)
+#' data(sim_rs)
 #' # extract amount targets for all species
 #' amount.target(sim_rs)
 #' # set amount targets for all species
@@ -461,7 +461,7 @@ amount.target<-function(x, species) {UseMethod('amount.target')}
 #' @seealso \code{RaspResults}, \code{RaspSolved}.
 #' @export
 #' @examples
-#' load(sim_rs)
+#' data(sim_rs)
 #' # space held (%) for each species in best solution
 #' space.held(sim_rs, 0)
 #' # space held (%) for each species in second solution
@@ -484,7 +484,7 @@ space.held<-function(x,y) {UseMethod('space.held')}
 #' @name space.target
 #' @examples
 #' # load data
-#' load(sim_rs)
+#' data(sim_rs)
 #' # extract space targets for all species
 #' space.target(sim_rs)
 #' # set space targets for all species
@@ -510,7 +510,7 @@ space.target<-function(x, species, space) {UseMethod('space.target')}
 #' @seealso \code{RaspResults}, \code{RaspSolved}.
 #' @export
 #' @examples
-#' load(sim_rs)
+#' data(sim_rs)
 #' # selections for best solution
 #' selections(sim_rs, 0)
 #' # selections for second solution

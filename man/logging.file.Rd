@@ -24,7 +24,7 @@ This function returns the Gurobi log file (*.log) associated with solving RASP.
 The term logging file was used due to collisions with the \code{log} function in base R.
 }
 \examples{
-load(sim_rs)
+data(sim_rs)
 # log file for best solution
 logging.file(sim_rs, 0)
 # log file for second solution

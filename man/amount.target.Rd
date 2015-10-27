@@ -36,7 +36,7 @@ This function sets or returns the target amounts for each species.
 }
 \examples{
 # load data
-load(sim_rs)
+data(sim_rs)
 # extract amount targets for all species
 amount.target(sim_rs)
 # set amount targets for all species

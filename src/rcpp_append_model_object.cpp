@@ -24,13 +24,13 @@ Rcpp::List rcpp_append_model_object(Rcpp::List model, Rcpp::List existing_sols) 
 
 	std::vector<std::string> senseSTR=model["sense"];
 	std::vector<double> rhsDBL=model["rhs"];
-	
+
 	//// Main processing
 	// construct new constraints
 	std::size_t counter=*A_i.rbegin()+1;
 	IntegerVector currSolution;
 	for (std::size_t i=0; i<existing_sols.size(); ++i) {
-		// get current solution		
+		// get current solution
 		currSolution=existing_sols[i];
 		for (std::size_t j=0; j<currSolution.size(); ++j)
 			if (currSolution[j]==1) {
@@ -44,12 +44,12 @@ Rcpp::List rcpp_append_model_object(Rcpp::List model, Rcpp::List existing_sols) 
 				A_j.push_back(j);
 				A_x.push_back(-1.0);
 			}
-			
+
 		senseSTR.push_back("<=");
 		rhsDBL.push_back(std::accumulate(currSolution.begin(), currSolution.end(), 0)-1);
 		++counter;
 	}
-		
+
 	//// Exports
 	model["Ar"] = Rcpp::List::create(
 		Rcpp::Named("row") = Rcpp::wrap(A_i),
@@ -58,8 +58,5 @@ Rcpp::List rcpp_append_model_object(Rcpp::List model, Rcpp::List existing_sols) 
 	);
 	model["rhs"] = Rcpp::wrap(rhsDBL);
 	model["sense"] = Rcpp::wrap(senseSTR);
-	
 	return(model);
 }
-
- 

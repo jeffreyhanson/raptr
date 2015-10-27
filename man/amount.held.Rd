@@ -24,7 +24,7 @@ amount.held(x, y)
 This function returns the amount held for each species in a solution.
 }
 \examples{
-load(sim_rs)
+data(sim_rs)
 # amount held (\%) for each species in best solution
 amount.held(sim_rs, 0)
 # amount held (\%) for each species in second solution

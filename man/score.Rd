@@ -25,7 +25,7 @@ Extract solution score from \code{RaspResults} or \code{RaspSolved} object.
 }
 \examples{
 # load data
-load(sim_rs)
+data(sim_rs)
 # score for best solution
 score(sim_rs, 0)
 # score for second solution

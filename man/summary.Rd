@@ -16,7 +16,7 @@ Extracts summary of solutions in a \code{RaspResults} or \code{RaspSolved} objec
 }
 \examples{
 # load data
-load(sim_rs)
+data(sim_rs)
 # show summary
 summary(sim_rs)
 }

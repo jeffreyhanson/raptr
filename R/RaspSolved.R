@@ -66,12 +66,12 @@ setMethod(
 		}
 
 		# generate model object
-		model=rcpp_generate_model_object(a@opts, inherits(a@opts, 'RaspUnreliableOpts'), a@data, verbose)
-		model$A=Matrix::sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value)
+		model<-rcpp_generate_model_object(a@opts, inherits(a@opts, 'RaspUnreliableOpts'), a@data, verbose)
+		model$A<-Matrix::sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value)
 		## first run
 		# run model
-		log.pth=tempfile(fileext='.log')
-		gparams=append(as.list(b), list("LogFile"=log.pth))
+		log.pth<-tempfile(fileext='.log')
+		gparams<-append(as.list(b), list("LogFile"=log.pth))
 		solution<-gurobi::gurobi(model, gparams)
 		if (file.exists('gurobi.log')) unlink('gurobi.log')
 
@@ -80,22 +80,22 @@ setMethod(
 			if (solution$status=="INFEASIBLE") {
 				stop('No solution found because model is not feasible.')
 			}
-		if (is.null(solution$a)) {
+		if (is.null(solution$x)) {
 			stop('No solution found because Gurobi parameters do not allow sufficient time.')
 		}
 
 		# store results
-		results=list(read.RaspResults(a@opts, a@data, model, paste(readLines(log.pth), collapse="\n"), solution, verbose))
-		existing.solutions=list(selections(results[[1]]))
+		results<-list(read.RaspResults(a@opts, a@data, model, paste(readLines(log.pth), collapse="\n"), solution, verbose))
+		existing.solutions<-list(selections(results[[1]]))
 
 		## subsequent runs
 		for (i in seq_len(b@NumberSolutions-1)) {
 			# create new model object, eacluding existing solutions as valid solutions to ensure a different solution is obtained
-			model=rcpp_append_model_object(model, existing.solutions[length(existing.solutions)])
-			model$A=Matrix::sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value)
-
+			model<-rcpp_append_model_object(model, existing.solutions[length(existing.solutions)])
+			model$A<-Matrix::sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value)
+			model$start<-solution$x
 			# run model
-			solution=gurobi::gurobi(model, gparams)
+			solution<-gurobi::gurobi(model, gparams)
 			if (file.exists('gurobi.log')) unlink('gurobi.log')
 
 			# load results
@@ -110,9 +110,9 @@ setMethod(
 			}
 
 			# store results
-			currResult=read.RaspResults(a@opts,a@data, model, paste(readLines(log.pth), collapse="\n"), solution, verbose)
-			results=append(results,currResult)
-			existing.solutions=append(existing.solutions, list(selections(currResult)))
+			currResult<-read.RaspResults(a@opts,a@data, model, paste(readLines(log.pth), collapse="\n"), solution, verbose)
+			results<-append(results,currResult)
+			existing.solutions<-append(existing.solutions, list(selections(currResult)))
 		}
 		# return RaspSolved object
 		return(RaspSolved(unsolved=a, solver=b, results=mergeRaspResults(results)))

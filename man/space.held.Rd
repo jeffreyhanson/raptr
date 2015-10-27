@@ -24,7 +24,7 @@ code{matrix} or code{numeric} vector depending on arguments.
 This function returns the attribute space held for each species in a solution.
 }
 \examples{
-load(sim_rs)
+data(sim_rs)
 # space held (\%) for each species in best solution
 space.held(sim_rs, 0)
 # space held (\%) for each species in second solution

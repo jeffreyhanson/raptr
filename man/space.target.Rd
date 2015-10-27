@@ -39,7 +39,7 @@ This function sets or returns the attribute space targets for each species.
 }
 \examples{
 # load data
-load(sim_rs)
+data(sim_rs)
 # extract space targets for all species
 space.target(sim_rs)
 # set space targets for all species

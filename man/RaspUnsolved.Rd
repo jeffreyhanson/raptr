@@ -19,10 +19,10 @@ This function creates a \code{RaspUnsolved} object using a \code{GurobiOpts}, a 
 }
 \examples{
 # load data
-data(sim_pus, sim_spp)
+data(cs_pus, cs_spp)
 # create inputs for RaspUnsolved
 ro <- RaspUnreliableOpts()
-rd <- make.RaspData(sim_pus[1:10,], sim_spp, NULL, include.geographic.space=TRUE,n.demand.points=5L)
+rd <- make.RaspData(cs_pus[1:10,], cs_spp, NULL, include.geographic.space=TRUE,n.demand.points=5L)
 # create RaspUnsolved object
 ru <- RaspUnsolved(ro, rd)
 print(ru)

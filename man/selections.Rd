@@ -26,7 +26,7 @@ selections(x, y)
 Extract selections for a given solution from a \code{RaspResults} or \code{RaspSolved} object.
 }
 \examples{
-load(sim_rs)
+data(sim_rs)
 # selections for best solution
 selections(sim_rs, 0)
 # selections for second solution
