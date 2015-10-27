@@ -44,6 +44,7 @@ test_that('Gurobi solver (unreliable)', {
 	model$A<-Matrix::sparseMatrix(i=model$Ar[[1]]+1, j=model$Ar[[2]]+1, x=model$Ar[[3]])
 	# solve the model
 	result<-gurobi::gurobi(model, append(as.list(GurobiOpts(MIPGap=0.99, Presolve=2L)), list('LogFile'=tempfile(fileext='.log'))))
+	if (file.exists('gurobi.log')) unlink('gurobi.log')
 })
 
 test_that('Gurobi solver (reliable)', {
@@ -51,29 +52,13 @@ test_that('Gurobi solver (reliable)', {
 	if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')
 	# load RaspUnsolved object
 	data(sim_ru)
-	sim_ru <- pu.subset(sim_ru, 1:10)
-	sim_ru@data@attribute.spaces[[1]] = AttributeSpace(
-		pu=sim_ru@data@attribute.spaces[[1]]@pu,
-		dp=list(
-			DemandPoints(
-				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[1]]@points@coords[1:10,]),
-				sim_ru@data@attribute.spaces[[1]]@dp[[1]]@weights[1:10]
-			),
-			DemandPoints(
-				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[2]]@points@coords[1:10,]),
-				sim_ru@data@attribute.spaces[[1]]@dp[[2]]@weights[1:10]
-			),
-			DemandPoints(
-				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[3]]@points@coords[1:10,]),
-				sim_ru@data@attribute.spaces[[1]]@dp[[3]]@weights[1:10]
-			)
-		)
-	)
+	sim_ru <- pu.subset(spp.subset(sim_ru, 1), 1:10)
 	# generate model code
 	model<-rcpp_generate_model_object(RaspReliableOpts(), FALSE, sim_ru@data, FALSE)
 	model$A<-Matrix::sparseMatrix(i=model$Ar[[1]]+1, j=model$Ar[[2]]+1, x=model$Ar[[3]])
 	# solve the model
 	result<-gurobi::gurobi(model, append(as.list(GurobiOpts(MIPGap=0.99, Presolve=2L)), list('LogFile'=tempfile(fileext='.log'))))
+	if (file.exists('gurobi.log')) unlink('gurobi.log')	
 })
 
 test_that('solve.RaspUnsolved (unreliable - NUMREPS=1)', {
@@ -110,24 +95,7 @@ test_that('solve.RaspUnsolved (reliable - NUMREPS=1)', {
 	if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')
 	# load RaspUnsolved object
 	data(sim_ru)
-	sim_ru <- pu.subset(sim_ru, 1:10)
-	sim_ru@data@attribute.spaces[[1]] = AttributeSpace(
-		pu=sim_ru@data@attribute.spaces[[1]]@pu,
-		dp=list(
-			DemandPoints(
-				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[1]]@points@coords[1:10,]),
-				sim_ru@data@attribute.spaces[[1]]@dp[[1]]@weights[1:10]
-			),
-			DemandPoints(
-				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[2]]@points@coords[1:10,]),
-				sim_ru@data@attribute.spaces[[1]]@dp[[2]]@weights[1:10]
-			),
-			DemandPoints(
-				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[3]]@points@coords[1:10,]),
-				sim_ru@data@attribute.spaces[[1]]@dp[[3]]@weights[1:10]
-			)
-		)
-	)
+	sim_ru <- pu.subset(spp.subset(sim_ru, 1), 1:10)
 	# make unsolved object
 	ru<-RaspUnsolved(RaspReliableOpts(), sim_ru@data)
 	# solve it
@@ -168,24 +136,7 @@ test_that('solve.RaspUnsolved (reliable - NUMREPS=2)', {
 	if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')
 	# load RaspUnsolved object
 	data(sim_ru)
-	sim_ru <- pu.subset(sim_ru, 1:10)
-	sim_ru@data@attribute.spaces[[1]] = AttributeSpace(
-		pu=sim_ru@data@attribute.spaces[[1]]@pu,
-		dp=list(
-			DemandPoints(
-				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[1]]@points@coords[1:10,]),
-				sim_ru@data@attribute.spaces[[1]]@dp[[1]]@weights[1:10]
-			),
-			DemandPoints(
-				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[2]]@points@coords[1:10,]),
-				sim_ru@data@attribute.spaces[[1]]@dp[[2]]@weights[1:10]
-			),
-			DemandPoints(
-				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[3]]@points@coords[1:10,]),
-				sim_ru@data@attribute.spaces[[1]]@dp[[3]]@weights[1:10]
-			)
-		)
-	)
+	sim_ru <- pu.subset(spp.subset(sim_ru, 1), 1:10)
 	# make unsolved object
 	ru<-RaspUnsolved(RaspReliableOpts(), sim_ru@data)
 	# solve it
@@ -233,24 +184,7 @@ test_that('solve.RaspUnsolved (reliable - STATUS test)', {
 	if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')
 	# load RaspUnsolved object
 	data(sim_ru)
-	sim_ru <- pu.subset(sim_ru, 1:10)
-	sim_ru@data@attribute.spaces[[1]] = AttributeSpace(
-		pu=sim_ru@data@attribute.spaces[[1]]@pu,
-		dp=list(
-			DemandPoints(
-				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[1]]@points@coords[1:10,]),
-				sim_ru@data@attribute.spaces[[1]]@dp[[1]]@weights[1:10]
-			),
-			DemandPoints(
-				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[2]]@points@coords[1:10,]),
-				sim_ru@data@attribute.spaces[[1]]@dp[[2]]@weights[1:10]
-			),
-			DemandPoints(
-				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[3]]@points@coords[1:10,]),
-				sim_ru@data@attribute.spaces[[1]]@dp[[3]]@weights[1:10]
-			)
-		)
-	)
+	sim_ru <- pu.subset(spp.subset(sim_ru, 1), 1:10)
 	# lock in and lock out planning units
 	sim_ru@data@pu$status[1]=0
 	sim_ru@data@pu$status[2]=2
@@ -298,24 +232,7 @@ test_that('solve.RaspUnsolved (reliable - BLM test)', {
 	if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')
 	# load RaspUnsolved object
 	data(sim_ru)
-	sim_ru <- pu.subset(sim_ru, 1:10)
-	sim_ru@data@attribute.spaces[[1]] = AttributeSpace(
-		pu=sim_ru@data@attribute.spaces[[1]]@pu,
-		dp=list(
-			DemandPoints(
-				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[1]]@points@coords[1:10,]),
-				sim_ru@data@attribute.spaces[[1]]@dp[[1]]@weights[1:10]
-			),
-			DemandPoints(
-				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[2]]@points@coords[1:10,]),
-				sim_ru@data@attribute.spaces[[1]]@dp[[2]]@weights[1:10]
-			),
-			DemandPoints(
-				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[3]]@points@coords[1:10,]),
-				sim_ru@data@attribute.spaces[[1]]@dp[[3]]@weights[1:10]
-			)
-		)
-	)
+	sim_ru <- pu.subset(spp.subset(sim_ru, 1), 1:10)
 	# make unsolved object
 	ru<-RaspUnsolved(RaspReliableOpts(BLM=100), sim_ru@data)
 	# solve it

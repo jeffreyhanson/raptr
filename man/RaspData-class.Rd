@@ -22,7 +22,7 @@ This class is used to store RASP input data.
 
 \item{\code{attribute.spaces}}{\code{list} of \code{AttributeSpace} objects with the demand points and planning unit coordinates.}
 
-\item{\code{boundary}}{\code{data.frame} with data on the shared boundary length of planning units. Columns are with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'boundary' (\code{integer}).}
+\item{\code{boundary}}{\code{data.frame} with data on the shared boundary length of planning units. Columns are with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'boundary' (\code{numeric}).}
 
 \item{\code{skipchecks}}{\code{logical} Skip data integrity checks? May improve speed for big data sets.}
 

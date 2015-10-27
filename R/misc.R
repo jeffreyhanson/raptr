@@ -129,24 +129,6 @@ blank.raster<-function(x, res) {
 #' @exportClass PolySet
 setClass("PolySet")
 
-#' PolySetOrNULL class
-#'
-#' Object is either \code{PolySet} or \code{NULL}.
-#'
-#' @name PolySetOrNULL-class
-#' @aliases PolySetOrNULL
-#' @exportClass PolySetOrNULL
-setClassUnion("PolySetOrNULL", c("PolySet", "NULL"))
-
-#' data.frameOrNULL class
-#'
-#' Object is either \code{data.frame} or \code{NULL}.
-#'
-#' @name data.frameOrNULL-class
-#' @aliases data.frameOrNULL
-#' @exportClass data.frameOrNULL
-setClassUnion("data.frameOrNULL", c("data.frame", "NULL"))
-
 #' RaspOpts class
 #'
 #' Object is either \code{RaspReliableOpts} or \code{RaspUnreliableOpts}.

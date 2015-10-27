@@ -541,21 +541,28 @@ SpatialPolygons2PolySet<-function(x, n_preallocate) UseMethod("SpatialPolygons2P
 #' This function plots the distribution of species across the study area.
 #'
 #' @param x \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
-#' @param y \code{character} name of species, or \code{integer} index for species.
+#' @param species \code{character} name of species, or \code{integer} index for species.
+#' @param y \code{NULL} \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.
+#' @param prob.color.palette \code{character} name of color palette to denote probability of occupancy of the species in planning units (see \code{\link[RColorBrewer]{brewer.pal}}). Defaults to 'YlGnBu'.
+#' @param pu.color.palette \code{character} name of color palette to indicate planning unit statuses (see \code{\link[RColorBrewer]{brewer.pal}}). Defaults to 'RdYlGn.
+#' @param locked.in.color \code{character} color to denote locked in planning units. Defaults to '#000000FF'.
+#' @param locked.out.color \code{character} color to denote locked in planning units. Defaults to '#D7D7D7FF'.
 #' @param basemap \code{character} object indicating the type of basemap to use (see \code{link{basemap}}). Use either 'none', 'roadmap', 'mobile', 'satellite', 'terrain', 'hybrid', 'mapmaker-roadmap', 'mapmaker-hybrid'. Defaults to 'none'.
-#' @param color.palette \code{character} name of colour palette to use for planning units (see \code{\link[RColorBrewer]{brewer.pal}}). Defaults to 'YlGnBu'.
 #' @param alpha \code{numeric} value to indicate how transparent the planning unit colors shoud be.
 #' @param grayscale \code{logical} should the basemap be gray-scaled?
 #' @param force.reset \code{logical} if basemap data has been cached, should it be re-downloaded?
+#' @param ... not used.
 #' @export
 #' @examples
 #' # load RaspSolved objects
-#' data(sim_rs, cs_rs)
+#' data(sim_ru, cs_rs)
 #' # plot first species in sim_rs
-#' spp.plot(sim_rs)
-#' # plot species in cs_rs with basemap
-#' spp.plot(cs_rs, basemap='satellite')
-spp.plot<-function(x, y, basemap, color.palette, alpha, grayscale, force.reset) UseMethod('spp.plot')
+#' spp.plot(sim_ru, species=1)
+#' # plot first species in cs_rs with basemap
+#' spp.plot(cs_rs, species=1, basemap='satellite')
+#' # as above indicate the best solution by coloring planning unit borders
+#' spp.plot(cs_rs, species=1, y=0, basemap='satellite')
+spp.plot<-function(x, species, ...) UseMethod('spp.plot')
 
 #' Plot space
 #'
@@ -563,11 +570,13 @@ spp.plot<-function(x, y, basemap, color.palette, alpha, grayscale, force.reset) 
 #' Note that this function only works for attribute spaces with one, two, or three dimensions.
 #'
 #' @param x \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
-#' @param y \code{character} name of species, or \code{integer} index for species.
+#' @param species \code{character} name of species, or \code{integer} index for species.
 #' @param space \code{integer} index of attribute space.
+#' @param y \code{NULL} \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.
 #' @param pu.color.palette \code{character} name of color palette to use for planning units (see \code{\link[RColorBrewer]{brewer.pal}}). Defaults to 'RdYlGn'.
 #' @param locked.in.color \code{character} color to denote locked in planning units. Used when \code{y} is \code{NULL}. Defaults to '#000000FF'.
 #' @param locked.out.color \code{character} color to denote locked in planning units. Used when \code{y} is \code{NULL}. Defaults to '#D7D7D7FF'.
+#' @param ... not used.
 #' @export
 #' @examples
 #' # load RaspSolved objects
@@ -576,11 +585,9 @@ spp.plot<-function(x, y, basemap, color.palette, alpha, grayscale, force.reset) 
 #' space.plot(sim_rs, 1, 1)
 space.plot<-function(
   x,
-	y,
+	species,
 	space,
-	pu.color.palette,
-	locked.in.color,
-	locked.out.color
+  ...
 ) {
   UseMethod('space.plot')
 }

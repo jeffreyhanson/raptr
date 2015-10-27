@@ -84,8 +84,8 @@ pu.subset.RaspUnsolved<-function(x, pu) {
 #' @rdname spp.plot
 #' @method spp.plot RaspUnsolved
 #' @export
-spp.plot.RaspUnsolved<-function(x, y, basemap='none', color.palette='YlGnBu', alpha=ifelse(basemap=="none", 1, 0.7), grayscale=FALSE, force.reset=FALSE) {
-	spp.plot(x@data, y, basemap, color.palette, alpha, grayscale, force.reset)
+spp.plot.RaspUnsolved<-function(x, species, prob.color.palette='YlGnBu', basemap='none', alpha=ifelse(basemap=="none", 1, 0.7), grayscale=FALSE, force.reset=FALSE) {
+	spp.plot(x@data, species, prob.color.palette, basemap, alpha, grayscale, force.reset)
 }
 
 #' @rdname space.plot

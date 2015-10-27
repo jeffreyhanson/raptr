@@ -46,7 +46,7 @@ hashCall<-function(expr, skipargs=c(), env=parent.frame()) {
 }
 
 # plotting functions
-prettyGeoplot<-function(polygons, col, basemap, main, fun, beside=TRUE) {
+prettyGeoplot<-function(polygons, col, basemap, main, fun, beside=TRUE, border.cols=NULL) {
 	# make layout
 	defpar<-par(no.readonly = TRUE)
 	par(mar=c(1,1,1,1),oma=c(0,0,0,0))
@@ -64,10 +64,10 @@ prettyGeoplot<-function(polygons, col, basemap, main, fun, beside=TRUE) {
 	# make geoplot
 	if (is.list(basemap)) {
 		PlotOnStaticMap(basemap)
-		suppressWarnings(PlotPolysOnStaticMap(basemap, polygons, col=col, add=TRUE))
+		suppressWarnings(PlotPolysOnStaticMap(basemap, polygons, col=col, border=border, add=TRUE))
 	} else {
 		xdiff<-diff(range(polygons$X))
-		plotPolys(polygons, col=col, axes=FALSE, xlab="", ylab="")
+		plotPolys(polygons, col=col, axes=FALSE, xlab="", ylab="", border=border)
 	}
 	par(defpar)
 	return(invisible())
@@ -748,5 +748,18 @@ parseArgs2<-function(args, ...) {
       names(ellipses.args),
       args
     )]
+  )
+}
+
+# create empty PolySet data
+emptyPolySet<-function() {
+  return(
+    structure(
+      list(PID = integer(0), SID = integer(0), POS = integer(0),
+        X = numeric(0), Y = numeric(0)), .Names = c("PID", "SID",
+        "POS", "X", "Y"),
+      row.names = integer(0),
+      class = c("PolySet", "data.frame")
+    )
   )
 }

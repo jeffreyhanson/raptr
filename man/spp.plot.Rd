@@ -7,44 +7,58 @@
 \alias{spp.plot.RaspUnsolved}
 \title{Plot species}
 \usage{
-\method{spp.plot}{RaspData}(x, y, basemap = "none",
-  color.palette = "YlGnBu", alpha = ifelse(basemap == "none", 1, 0.7),
+\method{spp.plot}{RaspData}(x, species, basemap = "none",
+  prob.color.palette = "YlGnBu", alpha = ifelse(basemap == "none", 1, 0.7),
   grayscale = FALSE, force.reset = FALSE)
 
-\method{spp.plot}{RaspSolved}(x, y, basemap = "none",
-  color.palette = "YlGnBu", alpha = ifelse(basemap == "none", 1, 0.7),
+\method{spp.plot}{RaspSolved}(x, species, y, prob.color.palette = "YlGnBu",
+  pu.color.palette = "RdYlGn", basemap = "none",
+  locked.in.color = "#000000FF", locked.out.color = "#D7D7D7FF",
+  alpha = ifelse(basemap == "none", 1, 0.7), grayscale = FALSE,
+  force.reset = FALSE)
+
+\method{spp.plot}{RaspUnsolved}(x, species, prob.color.palette = "YlGnBu",
+  basemap = "none", alpha = ifelse(basemap == "none", 1, 0.7),
   grayscale = FALSE, force.reset = FALSE)
 
-\method{spp.plot}{RaspUnsolved}(x, y, basemap = "none",
-  color.palette = "YlGnBu", alpha = ifelse(basemap == "none", 1, 0.7),
-  grayscale = FALSE, force.reset = FALSE)
-
-spp.plot(x, y, basemap, color.palette, alpha, grayscale, force.reset)
+spp.plot(x, species, ...)
 }
 \arguments{
 \item{x}{\code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.}
 
-\item{y}{\code{character} name of species, or \code{integer} index for species.}
+\item{species}{\code{character} name of species, or \code{integer} index for species.}
 
 \item{basemap}{\code{character} object indicating the type of basemap to use (see \code{link{basemap}}). Use either 'none', 'roadmap', 'mobile', 'satellite', 'terrain', 'hybrid', 'mapmaker-roadmap', 'mapmaker-hybrid'. Defaults to 'none'.}
 
-\item{color.palette}{\code{character} name of colour palette to use for planning units (see \code{\link[RColorBrewer]{brewer.pal}}). Defaults to 'YlGnBu'.}
+\item{prob.color.palette}{\code{character} name of color palette to denote probability of occupancy of the species in planning units (see \code{\link[RColorBrewer]{brewer.pal}}). Defaults to 'YlGnBu'.}
 
 \item{alpha}{\code{numeric} value to indicate how transparent the planning unit colors shoud be.}
 
 \item{grayscale}{\code{logical} should the basemap be gray-scaled?}
 
 \item{force.reset}{\code{logical} if basemap data has been cached, should it be re-downloaded?}
+
+\item{y}{\code{NULL} \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.}
+
+\item{pu.color.palette}{\code{character} name of color palette to indicate planning unit statuses (see \code{\link[RColorBrewer]{brewer.pal}}). Defaults to 'RdYlGn.}
+
+\item{locked.in.color}{\code{character} color to denote locked in planning units. Defaults to '#000000FF'.}
+
+\item{locked.out.color}{\code{character} color to denote locked in planning units. Defaults to '#D7D7D7FF'.}
+
+\item{...}{not used.}
 }
 \description{
 This function plots the distribution of species across the study area.
 }
 \examples{
 # load RaspSolved objects
-data(sim_rs, cs_rs)
+data(sim_ru, cs_rs)
 # plot first species in sim_rs
-spp.plot(sim_rs)
-# plot species in cs_rs with basemap
-spp.plot(cs_rs, basemap='satellite')
+spp.plot(sim_ru, species=1)
+# plot first species in cs_rs with basemap
+spp.plot(cs_rs, species=1, basemap='satellite')
+# as above indicate the best solution by coloring planning unit borders
+spp.plot(cs_rs, species=1, y=0, basemap='satellite')
 }
 

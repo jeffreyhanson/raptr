@@ -11,20 +11,20 @@ NULL
 #' @slot targets \code{data.frame} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), and 'proportion' (\code{character}).
 #' @slot pu.species.probabilities \code{data.frame} with data on the probability of species in each planning unit. Columns are 'species' (\code{integer}), 'pu' (\code{integer}), and 'value' (\code{numeric}) columns.
 #' @slot attribute.spaces \code{list} of \code{AttributeSpace} objects with the demand points and planning unit coordinates.
-#' @slot boundary \code{data.frame} with data on the shared boundary length of planning units. Columns are with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'boundary' (\code{integer}).
+#' @slot boundary \code{data.frame} with data on the shared boundary length of planning units. Columns are with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'boundary' (\code{numeric}).
 #' @slot skipchecks \code{logical} Skip data integrity checks? May improve speed for big data sets.
 #' @slot .cache \code{environment} used to cache calculations.
 #' @seealso \code{\link[PBSmapping]{PolySet}}.
 #' @export
 setClass("RaspData",
 	representation(
-		polygons="PolySetOrNULL",
+		polygons="PolySet",
 		pu="data.frame",
 		species="data.frame",
 		targets="data.frame",
 		pu.species.probabilities="data.frame",
 		attribute.spaces="list",
-		boundary="data.frameOrNULL",
+		boundary="data.frame",
 		skipchecks="logical",
 		.cache="environment"
 	),
@@ -103,24 +103,22 @@ setClass("RaspData",
 				# all validity checks are internal in the object
 
 			# boundary
-			if (!is.null(object@boundary)) {
-				if (any(!c('id1','id2','boundary') %in% names(object@boundary)))
-					stop("argument to boundary is missing one of these columns: 'id1', 'id2', or 'boundary'")
-				if (!inherits(object@boundary$id1, 'integer'))
-					stop('argument to boundary$id1 is not integer')
-				if (any(!is.finite(object@boundary$id1)))
-					stop('argument to boundary$id1 contains NA or non-finite values')
+			if (any(!c('id1','id2','boundary') %in% names(object@boundary)))
+				stop("argument to boundary is missing one of these columns: 'id1', 'id2', or 'boundary'")
+			if (!inherits(object@boundary$id1, 'integer'))
+				stop('argument to boundary$id1 is not integer')
+			if (any(!is.finite(object@boundary$id1)))
+				stop('argument to boundary$id1 contains NA or non-finite values')
 
-				if (!inherits(object@boundary$id2, 'integer'))
-					stop('argument to boundary$id2 is not integer')
-				if (any(!is.finite(object@boundary$id2)))
-					stop('argument to boundary$id2 contains NA or non-finite values')
+			if (!inherits(object@boundary$id2, 'integer'))
+				stop('argument to boundary$id2 is not integer')
+			if (any(!is.finite(object@boundary$id2)))
+				stop('argument to boundary$id2 contains NA or non-finite values')
 
-				if (!inherits(object@boundary$boundary, 'numeric'))
-					stop('argument to boundary$boundary is not numeric')
-				if (any(!is.finite(object@boundary$boundary)))
-					stop('argument to boundary$boundary contains NA or non-finite values')
-			}
+			if (!inherits(object@boundary$boundary, 'numeric'))
+				stop('argument to boundary$boundary is not numeric')
+			if (any(!is.finite(object@boundary$boundary)))
+				stop('argument to boundary$boundary contains NA or non-finite values')
 
 			## cross table dependencies
 			# check all planning units match
@@ -218,7 +216,7 @@ setClass("RaspData",
 #' )
 #' print(x)
 #' }
-RaspData<-function(pu, species, targets, pu.species.probabilities, attribute.spaces, boundary, polygons=NULL, skipchecks=FALSE, .cache=new.env()) {
+RaspData<-function(pu, species, targets, pu.species.probabilities, attribute.spaces, boundary, polygons=NA, skipchecks=FALSE, .cache=new.env()) {
 	# convert factors to characters
 	if (inherits(species$name, "factor"))
 		species$name<-as.character(species$name)
@@ -648,20 +646,20 @@ update.RaspData<-function(object, species=NULL, space=NULL, name=NULL, amount.ta
 #' @rdname spp.plot
 #' @method spp.plot RaspData
 #' @export
-spp.plot.RaspData<-function(x, y,	basemap='none', color.palette='YlGnBu', alpha=ifelse(basemap=="none", 1, 0.7), grayscale=FALSE, force.reset=FALSE) {
+spp.plot.RaspData<-function(x, species, basemap='none', prob.color.palette='YlGnBu', alpha=ifelse(basemap=="none", 1, 0.7), grayscale=FALSE, force.reset=FALSE) {
 	# data checks
-	stopifnot(length(y)==1)
-	if (!inherits(x@polygons, "PolySet")	)
+	stopifnot(length(species)==1)
+	if (nrow(x@polygons)>0)
 			stop("Spatial data for planning units not present in object")
-	if (is.character(y)) {
-		if (!y %in% x@species$name)
-			stop('argument to y is not a species name in argument to x')
-		ypos<-match(y, x@species$name)
+	if (is.character(species)) {
+		if (!species %in% x@species$name)
+			stop('argument to species is not a species name in argument to x')
+		spp_pos <-match(species, x@species$name)
 	}
-	if (is.numeric(y)) {
-		if (!y %in% seq_along(x@species$name))
-			stop('argument to y is not a valid index for species in argument to x')
-		ypos <- y
+	if (is.numeric(species)) {
+		if (!species %in% seq_along(x@species$name))
+			stop('argument to species is not a valid index for species in argument to x')
+		spp_pos <- species
 	}
 	# get basemap
 	if (basemap!="none")
@@ -669,7 +667,7 @@ spp.plot.RaspData<-function(x, y,	basemap='none', color.palette='YlGnBu', alpha=
 	## main processing
 	# extract planning unit colors
 	values<-numeric(nrow(x@pu))
-	rows<-which(x@pu.species.probabilities$species == ypos)
+	rows<-which(x@pu.species.probabilities$species == spp_pos )
 	values[x@pu.species.probabilities$pu[rows]]<-x@pu.species.probabilities$value[rows]
 	if (length(unique(values))>1) {
 		cols<-brewerCols(rescale(values, to=c(0,1)), color.palette, alpha)
@@ -679,9 +677,9 @@ spp.plot.RaspData<-function(x, y,	basemap='none', color.palette='YlGnBu', alpha=
 	}
 	# set title
 	if (!is.null(x@species$name)) {
-		main=paste0(x@species$name[ypos], " in planning units (%)")
+		main=paste0(x@species$name[spp_pos ], " in planning units (%)")
 	} else {
-		main=paste0("Species ",y, " in planning units (%)")
+		main=paste0("Species ",species, " in planning units (%)")
 	}
 	# make plot
 	plot(1,1)
@@ -700,40 +698,40 @@ spp.plot.RaspData<-function(x, y,	basemap='none', color.palette='YlGnBu', alpha=
 #' @export
 space.plot.RaspData<-function(
 		x,
-		y,
+		species,
 		space=1,
 		pu.color.palette='RdYlGn',
 		locked.in.color="#000000FF",
 		locked.out.color="#D7D7D7FF"
 	) {
 	# data checks
-	stopifnot(length(y)==1)
-	if (is.character(y)) {
-		if (!y %in% x@species$name)
-			stop('argument to y is not a species name in argument to x')
-		ypos<-match(y, x@species$name)
+	stopifnot(length(species)==1)
+	if (is.character(species)) {
+		if (!species %in% x@species$name)
+			stop('argument to species is not a species name in argument to x')
+		spp_pos<-match(species, x@species$name)
 	}
-	if (is.numeric(y)) {
-		if (!y %in% seq_along(x@species$name))
-			stop('argument to y is not a valid index for species in argument to x')
-		ypos <- y
+	if (is.numeric(species)) {
+		if (!species %in% seq_along(x@species$name))
+			stop('argument to species is not a valid index for species in argument to x')
+		spp_pos <- species
 	}
 	# set title
 	if (!is.null(x@species$name)) {
-		main=x@species$name[ypos]
+		main=x@species$name[spp_pos]
 	} else {
-		main=paste0("Species ",y)
+		main=paste0("Species ",species)
 	}
 	# extract pu data
 	pu<-as.data.frame(x@attribute.spaces[[space]]@pu@coords)
 	names(pu)<-paste0('X',seq_len(ncol(pu)))
-	pu$status<-'Not Selected'
+	pu$status	<-'Not Selected'
 	pu$status[which(x@pu$status==2)]<-'Locked In'
 	pu$status[which(x@pu$status==3)]<-'Locked Out'
 	# extract dp data
-	dp<-as.data.frame(x@attribute.spaces[[space]]@dp[[ypos]]@points@coords)
+	dp<-as.data.frame(x@attribute.spaces[[space]]@dp[[spp_pos]]@points@coords)
 	names(dp)<-paste0('X',seq_len(ncol(dp)))
-	dp$weights=x@attribute.spaces[[space]]@dp[[ypos]]@weights
+	dp$weights=x@attribute.spaces[[space]]@dp[[spp_pos]]@weights
 	# make plots
 	do.call(
 		paste0('spacePlot.',ncol(x@attribute.spaces[[space]]@pu@coords),'d'),

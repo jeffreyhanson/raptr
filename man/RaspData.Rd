@@ -5,7 +5,7 @@
 \title{Create new RaspData object}
 \usage{
 RaspData(pu, species, targets, pu.species.probabilities, attribute.spaces,
-  boundary, polygons = NULL, skipchecks = FALSE, .cache = new.env())
+  boundary, polygons = NA, skipchecks = FALSE, .cache = new.env())
 }
 \arguments{
 \item{pu}{\code{data.frame} planning unit data. Columns are 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).}

@@ -7,10 +7,11 @@
 \alias{space.plot.RaspUnsolved}
 \title{Plot space}
 \usage{
-\method{space.plot}{RaspData}(x, y, space = 1, pu.color.palette = "RdYlGn",
-  locked.in.color = "#000000FF", locked.out.color = "#D7D7D7FF")
+\method{space.plot}{RaspData}(x, species, space = 1,
+  pu.color.palette = "RdYlGn", locked.in.color = "#000000FF",
+  locked.out.color = "#D7D7D7FF")
 
-\method{space.plot}{RaspSolved}(x, y, space = 1,
+\method{space.plot}{RaspSolved}(x, species, space = 1, y = 0,
   pu.color.palette = "RdYlGn", locked.in.color = "#000000FF",
   locked.out.color = "#D7D7D7FF")
 
@@ -18,12 +19,12 @@
   pu.color.palette = "RdYlGn", locked.in.color = "#000000FF",
   locked.out.color = "#D7D7D7FF")
 
-space.plot(x, y, space, pu.color.palette, locked.in.color, locked.out.color)
+space.plot(x, species, space, ...)
 }
 \arguments{
 \item{x}{\code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.}
 
-\item{y}{\code{character} name of species, or \code{integer} index for species.}
+\item{species}{\code{character} name of species, or \code{integer} index for species.}
 
 \item{space}{\code{integer} index of attribute space.}
 
@@ -32,6 +33,10 @@ space.plot(x, y, space, pu.color.palette, locked.in.color, locked.out.color)
 \item{locked.in.color}{\code{character} color to denote locked in planning units. Used when \code{y} is \code{NULL}. Defaults to '#000000FF'.}
 
 \item{locked.out.color}{\code{character} color to denote locked in planning units. Used when \code{y} is \code{NULL}. Defaults to '#D7D7D7FF'.}
+
+\item{y}{\code{NULL} \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.}
+
+\item{...}{not used.}
 }
 \description{
 This function plots the distribution of planning units and the distribution of demand points for a particular species in an attribute space.
