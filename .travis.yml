@@ -13,6 +13,7 @@ apt_packages:
     
 before_install: 
   - echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
+  - sudo apt-get build-dep r-cran-rgl
   
 r_binary_packages:
   - boot

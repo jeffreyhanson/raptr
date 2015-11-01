@@ -15,7 +15,7 @@ Linux and Mac OSX users will first need to install several dependencies. Mac OSX
 sudo apt-get update
 sudo apt-get install libgdal-dev
 sudo apt-get install libproj-dev
-sudo apt-get install r-cran-rgl
+sudo apt-get build-dep r-cran-rgl
 ```
 
 To install the raspr R package, execute the following commands in R:
