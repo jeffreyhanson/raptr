@@ -45,7 +45,7 @@
 #' @importFrom methods setClassUnion
 #' @importFrom methods setClass
 
-#' @importFrom sm sm.density
+#' @importFrom ks kde
 
 #' @importFrom Matrix sparseMatrix
 

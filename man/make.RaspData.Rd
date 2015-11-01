@@ -5,10 +5,10 @@
 \title{Make data for RASP using minimal inputs}
 \usage{
 make.RaspData(pus, species, spaces = NULL, amount.targets = 0.2,
-  space.targets = 0.2, n.demand.points = 100L,
-  kernel.method = c("sm.density", "hyperbox")[1], quantile = 0.2,
-  species.points = NULL, n.species.points = ceiling(0.2 * cellStats(species,
-  "sum")), include.geographic.space = TRUE, verbose = FALSE, ...)
+  space.targets = 0.2, n.demand.points = 100L, kernel.method = c("ks",
+  "hyperbox")[1], quantile = 0.2, scale = TRUE, species.points = NULL,
+  n.species.points = ceiling(0.2 * cellStats(species, "sum")),
+  include.geographic.space = TRUE, verbose = FALSE, ...)
 }
 \arguments{
 \item{pus}{\code{SpatialPolygons} with planning unit data.}
@@ -23,9 +23,11 @@ make.RaspData(pus, species, spaces = NULL, amount.targets = 0.2,
 
 \item{n.demand.points}{\code{integer} number of demand points to use for each attribute space for each species. Defaults to 100L.}
 
-\item{kernel.method}{\code{character} name of kernel method to use to generate demand points. Use either \code{sm.density} or \code{hypervolume}.}
+\item{kernel.method}{\code{character} name of kernel method to use to generate demand points. Use either \code{ks} or \code{hypervolume}.}
 
 \item{quantile}{\code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.2.}
+
+\item{scale}{\code{logical} should attribute spaces be z-scored before generating demand points? Defaults to \code{TRUE}.}
 
 \item{species.points}{\code{list} of/or \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records. Use a \code{list} of objects to represent different species. Must have the same number of elements as \code{species}. If not supplied then use \code{n.species.points} to sample points from the species distributions.}
 
@@ -41,12 +43,10 @@ make.RaspData(pus, species, spaces = NULL, amount.targets = 0.2,
 This function prepares spatially explicit planning unit, species data, and landscape data layers for RASP processing.
 }
 \examples{
-\dontrun{
 # load data
 data(cs_pus, cs_spp, cs_space)
 x <- make.RaspData(cs_pus, cs_spp, cs_space, include.geographic.space=TRUE)
 print(x)
-}
 }
 \seealso{
 \code{\link{RaspData-class}}, \code{\link{RaspData}}.

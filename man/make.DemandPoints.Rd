@@ -5,7 +5,7 @@
 \title{Generate demand points for RASP}
 \usage{
 make.DemandPoints(species.points, space.rasters = NULL, n = 100L,
-  quantile = 0.2, kernel.method = c("sm.density", "hypervolume")[1], ...)
+  quantile = 0.2, kernel.method = c("ks", "hypervolume")[1], ...)
 }
 \arguments{
 \item{species.points}{\code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records.}
@@ -16,7 +16,7 @@ make.DemandPoints(species.points, space.rasters = NULL, n = 100L,
 
 \item{quantile}{\code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.2.}
 
-\item{kernel.method}{\code{character} name of kernel method to use to generate demand points. Defaults to 'sm.density'.}
+\item{kernel.method}{\code{character} name of kernel method to use to generate demand points. Defaults to 'ks'.}
 
 \item{...}{arguments passed to kernel density estimating functions}
 }
@@ -30,18 +30,19 @@ This function generates demand points for RASP using kernels.
 The values of the species records in the rasters is extracted. A kernel is fit to the points in the attribute space.
 Volumes are then fit to the points in the attribute space(s). Points are randomly generated inside the volume. Demand points are generated
 as random points inside the volume. A kernel is fit to the species records and used to predict the density at each of the demand points.
-By using 'sm.density' as an argument in \code{kernel.method}, the volume is fit as a minimum convex polygon using \code{\link[rgeos]{gConvexHull}} and
-\code{\link[sm]{sm.density}} is used to fit the kernel. Note this can only be used when the data is low-dimensional (d<3). By using
+By using 'ks' as an argument in \code{kernel.method}, the volume is fit as a minimum convex polygon using \code{\link[adehabitatHR]{mcp}} and
+\code{\link[kde]{kde}} is used to fit the kernel. Note this can only be used when the data is low-dimensional (d<3). By using
+'hypervolume' as an argument, the \code{\link[hypervolume]{hypervolume}} function is used. This can be used for hyer-dimensional data.
 }
 \examples{
 data(cs_spp, cs_space)
 # generate species points
  species.points <- randomPoints(cs_spp, n=100, prob=TRUE)
-# generate demand points for a 1d space using sm.density
+# generate demand points for a 1d space using ks
 dps1 <- make.DemandPoints(
 	species.points=species.points,
 	space.rasters=cs_space[[1]],
-	kernel.method='sm.density'
+	kernel.method='ks'
 )
 # generate demand points for a 2d space using hypervolume
 dps12 <- make.DemandPoints(
@@ -51,6 +52,6 @@ dps12 <- make.DemandPoints(
 )
 }
 \seealso{
-\code{\link[hypervolume]{hypervolume}}, \code{\link[sm]{sm.density}}, \code{\link[rgeos]{gConvexHull}}.
+\code{\link[hypervolume]{hypervolume}}, \code{\link[ks]{kde}}, \code{\link[adehabitatHR]{mcp}}.
 }
 

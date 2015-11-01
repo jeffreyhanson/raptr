@@ -128,7 +128,7 @@ demand.points.density1d<-function(pts, n, quantile=0, ...) {
 	quants=quantile(pts[,1], c((quantile/2), 1-(quantile/2)))
 	dp=runif(n, quants[[1]], quants[[2]])
 	# density kernel
-	est=sm.density(pts[,1], eval.points=dp, display='none', eval.grid=FALSE, ...)
+	est=kde(pts[,1], eval.points=dp, ...)
 	return(
 		list(
 			coords=matrix(est$eval.points, ncol=1),
@@ -145,7 +145,7 @@ demand.points.density2d<-function(pts, n, quantile=0, ...) {
 		type='random'
 	)@coords[seq_len(n),]
 	# fit density kernel
-	est=sm.density(pts, eval.points=dp, display='none', eval.grid=FALSE, ...)
+	est=kde(pts, eval.points=dp, ...)
 	# prepare data to return
 	return(
 		list(

@@ -243,7 +243,7 @@ RaspData<-function(pu, species, targets, pu.species.probabilities, attribute.spa
 #' @param amount.targets \code{numeric} vector for area targets (\%) for each species. Defaults to 0.2 for each attribute space for each species.
 #' @param space.targets \code{numeric} vector for attribute space targets (\%) for each species. Defaults to 0.2 for each attribute space for each species and each space.
 #' @param n.demand.points \code{integer} number of demand points to use for each attribute space for each species. Defaults to 100L.
-#' @param kernel.method \code{character} name of kernel method to use to generate demand points. Use either \code{sm.density} or \code{hypervolume}.
+#' @param kernel.method \code{character} name of kernel method to use to generate demand points. Use either \code{ks} or \code{hypervolume}.
 #' @param quantile \code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.2.
 #' @param scale \code{logical} should attribute spaces be z-scored before generating demand points? Defaults to \code{TRUE}.
 #' @param include.geographic.space \code{logical} should the geographic space be considered an attribute space?
@@ -259,7 +259,7 @@ RaspData<-function(pu, species, targets, pu.species.probabilities, attribute.spa
 #' x <- make.RaspData(cs_pus, cs_spp, cs_space, include.geographic.space=TRUE)
 #' print(x)
 make.RaspData<-function(pus, species, spaces=NULL,
-	amount.targets=0.2, space.targets=0.2, n.demand.points=100L, kernel.method=c('sm.density', 'hyperbox')[1], quantile=0.2, scale=TRUE,
+	amount.targets=0.2, space.targets=0.2, n.demand.points=100L, kernel.method=c('ks', 'hyperbox')[1], quantile=0.2, scale=TRUE,
 	species.points=NULL, n.species.points=ceiling(0.2*cellStats(species, 'sum')), include.geographic.space=TRUE, verbose=FALSE, ...) {
 
 	## init
@@ -373,7 +373,6 @@ make.RaspData<-function(pus, species, spaces=NULL,
 			}
 		)
 	}
-	
 	# calculate positions in geographic space
 	if (include.geographic.space) {
 		pu_coords=gCentroid(pus, byid=TRUE)@coords
@@ -404,7 +403,6 @@ make.RaspData<-function(pus, species, spaces=NULL,
 				space.rasters=spaces[[i]],
 				kernel.method=kernel.method,
 				n=n.demand.points,
-				id=j,
 				quantile=quantile
 			)
 		}

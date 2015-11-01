@@ -11,7 +11,7 @@ test_that('DemandPoints generator function', {
 	expect_equal(length(dp@weights), 50)
 })
 
-test_that('demand.points (sm.density, geographic space)', {
+test_that('demand.points (ks, geographic space)', {
 	# load data
 	sim_spp <- sim.species(sim.pus(225L), model='normal', res=1)
 	# generate points
@@ -21,7 +21,7 @@ test_that('demand.points (sm.density, geographic space)', {
 		species.points=pts,
 		space.rasters=NULL,
 		n=100L,
-		kernel.method='sm.density'
+		kernel.method='ks'
 	)
 	# check objects
 	expect_is(dp, 'DemandPoints')
@@ -32,7 +32,7 @@ test_that('demand.points (sm.density, geographic space)', {
 	expect_equal(sum(is.na((dp@weights))), 0)
 })
 
-test_that('demand.points (sm.density, attribute space)', {
+test_that('demand.points (ks, attribute space)', {
 	# load data
 	data(cs_spp, cs_space)
 	# generate points
@@ -42,7 +42,7 @@ test_that('demand.points (sm.density, attribute space)', {
 		species.points=pts,
 		space.rasters=cs_space[[1]],
 		n=100L,
-		kernel.method='sm.density'
+		kernel.method='ks'
 	)
 	# check objects
 	expect_is(dp, 'DemandPoints')

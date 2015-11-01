@@ -31,7 +31,7 @@ Imports:
     snow,
     rgeos,
     hypervolume,
-    sm,
+    ks,
     gdalUtils,
     mvtnorm,
     ggplot2
