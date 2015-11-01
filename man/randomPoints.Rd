@@ -22,7 +22,7 @@ This function generates random points in a \code{RasterLayer} object.
 \examples{
 # simulate data
 sim_pus <- sim.pus(225L)
-sim_spp <- sim.species(sim_pus, model='normal')
+sim_spp <- sim.species(sim_pus, model='normal', n=1, res=0.25)
 # generate points
 pts1 <- randomPoints(sim_spp, n=5)
 pts2 <- randomPoints(sim_spp, n=5, prob=TRUE)

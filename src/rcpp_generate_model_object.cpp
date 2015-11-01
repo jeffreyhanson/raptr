@@ -96,7 +96,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	Rcpp::S4 currS4;
 	Rcpp::S4 currS4_2;
 	Rcpp::List currLST;
-
+	
 	// planning unit points
 	if (verbose) Rcpp::Rcout << "\tpu points data" << std::endl;
 	Rcpp::NumericMatrix tmp;
@@ -115,7 +115,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	Eigen::Matrix<NumericVector, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> demandpoints_weights_MTX(n_species, n_attribute_spaces);
 	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> currCoordinates;
 	Rcpp::NumericVector currWeights;
-	std::vector<std::size_t> species_ndp(n_species);
+	Eigen::Matrix<std::size_t, Eigen::Dynamic, Eigen::Dynamic> species_ndp(n_species, n_attribute_spaces);
 	for (std::size_t j=0; j<n_attribute_spaces; ++j) {
 		currLST=Rcpp::as<Rcpp::S4>(attributespaceLST[j]).slot("dp");
 		for (std::size_t i=0; i<n_species; ++i) {
@@ -130,7 +130,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 			// weights
 			demandpoints_weights_MTX(i,j) = Rcpp::as<NumericVector>(currS4.slot("weights"));
 			// store number dp for species i
-			species_ndp[i]=demandpoints_weights_MTX(i,j).size();
+			species_ndp(i,j)=demandpoints_weights_MTX(i,j).size();
 		}
 	}
 
@@ -160,6 +160,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	std::vector<std::vector<std::size_t>> species_pu_ids(n_species);
 	std::vector<std::vector<double>> species_pu_probs(n_species);
 	std::vector<std::size_t> species_npu(n_species);
+	std::vector<std::size_t> species_rlevel(n_species);
 	for (std::size_t i=0; i<n_species; ++i) {
 		species_pu_ids[i].reserve(puvspeciesDF_pu.size());
 		species_pu_probs[i].reserve(puvspeciesDF_pu.size());
@@ -177,7 +178,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 		// assign prob to species vector
 		species_pu_probs[puvspeciesDF_species[i]].push_back(puvspeciesDF_value[i]);
 	}
-	if (verbose) Rcpp::Rcout << "\t\tresize vectors" << std::endl;
+		if (verbose) Rcpp::Rcout << "\t\tresize vectors" << std::endl;
   if (unreliable_formulation) {
     for (std::size_t i=0; i<n_species; ++i) {
   		species_pu_ids[i].shrink_to_fit();
@@ -191,6 +192,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   		species_pu_probs[i].push_back(1.0);
   		species_pu_probs[i].shrink_to_fit();
   		species_npu[i]=species_pu_ids[i].size()-1;
+			species_rlevel[i]=std::min(maxrlevelINT, species_npu[i]-1);
     }
   }
 
@@ -215,35 +217,39 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
   			// resize matrix
-  			weightdistMTX(i,j).resize(species_ndp[i],species_npu[i]);
+  			weightdistMTX(i,j).resize(species_ndp(i,j),species_npu[i]);
   			// calculate distances
   			for (std::size_t l=0; l<species_npu[i]; ++l) {
-  				for (std::size_t k=0; k<species_ndp[i]; ++k) {
+  				for (std::size_t k=0; k<species_ndp(i,j); ++k) {
   					currArray=pupointsMTX[j].row(species_pu_ids[i][l]) - demandpoints_coords_MTX(i,j).row(k);
   					weightdistMTX(i,j)(k,l) = zero_adjust + (demandpoints_weights_MTX(i,j)[k] * std::sqrt(currArray.square().sum()));
   				}
   			}
+  			// rescale such that minimum distance is 1
+				// weightdistMTX(i,j)*=(1.0 / weightdistMTX(i,j).minCoeff());
   		}
   	}
   } else {
     for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
   			// resize matrix
-  			weightdistMTX(i,j).resize(species_ndp[i],species_npu[i]+1);
+  			weightdistMTX(i,j).resize(species_ndp(i,j),species_npu[i]+1);
+				weightdistMTX(i,j).setZero();
 
   			// calculate distances
   			for (std::size_t l=0; l<species_npu[i]; ++l) {
-  				for (std::size_t k=0; k<species_ndp[i]; ++k) {
+  				for (std::size_t k=0; k<species_ndp(i,j); ++k) {
   					currArray=pupointsMTX[j].row(species_pu_ids[i][l]) - demandpoints_coords_MTX(i,j).row(k);
   					weightdistMTX(i,j)(k,l) = zero_adjust + (demandpoints_weights_MTX(i,j)[k] * std::sqrt(currArray.square().sum()));
   				}
   			}
   			// failure pu
-  			weightdistMTX(i,j).col(species_npu[i]).setZero();
   			currFailDist=weightdistMTX(i,j).maxCoeff() * failure_multiplier;
-  			for (std::size_t k=0; k<species_ndp[i]; ++k) {
+  			for (std::size_t k=0; k<species_ndp(i,j); ++k) {
   				weightdistMTX(i,j)(k,species_npu[i]) = currFailDist;
   			}
+				// rescale such that minimum distance is 1
+				// weightdistMTX(i,j)*=(1.0 / weightdistMTX(i,j).minCoeff());
   		}
   	}
   }
@@ -265,7 +271,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 				best_speciesspaceMTX(i,j)=reliable_space_value(
 					weightdistMTX(i,j),
 					species_pu_probs[i],
-					maxrlevelINT
+					species_rlevel[i]
 				);
 			}
 		}
@@ -323,10 +329,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 			n_species,
 			std::max(
 				n_attribute_spaces,
-				*std::max_element(
-					species_ndp.begin(),
-					species_ndp.end()
-				)
+				species_ndp.maxCoeff()
 			)
 		)
 	) + 2;
@@ -357,7 +360,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   if (unreliable_formulation) {
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-  			for (std::size_t k=0; k<species_ndp[i]; ++k) {
+  			for (std::size_t k=0; k<species_ndp(i,j); ++k) {
   				for (std::size_t l=0; l<species_npu[i]; ++l) {
   					// Y_var
   					currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l];
@@ -370,9 +373,9 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   } else {
     for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-  			for (std::size_t k=0; k<species_ndp[i]; ++k) {
+  			for (std::size_t k=0; k<species_ndp(i,j); ++k) {
   				for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
-  					for (std::size_t r=0; r<(maxrlevelINT+1); ++r) {
+  					for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
   						// Y_var
   						currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
   						variableMAP[currSTR] = counter;
@@ -426,17 +429,17 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	std::vector<std::string> senseSTR;
 	std::vector<double> rhsDBL;
   if (unreliable_formulation) {
-  	model_rows_INT.reserve(n_pu * n_species * n_attribute_spaces * std::accumulate(species_ndp.begin(), species_ndp.end(), 0));
-  	model_cols_INT.reserve(n_pu * n_species * n_attribute_spaces * std::accumulate(species_ndp.begin(), species_ndp.end(), 0));
-  	model_vals_DBL.reserve(n_pu * n_species * n_attribute_spaces * std::accumulate(species_ndp.begin(), species_ndp.end(), 0));
-  	senseSTR.reserve(n_pu * n_species * n_attribute_spaces * std::accumulate(species_ndp.begin(), species_ndp.end(), 0));
-  	rhsDBL.reserve(n_pu * n_species * n_attribute_spaces * std::accumulate(species_ndp.begin(), species_ndp.end(), 0));
+  	model_rows_INT.reserve(n_pu * n_species * n_attribute_spaces * species_ndp.sum());
+  	model_cols_INT.reserve(n_pu * n_species * n_attribute_spaces * species_ndp.sum());
+  	model_vals_DBL.reserve(n_pu * n_species * n_attribute_spaces * species_ndp.sum());
+  	senseSTR.reserve(n_pu * n_species * n_attribute_spaces * species_ndp.sum());
+  	rhsDBL.reserve(n_pu * n_species * n_attribute_spaces * species_ndp.sum());
   } else {
-    model_rows_INT.reserve(n_pu * n_species * n_attribute_spaces * std::accumulate(species_ndp.begin(), species_ndp.end(), 0) * maxrlevelINT);
-  	model_cols_INT.reserve(n_pu * n_species * n_attribute_spaces * std::accumulate(species_ndp.begin(), species_ndp.end(), 0) * maxrlevelINT);
-  	model_vals_DBL.reserve(n_pu * n_species * n_attribute_spaces * std::accumulate(species_ndp.begin(), species_ndp.end(), 0) * maxrlevelINT);
-  	senseSTR.reserve(n_pu * n_species * n_attribute_spaces * std::accumulate(species_ndp.begin(), species_ndp.end(), 0) * maxrlevelINT);
-  	rhsDBL.reserve(n_pu * n_species * n_attribute_spaces * std::accumulate(species_ndp.begin(), species_ndp.end(), 0) * maxrlevelINT);
+    model_rows_INT.reserve(n_pu * n_species * n_attribute_spaces * species_ndp.sum() * maxrlevelINT);
+  	model_cols_INT.reserve(n_pu * n_species * n_attribute_spaces * species_ndp.sum() * maxrlevelINT);
+  	model_vals_DBL.reserve(n_pu * n_species * n_attribute_spaces * species_ndp.sum() * maxrlevelINT);
+  	senseSTR.reserve(n_pu * n_species * n_attribute_spaces * species_ndp.sum() * maxrlevelINT);
+  	rhsDBL.reserve(n_pu * n_species * n_attribute_spaces * species_ndp.sum() * maxrlevelINT);
   }
 
 	// area target constraints
@@ -460,7 +463,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   if (unreliable_formulation) {
     for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-  			for (std::size_t k=0; k<species_ndp[i]; ++k) {
+  			for (std::size_t k=0; k<species_ndp(i,j); ++k) {
   				for (std::size_t l=0; l<species_npu[i]; ++l) {
   					currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l];
   					model_rows_INT.push_back(counter);
@@ -476,9 +479,9 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   } else {
     for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-  			for (std::size_t k=0; k<species_ndp[i]; ++k) {
+  			for (std::size_t k=0; k<species_ndp(i,j); ++k) {
   				for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
-  					for (std::size_t r=0; r<(maxrlevelINT+1); ++r) {
+  					for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
   						currSTR="W_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
   						model_rows_INT.push_back(counter);
   						model_cols_INT.push_back(variableMAP[currSTR]);
@@ -569,7 +572,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	if (verbose) Rcpp::Rcout << "\t\teqn. 1b constraints" << std::endl;
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-  			for (std::size_t k=0; k<species_ndp[i]; ++k) {
+  			for (std::size_t k=0; k<species_ndp(i,j); ++k) {
   					for (std::size_t l=0; l<species_npu[i]; ++l) {
   						currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l];
   						model_rows_INT.push_back(counter);
@@ -588,7 +591,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	if (verbose) Rcpp::Rcout << "\t\teqn. 1c constraints" << std::endl;
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-  			for (std::size_t k=0; k<species_ndp[i]; ++k) {
+  			for (std::size_t k=0; k<species_ndp(i,j); ++k) {
   				for (std::size_t l=0; l<species_npu[i]; ++l) {
   					currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l];
   					model_rows_INT.push_back(counter);
@@ -610,8 +613,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
     if (verbose) Rcpp::Rcout << "\t\teqn. 1b constraints" << std::endl;
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-  			for (std::size_t k=0; k<species_ndp[i]; ++k) {
-  				for (std::size_t r=0; r<(maxrlevelINT+1); ++r) {
+  			for (std::size_t k=0; k<species_ndp(i,j); ++k) {
+  				for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
   					for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
   						currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
   						model_rows_INT.push_back(counter);
@@ -637,9 +640,9 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	if (verbose) Rcpp::Rcout << "\t\teqn. 1c constraints" << std::endl;
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-  			for (std::size_t k=0; k<species_ndp[i]; ++k) {
+  			for (std::size_t k=0; k<species_ndp(i,j); ++k) {
   				for (std::size_t l=0; l<species_npu[i]; ++l) {
-  					for (std::size_t r=0; r<(maxrlevelINT+1); ++r) {
+  					for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
   						currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
   						model_rows_INT.push_back(counter);
   						model_cols_INT.push_back(variableMAP[currSTR]);
@@ -661,8 +664,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	if (verbose) Rcpp::Rcout << "\t\teqn. 1d constraints" << std::endl;
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-  			for (std::size_t k=0; k<species_ndp[i]; ++k) {
-  				for (std::size_t r=0; r<(maxrlevelINT+1); ++r) {
+  			for (std::size_t k=0; k<species_ndp(i,j); ++k) {
+  				for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
   					currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[species_npu[i]]+"_"+intSTR[r];
   					model_rows_INT.push_back(counter);
   					model_cols_INT.push_back(variableMAP[currSTR]);
@@ -680,7 +683,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	if (verbose) Rcpp::Rcout << "\t\teqn. 1e constraints" << std::endl;
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-  			for (std::size_t k=0; k<species_ndp[i]; ++k) {
+  			for (std::size_t k=0; k<species_ndp(i,j); ++k) {
   				for (std::size_t l=0; l<species_npu[i]; ++l) {
   					// real pu
   					currSTR="P_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_0";
@@ -710,9 +713,9 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	if (verbose) Rcpp::Rcout << "\t\teqn. 1f constraints" << std::endl;
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-  			for (std::size_t k=0; k<species_ndp[i]; ++k) {
+  			for (std::size_t k=0; k<species_ndp(i,j); ++k) {
   				for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
-  					for (std::size_t r=1, r2=0; r<(maxrlevelINT+1); ++r, ++r2) {
+  					for (std::size_t r=1, r2=0; r<(species_rlevel[i]+1); ++r, ++r2) {
 
   						currSTR="P_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
   						model_rows_INT.push_back(counter);
@@ -740,9 +743,9 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	if (verbose) Rcpp::Rcout << "\t\teqn 2. constraints" << std::endl;
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-  			for (std::size_t k=0; k<species_ndp[i]; ++k) {
+  			for (std::size_t k=0; k<species_ndp(i,j); ++k) {
   				for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
-  					for (std::size_t r=0; r<(maxrlevelINT+1); ++r) {
+  					for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
   						// init
   						currW="W_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
   						currP="P_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
@@ -798,10 +801,13 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   		}
   	}
   }
-	////// variable types
+  
+	////// variable types and bounds
 	Rcpp::checkUserInterrupt();
 	if (verbose) Rcpp::Rcout << "\tvariable types" << std::endl;
 	std::vector<std::string> vtypeSTR(objDBL.size());
+	std::vector<std::size_t> lbINT(objDBL.size(), 0);
+	std::vector<std::size_t> ubINT(objDBL.size(), 1);
 
 	///// binary
 	if (verbose) Rcpp::Rcout << "\t\t binary vars" << std::endl;
@@ -820,12 +826,12 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	}
 
   // 1g constraints
-	Rcpp::checkUserInterrupt();
+  Rcpp::checkUserInterrupt();
   if (unreliable_formulation) {
   	// 1g
     for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-  			for (std::size_t k=0; k<species_ndp[i]; ++k) {
+  			for (std::size_t k=0; k<species_ndp(i,j); ++k) {
   				for (std::size_t l=0; l<species_npu[i]; ++l) {
   					currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l];
   					vtypeSTR[variableMAP[currSTR]]="B";
@@ -838,9 +844,9 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	Rcpp::checkUserInterrupt();
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-  			for (std::size_t k=0; k<species_ndp[i]; ++k) {
+  			for (std::size_t k=0; k<species_ndp(i,j); ++k) {
   				for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
-  					for (std::size_t r=0; r<(maxrlevelINT+1); ++r) {
+  					for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
   						currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
   						vtypeSTR[variableMAP[currSTR]]="B";
   					}
@@ -854,9 +860,9 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	if (verbose) Rcpp::Rcout << "\t\tsemi-continuous vars" << std::endl;
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-  			for (std::size_t k=0; k<species_ndp[i]; ++k) {
+  			for (std::size_t k=0; k<species_ndp(i,j); ++k) {
   				for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
-  					for (std::size_t r=0; r<(maxrlevelINT+1); ++r) {
+  					for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
   						// w variables
   						currW="W_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
   						vtypeSTR[variableMAP[currW]]="S";
@@ -869,10 +875,13 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   		}
   	}
   }
+  
 
 	std::vector<std::string> variablesSTR(variableMAP.size());
 	for (auto i : variableMAP)
 		variablesSTR[i.second]=i.first;
+	if (!unreliable_formulation)
+		variablesSTR.pop_back();
 
 	//// Exports
 	Rcpp::checkUserInterrupt();
@@ -888,12 +897,13 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 			Rcpp::Named("sense") = Rcpp::wrap(senseSTR),
 			Rcpp::Named("rhs") = Rcpp::wrap(rhsDBL),
 			Rcpp::Named("vtype") = Rcpp::wrap(vtypeSTR),
+			Rcpp::Named("lb") = Rcpp::wrap(lbINT),
+			Rcpp::Named("ub") = Rcpp::wrap(ubINT),
 			Rcpp::Named("cache") = Rcpp::List::create(
 				Rcpp::Named("best_amount_values") = Rcpp::wrap(speciesareaDBL),
 				Rcpp::Named("space_targets") = Rcpp::wrap(speciesspaceMTX),
 				Rcpp::Named("best_space_values") = Rcpp::wrap(best_speciesspaceMTX),
 				Rcpp::Named("worst_space_values") = Rcpp::wrap(worst_speciesspaceMTX),
-
 				Rcpp::Named("variables") = Rcpp::wrap(variablesSTR)
 			),
 			Rcpp::Named("modelsense") = "min"

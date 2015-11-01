@@ -46,7 +46,7 @@ hashCall<-function(expr, skipargs=c(), env=parent.frame()) {
 }
 
 # plotting functions
-prettyGeoplot<-function(polygons, col, basemap, main, fun, beside=TRUE, border.cols=NULL) {
+prettyGeoplot<-function(polygons, col, basemap, main, fun, beside=TRUE, border=NULL) {
 	# make layout
 	defpar<-par(no.readonly = TRUE)
 	par(mar=c(1,1,1,1),oma=c(0,0,0,0))
@@ -610,7 +610,7 @@ spacePlot.1d<-function(pu, dp, pu.color.palette, locked.in.color, locked.out.col
   # make plot
   ggplot() +
   geom_point(
-		aes(x=X1, y=X2, alpha=weights),
+		aes_string(x="X1", y="X2", alpha="weights"),
     data=dp,
     color='darkblue',
     size=5,
@@ -620,7 +620,7 @@ spacePlot.1d<-function(pu, dp, pu.color.palette, locked.in.color, locked.out.col
     name='Demand point weight'
   ) +
   geom_point(
-		aes(x=X1, y=X2, color=status, size=status),
+		aes_string(x="X1", y="X2", color="status", size="status"),
     data=pu,
     position=position_jitter(width=0, height=5),
     alpha=0.1
@@ -666,7 +666,7 @@ spacePlot.2d<-function(pu, dp, pu.color.palette, locked.in.color, locked.out.col
   # make plot
   ggplot() +
   geom_point(
-		aes(x=X1, y=X2, alpha=weights),
+		aes_string(x="X1", y="X2", alpha="weights"),
     data=dp,
     color='darkblue',
     size=5
@@ -675,7 +675,7 @@ spacePlot.2d<-function(pu, dp, pu.color.palette, locked.in.color, locked.out.col
     name='Demand point weight'
   ) +
   geom_point(
-		aes(x=X1, y=X2, color=status, size=status),
+		aes_string(x="X1", y="X2", color="status", size="status"),
     data=pu,
     alpha=0.1
   ) +
@@ -731,12 +731,14 @@ spacePlot.3d<-function(pu, dp, pu.color.palette, locked.in.color, locked.out.col
 
 
 # parse arguments function
-parseArgs<-function(fn, object, ...) {
+parseArgs<-function(fn, object=NULL, ...) {
+  if (!is.null(object))
+    fn<-paste0(fn, '.', class(object))
   ellipses.args<-list(...)
   return(
     ellipses.args[intersect(
       names(ellipses.args),
-      names(as.list(args(paste0(fn, '.', class(object)))))
+      names(formals(fn))[-1]
     )]
   )
 }

@@ -11,20 +11,20 @@
 \title{Update object}
 \usage{
 \method{update}{GurobiOpts}(object, Threads = NULL, MIPGap = NULL,
-  Presolve = NULL, TimeLimit = NULL, NumberSolutions = NULL)
+  Presolve = NULL, TimeLimit = NULL, NumberSolutions = NULL, ...)
 
-\method{update}{ManualOpts}(object, NumberSolutions = NULL)
+\method{update}{ManualOpts}(object, NumberSolutions = NULL, ...)
 
 \method{update}{RaspData}(object, species = NULL, space = NULL,
   name = NULL, amount.target = NULL, space.target = NULL, pu = NULL,
-  cost = NULL, status = NULL)
+  cost = NULL, status = NULL, ...)
 
 \method{update}{RaspReliableOpts}(object, BLM = NULL,
-  FAILUREMULTIPLIER = NULL, MAXRLEVEL = NULL)
+  FAILUREMULTIPLIER = NULL, MAXRLEVEL = NULL, ...)
 
 \method{update}{RaspUnsolOrSol}(object, ..., solve = TRUE)
 
-\method{update}{RaspUnreliableOpts}(object, BLM = NULL)
+\method{update}{RaspUnreliableOpts}(object, BLM = NULL, ...)
 }
 \arguments{
 \item{object}{\code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.}
@@ -38,6 +38,8 @@
 \item{TimeLimit}{\code{integer} number of seconds to allow for solving.}
 
 \item{NumberSolutions}{\code{integer} number of solutions to generate.}
+
+\item{...}{parameters passed to \code{update.RaspReliableOpts}, \code{update.RaspUnreliableOpts}, or \code{update.RaspData}.}
 
 \item{species}{\code{integer} or \code{character} denoting species for which targets or name should be updated.}
 
@@ -60,8 +62,6 @@
 \item{FAILUREMULTIPLIER}{\code{numeric} multiplier for failure planning unit.}
 
 \item{MAXRLEVEL}{\code{numeric} maximum R failure level for approximation.}
-
-\item{...}{parameters passed to \code{update.RaspReliableOpts}, \code{update.RaspUnreliableOpts}, or \code{update.RaspData}.}
 
 \item{solve}{\code{logical} should the problem be solved? This argument is only valid for \code{RaspUnsolved} and \code{RaspSolved} objects. Defaults to \code{TRUE}.}
 }
@@ -95,25 +95,25 @@ print(y)
 
 # RaspData
 x <- sim_ru@data
-y <- update(x, space.targets=c(0.4, 0.7, 0.1))
-print(x@data$space.targets)
-print(y@data$space.targets)
+y <- update(x, space.target=c(0.4, 0.7, 0.1))
+print(space.target(x))
+print(space.target(y))
 
 ## RaspUnsolved
 x <- sim_ru
-y <- update(x, area.targets=c(0.1, 0.2, 0.3), BLM=3, Presolve=0L)
+y <- update(x, amount.target=c(0.1, 0.2, 0.3), BLM=3, solve=FALSE)
 # print x parameters
-print(x@opts@BLM); print(x@solver@Presolve); print(x@data@species$area.targets)
+print(x@opts@BLM); print(amount.target(x))
 # print y parameters
-print(y@opts@BLM); print(y@solver@Presolve); print(y@data@species$area.targets)
+print(y@opts@BLM); print(space.target(y))
 
 ## RaspSolved
 x <- sim_rs
-y <- update(x, space.targets=c(0.4, 0.6, 0.9), BLM=100, Presolve=1L)
+y <- update(x, space.targets=c(0.4, 0.6, 0.9), BLM=100, Presolve=1L, solve=FALSE)
 # print x parameters
-print(x@opts@BLM); print(x@solver@Presolve); print(x@data@species$area.targets)
+print(x@opts@BLM); print(amount.target(x))
 # print y parameters
-print(y@opts@BLM); print(y@solver@Presolve); print(y@data@species$area.targets)
+print(y@opts@BLM); print(space.target(y))
 }
 \seealso{
 \code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, \code{RaspUnsolved}, \code{RaspSolved}.

@@ -20,11 +20,11 @@ NULL
 #' @examples
 #' # simulate data
 #' sim_pus <- sim.pus(225L)
-#' sim_spp <- lapply(c('uniform','normal','bimodal'), sim.species, n=1)
+#' sim_spp <- lapply(c('uniform','normal','bimodal'), sim.species, n=1, res=1, x=sim_pus)
 #' # calculate average for 1 species
-#' puvspr1.dat<-calcSpeciesAverageInPus(sim_pus, sim_spp[[1]])
+#' puvspr1.dat <- calcSpeciesAverageInPus(sim_pus, sim_spp[[1]])
 #' # calculate average for multiple species
-#' puvspr2.dat<-calcSpeciesAverageInPus(sim_pus, sim_spp)
+#' puvspr2.dat <- calcSpeciesAverageInPus(sim_pus, stack(sim_spp))
 calcSpeciesAverageInPus<-function(x, ...) UseMethod("calcSpeciesAverageInPus")
 
 #' Simulate species distribution data for RASP
@@ -121,14 +121,14 @@ sim.space<-function(x, ...) UseMethod('sim.space')
 #' data(sim_ru)
 #' \dontrun{
 #' # solve it using Gurobi
-#' sim_rs <- solve(ru)
+#' sim_rs <- solve(sim_ru)
 #' }
 #' # evaluate manually specified solution using planning unit indices
-#' sim_rs2 <- solve(ru, 1:10)
+#' sim_rs2 <- solve(sim_ru, 1:10)
 #' # evaluate manually specifed solution using binary selections
-#' sim_rs3 <- solve(ru, c(rep(TRUE,10), rep(FALSE, 245)))
-#' # evlauate multiple manually specified solutions
-#' sim_rs4 <- solve(ru, matrix(sample(c(0,1), size=1275 replace=TRUE), ncol=255, nrow=5))
+#' sim_rs3 <- solve(sim_ru, c(rep(TRUE,10), rep(FALSE, 215)))
+#' #  evaluate multiple manually specified solutions
+#' sim_rs4 <- solve(sim_ru, matrix(sample(c(0,1), size=1125, replace=TRUE), ncol=225, nrow=5))
 setGeneric('solve', function(a, b, ...) standardGeneric('solve'))
 
 #' Plot RASP object
@@ -155,19 +155,31 @@ setGeneric('solve', function(a, b, ...) standardGeneric('solve'))
 #' @seealso \code{RaspSolved}.
 #' @examples
 #' # load data
-#' data(cs_rs_area, cs_rs_space)
+#' data(sim_rs, cs_rs_amount, cs_rs_space)
+#' ## simulated species examples
 #' # plot selection frequencies
-#' plot(cs_rs_area)
-#' # plot best solution with basemap
-#' plot(cs_rs_area, 0, basemap='satellite')
+#' plot(sim_rs)
+#' # plot best solution
+#' plot(sim_rs, 0)
 #' # plot second solution
-#' plot(cs_rs_area, 2, basemap='satellite', grayscale=TRUE)
-#' # plot different between first and second solutions
-#' plot(cs_rs_area, 1, 2)
+#' plot(sim_rs, 2)
+#' # plot different between best and second solutions
+#' plot(sim_rs, sim_rs, 0 ,2)
+#' \dontrun{
+#' ## case-study species examples
+#' # plot selection frequencies
+#' plot(cs_rs_amount)
+#' # plot best solution with basemap
+#' plot(cs_rs_amount, 0, basemap='satellite')
+#' plot(cs_rs_amount, 2, basemap='satellite', grayscale=TRUE)
+#' # plot second solution
+#' # plot different between best and second solutions
+#' plot(cs_rs_amount, cs_rs_amount, 0, 2)
 #' # plot difference in selection frequencies between two RaspSolved objects
-#' plot(cs_rs_area, cs_rs_space)
+#' plot(cs_rs_amount, cs_rs_space)
 #' # plot difference between best solutions in two RaspSolved objects
-#' plot(cs_rs_area, cs_rs_space, 0, 0)
+#' plot(cs_rs_amount, cs_rs_space, 0, 0)
+#' }
 NULL
 
 #' Print objects
@@ -310,25 +322,25 @@ NULL
 #'
 #' # RaspData
 #' x <- sim_ru@@data
-#' y <- update(x, space.targets=c(0.4, 0.7, 0.1))
-#' print(x@@data$space.targets)
-#' print(y@@data$space.targets)
+#' y <- update(x, space.target=c(0.4, 0.7, 0.1))
+#' print(space.target(x))
+#' print(space.target(y))
 #'
 #' ## RaspUnsolved
 #' x <- sim_ru
-#' y <- update(x, area.targets=c(0.1, 0.2, 0.3), BLM=3, Presolve=0L)
+#' y <- update(x, amount.target=c(0.1, 0.2, 0.3), BLM=3, solve=FALSE)
 #' # print x parameters
-#' print(x@@opts@@BLM); print(x@@solver@@Presolve); print(x@@data@@species$area.targets)
+#' print(x@@opts@@BLM); print(amount.target(x))
 #' # print y parameters
-#' print(y@@opts@@BLM); print(y@@solver@@Presolve); print(y@@data@@species$area.targets)
+#' print(y@@opts@@BLM); print(space.target(y))
 #'
 #' ## RaspSolved
 #' x <- sim_rs
-#' y <- update(x, space.targets=c(0.4, 0.6, 0.9), BLM=100, Presolve=1L)
+#' y <- update(x, space.targets=c(0.4, 0.6, 0.9), BLM=100, Presolve=1L, solve=FALSE)
 #' # print x parameters
-#' print(x@@opts@@BLM); print(x@@solver@@Presolve); print(x@@data@@species$area.targets)
+#' print(x@@opts@@BLM); print(amount.target(x))
 #' # print y parameters
-#' print(y@@opts@@BLM); print(y@@solver@@Presolve); print(y@@data@@species$area.targets)
+#' print(y@@opts@@BLM); print(space.target(y))
 NULL
 
 #' Subset species
@@ -343,7 +355,7 @@ NULL
 #' @export
 #' @examples
 #' # load data
-#' load(sim_ru)
+#' data(sim_ru)
 #' # generate new object with only species 1
 #' sim_ru2 <- spp.subset(sim_ru, 1)
 spp.subset<-function(x, species) UseMethod('spp.subset')
@@ -360,10 +372,31 @@ spp.subset<-function(x, species) UseMethod('spp.subset')
 #' @export
 #' @examples
 #' # load data
-#' load(sim_ru)
+#' data(sim_ru)
 #' # generate new object with first 10 planning units
 #' sim_ru2 <- pu.subset(sim_ru, 1:10)
 pu.subset<-function(x, pu) UseMethod('pu.subset')
+
+#' Subset demand points
+#'
+#' Subset demand points from a \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
+#'
+#' @param x \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
+#' @param space \code{integer} vector to specify the index of the space to subset demand points from.
+#' @param species \code{integer} vector to specify the index of the species to subset demand points from.
+#' @param points \code{integer} vector to specify the index of demand points to subset.
+#' @return \code{RaspData} or \code{RaspUnsolved} object depending on input object.
+#' @seealso \code{RaspData}, \code{RaspUnsolved}, \code{RaspSolved}.
+#' @rdname dp.subset
+#' @export
+#' @examples
+#' # load data
+#' data(sim_ru)
+#' # generate new object with first 10 planning units
+#' sim_ru2 <- dp.subset(sim_ru, 1, 1, 1:10)
+dp.subset<-function(x, space, species, points) UseMethod('dp.subset')
+
+
 
 #' Solution score
 #'
@@ -397,11 +430,11 @@ score<-function(x, y) UseMethod('score')
 #' @examples
 #' data(sim_rs)
 #' # log file for best solution
-#' logging.file(sim_rs, 0)
+#' cat(logging.file(sim_rs, 0))
 #' # log file for second solution
-#' logging.file(sim_rs, 2)
+#' cat(logging.file(sim_rs, 2))
 #' # log files for all solutions
-#' logging.file(sim_rs, NULL)
+#' cat(logging.file(sim_rs, NULL))
 logging.file<-function(x,y) UseMethod('logging.file')
 
 #' Extract amount held for a solution
@@ -555,13 +588,15 @@ SpatialPolygons2PolySet<-function(x, n_preallocate) UseMethod("SpatialPolygons2P
 #' @export
 #' @examples
 #' # load RaspSolved objects
-#' data(sim_ru, cs_rs)
+#' data(sim_ru, cs_rs_amount)
 #' # plot first species in sim_rs
 #' spp.plot(sim_ru, species=1)
+#' \dontrun{
 #' # plot first species in cs_rs with basemap
-#' spp.plot(cs_rs, species=1, basemap='satellite')
+#' spp.plot(cs_rs_amount, species=1, basemap='satellite')
 #' # as above indicate the best solution by coloring planning unit borders
-#' spp.plot(cs_rs, species=1, y=0, basemap='satellite')
+#' spp.plot(cs_rs_amount, species=1, y=0, basemap='satellite')
+#' }
 spp.plot<-function(x, species, ...) UseMethod('spp.plot')
 
 #' Plot space

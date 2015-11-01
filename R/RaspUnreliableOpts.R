@@ -57,7 +57,7 @@ setMethod(
 #' @rdname update
 #' @method update RaspUnreliableOpts
 #' @export
-update.RaspUnreliableOpts<-function(object, BLM=NULL) {
+update.RaspUnreliableOpts<-function(object, BLM=NULL, ...) {
 	if (!is.null(BLM))
 		object@BLM<-BLM
 	# check object for validity

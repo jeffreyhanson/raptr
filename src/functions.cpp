@@ -66,7 +66,7 @@ double reliable_space_value(
 	for (std::size_t k=0; k<weightdistMTX.rows(); ++k) {
 		// sort pus in order of distance
 		std::partial_sort(
-			pu_ids.begin(), pu_ids.begin()+(maxrlevelINT+1), pu_ids.end(),
+			pu_ids.begin(), pu_ids.begin()+maxrlevelINT, pu_ids.end(),
 			[&](const std::size_t p1, const std::size_t p2) {
 				return(weightdistMTX(k,p1) < weightdistMTX(k,p2));
 			}
@@ -74,11 +74,37 @@ double reliable_space_value(
 		// calculate expected weighted distances for real pus
 		currProb=1.0;
 		for (std::size_t r=0; r<maxrlevelINT; ++r) {
+
 			value+=(pu_probs[pu_ids[r]] * currProb * weightdistMTX(k,pu_ids[r]));
 			currProb*=(1.0 - pu_probs[pu_ids[r]]);
+
+// 			// error checking
+// 			if (!std::isfinite(value)) {
+// 				Rcout << "k = " << k << std::endl;
+// 				Rcout << "r = " << r << std::endl;
+// 				Rcout << "pu = " << pu_ids[r] << std::endl;
+// 				Rcout << "pu_probs[pu_ids[r]]" << pu_probs[pu_ids[r]] << std::endl; 
+// 				Rcout << "weightdistMTX(k,pu_ids[r])" << weightdistMTX(k,pu_ids[r]) << std::endl;
+// 				Rcout << "value = " << value <<  std::endl;
+// 				exit(5);
+// 			}
+			
 		}
+		
 		// calculate expected weighted distance for failure PU
 		value+=currProb*weightdistMTX(k, weightdistMTX.cols()-1);
+
+		
+//	// error checking		
+// 		if (!std::isfinite(value)) {
+// 				Rcout << "k = " << k << std::endl;
+// 				Rcout << "r = max" << std::endl;
+// 				Rcout << "pu = failure pu" << std::endl;
+// 				Rcout << "weightdistMTX(k,weightdistMTX.cols()-1)" << weightdistMTX.cols()-1 << std::endl;
+// 				Rcout << "value = " << value <<  std::endl;
+// 				exit(5);
+// 			}
+		
 	}
 	return(value);
 }
@@ -105,11 +131,10 @@ double reliable_space_value(
 ) {
 	double value=0.0;
 	double currProb;
-	std::size_t currR=std::min(maxrlevelINT, (pu_ids.size()-1));
 	for (std::size_t k=0; k<weightdistMTX.rows(); ++k) {
 		// sort pus in order of distance
 		std::partial_sort(
-			pu_ids.begin(), pu_ids.begin()+(maxrlevelINT+1), pu_ids.end(),
+			pu_ids.begin(), pu_ids.begin()+maxrlevelINT, pu_ids.end(),
 			[&](const std::size_t p1, const std::size_t p2) {
 				return(weightdistMTX(k,p1) < weightdistMTX(k,p2));
 			}
@@ -122,6 +147,7 @@ double reliable_space_value(
 		}
 		// calculate expected weighted distance for failure PU
 		value+=currProb*weightdistMTX(k, weightdistMTX.cols()-1);
+		
 	}
 	return(value);
 }

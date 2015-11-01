@@ -28,7 +28,7 @@ Subset planning units from a \code{RaspData}, \code{RaspUnsolved}, or \code{Rasp
 }
 \examples{
 # load data
-load(sim_ru)
+data(sim_ru)
 # generate new object with first 10 planning units
 sim_ru2 <- pu.subset(sim_ru, 1:10)
 }

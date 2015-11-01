@@ -68,6 +68,7 @@ setMethod(
 		# generate model object
 		model<-rcpp_generate_model_object(a@opts, inherits(a@opts, 'RaspUnreliableOpts'), a@data, verbose)
 		model$A<-Matrix::sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value)
+		
 		## first run
 		# run model
 		log.pth<-tempfile(fileext='.log')
@@ -93,7 +94,7 @@ setMethod(
 			# create new model object, eacluding existing solutions as valid solutions to ensure a different solution is obtained
 			model<-rcpp_append_model_object(model, existing.solutions[length(existing.solutions)])
 			model$A<-Matrix::sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value)
-			model$start<-solution$x
+
 			# run model
 			solution<-gurobi::gurobi(model, gparams)
 			if (file.exists('gurobi.log')) unlink('gurobi.log')
@@ -130,14 +131,21 @@ setMethod(
 			stop('argument to b has different number of planning units to a')
 		if (any(is.na(b)))
 			stop('argument to b must not contain any NA values')
-		if (any(b!= 0 || b!= 1))
+		if (any(b!= 0 & b!= 1))
 			stop('argument to b must be binary selections when b is a matrix')
 		# generate result objects
 		model=rcpp_generate_model_object(a@opts, inherits(a@opts, 'RaspUnreliableOpts'), a@data, verbose)
 		results=list()
 		for (i in seq_len(nrow(b))) {
 			# generate result object
-			currResult=read.RaspResults(a@opts,a@data, model, "User specified solution", b[i,], verbose)
+			currResult=read.RaspResults(
+				a@opts,a@data,model,"User specified solution",
+				list(
+					x=b[i,],
+					objval=NA
+				),
+				verbose
+			)
 			results=append(results,currResult)
 		}
 		# return RaspSolved object
@@ -223,6 +231,7 @@ logging.file.RaspSolved<-function(x, y=0) {
 #' @rdname print
 #' @export
 print.RaspSolved<-function(x, ...) {
+	cat("RaspSolved object\n\n")
 	cat("Parameters\n")
 	print(x@opts, header=FALSE)
 	cat("Solver settings\n")
@@ -238,17 +247,11 @@ print.RaspSolved<-function(x, ...) {
 #' @export
 spp.subset.RaspSolved<-function(x, species) {
 	return(
-		spp.subset(
-			RaspUnsolved(
-				pu=x@pu,
-				species=x@species,
-				attriubte.spaces=x@attriubte.spaces,
-				boundary=x@boundary,
-				polygons=x@polygons
-			),
-			species
-		)
-	)
+		RaspUnsolved(
+			opts=x@opts,
+			data=spp.subset(x@data, species)
+			)
+	 )
 }
 
 #' @rdname pu.subset
@@ -256,18 +259,25 @@ spp.subset.RaspSolved<-function(x, species) {
 #' @export
 pu.subset.RaspSolved<-function(x, pu) {
 	return(
-		pu.subset(
-			RaspUnsolved(
-				pu=x@pu,
-				species=x@species,
-				attriubte.spaces=x@attriubte.spaces,
-				boundary=x@boundary,
-				polygons=x@polygons
-			),
-			pu
-		)
-	)
+		RaspUnsolved(
+			opts=x@opts,
+			data=pu.subset(x@data, pu)
+			)
+	 )
 }
+
+#' @rdname dp.subset
+#' @method dp.subset RaspSolved
+#' @export
+dp.subset.RaspSolved<-function(x, space, species, points) {
+	return(
+		RaspUnsolved(
+			opts=x@opts,
+			data=dp.subset(x@data, space, species, points)
+			)
+	 )
+}
+
 
 #' @describeIn show
 #' @export
@@ -323,7 +333,7 @@ setMethod(
 		# check for issues
 		stopifnot(alpha<=1 & alpha>=0)
 		match.arg(color.palette, rownames(brewer.pal.info))
-		if (!nrow(x@polygons)>0) stop("Spatial data for planning units not present in object")
+		if (nrow(x@data@polygons)==0) stop("Spatial data for planning units not present in object")
 		# get basemap data
 		if (basemap!="none")
 			basemap<-basemap.RaspData(x@data, basemap, grayscale, force.reset)
@@ -358,7 +368,7 @@ setMethod(
 		match.arg(basemap, c("none", "roadmap", "mobile", "satellite", "terrain", "hybrid", "mapmaker-roadmap", "mapmaker-hybrid"))
 		stopifnot(alpha<=1 & alpha>=0)
 		match.arg(color.palette, rownames(brewer.pal.info))
-		if (!nrow(x@polygons)>0) stop("Spatial data for planning units not present in object")
+		if (nrow(x@data@polygons)==0) stop("Spatial data for planning units not present in object")
 		# get basemap data
 		if (basemap!="none")
 			basemap<-basemap.RaspData(x@data, basemap, grayscale, force.reset)
@@ -391,7 +401,7 @@ setMethod(
 		# check for issues
 		stopifnot(alpha<=1 & alpha>=0)
 		match.arg(color.palette, rownames(brewer.pal.info))
-		if (!nrow(x@polygons)>0) stop("Spatial data for planning units not present in object")
+		if (nrow(x@data@polygons)==0) stop("Spatial data for planning units not present in object")
 		stopifnot(is.comparable(x,y))
 		if (is.numeric(i))
 			stopifnot(i <= nrow(x@results@selections))
@@ -503,58 +513,59 @@ setMethod(
 #' @rdname spp.plot
 #' @method spp.plot RaspSolved
 #' @export
-spp.plot.RaspSolved<-function(x, species, y, prob.color.palette="YlGnBu", pu.color.palette='RdYlGn', basemap="none", locked.in.color="#000000FF", locked.out.color="#D7D7D7FF", alpha=ifelse(basemap=="none", 1, 0.7), grayscale=FALSE, force.reset=FALSE) {
+spp.plot.RaspSolved<-function(x, species, y=0, prob.color.palette="YlGnBu", pu.color.palette='RdYlGn', basemap="none", locked.in.color="#000000FF", locked.out.color="#D7D7D7FF", alpha=ifelse(basemap=="none", 1, 0.7), grayscale=FALSE, force.reset=FALSE, ...) {
 	# data checks
 	stopifnot(length(species)==1)
 	stopifnot(y %in% c(0:nrow(x@results@selections)))
-	if (nrow(x@polygons)>0)
+	if (nrow(x@data@polygons)==0)
 			stop("Spatial data for planning units not present in object")
 	if (is.character(species)) {
-		if (!species %in% x@species$name)
+		if (!species %in% x@data@species$name)
 			stop('argument to species is not a species name in argument to x')
-		spp_pos <-match(species, x@species$name)
-	}
-	if (is.numeric(species)) {
-		if (!species %in% seq_along(x@species$name))
-			stop('argument to species is not a valid index for species in argument to x')
-		spp_pos <- species
-	}
+		spp_pos <-match(species, x@data@species$name)
+	} else{
+		if (is.numeric(species)) {
+			if (!species %in% seq_along(x@data@species$name))
+				stop('argument to species is not a valid index for species in argument to x')
+			spp_pos <- species
+		}
+}
 	# get basemap
 	if (basemap!="none")
 		basemap<-basemap.RaspData(x, basemap, grayscale, force.reset)
 	## main processing
 	# extract planning fill unit colors
-	values<-numeric(nrow(x@pu))
-	rows<-which(x@pu.species.probabilities$species == spp_pos )
-	values[x@pu.species.probabilities$pu[rows]]<-x@pu.species.probabilities$value[rows]
+	values<-numeric(nrow(x@data@pu))
+	rows<-which(x@data@pu.species.probabilities$species == spp_pos)
+	values[x@data@pu.species.probabilities$pu[rows]]<-x@data@pu.species.probabilities$value[rows]
 	if (length(unique(values))>1) {
-		cols<-brewerCols(rescale(values, to=c(0,1)), color.palette, alpha)
+		cols<-brewerCols(rescale(values, to=c(0,1)), prob.color.palette, alpha)
 	} else {
-		cols<-brewerCols(rep(values[1], length(values)), color.palette, alpha)
+		cols<-brewerCols(rep(values[1], length(values)), prob.color.palette, alpha)
 		values<-c(0,values[1])
 	}
 	# extract planning unit border colors
-	border.cols<-brewerCols(c(0,1), color.palette, alpha)
+	all.border.cols<-brewerCols(c(0,1), pu.color.palette, alpha)
 	border.cols<-rep(all.border.cols[1], nrow(x@data@pu))
-	border.cols[which(as.logical(selections(x, y)))]<-border.cols[length(border.cols)]
-	border.cols[which(x@pu$status==2)]<-locked.in.color
-	border.cols[which(x@pu$status==3)]<-locked.out.color
+	border.cols[which(as.logical(selections(x, y)))]<-all.border.cols[length(all.border.cols)]
+	border.cols[which(x@data@pu$status==2)]<-locked.in.color
+	border.cols[which(x@data@pu$status==3)]<-locked.out.color
 	# set title
-	if (!is.null(x@species$name)) {
-		main=paste0(x@species$name[spp_pos ], " in planning units (%)")
+	if (!is.null(x@data@species$name)) {
+		main=paste0(x@data@species$name[spp_pos ], " in planning units (%)")
 	} else {
 		main=paste0("Species ",species, " in planning units (%)")
 	}
 	# make plot
 	plot(1,1)
 	prettyGeoplot(
-		x@polygons,
+		x@data@polygons,
 		cols,
 		basemap,
 		main,
-		continuousLegend(values,color.palette,posx=c(0.3, 0.4),posy=c(0.1, 0.9)),
+		continuousLegend(values,prob.color.palette,posx=c(0.3, 0.4),posy=c(0.1, 0.9)),
 		beside=TRUE,
-		border.cols=border.cols
+		border=border.cols
 	)
 }
 
@@ -568,42 +579,44 @@ space.plot.RaspSolved<-function(
 	y=0,
 	pu.color.palette='RdYlGn',
 	locked.in.color="#000000FF",
-	locked.out.color="#D7D7D7FF"
+	locked.out.color="#D7D7D7FF",
+	...
 ) {
 	# data checks
 	stopifnot(length(y)==1)
 	stopifnot(y %in% c(0:nrow(x@results@selections)))
 	stopifnot(length(species)==1)
 	if (is.character(species)) {
-		if (!species %in% x@species$name)
+		if (!species %in% x@data@species$name)
 			stop('argument to species is not a species name in argument to x')
-		spp_pos<-match(species, x@species$name)
-	}
-	if (is.numeric(species)) {
-		if (!species %in% seq_along(x@species$name))
-			stop('argument to species is not a valid index for species in argument to x')
-		spp_pos <- species
+		spp_pos<-match(species, x@data@species$name)
+	} else {
+		if (is.numeric(species)) {
+			if (!species %in% seq_along(x@data@species$name))
+				stop('argument to species is not a valid index for species in argument to x')
+			spp_pos <- species
+		}
 	}
 	# set title
-	if (!is.null(x@species$name)) {
-		main=x@species$name[spp_pos]
+	if (!is.null(x@data@species$name)) {
+		main=x@data@species$name[spp_pos]
 	} else {
 		main=paste0("Species ",species)
 	}
 	# extract pu data
-	pu<-as.data.frame(x@attribute.spaces[[space]]@pu@coords)
+	pu<-as.data.frame(x@data@attribute.spaces[[space]]@pu@coords)
 	names(pu)<-paste0('X',seq_len(ncol(pu)))
 	pu$status<-'Not Selected'
 	pu$status[which(as.logical(selections(x, y)))]<-'Selected'
-	pu$status[which(x@pu$status==2)]<-'Locked In'
-	pu$status[which(x@pu$status==3)]<-'Locked Out'
+	pu$status[which(x@data@pu$status==2)]<-'Locked In'
+	pu$status[which(x@data@pu$status==3)]<-'Locked Out'
 	# extract dp data
-	dp<-as.data.frame(x@attribute.spaces[[space]]@dp[[ypos]]@points@coords)
+	dp<-as.data.frame(x@data@attribute.spaces[[space]]@dp[[spp_pos]]@points@coords)
 	names(dp)<-paste0('X',seq_len(ncol(dp)))
-	dp$weights=x@attribute.spaces[[space]]@dp[[ypos]]@weights
+	dp$weights=x@data@attribute.spaces[[space]]@dp[[spp_pos]]@weights
 	# make plots
 	do.call(
-		paste0('spacePlot.',ncol(x@attribute.spaces[[space]]@pu@coords),'d'),
+		paste0('spacePlot.',ncol(x@data@attribute.spaces[[space]]@pu@coords),'d'),
 		list(
 			pu,
 			dp,

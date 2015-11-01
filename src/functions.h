@@ -5,6 +5,7 @@
 using namespace Rcpp;
 
 #include <vector>
+#include <math.h>
 #include <string>
 #include <algorithm>
 #include <unordered_map>

@@ -86,7 +86,7 @@ print.GurobiOpts=function(x, ..., header=TRUE) {
 	if (header) {
 		cat("GurobiOpts object.\n")
 	} else {
-		cat('  Solver Method: Gurobi\n')
+		cat('  Method: Gurobi\n')
 	}
 	cat('  Threads:',x@Threads,'\n')
 	cat('  MIPGap:',x@MIPGap,'\n')
@@ -122,7 +122,7 @@ as.list.GurobiOpts<-function(x, ...) {
 #' @rdname update
 #' @method update GurobiOpts
 #' @export
-update.GurobiOpts<-function(object, Threads=NULL, MIPGap=NULL, Presolve=NULL, TimeLimit=NULL, NumberSolutions=NULL) {
+update.GurobiOpts<-function(object, Threads=NULL, MIPGap=NULL, Presolve=NULL, TimeLimit=NULL, NumberSolutions=NULL, ...) {
 	# update arguments
 	if (!is.null(Threads))
 		object@Threads<-Threads

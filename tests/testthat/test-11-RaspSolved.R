@@ -32,9 +32,14 @@ test_that('plot (x=RaspSolved, y=RaspSolved, i=0, j=1)', {
 	plot(sim_rs, sim_rs2, 0, 1)
 })
 
-test_that('plot (x=RaspSolved, y=RaspSolved, i=0, j=1)', {
+test_that('spp.plot (x=RaspSolved, y=0)', {
 	data(sim_rs)
 	spp.plot(sim_rs, 1)
+})
+
+test_that('space.plot (x=RaspSolved, species=1, space=1, y=0)', {
+	data(sim_rs)
+	space.plot(sim_rs, 1, 1)
 })
 
 test_that('selections.RaspSolved', {
@@ -85,16 +90,15 @@ test_that('update.RaspSolved', {
 	sim_rs2 <- update(sim_rs, BLM=100, MIPGap=0.4, name=letters[1:3], solve=FALSE)
 	# checks
 	expect_equal(sim_rs2@opts@BLM, 100)
-	expect_equal(sim_rs2@gurobi@MIPGap, 0.4)
 	expect_equal(sim_rs2@data@species$name, letters[1:3])
 })
 
 test_that('amount.target.RaspSolved', {
 	data(sim_rs)
-	expect_equal(amount.target(sim_rs), sim_rs@data@species$amount.target)
+	expect_equal(unname(amount.target(sim_rs)), sim_rs@data@targets$proportion[which(sim_rs@data@targets$target==0)])
 })
 
 test_that('space.target.RaspSolved', {
 	data(sim_rs)
-	expect_equal(space.target(sim_rs), sim_rs@data@species$space.target)
+	expect_equal(unname(space.target(sim_rs)[,1]), sim_rs@data@targets$proportion[which(sim_rs@data@targets$target==1)])
 })

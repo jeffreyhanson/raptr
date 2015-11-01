@@ -48,7 +48,7 @@ print.ManualOpts=function(x, ..., header=TRUE) {
 	if (header) {
 		cat("ManualOpts object.\n")
 	} else {
-		cat('  Solver Method: solutions manually specified\n')
+		cat('  Method: manual\n')
 	}
 	cat('  NumberSolutions:',x@NumberSolutions,'\n')
 }
@@ -65,7 +65,7 @@ setMethod(
 #' @rdname update
 #' @method update ManualOpts
 #' @export
-update.ManualOpts<-function(object, NumberSolutions=NULL) {
+update.ManualOpts<-function(object, NumberSolutions=NULL, ...) {
 	if (!is.null(NumberSolutions))
 		stop('Solver parameters cannot be updated for manually specified solutions.')
 	return(object)

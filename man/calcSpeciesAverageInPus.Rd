@@ -41,11 +41,11 @@ By default all polygons will be treated as having separate ids.
 \examples{
 # simulate data
 sim_pus <- sim.pus(225L)
-sim_spp <- lapply(c('uniform','normal','bimodal'), sim.species, n=1)
+sim_spp <- lapply(c('uniform','normal','bimodal'), sim.species, n=1, res=1, x=sim_pus)
 # calculate average for 1 species
-puvspr1.dat<-calcSpeciesAverageInPus(sim_pus, sim_spp[[1]])
+puvspr1.dat <- calcSpeciesAverageInPus(sim_pus, sim_spp[[1]])
 # calculate average for multiple species
-puvspr2.dat<-calcSpeciesAverageInPus(sim_pus, sim_spp)
+puvspr2.dat <- calcSpeciesAverageInPus(sim_pus, stack(sim_spp))
 }
 \seealso{
 \code{\link{is.gdalInstalled}}, \url{http://www.gdal.org/}, \url{http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries}.

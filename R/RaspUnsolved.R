@@ -42,6 +42,7 @@ RaspUnsolved<-function(opts, data) {
 #' @rdname print
 #' @export
 print.RaspUnsolved=function(x, ...) {
+	cat("RaspUnsolved object\n\n")
 	cat("Parameters\n")
 	print(x@opts, header=FALSE)
 	cat("Data\n")
@@ -81,10 +82,24 @@ pu.subset.RaspUnsolved<-function(x, pu) {
 	 )
 }
 
+#' @rdname dp.subset
+#' @method dp.subset RaspUnsolved
+#' @export
+dp.subset.RaspUnsolved<-function(x, space, species, points) {
+	return(
+		RaspUnsolved(
+			opts=x@opts,
+			data=dp.subset(x@data, space, species, points)
+			)
+	 )
+}
+
+
+
 #' @rdname spp.plot
 #' @method spp.plot RaspUnsolved
 #' @export
-spp.plot.RaspUnsolved<-function(x, species, prob.color.palette='YlGnBu', basemap='none', alpha=ifelse(basemap=="none", 1, 0.7), grayscale=FALSE, force.reset=FALSE) {
+spp.plot.RaspUnsolved<-function(x, species, prob.color.palette='YlGnBu', basemap='none', alpha=ifelse(basemap=="none", 1, 0.7), grayscale=FALSE, force.reset=FALSE, ...) {
 	spp.plot(x@data, species, prob.color.palette, basemap, alpha, grayscale, force.reset)
 }
 
@@ -93,11 +108,12 @@ spp.plot.RaspUnsolved<-function(x, species, prob.color.palette='YlGnBu', basemap
 #' @export
 space.plot.RaspUnsolved<-function(
 	x,
-	y,
+	species,
 	space=1,
 	pu.color.palette='RdYlGn',
 	locked.in.color="#000000FF",
-	locked.out.color="#D7D7D7FF"
+	locked.out.color="#D7D7D7FF",
+	...
 ) {
-	space.plot.RaspData(x@data, y, space, pu.color.palette, locked.in.color, locked.out.color)
+	space.plot.RaspData(x@data, species, space, pu.color.palette, locked.in.color, locked.out.color, ...)
 }

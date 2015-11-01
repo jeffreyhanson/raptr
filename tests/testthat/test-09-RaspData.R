@@ -78,6 +78,16 @@ test_that('spp.subset.RaspData', {
 	expect_equal(nrow(rd2@targets), 2)
 })
 
+test_that('dp.subset.RaspData', {
+	# create RaspUnsolved object
+	data(sim_ru)
+	rd<-sim_ru@data
+	rd2<-dp.subset(rd, 1, 1, 1:10)
+	# tests
+	expect_equal(rd@attribute.spaces[[1]]@dp[[1]]@points@coords[1:10,], rd2@attribute.spaces[[1]]@dp[[1]]@points@coords)
+	expect_equal(rd@attribute.spaces[[1]]@dp[[1]]@weights[1:10], rd2@attribute.spaces[[1]]@dp[[1]]@weights)
+})
+
 test_that('update.RaspData', {
 	# generate objects
 	data(sim_ru)

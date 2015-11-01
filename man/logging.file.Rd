@@ -26,11 +26,11 @@ The term logging file was used due to collisions with the \code{log} function in
 \examples{
 data(sim_rs)
 # log file for best solution
-logging.file(sim_rs, 0)
+cat(logging.file(sim_rs, 0))
 # log file for second solution
-logging.file(sim_rs, 2)
+cat(logging.file(sim_rs, 2))
 # log files for all solutions
-logging.file(sim_rs, NULL)
+cat(logging.file(sim_rs, NULL))
 }
 \seealso{
 \code{RaspResults}, \code{RaspSolved}.

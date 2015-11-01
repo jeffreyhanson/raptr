@@ -23,7 +23,55 @@ setClass("RaspResults",
 		logging.file="character",
 		best="integer",
 		.cache='environment'
-	)
+	),
+	validity=function(object) {
+		# summary
+		if (!all(unlist(sapply(object@summary, is.finite))))
+			stop('object@summary contains NA or non-finite values')
+		
+		# selections
+		if (any(!object@selections %in% c(0,1)))
+			stop('object@selections contains values that are not 0 or 1')
+		
+		# amount.held
+		if (!all(c(is.finite(object@amount.held))))
+			stop('object@amount.held contains NA or non-finite values')
+		if (any(object@amount.held < 0 | object@amount.held > 1))
+			stop('object@amount.held contains values less than 0 or greater than 1')
+		
+		# space.held
+		if (!all(c(is.finite(object@space.held))))
+			stop('object@space.held contains NA or non-finite values')
+		if (any(object@space.held < 0))
+			stop('object@space.held contains values less than 0')
+		if (any(object@space.held > 1))
+			warning('object@space.held contains values greater than 1, consider increasing the FAILUREMULTIPLIER')
+		
+		# logging.file
+		if (any(is.na(object@logging.file)))
+			stop('object@logging.file contains NA values')
+		
+		# best
+		if (length(object@best)>1)
+			stop('object@best contains more than one value')
+		if (!is.finite(object@best))
+			stop('object@best contains NA or non-finite values')
+		if (!object@best %in% seq_len(nrow(object@space.held)))
+			stop('object@best is not an index of a solution in object')
+		
+		# cross-slot dependencies
+		if (nrow(object@summary) != length(object@logging.file))
+			stop('object@summary has different number of solutions to object@logging.file')
+		if (nrow(object@summary) != nrow(object@selections))
+			stop('object@summary has different number of solutions to object@selections')
+		if (nrow(object@summary) != nrow(object@amount.held))
+			stop('object@summary has different number of solutions to object@amount.held')
+		if (nrow(object@summary) != nrow(object@space.held))
+			stop('object@summary has different number of solutions to object@space.held')
+
+		
+		return(TRUE)
+	}
 )
 
 #' Create RaspResults object

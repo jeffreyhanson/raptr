@@ -24,9 +24,14 @@
 #' @examples
 #' # load data
 #' data(sim_ru, sim_rs)
-#' # plot data
-#' plot(sim_ru)
+#' # plot species distributions
+#' spp.plot(sim_ru, 1)
+#' spp.plot(sim_ru, 2)
+#' spp.plot(sim_ru, 3)
+#' # plot selection frequencies
 #' plot(sim_rs)
+#' # plot best solution
+#' plot(sim_rs, 0)
 NULL
 
 #' @rdname simulated_data
@@ -35,29 +40,33 @@ NULL
 #' @rdname simulated_data
 "sim_rs"
 
-
 #' Case-study dataset for a conservation planning exercise
 #'
 #' This dataset contains data to generate example prioritisations for the pale-headed Rosella (\emph{Platycercus adscitus}) in Queensland, Australia. Specific objects in the dataset include:
 #' \itemize{
 #'	\item cs_pus: \code{SpatialPolygonsDataFrame} planning units. The units were generated as \eqn{10km^2} squares across the species' range, and then clipped to the Queensland, Australia (using data obtained from the \href{Australia Bureau of Statistics}{http://www.abs.gov.au/ausstats/abs@@.nsf/mf/1259.0.30.001?OpenDocument}). They were then overliad with Australia's protected area network (obtained from the World Database on Protected Areas (WDPA) at \url{http://www.protectedplanet.net/}). This attribute table has 3 fields. The 'area' field contains the units' area, the 'cost' field is set to 1 for all units, and the 'status' filed indicates if 50\% or more of the units' extent is covered by protected areas.
 #'	\item cs_spp: \code{RasterLayer} probability distribution map for the \emph{P. adscitus} clipped to Queensland, Australia. This map was dervived from records in the BirdLife Altas Database (\url{http://birdata.com.au/}).
-#'	\item cs_space: \code{RasterStack} describing broad-scale variation across Queensland. containing the projections of the first two axes from a annual precipitation data across the species range (obtained from \url{http://www.worldclim.org/} as BIO12, and resampled ot \eqn{10km^2} resolution).
+#'	\item cs_space: \code{RasterStack} describing broad-scale variation across Queensland. containing the projections of the first two axes from a annual precipitation data across the species range (obtained from \url{http://www.worldclim.org/} as BIO12, and resampled to \eqn{10km^2} resolution).
+#'	\item cs_ru: \code{RaspUnsolved} object.
+#'	\item cs_rs_amount: \code{RaspSolved} object containing 5 solutions identified using amount-based targets.
+#'	\item cs_rs_space: \code{RaspSolved} object containing 5 solutions identified using both amount-based and space-based targets.
 #' }
 #'
 #' @docType data
-#' @aliases cs_pus cs_spp cs_space
+#' @aliases cs_pus cs_spp cs_space cs_ru cs_rs_amount cs_rs_space
 #' @format \code{SpatialPolyognsDataFrame}, \code{RasterLayer}, \code{RasterLayer}.
 #' @keywords datasets
 #' @name casestudy_data
 #' @examples
 #' # load data
-#' data(cs_pus, cs_spp, cs_space)
+#' data(cs_pus, cs_spp, cs_space, cs_ru, cs_rs_amount, cs_rs_space)
 #' # plot data
 #' \dontrun{
 #' plot(cs_pus)
 #' plot(cs_spp)
 #' plot(cs_space)
+#' plot(cs_rs_amount)
+#' plot(cs_rs_space)
 #' }
 NULL
 
@@ -74,4 +83,7 @@ NULL
 "cs_ru"
 
 #' @rdname casestudy_data
-"cs_rs"
+"cs_rs_amount"
+
+#' @rdname casestudy_data
+"cs_rs_space"

@@ -70,19 +70,31 @@ units contained in a single \code{RaspSolved} object. Additionally, two \code{Ra
 }}
 \examples{
 # load data
-data(cs_rs_area, cs_rs_space)
+data(sim_rs, cs_rs_amount, cs_rs_space)
+## simulated species examples
 # plot selection frequencies
-plot(cs_rs_area)
-# plot best solution with basemap
-plot(cs_rs_area, 0, basemap='satellite')
+plot(sim_rs)
+# plot best solution
+plot(sim_rs, 0)
 # plot second solution
-plot(cs_rs_area, 2, basemap='satellite', grayscale=TRUE)
-# plot different between first and second solutions
-plot(cs_rs_area, 1, 2)
+plot(sim_rs, 2)
+# plot different between best and second solutions
+plot(sim_rs, sim_rs, 0 ,2)
+\dontrun{
+## case-study species examples
+# plot selection frequencies
+plot(cs_rs_amount)
+# plot best solution with basemap
+plot(cs_rs_amount, 0, basemap='satellite')
+plot(cs_rs_amount, 2, basemap='satellite', grayscale=TRUE)
+# plot second solution
+# plot different between best and second solutions
+plot(cs_rs_amount, cs_rs_amount, 0, 2)
 # plot difference in selection frequencies between two RaspSolved objects
-plot(cs_rs_area, cs_rs_space)
+plot(cs_rs_amount, cs_rs_space)
 # plot difference between best solutions in two RaspSolved objects
-plot(cs_rs_area, cs_rs_space, 0, 0)
+plot(cs_rs_amount, cs_rs_space, 0, 0)
+}
 }
 \seealso{
 \code{RaspSolved}.

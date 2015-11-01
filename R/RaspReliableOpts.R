@@ -81,7 +81,7 @@ setMethod(
 #' @rdname update
 #' @method update RaspReliableOpts
 #' @export
-update.RaspReliableOpts<-function(object, BLM=NULL, FAILUREMULTIPLIER=NULL, MAXRLEVEL=NULL) {
+update.RaspReliableOpts<-function(object, BLM=NULL, FAILUREMULTIPLIER=NULL, MAXRLEVEL=NULL, ...) {
 	# update params
 	if (!is.null(BLM))
 		object@BLM<-BLM

@@ -110,32 +110,88 @@
 #  sim_ru <- RaspUnsolved(sim_ro, sim_go, sim_rd)
 
 ## ---- eval=FALSE---------------------------------------------------------
-#  # update space targets to 0%
-#  sim_ru <- update(sim_ru, space.target=0)
+#  # create new object with just the uniform species
+#  sim_ru_s1 <- spp.subset(sim_ru, 'uniform')
 #  
-#  # generate prioritisations for each species
-#  sp1_area <- solve(spp.subset(sim_ru_area, 'uniform'))
-#  sp2_area <- solve(spp.subset(sim_ru_area, 'normal'))
-#  sp3_area <- solve(spp.subset(sim_ru_area, 'bimodal'))
+#  # update amount targets to 20% and space targets to 0%
+#  sim_ru_s1 <- update(sim_ru_s1, amount.target=0.2, space.target=0, solve=FALSE)
 #  
-#  # plot prioritisations
-#  plot(sp1_area)
-#  plot(sp2_area)
-#  plot(sp3_area)
+#  # solve problem to identify prioritisation
+#  sim_rs_s1_amount <- solve(sim_ru_s1)
 
 ## ---- eval=FALSE---------------------------------------------------------
-#  # set 20% space targets in sim_ru
-#  sim_ru_space<-update(sim_ru_area, space.targets=0.2)
+#  # plot the prioritisation
+#  plot(sim_rs_s1_amount)
 #  
-#  # make prioritisations for each species
-#  sp1_space <- solve(spp.subset(sim_ru_space, 'uniform'))
-#  sp2_space <- solve(spp.subset(sim_ru_space, 'normal'))
-#  sp3_space <- solve(spp.subset(sim_ru_space, 'bimodal'))
+#  # plot the prioritisation and the uniform species' distribution
+#  spp.plot(sim_rs_s1_amount)
+
+## ---- eval=FALSE---------------------------------------------------------
+#  # create new object with just the normal species
+#  sim_ru_s2 <- spp.subset(sim_ru, 'normal')
 #  
-#  # plot prioritisations
-#  plot(sp1_space)
-#  plot(sp2_space)
-#  plot(sp3_space)
+#  # update amount targets to 20% and space targets to 0% and solve it
+#  sim_rs_s2_amount <- update(sim_ru_s2, amount.target=0.2, space.target=0, solve=TRUE)
+
+## ---- eval=FALSE---------------------------------------------------------
+#  # plot the prioritisation
+#  plot(sim_rs_s2_amount)
+#  
+#  # plot the prioritisation and the normal species' distribution
+#  spp.plot(sim_rs_s2_amount)
+
+## ---- eval=FALSE---------------------------------------------------------
+#  # create new object with just the bimodal species
+#  sim_ru_s3 <- spp.subset(sim_ru, 'bimodal')
+#  
+#  # update amount targets to 20% and space targets to 0% and solve it
+#  sim_rs_s3_amount <- update(sim_ru_s3, amount.target=0.2, space.target=0)
+#  
+#  # plot the prioritisation
+#  plot(sim_rs_s3_amount)
+#  
+#  # plot the prioritisation and the bimodal species' distribution
+#  spp.plot(sim_rs_s3_amount)
+
+## ---- eval=FALSE---------------------------------------------------------
+#  # make new prioritisation
+#  sim_rs_s1_space <- update(sim_rs_s1_amount, space.target=0.2)
+
+## ---- eval=FALSE---------------------------------------------------------
+#  # plot the prioritisation
+#  plot(sim_rs_s1_space)
+#  
+#  # plot the prioritisation and the uniform species' distribution
+#  spp.plot(sim_rs_s1_space)
+#  
+#  # plot the difference between old and new prioritisations
+#  plot(sim_rs_s1_amount, sim_rs_s1_space, 1, 1)
+
+## ---- eval=FALSE---------------------------------------------------------
+#  # make new prioritisation
+#  sim_rs_s2_space <- update(sim_rs_s2_amount, space.target=0.2)
+#  
+#  # plot the prioritisation
+#  plot(sim_rs_s2_space)
+#  
+#  # plot the prioritisation and the normal species' distribution
+#  spp.plot(sim_rs_s2_space)
+#  
+#  # plot the difference between old and new prioritisations
+#  plot(sim_rs_s2_amount, sim_rs_s2_space, 1, 1)
+
+## ---- eval=FALSE---------------------------------------------------------
+#  # make new prioritisation
+#  sim_rs_s3_space <- update(sim_rs_s3_amount, space.target=0.2)
+#  
+#  # plot the prioritisation
+#  plot(sim_rs_s3_space)
+#  
+#  # plot the prioritisation and the bimodal species' distribution
+#  spp.plot(sim_rs_s3_space)
+#  
+#  # plot the difference between old and new prioritisations
+#  plot(sim_rs_s3_amount, sim_rs_s3_space, 1, 1)
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  # make prioritisations
@@ -178,7 +234,10 @@
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  # make area-based prioritisation
-#  cs_rs_area <- rasp(cs_pus, cs_species, cs_spaces, area.targets=0.2, space.targets=0.2, n.demand.points=100L, include.geographic.space=TRUE, formulation='unreliable')
+#  cs_rs_area <- rasp(cs_pus, cs_species, cs_spaces,
+#    area.target=0.2, space.target=0.2, n.demand.points=100L,
+#    include.geographic.space=TRUE, formulation='unreliable'
+#  )
 #  
 #  # plot prioritisation
 #  plot(cs_rs_area)

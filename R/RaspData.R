@@ -408,17 +408,17 @@ make.RaspData<-function(pus, species, spaces=NULL,
 	if (identical(pus@proj4string, CRS('+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs')))
 		warning("creating boundary length data from pus in WGS1984; consider supplying in an object a projected CRS.")
 	if (verbose)
-		cat("Calculating boundary data.")
+		cat("Calculating boundary data.\n")
 	boundary<-calcBoundaryData(rcpp_Polygons2PolySet(pus@polygons), ...)
 	## set pu.species.probabilities
 	projPolygons=pus
 	if (!identical(projPolygons@proj4string, species@crs)) {
 		if (verbose)
-			cat("Projecting polygons to rasters' CRS.")
+			cat("Projecting polygons to rasters' CRS.\n")
 		projPolygons<-spTransform(projPolygons, species@crs)
 	}
 	if (verbose)
-		cat("Calculating average species probability in planning units.")
+		cat("Calculating average species probability in planning units.\n")
 	pu.species.probabilities<-calcSpeciesAverageInPus(projPolygons, species, ...)
 	## set species
 	species<-data.frame(
@@ -606,11 +606,41 @@ pu.subset.RaspData<-function(x, pu) {
 	)
 }
 
+#' @rdname dp.subset
+#' @method dp.subset RaspData
+#' @export
+dp.subset.RaspData<-function(x, space, species, points) {
+	# create objects
+	attr.space<-x@attribute.spaces
+	for (i in seq_along(space)) {
+		for (j in seq_along(species)) {
+			attr.space[[space[i]]]@dp[[species[j]]]<-DemandPoints(
+				SimplePoints(attr.space[[space[i]]]@dp[[species[j]]]@points@coords[points,]),
+				attr.space[[space[i]]]@dp[[species[j]]]@weights[points]
+			)
+		}
+	}
+	# return new object
+	return(
+		RaspData(
+			pu=x@pu,
+			species=x@species,
+			targets=x@targets,
+			pu.species.probabilities=x@pu.species.probabilities,
+			attribute.spaces=attr.space,
+			boundary=x@boundary,
+			polygons=x@polygons
+	  )
+	)
+}
+
+
+
 
 #' @rdname update
 #' @export
 #' @method update RaspData
-update.RaspData<-function(object, species=NULL, space=NULL, name=NULL, amount.target=NULL, space.target=NULL, pu=NULL, cost=NULL, status=NULL) {
+update.RaspData<-function(object, species=NULL, space=NULL, name=NULL, amount.target=NULL, space.target=NULL, pu=NULL, cost=NULL, status=NULL, ...) {
 	# deparse species
 	if (is.null(species)) {
 		species<-seq_len(nrow(object@species))
@@ -646,10 +676,10 @@ update.RaspData<-function(object, species=NULL, space=NULL, name=NULL, amount.ta
 #' @rdname spp.plot
 #' @method spp.plot RaspData
 #' @export
-spp.plot.RaspData<-function(x, species, basemap='none', prob.color.palette='YlGnBu', alpha=ifelse(basemap=="none", 1, 0.7), grayscale=FALSE, force.reset=FALSE) {
+spp.plot.RaspData<-function(x, species, prob.color.palette='YlGnBu', basemap='none', alpha=ifelse(basemap=="none", 1, 0.7), grayscale=FALSE, force.reset=FALSE, ...) {
 	# data checks
 	stopifnot(length(species)==1)
-	if (nrow(x@polygons)>0)
+	if (nrow(x@polygons)==0)
 			stop("Spatial data for planning units not present in object")
 	if (is.character(species)) {
 		if (!species %in% x@species$name)
@@ -670,9 +700,9 @@ spp.plot.RaspData<-function(x, species, basemap='none', prob.color.palette='YlGn
 	rows<-which(x@pu.species.probabilities$species == spp_pos )
 	values[x@pu.species.probabilities$pu[rows]]<-x@pu.species.probabilities$value[rows]
 	if (length(unique(values))>1) {
-		cols<-brewerCols(rescale(values, to=c(0,1)), color.palette, alpha)
+		cols<-brewerCols(rescale(values, to=c(0,1)), prob.color.palette, alpha)
 	} else {
-		cols<-brewerCols(rep(values[1], length(values)), color.palette, alpha)
+		cols<-brewerCols(rep(values[1], length(values)), prob.color.palette, alpha)
 		values<-c(0,values[1])
 	}
 	# set title
@@ -688,7 +718,7 @@ spp.plot.RaspData<-function(x, species, basemap='none', prob.color.palette='YlGn
 		cols,
 		basemap,
 		main,
-		continuousLegend(values,color.palette,posx=c(0.3, 0.4),posy=c(0.1, 0.9)),
+		continuousLegend(values,prob.color.palette,posx=c(0.3, 0.4),posy=c(0.1, 0.9)),
 		beside=TRUE
 	)
 }
@@ -702,7 +732,8 @@ space.plot.RaspData<-function(
 		space=1,
 		pu.color.palette='RdYlGn',
 		locked.in.color="#000000FF",
-		locked.out.color="#D7D7D7FF"
+		locked.out.color="#D7D7D7FF",
+		...
 	) {
 	# data checks
 	stopifnot(length(species)==1)

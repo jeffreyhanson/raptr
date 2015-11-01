@@ -58,14 +58,14 @@ This function is used to solve a \code{RaspUnsolved} object that has all of its 
 data(sim_ru)
 \dontrun{
 # solve it using Gurobi
-sim_rs <- solve(ru)
+sim_rs <- solve(sim_ru)
 }
 # evaluate manually specified solution using planning unit indices
-sim_rs2 <- solve(ru, 1:10)
+sim_rs2 <- solve(sim_ru, 1:10)
 # evaluate manually specifed solution using binary selections
-sim_rs3 <- solve(ru, c(rep(TRUE,10), rep(FALSE, 245)))
-# evlauate multiple manually specified solutions
-sim_rs4 <- solve(ru, matrix(sample(c(0,1), size=1275 replace=TRUE), ncol=255, nrow=5))
+sim_rs3 <- solve(sim_ru, c(rep(TRUE,10), rep(FALSE, 215)))
+#  evaluate multiple manually specified solutions
+sim_rs4 <- solve(sim_ru, matrix(sample(c(0,1), size=1125, replace=TRUE), ncol=225, nrow=5))
 }
 \seealso{
 \code{RaspUnsolved}, \code{RaspSolved}.

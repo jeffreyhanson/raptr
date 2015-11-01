@@ -15,19 +15,31 @@ NULL
 #' @return \code{RaspSolved} object if \code{solve} is \code{TRUE}, else \code{RaspUnsolved}.
 #' @seealso \code{\link{GurobiOpts}}, \code{\link{RaspReliableOpts}}, \code{\link{RaspUnreliableOpts}} \code{\link{RaspData}}, \code{\link{RaspResults}}, \code{\link{RaspUnsolved}}, \code{\link{RaspSolved}}.
 rasp<-function(pus, species, ..., formulation='unreliable', solve=TRUE) {
-	match.args(formulation, c('unreliable', 'reliable'))
+	# set formulation
+	match.arg(formulation, c('unreliable', 'reliable'))
 	if (formulation=='unreliable') {
 		opts<-'RaspUnreliableOpts'
 	} else {
 		opts<-'RaspReliableOpts'
 	}
-	args<-list(...)
+	# create unsolved object
 	x<-RaspUnsolved(
-		do.call(GurobiOpts, args[which(names(args) %in% slotNames('GurobiOpts'))]),
-		do.call(opts, args[which(names(args) %in% slotNames(opts))]),
-		make.RaspData(pus=pus, species=species, ...)
+		opts=do.call(opts, parseArgs(opts, object=NULL, ...)),
+		data=do.call(make.RaspData, append(
+			list(pus=pus, species=species),
+			parseArgs('make.RaspData', object=NULL, ...)
+		))
 	)
-	if (solve)
-		x<-solve(x)
+	# solve object if specified
+	if (solve) {
+		x<-do.call('solve', append(
+			append(
+				list(a=x),
+				parseArgs2(c('b', 'verbose'), ...)
+			),
+			parseArgs('GurobiOpts', object=NULL, ...)
+		))
+	}
+	# return object
 	return(x)
 }

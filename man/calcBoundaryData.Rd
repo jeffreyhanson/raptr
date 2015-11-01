@@ -36,7 +36,7 @@ If argument set to \code{SpatialPolygons} or \code{SpatialPolygonsDataFrame}, th
 }
 \examples{
 # simulate planning units
-sim.pud <- sim.pus(225L)
+sim_pus <- sim.pus(225L)
 # calculate boundary data
 bound.dat <- calcBoundaryData(sim_pus)
 summary(bound.dat)
