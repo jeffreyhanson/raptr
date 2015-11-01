@@ -245,6 +245,7 @@ RaspData<-function(pu, species, targets, pu.species.probabilities, attribute.spa
 #' @param n.demand.points \code{integer} number of demand points to use for each attribute space for each species. Defaults to 100L.
 #' @param kernel.method \code{character} name of kernel method to use to generate demand points. Use either \code{sm.density} or \code{hypervolume}.
 #' @param quantile \code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.2.
+#' @param scale \code{logical} should attribute spaces be z-scored before generating demand points? Defaults to \code{TRUE}.
 #' @param include.geographic.space \code{logical} should the geographic space be considered an attribute space?
 #' @param species.points \code{list} of/or \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records. Use a \code{list} of objects to represent different species. Must have the same number of elements as \code{species}. If not supplied then use \code{n.species.points} to sample points from the species distributions.
 #' @param n.species.points \code{numeric} vector specfiying the number points to sample the species distributions to use to generate demand points. Defaults to 20\% of the distribution.
@@ -253,14 +254,12 @@ RaspData<-function(pu, species, targets, pu.species.probabilities, attribute.spa
 #' @seealso \code{\link{RaspData-class}}, \code{\link{RaspData}}.
 #' @export make.RaspData
 #' @examples
-#' \dontrun{
 #' # load data
 #' data(cs_pus, cs_spp, cs_space)
 #' x <- make.RaspData(cs_pus, cs_spp, cs_space, include.geographic.space=TRUE)
 #' print(x)
-#' }
 make.RaspData<-function(pus, species, spaces=NULL,
-	amount.targets=0.2, space.targets=0.2, n.demand.points=100L, kernel.method=c('sm.density', 'hyperbox')[1], quantile=0.2,
+	amount.targets=0.2, space.targets=0.2, n.demand.points=100L, kernel.method=c('sm.density', 'hyperbox')[1], quantile=0.2, scale=TRUE,
 	species.points=NULL, n.species.points=ceiling(0.2*cellStats(species, 'sum')), include.geographic.space=TRUE, verbose=FALSE, ...) {
 
 	## init
@@ -270,11 +269,27 @@ make.RaspData<-function(pus, species, spaces=NULL,
 	stopifnot(inherits(species, c('RasterStack', 'RasterLayer')))
 	stopifnot(inherits(spaces, c('NULL', 'RasterStack', 'RasterLayer', 'list')))
 	.cache<-new.env()
-
 	# coerce non-list items to list
 	if (!inherits(spaces, 'list'))
 		spaces=list(spaces)
-
+	# z-score spaces
+	meansLST=list()
+	sdsLST=list()
+	if (scale) {
+		for (i in seq_along(spaces)) {
+				# get means and sds
+				meansLST[[i]]=cellStats(spaces[[i]], 'mean')
+				sdsLST[[i]]=cellStats(spaces[[i]], 'sd')
+				# if sdsLST contains zeros then the SD is 1 due to bug in cellStats package
+				if (any(is.na(sdsLST[[i]])))
+					sdsLST[[i]][is.na(sdsLST[[i]])]=1
+				tmpLST=list()
+				for (j in seq_along(meansLST[[i]])) {
+					tmpLST[[j]]=(spaces[[i]][[j]] - meansLST[[i]][[j]]) / sdsLST[[i]][[j]]
+				}
+				spaces[[i]]=stack(tmpLST)
+		}
+	}
 	# create species.points from species
 	if (is.null(species.points)) {
 		species.points=llply(
@@ -301,7 +316,6 @@ make.RaspData<-function(pus, species, spaces=NULL,
 			}
 		}
 	}
-
 	# set polygons
 	geoPolygons<-pus
 	if (!identical(geoPolygons, CRS('+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs'))) {
@@ -323,7 +337,6 @@ make.RaspData<-function(pus, species, spaces=NULL,
 			warning('Planning unit areas are being calculated in a geographic coordinate system')
 		pu$area=gArea(pus,byid=TRUE)
 	}
-
 	#### Attribute space data
 	## set pu.points
 	# set pu.points based spaces
@@ -332,44 +345,46 @@ make.RaspData<-function(pus, species, spaces=NULL,
 	if (!is.null(spaces[[1]])) {
 		# create initial rasterized version of the pus
 		pus@data$id<-seq_len(nrow(pus@data))
-		pu.rast<-rasterize(pus, spaces[[1]], field='id')
+		pu.rast<-rasterize(pus, spaces[[1]][[1]], field='id')
 		# extract means
-		pu.points<-append(
-			pu.points,
-			llply(
-				spaces,
-				.fun=function(x) {
-					# generate new raster if needed
-					if (
-						xmin(pu.rast) != xmin(x) ||
-						xmax(pu.rast) != xmax(x) ||
-						ymin(pu.rast) != ymin(x) ||
-						ymax(pu.rast) != ymax(x) ||
-						res(pu.rast)[1] != res(x)[1] ||
-						res(pu.rast)[2] != res(x)[2]
-					) {
-						pu.rast<-rasterize(pus, x)
-					}
-					# extract points
-					coordMTX<-matrix(NA, nrow=nrow(pus@data), ncol=nlayers(x))
-					for (i in seq_len(ncol(coordMTX))) {
-						vals<-rcpp_groupmean(getValues(pu.rast), getValues(x[[i]]))
-						coordMTX[attr(vals, 'ids'),i]<-c(vals)
-						# vals<-sapply(split(getValues(x[[i]]),getValues(pu.rast)),mean, na.rm=TRUE)
-						# coordMTX[as.integer(names(vals)),i]<-c(vals)
-					}
-					if (any(is.na(coordMTX[])))
-						stop('Some planning units do not intersect with an attribute space layer.')
-					return(SimplePoints(coords=coordMTX))
+		pu.points<-llply(
+			spaces,
+			.fun=function(x) {
+				# generate new raster if needed
+				if (
+					xmin(pu.rast) != xmin(x) ||
+					xmax(pu.rast) != xmax(x) ||
+					ymin(pu.rast) != ymin(x) ||
+					ymax(pu.rast) != ymax(x) ||
+					res(pu.rast)[1] != res(x)[1] ||
+					res(pu.rast)[2] != res(x)[2]
+				) {
+					pu.rast<-rasterize(pus, x)
 				}
-			)
+				# extract points
+				coordMTX<-matrix(NA, nrow=nrow(pus@data), ncol=nlayers(x))
+				for (i in seq_len(ncol(coordMTX))) {
+					vals<-rcpp_groupmean(getValues(pu.rast), getValues(x[[i]]))
+					coordMTX[attr(vals, 'ids'),i]<-c(vals)
+				}
+				if (any(is.na(coordMTX[])))
+					stop('Some planning units do not intersect with an attribute space layer.')
+				return(SimplePoints(coords=coordMTX))
+			}
 		)
 	}
+	
 	# calculate positions in geographic space
 	if (include.geographic.space) {
+		pu_coords=gCentroid(pus, byid=TRUE)@coords
+		if (scale) {
+			for (i in seq_len(ncol(pu_coords))) {
+				pu_coords[,i] = (pu_coords[,i] - mean(pu_coords[,i])) / sd(pu_coords[,i])
+			}
+		}
 		pu.points=append(
 			pu.points,
-			list(SimplePoints(gCentroid(pus, byid=TRUE)@coords))
+			list(SimplePoints(pu_coords))
 		)
 	}
 	if (length(pu.points)==0) {
