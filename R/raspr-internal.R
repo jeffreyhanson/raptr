@@ -190,7 +190,7 @@ zonalMean <- function(x, y, ids=names(y), ncores=1) {
 			clust<-makeCluster(ncores, type="SOCK")
 			clusterEvalQ(clust, {library(raster);library(Rcpp)})
 			clusterExport(clust, c("bs", "x", "rcpp_groupmean"))
-			registerDoSNOW(clust)
+			registerDoParallel(clust)
 		}
 		x<-rbind.fill(llply(seq_len(nlayers(y)), function(l) {
 			return(zonalMean.RasterLayerNotInMemory(bs, x, y[[l]], ids[l], registered=ncores>1, clust))

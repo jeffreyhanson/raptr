@@ -1,10 +1,9 @@
-#' @importFrom snow makeCluster
-#' @importFrom snow stopCluster
-#' @importFrom snow stopCluster.default
-#' @importFrom snow clusterExport
-#' @importFrom snow clusterEvalQ
+#' @importFrom parallel makeCluster
+#' @importFrom parallel stopCluster
+#' @importFrom parallel clusterExport
+#' @importFrom parallel clusterEvalQ
 
-#' @importFrom doSNOW registerDoSNOW
+#' @importFrom doParallel registerDoParallel
 
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom RColorBrewer brewer.pal.info

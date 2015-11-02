@@ -42,6 +42,6 @@ bound.dat <- calcBoundaryData(sim_pus)
 summary(bound.dat)
 }
 \seealso{
-This function is based on the algorithm in QMARXAN \url{http://aproposinfosystems.com/products/qmarxan/} for calculating boundary length.
+This function is based on the algorithm in QMARXAN \url{https://github.com/tsw-apropos/qmarxan} for calculating boundary length.
 }
 
