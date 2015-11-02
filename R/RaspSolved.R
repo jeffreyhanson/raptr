@@ -649,13 +649,28 @@ update.RaspUnsolOrSol<-function(object, ..., solve=TRUE) {
 		)
 	)
 	if (solve) {
+		# get any new specified GurobiOpts
+		goLST<-parseArgs2(c('Threads', 'MIPGap','NumberSolutions', 'TimeLimit', 'Presolve'), ...)
+		
+		# get old GurobiOpt
+		if (inherits(object, 'RaspSolved')) {
+			oldGoLST=list(Threads=object@Threads, MIPGap=object@MIPGap, NumberSolutions=object@NumberSolutions, TimeLimit=object@TimeLimit, Presolve=object@Presolve)
+			if (any(!names(oldGoLST %in% names(goLST)))) {
+				goLST=append(
+					goLST,
+					oldGoLST[!names(oldGoLST %in% names(goLST))]
+				)
+			}
+		}
+				# generate new RaspSolved object
 		object<-do.call(
-				raspr::solve,
+			raspr::solve,
+			append(
 				append(
 					list(a=object),
-					parseArgs2(c('b', 'Threads',
-						'MIPGap', 'NumberSolutions', 'TimeLimit', 'Presolve', 'verbose'
-					), ...)
+					goLST
+				),
+				parseArgs2('verbose', ...)
 			)
 		)
 	}
