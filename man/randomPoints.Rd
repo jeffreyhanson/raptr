@@ -32,6 +32,6 @@ points(pts1, col='red')
 points(pts2, col='black')
 }
 \seealso{
-\code{\link[dismo]{randomPoints}}.
+This function is similar to \code{dismo::randomPoints}.
 }
 

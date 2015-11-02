@@ -163,7 +163,7 @@ setClass("SolverOpts")
 #' @param n \code{integer} number of points to sample
 #' @param prob \code{logical} should the raster values be used as weights? Defaults to \code{FALSE}.
 #' @return code{matrix} with x-coordinates, y-coordinates, and cell values.
-#' @seealso \code{\link[dismo]{randomPoints}}.
+#' @seealso This function is similar to \code{dismo::randomPoints}.
 #' @export
 #' @examples
 #' # simulate data

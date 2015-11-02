@@ -44,6 +44,10 @@
 #' @importFrom methods setOldClass
 #' @importFrom methods setClassUnion
 #' @importFrom methods setClass
+#' @importFrom methods as
+#' @importFrom methods new
+#' @importFrom methods slot
+#' @importFrom methods validObject
 
 #' @importFrom ks kde
 
@@ -78,6 +82,19 @@
 
 #' @importFrom rgeos gArea
 
+ #' @importFrom grDevices colorRamp
+ #' @importFrom grDevices rgb
+
+ #' @importFrom graphics layout
+ #' @importFrom graphics legend
+ #' @importFrom graphics mtext
+ #' @importFrom graphics par
+ 
+ #' @importFrom stats runif
+ #' @importFrom stats sd
+ 
+#' @importFrom utils capture.output
+#' @importFrom utils shortPathName
 
 #' @import sp
 #' @import rgdal

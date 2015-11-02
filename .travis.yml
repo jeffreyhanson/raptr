@@ -17,7 +17,8 @@ apt_packages:
     
 before_install: 
   - echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
-  - sudo apt-get install r-cran-rgl -y
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install r-cran-rgl -y; fi
+  - if [ "$TRAVIS_OS_NAME" == "mac"]; then brew install Caskroom/cask/xquartz; fi;
   
 r_binary_packages:
   - boot
