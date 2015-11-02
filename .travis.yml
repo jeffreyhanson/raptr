@@ -37,15 +37,10 @@ r_binary_packages:
   - Rcpp
   - plyr
   - hypervolume
-  - dismo
   - mvtnorm
   - sp
   - raster
   - ks
-
-r_packages:
-  - parallel
-  - doParallel
   
 r_github_packages:
   - rstudio/rmarkdown
