@@ -37,8 +37,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	/// extract parameters from Rcpp::S4 opts
 	double blmDBL=Rcpp::as<double>(opts.slot("BLM"));
 	boundary = blmDBL > boundary_threshold;
-  double failure_multiplier;
-  std::size_t maxrlevelINT;
+  double failure_multiplier=0.0;
+  std::size_t maxrlevelINT=0;
   if (!unreliable_formulation) {
     failure_multiplier=Rcpp::as<double>(opts.slot("FAILUREMULTIPLIER"));
   	maxrlevelINT=Rcpp::as<double>(opts.slot("MAXRLEVEL"));
@@ -59,7 +59,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	n_pu=puDF_area.size();
 	std::vector<std::string> puDF_id_STR(n_pu+1);
 	for (std::size_t i=0; i<n_pu; ++i)
-		puDF_id_STR[i]="pu_"+std::to_string(i);
+		puDF_id_STR[i]="pu_"+num2str<std::size_t>(i);
 
 	// pu.species.probabilities
 	if (verbose) Rcpp::Rcout << "\tpuvspecies data" << std::endl;
@@ -84,7 +84,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 		boundaryDF_idpair_CHR.reserve(n_edges);
 		for (std::size_t i=0; i<n_edges; ++i) {
 			boundaryDF_idpair_CHR.push_back(
-				"pu_" + std::to_string(boundaryDF_id1[i]-1) + "_" + std::to_string(boundaryDF_id2[i]-1)
+				"pu_" + num2str<std::size_t>(boundaryDF_id1[i]-1) + "_" + num2str<std::size_t>(boundaryDF_id2[i]-1)
 			);
 		}
 	}
@@ -336,7 +336,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 
 	std::vector<std::string> intSTR(maxINT);
 	for (std::size_t i=0; i<maxINT; i++)
-		intSTR[i] = std::to_string(i);
+		intSTR[i] = num2str<std::size_t>(i);
 
 	/// create unordered map with variable names
 	if (verbose) Rcout << "\tcreating undordered_map with variable names" << std::endl;

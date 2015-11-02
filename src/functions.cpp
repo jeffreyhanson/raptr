@@ -41,7 +41,7 @@ double unreliable_space_value(
 ) {
 	double value=0.0;
 	double minWDist;
-	for (std::size_t k=0; k<weightdistMTX.rows(); ++k) {
+	for (std::size_t k=0; k<static_cast<std::size_t>(weightdistMTX.rows()); ++k) {
 		// get index for planning unit closest to demand point
 		minWDist=weightdistMTX(k,pu_ids[0]);
 		for (std::size_t m=1; m<pu_ids.size(); ++m) {
@@ -63,7 +63,7 @@ double reliable_space_value(
 	double currProb;
 	std::vector<std::size_t> pu_ids(weightdistMTX.cols()-1);
 	std::iota(pu_ids.begin(), pu_ids.end(), 0);
-	for (std::size_t k=0; k<weightdistMTX.rows(); ++k) {
+	for (std::size_t k=0; k<static_cast<std::size_t>(weightdistMTX.rows()); ++k) {
 		// sort pus in order of distance
 		std::partial_sort(
 			pu_ids.begin(), pu_ids.begin()+maxrlevelINT, pu_ids.end(),
@@ -131,7 +131,7 @@ double reliable_space_value(
 ) {
 	double value=0.0;
 	double currProb;
-	for (std::size_t k=0; k<weightdistMTX.rows(); ++k) {
+	for (std::size_t k=0; k<static_cast<std::size_t>(weightdistMTX.rows()); ++k) {
 		// sort pus in order of distance
 		std::partial_sort(
 			pu_ids.begin(), pu_ids.begin()+maxrlevelINT, pu_ids.end(),
@@ -151,3 +151,10 @@ double reliable_space_value(
 	}
 	return(value);
 }
+
+// calculate euclidean distance
+double distance(double x0, double y0, double x1, double y1) {
+	return(sqrt(std::abs(Pow<2>(x0-x1)) + std::abs(Pow<2>(y0-y1))));
+}
+
+

@@ -30,15 +30,9 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
 
  // return variables
  double Score;
- double Cost;
- double Planning_Units;
- double Connectivity_Total;
- double Connectivity_In;
- double Connectivity_Out;
- double Connectivity_Edge;
- double Connectivity_In_Fraction;
+ double Cost=0.0;
+ std::size_t Planning_Units=0.0;
  Environment cacheENV = Environment::base_env();
- const double boundary_threshold=1.0e-05;
 
  //// Preliminary processing
  if (verbose) Rcout << "Preliminary processing" << std::endl;
@@ -46,8 +40,8 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
  /// extract parameters from Rcpp::S4 opts
  if (verbose) Rcout << "\tRaspOpts" << std::endl;
  double blmDBL=Rcpp::as<double>(opts.slot("BLM"));
- double failure_multiplier;
- std::size_t maxrlevelINT;
+ double failure_multiplier=0.0;
+ std::size_t maxrlevelINT=0;
  if (!unreliable_formulation) {
    failure_multiplier=Rcpp::as<double>(opts.slot("FAILUREMULTIPLIER"));
    maxrlevelINT=Rcpp::as<double>(opts.slot("MAXRLEVEL"));	 
@@ -170,7 +164,7 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
 	) + 2;
  std::vector<std::string> intSTR(maxINT);
  for (std::size_t i=0; i<maxINT; i++)
-	 intSTR[i] = std::to_string(i);
+	 intSTR[i] = num2str<std::size_t>(i);
 
  // load cached data
  if (verbose) Rcout << "\tcached data" << std::endl;

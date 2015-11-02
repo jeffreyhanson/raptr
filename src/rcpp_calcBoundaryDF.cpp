@@ -11,48 +11,14 @@ using namespace Rcpp;
       #include <iomanip>
       #include <iostream>
       #include <Rcpp.h>
-
-      template<int P>
-      inline double Pow(double x) {
-	return (Pow<P-1>(x) * x);
-      }
-
-      template<>
-      inline double Pow<1>(double x) {
-	return (x);
-      }
-
-      template<>
-      inline double Pow<0>(double x) {
-	return (1.0);
-      }
-
-      double distance(double x0, double y0, double x1, double y1) {
-	return(sqrt(std::abs(Pow<2>(x0-x1)) + std::abs(Pow<2>(y0-y1))));
-      }
-      
-      template<typename T>
-      inline std::string num2str(T number, int precision=10)
-      {
-	std::ostringstream ss;
-	ss << std::fixed << std::setprecision(precision) << number;
-	return(ss.str());
-      }
-      
-      template<typename T>
-      void remove_duplicates(std::vector<T> &v) {
-	v.shrink_to_fit();
-	sort(v.begin(), v.end());
-	v.erase(unique(v.begin(), v.end()), v.end());
-	v.shrink_to_fit();
-      }
+      #include "functions.h"
             
       class LINE
       {
 	public:
 	  // declare constructor
 	  LINE(){};
-	  LINE(int pid, int pos0, int pos1, double x0, double y0, double x1, double y1, int tol) 
+	  LINE(int pid, int pos0, int pos1, double x0, double y0, double x1, double y1, std::size_t tol) 
 	    : _pid(pid), _pos0(pos0), _pos1(pos1), _x0(x0), _y0(y0), _x1(x1), _y1(y1) {
 	      if (_x0 > _x1 || (_x0 == _x1 && _y0 > _y1)) {
 		   _key = num2str<double>(_x0,tol) + "," + num2str<double>(_y0,tol) + ";" +num2str<double>(_x1,tol) + "," + num2str<double>(_y1,tol);
@@ -122,7 +88,7 @@ using namespace Rcpp;
 
 
 		// calculation vars
-		int tol = round(log10(1.0 / tolerance));
+		std::size_t tol = round(log10(1.0 / tolerance));
 		std::vector<int> pos_VINT(PID.size());
 		std::iota(pos_VINT.begin(), pos_VINT.end(), 1);
 		std::vector<std::string> line_key_VSTR;
@@ -166,7 +132,7 @@ using namespace Rcpp;
 		pos_VINT.shrink_to_fit();
 		
 		// obtain unique line keys
-		remove_duplicates(line_key_VSTR);
+		remove_duplicates<std::string>(line_key_VSTR);
 
 		//// main processing
 		/// construct lines
@@ -218,7 +184,7 @@ using namespace Rcpp;
 		/// construct pairs
 		{
 		  // obtain unique pair keys
-		  remove_duplicates(pupair_key_VSTR);
+		  remove_duplicates<std::string>(pupair_key_VSTR);
 
 		  // allocate memory
 		  puid0_VINT.resize(pupair_key_VSTR.size());

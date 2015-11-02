@@ -29,16 +29,16 @@ Rcpp::List rcpp_append_model_object(Rcpp::List model, Rcpp::List existing_sols) 
 	// construct new constraints
 	std::size_t counter=*A_i.rbegin()+1;
 	IntegerVector currSolution;
-	for (std::size_t i=0; i<existing_sols.size(); ++i) {
+	for (std::size_t i=0; i<static_cast<std::size_t>(existing_sols.size()); ++i) {
 		// get current solution
 		currSolution=existing_sols[i];
-		for (std::size_t j=0; j<currSolution.size(); ++j)
+		for (std::size_t j=0; j<static_cast<std::size_t>(currSolution.size()); ++j)
 			if (currSolution[j]==1) {
 				A_i.push_back(counter);
 				A_j.push_back(j);
 				A_x.push_back(1.0);
 			}
-		for (std::size_t j=0; j<currSolution.size(); ++j)
+		for (std::size_t j=0; j<static_cast<std::size_t>(currSolution.size()); ++j)
 			if (currSolution[j]==0) {
 				A_i.push_back(counter);
 				A_j.push_back(j);

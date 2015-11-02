@@ -45,7 +45,7 @@ using namespace Rcpp;
 			count_vec[levels_vec[i]]+=all_counts_vec[i];
 		}
 		NumericVector ret_vec(ids_vec.size());
-		for (std::size_t i=0; i!=ids_vec.size(); ++i)
+		for (std::size_t i=0; i!=static_cast<std::size_t>(ids_vec.size()); ++i)
 			ret_vec[i] = sum_vec[i] / count_vec[i];
 
 		// epts
