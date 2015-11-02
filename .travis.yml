@@ -18,6 +18,7 @@ apt_packages:
 before_install: 
   - echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install r-cran-rgl -y; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install r-cran-rgdal -y; fi
   - if [ "$TRAVIS_OS_NAME" == "mac"]; then brew install Caskroom/cask/xquartz; fi;
   - if [ "$TRAVIS_OS_NAME" == "mac"]; then Rscript -e "install.packages(c('rgdal','rgeos'),repos='http://www.stats.ox.ac.uk/pub/RWin')"; fi;
   
@@ -40,7 +41,6 @@ r_binary_packages:
   - dismo
   - mvtnorm
   - sp
-  - rgdal
   - raster
 
 r_github_packages:
