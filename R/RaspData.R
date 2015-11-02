@@ -277,6 +277,7 @@ make.RaspData<-function(pus, species, spaces=NULL,
 	sdsLST=list()
 	if (scale) {
 		for (i in seq_along(spaces)) {
+			if (inherits(spaces[[i]], 'Raster')) {
 				# get means and sds
 				meansLST[[i]]=cellStats(spaces[[i]], 'mean')
 				sdsLST[[i]]=cellStats(spaces[[i]], 'sd')
@@ -288,6 +289,7 @@ make.RaspData<-function(pus, species, spaces=NULL,
 					tmpLST[[j]]=(spaces[[i]][[j]] - meansLST[[i]][[j]]) / sdsLST[[i]][[j]]
 				}
 				spaces[[i]]=stack(tmpLST)
+			}
 		}
 	}
 	# create species.points from species
