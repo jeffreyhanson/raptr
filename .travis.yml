@@ -36,8 +36,8 @@ r_binary_packages:
   - RColorBrewer
   - Rcpp
   - plyr
-  - doSNOW
-  - snow
+  - parallel
+  - doParallel
   - hypervolume
   - sm
   - dismo
