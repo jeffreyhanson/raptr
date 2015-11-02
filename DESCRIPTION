@@ -16,6 +16,7 @@ Description: Biodiversity is in crisis. The overarching aim of conservation
     (MILP) and solved using exact-algorithm methods. Prioritisations can be obtained
     using 'Gurobi' (obtained from <http://www.gurobi.com/>).
 Imports:
+    utils,
     boot,
     PBSmapping,
     scales,

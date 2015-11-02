@@ -82,21 +82,22 @@
 
 #' @importFrom rgeos gArea
 
- #' @importFrom grDevices colorRamp
- #' @importFrom grDevices rgb
+#' @importFrom grDevices colorRamp
+#' @importFrom grDevices rgb
 
- #' @importFrom graphics layout
- #' @importFrom graphics legend
- #' @importFrom graphics mtext
- #' @importFrom graphics par
- 
- #' @importFrom stats runif
- #' @importFrom stats sd
+#' @importFrom graphics layout
+#' @importFrom graphics legend
+#' @importFrom graphics mtext
+#' @importFrom graphics par
+
+#' @importFrom stats runif
+#' @importFrom stats sd
+
+#' @importFrom utils capture.output
  
 #' @import sp
 #' @import rgdal
 #' @import raster
-#' @import utils
 NULL
 
 #' @useDynLib raspr

@@ -4,11 +4,6 @@ raspr
 [![Travis Build Status](https://img.shields.io/travis/paleo13/raspr/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/paleo13/raspr)
 [![AppVeyor Build Status](https://img.shields.io/appveyor/ci/paleo13/raspr/master.svg?label=Windows)](https://ci.appveyor.com/project/paleo13/raspr)
 [![Coverage Status](https://img.shields.io/coveralls/paleo13/raspr/master.svg?label=coverage)](https://codecov.io/github/paleo13/raspr?branch=master)
-
-
-[![Travis Build Status](https://travis-ci.org/paleo13/raspr.svg?branch=master)](https://travis-ci.org/paleo13/raspr)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/paleo13/raspr?branch=master&svg=true)](https://ci.appveyor.com/project/paleo13/raspr)
-[![Coverage Status](https://codecov.io/github/paleo13/raspr/coverage.svg?branch=master)](https://codecov.io/github/paleo13/raspr?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/raspr)](http://cran.r-project.org/package=raspr)
 
 ## This package is not ready for release yet!
