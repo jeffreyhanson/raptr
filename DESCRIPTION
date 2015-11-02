@@ -2,7 +2,7 @@ Package: raspr
 Type: Package
 Title: Identify Representative and Adequate Prioritisations in R
 Version: 1.0.0
-Date: 2015-07-12
+Date: 2015-11-2
 Authors@R: c(person(c("Jeffrey", "O"), "Hanson", email='jeffrey.hanson@uqconnect.edu.au', role = c("aut", "cre")),
 	person(c("Jonathon", "R"), "Rhodes", role = c("aut")),
 	person(c("Richard", "A"), "Fuller", role = c("aut")))

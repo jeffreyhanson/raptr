@@ -14,7 +14,7 @@ NULL
 #' @param edge.factor \code{numeric} to scale boundary lengths for edges that do not have any neighbors, such as those that occur along the margins.
 #' @param ... not used.
 #' @return \code{data.frame} with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'amount' (\code{numeric}) columns.
-#' @seealso This function is based on the algorithm in QMARXAN \url{http://aproposinfosystems.com/products/qmarxan/} for calculating boundary length.
+#' @seealso This function is based on the algorithm in QMARXAN \url{https://github.com/tsw-apropos/qmarxan} for calculating boundary length.
 #' @export
 #' @examples
 #' # simulate planning units
