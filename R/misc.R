@@ -150,7 +150,7 @@ setClass("RaspOpts",
 #' Object stores parameters used to solve problems.
 #'
 #' @name SolverOpts-class
-#' @seealso \code{GurobiOpts}.
+#' @seealso \code{\link{GurobiOpts}}.
 #' @aliases SolverOpts
 #' @exportClass SolverOpts
 setClass("SolverOpts")

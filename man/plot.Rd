@@ -97,6 +97,6 @@ plot(cs_rs_amount, cs_rs_space, 0, 0)
 }
 }
 \seealso{
-\code{RaspSolved}.
+\code{\link{RaspSolved}}.
 }
 

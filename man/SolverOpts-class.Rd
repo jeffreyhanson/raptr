@@ -9,6 +9,6 @@
 Object stores parameters used to solve problems.
 }
 \seealso{
-\code{GurobiOpts}.
+\code{\link{GurobiOpts}}.
 }
 

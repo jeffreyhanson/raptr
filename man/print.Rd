@@ -58,6 +58,6 @@ print(sim_rs@results)
 print(sim_rs)
 }
 \seealso{
-\code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, \code{RaspUnsolved}, \code{RaspResults}, \code{RaspSolved}.
+\code{\link{GurobiOpts}}, \code{\link{RaspUnreliableOpts}}, \code{\link{RaspReliableOpts}}, \code{\link{RaspData}}, \code{\link{RaspUnsolved}}, \code{\link{RaspResults}}, \code{\link{RaspSolved}}.
 }
 

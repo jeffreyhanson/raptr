@@ -115,7 +115,7 @@ sim.space<-function(x, ...) UseMethod('sim.space')
 #' @param ... not used.
 #' @return \code{RaspSolved} object
 #' @note This function is used to solve a \code{RaspUnsolved} object that has all of its inputs generated. The rasp function (without lower case 'r') provides a more general interface for generating inputs and outputs.
-#' @seealso \code{RaspUnsolved}, \code{RaspSolved}.
+#' @seealso \code{\link{RaspUnsolved}}, \code{\link{RaspSolved}}.
 #' @examples
 #' # load RaspUnsolved object
 #' data(sim_ru)
@@ -152,7 +152,7 @@ setGeneric('solve', function(a, b, ...) standardGeneric('solve'))
 #' @param grayscale \code{logical} should the basemap be gray-scaled?
 #' @param force.reset \code{logical} if basemap data has been cached, should it be re-downloaded?
 #' @name plot
-#' @seealso \code{RaspSolved}.
+#' @seealso \code{\link{RaspSolved}}.
 #' @examples
 #' # load data
 #' data(sim_rs, cs_rs_amount, cs_rs_space)
@@ -190,7 +190,7 @@ NULL
 #' @param header \code{logical} should object header be included?
 #' @param ... not used.
 #' @name print
-#' @seealso \code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, \code{RaspUnsolved}, \code{RaspResults}, \code{RaspSolved}.
+#' @seealso \code{\link{GurobiOpts}}, \code{\link{RaspUnreliableOpts}}, \code{\link{RaspReliableOpts}}, \code{\link{RaspData}}, \code{\link{RaspUnsolved}}, \code{\link{RaspResults}}, \code{\link{RaspSolved}}.
 #' @examples
 #' # load data
 #' data(sim_ru, sim_rs)
@@ -217,7 +217,7 @@ NULL
 #'
 #' @param object \code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, \code{RaspUnsolved}, \code{RaspResults}, or \code{RaspSolved} object.
 #' @name show
-#' @seealso \code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, \code{RaspUnsolved}, \code{RaspResults}, \code{RaspSolved}.
+#' @seealso \code{\link{GurobiOpts}}, \code{\link{RaspUnreliableOpts}}, \code{\link{RaspReliableOpts}}, \code{\link{RaspData}}, \code{\link{RaspUnsolved}}, \code{\link{RaspResults}}, \code{\link{RaspSolved}}.
 #' @examples
 #' # load data
 #' data(sim_ru, sim_rs)
@@ -263,7 +263,7 @@ NULL
 #' @param ... not used.
 #' @name summary
 #' @return \code{data.frame}
-#' @seealso \code{RaspResults}, \code{RaspSolved}.
+#' @seealso \code{\link{RaspResults}}, \code{\link{RaspSolved}}.
 #' @examples
 #' # load data
 #' data(sim_rs)
@@ -295,8 +295,8 @@ NULL
 #' @param ... parameters passed to \code{update.RaspReliableOpts}, \code{update.RaspUnreliableOpts}, or \code{update.RaspData}.
 #' @param solve \code{logical} should the problem be solved? This argument is only valid for \code{RaspUnsolved} and \code{RaspSolved} objects. Defaults to \code{TRUE}.
 #' @name update
-#' @return \code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object depending on \code{x}.
-#' @seealso \code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, \code{RaspUnsolved}, \code{RaspSolved}.
+#' @return \code{\link{GurobiOpts-class}}, \code{\link{RaspUnreliableOpts-class}}, \code{\link{RaspReliableOpts-class}}, \code{\link{RaspData-class}}, \code{\link{RaspUnsolved-class}}, or \code{\link{RaspSolved-class}} object depending on \code{x}.
+#' @seealso \code{\link{GurobiOpts-class}}, \code{\link{RaspUnreliableOpts-class}}, \code{\link{RaspReliableOpts-class}}, \code{\link{RaspData-class}}, \code{\link{RaspUnsolved-class}}, \code{\link{RaspSolved-class}}.
 #' @export
 #' @examples
 #' # load data
@@ -560,7 +560,7 @@ selections<-function(x, y) {UseMethod('selections')}
 #' @param n_preallocate \code{integer} How much memory should be preallocated for processing? Ideally, this number should equal the number of vertices in the \code{SpatialPolygons} object. If data processing is taking too long consider increasing this value.
 #' @return \code{PolySet} object.
 #' @note Be aware that this function is designed to be as fast as possible, but as a result it depends on C++ code and if used inappropriately this function will crash R.
-#' @seealso For a slower, more stable equivalent see \code{\link[maptools]{SpatialPolygons2PolySet}}.
+#' @seealso For a slower, more stable equivalent see \code{maptools::SpatialPolygons2PolySet}.
 #' @export
 #' @examples
 #' # generate SpatialPolygons object

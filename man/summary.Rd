@@ -21,6 +21,6 @@ data(sim_rs)
 summary(sim_rs)
 }
 \seealso{
-\code{RaspResults}, \code{RaspSolved}.
+\code{\link{RaspResults}}, \code{\link{RaspSolved}}.
 }
 

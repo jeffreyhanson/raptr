@@ -34,6 +34,6 @@ sim_pus <- sim.pus(225L)
 x <- SpatialPolygons2PolySet(sim_pus)
 }
 \seealso{
-For a slower, more stable equivalent see \code{\link[maptools]{SpatialPolygons2PolySet}}.
+For a slower, more stable equivalent see \code{maptools::SpatialPolygons2PolySet}.
 }
 

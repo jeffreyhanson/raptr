@@ -6,6 +6,7 @@ NULL
 #' This class is used to store parameters.
 #'
 #' @slot NumberSolutions \code{integer} number of solutions.
+#' @seealso \code{\link{ManualOpts}}.
 #' @export
 setClass("ManualOpts",
 	representation(

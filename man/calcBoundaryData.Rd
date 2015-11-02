@@ -30,8 +30,8 @@ calcBoundaryData(x, tol, length.factor, edge.factor)
 }
 \description{
 This function calculates boundary length data for \code{PolySet}, \code{SpatialPolygons}, and \code{SpatialPolygonsDataFrame} objects.
-Be aware that this function is designed to be as fast as possible, as a result it depends on C++ code and if this
-function is used improperly, then it will crash R. Furthermore, multipart polygons with touching edges will likely result in inaccuracies.
+Be aware that this function is designed to be as fast as possible, and as a consequence, if this
+function is used improperly then it may crash R. Furthermore, multipart polygons with touching edges will likely result in inaccuracies.
 If argument set to \code{SpatialPolygons} or \code{SpatialPolygonsDataFrame}, this will be converted to PolySet before processing.
 }
 \examples{

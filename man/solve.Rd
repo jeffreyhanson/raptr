@@ -68,6 +68,6 @@ sim_rs3 <- solve(sim_ru, c(rep(TRUE,10), rep(FALSE, 215)))
 sim_rs4 <- solve(sim_ru, matrix(sample(c(0,1), size=1125, replace=TRUE), ncol=225, nrow=5))
 }
 \seealso{
-\code{RaspUnsolved}, \code{RaspSolved}.
+\code{\link{RaspUnsolved}}, \code{\link{RaspSolved}}.
 }
 

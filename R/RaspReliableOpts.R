@@ -8,6 +8,7 @@ NULL
 #' @slot BLM \code{numeric} boundary length modifier. Defaults to 0.
 #' @slot FAILUREMULTIPLIER \code{numeric} multiplier for failure planning unit. Defaults to 1.1.
 #' @slot MAXRLEVEL \code{numeric} maximum R failure level for approximation. Defaults to 5L.
+#' @seealso \code{\link{RaspReliableOpts}}
 #' @export
 setClass("RaspReliableOpts",
 	representation(

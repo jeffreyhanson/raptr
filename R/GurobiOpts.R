@@ -10,6 +10,7 @@ NULL
 #' @slot Presolve \code{integer} code for level of computation in presolve. Defaults to 2.
 #' @slot TimeLimit \code{integer} number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.
 #' @slot NumberSolutions \code{integer} number of solutions to generate. Defaults to 1L.
+#' @seealso \code{\link{GurobiOpts}}.
 #' @export
 setClass("GurobiOpts",
 	representation(

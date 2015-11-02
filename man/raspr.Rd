@@ -28,6 +28,6 @@ The main classes used in this package are used to store input data and prioritis
   \item \code{\link{RaspSolved-class}}: contains all the input data, parameters and output data. This class contains all the objects in a \code{\link{RaspUnsolved}} object and also a \code{\link{RaspResults-class}} object.
 }
 
-Type \code{vignette('raspr')} for a tutorial on how to use this package to generate prioritisations.
+Type \code{vignette('raspr')} for a tutorial on how to use this package.
 }
 

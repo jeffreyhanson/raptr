@@ -20,4 +20,7 @@ This class is used to store Gurobi input parameters.
 
 \item{\code{NumberSolutions}}{\code{integer} number of solutions to generate. Defaults to 1L.}
 }}
+\seealso{
+\code{\link{GurobiOpts}}.
+}
 

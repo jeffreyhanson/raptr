@@ -66,7 +66,7 @@
 \item{solve}{\code{logical} should the problem be solved? This argument is only valid for \code{RaspUnsolved} and \code{RaspSolved} objects. Defaults to \code{TRUE}.}
 }
 \value{
-\code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object depending on \code{x}.
+\code{\link{GurobiOpts-class}}, \code{\link{RaspUnreliableOpts-class}}, \code{\link{RaspReliableOpts-class}}, \code{\link{RaspData-class}}, \code{\link{RaspUnsolved-class}}, or \code{\link{RaspSolved-class}} object depending on \code{x}.
 }
 \description{
 This function updates parameters or data stored in an existing \code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, \code{RaspUnsolved}, or \code{RaspSolved} object.
@@ -116,6 +116,6 @@ print(x@opts@BLM); print(amount.target(x))
 print(y@opts@BLM); print(space.target(y))
 }
 \seealso{
-\code{GurobiOpts}, \code{RaspUnreliableOpts}, \code{RaspReliableOpts}, \code{RaspData}, \code{RaspUnsolved}, \code{RaspSolved}.
+\code{\link{GurobiOpts-class}}, \code{\link{RaspUnreliableOpts-class}}, \code{\link{RaspReliableOpts-class}}, \code{\link{RaspData-class}}, \code{\link{RaspUnsolved-class}}, \code{\link{RaspSolved-class}}.
 }
 

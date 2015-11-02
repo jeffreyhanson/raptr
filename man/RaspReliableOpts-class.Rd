@@ -16,4 +16,7 @@ This class is used to store input parameters for the reliable formulation of RAS
 
 \item{\code{MAXRLEVEL}}{\code{numeric} maximum R failure level for approximation. Defaults to 5L.}
 }}
+\seealso{
+\code{\link{RaspReliableOpts}}
+}
 
