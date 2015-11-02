@@ -37,12 +37,16 @@ r_binary_packages:
   - Rcpp
   - plyr
   - hypervolume
-  - sm
   - dismo
   - mvtnorm
   - sp
   - raster
+  - ks
 
+r_packages:
+  - parallel
+  - doParallel
+  
 r_github_packages:
   - rstudio/rmarkdown
   - hadley/testthat
@@ -50,4 +54,4 @@ r_github_packages:
   
 after_success:
   - Rscript -e 'covr::codecov()'
- 
+ -
