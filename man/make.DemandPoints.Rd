@@ -31,7 +31,7 @@ The values of the species records in the rasters is extracted. A kernel is fit t
 Volumes are then fit to the points in the attribute space(s). Points are randomly generated inside the volume. Demand points are generated
 as random points inside the volume. A kernel is fit to the species records and used to predict the density at each of the demand points.
 By using 'ks' as an argument in \code{kernel.method}, the volume is fit as a minimum convex polygon using \code{\link[adehabitatHR]{mcp}} and
-\code{\link[kde]{kde}} is used to fit the kernel. Note this can only be used when the data is low-dimensional (d<3). By using
+\code{\link[ks]{kde}} is used to fit the kernel. Note this can only be used when the data is low-dimensional (d<3). By using
 'hypervolume' as an argument, the \code{\link[hypervolume]{hypervolume}} function is used. This can be used for hyer-dimensional data.
 }
 \examples{
