@@ -38,3 +38,19 @@ test_that('update.GurobiOpts', {
 	expect_equal(y@TimeLimit, 5L)
 	expect_equal(y@NumberSolutions, 5L)
 })
+
+
+test_that('ManualOpts', {
+	# generate object
+	x=ManualOpts()
+	# tests
+	expect_equal(x@NumberSolutions=1)
+})
+
+test_that('update.ManualOpts', {
+	# generate object
+	x=ManualOpts()
+	# tests
+	expect_error(update(x, NumberSolutions=5L))
+})
+
