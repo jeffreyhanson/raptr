@@ -318,7 +318,7 @@ findGdalInstallationPaths<-function (search_path = NULL, rescan = FALSE, ignore.
 	correctPath <- function(x) {
 		if (!is.null(x)) {
 			if (.Platform$OS.type == "windows") {
-				x <- shortPathName(x)
+				x <- utils::shortPathName(x)
 			} else {
 				x <- path.expand(x)
 			}

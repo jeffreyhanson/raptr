@@ -93,12 +93,10 @@
  #' @importFrom stats runif
  #' @importFrom stats sd
  
-#' @importFrom utils capture.output
-#' @importFrom utils shortPathName
-
 #' @import sp
 #' @import rgdal
 #' @import raster
+#' @import utils
 NULL
 
 #' @useDynLib raspr
