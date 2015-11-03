@@ -396,8 +396,6 @@ pu.subset<-function(x, pu) UseMethod('pu.subset')
 #' sim_ru2 <- dp.subset(sim_ru, 1, 1, 1:10)
 dp.subset<-function(x, space, species, points) UseMethod('dp.subset')
 
-
-
 #' Solution score
 #'
 #' Extract solution score from \code{RapResults} or \code{RapSolved} object.
