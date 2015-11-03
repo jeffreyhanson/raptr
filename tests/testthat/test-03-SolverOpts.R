@@ -44,7 +44,7 @@ test_that('ManualOpts', {
 	# generate object
 	x=ManualOpts()
 	# tests
-	expect_equal(x@NumberSolutions=1)
+	expect_equal(x@NumberSolutions, 1L)
 })
 
 test_that('update.ManualOpts', {
