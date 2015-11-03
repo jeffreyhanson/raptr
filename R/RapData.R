@@ -379,8 +379,12 @@ make.RapData<-function(pus, species, spaces=NULL,
 	if (include.geographic.space) {
 		pu_coords=gCentroid(pus, byid=TRUE)@coords
 		if (scale) {
+			pu_meansDBL=c()
+			pu_sdsDBL=c()
 			for (i in seq_len(ncol(pu_coords))) {
-				pu_coords[,i] = (pu_coords[,i] - mean(pu_coords[,i])) / sd(pu_coords[,i])
+				pu_meansDBL=c(pu_meansDBL,mean(pu_coords[,i]))
+				pu_sdsDBL=c(pu_sdsDBL,sd(pu_coords[,i]))
+				pu_coords[,i] = (pu_coords[,i] - pu_meansDBL[i]) / pu_sdsDBL[i]
 			}
 		}
 		pu.points=append(
@@ -400,9 +404,17 @@ make.RapData<-function(pus, species, spaces=NULL,
 	for (i in seq_along(spaces)) {
 		dpLST=list()
 		for (j in seq_along(species.points)) {
+			# extract space points
+			if (is.null(spaces[[i]])) {
+				space.points=species.points[[j]]@coords
+				for (k in seq_len(ncol(space.points)))
+					space.points[,k]=(species.points[[j]]@coords[,k] - pu_meansDBL[k]) / pu_sdsDBL[k]
+			} else {
+				space.points=extract(spaces[[i]], species.points[[j]])
+			}
+			# generate demand points
 			dpLST[[j]]=make.DemandPoints(
-				species.points[[j]],
-				space.rasters=spaces[[i]],
+				points=space.points,
 				kernel.method=kernel.method,
 				n=n.demand.points,
 				quantile=quantile

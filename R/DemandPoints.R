@@ -72,43 +72,36 @@ DemandPoints<-function(points, weights) {
 #' @examples
 #' data(cs_spp, cs_space)
 #' # generate species points
-#'  species.points <- randomPoints(cs_spp, n=100, prob=TRUE)
+#' species.points <- randomPoints(cs_spp, n=100, prob=TRUE)
+#' env.points <- extract(cs_space[[1]], cs_spp)
 #' # generate demand points for a 1d space using ks
 #' dps1 <- make.DemandPoints(
-#'	species.points=species.points,
-#'	space.rasters=cs_space[[1]],
+#'	points=env.points[,1,drop=FALSE]
 #'	kernel.method='ks'
 #' )
 #' # generate demand points for a 2d space using hypervolume
 #' dps12 <- make.DemandPoints(
-#'	species.points=species.points,
-#'	space.rasters=cs_space,
+#'	points=env.points,
 #'	kernel.method='hypervolume'
 #' )
-make.DemandPoints<-function(species.points, space.rasters=NULL, n=100L, quantile=0.2, kernel.method=c('ks', 'hypervolume')[1], ...) {
+make.DemandPoints<-function(points, n=100L, quantile=0.2, kernel.method=c('ks', 'hypervolume')[1], ...) {
 	# check inputs for validityhod
 	match.arg(kernel.method, c('ks', 'hypervolume'))
-	if (!is.null(space.rasters))
-		if (nlayers(space.rasters)>2 &  kernel.method=='ks')
-			stop(paste0('argument to kernel.method must be "hypervolume" when nlayers(space.rasters)>2'))
-	# extract values
-	if (!is.null(space.rasters)) {
-		space.points<-extract(space.rasters,species.points)
-		if (!inherits(space.points, 'matrix'))
-			space.points<-matrix(space.points, ncol=1)
-	} else {
-		space.points<-species.points@coords
-	}
-	# generate demand points for species.points
+	# convert to matrix
+	if (!inherits(points, 'matrix') & inherits(points, 'numeric'))
+			points<-matrix(points, ncol=1)
+	if (ncol(points)>2 & kernel.method!='hypervolume')
+			stop(paste0('argument to kernel.method must be "hypervolume" when ncol(points)>2'))
+	# generate demand points
 	if (kernel.method=='ks') {
-		if (ncol(space.points)==1) {
-			dp<-demand.points.density1d(space.points, n=n, quantile=quantile, ...)
+		if (ncol(points)==1) {
+			dp<-demand.points.density1d(points, n=n, quantile=quantile, ...)
 		}
-		if (ncol(space.points)==2) {
-			dp<-demand.points.density2d(space.points, n=n, quantile=quantile, ...)
+		if (ncol(points)==2) {
+			dp<-demand.points.density2d(points, n=n, quantile=quantile, ...)
 		}
 	} else {
-		dp<-demand.points.hypervolume(space.points, n=n, quantile=quantile, ...)
+		dp<-demand.points.hypervolume(points, n=n, quantile=quantile, ...)
 	}
 	# return demand points
 	return(

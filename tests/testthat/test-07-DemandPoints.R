@@ -18,8 +18,7 @@ test_that('demand.points (ks, geographic space)', {
 	pts<-SpatialPoints(coords=randomPoints(sim_spp, n=10, prob=TRUE))
 	# create demand points
 	dp<-make.DemandPoints(
-		species.points=pts,
-		space.rasters=NULL,
+		points=pts@coords,
 		n=100L,
 		kernel.method='ks'
 	)
@@ -37,10 +36,10 @@ test_that('demand.points (ks, attribute space)', {
 	data(cs_spp, cs_space)
 	# generate points
 	pts<-SpatialPoints(coords=randomPoints(cs_spp[[1]], n=10, prob=TRUE))
+	space.pts<-extract(cs_space[[1]], pts)
 	# create demand points
 	dp<-make.DemandPoints(
-		species.points=pts,
-		space.rasters=cs_space[[1]],
+		points=space.pts,
 		n=100L,
 		kernel.method='ks'
 	)
