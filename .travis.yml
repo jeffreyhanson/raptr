@@ -41,11 +41,13 @@ r_binary_packages:
   - sp
   - raster
   - ks
+
+r_packages:
+  - covr
   
 r_github_packages:
   - rstudio/rmarkdown
   - hadley/testthat
-  - jimhester/covr
   
 after_success:
   - Rscript -e 'covr::codecov()'
