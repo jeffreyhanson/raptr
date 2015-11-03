@@ -43,4 +43,4 @@ vignette('rapr', package='rapr')
 
 **If this R package helped you, please cite it.**
 
-Hanson J.O., Rhodes J. R., Fuller R. A. (2015). rapr: Representative and Adequate Prioritisations in R. Version 1.0.0.
+Hanson J.O., Rhodes J. R., Fuller R. A. (2015). rapr: Representative and Adequate Prioritisations in R. Version 1.0.0. doi: 10.5281/zenodo.33095.
