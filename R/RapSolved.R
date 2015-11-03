@@ -648,6 +648,7 @@ update.RapUnsolOrSol<-function(object, ..., solve=TRUE) {
 			)
 		)
 	)
+	# solve it
 	if (solve) {
 		# get any new specified GurobiOpts
 		goLST<-parseArgs2(c('Threads', 'MIPGap','NumberSolutions', 'TimeLimit', 'Presolve'), ...)
@@ -662,7 +663,7 @@ update.RapUnsolOrSol<-function(object, ..., solve=TRUE) {
 				)
 			}
 		}
-				# generate new RapSolved object
+		# generate new RapSolved object
 		object<-do.call(
 			rapr::solve,
 			append(

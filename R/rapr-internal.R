@@ -12,7 +12,7 @@ affineTrans=function(OldValue, OldMax, OldMin, NewMax, NewMin) {
 
 # niche simulation functions
 normal_niche=function(x, y) {
-	return(dmvnorm(x=matrix(c(x,y), ncol=2), mean=c(0,0), sigma=matrix(c(12.5,0,0,12.5), ncol=2))*70)
+	return(dmvnorm(x=matrix(c(x,y), ncol=2), mean=c(0,0), sigma=matrix(c(8.5,0,0,8.5), ncol=2))*40)
 }
 
 uniform_niche=function(x, y) {
@@ -24,8 +24,8 @@ bimodal_niche=function(x, y) {
 		apply(
 			matrix(
 				c(
-					dmvnorm(x=matrix(c(x,y), ncol=2), mean=c(-3.75,-3.75), sigma=matrix(c(10,0,0,10), ncol=2))*60,
-					dmvnorm(x=matrix(c(x,y), ncol=2), mean=c(3.75,3.75), sigma=matrix(c(8,0,0,8), ncol=2))*30
+					dmvnorm(x=matrix(c(x,y), ncol=2), mean=c(-2,-2), sigma=matrix(c(5,0,0,5), ncol=2))*30,
+					dmvnorm(x=matrix(c(x,y), ncol=2), mean=c(3,3), sigma=matrix(c(3,0,0,3), ncol=2))*12
 				),
 				ncol=2
 			),

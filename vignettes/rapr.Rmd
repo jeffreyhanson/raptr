@@ -22,7 +22,7 @@ To investigate the behaviour of the problem, we will generate prioritisations fo
 
 ```{r, eval=FALSE}
 # make planning units
-sim_pus <- sim.pus(225L)
+sim_pus <- sim.pus(100L)
 
 # simulate species distributions
 sim_spp <- lapply(
@@ -91,10 +91,6 @@ Now, we will construct a `RapUnsolved` object to store our input data and parame
 # this stores parameters for the problem (eg. BLM)
 sim_ro <- RapUnreliableOpts()
 
-## create GurobiOpts object
-# this stores parameters for solving the problem (eg. MIPGap)
-sim_go <- GurobiOpts()
-
 ## create RapData object
 # create data.frame with species info
 species <- data.frame(
@@ -138,7 +134,7 @@ sim_rd <- RapData(
 
 ## create RapUnsolved object
 # this store all the input data and parameters needed to generate prioritisations
-sim_ru <- RapUnsolved(sim_ro, sim_go, sim_rd)
+sim_ru <- RapUnsolved(sim_ro, sim_rd)
 ```
 
 ### Single-species prioritisations

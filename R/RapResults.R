@@ -83,12 +83,13 @@ setClass("RapResults",
 #' @param amount.held \code{matrix} with the amount held for each species in each solution.
 #' @param space.held \code{matrix} with the poportion of attribute space sampled for each species in each solution.
 #' @param logging.file \code{character} Gurobi log files.
+#' @param .cache \code{environmental} used to cache calculations.
 #' @export
 #' @note slot \code{best} is automatically determined based on data in \code{summary}.
 #' @return \code{RapResults} object
 #' @seealso \code{\link{RapResults-class}} \code{\link{read.RapResults}}
-RapResults=function(summary, selections, amount.held, space.held, logging.file) {
-	return(new("RapResults", summary=summary, selections=selections, amount.held=amount.held, space.held=space.held, logging.file=logging.file, best=which.min(summary$Score)))
+RapResults=function(summary, selections, amount.held, space.held, logging.file, .cache=new.env()) {
+	return(new("RapResults", summary=summary, selections=selections, amount.held=amount.held, space.held=space.held, logging.file=logging.file, best=which.min(summary$Score), .cache=new.env()))
 }
 
 

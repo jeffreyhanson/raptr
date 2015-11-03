@@ -407,8 +407,10 @@ make.RapData<-function(pus, species, spaces=NULL,
 			# extract space points
 			if (is.null(spaces[[i]])) {
 				space.points=species.points[[j]]@coords
-				for (k in seq_len(ncol(space.points)))
-					space.points[,k]=(species.points[[j]]@coords[,k] - pu_meansDBL[k]) / pu_sdsDBL[k]
+				if (scale) {
+					for (k in seq_len(ncol(space.points)))
+						space.points[,k]=(species.points[[j]]@coords[,k] - pu_meansDBL[k]) / pu_sdsDBL[k]
+				}
 			} else {
 				space.points=extract(spaces[[i]], species.points[[j]])
 			}
