@@ -99,5 +99,5 @@
 #' @import raster
 NULL
 
-#' @useDynLib raspr
+#' @useDynLib rapr
 NULL

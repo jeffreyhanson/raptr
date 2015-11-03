@@ -1,4 +1,4 @@
-#' @include RcppExports.R raspr-internal.R generics.R sim.space.R misc.R
+#' @include RcppExports.R rapr-internal.R generics.R sim.space.R misc.R
 NULL
 
 #' @rdname sim.species

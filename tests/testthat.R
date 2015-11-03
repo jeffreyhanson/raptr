@@ -1,3 +1,3 @@
 library(testthat)
-library(raspr)
-test_check("raspr")
+library(rapr)
+test_check("rapr")

@@ -1,4 +1,4 @@
-#' @include RcppExports.R raspr-internal.R
+#' @include RcppExports.R rapr-internal.R
 NULL
 
 #' Test if Gurobi is installed on computer
@@ -129,14 +129,14 @@ blank.raster<-function(x, res) {
 #' @exportClass PolySet
 setClass("PolySet")
 
-#' RaspOpts class
+#' RapOpts class
 #'
-#' Object is either \code{RaspReliableOpts} or \code{RaspUnreliableOpts}.
+#' Object is either \code{RapReliableOpts} or \code{RapUnreliableOpts}.
 #'
-#' @name RaspOpts-class
-#' @aliases RaspOpts
-#' @exportClass RaspOpts
-setClass("RaspOpts",
+#' @name RapOpts-class
+#' @aliases RapOpts
+#' @exportClass RapOpts
+setClass("RapOpts",
 	representation(
 		BLM="numeric"
 	),

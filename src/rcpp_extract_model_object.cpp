@@ -38,7 +38,7 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
  if (verbose) Rcout << "Preliminary processing" << std::endl;
  Rcpp::checkUserInterrupt();
  /// extract parameters from Rcpp::S4 opts
- if (verbose) Rcout << "\tRaspOpts" << std::endl;
+ if (verbose) Rcout << "\tRapOpts" << std::endl;
  double blmDBL=Rcpp::as<double>(opts.slot("BLM"));
  double failure_multiplier=0.0;
  std::size_t maxrlevelINT=0;
@@ -344,7 +344,7 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
 
  //// Exports
  if (verbose) Rcout << "Exporting data to R" << std::endl;
- Rcpp::S4 ret("RaspResults");
+ Rcpp::S4 ret("RapResults");
  ret.slot("summary") = Rcpp::DataFrame::create(
 	 Rcpp::Named("Run_Number") = Rcpp::wrap(1),
 	 Rcpp::Named("Score")=Rcpp::wrap(Score),

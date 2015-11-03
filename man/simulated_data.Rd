@@ -26,8 +26,8 @@ The species were simulated to represent different simplified versions of species
 \details{
 The objects contained in this dataset are:
 \itemize{
-	\item sim_ru: A \code{RaspUnsolved} object with all the simulated data.
-	\item sim_rs: A \code{RaspSolved} object with 5 near-optimal solutions.
+	\item sim_ru: A \code{RapUnsolved} object with all the simulated data.
+	\item sim_rs: A \code{RapSolved} object with 5 near-optimal solutions.
 }
 }
 \examples{

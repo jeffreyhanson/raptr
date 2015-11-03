@@ -1,4 +1,4 @@
-#' @include RcppExports.R raspr-internal.R generics.R misc.R SimplePoints.R DemandPoints.R
+#' @include RcppExports.R rapr-internal.R generics.R misc.R SimplePoints.R DemandPoints.R
 NULL
 
 #' AttributeSpace: An S4 class to represent an attribute space.

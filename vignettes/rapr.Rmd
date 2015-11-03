@@ -1,0 +1,350 @@
+---
+title: "rapr: Identify Representative and Adequate Prioritisations in R"
+author: "Jeffrey O. Hanson"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{rapr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+## Overview
+A central aim in conservation is to maximise the long-term persistence of biodiversity. To achieve this, reserve networks must be sited in places that safeguard biodiversity patterns and processes. Here, we present a novel formulation of the reserve-selection problem to identify prioritisations that fulfill this objective. The representative and adequate sample problem (RASP) is a general multi-objective optimisation problem that can identify prioritisations that are adequate--in terms of how much of the feature is secured--and also representative--in terms of the spatial variation at locations where the feature is protected. Here, we present an R package to develop prioritisations using this formulation of the reserve-selection problem. We examine the behaviour of this formulation using several simulated species and a case-study species.
+
+## Problem formulation
+
+## Classes
+
+## Simulated examples
+### Data
+To investigate the behaviour of the problem, we will generate prioritisations for three simulated species. To reduce computational effort, we will use the unreliable formulation of the problem. The first species (termed 'uniform') will represent a hyper-generalist. This species will inhabit all areas with equal probability. The second species (termed 'normal') will represent a species with a single range core. The third species (termed 'bimodal') will represent a species with two distinct ecotypes, each with their own range core. To reduce computational time for this example, we will use a $15 \times 15$ grid of square planning units.
+
+```{r, eval=FALSE}
+# make planning units
+sim_pus <- sim.pus(225L)
+
+# simulate species distributions
+sim_spp <- lapply(
+	c('uniform', 'normal', 'bimodal'),
+	sim.species,
+  n=1,
+  x=sim_pus,
+  res=1
+)
+```
+
+Let's see what these species' distributions look like. Each square represents a planning unit, and the color of each denotes square denotes the probability of the species in the planning unit.
+
+```{r, eval=FALSE}
+# change the plot parameters, so we can plot the distributions side by side
+par(mfrow=c(1,3))
+
+# uniform species
+plot(sim_spp[[1]], main='uniform species')
+lines(sim_pus)
+
+# normal species
+plot(sim_spp[[2]], main='normal species')
+lines(sim_pus)
+
+# bimodal species
+plot(sim_spp[[3]], main='bimodal species')
+lines(sim_pus)
+
+# reset plot parameters
+par(mfrow=c(1,1))
+```
+
+Next, we will generate a set of demand points. To understand the effects of probabilities and weights on the demand points, we will generate the demand points in geographic space. These demand points will be the centroids of the planning units. Additionally, we will use the same set of demand points for each species and only vary the weights of the demand points between species.
+
+```{r, eval=FALSE}
+# generate coordinates for pus/demand points
+pu_coords <- rgeos::gCentroid(sim_pus, byid=TRUE)
+
+# calculate weights
+sim_dps <- lapply(
+	sim_spp,
+	function(x) {
+		return(extract(x, pu_coords))
+	}
+)
+
+# create demand point objects
+sim_dps <- lapply(
+	sim_dps,
+	function(x) {
+		return(
+			DemandPoints(
+				SimplePoints(pu_coords@coords),
+				c(x)
+			)
+		)
+	}
+)
+```
+
+Now, we will construct a `RapUnsolved` object to store our input data and parameters. This contains all the information to generate prioritisations.
+
+```{r, eval=FALSE}
+## create RapUnreliableOpts object
+# this stores parameters for the problem (eg. BLM)
+sim_ro <- RapUnreliableOpts()
+
+## create GurobiOpts object
+# this stores parameters for solving the problem (eg. MIPGap)
+sim_go <- GurobiOpts()
+
+## create RapData object
+# create data.frame with species info
+species <- data.frame(
+  name=c('uniform', 'normal', 'bimodal')
+)
+
+## create data.frame with species and space targets
+# amount targets at 20% (denoted with target=0)
+# space targets at 20% (denoted with target=1)
+targets <- expand.grid(
+  species=1:3,
+  target=0:1,
+  proportion=0.2
+)
+
+# calculate probability of each species in each pu
+pu_probabilities <- calcSpeciesAverageInPus(sim_pus, stack(sim_spp))
+
+## create AttributeSpace object
+# this stores the coordinates of the planning units in an attribute space
+# and the coordinates and weights of demand points in the space
+attr_space <- AttributeSpace(
+  SimplePoints(pu_coords@coords),
+  sim_dps
+)
+
+# generate boundary data information
+boundary <- calcBoundaryData(sim_pus)
+
+## create RapData object
+# this store all the input data for the prioritisation
+sim_rd <- RapData(
+  sim_pus@data,
+  species,
+  targets,
+  pu_probabilities,
+  list(attr_space),
+  boundary,
+  SpatialPolygons2PolySet(sim_pus)
+)
+
+## create RapUnsolved object
+# this store all the input data and parameters needed to generate prioritisations
+sim_ru <- RapUnsolved(sim_ro, sim_go, sim_rd)
+```
+
+### Single-species prioritisations
+Let's keep things simple to start off with. First we will generate a prioritisation for each species using only amount-based targets. Then, we will generate prioritisations for each species using a combination of amount-based and space-based targets. We will then compare the prioritisations to see how they differ to see how including space-based targets can change prioritisaitons under the simplest of circumstances.
+
+Let's generate a prioritisation for the uniform species using amount-based targets. To do this we will subset out the data relating to the uniform species and the planning units from the `sim_ru` object. Then, we will `update` the targets in the new object. Finally we will need to `solve` the object to generate a prioritisation that fulfills the targets for minimal cost.
+
+```{r, eval=FALSE}
+# create new object with just the uniform species
+sim_ru_s1 <- spp.subset(sim_ru, 'uniform')
+
+# update amount targets to 20% and space targets to 0%
+sim_ru_s1 <- update(sim_ru_s1, amount.target=0.2, space.target=0, solve=FALSE)
+
+# solve problem to identify prioritisation
+sim_rs_s1_amount <- solve(sim_ru_s1)
+```
+
+Now that we have generated a prioritisation, we will see what it looks like. We can use the `plot` method to plot the spatial distribution of the planning units. Planning units with a dark green fill are selected for prioritsation, and those with a pale green color have not. Additionally, we can use the `spp.plot` method to see how the prioritisation overlaps with the species' distribution. The fill of the planning units indicates the probability that they are  occupied by the species. Since all planning units have equal probabilities for this species, all planning units have the same color. Planning units with a green border are included for prioritisation.
+
+```{r, eval=FALSE}
+# plot the prioritisation
+plot(sim_rs_s1_amount)
+
+# plot the prioritisation and the uniform species' distribution
+spp.plot(sim_rs_s1_amount)
+```
+
+The prioritisation for the uniform species appears to be just a random selection of planning units. This behavior is due to the fact that any prioritisation with `sum(selections(sim_ru_s1))` planning units is optimal. By relying on just amount targets, this solution may preserve a section of the species' range core, or just focus on the range margin, or some random part of its range--no emphasis is directed towards preserving different parts of the species' range. This behavior highlights a fundamental limitation of just using amount-based targets. In the absence of additional criteria, reserve selection problems do not contain any additional information to identify the most effective prioritisation.
+
+Now, we will generate a prioritisation for the normally distributed species using amount-targets. We will use a similar process to what we used for the uniformly distributed species, but for brevity, we will generate solutions immediately after updating the object.
+
+```{r, eval=FALSE}
+# create new object with just the normal species
+sim_ru_s2 <- spp.subset(sim_ru, 'normal')
+
+# update amount targets to 20% and space targets to 0% and solve it
+sim_rs_s2_amount <- update(sim_ru_s2, amount.target=0.2, space.target=0, solve=TRUE)
+```
+
+Now let's visualise the prioritisation we made for the normal species.
+
+```{r, eval=FALSE}
+# plot the prioritisation
+plot(sim_rs_s2_amount)
+
+# plot the prioritisation and the normal species' distribution
+spp.plot(sim_rs_s2_amount)
+```
+
+The amount-based prioritisation for the normal species focuses only on the species' range core. This prioritisation fails to secure any peripheral parts of the species' distribution. As a consequence, it may miss out on populations with novel adaptations to environmental conditions along the species' range margin.
+
+Now, let's generate an amount-based target for the bimodally distributed species, and visualise it.
+
+```{r, eval=FALSE}
+# create new object with just the bimodal species
+sim_ru_s3 <- spp.subset(sim_ru, 'bimodal')
+
+# update amount targets to 20% and space targets to 0% and solve it
+sim_rs_s3_amount <- update(sim_ru_s3, amount.target=0.2, space.target=0)
+
+# plot the prioritisation
+plot(sim_rs_s3_amount)
+
+# plot the prioritisation and the bimodal species' distribution
+spp.plot(sim_rs_s3_amount)
+```
+
+The amount-based prioritisation for the bimodally distributed species only selects plannig units in the bottom left corner of the study area. This prioritisation only preserves individuals belonging to one of the two ecotypes. As a consequence, this prioritisaiton fails to preserve a representative sample of the genetic variation found inside this species.
+
+Now that we have generated a prioritisation for each species that only considers amount-targets, we will generate a prioritisation for each species that considers both amount-based and space-targets. To do this we will update the space targets in our amount-based prioritisations, and store the prioritisations in new objects.
+
+First, let's do this for the uniform species.
+
+```{r, eval=FALSE}
+# make new prioritisation
+sim_rs_s1_space <- update(sim_rs_s1_amount, space.target=0.2)
+```
+
+Let's take a look at the prioritisation for the uniform species with amount-based and space-based targets. Then, let's compare the solutions for the amount-based prioritisation with the new prioritisation using both amount and space targets.
+
+```{r, eval=FALSE}
+# plot the prioritisation
+plot(sim_rs_s1_space)
+
+# plot the prioritisation and the uniform species' distribution
+spp.plot(sim_rs_s1_space)
+
+# plot the difference between old and new prioritisations
+plot(sim_rs_s1_amount, sim_rs_s1_space, 1, 1)
+```
+
+Here we can see that by including a space-target the prioritisation is spread out evenly across the species' distribution. Unlike the amount-based prioritisation, this prioritisation samples all the different parts of the species' distribution.
+
+Now, let's generate a prioritisation for the normally distributed species that considers amount-based and space-based targets. Then, let's visualise the new prioritisation and compare it to the old amount-based prioritisation.
+
+```{r, eval=FALSE}
+# make new prioritisation
+sim_rs_s2_space <- update(sim_rs_s2_amount, space.target=0.2)
+
+# plot the prioritisation
+plot(sim_rs_s2_space)
+
+# plot the prioritisation and the normal species' distribution
+spp.plot(sim_rs_s2_space)
+
+# plot the difference between old and new prioritisations
+plot(sim_rs_s2_amount, sim_rs_s2_space, 1, 1)
+```
+
+These plots show that the prioritisation which was generated using amount-based and space-based targets captures both the species' range core and its range margin. As a consequence, it may capture any novel adaptations found along the species' range margin--unlike the amount-based prioritisation.
+
+Finally, let's generate a prioritisation for the bimodal species using amount-based and space-based targets.
+
+```{r, eval=FALSE}
+# make new prioritisation
+sim_rs_s3_space <- update(sim_rs_s3_amount, space.target=0.2)
+
+# plot the prioritisation
+plot(sim_rs_s3_space)
+
+# plot the prioritisation and the bimodal species' distribution
+spp.plot(sim_rs_s3_space)
+
+# plot the difference between old and new prioritisations
+plot(sim_rs_s3_amount, sim_rs_s3_space, 1, 1)
+```
+
+Earlier we found that the amount-based prioritisation only preserved individuals from a single ecotype, and would have failed to adequately preserve the intra-specific variation for this species. However, here we can see that by including space-based targets, we can develop prioritisations that the secure individuals belonging to both ecotypes. This new prioritisation is much more effective at sampling the intra-specific variation for this species.
+
+Overall, these results demonstrate that under the simplest of conditions that the use of space-based targets can improve prioritisations. However, all these prioritisations were generated for a single species at a time. It is possible that by prioritisations generated using multiple species may do a better job at preserving the intra-specific variation for individuals species. We will investigate this in the next section.
+
+### Multi-species prioritisations
+Previously, we have generated prioritisations for only one species at a time. However, real-world prioritisations are often generated for multiple-species. Here, we will generate prioritisations for all three of the simulated species. First, we will generate a prioritisation that only aims to preserve 20% of the area they occupy. Then, we will generate a prioritisation that also aims to preserve a representative portion of their geographic distribution. After doing this we will compare the two prioritisations.
+
+```{r, eval=FALSE}
+# make prioritisations
+sim_mrs_area <- solve(sim_ru_area)
+sim_mrs_space <- solve(sim_ru_space)
+
+# plot prioritisations
+plot(sim_mrs_area)
+plot(sim_mrs_space)
+```
+
+Here we can see that the inclusion of space-based targets to ensure that prioritisations secure a representative portion of the species' range changes the both the selection of planning units and also the number of planning units that are selected. The area-based prioritistion is comprised of `sum(sim_mrs_area@results@selections[1,])` units, and the space-based prioritisation is comprised of `sum(sim_mrs_space@results@selections[1,])` units. These simulated species demonstrate that under the simplest of distributions the inclusion of space-based targets can result in different prioritisations. However, real world planning exercises may use attribute spaces that have a complex relationship with geographic space, and this will affect the difference of including space-based targets.
+
+## Case-study examples
+### Overview
+Here we will investigate how including space-based targets can affect prioritisations using a real-world dataset. We will generate prioritisations for the pale-headed rosella (_Platycercus adscitus_). This Australian bird species persists across broad environmental gradients across north-eastern Australia. Firstly, we will generate a typical area-based prioritisation that aims to capture 20% of its distribution. Then we will generate a prioritisation that aims to capture the neutral evolutionary processes acting on this species. To do this we will generate a prioritisation that secures indiviudals in different parts of its geographic range. Next, we will generate a prioritisation that aims to capture the adaptive evolutionary processes acting on this species, by securing individuals in different environmental conditions. Lastly, we will also generate a prioritisation that secures both of these processes and see how this prioritisations compares to the previous prioritisations.
+
+### Data
+Survey data for this species was obtained from [BirdLife Australia](http://birdlife.org.au/projects/atlas-and-birdata). This was used to generate a probability map (1km^2 resolution) of its distribution across Australia. To improve the accuracy of this map, areas well outside of its known distribution were set to 0. This was acheived by masking out [biogeographic regions](https://www.environment.gov.au/land/nrs/science/ibra) where the species was not observed and did not have a neighboring region where the species was observed. The resulting map is stored in the `cs_spp` object.
+
+```{r, eval=FALSE}
+# load data
+data(cs_spp)
+
+# plot species distribution
+plot(cs_spp)
+```
+
+Planning units (10km^2 resolution) were generated across Australia, and then clipped to the [Queensland state borders and coastline](http://www.abs.gov.au/ausstats/abs@.nsf/mf/1259.0.30.001?OpenDocument). To ensure our prioritisations include information on the distribution of existing protected areas, [Australia's current protected area network](http://www.protectedplanet.net/) were intersected with the planning units. Planning units with more than 50% of their area inside a protected area had their status set to two ([following conventions in Marxan](http://www.uq.edu.au/marxan/tutorial/module4.html)). Since we do not have cost data, the prioritisations will aim to select the minimum number of planning units required to meet the targets. The planning units are in the `cs_pu` object.
+
+```{r, eval=FALSE}
+# load data
+data(cs_pu)
+
+## plot planning units
+# denote units not inside a protected area with white
+plot(cs_pu[which(cs_pu$status==0),], col='white')
+
+# denote units inside a protected area with green
+plot(cs_pu[which(cs_pu$status==2),], col='white')
+```
+
+To map the distribution of environmental conditions across the species' range, 21 [bioclimatic layers](http://www.worldclim.org/bioclim) were obtained. These layers were cropped to Australia and subject to [detrended correspondance analysis](http://cc.oulu.fi/~jarioksa/softhelp/vegan/html/decorana.html) to produce two new variables (explaning XX percent of the variation). These layers are stored in the `cs_space` object.
+
+```{r, eval=FALSE}
+# set up plotting window
+par(mfrow=c(1,2))
+# plot first variable
+plot(cs_space[[1]])
+
+# plot second variable
+plot(cs_space[[2]])
+
+# reset window
+par(mfrow=c(1,1))
+```
+
+### Prioritisations
+To simplify the process of formatting data and generating prioritisations, we can use the `rap` function. First, we will generate an area-based prioritisation that aims to capture 20% of the rosella's range. We will use 100 demand points to map the geographic and environmental spaces.
+
+```{r, eval=FALSE}
+# make area-based prioritisation
+cs_rs_area <- rap(cs_pus, cs_species, cs_spaces,
+  area.target=0.2, space.target=0.2, n.demand.points=100L,
+  include.geographic.space=TRUE, formulation='unreliable'
+)
+
+# plot prioritisation
+plot(cs_rs_area)
+
+# plot prioritisation in environmental space
+space.plot(cs_rs_area)
+```
+
+### Fragmentation

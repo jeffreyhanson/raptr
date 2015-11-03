@@ -4,7 +4,7 @@
 \alias{summary}
 \title{Summary of solutions}
 \arguments{
-\item{object}{\code{RaspResults}, or \code{RaspSolved} object.}
+\item{object}{\code{RapResults}, or \code{RapSolved} object.}
 
 \item{...}{not used.}
 }
@@ -12,7 +12,7 @@
 \code{data.frame}
 }
 \description{
-Extracts summary of solutions in a \code{RaspResults} or \code{RaspSolved} object.
+Extracts summary of solutions in a \code{RapResults} or \code{RapSolved} object.
 }
 \examples{
 # load data
@@ -21,6 +21,6 @@ data(sim_rs)
 summary(sim_rs)
 }
 \seealso{
-\code{\link{RaspResults}}, \code{\link{RaspSolved}}.
+\code{\link{RapResults}}, \code{\link{RapSolved}}.
 }
 

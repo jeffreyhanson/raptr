@@ -12,8 +12,8 @@
 #'
 #' The objects contained in this dataset are:
 #' \itemize{
-#'	\item sim_ru: A \code{RaspUnsolved} object with all the simulated data.
-#'	\item sim_rs: A \code{RaspSolved} object with 5 near-optimal solutions.
+#'	\item sim_ru: A \code{RapUnsolved} object with all the simulated data.
+#'	\item sim_rs: A \code{RapSolved} object with 5 near-optimal solutions.
 #' }
 #'
 #' @docType data
@@ -47,9 +47,9 @@ NULL
 #'	\item cs_pus: \code{SpatialPolygonsDataFrame} planning units. The units were generated as \eqn{30km^2} squares across the species' range, and then clipped to the Queensland, Australia (using data obtained from the \href{Australia Bureau of Statistics}{http://www.abs.gov.au/ausstats/abs@@.nsf/mf/1259.0.30.001?OpenDocument}). They were then overliad with Australia's protected area network (obtained from the World Database on Protected Areas (WDPA) at \url{http://www.protectedplanet.net/}). This attribute table has 3 fields. The 'area' field contains the units' area, the 'cost' field is set to 1 for all units, and the 'status' filed indicates if 50\% or more of the units' extent is covered by protected areas.
 #'	\item cs_spp: \code{RasterLayer} probability distribution map for the \emph{P. adscitus} clipped to Queensland, Australia. This map was dervived from records in the BirdLife Altas Database (\url{http://birdata.com.au/}).
 #'	\item cs_space: \code{RasterStack} describing broad-scale variation across Queensland. containing the projections of the first two axes from a annual precipitation data across the species range (obtained from \url{http://www.worldclim.org/} as BIO12, and resampled to \eqn{10km^2} resolution).
-#'	\item cs_ru: \code{RaspUnsolved} object.
-#'	\item cs_rs_amount: \code{RaspSolved} object containing 5 solutions identified using amount-based targets.
-#'	\item cs_rs_space: \code{RaspSolved} object containing 5 solutions identified using both amount-based and space-based targets.
+#'	\item cs_ru: \code{RapUnsolved} object.
+#'	\item cs_rs_amount: \code{RapSolved} object containing 5 solutions identified using amount-based targets.
+#'	\item cs_rs_space: \code{RapSolved} object containing 5 solutions identified using both amount-based and space-based targets.
 #' }
 #'
 #' @docType data
