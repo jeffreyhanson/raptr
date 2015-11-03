@@ -26,7 +26,7 @@ brew install gdal
 Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos'))"
 ```
 
-To install the rapr R package, execute the following commands in R:
+To install the `rapr` R package, execute the following commands in R:
 
 ```
 if (!require('devtools'))
@@ -34,7 +34,7 @@ if (!require('devtools'))
 devtools:::install_github('paleo13/rapsr')
 ```
 
-Once this package has been installed, you can explore its functions by reading through the vignette. You can access it in R by running the code below:
+Once this package has been installed, you can read through the vignette for a tutorial on how to use it. You view it by running the code below in R:
 
 ```
 # open vignette in web browser
