@@ -53,14 +53,10 @@ This function plots the distribution of species across the study area.
 }
 \examples{
 # load RapSolved objects
-data(sim_ru, cs_rs_amount)
+data(sim_ru)
 # plot first species in sim_rs
 spp.plot(sim_ru, species=1)
-\dontrun{
-# plot first species in cs_rs with basemap
-spp.plot(cs_rs_amount, species=1, basemap='satellite')
-# as above indicate the best solution by coloring planning unit borders
-spp.plot(cs_rs_amount, species=1, y=0, basemap='satellite')
-}
+# plot 'bimodal' species in sim_rs
+spp.plot(sim_ru, species='bimodal')
 }
 

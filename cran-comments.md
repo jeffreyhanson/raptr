@@ -23,10 +23,10 @@ There were 3 NOTEs
   solvers cannot solve moderately sized problems in a feasible amount of time. Additionally, several existing R packages on CRAN use the gurobi R package (eg. cherry, DESP).
   
 * checking installed package size ... NOTE
-  installed size is 27.1Mb
+  installed size is  9.1Mb
   sub-directories of 1Mb or more:
-    data  20.5Mb
-    libs   6.2Mb
+    data   2.2Mb
+    libs   6.4Mb
 
   +data: The ./data directory contains case-study data for a vignette. Although a seperate package could be created to store the case-study data, this
   seems unnecessary because the datsets are used in both package testing in the vignette. I would prefer to keep the datasets in this pacakge for simplicity.

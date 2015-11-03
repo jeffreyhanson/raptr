@@ -63,9 +63,9 @@ sim_rs <- solve(sim_ru)
 # evaluate manually specified solution using planning unit indices
 sim_rs2 <- solve(sim_ru, 1:10)
 # evaluate manually specifed solution using binary selections
-sim_rs3 <- solve(sim_ru, c(rep(TRUE,10), rep(FALSE, 215)))
+sim_rs3 <- solve(sim_ru, c(rep(TRUE,10), rep(FALSE, 90)))
 #  evaluate multiple manually specified solutions
-sim_rs4 <- solve(sim_ru, matrix(sample(c(0,1), size=1125, replace=TRUE), ncol=225, nrow=5))
+sim_rs4 <- solve(sim_ru, matrix(sample(c(0,1), size=500, replace=TRUE), ncol=100, nrow=5))
 }
 \seealso{
 \code{\link{RapUnsolved}}, \code{\link{RapSolved}}.

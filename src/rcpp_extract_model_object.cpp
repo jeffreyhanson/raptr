@@ -173,7 +173,6 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
  Eigen::Map<Eigen::MatrixXd> best_speciesspaceMTX = Rcpp::as<Eigen::Map<Eigen::MatrixXd>>(Rcpp::as<Rcpp::NumericMatrix>(cacheLST["best_space_values"]));
  Eigen::Map<Eigen::MatrixXd> worst_speciesspaceMTX = Rcpp::as<Eigen::Map<Eigen::MatrixXd>>(Rcpp::as<Rcpp::NumericMatrix>(cacheLST["worst_space_values"]));
 
-
  //// Main processing
  if (verbose) Rcout << "Main processing" << std::endl;
  /// simple vars

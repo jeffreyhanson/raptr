@@ -54,10 +54,9 @@ DemandPoints<-function(points, weights) {
 #'
 #' This function generates demand points for RASP using kernels.
 #'
-#' @param species.points \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records.
-#' @param space.rasters \code{NULL}, \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} with projections of the attribute space over geographic space. If NULL (default) then geographic space is used.
+#' @param points \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records.
 #' @param n \code{integer} number of demand points to use for each attribute space for each species. Defaults to 100L.
-#' @param quantile \code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.2. 
+#' @param quantile \code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{points} intersect. Defaults to 0.2. 
 #' @param kernel.method \code{character} name of kernel method to use to generate demand points. Defaults to 'ks'.
 #' @param ... arguments passed to kernel density estimating functions
 #' @return \code{DemandPoints} object.
@@ -73,10 +72,10 @@ DemandPoints<-function(points, weights) {
 #' data(cs_spp, cs_space)
 #' # generate species points
 #' species.points <- randomPoints(cs_spp, n=100, prob=TRUE)
-#' env.points <- extract(cs_space[[1]], cs_spp)
+#' env.points <- extract(cs_space, species.points)
 #' # generate demand points for a 1d space using ks
 #' dps1 <- make.DemandPoints(
-#'	points=env.points[,1,drop=FALSE]
+#'	points=env.points[,1],
 #'	kernel.method='ks'
 #' )
 #' # generate demand points for a 2d space using hypervolume

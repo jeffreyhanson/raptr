@@ -70,7 +70,7 @@ units contained in a single \code{RapSolved} object. Additionally, two \code{Rap
 }}
 \examples{
 # load data
-data(sim_rs, cs_rs_amount, cs_rs_space)
+data(sim_rs)
 ## simulated species examples
 # plot selection frequencies
 plot(sim_rs)
@@ -80,21 +80,6 @@ plot(sim_rs, 0)
 plot(sim_rs, 2)
 # plot different between best and second solutions
 plot(sim_rs, sim_rs, 0 ,2)
-\dontrun{
-## case-study species examples
-# plot selection frequencies
-plot(cs_rs_amount)
-# plot best solution with basemap
-plot(cs_rs_amount, 0, basemap='satellite')
-plot(cs_rs_amount, 2, basemap='satellite', grayscale=TRUE)
-# plot second solution
-# plot different between best and second solutions
-plot(cs_rs_amount, cs_rs_amount, 0, 2)
-# plot difference in selection frequencies between two RapSolved objects
-plot(cs_rs_amount, cs_rs_space)
-# plot difference between best solutions in two RapSolved objects
-plot(cs_rs_amount, cs_rs_space, 0, 0)
-}
 }
 \seealso{
 \code{\link{RapSolved}}.

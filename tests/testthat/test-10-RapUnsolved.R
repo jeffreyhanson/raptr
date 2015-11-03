@@ -89,109 +89,110 @@ test_that('solve.RapUnsolved (unreliable - NUMREPS=1)', {
 	# skip if gurobi not installed
 	if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')
 	# load RapUnsolved object
-	data(cs_ru)
-	cs_ru <- pu.subset(cs_ru, 1:10)
-	cs_ru@opts=RapUnreliableOpts()
+	data(sim_ru)
+	sim_ru<- pu.subset(sim_ru, 1:10)
+	sim_ru@opts=RapUnreliableOpts()
 	# solve it
-	cs_rs<-rapr::solve(cs_ru, GurobiOpts(MIPGap=0.99, Presolve=2L))
+	sim_rs<-rapr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L))
 	# check number of selections is 1
-	expect_equal(nrow(summary(cs_rs)), 1L)
+	expect_equal(nrow(summary(sim_rs)), 1L)
 })
 
 test_that('solve.RapUnsolved (reliable - NUMREPS=1)', {
 	# skip if gurobi not installed
 	if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')
 	# load RapUnsolved object
-	data(cs_ru)
-	cs_ru <- pu.subset(cs_ru, 1:10)
-	cs_ru@opts=RapReliableOpts()
+	data(sim_ru)
+	sim_ru<- pu.subset(sim_ru, 1:10)
+	sim_ru@opts=RapReliableOpts()
 	# solve it
-	cs_rs<-rapr::solve(cs_ru, GurobiOpts(MIPGap=0.99, Presolve=2L))
+	sim_rs<-rapr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L))
 	# check number of selections is 1
-	expect_equal(nrow(summary(cs_rs)), 1L)
+	expect_equal(nrow(summary(sim_rs)), 1L)
 })
 
 test_that('solve.RapUnsolved (unreliable - NumberSolutions=2)', {
 	# skip if gurobi not installed
 	if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')
 	# load RapUnsolved object
-	data(cs_ru)
-	cs_ru <- pu.subset(cs_ru, 1:10)
-	cs_ru@opts=RapUnreliableOpts()
+	data(sim_ru)
+	sim_ru<- pu.subset(sim_ru, 1:10)
+	sim_ru@opts=RapUnreliableOpts()
 	# solve it
-	rs<-rapr::solve(cs_ru, GurobiOpts(MIPGap=0.99, Presolve=2L, NumberSolutions=2L))
-	# check number of selections is 2
-	expect_equal(nrow(summary(rs)), 2L)
+	sim_rs<-rapr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L, NumberSolutions=2L))
+	# check number of selections is 1
+	expect_equal(nrow(summary(sim_rs)), 2L)
 })
 
 test_that('solve.RapUnsolved (reliable - NumberSolutions=2)', {
 	# skip if gurobi not installed
 	if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')
 	# load RapUnsolved object
-	data(cs_ru)
-	cs_ru <- pu.subset(cs_ru, 1:10)
-	cs_ru@opts=RapReliableOpts()
+	data(sim_ru)
+	sim_ru<- pu.subset(sim_ru, 1:10)
+	sim_ru@opts=RapReliableOpts()
 	# solve it
-	rs<-rapr::solve(cs_ru, GurobiOpts(MIPGap=0.99, Presolve=2L, NumberSolutions=2L))
-	# check number of selections is 2
-	expect_equal(nrow(summary(rs)), 2L)
+	sim_rs<-rapr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L, NumberSolutions=2L))
+	# check number of selections is 1
+	expect_equal(nrow(summary(sim_rs)), 2L)
 })
 
 test_that('solve.RapUnsolved (unreliable - STATUS test)', {
 	# skip if gurobi not installed
 	if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')
 	# load RapUnsolved object
-	data(cs_ru)
-	cs_ru <- pu.subset(cs_ru, 1:20)
-	cs_ru@opts=RapUnreliableOpts()
+	data(sim_ru)
+	sim_ru<- pu.subset(sim_ru, 1:10)
+	sim_ru@opts=RapUnreliableOpts()
 	# lock in and lock out planning units
-	cs_ru@data@pu$status[1]=0
-	cs_ru@data@pu$status[2]=2
-	cs_ru@data@pu$status[3]=3
+	sim_ru@data@pu$status[1]=0
+	sim_ru@data@pu$status[2]=2
+	sim_ru@data@pu$status[3]=3
 	# solve it
-	cs_rs<-rapr::solve(cs_ru, GurobiOpts(MIPGap=0.99, Presolve=1L))
-	# check that planning units locked in and out are set accordingly
-	expect_identical(selections(cs_rs)[2], 1L)
-	expect_identical(selections(cs_rs)[3], 0L)
+	sim_rs<-rapr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L))
+	# check number of selections is 1
+	expect_identical(selections(sim_rs)[2], 1L)
+	expect_identical(selections(sim_rs)[3], 0L)
 })
 
 test_that('solve.RapUnsolved (reliable - STATUS test)', {
+	# skip if gurobi not installed
 	if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')
 	# load RapUnsolved object
-	data(cs_ru)
-	cs_ru <- dp.subset(pu.subset(cs_ru, 1:20), species=1, space=1, 1:2)
-	cs_ru@opts<-RapReliableOpts()
+	data(sim_ru)
+	sim_ru<- pu.subset(sim_ru, 1:10)
+	sim_ru@opts=RapReliableOpts()
 	# lock in and lock out planning units
-	cs_ru@data@pu$status[1]=0L
-	cs_ru@data@pu$status[2]=2L
-	cs_ru@data@pu$status[3]=3L
+	sim_ru@data@pu$status[1]=0
+	sim_ru@data@pu$status[2]=2
+	sim_ru@data@pu$status[3]=3
 	# solve it
-	cs_rs<-rapr::solve(cs_ru, GurobiOpts(MIPGap=0.99, Presolve=1L))
-	# check that planning units locked in and out are set accordingly
-	expect_identical(selections(cs_rs)[2], 1L)
-	expect_identical(selections(cs_rs)[3], 0L)
+	sim_rs<-rapr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L))
+	# check number of selections is 1
+	expect_identical(selections(sim_rs)[2], 1L)
+	expect_identical(selections(sim_rs)[3], 0L)
 })
 
 test_that('solve.RapUnsolved (unreliable - BLM test)', {
 	# skip if gurobi not installed
 	if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')
 	# load RapUnsolved object
-	data(cs_ru)
-	cs_ru <- pu.subset(cs_ru, 1:10)
-	cs_ru@opts=RapUnreliableOpts(BLM=1)
+	data(sim_ru)
+	sim_ru<- pu.subset(sim_ru, 1:10)
+	sim_ru@opts=RapUnreliableOpts(BLM=100)
 	# solve it
-	rs<-rapr::solve(cs_ru, GurobiOpts(MIPGap=0.99, Presolve=1L,NumberSolutions=2L))
+	sim_rs<-rapr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L))
 })
 
 test_that('solve.RapUnsolved (reliable - BLM test)', {
 	# skip if gurobi not installed
 	if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')
 	# load RapUnsolved object
-	data(cs_ru)
-	cs_ru <- pu.subset(cs_ru, 1:10)
-	cs_ru@opts<-RapReliableOpts(BLM=1)
+	data(sim_ru)
+	sim_ru<- pu.subset(sim_ru, 1:10)
+	sim_ru@opts=RapReliableOpts(BLM=100)
 	# solve it
-	rs<-rapr::solve(cs_ru, GurobiOpts(MIPGap=0.99, Presolve=1L,NumberSolutions=2L))
+	sim_rs<-rapr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L))
 })
 
 test_that('update.RapUnsolved', {

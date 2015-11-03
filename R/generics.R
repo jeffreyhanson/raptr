@@ -126,9 +126,9 @@ sim.space<-function(x, ...) UseMethod('sim.space')
 #' # evaluate manually specified solution using planning unit indices
 #' sim_rs2 <- solve(sim_ru, 1:10)
 #' # evaluate manually specifed solution using binary selections
-#' sim_rs3 <- solve(sim_ru, c(rep(TRUE,10), rep(FALSE, 215)))
+#' sim_rs3 <- solve(sim_ru, c(rep(TRUE,10), rep(FALSE, 90)))
 #' #  evaluate multiple manually specified solutions
-#' sim_rs4 <- solve(sim_ru, matrix(sample(c(0,1), size=1125, replace=TRUE), ncol=225, nrow=5))
+#' sim_rs4 <- solve(sim_ru, matrix(sample(c(0,1), size=500, replace=TRUE), ncol=100, nrow=5))
 setGeneric('solve', function(a, b, ...) standardGeneric('solve'))
 
 #' Plot RASP object
@@ -155,7 +155,7 @@ setGeneric('solve', function(a, b, ...) standardGeneric('solve'))
 #' @seealso \code{\link{RapSolved}}.
 #' @examples
 #' # load data
-#' data(sim_rs, cs_rs_amount, cs_rs_space)
+#' data(sim_rs)
 #' ## simulated species examples
 #' # plot selection frequencies
 #' plot(sim_rs)
@@ -165,21 +165,6 @@ setGeneric('solve', function(a, b, ...) standardGeneric('solve'))
 #' plot(sim_rs, 2)
 #' # plot different between best and second solutions
 #' plot(sim_rs, sim_rs, 0 ,2)
-#' \dontrun{
-#' ## case-study species examples
-#' # plot selection frequencies
-#' plot(cs_rs_amount)
-#' # plot best solution with basemap
-#' plot(cs_rs_amount, 0, basemap='satellite')
-#' plot(cs_rs_amount, 2, basemap='satellite', grayscale=TRUE)
-#' # plot second solution
-#' # plot different between best and second solutions
-#' plot(cs_rs_amount, cs_rs_amount, 0, 2)
-#' # plot difference in selection frequencies between two RapSolved objects
-#' plot(cs_rs_amount, cs_rs_space)
-#' # plot difference between best solutions in two RapSolved objects
-#' plot(cs_rs_amount, cs_rs_space, 0, 0)
-#' }
 NULL
 
 #' Print objects
@@ -586,15 +571,11 @@ SpatialPolygons2PolySet<-function(x, n_preallocate) UseMethod("SpatialPolygons2P
 #' @export
 #' @examples
 #' # load RapSolved objects
-#' data(sim_ru, cs_rs_amount)
+#' data(sim_ru)
 #' # plot first species in sim_rs
 #' spp.plot(sim_ru, species=1)
-#' \dontrun{
-#' # plot first species in cs_rs with basemap
-#' spp.plot(cs_rs_amount, species=1, basemap='satellite')
-#' # as above indicate the best solution by coloring planning unit borders
-#' spp.plot(cs_rs_amount, species=1, y=0, basemap='satellite')
-#' }
+#' # plot 'bimodal' species in sim_rs
+#' spp.plot(sim_ru, species='bimodal')
 spp.plot<-function(x, species, ...) UseMethod('spp.plot')
 
 #' Plot space

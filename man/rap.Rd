@@ -4,12 +4,15 @@
 \alias{rap}
 \title{Generate prioritisations using RASP}
 \usage{
-rap(pus, species, ..., formulation = "unreliable", solve = TRUE)
+rap(pus, species, spaces = NULL, ..., formulation = "unreliable",
+  solve = TRUE)
 }
 \arguments{
 \item{pus}{\code{SpatialPolyogns} object representing planning units.}
 
 \item{species}{\code{Raster} object with species distribution data.}
+
+\item{spaces}{\code{list} of \code{RasterLayer} or \code{RasterStack} objects. Each elements denotes the spatial distribution for each space. Defaults to \code{NULL}.}
 
 \item{...}{arguments are passed to \code{GurobiOpts}, \code{RapData}, and \code{RapReliableOpts} or \code{RapUnreliableOpts} functions.}
 
@@ -24,7 +27,7 @@ rap(pus, species, ..., formulation = "unreliable", solve = TRUE)
 This is a general function to create Rap objects from scratch and solve them to generate solutions.
 }
 \note{
-Type \code{vignette('rapr')} tpo see the package vignette for help.
+Type \code{vignette('rapr')} to see the package vignette for help.
 }
 \seealso{
 \code{\link{GurobiOpts}}, \code{\link{RapReliableOpts}}, \code{\link{RapUnreliableOpts}} \code{\link{RapData}}, \code{\link{RapResults}}, \code{\link{RapUnsolved}}, \code{\link{RapSolved}}.

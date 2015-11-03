@@ -56,11 +56,10 @@ test_that('demand.points (hpyervolume, geographic space)', {
 	# load data
 	data(cs_spp)
 	# generate points
-	pts<-SpatialPoints(coords=randomPoints(cs_spp[[1]], n=100, prob=TRUE))
+	pts<-SpatialPoints(coords=randomPoints(cs_spp[[1]], n=100, prob=TRUE))@coords
 	# create demand points
 	dp<-make.DemandPoints(
-		species.points=pts,
-		space.rasters=NULL,
+		points=pts,
 		n=100L,
 		kernel.method='hypervolume'
 	)
@@ -77,11 +76,10 @@ test_that('demand.points (hypervolume, attribute space)', {
 	# load data
 	data(cs_spp, cs_space)
 	# generate points
-	pts<-SpatialPoints(coords=randomPoints(cs_spp[[1]], n=100, prob=TRUE)	)
+	pts<-SpatialPoints(coords=randomPoints(cs_spp[[1]], n=100, prob=TRUE))@coords
 	# create demand points
 	dp<-make.DemandPoints(
-		species.points=pts,
-		space.rasters=cs_space,
+		points=pts,
 		n=100L,
 		kernel.method='hypervolume'
 	)

@@ -4,17 +4,15 @@
 \alias{make.DemandPoints}
 \title{Generate demand points for RASP}
 \usage{
-make.DemandPoints(species.points, space.rasters = NULL, n = 100L,
-  quantile = 0.2, kernel.method = c("ks", "hypervolume")[1], ...)
+make.DemandPoints(points, n = 100L, quantile = 0.2,
+  kernel.method = c("ks", "hypervolume")[1], ...)
 }
 \arguments{
-\item{species.points}{\code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records.}
-
-\item{space.rasters}{\code{NULL}, \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} with projections of the attribute space over geographic space. If NULL (default) then geographic space is used.}
+\item{points}{\code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records.}
 
 \item{n}{\code{integer} number of demand points to use for each attribute space for each species. Defaults to 100L.}
 
-\item{quantile}{\code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.2.}
+\item{quantile}{\code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{points} intersect. Defaults to 0.2.}
 
 \item{kernel.method}{\code{character} name of kernel method to use to generate demand points. Defaults to 'ks'.}
 
@@ -37,17 +35,16 @@ By using 'ks' as an argument in \code{kernel.method}, the volume is fit as a min
 \examples{
 data(cs_spp, cs_space)
 # generate species points
- species.points <- randomPoints(cs_spp, n=100, prob=TRUE)
+species.points <- randomPoints(cs_spp, n=100, prob=TRUE)
+env.points <- extract(cs_space, species.points)
 # generate demand points for a 1d space using ks
 dps1 <- make.DemandPoints(
-	species.points=species.points,
-	space.rasters=cs_space[[1]],
+	points=env.points[,1],
 	kernel.method='ks'
 )
 # generate demand points for a 2d space using hypervolume
 dps12 <- make.DemandPoints(
-	species.points=species.points,
-	space.rasters=cs_space,
+	points=env.points,
 	kernel.method='hypervolume'
 )
 }

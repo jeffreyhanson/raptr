@@ -317,7 +317,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> speciesspaceMTX(n_species, n_attribute_spaces);
 	for (std::size_t i=0; i<n_species; ++i) {
 		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-			speciesspaceMTX(i,j)=best_speciesspaceMTX(i,j) + ((worst_speciesspaceMTX(i,j) - best_speciesspaceMTX(i,j)) * spacetargetsMTX(i,j));
+			speciesspaceMTX(i,j)=best_speciesspaceMTX(i,j) + ((worst_speciesspaceMTX(i,j) - best_speciesspaceMTX(i,j)) * (1.0 - spacetargetsMTX(i,j)));
 		}
 	}
 

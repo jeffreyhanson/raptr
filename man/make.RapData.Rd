@@ -45,7 +45,8 @@ This function prepares spatially explicit planning unit, species data, and lands
 \examples{
 # load data
 data(cs_pus, cs_spp, cs_space)
-x <- make.RapData(cs_pus, cs_spp, cs_space, include.geographic.space=TRUE)
+# make RapData object using the 1st 10 planning units
+x <- make.RapData(cs_pus[1:10,], cs_spp, cs_space, include.geographic.space=TRUE)
 print(x)
 }
 \seealso{

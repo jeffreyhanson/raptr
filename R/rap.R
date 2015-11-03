@@ -27,7 +27,7 @@ rap<-function(pus, species, spaces=NULL, ..., formulation='unreliable', solve=TR
 	x<-RapUnsolved(
 		opts=do.call(opts, parseArgs(opts, object=NULL, ...)),
 		data=do.call(make.RapData, append(
-			list(pus=pus, species=species, space=space),
+			list(pus=pus, species=species, spaces=spaces),
 			parseArgs('make.RapData', object=NULL, ...)
 		))
 	)

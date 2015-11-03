@@ -4,7 +4,8 @@
 \alias{RapResults}
 \title{Create RapResults object}
 \usage{
-RapResults(summary, selections, amount.held, space.held, logging.file)
+RapResults(summary, selections, amount.held, space.held, logging.file,
+  .cache = new.env())
 }
 \arguments{
 \item{summary}{\code{data.frame} with summary information on solutions.}
@@ -16,6 +17,8 @@ RapResults(summary, selections, amount.held, space.held, logging.file)
 \item{space.held}{\code{matrix} with the poportion of attribute space sampled for each species in each solution.}
 
 \item{logging.file}{\code{character} Gurobi log files.}
+
+\item{.cache}{\code{environmental} used to cache calculations.}
 }
 \value{
 \code{RapResults} object

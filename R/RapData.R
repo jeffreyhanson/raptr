@@ -256,7 +256,8 @@ RapData<-function(pu, species, targets, pu.species.probabilities, attribute.spac
 #' @examples
 #' # load data
 #' data(cs_pus, cs_spp, cs_space)
-#' x <- make.RapData(cs_pus, cs_spp, cs_space, include.geographic.space=TRUE)
+#' # make RapData object using the 1st 10 planning units
+#' x <- make.RapData(cs_pus[1:10,], cs_spp, cs_space, include.geographic.space=TRUE)
 #' print(x)
 make.RapData<-function(pus, species, spaces=NULL,
 	amount.targets=0.2, space.targets=0.2, n.demand.points=100L, kernel.method=c('ks', 'hyperbox')[1], quantile=0.2, scale=TRUE,
