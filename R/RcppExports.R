@@ -2,30 +2,30 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 rcpp_append_model_object <- function(model, existing_sols) {
-    .Call('raspr_rcpp_append_model_object', PACKAGE = 'raspr', model, existing_sols)
+    .Call('rapr_rcpp_append_model_object', PACKAGE = 'rapr', model, existing_sols)
 }
 
 rcpp_calcBoundaryDF <- function(df, tolerance = 0.001, lengthFactor = 1.0, edgeFactor = 1.0) {
-    .Call('raspr_rcpp_calcBoundaryDF', PACKAGE = 'raspr', df, tolerance, lengthFactor, edgeFactor)
+    .Call('rapr_rcpp_calcBoundaryDF', PACKAGE = 'rapr', df, tolerance, lengthFactor, edgeFactor)
 }
 
 rcpp_extract_model_object <- function(opts, unreliable_formulation, data, model, logging_file, solution, verbose) {
-    .Call('raspr_rcpp_extract_model_object', PACKAGE = 'raspr', opts, unreliable_formulation, data, model, logging_file, solution, verbose)
+    .Call('rapr_rcpp_extract_model_object', PACKAGE = 'rapr', opts, unreliable_formulation, data, model, logging_file, solution, verbose)
 }
 
 rcpp_generate_model_object <- function(opts, unreliable_formulation, data, verbose) {
-    .Call('raspr_rcpp_generate_model_object', PACKAGE = 'raspr', opts, unreliable_formulation, data, verbose)
+    .Call('rapr_rcpp_generate_model_object', PACKAGE = 'rapr', opts, unreliable_formulation, data, verbose)
 }
 
 rcpp_groupcombine <- function(group_means) {
-    .Call('raspr_rcpp_groupcombine', PACKAGE = 'raspr', group_means)
+    .Call('rapr_rcpp_groupcombine', PACKAGE = 'rapr', group_means)
 }
 
 rcpp_groupmean <- function(cat_vec, val_vec) {
-    .Call('raspr_rcpp_groupmean', PACKAGE = 'raspr', cat_vec, val_vec)
+    .Call('rapr_rcpp_groupmean', PACKAGE = 'rapr', cat_vec, val_vec)
 }
 
 rcpp_Polygons2PolySet <- function(polys, n_preallocate = 10000L) {
-    .Call('raspr_rcpp_Polygons2PolySet', PACKAGE = 'raspr', polys, n_preallocate)
+    .Call('rapr_rcpp_Polygons2PolySet', PACKAGE = 'rapr', polys, n_preallocate)
 }
 

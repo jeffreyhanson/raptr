@@ -8,7 +8,7 @@ using namespace Rcpp;
 
 // rcpp_append_model_object
 Rcpp::List rcpp_append_model_object(Rcpp::List model, Rcpp::List existing_sols);
-RcppExport SEXP raspr_rcpp_append_model_object(SEXP modelSEXP, SEXP existing_solsSEXP) {
+RcppExport SEXP rapr_rcpp_append_model_object(SEXP modelSEXP, SEXP existing_solsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
@@ -20,7 +20,7 @@ END_RCPP
 }
 // rcpp_calcBoundaryDF
 Rcpp::List rcpp_calcBoundaryDF(Rcpp::DataFrame df, double tolerance, double lengthFactor, double edgeFactor);
-RcppExport SEXP raspr_rcpp_calcBoundaryDF(SEXP dfSEXP, SEXP toleranceSEXP, SEXP lengthFactorSEXP, SEXP edgeFactorSEXP) {
+RcppExport SEXP rapr_rcpp_calcBoundaryDF(SEXP dfSEXP, SEXP toleranceSEXP, SEXP lengthFactorSEXP, SEXP edgeFactorSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
@@ -34,7 +34,7 @@ END_RCPP
 }
 // rcpp_extract_model_object
 Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, Rcpp::S4 data, Rcpp::List model, std::vector<std::string> logging_file, Rcpp::List solution, bool verbose);
-RcppExport SEXP raspr_rcpp_extract_model_object(SEXP optsSEXP, SEXP unreliable_formulationSEXP, SEXP dataSEXP, SEXP modelSEXP, SEXP logging_fileSEXP, SEXP solutionSEXP, SEXP verboseSEXP) {
+RcppExport SEXP rapr_rcpp_extract_model_object(SEXP optsSEXP, SEXP unreliable_formulationSEXP, SEXP dataSEXP, SEXP modelSEXP, SEXP logging_fileSEXP, SEXP solutionSEXP, SEXP verboseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
@@ -51,7 +51,7 @@ END_RCPP
 }
 // rcpp_generate_model_object
 Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation, Rcpp::S4 data, bool verbose);
-RcppExport SEXP raspr_rcpp_generate_model_object(SEXP optsSEXP, SEXP unreliable_formulationSEXP, SEXP dataSEXP, SEXP verboseSEXP) {
+RcppExport SEXP rapr_rcpp_generate_model_object(SEXP optsSEXP, SEXP unreliable_formulationSEXP, SEXP dataSEXP, SEXP verboseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
@@ -65,7 +65,7 @@ END_RCPP
 }
 // rcpp_groupcombine
 NumericVector rcpp_groupcombine(std::vector<NumericVector> group_means);
-RcppExport SEXP raspr_rcpp_groupcombine(SEXP group_meansSEXP) {
+RcppExport SEXP rapr_rcpp_groupcombine(SEXP group_meansSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
@@ -76,7 +76,7 @@ END_RCPP
 }
 // rcpp_groupmean
 NumericVector rcpp_groupmean(IntegerVector cat_vec, NumericVector val_vec);
-RcppExport SEXP raspr_rcpp_groupmean(SEXP cat_vecSEXP, SEXP val_vecSEXP) {
+RcppExport SEXP rapr_rcpp_groupmean(SEXP cat_vecSEXP, SEXP val_vecSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
@@ -88,7 +88,7 @@ END_RCPP
 }
 // rcpp_Polygons2PolySet
 Rcpp::DataFrame rcpp_Polygons2PolySet(Rcpp::List polys, std::size_t n_preallocate);
-RcppExport SEXP raspr_rcpp_Polygons2PolySet(SEXP polysSEXP, SEXP n_preallocateSEXP) {
+RcppExport SEXP rapr_rcpp_Polygons2PolySet(SEXP polysSEXP, SEXP n_preallocateSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
