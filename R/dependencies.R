@@ -37,6 +37,7 @@
 #' @importFrom plyr rbind.fill
 
 #' @importFrom PBSmapping plotPolys
+#' @importFrom PBSmapping addPolys
 
 #' @importFrom shape colorlegend
 

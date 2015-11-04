@@ -18,7 +18,7 @@ A central aim in conservation is to maximise the long-term persistence of biodiv
 
 ## Simulated examples
 ### Data
-To investigate the behaviour of the problem, we will generate prioritisations for three simulated species. To reduce computational effort, we will use the unreliable formulation of the problem. The first species (termed 'uniform') will represent a hyper-generalist. This species will inhabit all areas with equal probability. The second species (termed 'normal') will represent a species with a single range core. The third species (termed 'bimodal') will represent a species with two distinct ecotypes, each with their own range core. To reduce computational time for this example, we will use a $10 \times 10$ grid of square planning units.
+To investigate the behaviour of the problem, we will generate prioritisations for three simulated species. To reduce computational effort, we will use the unreliable formulation of the problem. The first species (termed 'uniform') will represent a hyper-generalist. This species will inhabit all areas with equal probability. The second species (termed 'normal') will represent a species with a single range core. The third species (termed 'bimodal') will represent a species with two distinct ecotypes, each with their own range core. To reduce computational time for this example, we will use a $15 \times 15$ grid of square planning units.
 
 ```{r, eval=FALSE}
 # make planning units
@@ -138,7 +138,6 @@ sim_ru <- RapUnsolved(sim_ro, sim_rd)
 ```
 
 ### Single-species prioritisations
-#### Amount-based targets
 Let's keep things simple to start off with. First we will generate a prioritisation for each species using only amount-based targets. Then, we will generate prioritisations for each species using a combination of amount-based and space-based targets. We will then compare the prioritisations to see how they differ to see how including space-based targets can change prioritisaitons under the simplest of circumstances.
 
 Let's generate a prioritisation for the uniform species using amount-based targets. To do this we will subset out the data relating to the uniform species and the planning units from the `sim_ru` object. Then, we will `update` the targets in the new object. Finally we will need to `solve` the object to generate a prioritisation that fulfills the targets for minimal cost.
@@ -161,7 +160,7 @@ Now that we have generated a prioritisation, we will see what it looks like. We 
 plot(sim_rs_s1_amount)
 
 # plot the prioritisation and the uniform species' distribution
-spp.plot(sim_rs_s1_amount, 1)
+spp.plot(sim_rs_s1_amount)
 ```
 
 The prioritisation for the uniform species appears to be just a random selection of planning units. This behavior is due to the fact that any prioritisation with `sum(selections(sim_ru_s1))` planning units is optimal. By relying on just amount targets, this solution may preserve a section of the species' range core, or just focus on the range margin, or some random part of its range--no emphasis is directed towards preserving different parts of the species' range. This behavior highlights a fundamental limitation of just using amount-based targets. In the absence of additional criteria, reserve selection problems do not contain any additional information to identify the most effective prioritisation.
@@ -183,7 +182,7 @@ Now let's visualise the prioritisation we made for the normal species.
 plot(sim_rs_s2_amount)
 
 # plot the prioritisation and the normal species' distribution
-spp.plot(sim_rs_s2_amount, 1)
+spp.plot(sim_rs_s2_amount)
 ```
 
 The amount-based prioritisation for the normal species focuses only on the species' range core. This prioritisation fails to secure any peripheral parts of the species' distribution. As a consequence, it may miss out on populations with novel adaptations to environmental conditions along the species' range margin.
@@ -201,12 +200,11 @@ sim_rs_s3_amount <- update(sim_ru_s3, amount.target=0.2, space.target=0)
 plot(sim_rs_s3_amount)
 
 # plot the prioritisation and the bimodal species' distribution
-spp.plot(sim_rs_s3_amount, 1)
+spp.plot(sim_rs_s3_amount)
 ```
 
 The amount-based prioritisation for the bimodally distributed species only selects plannig units in the bottom left corner of the study area. This prioritisation only preserves individuals belonging to one of the two ecotypes. As a consequence, this prioritisaiton fails to preserve a representative sample of the genetic variation found inside this species.
 
-#### Amount-based and space-based targets
 Now that we have generated a prioritisation for each species that only considers amount-targets, we will generate a prioritisation for each species that considers both amount-based and space-targets. To do this we will update the space targets in our amount-based prioritisations, and store the prioritisations in new objects.
 
 First, let's do this for the uniform species.

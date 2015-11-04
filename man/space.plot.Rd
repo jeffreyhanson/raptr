@@ -8,16 +8,16 @@
 \title{Plot space}
 \usage{
 \method{space.plot}{RapData}(x, species, space = 1,
-  pu.color.palette = "RdYlGn", locked.in.color = "#000000FF",
-  locked.out.color = "#D7D7D7FF", ...)
+  pu.color.palette = c("#4D4D4D4D", "#00FF0080", "#FFFF0080", "#FF00004D"),
+  main = NULL, ...)
 
 \method{space.plot}{RapSolved}(x, species, space = 1, y = 0,
-  pu.color.palette = "RdYlGn", locked.in.color = "#000000FF",
-  locked.out.color = "#D7D7D7FF", ...)
+  pu.color.palette = c("#4D4D4D4D", "#00FF0080", "#FFFF0080", "#FF00004D"),
+  main = NULL, ...)
 
 \method{space.plot}{RapUnsolved}(x, species, space = 1,
-  pu.color.palette = "RdYlGn", locked.in.color = "#000000FF",
-  locked.out.color = "#D7D7D7FF", ...)
+  pu.color.palette = c("#4D4D4D4D", "#00FF0080", "#FFFF0080", "#FF00004D"),
+  main = NULL, ...)
 
 space.plot(x, species, space, ...)
 }
@@ -28,11 +28,9 @@ space.plot(x, species, space, ...)
 
 \item{space}{\code{integer} index of attribute space.}
 
-\item{pu.color.palette}{\code{character} name of color palette to use for planning units (see \code{\link[RColorBrewer]{brewer.pal}}). Defaults to 'RdYlGn'.}
+\item{pu.color.palette}{\code{character} name of colors or color palette (\code{\link[RColorBrewer]{brewer.pal}}) to indicate planning unit statuses. Defaults to \code{c('grey30', 'green', 'black', 'red')} which indicate non selected, selected, locked in, and locked out (respectively).}
 
-\item{locked.in.color}{\code{character} color to denote locked in planning units. Used when \code{y} is \code{NULL}. Defaults to '#000000FF'.}
-
-\item{locked.out.color}{\code{character} color to denote locked in planning units. Used when \code{y} is \code{NULL}. Defaults to '#D7D7D7FF'.}
+\item{main}{\code{character} title for the plot. Defaults to \code{NULL} and a default title is used.}
 
 \item{...}{not used.}
 
@@ -44,8 +42,10 @@ Note that this function only works for attribute spaces with one, two, or three 
 }
 \examples{
 # load RapSolved objects
-data(sim_rs)
-# plot distribution of first species in first attribute space
+data(sim_ru, sim_rs)
+# plot first species in first attribute space
+space.plot(sim_ru, 1, 1)
+# plot distribution of solutions for first species in first attribute space
 space.plot(sim_rs, 1, 1)
 }
 

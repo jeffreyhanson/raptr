@@ -99,8 +99,29 @@ dp.subset.RapUnsolved<-function(x, space, species, points) {
 #' @rdname spp.plot
 #' @method spp.plot RapUnsolved
 #' @export
-spp.plot.RapUnsolved<-function(x, species, prob.color.palette='YlGnBu', basemap='none', alpha=ifelse(basemap=="none", 1, 0.7), grayscale=FALSE, force.reset=FALSE, ...) {
-	spp.plot(x@data, species, prob.color.palette, basemap, alpha, grayscale, force.reset)
+spp.plot.RapUnsolved<-function(
+	x,
+	species,
+	prob.color.palette='YlGnBu',
+	pu.color.palette=c('#4D4D4D', '#00FF00', '#FFFF00', '#FF0000'),
+	basemap='none',
+	alpha=ifelse(basemap=="none", 1, 0.7),
+	grayscale=FALSE,
+	main=NULL,
+	force.reset=FALSE,
+	...
+) {
+	# set title
+	if (is.null(main)) {
+		if ('name' %in% names(x@data@species) & is.numeric(species)) {
+			main=paste0(x@data@species$name[species])
+		} else if (is.numeric(species)) {
+			main=paste0('Species ', species)
+		} else {
+			main=paste0(species)
+		}
+	}
+	spp.plot(x=x@data, species=species, prob.color.palette=prob.color.palette, pu.color.palette=pu.color.palette, basemap=basemap, alpha=alpha, grayscale=grayscale, main=main, force.reset=force.reset, ...)
 }
 
 #' @rdname space.plot
@@ -110,10 +131,19 @@ space.plot.RapUnsolved<-function(
 	x,
 	species,
 	space=1,
-	pu.color.palette='RdYlGn',
-	locked.in.color="#000000FF",
-	locked.out.color="#D7D7D7FF",
+	pu.color.palette=c('#4D4D4D4D', '#00FF0080', '#FFFF0080', '#FF00004D'),
+	main=NULL,
 	...
 ) {
-	space.plot.RapData(x@data, species, space, pu.color.palette, locked.in.color, locked.out.color, ...)
+	# set title
+	if (is.null(main)) {
+		if ('name' %in% names(x@data@species) & is.numeric(species)) {
+			main=paste0(x@data@species$name[species], ' in space ', space)
+		} else if (is.numeric(species)) {
+			main=paste0('Species ', species, ' in space ', space)
+		} else {
+			main=paste0(species, ' in space ', space)
+		}
+	}
+	space.plot.RapData(x@data, species, space, pu.color.palette, main, ...)
 }

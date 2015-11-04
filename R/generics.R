@@ -141,15 +141,10 @@ setGeneric('solve', function(a, b, ...) standardGeneric('solve'))
 #' @param i \code{NULL} to plot selection frequencies. \code{numeric} to plot the i'th solution, or 0 to plot the best solution. Only used when \code{y} is a \code{RapSolved} object. Defaults to \code{NULL}.
 #' @param j \code{NULL} to plot selection frequencies. \code{numeric} to plot the i'th solution, or 0 to plot the best solution. Only used when \code{y} is a \code{RapSolved} object. Defaults to \code{j}.
 #' @param basemap \code{character} object indicating the type of basemap to use (see \code{link{basemap}}). Use either 'none', 'roadmap', 'mobile', 'satellite', 'terrain', 'hybrid', 'mapmaker-roadmap', 'mapmaker-hybrid'. Defaults to 'none'.
-#' @param color.palette \code{character} name of colour palette to use for planning units (see \code{\link[RColorBrewer]{brewer.pal}}). Defaults to 'PuBu' when \code{y} is \code{NULL}, 'Greens' when \code{y} is \code{numeric}, and 'RdYlBu' or 'Accent' when \code{y} is \code{RapSolved}.
-#' @param locked.in.color \code{character} color to denote locked in planning units. Used when \code{y} is \code{NULL}. Defaults to '#000000FF'.
-#' @param locked.out.color \code{character} color to denote locked in planning units. Used when \code{y} is \code{NULL}. Defaults to '#D7D7D7FF'.
-#' @param x.locked.in.color \code{character} color to denote locked in planning units in \code{x}. Used when \code{y} is \code{RapSolved}. Defaults to '#000000FF'.
-#' @param x.locked.out.color \code{character} color to denote locked out planning units in \code{x}. Used when \code{y} is \code{RapSolved}. Defaults to '#D7D7D7FF'.
-#' @param y.locked.in.color \code{character} color to denote locked in planning units in \code{y}. Used when \code{y} is \code{RapSolved}. Defaults to '#FFFFFFFF'.
-#' @param y.locked.out.color \code{character} color to denote locked out planning units in \code{y}. Used when \code{y} is \code{RapSolved}. Defaults to '#D7D7D7FF'.
+#' @param pu.color.palette \code{character} name of colors or color palette (\code{\link[RColorBrewer]{brewer.pal}}) to indicate planning unit statuses. Defaults to \code{c('grey30', 'green', 'yellow', 'black', 'gray80', 'red', 'orange')}.
 #' @param alpha \code{numeric} value to indicate how transparent the planning unit colors shoud be.
 #' @param grayscale \code{logical} should the basemap be gray-scaled?
+#' @param main \code{character} title for the plot. Defaults to \code{NULL} and a default title is used.
 #' @param force.reset \code{logical} if basemap data has been cached, should it be re-downloaded?
 #' @name plot
 #' @seealso \code{\link{RapSolved}}.
@@ -560,22 +555,21 @@ SpatialPolygons2PolySet<-function(x, n_preallocate) UseMethod("SpatialPolygons2P
 #' @param species \code{character} name of species, or \code{integer} index for species.
 #' @param y \code{NULL} \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.
 #' @param prob.color.palette \code{character} name of color palette to denote probability of occupancy of the species in planning units (see \code{\link[RColorBrewer]{brewer.pal}}). Defaults to 'YlGnBu'.
-#' @param pu.color.palette \code{character} name of color palette to indicate planning unit statuses (see \code{\link[RColorBrewer]{brewer.pal}}). Defaults to 'RdYlGn.
-#' @param locked.in.color \code{character} color to denote locked in planning units. Defaults to '#000000FF'.
-#' @param locked.out.color \code{character} color to denote locked in planning units. Defaults to '#D7D7D7FF'.
+#' @param pu.color.palette \code{character} name of colors or color palette (\code{\link[RColorBrewer]{brewer.pal}}) to indicate planning unit statuses. Defaults to \code{c('grey30', 'green', 'black', 'red')} which indicate non selected, selected, locked in, and locked out (respectively).
 #' @param basemap \code{character} object indicating the type of basemap to use (see \code{link{basemap}}). Use either 'none', 'roadmap', 'mobile', 'satellite', 'terrain', 'hybrid', 'mapmaker-roadmap', 'mapmaker-hybrid'. Defaults to 'none'.
 #' @param alpha \code{numeric} value to indicate how transparent the planning unit colors shoud be.
 #' @param grayscale \code{logical} should the basemap be gray-scaled?
+#' @param main \code{character} title for the plot. Defaults to \code{NULL} and a default title is used.
 #' @param force.reset \code{logical} if basemap data has been cached, should it be re-downloaded?
 #' @param ... not used.
 #' @export
 #' @examples
 #' # load RapSolved objects
-#' data(sim_ru)
-#' # plot first species in sim_rs
+#' data(sim_ru, sim_rs)
+#' # plot first species in sim_ru
 #' spp.plot(sim_ru, species=1)
 #' # plot 'bimodal' species in sim_rs
-#' spp.plot(sim_ru, species='bimodal')
+#' spp.plot(sim_rs, species='bimodal')
 spp.plot<-function(x, species, ...) UseMethod('spp.plot')
 
 #' Plot space
@@ -587,21 +581,22 @@ spp.plot<-function(x, species, ...) UseMethod('spp.plot')
 #' @param species \code{character} name of species, or \code{integer} index for species.
 #' @param space \code{integer} index of attribute space.
 #' @param y \code{NULL} \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.
-#' @param pu.color.palette \code{character} name of color palette to use for planning units (see \code{\link[RColorBrewer]{brewer.pal}}). Defaults to 'RdYlGn'.
-#' @param locked.in.color \code{character} color to denote locked in planning units. Used when \code{y} is \code{NULL}. Defaults to '#000000FF'.
-#' @param locked.out.color \code{character} color to denote locked in planning units. Used when \code{y} is \code{NULL}. Defaults to '#D7D7D7FF'.
+#' @param pu.color.palette \code{character} name of colors or color palette (\code{\link[RColorBrewer]{brewer.pal}}) to indicate planning unit statuses. Defaults to \code{c('grey30', 'green', 'black', 'red')} which indicate non selected, selected, locked in, and locked out (respectively).
+#' @param main \code{character} title for the plot. Defaults to \code{NULL} and a default title is used.
 #' @param ... not used.
 #' @export
 #' @examples
 #' # load RapSolved objects
-#' data(sim_rs)
-#' # plot distribution of first species in first attribute space
+#' data(sim_ru, sim_rs)
+#' # plot first species in first attribute space
+#' space.plot(sim_ru, 1, 1)
+#' # plot distribution of solutions for first species in first attribute space
 #' space.plot(sim_rs, 1, 1)
 space.plot<-function(
   x,
 	species,
 	space,
-  ...
+	...
 ) {
   UseMethod('space.plot')
 }

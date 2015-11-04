@@ -70,12 +70,20 @@ test_that('spp.subset.RapData', {
 	data(sim_ru)
 	rd<-sim_ru@data
 	rd2<-spp.subset(rd, 1)
+	rd3<-spp.subset(rd, 'uniform')
 	# tests
 	expect_equal(nrow(rd2@species), 1)
 	expect_true(all(rd2@pu.species.probabilities$species==1L))
 	expect_equal(length(rd2@attribute.spaces[[1]]@dp), 1)
 	expect_true(all(rd2@targets$species==1L))
 	expect_equal(nrow(rd2@targets), 2)
+	
+	expect_equal(nrow(rd3@species), 1)
+	expect_true(all(rd3@pu.species.probabilities$species==1L))
+	expect_equal(length(rd3@attribute.spaces[[1]]@dp), 1)
+	expect_true(all(rd3@targets$species==1L))
+	expect_equal(nrow(rd3@targets), 2)
+	
 })
 
 test_that('dp.subset.RapData', {
@@ -153,3 +161,16 @@ test_that('space.target<-.RapData', {
 	space.target(sim_rd, 1)<-0.5
 	expect_equal(unname(space.target(sim_rd)[,1]), c(0.5, 0.3, 0.3))
 })
+
+test_that('spp.plot.RapData', {
+	data(sim_ru)
+	spp.plot(sim_ru@data, 1)
+	spp.plot(sim_ru@data, 'uniform')
+})
+
+test_that('space.plot.RapData', {
+	data(sim_ru)
+	space.plot(sim_ru@data, 1, 1)
+	space.plot(sim_ru@data, 'normal', 1)
+})
+

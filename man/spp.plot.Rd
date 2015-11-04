@@ -8,18 +8,19 @@
 \title{Plot species}
 \usage{
 \method{spp.plot}{RapData}(x, species, prob.color.palette = "YlGnBu",
+  pu.color.palette = c("#4D4D4D", "#00FF00", "#FFFF00", "#FF0000"),
   basemap = "none", alpha = ifelse(basemap == "none", 1, 0.7),
-  grayscale = FALSE, force.reset = FALSE, ...)
+  grayscale = FALSE, main = NULL, force.reset = FALSE, ...)
 
 \method{spp.plot}{RapSolved}(x, species, y = 0,
-  prob.color.palette = "YlGnBu", pu.color.palette = "RdYlGn",
-  basemap = "none", locked.in.color = "#000000FF",
-  locked.out.color = "#D7D7D7FF", alpha = ifelse(basemap == "none", 1, 0.7),
-  grayscale = FALSE, force.reset = FALSE, ...)
+  prob.color.palette = "YlGnBu", pu.color.palette = c("#4D4D4D", "#00FF00",
+  "#FFFF00", "#FF0000"), basemap = "none", alpha = ifelse(basemap == "none",
+  1, 0.7), grayscale = FALSE, main = NULL, force.reset = FALSE, ...)
 
 \method{spp.plot}{RapUnsolved}(x, species, prob.color.palette = "YlGnBu",
+  pu.color.palette = c("#4D4D4D", "#00FF00", "#FFFF00", "#FF0000"),
   basemap = "none", alpha = ifelse(basemap == "none", 1, 0.7),
-  grayscale = FALSE, force.reset = FALSE, ...)
+  grayscale = FALSE, main = NULL, force.reset = FALSE, ...)
 
 spp.plot(x, species, ...)
 }
@@ -30,33 +31,31 @@ spp.plot(x, species, ...)
 
 \item{prob.color.palette}{\code{character} name of color palette to denote probability of occupancy of the species in planning units (see \code{\link[RColorBrewer]{brewer.pal}}). Defaults to 'YlGnBu'.}
 
+\item{pu.color.palette}{\code{character} name of colors or color palette (\code{\link[RColorBrewer]{brewer.pal}}) to indicate planning unit statuses. Defaults to \code{c('grey30', 'green', 'black', 'red')} which indicate non selected, selected, locked in, and locked out (respectively).}
+
 \item{basemap}{\code{character} object indicating the type of basemap to use (see \code{link{basemap}}). Use either 'none', 'roadmap', 'mobile', 'satellite', 'terrain', 'hybrid', 'mapmaker-roadmap', 'mapmaker-hybrid'. Defaults to 'none'.}
 
 \item{alpha}{\code{numeric} value to indicate how transparent the planning unit colors shoud be.}
 
 \item{grayscale}{\code{logical} should the basemap be gray-scaled?}
 
+\item{main}{\code{character} title for the plot. Defaults to \code{NULL} and a default title is used.}
+
 \item{force.reset}{\code{logical} if basemap data has been cached, should it be re-downloaded?}
 
 \item{...}{not used.}
 
 \item{y}{\code{NULL} \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.}
-
-\item{pu.color.palette}{\code{character} name of color palette to indicate planning unit statuses (see \code{\link[RColorBrewer]{brewer.pal}}). Defaults to 'RdYlGn.}
-
-\item{locked.in.color}{\code{character} color to denote locked in planning units. Defaults to '#000000FF'.}
-
-\item{locked.out.color}{\code{character} color to denote locked in planning units. Defaults to '#D7D7D7FF'.}
 }
 \description{
 This function plots the distribution of species across the study area.
 }
 \examples{
 # load RapSolved objects
-data(sim_ru)
-# plot first species in sim_rs
+data(sim_ru, sim_rs)
+# plot first species in sim_ru
 spp.plot(sim_ru, species=1)
 # plot 'bimodal' species in sim_rs
-spp.plot(sim_ru, species='bimodal')
+spp.plot(sim_rs, species='bimodal')
 }
 

@@ -329,10 +329,18 @@ basemap.RapSolved<-function(x, basemap="none", grayscale=FALSE, force.reset=FALS
 setMethod(
 	"plot",
 	signature(x="RapSolved",y="numeric"),
-	function(x, y, basemap="none", color.palette="Greens", locked.in.color="#000000FF", locked.out.color="#D7D7D7FF", alpha=ifelse(basemap=="none",1,0.7), grayscale=FALSE, force.reset=FALSE) {
+	function(
+		x,
+		y,
+		basemap="none",
+		pu.color.palette=c('#e5f5f9', '#00441b', '#FFFF00', '#FF0000'),
+		alpha=ifelse(basemap=="none",1,0.7),
+		grayscale=FALSE,
+		main=NULL,
+		force.reset=FALSE
+	) {
 		# check for issues
 		stopifnot(alpha<=1 & alpha>=0)
-		match.arg(color.palette, rownames(brewer.pal.info))
 		if (nrow(x@data@polygons)==0) stop("Spatial data for planning units not present in object")
 		# get basemap data
 		if (basemap!="none")
@@ -344,16 +352,26 @@ setMethod(
 			stopifnot(y<=nrow(x@results@selections))
 		values<-x@results@selections[y,]
 		cols<-character(length(values))
-		cols[which(x@data@pu$status==2)]<-locked.in.color
-		cols[which(x@data@pu$status==3)]<-locked.out.color
-		cols[which(x@data@pu$status<2)]<-brewerCols(values[which(x@data@pu$status<2)], color.palette, alpha, n=2)
+		cols[which(values==0)]<-pu.color.palette[1]
+		cols[which(values==1)]<-pu.color.palette[2]
+		cols[which(x@data@pu$status==2)]<-pu.color.palette[3]
+		cols[which(x@data@pu$status==3)]<-pu.color.palette[4]
+		# set title
+		if (is.null(main)) {
+			if (y==x@results@best) {
+				main=paste0('Best solution (', y, ')')
+			} else {
+				main=paste0('Solution ', y)
+			}
+		}
 		prettyGeoplot(
 			x@data@polygons,
 			cols,
 			basemap,
-			ifelse(y==x@results@best, paste0("Best Solution (",y,")"), paste0("Solution (",y,")")),
-			categoricalLegend(c(locked.out.color,brewerCols(c(0,1),color.palette,alpha,n=2),locked.in.color),c("Locked Out", "Not Selected", "Selected", "Locked In")),
-			beside=FALSE
+			main=main,
+			categoricalLegend(pu.color.palette[c(4,2,1,3)],c("Locked Out", "Not Selected", "Selected", "Locked In")),
+			beside=FALSE,
+			border='gray30'
 		)
 	}
 )
@@ -363,31 +381,45 @@ setMethod(
 setMethod(
 	"plot",
 	signature(x="RapSolved",y="missing"),
-	function(x, y, basemap="none", color.palette="PuBu", locked.in.color="#000000FF", locked.out.color="#D7D7D7FF", alpha=ifelse(basemap=="none",1,0.7), grayscale=FALSE, force.reset=FALSE) {
+	function(
+		x,
+		y,
+		basemap="none",
+		pu.color.palette=c('PuBu', '#FFFF00', '#FF0000'),
+		alpha=ifelse(basemap=="none",1,0.7),
+		grayscale=FALSE,
+		main=NULL,
+		force.reset=FALSE
+	) {
 		# check for issues
 		match.arg(basemap, c("none", "roadmap", "mobile", "satellite", "terrain", "hybrid", "mapmaker-roadmap", "mapmaker-hybrid"))
 		stopifnot(alpha<=1 & alpha>=0)
-		match.arg(color.palette, rownames(brewer.pal.info))
+		match.arg(pu.color.palette[1], rownames(brewer.pal.info))
 		if (nrow(x@data@polygons)==0) stop("Spatial data for planning units not present in object")
 		# get basemap data
 		if (basemap!="none")
 			basemap<-basemap.RapData(x@data, basemap, grayscale, force.reset)
+		# set title
+		if (is.null(main)) {
+			main='Selection frequencies (%)'
+		}
 		# main processing
 		if (force.reset || !is.cached(x@results, "selectionfreqs")) {
 			cache(x@results, "selectionfreqs", colMeans(x@results@selections))
 		}
 		values<-cache(x@results,"selectionfreqs")[which(x@data@pu$status<2)]
 		cols<-character(length(cache(x@results,"selectionfreqs")))
-		cols[which(x@data@pu$status<2)]<-brewerCols(rescale(values,from=range(values),to=c(0,1)), pal=color.palette, alpha=alpha)
-		cols[which(x@data@pu$status==2)]<-locked.in.color
-		cols[which(x@data@pu$status==3)]<-locked.out.color
+		cols[which(x@data@pu$status<2)]<-brewerCols(rescale(values,from=range(values),to=c(0,1)), pal=pu.color.palette[1], alpha=alpha)
+		cols[which(x@data@pu$status==2)]<-pu.color.palette[2]
+		cols[which(x@data@pu$status==3)]<-pu.color.palette[3]
 		prettyGeoplot(
 			x@data@polygons,
 			cols,
 			basemap,
-			"Planning unit selection frequency",
-			continuousLegend(values,color.palette,posx=c(0.3, 0.4),posy=c(0.1, 0.9)),
-			beside=TRUE
+			main=main,
+			continuousLegend(values,pu.color.palette[1],posx=c(0.3, 0.4),posy=c(0.1, 0.9)),
+			beside=TRUE,
+			border='gray30'
 		)
 	}
 )
@@ -397,10 +429,21 @@ setMethod(
 setMethod(
 	"plot",
 	signature(x="RapSolved",y="RapSolved"),
-	function(x, y, i=NULL, j=i, basemap="none", color.palette=ifelse(is.null(i), "RdYlBu", "Accent"), x.locked.in.color="#000000FF", x.locked.out.color="#D7D7D7FF", y.locked.in.color="#FFFFFFFF", y.locked.out.color="#D7D7D7FF", alpha=ifelse(basemap=="none",1,0.7), grayscale=FALSE, force.reset=FALSE) {
+	function(
+		x,
+		y,
+		i=NULL,
+		j=i,
+		basemap="none",
+		pu.color.palette=ifelse(is.null(i), c('RdYlBu', '#FFFF00', '#FF0000'), "Accent"),
+		alpha=ifelse(basemap=="none",1,0.7),
+		grayscale=FALSE,
+		main=NULL,
+		force.reset=FALSE
+	) {
 		# check for issues
 		stopifnot(alpha<=1 & alpha>=0)
-		match.arg(color.palette, rownames(brewer.pal.info))
+		match.arg(pu.color.palette[1], rownames(brewer.pal.info))
 		if (nrow(x@data@polygons)==0) stop("Spatial data for planning units not present in object")
 		stopifnot(is.comparable(x,y))
 		if (is.numeric(i))
@@ -413,10 +456,12 @@ setMethod(
 		# main processing
 		cols<-character(nrow(x@data@pu))
 		if (is.null(i) || is.null(j)) {
-			cols[which(x@data@pu$status==2)]<-x.locked.in.color
-			cols[which(y@data@pu$status==2)]<-y.locked.in.color
-			cols[which(x@data@pu$status==3)]<-x.locked.out.color
-			cols[which(y@data@pu$status==3)]<-y.locked.out.color
+			if (is.null(main)) main="Difference in selection frequencies (%)"
+		
+			cols[which(x@data@pu$status==2)]<-pu.color.palette[2]
+			cols[which(y@data@pu$status==2)]<-pu.color.palette[2]
+			cols[which(x@data@pu$status==3)]<-pu.color.palette[3]
+			cols[which(y@data@pu$status==3)]<-pu.color.palette[3]
 
 			if (force.reset || !is.cached(x@results, "selectionfreqs"))
 				cache(x@results, "selectionfreqs", colMeans(x@results@selections))
@@ -426,13 +471,14 @@ setMethod(
 			ysc<-cache(y@results, "selectionfreqs")[which(nchar(cols)==0)]
 			values<-xsc-ysc
 			col.pos=which(nchar(cols)==0)
-			cols[col.pos]<-brewerCols(rescale(values,to=c(0,1)), color.palette, alpha)
+			cols[col.pos]<-brewerCols(rescale(values,to=c(0,1)), pu.color.palette[1], alpha)
 			# determine legend function
 			if (length(unique(round(values, 5)))>1) {
 				legend.fun=continuousLegend(
 					values,
-					color.palette,
-					posx=c(0.3, 0.4),posy=c(0.1, 0.9),
+					pu.color.palette[1],
+					posx=c(0.3, 0.4),
+					posy=c(0.1, 0.9),
 					center=TRUE,
 					endlabs=c('+X','+Y')
 				)
@@ -441,21 +487,13 @@ setMethod(
 				# create legend entries
 				leg.cols=c(cols[col.pos[1]])
 				leg.labs=c(values[1])
-				if (any(x@data@pu$status==2)) {
-					leg.cols=c(leg.cols, x.locked.in.color)
-					leg.labs=c(leg.labs, "Locked in X")
+				if (any(x@data@pu$status==2) | any(y@data@pu$status==2)) {
+					leg.cols=c(leg.cols, pu.color.palette[2])
+					leg.labs=c(leg.labs, "Locked in")
 				}
-				if (any(x@data@pu$status==3)) {
-					leg.cols=c(leg.cols, x.locked.out.color)
-					leg.labs=c(leg.labs, "Locked out X")
-				}
-				if (any(y@data@pu$status==2)) {
-					leg.cols=c(leg.cols, y.locked.in.color)
-					leg.labs=c(leg.labs, "Locked in Y")
-				}
-				if (any(y@data@pu$status==3)) {
-					leg.cols=c(leg.cols, y.locked.out.color)
-					leg.labs=c(leg.labs, "Locked out Y")
+				if (any(x@data@pu$status==3) | any(y@data@pu$status==3)) {
+					leg.cols=c(leg.cols, pu.color.palette[3])
+					leg.labs=c(leg.labs, "Locked out")
 				}
 				# create legend function
 				legend.fun=categoricalLegend(
@@ -469,38 +507,40 @@ setMethod(
 				x@data@polygons,
 				cols,
 				basemap,
-				"Difference in selection frequencies",
+				main=main,
 				fun=legend.fun,
-				beside=beside
+				beside=beside,
+				border='gray30'
 			)
 		} else {
 			if (i==0)
 				i<-x@results@best
 			if (j==0)
 				j<-y@results@best
-			cols2<-brewerCols(seq(0,1,length.out=4),color.palette,alpha,n=4)
+			cols2<-brewerCols(seq(0,1,length.out=8),pu.color.palette,alpha,n=8)
 
 			cols[which(x@results@selections[i,]==1 & y@results@selections[j,]==0)]<-cols2[1]
 			cols[which(x@results@selections[i,]==0 & y@results@selections[j,]==1)]<-cols2[2]
 			cols[which(x@results@selections[i,]==1 & y@results@selections[j,]==1)]<-cols2[3]
 			cols[which(x@results@selections[i,]==0 & y@results@selections[j,]==0)]<-cols2[4]
 
-			cols[which(x@data@pu$status==2)]<-x.locked.in.color
-			cols[which(y@data@pu$status==2)]<-y.locked.in.color
-			cols[which(x@data@pu$status==3)]<-x.locked.out.color
-			cols[which(y@data@pu$status==3)]<-y.locked.out.color
+			cols[which(x@data@pu$status==2)]<-cols2[5]
+			cols[which(y@data@pu$status==2)]<-cols2[6]
+			cols[which(x@data@pu$status==3)]<-cols2[7]
+			cols[which(y@data@pu$status==3)]<-cols2[8]
 
-			xrepr<-ifelse(i==x@results@best, '(best)', paste0('(',i,')'))
-			yrepr<-ifelse(i==y@results@best, '(best)', paste0('(',j,')'))
+			if (is.null(main)) {
+				main=paste0("Difference between solution ",i,ifelse(i==x@results@best, " (best)", ""), " and solution ",j, ifelse(j==y@results@best, " (best)", ""))
+			}
 
 			prettyGeoplot(
 				x@data@polygons,
 				cols,
 				basemap,
-				paste0("Difference in X solution ",i,ifelse(i==x@results@best, " (best)", ""), " and Y solution ",j, ifelse(j==y@results@best, " (best)", "")),
+				main=main,
 				categoricalLegend(
-					c(cols2,x.locked.in.color,y.locked.in.color,x.locked.out.color,y.locked.out.color),
-					c("Selected in X",  "Selected in Y", "Both", "Neither", "Locked in X", "Locked in Y", paste("Locked out X"), paste("Locked out Y")),
+					c(cols2),
+					c("Selected in X",  "Selected in Y", "Both", "Neither", "Locked in X", "Locked in Y", "Locked out X", "Locked out Y"),
 					ncol=4
 				),
 				beside=FALSE
@@ -513,10 +553,23 @@ setMethod(
 #' @rdname spp.plot
 #' @method spp.plot RapSolved
 #' @export
-spp.plot.RapSolved<-function(x, species, y=0, prob.color.palette="YlGnBu", pu.color.palette='RdYlGn', basemap="none", locked.in.color="#000000FF", locked.out.color="#D7D7D7FF", alpha=ifelse(basemap=="none", 1, 0.7), grayscale=FALSE, force.reset=FALSE, ...) {
+spp.plot.RapSolved<-function(
+	x,
+	species,
+	y=0,
+	prob.color.palette="YlGnBu",
+	pu.color.palette=c('#4D4D4D', '#00FF00', '#FFFF00', '#FF0000'),
+	basemap="none",
+	alpha=ifelse(basemap=="none", 1, 0.7),
+	grayscale=FALSE,
+	main=NULL,
+	force.reset=FALSE,
+	...
+) {
 	# data checks
 	stopifnot(length(species)==1)
 	stopifnot(y %in% c(0:nrow(x@results@selections)))
+	stopifnot(length(pu.color.palette)==4 || length(pu.color.palette)==1)
 	if (nrow(x@data@polygons)==0)
 			stop("Spatial data for planning units not present in object")
 	if (is.character(species)) {
@@ -529,7 +582,17 @@ spp.plot.RapSolved<-function(x, species, y=0, prob.color.palette="YlGnBu", pu.co
 				stop('argument to species is not a valid index for species in argument to x')
 			spp_pos <- species
 		}
-}
+	}
+	# set title
+	if (is.null(main)) {
+		if ('name' %in% names(x@data@species) & is.numeric(species)) {
+			main=paste0(x@data@species$name[species])
+		} else if (is.numeric(species)) {
+			main=paste0('Species ', species)
+		} else {
+			main=paste0(species)
+		}
+	}	
 	# get basemap
 	if (basemap!="none")
 		basemap<-basemap.RapData(x, basemap, grayscale, force.reset)
@@ -544,12 +607,14 @@ spp.plot.RapSolved<-function(x, species, y=0, prob.color.palette="YlGnBu", pu.co
 		cols<-brewerCols(rep(values[1], length(values)), prob.color.palette, alpha)
 		values<-c(0,values[1])
 	}
+	# get selected rows
+	sel.pu.ids<-which(as.logical(selections(x, y)))
+	unsel.pu.ids<-which(!as.logical(selections(x, y)))
 	# extract planning unit border colors
-	all.border.cols<-brewerCols(c(0,1), pu.color.palette, alpha)
-	border.cols<-rep(all.border.cols[1], nrow(x@data@pu))
-	border.cols[which(as.logical(selections(x, y)))]<-all.border.cols[length(all.border.cols)]
-	border.cols[which(x@data@pu$status==2)]<-locked.in.color
-	border.cols[which(x@data@pu$status==3)]<-locked.out.color
+	border.cols<-rep(pu.color.palette[1], nrow(x@data@pu))
+	border.cols[sel.pu.ids]<-pu.color.palette[2]
+	border.cols[which(x@data@pu$status==2)]<-pu.color.palette[3]
+	border.cols[which(x@data@pu$status==3)]<-pu.color.palette[4]
 	# set title
 	if (!is.null(x@data@species$name)) {
 		main=paste0(x@data@species$name[spp_pos ], " in planning units (%)")
@@ -559,13 +624,14 @@ spp.plot.RapSolved<-function(x, species, y=0, prob.color.palette="YlGnBu", pu.co
 	# make plot
 	plot(1,1)
 	prettyGeoplot(
-		x@data@polygons,
-		cols,
+		list(x@data@polygons[x@data@polygons$PID %in% unsel.pu.ids,], x@data@polygons[x@data@polygons$PID %in% sel.pu.ids,]),
+		list(cols[unsel.pu.ids], cols[sel.pu.ids]),
 		basemap,
 		main,
 		continuousLegend(values,prob.color.palette,posx=c(0.3, 0.4),posy=c(0.1, 0.9)),
 		beside=TRUE,
-		border=border.cols
+		border=list(border.cols[unsel.pu.ids], border.cols[sel.pu.ids]),
+		lwd=list(1, 5)
 	)
 }
 
@@ -577,13 +643,13 @@ space.plot.RapSolved<-function(
 	species,
 	space=1,
 	y=0,
-	pu.color.palette='RdYlGn',
-	locked.in.color="#000000FF",
-	locked.out.color="#D7D7D7FF",
+	pu.color.palette=c('#4D4D4D4D', '#00FF0080', '#FFFF0080', '#FF00004D'),
+	main=NULL,
 	...
 ) {
 	# data checks
 	stopifnot(length(y)==1)
+	stopifnot(length(pu.color.palette)==1 || length(pu.color.palette)==4)
 	stopifnot(y %in% c(0:nrow(x@results@selections)))
 	stopifnot(length(species)==1)
 	if (is.character(species)) {
@@ -598,10 +664,14 @@ space.plot.RapSolved<-function(
 		}
 	}
 	# set title
-	if (!is.null(x@data@species$name)) {
-		main=x@data@species$name[spp_pos]
-	} else {
-		main=paste0("Species ",species)
+	if (is.null(main)) {
+		if ('name' %in% names(x@data@species) & is.numeric(species)) {
+			main=paste0(x@data@species$name[species], ' in space ', space)
+		} else if (is.numeric(species)) {
+			main=paste0('Species ', species, ' in space ', space)
+		} else {
+			main=paste0(species, ' in space ', space)
+		}
 	}
 	# extract pu data
 	pu<-as.data.frame(x@data@attribute.spaces[[space]]@pu@coords)
@@ -621,8 +691,6 @@ space.plot.RapSolved<-function(
 			pu,
 			dp,
 			pu.color.palette,
-			locked.in.color,
-			locked.out.color,
 			main
 		)
 	)

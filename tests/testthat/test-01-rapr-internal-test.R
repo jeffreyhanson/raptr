@@ -51,9 +51,7 @@ test_that('spacePlot.1d', {
 			X1=runif(100, min=-4, max=4),
 			weights=runif(100)
 		),
-		pu.color.palette='RdYlGn',
-		locked.in.color='#000000FF',
-		locked.out.color='#D7D7D7FF',
+		pu.color.palette=c('grey30', 'green', 'black', 'red'),
 		main='test 1d'
 	)
 })
@@ -76,9 +74,7 @@ test_that('spacePlot.2d', {
 			X2=runif(100, min=-4, max=4),
 			weights=runif(100)
 		),
-		pu.color.palette='RdYlGn',
-		locked.in.color='#000000FF',
-		locked.out.color='#D7D7D7FF',
+		pu.color.palette=c('grey30', 'green', 'black', 'red'),
 		main='test 2d'
 	)
 })
@@ -106,9 +102,7 @@ test_that('spacePlot.3d', {
 			X3=runif(100, min=-4, max=4),
 			weights=runif(100)
 		),
-		pu.color.palette='RdYlGn',
-		locked.in.color='#000000FF',
-		locked.out.color='#D7D7D7FF',
+		pu.color.palette=c('grey30', 'green', 'black', 'red'),
 		main='test 3d'
 	)
 	# close rgl device

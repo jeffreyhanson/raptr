@@ -46,7 +46,7 @@ hashCall<-function(expr, skipargs=c(), env=parent.frame()) {
 }
 
 # plotting functions
-prettyGeoplot<-function(polygons, col, basemap, main, fun, beside=TRUE, border=NULL) {
+prettyGeoplot<-function(polygons, col, basemap, main, fun, beside=TRUE, border=NULL, lwd=1) {
 	# make layout
 	defpar<-par(no.readonly = TRUE)
 	par(mar=c(1,1,1,1),oma=c(0,0,0,0))
@@ -55,6 +55,14 @@ prettyGeoplot<-function(polygons, col, basemap, main, fun, beside=TRUE, border=N
 	} else {
 		layout(matrix(c(1,3,2),ncol=1,byrow=TRUE), widths=c(1), heights=c(0.1,0.8,0.1))
 	}
+	# convert to list if not
+	if (!inherits(polygons, 'list')) {
+		polygons=list(polygons)
+		col=list(col)
+		border=list(border)
+		lwd=list(lwd)
+	}
+	
 	# make title
 	plot(1,1,type="n", xlim=c(-1,1), ylim=c(-1,1), axes=FALSE, xlab="", ylab="")
 	mtext(side=1, line=-1.5, main, cex=1.5)
@@ -64,10 +72,15 @@ prettyGeoplot<-function(polygons, col, basemap, main, fun, beside=TRUE, border=N
 	# make geoplot
 	if (is.list(basemap)) {
 		PlotOnStaticMap(basemap)
-		suppressWarnings(PlotPolysOnStaticMap(basemap, polygons, col=col, border=border, add=TRUE))
+		for (i in seq_along(polygons)) {
+			suppressWarnings(PlotPolysOnStaticMap(basemap, polygons[[i]], col=col[[i]], border=border[[i]], add=TRUE, lwd=lwd[[i]]))
+		}
 	} else {
-		xdiff<-diff(range(polygons$X))
-		plotPolys(polygons, col=col, axes=FALSE, xlab="", ylab="", border=border)
+		plotPolys(polygons[[1]], col=col[[1]], axes=FALSE, xlab="", ylab="", border=border[[1]], lwd=lwd[[1]])
+		for (i in seq_along(polygons)[-1]) {
+			if (nrow(polygons[[i]])>0)
+				suppressWarnings(addPolys(polygons[[i]], col=col[[i]], xlab="", ylab="", border=border[[i]], lwd=lwd[[i]]))
+		}
 	}
 	par(defpar)
 	return(invisible())
@@ -75,12 +88,18 @@ prettyGeoplot<-function(polygons, col, basemap, main, fun, beside=TRUE, border=N
 
 # color functions
 brewerCols<-function(values, pal, alpha=1, n=NULL) {
-	if (is.null(n))
+	if (is.null(n) & length(pal)==1) {
 		n<-brewer.pal.info$maxcolors[which(rownames(brewer.pal.info)==pal)]
-	suppressWarnings(r<-colorRamp(brewer.pal(n, pal))(values))
+	} else {
+		n=length(values)
+	}
+	if (length(pal)==1) {
+		suppressWarnings(r<-colorRamp(brewer.pal(n, pal))(values))
+	} else{
+		suppressWarnings(r<-colorRamp(pal)(values))
+	}
 	return(rgb(r, maxColorValue=255, alpha=rescale(alpha, from=c(0,1), to=c(0,255))))
 }
-
 
 # automated legend functions
 continuousLegend<-function(values, pal, posx, posy, center=FALSE, endlabs=NULL) {
@@ -599,14 +618,13 @@ setGeneric("is.cached", function(x,name) standardGeneric("is.cached"))
 setGeneric("cache", function(x, name, y) standardGeneric("cache"))
 
 ## space plotting functions
-spacePlot.1d<-function(pu, dp, pu.color.palette, locked.in.color, locked.out.color, main) {
+spacePlot.1d<-function(pu, dp, pu.color.palette, main) {
   # create X2 vars
   pu$X2<-0
   dp$X2<-0
   # create colors
-  cols<-brewerCols(c(0,1), pu.color.palette, 1)
-  not.selected.col=cols[1]
-  selected.col=cols[length(cols)]
+  if (length(pu.color.palette)==1)
+		pu.color.palette<-brewerCols(seq(0,1,0.25), pu.color.palette, 4)
   # make plot
   ggplot() +
   geom_point(
@@ -622,25 +640,23 @@ spacePlot.1d<-function(pu, dp, pu.color.palette, locked.in.color, locked.out.col
   geom_point(
 		aes_string(x="X1", y="X2", color="status", size="status"),
     data=pu,
-    position=position_jitter(width=0, height=5),
-    alpha=0.1
+    position=position_jitter(width=0, height=5)
   ) +
   scale_color_manual(
     name='Planning unit status',
     values=c(
-      "Locked Out"=locked.out.color,
-      "Not Selected"=not.selected.col,
-      "Selected"=selected.col,
-      "Locked In"=locked.in.color
-    ),
-    guide=guide_legend(override.aes=list(alpha=1))
+      "Locked Out"=pu.color.palette[4],
+      "Not Selected"=pu.color.palette[1],
+      "Selected"=pu.color.palette[2],
+      "Locked In"=pu.color.palette[3]
+    )
   ) +
   scale_size_manual(
     values=c(
       "Locked Out"=2,
       "Not Selected"=2,
-      "Selected"=5,
-      "Locked In"=5
+      "Selected"=4.5,
+      "Locked In"=4.5
     ),
     guide=FALSE
   ) +
@@ -658,11 +674,10 @@ spacePlot.1d<-function(pu, dp, pu.color.palette, locked.in.color, locked.out.col
   ylab('')
 }
 
-spacePlot.2d<-function(pu, dp, pu.color.palette, locked.in.color, locked.out.color, main) {
+spacePlot.2d<-function(pu, dp, pu.color.palette, main) {
   # create colors
-  cols<-brewerCols(c(0,1), pu.color.palette, 1)
-  not.selected.col=cols[1]
-  selected.col=cols[length(cols)]
+  if (length(pu.color.palette)==1)
+		pu.color.palette<-brewerCols(seq(0,1,0.25), pu.color.palette, 4)
   # make plot
   ggplot() +
   geom_point(
@@ -676,25 +691,23 @@ spacePlot.2d<-function(pu, dp, pu.color.palette, locked.in.color, locked.out.col
   ) +
   geom_point(
 		aes_string(x="X1", y="X2", color="status", size="status"),
-    data=pu,
-    alpha=0.1
+    data=pu
   ) +
   scale_color_manual(
     name='Planning unit status',
     values=c(
-      "Locked Out"=locked.out.color,
-      "Not Selected"=not.selected.col,
-      "Selected"=selected.col,
-      "Locked In"=locked.in.color
-    ),
-    guide=guide_legend(override.aes=list(alpha=1))
+      "Locked Out"=pu.color.palette[4],
+      "Not Selected"=pu.color.palette[1],
+      "Selected"=pu.color.palette[2],
+      "Locked In"=pu.color.palette[3]
+    )
   ) +
   scale_size_manual(
     values=c(
       "Locked Out"=2,
       "Not Selected"=2,
-      "Selected"=5,
-      "Locked In"=5
+      "Selected"=4.5,
+      "Locked In"=4.5
     ),
     guide=FALSE
   ) +
@@ -708,19 +721,20 @@ spacePlot.2d<-function(pu, dp, pu.color.palette, locked.in.color, locked.out.col
   ylab('Dimension 2')
 }
 
-spacePlot.3d<-function(pu, dp, pu.color.palette, locked.in.color, locked.out.color, main) {
+spacePlot.3d<-function(pu, dp, pu.color.palette, main) {
   # check if rgl is installed
   if (!'rgl' %in% unlist(lapply(.libPaths(), dir), recursive=FALSE, use.names=FALSE))
     stop('The rgl R package must be installed to visualise 3d attribute spaces')
   # create frame
   rgl::open3d()
   # add pu points
-  cols<-brewerCols(c(0,1), pu.color.palette, 1)
+  if (length(pu.color.palette)==1)
+		pu.color.palette<-brewerCols(seq(0,1,0.25), pu.color.palette, 4)
   pu.cols<-character(nrow(pu))
-  pu.cols[which(pu$status=='Not Selected')]<-cols[1]
-  pu.cols[which(pu$status=='Selected')]<-cols[length(cols)]
-  pu.cols[which(pu$status=='Locked In')]<-locked.in.color
-  pu.cols[which(pu$status=='Locked Out')]<-locked.out.color
+  pu.cols[which(pu$status=='Not Selected')]<-pu.color.palette[1]
+  pu.cols[which(pu$status=='Selected')]<-pu.color.palette[2]
+  pu.cols[which(pu$status=='Locked In')]<-pu.color.palette[3]
+  pu.cols[which(pu$status=='Locked Out')]<-pu.color.palette[4]
   rgl::points3d(as.matrix(pu[,1:3]), col=pu.cols)
   # add dp points
   dp.cols<-alpha(rep('darkblue', nrow(dp)), affineTrans(dp$weights, min(dp$weights), max(dp$weights), 0.1, 1))

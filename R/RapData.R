@@ -557,7 +557,7 @@ spp.subset.RapData<-function(x, species) {
 	if (inherits(species, 'character')) {
 		if (!'name' %in% names(x@species))
 			stop('argument to x does not have names for species.')
-		species <- match(species, x@species)
+		species <- match(species, x@species$name)
 		if (any(is.na(species)))
 			stop('argument to species contains names not present in object.')
 	}
@@ -706,7 +706,18 @@ update.RapData<-function(object, species=NULL, space=NULL, name=NULL, amount.tar
 #' @rdname spp.plot
 #' @method spp.plot RapData
 #' @export
-spp.plot.RapData<-function(x, species, prob.color.palette='YlGnBu', basemap='none', alpha=ifelse(basemap=="none", 1, 0.7), grayscale=FALSE, force.reset=FALSE, ...) {
+spp.plot.RapData<-function(
+	x,
+	species,
+	prob.color.palette='YlGnBu',
+	pu.color.palette=c('#4D4D4D', '#00FF00', '#FFFF00', '#FF0000'),
+	basemap='none',
+	alpha=ifelse(basemap=="none", 1, 0.7),
+	grayscale=FALSE,
+	main=NULL,
+	force.reset=FALSE,
+	...
+) {
 	# data checks
 	stopifnot(length(species)==1)
 	if (nrow(x@polygons)==0)
@@ -736,20 +747,34 @@ spp.plot.RapData<-function(x, species, prob.color.palette='YlGnBu', basemap='non
 		values<-c(0,values[1])
 	}
 	# set title
-	if (!is.null(x@species$name)) {
-		main=paste0(x@species$name[spp_pos ], " in planning units (%)")
-	} else {
-		main=paste0("Species ",species, " in planning units (%)")
-	}
+	if (is.null(main)) {
+		if ('name' %in% names(x@species) & is.numeric(species)) {
+			main=paste0(x@species$name[species])
+		} else if (is.numeric(species)) {
+			main=paste0('Species ', species)
+		} else {
+			main=paste0(species)
+		}
+	}	
+	# get selected rows
+	sel.pu.ids<-which(x@pu$status==2)
+	unsel.pu.ids<-which(x@pu$status!=2)
+	# extract planning unit border colors
+	border.cols<-rep(pu.color.palette[1], nrow(x@pu))
+	border.cols[sel.pu.ids]<-pu.color.palette[2]
+	border.cols[which(x@pu$status==2)]<-pu.color.palette[3]
+	border.cols[which(x@pu$status==3)]<-pu.color.palette[4]
 	# make plot
 	plot(1,1)
 	prettyGeoplot(
-		x@polygons,
-		cols,
+		polygons=list(x@polygons[x@polygons$PID %in% unsel.pu.ids,], x@polygons[x@polygons$PID %in% sel.pu.ids,]),
+		col=list(cols[unsel.pu.ids], cols[sel.pu.ids]),
 		basemap,
-		main,
+		main=main,
 		continuousLegend(values,prob.color.palette,posx=c(0.3, 0.4),posy=c(0.1, 0.9)),
-		beside=TRUE
+		beside=TRUE,
+		border=list(border.cols[unsel.pu.ids], border.cols[sel.pu.ids]),
+		lwd=list(1, 5)
 	)
 }
 
@@ -760,9 +785,8 @@ space.plot.RapData<-function(
 		x,
 		species,
 		space=1,
-		pu.color.palette='RdYlGn',
-		locked.in.color="#000000FF",
-		locked.out.color="#D7D7D7FF",
+		pu.color.palette=c('#4D4D4D4D', '#00FF0080', '#FFFF0080', '#FF00004D'),
+		main=NULL,
 		...
 	) {
 	# data checks
@@ -778,10 +802,14 @@ space.plot.RapData<-function(
 		spp_pos <- species
 	}
 	# set title
-	if (!is.null(x@species$name)) {
-		main=x@species$name[spp_pos]
-	} else {
-		main=paste0("Species ",species)
+	if (is.null(main)) {
+		if ('name' %in% names(x@species) & is.numeric(species)) {
+			main=paste0(x@species$name[species], ' in space ', space)
+		} else if (is.numeric(species)) {
+			main=paste0('Species ', species, ' in space ', space)
+		} else {
+			main=paste0(species, ' in space ', space)
+		}
 	}
 	# extract pu data
 	pu<-as.data.frame(x@attribute.spaces[[space]]@pu@coords)
@@ -800,8 +828,6 @@ space.plot.RapData<-function(
 			pu,
 			dp,
 			pu.color.palette,
-			locked.in.color,
-			locked.out.color,
 			main
 		)
 	)

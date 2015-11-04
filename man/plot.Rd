@@ -9,21 +9,18 @@
 \title{Plot RASP object}
 \usage{
 \S4method{plot}{RapSolved,numeric}(x, y, basemap = "none",
-  color.palette = "Greens", locked.in.color = "#000000FF",
-  locked.out.color = "#D7D7D7FF", alpha = ifelse(basemap == "none", 1, 0.7),
-  grayscale = FALSE, force.reset = FALSE)
+  pu.color.palette = c("#e5f5f9", "#00441b", "#FFFF00", "#FF0000"),
+  alpha = ifelse(basemap == "none", 1, 0.7), grayscale = FALSE,
+  main = NULL, force.reset = FALSE)
 
 \S4method{plot}{RapSolved,missing}(x, y, basemap = "none",
-  color.palette = "PuBu", locked.in.color = "#000000FF",
-  locked.out.color = "#D7D7D7FF", alpha = ifelse(basemap == "none", 1, 0.7),
-  grayscale = FALSE, force.reset = FALSE)
+  pu.color.palette = c("PuBu", "#FFFF00", "#FF0000"), alpha = ifelse(basemap
+  == "none", 1, 0.7), grayscale = FALSE, main = NULL, force.reset = FALSE)
 
 \S4method{plot}{RapSolved,RapSolved}(x, y, i = NULL, j = i,
-  basemap = "none", color.palette = ifelse(is.null(i), "RdYlBu", "Accent"),
-  x.locked.in.color = "#000000FF", x.locked.out.color = "#D7D7D7FF",
-  y.locked.in.color = "#FFFFFFFF", y.locked.out.color = "#D7D7D7FF",
-  alpha = ifelse(basemap == "none", 1, 0.7), grayscale = FALSE,
-  force.reset = FALSE)
+  basemap = "none", pu.color.palette = ifelse(is.null(i), c("RdYlBu",
+  "#FFFF00", "#FF0000"), "Accent"), alpha = ifelse(basemap == "none", 1, 0.7),
+  grayscale = FALSE, main = NULL, force.reset = FALSE)
 }
 \arguments{
 \item{x}{\code{RapSolved} object.}
@@ -32,29 +29,19 @@
 
 \item{basemap}{\code{character} object indicating the type of basemap to use (see \code{link{basemap}}). Use either 'none', 'roadmap', 'mobile', 'satellite', 'terrain', 'hybrid', 'mapmaker-roadmap', 'mapmaker-hybrid'. Defaults to 'none'.}
 
-\item{color.palette}{\code{character} name of colour palette to use for planning units (see \code{\link[RColorBrewer]{brewer.pal}}). Defaults to 'PuBu' when \code{y} is \code{NULL}, 'Greens' when \code{y} is \code{numeric}, and 'RdYlBu' or 'Accent' when \code{y} is \code{RapSolved}.}
-
-\item{locked.in.color}{\code{character} color to denote locked in planning units. Used when \code{y} is \code{NULL}. Defaults to '#000000FF'.}
-
-\item{locked.out.color}{\code{character} color to denote locked in planning units. Used when \code{y} is \code{NULL}. Defaults to '#D7D7D7FF'.}
+\item{pu.color.palette}{\code{character} name of colors or color palette (\code{\link[RColorBrewer]{brewer.pal}}) to indicate planning unit statuses. Defaults to \code{c('grey30', 'green', 'yellow', 'black', 'gray80', 'red', 'orange')}.}
 
 \item{alpha}{\code{numeric} value to indicate how transparent the planning unit colors shoud be.}
 
 \item{grayscale}{\code{logical} should the basemap be gray-scaled?}
+
+\item{main}{\code{character} title for the plot. Defaults to \code{NULL} and a default title is used.}
 
 \item{force.reset}{\code{logical} if basemap data has been cached, should it be re-downloaded?}
 
 \item{i}{\code{NULL} to plot selection frequencies. \code{numeric} to plot the i'th solution, or 0 to plot the best solution. Only used when \code{y} is a \code{RapSolved} object. Defaults to \code{NULL}.}
 
 \item{j}{\code{NULL} to plot selection frequencies. \code{numeric} to plot the i'th solution, or 0 to plot the best solution. Only used when \code{y} is a \code{RapSolved} object. Defaults to \code{j}.}
-
-\item{x.locked.in.color}{\code{character} color to denote locked in planning units in \code{x}. Used when \code{y} is \code{RapSolved}. Defaults to '#000000FF'.}
-
-\item{x.locked.out.color}{\code{character} color to denote locked out planning units in \code{x}. Used when \code{y} is \code{RapSolved}. Defaults to '#D7D7D7FF'.}
-
-\item{y.locked.in.color}{\code{character} color to denote locked in planning units in \code{y}. Used when \code{y} is \code{RapSolved}. Defaults to '#FFFFFFFF'.}
-
-\item{y.locked.out.color}{\code{character} color to denote locked out planning units in \code{y}. Used when \code{y} is \code{RapSolved}. Defaults to '#D7D7D7FF'.}
 }
 \description{
 This function plots the solutions contained in \code{RapSolved} objects. It can be used to show a single solution, or the the selection frequencies of planning
