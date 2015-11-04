@@ -44,10 +44,8 @@ r_binary_packages:
 
 r_packages:
   - covr
-  
-r_github_packages:
-  - rstudio/rmarkdown
-  - hadley/testthat
+  - rmarkdown
+  - testthat
   
 after_success:
   - Rscript -e 'covr::codecov()'
