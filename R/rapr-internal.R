@@ -65,7 +65,7 @@ prettyGeoplot<-function(polygons, col, basemap, main, fun, beside=TRUE, border=N
 	
 	# make title
 	plot(1,1,type="n", xlim=c(-1,1), ylim=c(-1,1), axes=FALSE, xlab="", ylab="")
-	mtext(side=1, line=-1.5, main, cex=1.5)
+	mtext(side=1, line=-0.5, main, cex=1.5)
 	# make legend
 	plot(1,1,type="n", xlim=c(-1,1), ylim=c(-1,1), axes=FALSE, xlab="", ylab="")
 	fun()
@@ -76,7 +76,8 @@ prettyGeoplot<-function(polygons, col, basemap, main, fun, beside=TRUE, border=N
 			suppressWarnings(PlotPolysOnStaticMap(basemap, polygons[[i]], col=col[[i]], border=border[[i]], add=TRUE, lwd=lwd[[i]]))
 		}
 	} else {
-		plotPolys(polygons[[1]], col=col[[1]], axes=FALSE, xlab="", ylab="", border=border[[1]], lwd=lwd[[1]])
+		allpolygons=do.call(rbind, polygons)
+		plotPolys(polygons[[1]], col=col[[1]], axes=FALSE, xlab="", ylab="", border=border[[1]], lwd=lwd[[1]], xlim=range(allpolygons$X), ylim=range(allpolygons$Y))
 		for (i in seq_along(polygons)[-1]) {
 			if (nrow(polygons[[i]])>0)
 				suppressWarnings(addPolys(polygons[[i]], col=col[[i]], xlab="", ylab="", border=border[[i]], lwd=lwd[[i]]))

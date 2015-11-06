@@ -5,6 +5,7 @@ Version: 1.0.0
 Date: 2015-11-2
 Authors@R: c(person(c("Jeffrey", "O"), "Hanson", email='jeffrey.hanson@uqconnect.edu.au', role = c("aut", "cre")),
 	person(c("Jonathon", "R"), "Rhodes", role = c("aut")),
+	person(c("Hugh", "P"), "Possingham", role = c("aut")),
 	person(c("Richard", "A"), "Fuller", role = c("aut")))
 Description: Biodiversity is in crisis. The overarching aim of conservation
     is to preserve biodiversity patterns and processes. To this end, protected
@@ -51,6 +52,7 @@ License: GPL-3
 VignetteBuilder: knitr
 Suggests:
     knitr,
+    rworldmap,
     testthat,
     gurobi,
     rgl

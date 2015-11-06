@@ -765,7 +765,6 @@ spp.plot.RapData<-function(
 	border.cols[which(x@pu$status==2)]<-pu.color.palette[3]
 	border.cols[which(x@pu$status==3)]<-pu.color.palette[4]
 	# make plot
-	plot(1,1)
 	prettyGeoplot(
 		polygons=list(x@polygons[x@polygons$PID %in% unsel.pu.ids,], x@polygons[x@polygons$PID %in% sel.pu.ids,]),
 		col=list(cols[unsel.pu.ids], cols[sel.pu.ids]),

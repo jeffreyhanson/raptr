@@ -615,14 +615,8 @@ spp.plot.RapSolved<-function(
 	border.cols[sel.pu.ids]<-pu.color.palette[2]
 	border.cols[which(x@data@pu$status==2)]<-pu.color.palette[3]
 	border.cols[which(x@data@pu$status==3)]<-pu.color.palette[4]
-	# set title
-	if (!is.null(x@data@species$name)) {
-		main=paste0(x@data@species$name[spp_pos ], " in planning units (%)")
-	} else {
-		main=paste0("Species ",species, " in planning units (%)")
-	}
+	
 	# make plot
-	plot(1,1)
 	prettyGeoplot(
 		list(x@data@polygons[x@data@polygons$PID %in% unsel.pu.ids,], x@data@polygons[x@data@polygons$PID %in% sel.pu.ids,]),
 		list(cols[unsel.pu.ids], cols[sel.pu.ids]),
