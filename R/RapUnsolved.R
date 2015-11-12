@@ -95,9 +95,9 @@ dp.subset.RapUnsolved<-function(x, space, species, points) {
 }
 
 #' @rdname prob.subset
-#' @method prob.subset RapSolved
+#' @method prob.subset RapUnsolved
 #' @export
-prob.subset.RapSolved<-function(x, species, threshold) {
+prob.subset.RapUnsolved<-function(x, species, threshold) {
 	return(
 		RapUnsolved(
 			opts=x@opts,

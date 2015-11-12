@@ -4,13 +4,14 @@
 \alias{prob.subset}
 \alias{prob.subset.RapData}
 \alias{prob.subset.RapSolved}
+\alias{prob.subset.RapUnsolved}
 \title{Subset probabilities above a threshold}
 \usage{
 \method{prob.subset}{RapData}(x, species, threshold)
 
 \method{prob.subset}{RapSolved}(x, species, threshold)
 
-\method{prob.subset}{RapSolved}(x, species, threshold)
+\method{prob.subset}{RapUnsolved}(x, species, threshold)
 
 prob.subset(x, species, threshold)
 }
