@@ -20,7 +20,7 @@
   cost = NULL, status = NULL, ...)
 
 \method{update}{RapReliableOpts}(object, BLM = NULL,
-  FAILUREMULTIPLIER = NULL, MAXRLEVEL = NULL, ...)
+  FailureMultiplier = NULL, MaxRLevel = NULL, ...)
 
 \method{update}{RapUnsolOrSol}(object, ..., solve = TRUE)
 
@@ -59,9 +59,9 @@
 
 \item{BLM}{\code{numeric} boundary length modifier.}
 
-\item{FAILUREMULTIPLIER}{\code{numeric} multiplier for failure planning unit.}
+\item{FailureMultiplier}{\code{numeric} multiplier for failure planning unit.}
 
-\item{MAXRLEVEL}{\code{numeric} maximum R failure level for approximation.}
+\item{MaxRLevel}{\code{numeric} maximum R failure level for approximation.}
 
 \item{solve}{\code{logical} should the problem be solved? This argument is only valid for \code{RapUnsolved} and \code{RapSolved} objects. Defaults to \code{TRUE}.}
 }
@@ -88,8 +88,8 @@ print(x)
 print(y)
 
 # RapReliableOpts
-x <- RapReliableOpts(FAILUREMULTIPLIER=2)
-y <- update(x, FAILUREMULTIPLIER=4)
+x <- RapReliableOpts(FailureMultiplier=2)
+y <- update(x, FailureMultiplier=4)
 print(x)
 print(y)
 

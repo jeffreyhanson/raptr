@@ -218,7 +218,7 @@ The `rapr` R package uses a range of S4 classes to store conservation planning d
 | ManualOpts          | place-holder class for manually specified solutions 							  | NumberSolutions																																									|
 | GurobiOpts          | parameters for solving optimisation problems using Gurobi					  | Threads, MIPGap, Presolve, TimeLimit, NumberSolutions																						|
 | RapUnreliableOpts   | parameters for the unreliable problem formulation										| BLM																																															|
-| RapReliableOpts     | parameters for the reliable problem formulation											| FAILUREMULTIPLIER, MAXRLEVEL																																		|
+| RapReliableOpts     | parameters for the reliable problem formulation											| FailureMultiplier, MaxRLevel																																		|
 | RapData             | planning unit, species, and attribute space data										| pu, species, targets, pu.species.probabilities,<br>attribute.spaces, boundary, polygons, .cache |
 | RapUnsolved         | data and parameters needed to generate prioritisations using RAP		| opts, data																																											|
 | RapResults          | prioritisations and summary statistics															| summary, selections, amount.held, space.held, logging.file, .cache															|

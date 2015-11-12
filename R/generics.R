@@ -262,8 +262,8 @@ NULL
 #' @param TimeLimit \code{integer} number of seconds to allow for solving.
 #' @param NumberSolutions \code{integer} number of solutions to generate.
 #' @param BLM \code{numeric} boundary length modifier.
-#' @param FAILUREMULTIPLIER \code{numeric} multiplier for failure planning unit.
-#' @param MAXRLEVEL \code{numeric} maximum R failure level for approximation.
+#' @param FailureMultiplier \code{numeric} multiplier for failure planning unit.
+#' @param MaxRLevel \code{numeric} maximum R failure level for approximation.
 #' @param species \code{integer} or \code{character} denoting species for which targets or name should be updated.
 #' @param space \code{integer} denoting space for which targets should be updated.
 #' @param name \code{character} to rename species.
@@ -295,8 +295,8 @@ NULL
 #' print(y)
 #'
 #' # RapReliableOpts
-#' x <- RapReliableOpts(FAILUREMULTIPLIER=2)
-#' y <- update(x, FAILUREMULTIPLIER=4)
+#' x <- RapReliableOpts(FailureMultiplier=2)
+#' y <- update(x, FailureMultiplier=4)
 #' print(x)
 #' print(y)
 #'

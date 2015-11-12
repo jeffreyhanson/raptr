@@ -4,14 +4,14 @@
 \alias{RapReliableOpts}
 \title{Create RapReliableOpts object}
 \usage{
-RapReliableOpts(BLM = 0, FAILUREMULTIPLIER = 1.1, MAXRLEVEL = 5L)
+RapReliableOpts(BLM = 0, FailureMultiplier = 1.1, MaxRLevel = 5L)
 }
 \arguments{
 \item{BLM}{\code{numeric} boundary length modifier. Defaults to 0.}
 
-\item{FAILUREMULTIPLIER}{\code{numeric} multiplier for failure planning unit. Defaults to 1.1.}
+\item{FailureMultiplier}{\code{numeric} multiplier for failure planning unit. Defaults to 1.1.}
 
-\item{MAXRLEVEL}{\code{numeric} maximum R failure level for approximation. Defaults to 5L.}
+\item{MaxRLevel}{\code{numeric} maximum R failure level for approximation. Defaults to 5L.}
 }
 \value{
 \code{RapReliableOpts} object
@@ -21,7 +21,7 @@ This function creates a new RapReliableOpts object.
 }
 \examples{
 # create RapReliableOpts using defaults
-RapReliableOpts(BLM=0, FAILUREMULTIPLIER=1.1, MAXRLEVEL=5L)
+RapReliableOpts(BLM=0, FailureMultiplier=1.1, MaxRLevel=5L)
 }
 \seealso{
 \code{\link{RapReliableOpts-class}}.

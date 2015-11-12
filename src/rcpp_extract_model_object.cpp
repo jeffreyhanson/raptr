@@ -43,8 +43,8 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
  double failure_multiplier=0.0;
  std::size_t maxrlevelINT=0;
  if (!unreliable_formulation) {
-   failure_multiplier=Rcpp::as<double>(opts.slot("FAILUREMULTIPLIER"));
-   maxrlevelINT=Rcpp::as<double>(opts.slot("MAXRLEVEL"));	 
+   failure_multiplier=Rcpp::as<double>(opts.slot("FailureMultiplier"));
+   maxrlevelINT=Rcpp::as<double>(opts.slot("MaxRLevel"));	 
  }
 
  /// extract data from Rcpp::S4 data

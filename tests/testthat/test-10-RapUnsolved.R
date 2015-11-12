@@ -183,7 +183,7 @@ test_that('solve.RapUnsolved (reliable - NUMREPS=1)', {
 	data(sim_ru)
 	sim_ru<- pu.subset(sim_ru, 1:10)
 	sim_ru<-dp.subset(sim_ru, species=1:3, space=1, points=1:3)
-	sim_ru@opts=RapReliableOpts(FAILUREMULTIPLIER=10)
+	sim_ru@opts=RapReliableOpts(FailureMultiplier=10)
 	sim_ru@data@targets[[3]]=c(0.5,0.5,0.5,0.99,0.99,0.99)
 	# solve it
 	sim_rs<-rapr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L))
@@ -224,13 +224,13 @@ test_that('solve.RapUnsolved (reliable - NUMREPS=1)', {
 			dist_mtx=fields::rdist(dp_pts, pu_pts)
 			dp_wts_mtx=matrix(rep(dp_wts, nrow(pu_pts)), ncol=nrow(pu_pts),nrow=length(dp_wts))
 			wdist_mtx=(dist_mtx*dp_wts_mtx) + 1e-05
-			wdist_mtx=cbind(wdist_mtx, max(wdist_mtx)*sim_rs@opts@FAILUREMULTIPLIER)
+			wdist_mtx=cbind(wdist_mtx, max(wdist_mtx)*sim_rs@opts@FailureMultiplier)
 			# calculate space.held in solution
-			curr_solution=calcReliableSpaceHeld(wdist_mtx, curr_df[[3]], sim_rs@opts@MAXRLEVEL, pu_ids)
+			curr_solution=calcReliableSpaceHeld(wdist_mtx, curr_df[[3]], sim_rs@opts@MaxRLevel, pu_ids)
 			# calculate space.held in worst solution
-			curr_worst=max(sapply(curr_df$pu, calcReliableSpaceHeld, w=wdist_mtx, p=curr_df[[3]], maxr=sim_rs@opts@MAXRLEVEL))
+			curr_worst=max(sapply(curr_df$pu, calcReliableSpaceHeld, w=wdist_mtx, p=curr_df[[3]], maxr=sim_rs@opts@MaxRLevel))
 			# calculate space.held in best solution
-			curr_best=calcReliableSpaceHeld(wdist_mtx, curr_df[[3]], sim_rs@opts@MAXRLEVEL, curr_df$pu)
+			curr_best=calcReliableSpaceHeld(wdist_mtx, curr_df[[3]], sim_rs@opts@MaxRLevel, curr_df$pu)
 			# tests
 			expect_equal(
 				round(((curr_worst-curr_solution ) / (curr_worst-curr_best)),5),
@@ -362,13 +362,13 @@ test_that('solve.RapUnsolved (reliable - NUMREPS=1 - sparse occupancy)', {
 			dist_mtx=fields::rdist(dp_pts, pu_pts)
 			dp_wts_mtx=matrix(rep(dp_wts, nrow(pu_pts)), ncol=nrow(pu_pts),nrow=length(dp_wts))
 			wdist_mtx=(dist_mtx*dp_wts_mtx) + 1e-05
-			wdist_mtx=cbind(wdist_mtx, max(wdist_mtx)*sim_rs@opts@FAILUREMULTIPLIER)
+			wdist_mtx=cbind(wdist_mtx, max(wdist_mtx)*sim_rs@opts@FailureMultiplier)
 			# calculate space.held in solution
-			curr_solution=calcReliableSpaceHeld(wdist_mtx, curr_df[[3]], sim_rs@opts@MAXRLEVEL, pu_pos)
+			curr_solution=calcReliableSpaceHeld(wdist_mtx, curr_df[[3]], sim_rs@opts@MaxRLevel, pu_pos)
 			# calculate space.held in worst solution
-			curr_worst=max(sapply(seq_len(nrow(pu_pts)), calcReliableSpaceHeld, w=wdist_mtx, p=curr_df[[3]], maxr=sim_rs@opts@MAXRLEVEL))
+			curr_worst=max(sapply(seq_len(nrow(pu_pts)), calcReliableSpaceHeld, w=wdist_mtx, p=curr_df[[3]], maxr=sim_rs@opts@MaxRLevel))
 			# calculate space.held in best solution
-			curr_best=calcReliableSpaceHeld(wdist_mtx, curr_df[[3]], sim_rs@opts@MAXRLEVEL, seq_len(nrow(pu_pts)))
+			curr_best=calcReliableSpaceHeld(wdist_mtx, curr_df[[3]], sim_rs@opts@MaxRLevel, seq_len(nrow(pu_pts)))
 			# tests
 			expect_equal(
 				round(((curr_worst-curr_solution ) / (curr_worst-curr_best)),5),

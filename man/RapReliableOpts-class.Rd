@@ -12,9 +12,9 @@ This class is used to store input parameters for the reliable formulation of RAS
 \describe{
 \item{\code{BLM}}{\code{numeric} boundary length modifier. Defaults to 0.}
 
-\item{\code{FAILUREMULTIPLIER}}{\code{numeric} multiplier for failure planning unit. Defaults to 1.1.}
+\item{\code{FailureMultiplier}}{\code{numeric} multiplier for failure planning unit. Defaults to 1.1.}
 
-\item{\code{MAXRLEVEL}}{\code{numeric} maximum R failure level for approximation. Defaults to 5L.}
+\item{\code{MaxRLevel}}{\code{numeric} maximum R failure level for approximation. Defaults to 5L.}
 }}
 \seealso{
 \code{\link{RapReliableOpts}}
