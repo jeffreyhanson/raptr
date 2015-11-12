@@ -67,7 +67,7 @@ setMethod(
 
 		# generate model object
 		model<-rcpp_generate_model_object(a@opts, inherits(a@opts, 'RapUnreliableOpts'), a@data, verbose)
-		model$A<-Matrix::sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value)
+		model$A<-Matrix::sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value, dims=c(max(model$Ar$row)+1, length(model$obj)))
 		
 		## first run
 		# run model
@@ -93,7 +93,7 @@ setMethod(
 		for (i in seq_len(b@NumberSolutions-1)) {
 			# create new model object, eacluding existing solutions as valid solutions to ensure a different solution is obtained
 			model<-rcpp_append_model_object(model, existing.solutions[length(existing.solutions)])
-			model$A<-Matrix::sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value)
+			model$A<-Matrix::sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value, dims=c(max(model$Ar$row)+1, length(model$obj)))
 
 			# run model
 			solution<-gurobi::gurobi(model, gparams)
@@ -208,15 +208,64 @@ summary.RapSolved<-function(object, ...) {
 #' @export
 #' @inheritParams amount.held
 #' @rdname amount.held
-amount.held.RapSolved<-function(x, y=0) {
-	return(amount.held.RapResults(x@results, y))
+amount.held.RapSolved<-function(x, y=0, species = NULL) {
+	# get solution numbers
+	if (is.null(y))
+		y<-seq_len(nrow(x@results@selections))
+	if (all(y==0))
+		y=x@results@best
+	# get species numbers
+	if (is.null(species))
+		species<-seq_len(nrow(x@data@species))
+	if (is.character(species))
+		species<-match(species, x@data@species$name)
+	# return named vector
+	return(
+		structure(
+			x@results@amount.held[y,],
+			.Dim=c(
+				length(y),
+				length(species)
+			),
+			.Dimnames=list(
+				seq_along(y),
+				x@data@species$name[species]
+			)
+		)
+	)
 }
 
 #' @rdname space.held
 #' @inheritParams space.held
 #' @export
-space.held.RapSolved<-function(x, y=0) {
-	return(space.held.RapResults(x@results, y))
+space.held.RapSolved<-function(x, y=0, species = NULL, space = NULL) {
+	# get solution numbers
+	if (is.null(y))
+		y<-seq_len(nrow(x@results@selections))
+	if (all(y==0))
+		y=x@results@best
+	# get species numbers
+	if (is.null(species))
+		species<-seq_len(nrow(x@data@species))
+	# get space numbers
+	if (is.null(space))
+		space<-seq_along(x@data@attribute.spaces)
+	# return named array
+	as_ind=rep(seq_along(x@data@attribute.spaces), nrow(x@data@species))
+	sp_ind=rep(seq_len(nrow(x@data@species)), each=length(x@data@attribute.spaces))
+	return(
+		structure(
+			c(x@results@space.held[y, sp_ind %in% species & as_ind %in% space]),
+			dim=c(length(y), length(species)*length(space)),
+			dimnames=list(
+				seq_along(y),
+				paste0(
+					rep(x@data@species$name[species], each=length(space)),
+					rep(paste0(' (Space ',space, ')'), length(species))
+				)
+			)
+		)
+	)
 }
 
 #' @rdname logging.file
@@ -733,7 +782,7 @@ update.RapUnsolOrSol<-function(object, ..., solve=TRUE) {
 					list(a=object),
 					goLST
 				),
-				parseArgs2('verbose', ...)
+				parseArgs2(c('verbose','b'), ...)
 			)
 		)
 	}

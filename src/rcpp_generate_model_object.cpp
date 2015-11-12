@@ -246,9 +246,11 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   			}
   			// failure pu
   			currFailDist=weightdistMTX(i,j).maxCoeff() * failure_multiplier;
+				
   			for (std::size_t k=0; k<species_ndp(i,j); ++k) {
   				weightdistMTX(i,j)(k,species_npu[i]) = currFailDist;
   			}
+  			  			
 				// rescale such that minimum distance is 1
 				// weightdistMTX(i,j)*=(1.0 / weightdistMTX(i,j).minCoeff());
   		}
@@ -611,7 +613,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 							model_vals_DBL.push_back(1.0);
 
 							model_rows_INT.push_back(counter);
-							model_cols_INT.push_back(variableMAP[puDF_id_STR[l]]);
+							model_cols_INT.push_back(variableMAP[puDF_id_STR[species_pu_ids[i][l]]]);
 							model_vals_DBL.push_back(-1.0);
 
 							senseSTR.push_back("<=");
@@ -629,14 +631,28 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 				if (spacetargetsMTX(i,j)>sptarget_threshold) {
 					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
 						for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
+							
+							// original formulation
+// 							for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
+// 								currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
+// 								model_rows_INT.push_back(counter);
+// 								model_cols_INT.push_back(variableMAP[currSTR]);
+// 								model_vals_DBL.push_back(1.0);
+// 							}
+// 							for (std::size_t r2=0; r2<r; ++r2) {
+// 								currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[species_npu[i]]+"_"+intSTR[r2];
+// 								model_rows_INT.push_back(counter);
+// 								model_cols_INT.push_back(variableMAP[currSTR]);
+// 								model_vals_DBL.push_back(1.0);
+// 							}
+// 							senseSTR.push_back("=");
+// 							rhsDBL.push_back(1.0);
+// 							++counter;
+// 						}
+
+							// force each R-level to be assigned to a pu
 							for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
 								currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
-								model_rows_INT.push_back(counter);
-								model_cols_INT.push_back(variableMAP[currSTR]);
-								model_vals_DBL.push_back(1.0);
-							}
-							for (std::size_t r2=0; r2<r; ++r2) {
-								currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[species_npu[i]]+"_"+intSTR[r2];
 								model_rows_INT.push_back(counter);
 								model_cols_INT.push_back(variableMAP[currSTR]);
 								model_vals_DBL.push_back(1.0);
@@ -650,12 +666,34 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   		}
   	}
 
+  	// 1b extra - force each pu to be assigned to only 1 r-level
+    if (verbose) Rcpp::Rcout << "\t\teqn. 1b (extra) constraints" << std::endl;
+  	for (std::size_t i=0; i<n_species; ++i) {
+  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
+				if (spacetargetsMTX(i,j)>sptarget_threshold) {
+					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
+						for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
+							for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
+								currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
+								model_rows_INT.push_back(counter);
+								model_cols_INT.push_back(variableMAP[currSTR]);
+								model_vals_DBL.push_back(1.0);
+							}
+							senseSTR.push_back("<=");
+							rhsDBL.push_back(1.0);
+							++counter;
+						}
+					}
+				}
+			}
+		}
+  	
   	// 1c
   	Rcpp::checkUserInterrupt();
   	if (verbose) Rcpp::Rcout << "\t\teqn. 1c constraints" << std::endl;
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (spacetargetsMTX(i,j)>sptarget_threshold) {				
+				if (spacetargetsMTX(i,j)>sptarget_threshold) {
 					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
 						for (std::size_t l=0; l<species_npu[i]; ++l) {
 							for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
@@ -665,7 +703,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 								model_vals_DBL.push_back(1.0);
 							}
 							model_rows_INT.push_back(counter);
-							model_cols_INT.push_back(variableMAP[puDF_id_STR[l]]);
+							model_cols_INT.push_back(variableMAP[puDF_id_STR[species_pu_ids[i][l]]]);
 							model_vals_DBL.push_back(-1.0);
 							senseSTR.push_back("<=");
 							rhsDBL.push_back(0.0);
@@ -681,17 +719,30 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	if (verbose) Rcpp::Rcout << "\t\teqn. 1d constraints" << std::endl;
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (spacetargetsMTX(i,j)>sptarget_threshold) {				
+				if (spacetargetsMTX(i,j)>sptarget_threshold) {
 					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
-						for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
-							currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[species_npu[i]]+"_"+intSTR[r];
-							model_rows_INT.push_back(counter);
-							model_cols_INT.push_back(variableMAP[currSTR]);
-							model_vals_DBL.push_back(1.0);
-						}
+						
+						// original formulation
+// 						for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
+// 							currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[species_npu[i]]+"_"+intSTR[r];
+// 							model_rows_INT.push_back(counter);
+// 							model_cols_INT.push_back(variableMAP[currSTR]);
+// 							model_vals_DBL.push_back(1.0);
+// 						}
+// 						senseSTR.push_back("=");
+// 						rhsDBL.push_back(1.0);
+// 						++counter;
+						
+						// ensure that failure planning unit is assigned to last r-level
+						currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[species_npu[i]]+"_"+intSTR[species_rlevel[i]];
+						model_rows_INT.push_back(counter);
+						model_cols_INT.push_back(variableMAP[currSTR]);
+						model_vals_DBL.push_back(1.0);
 						senseSTR.push_back("=");
 						rhsDBL.push_back(1.0);
 						++counter;
+						
+						
 					}
 				}
 			}
@@ -735,6 +786,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
 				if (spacetargetsMTX(i,j)>sptarget_threshold) {
+					// assign values
 					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
 						for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
 							for (std::size_t r=1, r2=0; r<(species_rlevel[i]+1); ++r, ++r2) {

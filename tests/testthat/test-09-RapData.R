@@ -5,14 +5,14 @@ test_that('RapData', {
 	attribute.spaces=list(
 		AttributeSpace(
 			pu=SimplePoints(rgeos::gCentroid(cs_pus[1:10,], byid=TRUE)@coords),
-			dp=list(make.DemandPoints(SpatialPoints(coords=randomPoints(cs_spp, n=100, prob=TRUE))@coords))
+			dp=list(make.DemandPoints(SpatialPoints(coords=randomPoints(cs_spp[[1]], n=100, prob=TRUE))@coords))
 		),
 		AttributeSpace(
 			pu=SimplePoints(extract(cs_space[[1]],cs_pus[1:10,],fun=mean)),
-			dp=list(make.DemandPoints(extract(cs_space[[1]], SpatialPoints(coords=randomPoints(cs_spp, n=100, prob=TRUE)))))
+			dp=list(make.DemandPoints(extract(cs_space[[1]], SpatialPoints(coords=randomPoints(cs_spp[[1]], n=100, prob=TRUE)))))
 		)
 	)
-	pu.species.probabilities=calcSpeciesAverageInPus(cs_pus[1:10,], cs_spp)
+	pu.species.probabilities=calcSpeciesAverageInPus(cs_pus[1:10,], cs_spp[[1]])
 	polygons=SpatialPolygons2PolySet(cs_pus[1:10,])
 	boundary=calcBoundaryData(cs_pus[1:10,])
 

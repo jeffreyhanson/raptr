@@ -210,12 +210,11 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
  for (std::size_t i=0; i<n_species; ++i) {
    n_sel=std::accumulate(selectionsMTX.begin(), selectionsMTX.end(), 0);
 	 species_pu_ids[i].reserve(puvspeciesDF_pu.size());
-	 selected_species_pu_pos[i].reserve(n_sel);
 	 selected_species_pu_ids[i].reserve(n_sel);
+	 selected_species_pu_pos[i].reserve(n_sel);
 	 selected_species_pu_probs[i].reserve(n_sel);
 	 species_pu_probs[i].reserve(puvspeciesDF_pu.size());
  }
-
  // calcs
  if (verbose) Rcout << "\t\torganising prob. data" << std::endl;
 // 	Rcpp::Rcout << "\t\tcalculate numbers" << std::endl;
@@ -229,7 +228,6 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
 	 species_pu_ids[i].shrink_to_fit();
 	 species_pu_probs[i].shrink_to_fit();
  }
-
  // create pu species selections
  for (std::size_t i=0; i<n_species; ++i) {
 	 for (std::size_t j=0; j<species_pu_ids[i].size(); ++j) {
@@ -238,13 +236,11 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
 			 selected_species_pu_ids[i].push_back(species_pu_ids[i][j]);
 			 selected_species_pu_probs[i].push_back(species_pu_probs[i][j]);
 		 }
-	 }	 
-   selected_species_pu_pos[i].shrink_to_fit();
+	 }
+	 selected_species_pu_pos[i].shrink_to_fit();
 	 selected_species_pu_ids[i].shrink_to_fit();
    selected_species_pu_probs[i].shrink_to_fit();
-	 
  }
-
  // resize vectors
  if (verbose) Rcout << "\t\tdeallocating excess memory" << std::endl;
  if (unreliable_formulation) {
@@ -256,7 +252,7 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
   	 species_pu_ids[i].push_back(n_pu);
   	 species_pu_probs[i].push_back(1.0);
   	 species_npu[i]=species_pu_ids[i].size()-1;
-		 species_rlevel[i]=std::min(maxrlevelINT, selected_species_pu_pos[i].size());
+		 species_rlevel[i]=std::min(maxrlevelINT, selected_species_pu_ids[i].size());
 	 }
  }
  /// create distance variables
@@ -317,7 +313,7 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
          (worst_speciesspaceMTX(i,j) - unreliable_space_value(weightdistMTX(i,j),selected_species_pu_pos[i])) /
          (worst_speciesspaceMTX(i,j)-best_speciesspaceMTX(i,j))
        );
-     }
+		}
    }
  } else {
 	 for (std::size_t i=0; i<n_species; ++i) {

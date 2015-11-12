@@ -76,16 +76,16 @@ test_that('score.RapSolved', {
 
 test_that('amount.held.RapSolved', {
 	data(sim_rs)
-	expect_identical(amount.held(sim_rs), sim_rs@results@amount.held[sim_rs@results@best,])
-	expect_identical(amount.held(sim_rs, NULL), sim_rs@results@amount.held)
-	expect_identical(amount.held(sim_rs, 1), sim_rs@results@amount.held[1,])
+	expect_identical(unname(c(amount.held(sim_rs))), sim_rs@results@amount.held[sim_rs@results@best,])
+	expect_identical(unname(c(amount.held(sim_rs, y=NULL))), c(sim_rs@results@amount.held))
+	expect_identical(unname(c(amount.held(sim_rs, y=1))), c(sim_rs@results@amount.held[1,]))
 })
 
 test_that('space.held.RapSolved', {
 	data(sim_rs)
-	expect_identical(space.held(sim_rs), sim_rs@results@space.held[sim_rs@results@best,])
-	expect_identical(space.held(sim_rs, NULL), sim_rs@results@space.held)
-	expect_identical(space.held(sim_rs, 1), sim_rs@results@space.held[1,])
+	expect_identical(unname(c(space.held(sim_rs))), sim_rs@results@space.held[sim_rs@results@best,])
+	expect_identical(unname(c(space.held(sim_rs, y=NULL))), c(sim_rs@results@space.held))
+	expect_identical(unname(c(space.held(sim_rs, y=1))), c(sim_rs@results@space.held[1,]))
 })
 
 test_that('summary.RapSolved', {

@@ -4,8 +4,8 @@
 \alias{make.RapData}
 \title{Make data for RASP using minimal inputs}
 \usage{
-make.RapData(pus, species, spaces = NULL, amount.targets = 0.2,
-  space.targets = 0.2, n.demand.points = 100L, kernel.method = c("ks",
+make.RapData(pus, species, spaces = NULL, amount.target = 0.2,
+  space.target = 0.2, n.demand.points = 100L, kernel.method = c("ks",
   "hyperbox")[1], quantile = 0.2, scale = TRUE, species.points = NULL,
   n.species.points = ceiling(0.2 * cellStats(species, "sum")),
   include.geographic.space = TRUE, verbose = FALSE, ...)
@@ -17,9 +17,9 @@ make.RapData(pus, species, spaces = NULL, amount.targets = 0.2,
 
 \item{spaces}{\code{list} of/or \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} representing projects of attribute space over geographic space. Use a \code{list} to denote seperate attribute spaces.}
 
-\item{amount.targets}{\code{numeric} vector for area targets (\%) for each species. Defaults to 0.2 for each attribute space for each species.}
+\item{amount.target}{\code{numeric} vector for area targets (\%) for each species. Defaults to 0.2 for each attribute space for each species.}
 
-\item{space.targets}{\code{numeric} vector for attribute space targets (\%) for each species. Defaults to 0.2 for each attribute space for each species and each space.}
+\item{space.target}{\code{numeric} vector for attribute space targets (\%) for each species. Defaults to 0.2 for each attribute space for each species and each space.}
 
 \item{n.demand.points}{\code{integer} number of demand points to use for each attribute space for each species. Defaults to 100L.}
 

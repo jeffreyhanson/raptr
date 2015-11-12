@@ -109,7 +109,7 @@ print(y@opts@BLM); print(space.target(y))
 
 ## RapSolved
 x <- sim_rs
-y <- update(x, space.targets=c(0.4, 0.6, 0.9), BLM=100, Presolve=1L, solve=FALSE)
+y <- update(x, space.target=c(0.4, 0.6, 0.9), BLM=100, Presolve=1L, solve=FALSE)
 # print x parameters
 print(x@opts@BLM); print(amount.target(x))
 # print y parameters

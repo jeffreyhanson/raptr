@@ -79,15 +79,13 @@ double reliable_space_value(
 			currProb*=(1.0 - pu_probs[pu_ids[r]]);
 
 // 			// error checking
-// 			if (!std::isfinite(value)) {
-// 				Rcout << "k = " << k << std::endl;
+// 				Rcout << std::endl << "k = " << k << std::endl;
 // 				Rcout << "r = " << r << std::endl;
 // 				Rcout << "pu = " << pu_ids[r] << std::endl;
-// 				Rcout << "pu_probs[pu_ids[r]]" << pu_probs[pu_ids[r]] << std::endl; 
-// 				Rcout << "weightdistMTX(k,pu_ids[r])" << weightdistMTX(k,pu_ids[r]) << std::endl;
+// 				Rcout << "pu_probs[pu_ids[r]] = " << pu_probs[pu_ids[r]] << std::endl; 
+// 				Rcout << "weightdistMTX(k,pu_ids[r]) = " << weightdistMTX(k,pu_ids[r]) << std::endl;
 // 				Rcout << "value = " << value <<  std::endl;
 // 				exit(5);
-// 			}
 			
 		}
 		
@@ -96,16 +94,22 @@ double reliable_space_value(
 
 		
 //	// error checking		
-// 		if (!std::isfinite(value)) {
-// 				Rcout << "k = " << k << std::endl;
+// 				Rcout << std::endl << "k = " << k << std::endl;
 // 				Rcout << "r = max" << std::endl;
 // 				Rcout << "pu = failure pu" << std::endl;
-// 				Rcout << "weightdistMTX(k,weightdistMTX.cols()-1)" << weightdistMTX.cols()-1 << std::endl;
+// 				Rcout << "weightdistMTX(k,weightdistMTX.cols()-1) = " << weightdistMTX(k,weightdistMTX.cols()-1) << std::endl;
 // 				Rcout << "value = " << value <<  std::endl;
 // 				exit(5);
-// 			}
-		
+
+				
+// 				Rcout << "------------------------------------------" <<  std::endl;
+				
 	}
+
+// 	Rcout << "value = " << value << std::endl;
+// 	throw std::range_error("boom");
+// 	return(0);
+	
 	return(value);
 }
 

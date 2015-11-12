@@ -6,6 +6,18 @@
 
 using namespace Rcpp;
 
+// rcpp_Polygons2PolySet
+Rcpp::DataFrame rcpp_Polygons2PolySet(Rcpp::List polys, std::size_t n_preallocate);
+RcppExport SEXP rapr_rcpp_Polygons2PolySet(SEXP polysSEXP, SEXP n_preallocateSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< Rcpp::List >::type polys(polysSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type n_preallocate(n_preallocateSEXP);
+    __result = Rcpp::wrap(rcpp_Polygons2PolySet(polys, n_preallocate));
+    return __result;
+END_RCPP
+}
 // rcpp_append_model_object
 Rcpp::List rcpp_append_model_object(Rcpp::List model, Rcpp::List existing_sols);
 RcppExport SEXP rapr_rcpp_append_model_object(SEXP modelSEXP, SEXP existing_solsSEXP) {
@@ -83,18 +95,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< IntegerVector >::type cat_vec(cat_vecSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type val_vec(val_vecSEXP);
     __result = Rcpp::wrap(rcpp_groupmean(cat_vec, val_vec));
-    return __result;
-END_RCPP
-}
-// rcpp_Polygons2PolySet
-Rcpp::DataFrame rcpp_Polygons2PolySet(Rcpp::List polys, std::size_t n_preallocate);
-RcppExport SEXP rapr_rcpp_Polygons2PolySet(SEXP polysSEXP, SEXP n_preallocateSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< Rcpp::List >::type polys(polysSEXP);
-    Rcpp::traits::input_parameter< std::size_t >::type n_preallocate(n_preallocateSEXP);
-    __result = Rcpp::wrap(rcpp_Polygons2PolySet(polys, n_preallocate));
     return __result;
 END_RCPP
 }

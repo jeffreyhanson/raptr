@@ -316,7 +316,7 @@ NULL
 #'
 #' ## RapSolved
 #' x <- sim_rs
-#' y <- update(x, space.targets=c(0.4, 0.6, 0.9), BLM=100, Presolve=1L, solve=FALSE)
+#' y <- update(x, space.target=c(0.4, 0.6, 0.9), BLM=100, Presolve=1L, solve=FALSE)
 #' # print x parameters
 #' print(x@@opts@@BLM); print(amount.target(x))
 #' # print y parameters
@@ -421,6 +421,7 @@ logging.file<-function(x,y) UseMethod('logging.file')
 #'
 #' @param x \code{RapResults} or \code{RapSolved} object.
 #' @param y \code{NULL} to return all values, \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.
+#' @param species \code{NULL} for all species or \code{integer} indicating species.
 #' @return \code{matrix} or \code{numeric} vector depending on arguments.
 #' @seealso \code{RapResults}, \code{RapSolved}.
 #' @export
@@ -432,7 +433,7 @@ logging.file<-function(x,y) UseMethod('logging.file')
 #' amount.held(sim_rs, 2)
 #' # amount held (%) for each species in each solution
 #' amount.held(sim_rs, NULL)
-amount.held<-function(x,y) {UseMethod('amount.held')}
+amount.held<-function(x,y,species) {UseMethod('amount.held')}
 
 #' Amount targets
 #'
@@ -468,7 +469,9 @@ amount.target<-function(x, species) {UseMethod('amount.target')}
 #'
 #' @param x \code{RapResults} or \code{RapSolved} object.
 #' @param y \code{NULL} to return all values, \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.
-#' @return code{matrix} or code{numeric} vector depending on arguments.
+#' @param species \code{NULL} for all species or \code{integer} indicating species.
+#' @param space \code{NULL} for all spaces or \code{integer} indicating a specific space.
+#' @return code{matrix} object.
 #' @seealso \code{RapResults}, \code{RapSolved}.
 #' @export
 #' @examples
@@ -479,7 +482,7 @@ amount.target<-function(x, species) {UseMethod('amount.target')}
 #' space.held(sim_rs, 2)
 #' # space held (%) for each species in each solution
 #' space.held(sim_rs)
-space.held<-function(x,y) {UseMethod('space.held')}
+space.held<-function(x,y,species,space) {UseMethod('space.held')}
 
 #' Attribute space targets
 #'

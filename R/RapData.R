@@ -7,7 +7,7 @@ NULL
 #'
 #' @slot polygons \code{PolySet} planning unit spatial data or \code{NULL} if data not available.
 #' @slot pu \code{data.frame} planning unit data. Columns are 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).
-#' @slot species \code{data.frame} with species data. Columns are 'name' (\code{character}.
+#' @slot species \code{data.frame} with species data. Columns are 'name' (\code{character} and 'prob.threshold' (\code{numeric}).
 #' @slot targets \code{data.frame} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), and 'proportion' (\code{character}).
 #' @slot pu.species.probabilities \code{data.frame} with data on the probability of species in each planning unit. Columns are 'species' (\code{integer}), 'pu' (\code{integer}), and 'value' (\code{numeric}) columns.
 #' @slot attribute.spaces \code{list} of \code{AttributeSpace} objects with the demand points and planning unit coordinates.
@@ -240,8 +240,8 @@ RapData<-function(pu, species, targets, pu.species.probabilities, attribute.spac
 #' @param pus \code{SpatialPolygons} with planning unit data.
 #' @param species \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} with species probability distribution data.
 #' @param spaces \code{list} of/or \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} representing projects of attribute space over geographic space. Use a \code{list} to denote seperate attribute spaces.
-#' @param amount.targets \code{numeric} vector for area targets (\%) for each species. Defaults to 0.2 for each attribute space for each species.
-#' @param space.targets \code{numeric} vector for attribute space targets (\%) for each species. Defaults to 0.2 for each attribute space for each species and each space.
+#' @param amount.target \code{numeric} vector for area targets (\%) for each species. Defaults to 0.2 for each attribute space for each species.
+#' @param space.target \code{numeric} vector for attribute space targets (\%) for each species. Defaults to 0.2 for each attribute space for each species and each space.
 #' @param n.demand.points \code{integer} number of demand points to use for each attribute space for each species. Defaults to 100L.
 #' @param kernel.method \code{character} name of kernel method to use to generate demand points. Use either \code{ks} or \code{hypervolume}.
 #' @param quantile \code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.2.
@@ -260,7 +260,7 @@ RapData<-function(pu, species, targets, pu.species.probabilities, attribute.spac
 #' x <- make.RapData(cs_pus[1:10,], cs_spp, cs_space, include.geographic.space=TRUE)
 #' print(x)
 make.RapData<-function(pus, species, spaces=NULL,
-	amount.targets=0.2, space.targets=0.2, n.demand.points=100L, kernel.method=c('ks', 'hyperbox')[1], quantile=0.2, scale=TRUE,
+	amount.target=0.2, space.target=0.2, n.demand.points=100L, kernel.method=c('ks', 'hyperbox')[1], quantile=0.2, scale=TRUE,
 	species.points=NULL, n.species.points=ceiling(0.2*cellStats(species, 'sum')), include.geographic.space=TRUE, verbose=FALSE, ...) {
 
 	## init
@@ -329,16 +329,24 @@ make.RapData<-function(pus, species, spaces=NULL,
 	geoPolygons<-rcpp_Polygons2PolySet(geoPolygons@polygons)
 	## set pu
 	validNames<-c('cost','status', 'area')
-	if (inherits(pus, "SpatialPolygonsDataFrame") & all(c('cost','status', 'area') %in% names(pus))) {
-		pu<-pus@data[,validNames,drop=FALSE]
+	if (inherits(pus, "SpatialPolygonsDataFrame") & any(c('cost','status', 'area') %in% names(pus))) {
+		pu<-pus@data[,intersect(validNames,names(pus@data)),drop=FALSE]
 	} else {
-		warning("argument to pus does not have 'cost', and 'status' columns, creating default with all costs=1 and status=0")
-		pu<-data.frame(cost=rep(1, length(pus@polygons)), status=rep(0L, length(pus@polygons)))
+		pu<-data.frame(x=rep(1, length(pus@polygons)))[,-1,drop=FALSE]
+	}
+	if (!'cost' %in% names(pu)) {
+		pu$cost<-rep(1, length(pus@polygons))
+		warning("argument to pus does not have a 'cost' column, creating default with all costs=1")
+	}
+	if (!'status' %in% names(pu)) {
+		pu$status<-rep(0L, length(pus@polygons))
+		warning("argument to pus does not have a 'status' column, creating default with all status=0L")
 	}
 	if (!'area' %in% names(pu)) {
+		pu$area=gArea(pus,byid=TRUE)
+		warning("argument to pus does not have a 'area' column, creating default using area of polygons")
 		if (identical(pus@proj4string, CRS('+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs')))
 			warning('Planning unit areas are being calculated in a geographic coordinate system')
-		pu$area=gArea(pus,byid=TRUE)
 	}
 	#### Attribute space data
 	## set pu.points
@@ -460,12 +468,12 @@ make.RapData<-function(pus, species, spaces=NULL,
 		expand.grid(
 			species=seq_len(nrow(species)),
 			target=0L,
-			proportion=amount.targets
+			proportion=amount.target
 		),
 		expand.grid(
 			species=seq_len(nrow(species)),
 			target=seq(1L, length(attribute.spaces)),
-			proportion=space.targets
+			proportion=space.target
 		)
 	)
 	## return object
@@ -561,25 +569,17 @@ spp.subset.RapData<-function(x, species) {
 		if (any(is.na(species)))
 			stop('argument to species contains names not present in object.')
 	}
-	pu <- x@pu.species.probabilities$pu[which(x@pu.species.probabilities$species %in% species)]
 	# create new objects
 	pu.species.probabilities<-x@pu.species.probabilities[which(
-			x@pu.species.probabilities$pu %in% pu &
 			x@pu.species.probabilities$species %in% species
 	),]
 	pu.species.probabilities$species<-match(pu.species.probabilities$species, species)
-	pu.species.probabilities$pu<-match(pu.species.probabilities$pu, pu)
-	boundary<-x@boundary[which(x@boundary$id1 %in% pu & x@boundary$id2 %in% pu),]
-	boundary$id1<-match(boundary$id1, pu)
-	boundary$id2<-match(boundary$id2, pu)
-	polygons<-x@polygons[which(x@polygons$PID %in% pu),]
-	polygons$PID<-match(polygons$PID, pu)
 	targets<-x@targets[which(x@targets$species %in% species),,drop=FALSE]
 	targets$species<-match(targets$species, species)
 	# return new object
 	return(
 		RapData(
-			pu=x@pu[pu,],
+			pu=x@pu,
 			species=x@species[species,,drop=FALSE],
 			targets=targets,
 			pu.species.probabilities=pu.species.probabilities,
@@ -587,13 +587,13 @@ spp.subset.RapData<-function(x, species) {
 				x@attribute.spaces,
 				function(x) {
 						AttributeSpace(
-							SimplePoints(x@pu@coords[pu,]),
+							x@pu,
 							x@dp[species]
 					  )
 				}
 			),
-			boundary=boundary,
-			polygons=polygons
+			boundary=x@boundary,
+			polygons=x@polygons
 	  )
 	)
 }
@@ -606,7 +606,7 @@ pu.subset.RapData<-function(x, pu) {
 	pu.species.probabilities<-x@pu.species.probabilities[which(
 			x@pu.species.probabilities$pu %in% pu
 	),]
-	species=unique(pu.species.probabilities$species)
+	species<-unique(pu.species.probabilities$species)
 	pu.species.probabilities$species<-match(pu.species.probabilities$species, species)
 	pu.species.probabilities$pu<-match(pu.species.probabilities$pu, pu)
 	boundary<-x@boundary[which(x@boundary$id1 %in% pu & x@boundary$id2 %in% pu),]
@@ -617,7 +617,7 @@ pu.subset.RapData<-function(x, pu) {
 	# return new object
 	return(
 		RapData(
-			pu=x@pu[pu,],
+			pu=x@pu[pu,,drop=FALSE],
 			species=x@species,
 			targets=x@targets,
 			pu.species.probabilities=pu.species.probabilities,
@@ -625,7 +625,7 @@ pu.subset.RapData<-function(x, pu) {
 				x@attribute.spaces,
 				function(x) {
 						AttributeSpace(
-							SimplePoints(x@pu@coords[pu,]),
+							SimplePoints(x@pu@coords[pu,,drop=FALSE]),
 							x@dp[species]
 					  )
 				}

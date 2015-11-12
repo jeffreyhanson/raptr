@@ -35,7 +35,7 @@ By using 'ks' as an argument in \code{kernel.method}, the volume is fit as a min
 \examples{
 data(cs_spp, cs_space)
 # generate species points
-species.points <- randomPoints(cs_spp, n=100, prob=TRUE)
+species.points <- randomPoints(cs_spp[[1]], n=100, prob=TRUE)
 env.points <- extract(cs_space, species.points)
 # generate demand points for a 1d space using ks
 dps1 <- make.DemandPoints(

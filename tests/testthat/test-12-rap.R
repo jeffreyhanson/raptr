@@ -1,5 +1,6 @@
 test_that('rap (unreliable - default RapOpts and GurobiOpts - solve=FALSE)', {
   # load data
+  set.seed(500)
   data(cs_pus, cs_spp)
   cs_pus<-cs_pus[1:10,]
   # run function
@@ -16,7 +17,8 @@ test_that('rap (unreliable - default RapOpts and GurobiOpts - solve=FALSE)', {
 test_that('rap (unreliable - custom RapOpts and GurobiOpts - solve=TRUE)', {
   if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')
   # load data
-	data(cs_pus, cs_spp)
+  set.seed(500)
+  data(cs_pus, cs_spp)
 	cs_pus<-cs_pus[1:10,]
 	# run function
 	cs_rs<-rap(
@@ -37,6 +39,7 @@ test_that('rap (unreliable - custom RapOpts and GurobiOpts - solve=TRUE)', {
 
 test_that('rap (reliable - default RapOpts and GurobiOpts - solve=FALSE)', {
 	# laod data
+  set.seed(500)	
 	data(cs_pus, cs_spp)
 	cs_pus<-cs_pus[1:10,]
 	# run function
@@ -54,6 +57,7 @@ test_that('rap (reliable - default RapOpts and GurobiOpts - solve=FALSE)', {
 test_that('rap (reliable - custom RapOpts and GurobiOpts - solve=TRUE)', {
   if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')
   # load data
+  set.seed(500)
   data(cs_pus, cs_spp)
   cs_pus<-cs_pus[1:10,]
   # run function
@@ -68,7 +72,6 @@ test_that('rap (reliable - custom RapOpts and GurobiOpts - solve=TRUE)', {
   )
   # check calculations
   expect_true(all(space.held(cs_rs) >= 0.2))
-  expect_true(all(space.held(cs_rs) <= 1))
   expect_true(all(amount.held(cs_rs) >= 0.2))
   expect_true(all(amount.held(cs_rs) <= 1))  
 })

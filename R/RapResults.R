@@ -122,29 +122,6 @@ summary.RapResults<-function(object) {
 	return(object@summary)
 }
 
-
-#' @export
-#' @inheritParams amount.held
-#' @rdname amount.held
-amount.held.RapResults<-function(x, y=0) {
-	if (is.null(y))
-		return(x@amount.held)
-	if (y==0)
-		return(x@amount.held[x@best,])
-	return(x@amount.held[y,])
-}
-
-#' @rdname space.held
-#' @inheritParams space.held
-#' @export
-space.held.RapResults<-function(x, y=0) {
-	if (is.null(y))
-		return(x@space.held)
-	if (y==0)
-		return(x@space.held[x@best,])
-	return(x@space.held[y,])
-}
-
 #' @rdname logging.file
 #' @inheritParams logging.file
 #' @export
