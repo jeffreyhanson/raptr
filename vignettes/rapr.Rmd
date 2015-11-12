@@ -589,7 +589,7 @@ A simple solution to this issue would be to set a proability threshold. For a gi
 
 ```{r, eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=4.6, fig.width=4.6}
 # make new prioritisation with probability threshold of 0.7 for each species
-sim_mrs_space2 <- update(sim_mrs_space, prob.threshold=c(0.7,0.7,0.7))
+sim_mrs_space2 <- solve(prob.subset(species=1:3, threshold=c(0.7,0.7,0.7)))
 
 # show summary
 summary(sim_mrs_space2)

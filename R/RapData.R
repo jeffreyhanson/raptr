@@ -7,7 +7,7 @@ NULL
 #'
 #' @slot polygons \code{PolySet} planning unit spatial data or \code{NULL} if data not available.
 #' @slot pu \code{data.frame} planning unit data. Columns are 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).
-#' @slot species \code{data.frame} with species data. Columns are 'name' (\code{character} and 'prob.threshold' (\code{numeric}).
+#' @slot species \code{data.frame} with species data. Columns are 'name' (\code{character}.
 #' @slot targets \code{data.frame} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), and 'proportion' (\code{character}).
 #' @slot pu.species.probabilities \code{data.frame} with data on the probability of species in each planning unit. Columns are 'species' (\code{integer}), 'pu' (\code{integer}), and 'value' (\code{numeric}) columns.
 #' @slot attribute.spaces \code{list} of \code{AttributeSpace} objects with the demand points and planning unit coordinates.
@@ -664,8 +664,31 @@ dp.subset.RapData<-function(x, space, species, points) {
 	)
 }
 
-
-
+#' @rdname prob.subset
+#' @method prob.subset RapData
+#' @export
+prob.subset.RapData<-function(x, species, threshold) {
+	stopifnot(length(species)==length(threshold))
+	# create new object
+	pu.species.probs<-x@pu.species.probabilities
+	for (i in seq_along(species)) {
+		rows <- which(pu.species.probs$species == species[i] & pu.species.probs[[3]] < threshold[i])
+		if (length(rows)>0)
+			pu.species.probs<-pu.species.probs[-rows,,drop=FALSE]
+	}
+	# return new object
+	return(
+		RapData(
+			pu=x@pu,
+			species=x@species,
+			targets=x@targets,
+			pu.species.probabilities=pu.species.probs,
+			attribute.spaces=x@attribute.spaces,
+			boundary=x@boundary,
+			polygons=x@polygons
+	  )
+	)
+}
 
 #' @rdname update
 #' @export

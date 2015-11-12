@@ -327,6 +327,18 @@ dp.subset.RapSolved<-function(x, space, species, points) {
 	 )
 }
 
+#' @rdname prob.subset
+#' @method prob.subset RapSolved
+#' @export
+prob.subset.RapSolved<-function(x, species, threshold) {
+	return(
+		RapUnsolved(
+			opts=x@opts,
+			data=prob.subset(x@data, species, threshold)
+			)
+	 )
+}
+
 
 #' @describeIn show
 #' @export

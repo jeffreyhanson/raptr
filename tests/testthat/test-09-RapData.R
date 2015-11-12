@@ -96,6 +96,21 @@ test_that('dp.subset.RapData', {
 	expect_equal(rd@attribute.spaces[[1]]@dp[[1]]@weights[1:10], rd2@attribute.spaces[[1]]@dp[[1]]@weights)
 })
 
+test_that('prob.subset.RapData', {
+	# create RapUnsolved object
+	data(sim_ru)
+	rd<-sim_ru@data
+	rd2<-prob.subset(rd, 1:3, c(0.1, 0.2, 0.7))
+	# tests
+	expect_true(all(rd2@pu.species.probabilities[[3]][which(rd2@pu.species.probabilities[[1]]==1)]>0.1))
+	expect_true(sum(rd2@pu.species.probabilities[[3]][which(rd2@pu.species.probabilities[[1]]==1)]<0.7)>1)
+	
+	expect_true(all(rd2@pu.species.probabilities[[3]][which(rd2@pu.species.probabilities[[1]]==2)]>0.2))
+	expect_true(sum(rd2@pu.species.probabilities[[3]][which(rd2@pu.species.probabilities[[1]]==2)]<0.7)>1)
+	
+	expect_true(all(rd2@pu.species.probabilities[[3]][which(rd2@pu.species.probabilities[[1]]==3)]>0.7))
+})
+
 test_that('update.RapData', {
 	# generate objects
 	data(sim_ru)

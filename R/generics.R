@@ -376,6 +376,25 @@ pu.subset<-function(x, pu) UseMethod('pu.subset')
 #' sim_ru2 <- dp.subset(sim_ru, 1, 1, 1:10)
 dp.subset<-function(x, space, species, points) UseMethod('dp.subset')
 
+#' Subset probabilities above a threshold
+#'
+#' This function subsets out probabilities assigned to planning units above a threshold. It effectively sets the probability
+#' that species inhabit planning units to zero if they are below the threshold. 
+#'
+#' @param x \code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.
+#' @param species \code{integer} vector to specify the index of the species to apply threshold to
+#' @param threshold \code{numeric} probability to use a threshold.
+#' @return \code{RapData} or \code{RapUnsolved} object depending on input object.
+#' @seealso \code{RapData}, \code{RapUnsolved}, \code{RapSolved}.
+#' @rdname prob.subset
+#' @export
+#' @examples
+#' # load data
+#' data(sim_ru)
+#' # generate new object with first 10 planning units
+#' sim_ru2 <- prob.subset(sim_ru, 1:3, c(0.1,0.2,0.3))
+prob.subset<-function(x, species, threshold) UseMethod('prob.subset')
+
 #' Solution score
 #'
 #' Extract solution score from \code{RapResults} or \code{RapSolved} object.
