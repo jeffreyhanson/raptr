@@ -9,3 +9,7 @@
 
 # log files
 gurobi.log
+
+# vignette cache
+/vignettes/rapr_files
+/vignettes/rapr_cache
