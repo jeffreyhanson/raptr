@@ -58,54 +58,6 @@ setMethod(
 		print.RapUnsolved(object)
 )
 
-#' @rdname spp.subset
-#' @method spp.subset RapUnsolved
-#' @export
-spp.subset.RapUnsolved<-function(x, species) {
-	return(
-		RapUnsolved(
-			opts=x@opts,
-			data=spp.subset(x@data, species)
-			)
-	 )
-}
-
-#' @rdname pu.subset
-#' @method pu.subset RapUnsolved
-#' @export
-pu.subset.RapUnsolved<-function(x, pu) {
-	return(
-		RapUnsolved(
-			opts=x@opts,
-			data=pu.subset(x@data, pu)
-			)
-	 )
-}
-
-#' @rdname dp.subset
-#' @method dp.subset RapUnsolved
-#' @export
-dp.subset.RapUnsolved<-function(x, space, species, points) {
-	return(
-		RapUnsolved(
-			opts=x@opts,
-			data=dp.subset(x@data, space, species, points)
-			)
-	 )
-}
-
-#' @rdname prob.subset
-#' @method prob.subset RapUnsolved
-#' @export
-prob.subset.RapUnsolved<-function(x, species, threshold) {
-	return(
-		RapUnsolved(
-			opts=x@opts,
-			data=prob.subset(x@data, species, threshold)
-			)
-	 )
-}
-
 #' @rdname spp.plot
 #' @method spp.plot RapUnsolved
 #' @export

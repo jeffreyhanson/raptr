@@ -69,6 +69,8 @@ setMethod(
 		model<-rcpp_generate_model_object(a@opts, inherits(a@opts, 'RapUnreliableOpts'), a@data, verbose)
 		model$A<-Matrix::sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value, dims=c(max(model$Ar$row)+1, length(model$obj)))
 		
+		o1<<-model
+		
 		## first run
 		# run model
 		log.pth<-tempfile(fileext='.log')
@@ -76,6 +78,8 @@ setMethod(
 		solution<-gurobi::gurobi(model, gparams)
 		if (file.exists('gurobi.log')) unlink('gurobi.log')
 
+		o2<<-solution
+		
 		# check solution object
 		if (!is.null(solution$status))
 			if (solution$status=="INFEASIBLE") {
@@ -292,9 +296,9 @@ print.RapSolved<-function(x, ...) {
 }
 
 #' @rdname spp.subset
-#' @method spp.subset RapSolved
+#' @method spp.subset RapUnsolOrSol
 #' @export
-spp.subset.RapSolved<-function(x, species) {
+spp.subset.RapUnsolOrSol<-function(x, species) {
 	return(
 		RapUnsolved(
 			opts=x@opts,
@@ -304,9 +308,9 @@ spp.subset.RapSolved<-function(x, species) {
 }
 
 #' @rdname pu.subset
-#' @method pu.subset RapSolved
+#' @method pu.subset RapUnsolOrSol
 #' @export
-pu.subset.RapSolved<-function(x, pu) {
+pu.subset.RapUnsolOrSol<-function(x, pu) {
 	return(
 		RapUnsolved(
 			opts=x@opts,
@@ -316,9 +320,9 @@ pu.subset.RapSolved<-function(x, pu) {
 }
 
 #' @rdname dp.subset
-#' @method dp.subset RapSolved
+#' @method dp.subset RapUnsolOrSol
 #' @export
-dp.subset.RapSolved<-function(x, space, species, points) {
+dp.subset.RapUnsolOrSol<-function(x, space, species, points) {
 	return(
 		RapUnsolved(
 			opts=x@opts,
@@ -328,9 +332,9 @@ dp.subset.RapSolved<-function(x, space, species, points) {
 }
 
 #' @rdname prob.subset
-#' @method prob.subset RapSolved
+#' @method prob.subset RapUnsolOrSol
 #' @export
-prob.subset.RapSolved<-function(x, species, threshold) {
+prob.subset.RapUnsolOrSol<-function(x, species, threshold) {
 	return(
 		RapUnsolved(
 			opts=x@opts,
@@ -338,7 +342,6 @@ prob.subset.RapSolved<-function(x, species, threshold) {
 			)
 	 )
 }
-
 
 #' @describeIn show
 #' @export
@@ -394,7 +397,7 @@ setMethod(
 		x,
 		y,
 		basemap="none",
-		pu.color.palette=c('#e5f5f9', '#00441b', '#FFFF00', '#FF0000'),
+		pu.color.palette=c('#00441b', '#e5f5f9', '#FFFF00', '#FF0000'),
 		alpha=ifelse(basemap=="none",1,0.7),
 		grayscale=FALSE,
 		main=NULL,
@@ -754,13 +757,30 @@ space.plot.RapSolved<-function(
 #' @rdname update
 #' @method update RapUnsolOrSol
 #' @export
-update.RapUnsolOrSol<-function(object, ..., solve=TRUE) {
+update.RapUnsolOrSol<-function(object, ..., formulation=NULL, solve=TRUE) {
+	# update formulation
+	opts<-object@opts
+	if (!is.null(formulation)) {
+		match.arg(formulation, c('unreliable','reliable'))
+		# create new opts object
+		if (formulation=='unreliable') {
+			opts<-RapUnreliableOpts()
+		} else {
+			opts<-RapReliableOpts()
+		}
+		# fill in matching slots
+		for (i in slotNames(object@opts)) {
+			if (i %in% slotNames(opts))
+				slot(opts, i)=slot(object@opts, i)
+		}
+	}
+	# return updated object
 	object<-RapUnsolved(
 		opts=do.call(
 			'update',
 			append(
-					list(object=object@opts),
-					parseArgs('update', object@opts, ...)
+					list(object=opts),
+					parseArgs('update', opts, ...)
 			)
 		),
 		data=do.call(

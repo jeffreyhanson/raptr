@@ -25,6 +25,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	std::size_t n_attribute_spaces;
 	std::size_t n_pu;
 	std::size_t n_edges;
+	std::size_t n_edges2=0;
 	std::size_t n_species;
 	std::vector<std::size_t> n_demand_points;
 	bool boundary;
@@ -80,14 +81,30 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	std::vector<std::size_t> boundaryDF_id2 = boundaryDF["id2"];
 	std::vector<double> boundaryDF_boundary = boundaryDF["boundary"];
 	n_edges=boundaryDF_boundary.size();
-	std::vector<std::string> boundaryDF_idpair_CHR;
+	std::vector<std::size_t> edge_pos;
+	std::vector<std::string> boundaryDF_idpair_STR;
 	if (boundary) {
-		boundaryDF_idpair_CHR.reserve(n_edges);
+		boundaryDF_idpair_STR.reserve(n_edges);
+		edge_pos.reserve(n_edges);
 		for (std::size_t i=0; i<n_edges; ++i) {
-			boundaryDF_idpair_CHR.push_back(
-				"pu_" + num2str<std::size_t>(boundaryDF_id1[i]-1) + "_" + num2str<std::size_t>(boundaryDF_id2[i]-1)
-			);
+			// convert to base-0 indexing
+			boundaryDF_id1[i]-=1;
+			boundaryDF_id2[i]-=1;
+			// main processing
+			if (boundaryDF_id1[i]!=boundaryDF_id2[i]) {
+				/// if boundaryDF_id1[i] != boundaryDF_id2[i]
+				// store quadratic variable
+				boundaryDF_idpair_STR.push_back(
+					"pu_" + num2str<std::size_t>(boundaryDF_id1[i]) + "_" + num2str<std::size_t>(boundaryDF_id2[i])
+				);
+				// cache location of quadratic variable
+				edge_pos.push_back(i);
+			}
+			// increase cost variable with boundary
+			puDF_cost[boundaryDF_id1[i]] += (blmDBL * boundaryDF_boundary[i]);
 		}
+		boundaryDF_idpair_STR.shrink_to_fit();
+		n_edges2=boundaryDF_idpair_STR.size();
 	}
 
 	/// attribute.space
@@ -353,8 +370,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 
 	// pu_pu boundary vars
 	if (boundary) {
-		for (std::size_t i=0; i<n_edges; ++i) {
-			variableMAP[boundaryDF_idpair_CHR[i]] = counter;
+		for (std::size_t i=0; i<n_edges2; ++i) {
+			variableMAP[boundaryDF_idpair_STR[i]] = counter;
 			++counter;
 		}
 	}
@@ -422,8 +439,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	// boundary variables
 	if (verbose) Rcpp::Rcout << "\t\tboundary variables" << std::endl;
 	if (boundary) {
-		for (std::size_t i=0; i<n_edges; ++i) {
-			objDBL[variableMAP[boundaryDF_idpair_CHR[i]]] = blmDBL * boundaryDF_boundary[i];
+		for (std::size_t i=0; i<n_edges2; ++i) {
+			objDBL[variableMAP[boundaryDF_idpair_STR[i]]] = -(blmDBL * boundaryDF_boundary[edge_pos[i]]);
 		}
 	}
 
@@ -533,44 +550,47 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	Rcpp::checkUserInterrupt();
 	if (verbose) Rcpp::Rcout << "\t\tboundary constraints" << std::endl;
 	if (boundary) {
-		for (std::size_t i=0; i<n_edges; ++i) {
-			// model+=boundaryDF_idpair_CHR[i] + " - " + puDF_id_STR[boundaryDF_id1[i]] + " <= 0\n";
+		for (std::size_t i=0; i<n_edges2; ++i) {
+			/// constraints if boundaryDF_id1[i] != boundaryDF_id2[i]				
+			// model+=boundaryDF_idpair_STR[i] + " - " + puDF_id_STR[boundaryDF_id1[i]] + " <= 0\n";
 			model_rows_INT.push_back(counter);
 			model_rows_INT.push_back(counter);
-			model_cols_INT.push_back(variableMAP[boundaryDF_idpair_CHR[i]]);
-			model_cols_INT.push_back(variableMAP[puDF_id_STR[boundaryDF_id1[i]]]);
+			model_cols_INT.push_back(variableMAP[boundaryDF_idpair_STR[i]]);
+			model_cols_INT.push_back(variableMAP[puDF_id_STR[boundaryDF_id1[edge_pos[i]]]]);
 			model_vals_DBL.push_back(1.0);
 			model_vals_DBL.push_back(-1.0);
 			senseSTR.push_back("<=");
 			rhsDBL.push_back(0.0);
 			++counter;
 
-			// model+=boundaryDF_idpair_CHR[i] + " - " + puDF_id_STR[boundaryDF_id2[i]] + " <= 0\n";
+			// model+=boundaryDF_idpair_STR[i] + " - " + puDF_id_STR[boundaryDF_id2[i]] + " <= 0\n";
 			model_rows_INT.push_back(counter);
 			model_rows_INT.push_back(counter);
-			model_cols_INT.push_back(variableMAP[boundaryDF_idpair_CHR[i]]);
-			model_cols_INT.push_back(variableMAP[puDF_id_STR[boundaryDF_id2[i]]]);
+			model_cols_INT.push_back(variableMAP[boundaryDF_idpair_STR[i]]);
+			model_cols_INT.push_back(variableMAP[puDF_id_STR[boundaryDF_id2[edge_pos[i]]]]);
 			model_vals_DBL.push_back(1.0);
 			model_vals_DBL.push_back(-1.0);
 			senseSTR.push_back("<=");
 			rhsDBL.push_back(0.0);
 			++counter;
 
-			// model+=boundaryDF_idpair_CHR[i] + " - " +
+			// model+=boundaryDF_idpair_STR[i] + " - " +
 				// puDF_id_STR[boundaryDF_id1[i]] + " - " +
 				// puDF_id_STR[boundaryDF_id2[i]] + " >= -1\n";
-			model_rows_INT.push_back(counter);
-			model_rows_INT.push_back(counter);
-			model_rows_INT.push_back(counter);
-			model_cols_INT.push_back(variableMAP[boundaryDF_idpair_CHR[i]]);
-			model_cols_INT.push_back(variableMAP[puDF_id_STR[boundaryDF_id1[i]]]);
-			model_cols_INT.push_back(variableMAP[puDF_id_STR[boundaryDF_id2[i]]]);
-			model_vals_DBL.push_back(1);
-			model_vals_DBL.push_back(-1);
-			model_vals_DBL.push_back(-1);
-			senseSTR.push_back(">=");
-			rhsDBL.push_back(-1.0);
-			++counter;
+			
+			// constraints not strictly needed since decision variables are binary
+// 			model_rows_INT.push_back(counter);
+// 			model_rows_INT.push_back(counter);
+// 			model_rows_INT.push_back(counter);
+// 			model_cols_INT.push_back(variableMAP[boundaryDF_idpair_STR[i]]);
+// 			model_cols_INT.push_back(variableMAP[puDF_id_STR[boundaryDF_id1[edge_pos[i]]]]);
+// 			model_cols_INT.push_back(variableMAP[puDF_id_STR[boundaryDF_id2[edge_pos[i]]]]);
+// 			model_vals_DBL.push_back(1);
+// 			model_vals_DBL.push_back(-1);
+// 			model_vals_DBL.push_back(-1);
+// 			senseSTR.push_back(">=");
+// 			rhsDBL.push_back(-1.0);
+// 			++counter;
 		}
 	}
 
@@ -898,8 +918,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	// boundary variables
 	Rcpp::checkUserInterrupt();
 	if (boundary) {
-		for (std::size_t i=0; i<n_edges; ++i)
-			vtypeSTR[variableMAP[boundaryDF_idpair_CHR[i]]]="B";
+		for (std::size_t i=0; i<n_edges2; ++i)
+			vtypeSTR[variableMAP[boundaryDF_idpair_STR[i]]]="B";
 	}
 
   // 1g constraints

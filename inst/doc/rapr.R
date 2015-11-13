@@ -2,6 +2,35 @@
 # load rapr R package
 library(rapr)
 
+## ---- echo=FALSE, fig.height=4, fig.width=4, fig.cap="Figure 1. An example of an environmental attribute space. This environmental space has dimensions relating to temperature $\\circ$ and rainfall values. Points denote demand points. Letters denote populations. The populations A and C have relatively similar environmental conditions. Whereas, populations A and B have relatively different environmental conditions."----
+## load packages
+library(ggplot2)
+
+## generate data
+# population data
+populations <- data.frame(
+	population=LETTERS[1:4],
+	temperature=c(22,29,21.6,28),
+	rainfall=c(6,12,5.5,6)
+)
+# demand point data
+make.dp <- function(x, n, pad.percent=0.2) {
+	padding<-diff(range(x))*pad.percent
+	return(seq(min(x)-padding, max(x)+padding, length.out=n))
+}
+demand.points <- expand.grid(
+	temperature=make.dp(populations$temperature, n=4, pad.percent=0.2),
+	rainfall=make.dp(populations$rainfall, n=4, pad.percent=0.2)
+)
+
+## plot data
+ggplot(aes(x=temperature, y=rainfall), data=populations) +
+	geom_point(data=demand.points, fill='gray70') +
+	geom_text(aes(label=population), size=10) +
+	xlab(expression('Temperature ('*degree*'C)')) +
+	ylab('Rainfall (mm)') +
+	theme_classic()
+
 ## ---- eval=FALSE---------------------------------------------------------
 #  # load rapr R package
 #  library(rapr)
@@ -135,9 +164,9 @@ amount.held(sim_rs_s1_amount)
 # show space held
 space.held(sim_rs_s1_amount)
 
-## ---- eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=4.6, fig.width=4.6----
-# plot the prioritisation
-plot(sim_rs_s1_amount)
+## ---- eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=5.5, fig.width=5.5----
+# plot the first (and only) solution in the prioritisation
+plot(sim_rs_s1_amount, 1)
 
 # plot the prioritisation and the uniform species' distribution
 spp.plot(sim_rs_s1_amount, 1, main='Uniform species')
@@ -158,14 +187,14 @@ amount.held(sim_rs_s2_amount)
 # show space held
 space.held(sim_rs_s2_amount)
 
-## ---- eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=4.6, fig.width=4.6----
+## ---- eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=5.5, fig.width=5.5----
 # plot the prioritisation
-plot(sim_rs_s2_amount)
+plot(sim_rs_s2_amount, 1)
 
 # plot the prioritisation and the normal species' distribution
 spp.plot(sim_rs_s2_amount, 1, main='Normal species')
 
-## ---- eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=4.6, fig.width=4.6----
+## ---- eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=5.5, fig.width=5.5----
 # create new object with just the bimodal species
 sim_ru_s3 <- spp.subset(sim_ru, 'bimodal')
 
@@ -173,7 +202,7 @@ sim_ru_s3 <- spp.subset(sim_ru, 'bimodal')
 sim_rs_s3_amount <- update(sim_ru_s3, amount.target=0.2, space.target=0)
 
 # plot the prioritisation
-plot(sim_rs_s3_amount)
+plot(sim_rs_s3_amount, 1)
 
 # plot the prioritisation and the bimodal species' distribution
 spp.plot(sim_rs_s3_amount, 1, main='Bimodal species')
@@ -200,7 +229,7 @@ amount.held(sim_rs_s1_space)
 # show space held
 space.held(sim_rs_s1_space)
 
-## ---- eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=4.6, fig.width=4.6----
+## ---- eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=5.5, fig.width=5.5----
 # plot the prioritisation
 plot(sim_rs_s1_space)
 
@@ -211,7 +240,7 @@ spp.plot(sim_rs_s1_space, 'uniform', main='Uniform species')
 # plot the difference between old and new prioritisations
 plot(sim_rs_s1_amount, sim_rs_s1_space, 1, 1, main='Difference between solutions')
 
-## ---- eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=4.6, fig.width=4.6----
+## ---- eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=5.5, fig.width=5.5----
 # make new prioritisation
 sim_rs_s2_space <- update(sim_rs_s2_amount, amount.target=0.2, space.target=0.85)
 
@@ -225,7 +254,7 @@ amount.held(sim_rs_s2_space)
 space.held(sim_rs_s2_space)
 
 # plot the prioritisation
-plot(sim_rs_s2_space)
+plot(sim_rs_s2_space, 1)
 
 # plot the prioritisation and the normal species' distribution
 spp.plot(sim_rs_s2_space, 'normal', main='Normal species')
@@ -234,7 +263,7 @@ spp.plot(sim_rs_s2_space, 'normal', main='Normal species')
 # plot the difference between old and new prioritisations
 plot(sim_rs_s2_amount, sim_rs_s2_space, 1, 1, main='Difference between solutions')
 
-## ---- eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=4.6, fig.width=4.6----
+## ---- eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=5.5, fig.width=5.5----
 # make new prioritisation
 sim_rs_s3_space <- update(sim_rs_s3_amount, amount.target=0.2, space.target=0.85)
 
@@ -248,7 +277,7 @@ amount.held(sim_rs_s3_space)
 space.held(sim_rs_s3_space)
 
 # plot the prioritisation
-plot(sim_rs_s3_space)
+plot(sim_rs_s3_space, 1)
 
 # plot the prioritisation and the bimodal species' distribution
 spp.plot(sim_rs_s3_space, 'bimodal', main='Bimodal species')
@@ -258,7 +287,7 @@ spp.plot(sim_rs_s3_space, 'bimodal', main='Bimodal species')
 # plot the difference between old and new prioritisations
 plot(sim_rs_s3_amount, sim_rs_s3_space, 1, 1, main='Difference between solutions')
 
-## ---- eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=4.6, fig.width=4.6----
+## ---- eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=5.5, fig.width=5.5----
 # make prioritisations
 sim_mrs_amount <- update(sim_ru, amount.target=c(0.2,0.2,0.2), space.target=c(0,0,0))
 
@@ -277,14 +306,48 @@ space.held(sim_mrs_amount)
 space.held(sim_mrs_space)
 
 # plot multi-species prioritisation with amount-based targets
-plot(sim_mrs_amount, main='Amount-based targets')
+plot(sim_mrs_amount, 1, main='Amount-based targets')
 
 # plot multi-species prioritisation with amount- and space-based targets
-plot(sim_mrs_space, main='Amount and space-based targets')
+plot(sim_mrs_space, 1, main='Amount and space-based targets')
 
 ## ---- eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=5.5, fig.width=5.5----
 # difference between the two prioritisations
 plot(sim_mrs_amount, sim_mrs_space, 1, 1, main='Difference between solutions')
+
+## ---- eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=5.5, fig.width=5.5----
+# make new prioritisation with probability threshold of 0.7 for each species
+sim_mrs_space2 <- solve(
+	prob.subset(
+		sim_mrs_space,
+		species=2:3,
+		threshold=c(0.7,0.7)
+	)
+)
+
+# show summary
+summary(sim_mrs_space2)
+
+# plot prioritisation
+plot(sim_mrs_space2, 1)
+
+## ---- eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=5.5, fig.width=5.5----
+# difference between prioritisations that use and do not use thresholds
+plot(sim_mrs_space2, sim_mrs_space, 1, 1, main='Difference between solutions')
+
+## ---- eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=5.5, fig.width=5.5----
+# make new prioritisation using reliable formulation
+sim_mrs_space3 <- update(sim_mrs_space, formulation='reliable', MaxRLevel=1L)
+
+# show summary
+summary(sim_mrs_space3)
+
+# plot prioritisation
+plot(sim_mrs_space3, 1)
+
+## ---- eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=5.5, fig.width=5.5----
+# difference between prioritisations based on unreliable and reliable formulation
+plot(sim_mrs_space3, sim_mrs_space, 1, 1, main='Difference between solutions')
 
 ## ---- eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=5.5, fig.width=5.5----
 # load data
@@ -385,7 +448,7 @@ cs_results <- data.frame(
 		space.held(cs_rs_amount, space=1)[1,], space.held(cs_rs_space, space=1)[1,],
 			space.held(cs_rs_aus, space=1)[1,]
 	)
-) %>% group_by (
+) %>% group_by(
 	name,
 	variable
 ) %>% summarise(
@@ -405,7 +468,7 @@ ggplot(aes(x=variable, y=mean, fill=name), data=cs_results) +
 	theme_classic() +
 	theme(legend.position='bottom',legend.direction='horizontal')
 
-## ---- eval=FALSE, fig.height=4.6, fig.width=4.6--------------------------
+## ---- eval=FALSE, fig.height=5.5, fig.width=5.5--------------------------
 #  # update prioritisation
 #  cs_rs_space_blm <- update(cs_rs_space, BLM=100000)
 #  
@@ -413,27 +476,9 @@ ggplot(aes(x=variable, y=mean, fill=name), data=cs_results) +
 #  summary(cs_rs_space_blm)
 #  
 #  # plot prioritisation
-#  plot(cs_rs_space_blm)
+#  plot(cs_rs_space_blm, 1)
 
-## ---- eval=FALSE---------------------------------------------------------
-#  # create a vector with BLM values
-#  blms <- seq(0, 1000, length.out=10)
-#  
-#  # create empty list to store solutions
-#  solutions <- list()
-#  
-#  # iterate over blms and create solutions
-#  for (i in blms)
-#  	solutions[[i]]=update(cs_rs_space, BLM=i)
-#  
-#  # create data.frame with BLM values, cost, and fragmentation
-#  blm_results=data.frame(
-#  	BLM=blms,
-#  	cost=sapply(solutions, function(i) {summary(i)$Cost}),
-#  	fragmentation=sapply(solutions, function(i) {summary(i)$Fragmentation})
-#  )
-
-## ---- eval=FALSE, fig.height=4.6, fig.width=7.5--------------------------
+## ---- eval=FALSE, fig.height=5.5, fig.width=7.5--------------------------
 #  # load ggplot2 package
 #  library(ggplot2)
 #  
@@ -450,4 +495,8 @@ ggplot(aes(x=variable, y=mean, fill=name), data=cs_results) +
 #  	xlab('Boundary length modifier (BLM)') +
 #  	ylab('Fragmentation (ratio of edge lengths inside reserves to exposed lengths)') +
 #  	theme_classic()
+
+## ---- eval=FALSE, fig.height=5.5, fig.width=5.5--------------------------
+#  # plot prioritisation with blm=300
+#  plot(solutions[[3]], 1)
 

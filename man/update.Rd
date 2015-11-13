@@ -22,7 +22,8 @@
 \method{update}{RapReliableOpts}(object, BLM = NULL,
   FailureMultiplier = NULL, MaxRLevel = NULL, ...)
 
-\method{update}{RapUnsolOrSol}(object, ..., solve = TRUE)
+\method{update}{RapUnsolOrSol}(object, ..., formulation = NULL,
+  solve = TRUE)
 
 \method{update}{RapUnreliableOpts}(object, BLM = NULL, ...)
 }
@@ -62,6 +63,8 @@
 \item{FailureMultiplier}{\code{numeric} multiplier for failure planning unit.}
 
 \item{MaxRLevel}{\code{numeric} maximum R failure level for approximation.}
+
+\item{formulation}{\code{character} indicating new problem formulation to use. This can be either 'unreliable' or 'reliable'. The default is \code{NULL} so that formulation in \code{object} is used.}
 
 \item{solve}{\code{logical} should the problem be solved? This argument is only valid for \code{RapUnsolved} and \code{RapSolved} objects. Defaults to \code{TRUE}.}
 }

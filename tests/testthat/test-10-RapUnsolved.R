@@ -478,6 +478,18 @@ test_that('update.RapUnsolved', {
 	expect_equal(sim_ru2@data@species$name, letters[1:3])
 })
 
+test_that('update.RapUnsolved (formulation argument)', {
+	# load RapUnsolved object
+	set.seed(500)
+	data(sim_ru)
+	# update object
+	sim_ru@opts@BLM=100
+	sim_ru2 <- update(sim_ru, formulation='reliable', solve=FALSE)
+	# checks
+	expect_equal(sim_ru2@opts@BLM, 100)
+	expect_is(sim_ru2@opts,'RapReliableOpts')
+})
+
 test_that('amount.target.RapData', {
 	data(sim_ru)
 	expect_equal(

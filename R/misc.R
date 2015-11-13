@@ -17,10 +17,37 @@ NULL
 #' options()$GurobiInstalled
 #' }
 is.GurobiInstalled<-function(verbose=TRUE) {
-	# check if installed
+	# define installation instructions
+	gurobiInstallationInstructions <- paste(
+		'Follow these instructions to download the Gurobi software suite:\n\t-',
+		c('Linux'='http://bit.ly/1ksXUaQ','Windows'='http://bit.ly/1MrjXWc', 'Darwin'='http://bit.ly/1N0AlT0')[Sys.info()[['sysname']]]
+	)
+	
+	rInstallationInstructions <- paste(
+		'Follow these instructions to install the Gurobi R package:\n\t-',
+		c('Linux'='http://bit.ly/1HLCRoE','Windows'='http://bit.ly/1MMSZaH','Darwin'='http://bit.ly/1Pr2WRG')[Sys.info()[['sysname']]]
+	)
+	
+	licenseInstructions <- 'The Gurobi R package requires a Gurobi license to work:\n\t- visit this web-page for an overview: http://bit.ly/1OHEQCm\n\t- academics can obtain a license at no cost here: http://bit.ly/1iYg3LX'
+	
+	# check if gurobi installed
+	tmp<-capture.output(
+		{result<-system('gurobi_cl -v')}
+	)
+	if (result!=0) {
+		if (verbose) {
+			cat('The gorubi software is not installed\n')
+			cat('\n', gurobiInstallationInstructions,'\n\n',licenseInstructions,'\n\n',rInstallationInstructions,'\n\n')
+		}
+		options(GurobiInstalled=FALSE)
+		return(FALSE)
+	}
+	# check if R package installed
 	if (!'gurobi' %in% unlist(sapply(.libPaths(), dir), recursive=FALSE, use.names=TRUE)) {
-		if (verbose)
+		if (verbose) {
 			cat('The gorubi R package is not installed\n')
+			cat('\n', rInstallationInstructions, '\n\n')
+		}
 		options(GurobiInstalled=FALSE)
 		return(FALSE)
 	}
@@ -40,14 +67,17 @@ is.GurobiInstalled<-function(verbose=TRUE) {
 		}
 	)
 	if (result$status!="OPTIMAL") {
-		if (verbose)
+		if (verbose) {
 			cat('The gurobi R package is installed, but R is having issues using it\n')
+			cat('\nOutput from trying to run Gurobi:\n\n')
+			cat(paste(tmp, collapse='\n'),'\n',sep='')
+			cat('\nThis might be due to licensing issues.\n',licenseInstructions, '\n',sep='')
+		}
 		options(GurobiInstalled=FALSE)
 		return(FALSE)
 	}
 	return(TRUE)
 }
-
 
 #' Test if GDAL is installed on computer
 #'

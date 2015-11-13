@@ -133,6 +133,8 @@ setClass("RapData",
 			# check all species match
 			if (!all(object@pu.species.probabilities$species %in% seq_len(nrow(object@species))))
 				stop('argument to pu.species.probabilities$species must have values that correspond to rows in argument to species')
+			if (!all(seq_len(nrow(object@species)) %in% object@pu.species.probabilities$species))
+				stop('argument to species has species that do not occur at least once in pu.species.probabilities$species')
 			if (!all(laply(object@attribute.spaces, function(x) {length(x@dp)==nrow(object@species)})))
 				stop('arguments to attribute.space and species must have the same number of species')
 			if (!all(object@targets$species %in% seq_len(nrow(object@species))))
@@ -602,16 +604,25 @@ spp.subset.RapData<-function(x, species) {
 #' @method pu.subset RapData
 #' @export
 pu.subset.RapData<-function(x, pu) {
-	# create objects
+	## create objects
+	# pu.species.probabilities
 	pu.species.probabilities<-x@pu.species.probabilities[which(
 			x@pu.species.probabilities$pu %in% pu
 	),]
 	species<-unique(pu.species.probabilities$species)
 	pu.species.probabilities$species<-match(pu.species.probabilities$species, species)
 	pu.species.probabilities$pu<-match(pu.species.probabilities$pu, pu)
+	# boundary
 	boundary<-x@boundary[which(x@boundary$id1 %in% pu & x@boundary$id2 %in% pu),]
+	boundary2<-x@boundary[which(x@boundary$id1 %in% pu & !x@boundary$id2 %in% pu),]
+	boundary2$id2<-boundary2$id1
+	boundary3<-x@boundary[which(!x@boundary$id1 %in% pu & x@boundary$id2 %in% pu),]
+	boundary3$id1<-boundary3$id2
+	boundary<-do.call(rbind, list(boundary, boundary2, boundary3))
 	boundary$id1<-match(boundary$id1, pu)
 	boundary$id2<-match(boundary$id2, pu)
+	boundary<-rcpp_sum_duplicates(boundary[[1]], boundary[[2]], boundary[[3]])
+	# polygons
 	polygons<-x@polygons[x@polygons$PID %in% pu,]
 	polygons$PID<-match(polygons$PID, pu)
 	# return new object

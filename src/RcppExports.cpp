@@ -98,3 +98,16 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// rcpp_sum_duplicates
+Rcpp::DataFrame rcpp_sum_duplicates(std::vector<std::size_t> ids1, std::vector<std::size_t> ids2, std::vector<double> boundary);
+RcppExport SEXP rapr_rcpp_sum_duplicates(SEXP ids1SEXP, SEXP ids2SEXP, SEXP boundarySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< std::vector<std::size_t> >::type ids1(ids1SEXP);
+    Rcpp::traits::input_parameter< std::vector<std::size_t> >::type ids2(ids2SEXP);
+    Rcpp::traits::input_parameter< std::vector<double> >::type boundary(boundarySEXP);
+    __result = Rcpp::wrap(rcpp_sum_duplicates(ids1, ids2, boundary));
+    return __result;
+END_RCPP
+}

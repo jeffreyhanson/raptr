@@ -29,3 +29,7 @@ rcpp_groupmean <- function(cat_vec, val_vec) {
     .Call('rapr_rcpp_groupmean', PACKAGE = 'rapr', cat_vec, val_vec)
 }
 
+rcpp_sum_duplicates <- function(ids1, ids2, boundary) {
+    .Call('rapr_rcpp_sum_duplicates', PACKAGE = 'rapr', ids1, ids2, boundary)
+}
+

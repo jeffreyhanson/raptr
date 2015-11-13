@@ -264,6 +264,7 @@ NULL
 #' @param BLM \code{numeric} boundary length modifier.
 #' @param FailureMultiplier \code{numeric} multiplier for failure planning unit.
 #' @param MaxRLevel \code{numeric} maximum R failure level for approximation.
+#' @param formulation \code{character} indicating new problem formulation to use. This can be either 'unreliable' or 'reliable'. The default is \code{NULL} so that formulation in \code{object} is used.
 #' @param species \code{integer} or \code{character} denoting species for which targets or name should be updated.
 #' @param space \code{integer} denoting space for which targets should be updated.
 #' @param name \code{character} to rename species.
