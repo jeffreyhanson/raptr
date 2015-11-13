@@ -1,7 +1,6 @@
 .onLoad <- function(libname, pkgname) {
 	# check gurobi package installed
-	is.GurobiInstalled(verbose=TRUE)
-	if (!options()$GurobiInstalled) {
+	if (!is.GurobiInstalled(verbose=TRUE)) {
 		cat('\n\nType the code \'is.GurobiInstalled()\' to check if Gurobi is succesfully installed.')
 	}
 }

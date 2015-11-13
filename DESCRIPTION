@@ -79,6 +79,7 @@ Collate:
     'RapSolved.R'
     'SpatialPolygons2PolySet.R'
     'data.R'
+    'onLoad.R'
     'rap.R'
     'rapr.R'
     'sim.pus.R'
