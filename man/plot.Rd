@@ -9,7 +9,7 @@
 \title{Plot RASP object}
 \usage{
 \S4method{plot}{RapSolved,numeric}(x, y, basemap = "none",
-  pu.color.palette = c("#e5f5f9", "#00441b", "#FFFF00", "#FF0000"),
+  pu.color.palette = c("#00441b", "#e5f5f9", "#FFFF00", "#FF0000"),
   alpha = ifelse(basemap == "none", 1, 0.7), grayscale = FALSE,
   main = NULL, force.reset = FALSE)
 

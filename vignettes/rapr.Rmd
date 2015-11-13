@@ -590,7 +590,79 @@ plot(sim_mrs_amount, sim_mrs_space, 1, 1, main='Difference between solutions')
 
 Here we can see that the inclusion of space-based targets changes which planning units are selected for prioritisation, but also the number of planning units that are selected. The amount-based prioritistion is comprised of 20 units, and the space-based prioritisation is comprised of 21 units. This result suggests that a adequate and representative prioritisation can be acheived for only a minor increase in cost.
 
-## Accomodating uncertainty in species' distributions
+### Fragmentation
+Fragmentation is an important consideration in real-world planning situations. Up until now, we haven't considered the effects of fragmentation on the viability of the prioritisation. As a consequence, our prioritisations have tended to contain planning units without any neighbors. We can use the `BLM` parameter to penalise fragmented solutions.
+
+Let's generate a new prioritisation that heavily penalises fragmention, by updating the `sim_mrs_space` object with a BLM of `1000`.
+
+```{r, eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=5.5, fig.width=5.5}
+# update prioritisation
+sim_rs_space_blm <- update(sim_mrs_space, BLM=100)
+
+# show summary of prioritisation
+summary(sim_rs_space_blm)
+
+# show amount held for each prioritisation
+amount.held(sim_mrs_space_blm)
+
+# show space held for each prioritisation
+space.held(sim_mrs_space_blm)
+
+# plot prioritisation
+plot(sim_rs_space_blm, 1)
+```
+
+```{r, eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=5.5, fig.width=5.5}
+# difference between the two prioritisations
+plot(sim_mrs_space_blm, sim_mrs_space, 1, 1, main='Difference between solutions')
+```
+
+We can see that by increasing the `BLM` parameter, the prioritisation becomes more clustered. However, this particular solution is not very useful because it includes a lot of additional planning units to reduce fragmentation. It can be dificult to find a suitable `BLM` parameter--a value that yields a well-connected network for minimal cost. 
+
+To help identify a suitable `BLM` parameter, we can generate a suite of priortisations using different `BLM` parameters. Then, we can construct a Pareto frontier to visualise the relationship between cost, fragmentation, and find a suitable `BLM` parameter.
+
+```{r, eval={is.GurobiInstalled(verbose=FALSE)}}
+# create a vector with BLM values
+blms <- seq(0, 100, length.out=10)
+
+# create empty list to store solutions
+solutions <- list()
+
+# iterate over blms and create solutions
+for (i in blms)
+	solutions[[i]] <- update(sim_rs_space, BLM=i)
+
+# create data.frame with BLM values, cost, and fragmentation
+blm_results <- data.frame(
+	BLM=blms,
+	cost=sapply(solutions, function(i) {summary(i)$Cost}),
+	fragmentation=sapply(solutions, function(i) {summary(i)$Connectivity_In_Fraction})
+)
+```
+
+Now, let's plot the relationship between `BLM`, cost, and fragmentation.
+
+```{r, eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=5.5, fig.width=7.5}
+# load ggplot2 package
+library(ggplot2)
+
+# plot showing cost, fragmentation, and 
+ggplot(aes(x=fragmentation, y=cost), data=blm_results) +
+	geom_line(color='grey60') +
+	geom_text(aes(labels=BLM), size=3) +
+	ylab('Cost (number of planning units)') +
+	xlab(Fragmentation (ratio of edge lengths inside reserves to exposed lengths)') +
+	theme_classic()
+```
+
+Here, we can see that the prioritisation with a `BLM` value of 50 is relatively well-connected without being too costly. Let's take a look at it.
+
+```{r, eval=FALSE, fig.height=5.5, fig.width=5.5}
+# plot prioritisation with blm=50
+plot(solutions[[3]], 1)
+```
+
+## Uncertainty in species' distributions
 The unreliable formulation does not consider the probability that the planning units are occupied by features when calculating how well a given solution secures a representative sample of an attribute space. Thus solutions identified using the unreliable formulation may represent regions of an attribute space for a species using planning units only have a small chance of being occupied by the species. As a consequence, if the prioritisation is implemented, it may fail to secure regions of an attribute space if individuals do not inhabit these planning units, and ultimately fail to fulfil the space targets.
 
 A simple solution to this issue would be to ensure that planning units cannot be assigned to demand points if they have a low probability of occupancy. This can be acheived by setting a probability threshold for planning units, such that planning units with a probability of occupancy below the threshold are effectively set to zero.
@@ -814,65 +886,6 @@ ggplot(aes(x=variable, y=mean, fill=name), data=cs_results) +
 
 These results suggest that prioritisations based just on amount-based targets can obtain a moderately representative sample of the species' geographic distribution and climatic niche. However, a much larger analysis is be required to verify this.
 
-### Fragmentation
-Fragmentation is an important consideration in real-world planning situations. Up until now, we haven't considered the effects of fragmentation on the viability of the prioritisation. As a consequence, our prioritisations have tended to contain planning units without any neighbors. We can use the `BLM` parameter to penalise fragmented solutions.
-
-Let's generate a new prioritisation that heavily penalises fragmention, by updating the `cs_rs_space` object with a BLM of `1000`.
-
-```{r, eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=5.5, fig.width=5.5}
-# update prioritisation
-cs_rs_space_blm <- update(cs_rs_space, BLM=100)
-
-# show summary of prioritisation
-summary(cs_rs_space_blm)
-
-# plot prioritisation
-plot(cs_rs_space_blm, 1)
-```
-
-We can see that by increasing the `BLM` parameter, the prioritisation becomes more clustered. However, this particular solution would be extremely costly to implement because it includes a lot of additional planning units to reduce fragmentation. It can be dificult to find a suitable `BLM` parameter--a value that yields a well-connected network for minimal cost. 
-
-To help identify a suitable `BLM` parameter, we can generate a suite of priortisations using different `BLM` parameters. Then, we can construct a Pareto frontier to visualise the relationship between cost, fragmentation, and find a suitable `BLM` parameter.
-
-```{r, eval={is.GurobiInstalled(verbose=FALSE)}}
-# create a vector with BLM values
-blms <- seq(0, 100, length.out=10)
-
-# create empty list to store solutions
-solutions <- list()
-
-# iterate over blms and create solutions
-for (i in blms)
-	solutions[[i]] <- update(cs_rs_space, BLM=i)
-
-# create data.frame with BLM values, cost, and fragmentation
-blm_results <- data.frame(
-	BLM=blms,
-	cost=sapply(solutions, function(i) {summary(i)$Cost}),
-	fragmentation=sapply(solutions, function(i) {summary(i)$Connectivity_In_Fraction})
-)
-```
-
-Now, let's plot the relationship between `BLM`, cost, and fragmentation.
-```{r, eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=5.5, fig.width=7.5}
-# load ggplot2 package
-library(ggplot2)
-
-# plot showing cost, fragmentation, and 
-ggplot(aes(x=fragmentation, y=cost), data=blm_results) +
-	geom_line(color='grey60') +
-	geom_text(aes(labels=BLM), size=3) +
-	ylab('Cost (number of planning units)') +
-	xlab(Fragmentation (ratio of edge lengths inside reserves to exposed lengths)') +
-	theme_classic()
-```
-
-Here, we can see that the prioritisation with a `BLM` value of 50 is relatively well-connected without being too costly. Let's take a look at it.
-
-```{r, eval=FALSE, fig.height=5.5, fig.width=5.5}
-# plot prioritisation with blm=50
-plot(solutions[[3]], 1)
-```
 
 ## Conclusions
 
