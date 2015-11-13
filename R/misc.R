@@ -64,6 +64,7 @@ is.GurobiInstalled<-function(verbose=TRUE) {
 		)
 		}
 	)
+	if (file.exists('gurobi.log')) unlink('gurobi.log')
 	if (result$status!="OPTIMAL") {
 		if (verbose) {
 			cat('The gurobi R package is installed, but R is having issues using it\n')

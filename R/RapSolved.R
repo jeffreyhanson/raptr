@@ -69,8 +69,6 @@ setMethod(
 		model<-rcpp_generate_model_object(a@opts, inherits(a@opts, 'RapUnreliableOpts'), a@data, verbose)
 		model$A<-Matrix::sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value, dims=c(max(model$Ar$row)+1, length(model$obj)))
 		
-		o1<<-model
-		
 		## first run
 		# run model
 		log.pth<-tempfile(fileext='.log')
@@ -78,8 +76,6 @@ setMethod(
 		solution<-gurobi::gurobi(model, gparams)
 		if (file.exists('gurobi.log')) unlink('gurobi.log')
 
-		o2<<-solution
-		
 		# check solution object
 		if (!is.null(solution$status))
 			if (solution$status=="INFEASIBLE") {
@@ -397,7 +393,7 @@ setMethod(
 		x,
 		y,
 		basemap="none",
-		pu.color.palette=c('#00441b', '#e5f5f9', '#FFFF00', '#FF0000'),
+		pu.color.palette=c('#e5f5f9', '#00441b', '#FFFF00', '#FF0000'),
 		alpha=ifelse(basemap=="none",1,0.7),
 		grayscale=FALSE,
 		main=NULL,
@@ -433,7 +429,7 @@ setMethod(
 			cols,
 			basemap,
 			main=main,
-			categoricalLegend(pu.color.palette[c(4,2,1,3)],c("Locked Out", "Not Selected", "Selected", "Locked In")),
+			categoricalLegend(pu.color.palette[c(4,1,2,3)],c("Locked Out", "Not Selected", "Selected", "Locked In")),
 			beside=FALSE,
 			border='gray30'
 		)
