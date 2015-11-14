@@ -58,15 +58,15 @@ sim_spp <- lapply(
 par(mfrow=c(1,3), mar=c(5.1, 4.1, 4.1, 4))
 
 # uniform species
-plot(sim_spp[[1]], main='uniform species')
+plot(sim_spp[[1]], main='Uniform species')
 lines(sim_pus)
 
 # normal species
-plot(sim_spp[[2]], main='normal species')
+plot(sim_spp[[2]], main='Normal species')
 lines(sim_pus)
 
 # bimodal species
-plot(sim_spp[[3]], main='bimodal species')
+plot(sim_spp[[3]], main='Bimodal species')
 lines(sim_pus)
 
 # reset plot parameters
@@ -281,7 +281,7 @@ sim_rs_s2_space <- update(sim_rs_s2_amount, amount.target=0.2, space.target=0.85
 
 ## ---- eval=!is.GurobiInstalled(verbose=FALSE), include=FALSE-------------
 #  # make new prioritisation
-#  sim_rs_s2_space <- update(sim_rs_s2_amount, amount.target=0.2, space.target=0.85, solve=FASE)
+#  sim_rs_s2_space <- update(sim_rs_s2_amount, amount.target=0.2, space.target=0.85, solve=FALSE)
 #  sim_rs_s2_space <- solve(sim_rs_s2_space, b=c(23L, 25L, 28L, 44L, 46L, 47L, 53L, 56L, 59L, 65L, 66L, 73L, 78L, 86L))
 #  
 
@@ -504,7 +504,10 @@ plot(sim_mrs_space3, sim_mrs_space, 1, 1, main='Difference between solutions')
 data(cs_spp)
 
 # plot species' distributions
-plot(cs_spp)
+plot(cs_spp, main=c(
+	"Blue-winged kookuburra", "Brown-backed honeyeater", 
+	"Brown falcon", "Pale-headed rosella"
+))
 
 ## ---- fig.height=4, fig.width=4------------------------------------------
 # load data
@@ -538,7 +541,7 @@ par(mfrow=c(1,1), mar=c(5.1, 4.1, 4.1, 2.1))
 data(cs_space)
 
 # plot variables
-plot(cs_space)
+plot(cs_space, main=c('DC1', 'DC2'))
 
 ## ---- eval=!is.GurobiInstalled(verbose=FALSE), include=FALSE-------------
 #  cs_rs_amount <- rap(
@@ -588,7 +591,7 @@ gridExtra::grid.arrange(p1, p2, p3, p4, ncol=1)
 
 ## ---- eval={!is.GurobiInstalled(verbose=FALSE)}, include=FALSE-----------
 #  # make amount- and space-based prioritisation
-#  cs_rs_space <- update(cs_rs_amount, space.target=0.85)
+#  cs_rs_space <- update(cs_rs_amount, space.target=0.85, solve=FALSE)
 #  cs_rs_space <- solve(
 #  	cs_rs_space,
 #  	b=c(4L, 7L, 14L, 19L, 25L, 26L, 31L, 36L, 37L, 38L, 43L, 44L, 45L,
