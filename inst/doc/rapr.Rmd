@@ -80,7 +80,7 @@ ggplot(aes(x=temperature, y=rainfall), data=populations) +
 
 The reserve selection problems are based on uncapacitated facility location problems (all mathematical terms defined hereafter are described in Table S1 for convenience). For convenience, the cardinality of sets will be denoted using the same symbol used to denote the variable. Define $F$ to be the set of features (indexed by $f$). Let $J$ be a set of planning units (indexed by $j$). Also, let $A_j$ denote the area, and $c_j$ denote the cost of preserving planning unit $j \in J$. To assess the extent to which each feature is secured in a given prioritisation, let $q_{fj}$ denote the probability of feature $f$ occupying planning unit $j$. The level of fragmentation associated with a prioritisation is parametrised as the net exposed boundary length. Let the shared boundary length between each planning unit $j \in J$ and $k \in J$ be $b_{jk}$. In any real-world problem, some planning units will have edges that are not associated with any neighbouring planning units (eg. edges along coastlines), these cases will be denoted using $b_{jj}$ for $j \in J$.
 
-Let $S$ denote a set of attribute spaces (indexed by $s$). Each $j \in J$ is associated with spatially explicit data that represent coordinates for each attribute space $s \in S$. Let $I_{fsi}$ denote a set of demand points (indexed by $i$) for each feature $f \in F$ and each attribute space $s \in S$. Let $\lambda_{fsi}$ denote the weighting for each demand point $i \in I$ for each feature $f \in F$ and each attribute space $s \in S$. Let $d_{fsij}$ denote the distance between each demand point $i \in I$ and each planning unit $j \in J$ for each feature $f \in F$ and attribute space $s \in S$. The decision maker will need to choose an appropriate distance metric for each attribute space. For example, Euclidean, Mahalanobis [@r398], Sorenson [@r253], or Bray-Curtis distances may be appropriate given the nature of the attribute space.
+Let $S$ denote a set of attribute spaces (indexed by $s$). Each $j \in J$ is associated with spatially explicit data that represent coordinates for each attribute space $s \in S$. Let $I_{fsi}$ denote a set of demand points (indexed by $i$) for each feature $f \in F$ and each attribute space $s \in S$. Let $\lambda_{fsi}$ denote the weighting for each demand point $i \in I$ for each feature $f \in F$ and each attribute space $s \in S$. Let $d_{fsij}$ denote the distance between each demand point $i \in I$ and each planning unit $j \in J$ for each feature $f \in F$ and attribute space $s \in S$. The decision maker will need to choose an appropriate distance metric for each attribute space. For example, Euclidean, Mahalanobis [@r398], Bray-Curtis, or other distance metrics may be appropriate given the nature of the attribute space [@r449].
 
 Targets are used to ensure that prioritisations are sufficient in terms of their adequacy and representativeness. Let $\hat{T}_f$ denote the expected amount of area that needs to be preserved for each feature $f \in F$. Let $\bar{T}_{fs}$ denote the representativeness targets for feature $f \in F$ and attribute space $a \in A$. For convenience, these targets are expressed as proportions in the R package between the values for the worst possible prioritisation and the prioritisation that includes all the planning units.
 
@@ -235,16 +235,19 @@ The `rapr` R package uses a range of S4 classes to store conservation planning d
 
 Table 1: Classes in `rapr` R package
 
-| Class Name          | Description                                                         | Slots																																														|
-| :-----------------: |:------------------------------------------------------------------- | :-----------------------------------------------------------------------------------------------|
-| ManualOpts          | place-holder class for manually specified solutions 							  | NumberSolutions																																									|
-| GurobiOpts          | parameters for solving optimisation problems using Gurobi					  | Threads, MIPGap, Presolve, TimeLimit, NumberSolutions																						|
-| RapUnreliableOpts   | parameters for the unreliable problem formulation										| BLM																																															|
-| RapReliableOpts     | parameters for the reliable problem formulation											| FailureMultiplier, MaxRLevel																																		|
-| RapData             | planning unit, species, and attribute space data										| pu, species, targets, pu.species.probabilities,<br>attribute.spaces, boundary, polygons, .cache |
-| RapUnsolved         | data and parameters needed to generate prioritisations using RAP		| opts, data																																											|
-| RapResults          | prioritisations and summary statistics															| summary, selections, amount.held, space.held, logging.file, .cache															|
-| RapSolved           | data, parameters, and prioritisations using them										| opts, data, results																																							|
+| Class Name          | Description                                                               | Slots																																														|
+| :-----------------: |:------------------------------------------------------------------------- | :-----------------------------------------------------------------------------------------------|
+| ManualOpts          | place-holder class for manually specified solutions 										  | NumberSolutions																																									|
+| GurobiOpts          | parameters for solving optimisation problems using Gurobi								  | Threads, MIPGap, Presolve, TimeLimit, NumberSolutions																						|
+| RapUnreliableOpts   | parameters for the unreliable problem formulation													| BLM																																															|
+| RapReliableOpts     | parameters for the reliable problem formulation														| failure.multiplier, max.r.level																																	|
+| SimplePoints        | stores coordinates in an n-dimensional space															| coords																																													|
+| DemandPoints        | demand points coordinates and weights for a species in an attribute space	| points, weights																																								  |
+| AttributeSpace      | planning unit coordinates and demand points data for an attribute space		| pu, demand.points, distance.metric																														  |
+| RapData             | planning unit, species, and attribute space data													| pu, species, targets, pu.species.probabilities,<br>attribute.spaces, boundary, polygons, .cache |
+| RapUnsolved         | data and parameters needed to generate prioritisations using RAP					| opts, data																																											|
+| RapResults          | prioritisations and summary statistics																		| summary, selections, amount.held, space.held, logging.file, .cache															|
+| RapSolved           | data, parameters, and prioritisations using them													| opts, data, results																																							|
 
 
 ## Simulated examples
@@ -268,23 +271,13 @@ sim_spp <- lapply(
 Let's see what these species' distributions look like. Each square represents a planning unit, and the color of each denotes square denotes the probability of the species in the planning unit.
 
 ```{r, fig.width=7, fig.height=2.5}
-# change the plot parameters, so we can plot the distributions side by side
-par(mfrow=c(1,3), mar=c(5.1, 4.1, 4.1, 4))
-
-# uniform species
-plot(sim_spp[[1]], main='Uniform species')
-lines(sim_pus)
-
-# normal species
-plot(sim_spp[[2]], main='Normal species')
-lines(sim_pus)
-
-# bimodal species
-plot(sim_spp[[3]], main='Bimodal species')
-lines(sim_pus)
-
-# reset plot parameters
-par(mfrow=c(1,1), mar=c(5.1, 4.1, 4.1, 2.1))
+# plot species
+plot(
+	stack(sim_spp),
+	main=c('Uniform species','Normal species','Bimodal species'),
+	addfun=function(){lines(sim_pus)},
+	nc=3
+)
 ```
 
 Next, we will generate a set of demand points. To understand the effects of probabilities and weights on the demand points, we will generate the demand points in geographic space. These demand points will be the centroids of the planning units. Additionally, we will use the same set of demand points for each species and only vary the weights of the demand points between species. **Note that we are only using the same distribution of demand points for different species for teaching purposes. It is strongly recomended to use different demand points for different species in real-world conservation planning exercises.** 
@@ -768,7 +761,7 @@ Here, we can see that the prioritisation with a `BLM` value of 50 is relatively 
 plot(solutions[[3]], 1)
 ```
 
-## Uncertainty in species' distributions
+### Uncertainty in species' distributions
 The unreliable formulation does not consider the probability that the planning units are occupied by features when calculating how well a given solution secures a representative sample of an attribute space. Thus solutions identified using the unreliable formulation may represent regions of an attribute space for a species using planning units only have a small chance of being occupied by the species. As a consequence, if the prioritisation is implemented, it may fail to secure regions of an attribute space if individuals do not inhabit these planning units, and ultimately fail to fulfil the space targets.
 
 A simple solution to this issue would be to ensure that planning units cannot be assigned to demand points if they have a low probability of occupancy. This can be acheived by setting a probability threshold for planning units, such that planning units with a probability of occupancy below the threshold are effectively set to zero.
@@ -816,12 +809,12 @@ But this method requires setting somewhat arbitrary thresholds. A more objective
 
 ```{r, eval=is.GurobiInstalled(verbose=FALSE)}
 # make new prioritisation using reliable formulation
-sim_mrs_space3 <- update(sim_mrs_space, formulation='reliable', MaxRLevel=1L)
+sim_mrs_space3 <- update(sim_mrs_space, formulation='reliable', max.r.level=1L)
 ```
 
 ```{r, eval=!is.GurobiInstalled(verbose=FALSE), include=FALSE}
 # make new prioritisation using reliable formulation
-sim_mrs_space3 <- update(sim_mrs_space, formulation='reliable', MaxRLevel=1L, solve=FALSE)
+sim_mrs_space3 <- update(sim_mrs_space, formulation='reliable', max.r.level=1L, solve=FALSE)
 sim_mrs_space3 <- solve(
 	sim_mrs_space3,
 	b=c(13L, 14L, 17L, 19L, 20L, 21L, 26L, 35L, 49L, 51L, 53L, 55L, 
@@ -844,6 +837,125 @@ plot(sim_mrs_space3, sim_mrs_space, 1, 1, main='Difference between solutions')
 ```
 
 We can see that more planning units were selected using the reliable formulation to ensure that if any single planning unit was not occupuied, then there would be a suitable backup planning unit. While the reliable formulation can deliver more robust prioritisations, it takes much longer to solve conservation planning problems expressed using this formulation than the unreliable formulation. As a consequence, the reliable formulation is only feasible for particularly small problems, such as those only involving few features and less than 100 planning units. 
+
+### Distance metrics
+In the previous examples, we have only used Euclidean distances to determine how much a prioritisation samples a set of demand points in an attribute space. However, Euclidean distances can be poor measures of distance for multivariate, binary, or correlated variables [@r449]. As a consequence this may lead to over- or under-estimates of how well a given prioritisation samples an attribute space.
+
+The `rapr` R package provides a suite of distance metrics that can be used to calculate spatial representation. To illustrate how using different distance metrics can affect the the optimal solution, we will generate a new suite of prioritisations using different distance metrics.
+
+First, we will simulate a new species and a three-dimensional attribute space. Note that unlike the previous examples, the attribute space will not be geographic space. Rather, the each dimension in the attribute space will have values that map onto geographic space (eg. like climatic variables across the landscape). To add further complexity, we simulate their distributions using Gaussian processes.
+
+```{r}
+# load RandomFields package and set seed for simulations
+library(RandomFields)
+set.seed(500)
+
+# simulate planning units
+sim_pus <- sim.pus(25L)
+
+# simulate species
+sim_gspp <- sim.species(sim_pus, model=RPgauss(), n=1, res=0.1)
+
+# simulate space
+sim_gspace <- sim.space(sim_pus, model=RMgauss(scale=3), d=3, res=0.1)
+
+# generate RapUnsolved object containing data to generate prioritisations
+sim_gru <- rap(
+	sim_pus, sim_gspp, sim_gspace, 
+	amount.target=0.2, space.target=0.85,
+	n.demand.points=50L, kernel.method='hypervolume',
+	include.geographic.space=FALSE, solve=FALSE
+)
+```
+
+Let's visualise the species' distribution and the distribution of the attribute space across geographic space.
+
+```{r, fig.height=5.5, fig.width=5.5}
+# plot species distribution
+plot(
+	sim_gspp,
+	main='Simulated species',
+	col=colorRampPalette(c("#FFFFD9", "#EDF8B1", "#C7E9B4", "#7FCDBB",
+		"#41B6C4", "#1D91C0", "#225EA8", "#253494", "#081D58"
+	))(100)
+)
+lines(sim_pus)
+```
+
+```{r, fig.width=7, fig.height=2.5}
+# plot distribution of each dimension in the attribute space across geographic space
+plot(
+	sim_gspace,
+	main=c('Attribute space (d=1)', 'Attribute space (d=2)', 'Attribute space (d=3)'),
+	addfun=function(){lines(sim_pus)},
+	nc=3
+)
+```
+
+For each different distance metric, we will update the `sim_gru` object with the new distance metric, solve it, and store the solution in a list. 
+
+```{r, eval=is.GurobiInstalled(verbose=FALSE)}
+# create vector with distance metrics
+dist.metrics <- c(
+	'euclidean', 'bray', 'manhattan','gower',
+	'canberra', 'mahalanobis',
+	'jaccard', 'kulczynski'
+)
+
+# generate solutions
+solutions <- list()
+for (i in dist.metrics) {
+	solutions[[i]] <- update(sim_gru, distance.metric=i)
+}
+```
+
+```{r, eval=!is.GurobiInstalled(verbose=FALSE), include=FALSE}
+# create vector with distance metrics
+dist.metrics <- c(
+	'euclidean', 'bray', 'manhattan','gower',
+	'canberra', 'mahalanobis',
+	'jaccard', 'kulczynski'
+)
+
+## create list with selections
+# dput(lapply(solutions, function(x){which(selections(x)==1)}))
+selections <- structure(list(euclidean = c(6L, 9L, 10L, 22L, 25L), bray = c(17L, 
+18L, 22L, 23L), manhattan = c(6L, 10L, 17L, 23L), gower = c(6L, 
+10L, 17L, 23L), canberra = c(6L, 10L, 17L, 20L, 23L), mahalanobis = c(1L, 
+10L, 11L, 17L, 23L), jaccard = c(7L, 17L, 18L, 23L), kulczynski = c(16L, 
+17L, 18L, 23L)), .Names = c("euclidean", "bray", "manhattan", 
+"gower", "canberra", "mahalanobis", "jaccard", "kulczynski"))
+
+# generate solutions
+soutions <- list()
+for (i in dist.metrics) {
+	solutions[[i]] <- update(sim_gru, distance.metric=i, solve=FALSE)
+	solutions[[i]] <- solve(solutions[[i]],b=selections[[i]])
+}
+```
+
+Now, let's plot the solutions to see how they differ.
+
+```{r, fig.height=8, fig.width=8}
+# set counter for plotting
+counter <- 1
+
+# create plots showing the selected planning units (green) using each metric 
+plot(
+	stack(replicate(list(sim_gspp), n=length(dist.metrics))),
+	main=dist.metrics,
+	col=colorRampPalette(c("#FFFFD9", "#EDF8B1", "#C7E9B4", "#7FCDBB",
+		"#41B6C4", "#1D91C0", "#225EA8", "#253494", "#081D58"
+	))(100),
+	addfun=function() {
+		lines(sim_pus[selections(solutions[[counter]])==0,])
+		lines(sim_pus[selections(solutions[[counter]])==0,], col='green', lwd=2)
+		counter <<- counter + 1
+	}
+)
+```
+
+It appears that main difference between the solutions is which planning units get selected in the bottom section of the study area. Some solutions tend to select a lot of planning units in this region (eg. Euclidean, Gower, and manhattan), whereas others select fewer planning units (eg. Bray-Curtis, Jaccard, and Kulczynski). Conservations planners should think carefully which distance metric is most apropriate for their attribute spaces. 
 
 ## Case-study examples
 ### Overview
@@ -890,7 +1002,7 @@ PBSmapping::plotPolys(
 )
 
 # reset plotting window
-par(mfrow=c(1,1), mar=c(5.1, 4.1, 4.1, 2.1))
+par(mar=c(5.1, 4.1, 4.1, 2.1))
 ```
 
 To map the distribution of environmental conditions across the species' range, 21 [bioclimatic layers](http://www.worldclim.org/bioclim) were obtained. These layers were cropped to Australia and subject to [detrended correspondance analysis](http://cc.oulu.fi/~jarioksa/softhelp/vegan/html/decorana.html) to produce two new variables. These layers are stored in the `cs_space` object.

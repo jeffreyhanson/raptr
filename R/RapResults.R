@@ -45,7 +45,7 @@ setClass("RapResults",
 		if (any(object@space.held < 0))
 			stop('object@space.held contains values less than 0')
 		if (any(object@space.held > 1))
-			warning('object@space.held contains values greater than 1, consider increasing the FailureMultiplier')
+			warning('object@space.held contains values greater than 1, consider increasing the failure.multiplier')
 		
 		# logging.file
 		if (any(is.na(object@logging.file)))

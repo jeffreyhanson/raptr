@@ -80,7 +80,7 @@ ggplot(aes(x=temperature, y=rainfall), data=populations) +
 
 The reserve selection problems are based on uncapacitated facility location problems (all mathematical terms defined hereafter are described in Table S1 for convenience). For convenience, the cardinality of sets will be denoted using the same symbol used to denote the variable. Define $F$ to be the set of features (indexed by $f$). Let $J$ be a set of planning units (indexed by $j$). Also, let $A_j$ denote the area, and $c_j$ denote the cost of preserving planning unit $j \in J$. To assess the extent to which each feature is secured in a given prioritisation, let $q_{fj}$ denote the probability of feature $f$ occupying planning unit $j$. The level of fragmentation associated with a prioritisation is parametrised as the net exposed boundary length. Let the shared boundary length between each planning unit $j \in J$ and $k \in J$ be $b_{jk}$. In any real-world problem, some planning units will have edges that are not associated with any neighbouring planning units (eg. edges along coastlines), these cases will be denoted using $b_{jj}$ for $j \in J$.
 
-Let $S$ denote a set of attribute spaces (indexed by $s$). Each $j \in J$ is associated with spatially explicit data that represent coordinates for each attribute space $s \in S$. Let $I_{fsi}$ denote a set of demand points (indexed by $i$) for each feature $f \in F$ and each attribute space $s \in S$. Let $\lambda_{fsi}$ denote the weighting for each demand point $i \in I$ for each feature $f \in F$ and each attribute space $s \in S$. Let $d_{fsij}$ denote the distance between each demand point $i \in I$ and each planning unit $j \in J$ for each feature $f \in F$ and attribute space $s \in S$. The decision maker will need to choose an appropriate distance metric for each attribute space. For example, Euclidean, Mahalanobis [@r398], Sorenson [@r253], or Bray-Curtis distances may be appropriate given the nature of the attribute space.
+Let $S$ denote a set of attribute spaces (indexed by $s$). Each $j \in J$ is associated with spatially explicit data that represent coordinates for each attribute space $s \in S$. Let $I_{fsi}$ denote a set of demand points (indexed by $i$) for each feature $f \in F$ and each attribute space $s \in S$. Let $\lambda_{fsi}$ denote the weighting for each demand point $i \in I$ for each feature $f \in F$ and each attribute space $s \in S$. Let $d_{fsij}$ denote the distance between each demand point $i \in I$ and each planning unit $j \in J$ for each feature $f \in F$ and attribute space $s \in S$. The decision maker will need to choose an appropriate distance metric for each attribute space. For example, Euclidean, Mahalanobis [@r398], Bray-Curtis, or other distance metrics may be appropriate given the nature of the attribute space [@r449].
 
 Targets are used to ensure that prioritisations are sufficient in terms of their adequacy and representativeness. Let $\hat{T}_f$ denote the expected amount of area that needs to be preserved for each feature $f \in F$. Let $\bar{T}_{fs}$ denote the representativeness targets for feature $f \in F$ and attribute space $a \in A$. For convenience, these targets are expressed as proportions in the R package between the values for the worst possible prioritisation and the prioritisation that includes all the planning units.
 
@@ -235,16 +235,19 @@ The `rapr` R package uses a range of S4 classes to store conservation planning d
 
 Table 1: Classes in `rapr` R package
 
-| Class Name          | Description                                                         | Slots																																														|
-| :-----------------: |:------------------------------------------------------------------- | :-----------------------------------------------------------------------------------------------|
-| ManualOpts          | place-holder class for manually specified solutions 							  | NumberSolutions																																									|
-| GurobiOpts          | parameters for solving optimisation problems using Gurobi					  | Threads, MIPGap, Presolve, TimeLimit, NumberSolutions																						|
-| RapUnreliableOpts   | parameters for the unreliable problem formulation										| BLM																																															|
-| RapReliableOpts     | parameters for the reliable problem formulation											| FailureMultiplier, MaxRLevel																																		|
-| RapData             | planning unit, species, and attribute space data										| pu, species, targets, pu.species.probabilities,<br>attribute.spaces, boundary, polygons, .cache |
-| RapUnsolved         | data and parameters needed to generate prioritisations using RAP		| opts, data																																											|
-| RapResults          | prioritisations and summary statistics															| summary, selections, amount.held, space.held, logging.file, .cache															|
-| RapSolved           | data, parameters, and prioritisations using them										| opts, data, results																																							|
+| Class Name          | Description                                                               | Slots																																														|
+| :-----------------: |:------------------------------------------------------------------------- | :-----------------------------------------------------------------------------------------------|
+| ManualOpts          | place-holder class for manually specified solutions 										  | NumberSolutions																																									|
+| GurobiOpts          | parameters for solving optimisation problems using Gurobi								  | Threads, MIPGap, Presolve, TimeLimit, NumberSolutions																						|
+| RapUnreliableOpts   | parameters for the unreliable problem formulation													| BLM																																															|
+| RapReliableOpts     | parameters for the reliable problem formulation														| failure.multiplier, max.r.level																																	|
+| SimplePoints        | stores coordinates in an n-dimensional space															| coords																																													|
+| DemandPoints        | demand points coordinates and weights for a species in an attribute space	| points, weights																																								  |
+| AttributeSpace      | planning unit coordinates and demand points data for an attribute space		| pu, demand.points, distance.metric																														  |
+| RapData             | planning unit, species, and attribute space data													| pu, species, targets, pu.species.probabilities,<br>attribute.spaces, boundary, polygons, .cache |
+| RapUnsolved         | data and parameters needed to generate prioritisations using RAP					| opts, data																																											|
+| RapResults          | prioritisations and summary statistics																		| summary, selections, amount.held, space.held, logging.file, .cache															|
+| RapSolved           | data, parameters, and prioritisations using them													| opts, data, results																																							|
 
 
 ## Simulated examples
@@ -806,12 +809,12 @@ But this method requires setting somewhat arbitrary thresholds. A more objective
 
 ```{r, eval=is.GurobiInstalled(verbose=FALSE)}
 # make new prioritisation using reliable formulation
-sim_mrs_space3 <- update(sim_mrs_space, formulation='reliable', MaxRLevel=1L)
+sim_mrs_space3 <- update(sim_mrs_space, formulation='reliable', max.r.level=1L)
 ```
 
 ```{r, eval=!is.GurobiInstalled(verbose=FALSE), include=FALSE}
 # make new prioritisation using reliable formulation
-sim_mrs_space3 <- update(sim_mrs_space, formulation='reliable', MaxRLevel=1L, solve=FALSE)
+sim_mrs_space3 <- update(sim_mrs_space, formulation='reliable', max.r.level=1L, solve=FALSE)
 sim_mrs_space3 <- solve(
 	sim_mrs_space3,
 	b=c(13L, 14L, 17L, 19L, 20L, 21L, 26L, 35L, 49L, 51L, 53L, 55L, 
@@ -836,7 +839,7 @@ plot(sim_mrs_space3, sim_mrs_space, 1, 1, main='Difference between solutions')
 We can see that more planning units were selected using the reliable formulation to ensure that if any single planning unit was not occupuied, then there would be a suitable backup planning unit. While the reliable formulation can deliver more robust prioritisations, it takes much longer to solve conservation planning problems expressed using this formulation than the unreliable formulation. As a consequence, the reliable formulation is only feasible for particularly small problems, such as those only involving few features and less than 100 planning units. 
 
 ### Distance metrics
-In the previous examples, we have only used Euclidean distances to determine how much a prioritisation samples a set of demand points in an attribute space. However, Euclidean distances can be poor measures of distance for multivariate, binary, or correlated variables [@]. As a consequence this may lead to over- or under-estimates of how well a given prioritisation samples an attribute space. 
+In the previous examples, we have only used Euclidean distances to determine how much a prioritisation samples a set of demand points in an attribute space. However, Euclidean distances can be poor measures of distance for multivariate, binary, or correlated variables [@r449]. As a consequence this may lead to over- or under-estimates of how well a given prioritisation samples an attribute space.
 
 The `rapr` R package provides a suite of distance metrics that can be used to calculate spatial representation. To illustrate how using different distance metrics can affect the the optimal solution, we will generate a new suite of prioritisations using different distance metrics.
 

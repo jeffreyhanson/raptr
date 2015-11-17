@@ -54,23 +54,13 @@ sim_spp <- lapply(
 )
 
 ## ---- fig.width=7, fig.height=2.5----------------------------------------
-# change the plot parameters, so we can plot the distributions side by side
-par(mfrow=c(1,3), mar=c(5.1, 4.1, 4.1, 4))
-
-# uniform species
-plot(sim_spp[[1]], main='Uniform species')
-lines(sim_pus)
-
-# normal species
-plot(sim_spp[[2]], main='Normal species')
-lines(sim_pus)
-
-# bimodal species
-plot(sim_spp[[3]], main='Bimodal species')
-lines(sim_pus)
-
-# reset plot parameters
-par(mfrow=c(1,1), mar=c(5.1, 4.1, 4.1, 2.1))
+# plot species
+plot(
+	stack(sim_spp),
+	main=c('Uniform species','Normal species','Bimodal species'),
+	addfun=function(){lines(sim_pus)},
+	nc=3
+)
 
 ## ------------------------------------------------------------------------
 # generate coordinates for pus/demand points
@@ -370,14 +360,14 @@ plot(sim_mrs_amount, sim_mrs_space, 1, 1, main='Difference between solutions')
 #  sim_mrs_space_blm <- update(sim_mrs_space, BLM=100)
 
 ## ---- eval={!is.GurobiInstalled(verbose=FALSE) || !exists('sim_mrs_space_blm')}, include=FALSE----
-#  sim_mrs_space_blm <- update(sim_mrs_space, BLM=100, solve=FALSE)
-#  sim_mrs_space_blm <- solve(
-#  	sim_mrs_space_blm,
-#  	b=c(13L, 23L, 24L, 25L, 26L, 27L, 28L, 33L, 34L, 35L, 36L, 37L,
-#  		38L, 43L, 44L, 45L, 46L, 47L, 48L, 53L, 54L, 55L, 56L, 57L, 58L,
-#  		63L, 64L, 65L, 66L, 67L, 68L, 73L, 74L, 75L, 76L, 77L, 78L
-#  	)
-#  )
+sim_mrs_space_blm <- update(sim_mrs_space, BLM=100, solve=FALSE)
+sim_mrs_space_blm <- solve(
+	sim_mrs_space_blm,
+	b=c(13L, 23L, 24L, 25L, 26L, 27L, 28L, 33L, 34L, 35L, 36L, 37L, 
+		38L, 43L, 44L, 45L, 46L, 47L, 48L, 53L, 54L, 55L, 56L, 57L, 58L, 
+		63L, 64L, 65L, 66L, 67L, 68L, 73L, 74L, 75L, 76L, 77L, 78L
+	)
+)
 
 ## ---- fig.height=5.5, fig.width=5.5--------------------------------------
 # show summary of prioritisation
@@ -476,11 +466,11 @@ plot(sim_mrs_space2, sim_mrs_space, 1, 1, main='Difference between solutions')
 
 ## ---- eval=is.GurobiInstalled(verbose=FALSE)-----------------------------
 # make new prioritisation using reliable formulation
-sim_mrs_space3 <- update(sim_mrs_space, formulation='reliable', MaxRLevel=1L)
+sim_mrs_space3 <- update(sim_mrs_space, formulation='reliable', max.r.level=1L)
 
 ## ---- eval=!is.GurobiInstalled(verbose=FALSE), include=FALSE-------------
 #  # make new prioritisation using reliable formulation
-#  sim_mrs_space3 <- update(sim_mrs_space, formulation='reliable', MaxRLevel=1L, solve=FALSE)
+#  sim_mrs_space3 <- update(sim_mrs_space, formulation='reliable', max.r.level=1L, solve=FALSE)
 #  sim_mrs_space3 <- solve(
 #  	sim_mrs_space3,
 #  	b=c(13L, 14L, 17L, 19L, 20L, 21L, 26L, 35L, 49L, 51L, 53L, 55L,
@@ -498,6 +488,104 @@ plot(sim_mrs_space3, 1)
 ## ---- fig.height=5.5, fig.width=5.5--------------------------------------
 # difference between prioritisations based on unreliable and reliable formulation
 plot(sim_mrs_space3, sim_mrs_space, 1, 1, main='Difference between solutions')
+
+## ------------------------------------------------------------------------
+# load RandomFields package and set seed for simulations
+library(RandomFields)
+set.seed(500)
+
+# simulate planning units
+sim_pus <- sim.pus(25L)
+
+# simulate species
+sim_gspp <- sim.species(sim_pus, model=RPgauss(), n=1, res=0.1)
+
+# simulate space
+sim_gspace <- sim.space(sim_pus, model=RMgauss(scale=3), d=3, res=0.1)
+
+# generate RapUnsolved object containing data to generate prioritisations
+sim_gru <- rap(
+	sim_pus, sim_gspp, sim_gspace, 
+	amount.target=0.2, space.target=0.85,
+	n.demand.points=50L, kernel.method='hypervolume',
+	include.geographic.space=FALSE, solve=FALSE
+)
+
+## ---- fig.height=5.5, fig.width=5.5--------------------------------------
+# plot species distribution
+plot(
+	sim_gspp,
+	main='Simulated species',
+	col=colorRampPalette(c("#FFFFD9", "#EDF8B1", "#C7E9B4", "#7FCDBB",
+		"#41B6C4", "#1D91C0", "#225EA8", "#253494", "#081D58"
+	))(100)
+)
+lines(sim_pus)
+
+## ---- fig.width=7, fig.height=2.5----------------------------------------
+# plot distribution of each dimension in the attribute space across geographic space
+plot(
+	sim_gspace,
+	main=c('Attribute space (d=1)', 'Attribute space (d=2)', 'Attribute space (d=3)'),
+	addfun=function(){lines(sim_pus)},
+	nc=3
+)
+
+## ---- eval=is.GurobiInstalled(verbose=FALSE)-----------------------------
+# create vector with distance metrics
+dist.metrics <- c(
+	'euclidean', 'bray', 'manhattan','gower',
+	'canberra', 'mahalanobis',
+	'jaccard', 'kulczynski'
+)
+
+# generate solutions
+solutions <- list()
+for (i in dist.metrics) {
+	solutions[[i]] <- update(sim_gru, distance.metric=i)
+}
+
+## ---- eval=!is.GurobiInstalled(verbose=FALSE), include=FALSE-------------
+#  # create vector with distance metrics
+#  dist.metrics <- c(
+#  	'euclidean', 'bray', 'manhattan','gower',
+#  	'canberra', 'mahalanobis',
+#  	'jaccard', 'kulczynski'
+#  )
+#  
+#  ## create list with selections
+#  # dput(lapply(solutions, function(x){which(selections(x)==1)}))
+#  selections <- structure(list(euclidean = c(6L, 9L, 10L, 22L, 25L), bray = c(17L,
+#  18L, 22L, 23L), manhattan = c(6L, 10L, 17L, 23L), gower = c(6L,
+#  10L, 17L, 23L), canberra = c(6L, 10L, 17L, 20L, 23L), mahalanobis = c(1L,
+#  10L, 11L, 17L, 23L), jaccard = c(7L, 17L, 18L, 23L), kulczynski = c(16L,
+#  17L, 18L, 23L)), .Names = c("euclidean", "bray", "manhattan",
+#  "gower", "canberra", "mahalanobis", "jaccard", "kulczynski"))
+#  
+#  # generate solutions
+#  soutions <- list()
+#  for (i in dist.metrics) {
+#  	solutions[[i]] <- update(sim_gru, distance.metric=i, solve=FALSE)
+#  	solutions[[i]] <- solve(solutions[[i]],b=selections[[i]])
+#  }
+
+## ---- fig.height=8, fig.width=8------------------------------------------
+# set counter for plotting
+counter <- 1
+
+# create plots showing the selected planning units (green) using each metric 
+plot(
+	stack(replicate(list(sim_gspp), n=length(dist.metrics))),
+	main=dist.metrics,
+	col=colorRampPalette(c("#FFFFD9", "#EDF8B1", "#C7E9B4", "#7FCDBB",
+		"#41B6C4", "#1D91C0", "#225EA8", "#253494", "#081D58"
+	))(100),
+	addfun=function() {
+		lines(sim_pus[selections(solutions[[counter]])==0,])
+		lines(sim_pus[selections(solutions[[counter]])==0,], col='green', lwd=2)
+		counter <<- counter + 1
+	}
+)
 
 ## ---- fig.height=5.5, fig.width=5.5--------------------------------------
 # load data
@@ -534,7 +622,7 @@ PBSmapping::plotPolys(
 )
 
 # reset plotting window
-par(mfrow=c(1,1), mar=c(5.1, 4.1, 4.1, 2.1))
+par(mar=c(5.1, 4.1, 4.1, 2.1))
 
 ## ---- fig.height=3.5, fig.width=7.2--------------------------------------
 # load data
@@ -542,6 +630,16 @@ data(cs_space)
 
 # plot variables
 plot(cs_space, main=c('DC1', 'DC2'))
+
+## ---- eval=is.GurobiInstalled(verbose=FALSE), cache=TRUE-----------------
+# make amount-based prioritisation,
+# and ignore existing protected areas by discarding values in the 
+# status (third) column of the attribute table
+cs_rs_amount <- rap(
+	cs_pus[,-2], cs_spp, cs_space,
+  amount.target=0.2, space.target=0, n.demand.points=50L,
+  include.geographic.space=TRUE, formulation='unreliable'
+)
 
 ## ---- eval=!is.GurobiInstalled(verbose=FALSE), include=FALSE-------------
 #  cs_rs_amount <- rap(
@@ -588,6 +686,10 @@ p2 <- space.plot(cs_rs_amount, 2, 1, main='Brown-backed honeyeater')
 p3 <- space.plot(cs_rs_amount, 3, 1, main='Brown falcon')
 p4 <- space.plot(cs_rs_amount, 4, 1, main='Pale-headed rosella')
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol=1)
+
+## ---- eval={is.GurobiInstalled(verbose=FALSE)}, cache=TRUE---------------
+# make amount- and space-based prioritisation
+cs_rs_space <- update(cs_rs_amount, space.target=0.85)
 
 ## ---- eval={!is.GurobiInstalled(verbose=FALSE)}, include=FALSE-----------
 #  # make amount- and space-based prioritisation
