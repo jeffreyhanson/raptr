@@ -6,7 +6,7 @@ NULL
 #' @export
 sim.space.RasterLayer<-function(x, d=2, model=RMgauss(), ...) {
 	# generate values for rasters
-	valMTX=RFsimulate(model, as(x, 'SpatialPoints')@coords, n=d, spConform=FALSE, ...)
+	valMTX=RFsimulate(model=model, as(x, 'SpatialPoints')@coords, n=d, spConform=FALSE, ...)
 	# convert to matrix if not a matrix
 	if (!inherits(valMTX, 'matrix'))
 		valMTX=matrix(valMTX, ncol=1)

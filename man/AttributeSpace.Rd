@@ -34,8 +34,8 @@ The distance \eqn{d_{ij}} between demand point \eqn{i \in I} and planning unit \
 \tab where \eqn{NZ} is the number of non-zero entries. \cr
 \code{mahalanobis}
 \tab \eqn{d_{ij} = \sqrt{(s_{i,.} - x{j,.})^T Q^{-1} (s_{i,.} - x{j,.})}} \cr
-\tab where:
-\tab \eqn{s} = x centered   .\cr
+\tab where:\cr
+\tab \eqn{s} = x centered.\cr
 \tab \eqn{s_{ik}} = x_{ik} - mean(x_{.,k}) \cr
 \tab \eqn{Q} = covariance matrix planning units and demand points in attribute space.\cr
 \code{jaccard}

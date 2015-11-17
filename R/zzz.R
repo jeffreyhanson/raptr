@@ -1,4 +1,4 @@
-.onLoad <- function(libname, pkgname) {
+.onAttach <- function(libname, pkgname) {
 	# check gurobi package installed
 	msg<-capture.output({gurobi.installed<-is.GurobiInstalled(verbose=TRUE)})
 	if (!gurobi.installed) {

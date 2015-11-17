@@ -177,16 +177,17 @@ demand.points.density2d<-function(pts, n, quantile=0, ...) {
 
 demand.points.hypervolume<-function(pts, n, quantile=0, ...) {
 	# fit density kernel
-	repsperpoint=500 # default
-	if (ncol(pts)*repsperpoint < n) {
-		repsperpoint=n/ncol(pts)
+	if (!exists("repsperpoint"))
+		repsperpoint=500*ncol(pts)
+	if (repsperpoint*nrow(pts) < n) {
+		stop('argument to n.demand.points is too high. Set a higher value in the argument to repsperpoint (defaults to 500*dimensions in attribute space).')
 	}
 	# estimate bandwidth for kernel
 	if (!exists('bandwidth')) {
 		bandwidth=estimate_bandwidth(pts)
 	}
 	# fit kernel
-	hv=hypervolume(pts, repsperpoint=repsperpoint, bandwidth=bandwidth, quantile=quantile, ...)
+	hv=hypervolume(pts, bandwidth=bandwidth, quantile=quantile, ...)
 	# return demand points
 	rndpos=sample.int(nrow(hv@RandomUniformPointsThresholded), n)
 	return(

@@ -253,7 +253,8 @@ RapData<-function(pu, species, targets, pu.species.probabilities, attribute.spac
 #' @param include.geographic.space \code{logical} should the geographic space be considered an attribute space?
 #' @param species.points \code{list} of/or \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records. Use a \code{list} of objects to represent different species. Must have the same number of elements as \code{species}. If not supplied then use \code{n.species.points} to sample points from the species distributions.
 #' @param n.species.points \code{numeric} vector specfiying the number points to sample the species distributions to use to generate demand points. Defaults to 20\% of the distribution.
-#' @param distance.metric \code{character} specifying the distance metric to use for each attribute space. The length of this should equal the number of attribute spaces, including a geographic space if \code{include.geographic.space=TRUE}. Valid metrics are 'euclidean', 'bray', 'manhattan','gower', 'altGower', 'canberra', 'mahalanobis', 'jaccard', and 'kulczynski'. Argument defaults to 'bray' for each attribute space, except for the geographic space (if specified), which defaults to 'euclidean'. See \code{?AttributeSpace} for details on the distance metrics.
+#' @param spaces.distance.metric \code{character} specifying the distance metric to use for each attribute space in \code{spaces}. Valid metrics are 'euclidean', 'bray', 'manhattan','gower', 'canberra', 'mahalanobis', 'jaccard', and 'kulczynski'. Argument defaults to 'bray' for each attribute space. See \code{?AttributeSpace} for details on the distance metrics.
+#' @param geographic.distance.metric \code{character} specifying the distance metric to use for the geographic attribute space (if \code{include.geographic.space=TRUE}). Defaults to 'euclidean'. See \code{?AttributeSpace} for details on the distance metrics.
 #' @param verbose \code{logical} print statements during processing?
 #' @param ... additional arguments to \code{calcBoundaryData} and \code{calcPuVsSpeciesData}.
 #' @seealso \code{\link{RapData-class}}, \code{\link{RapData}}.
@@ -267,7 +268,8 @@ RapData<-function(pu, species, targets, pu.species.probabilities, attribute.spac
 make.RapData<-function(pus, species, spaces=NULL,
 	amount.target=0.2, space.target=0.2, n.demand.points=100L, kernel.method=c('ks', 'hyperbox')[1], quantile=0.2, scale=TRUE,
 	species.points=NULL, n.species.points=ceiling(0.2*cellStats(species, 'sum')), include.geographic.space=TRUE, 
-	distance.metric={m<-c(); if(!is.null(spaces)) {m<-ifelse(inherits(spaces,'list'), rep('bray', length(spaces)), 'bray')}; if(include.geographic.space) m<-c(m, 'euclidean'); m},
+	spaces.distance.metric=ifelse(inherits(spaces,'list'), rep('bray', length(spaces)), 'bray'),
+	geographic.distance.metric='euclidean',
 	verbose=FALSE, ...
 ) {
 	## init
@@ -276,21 +278,25 @@ make.RapData<-function(pus, species, spaces=NULL,
 	stopifnot(inherits(pus, c('SpatialPolygons')))
 	stopifnot(inherits(species, c('RasterStack', 'RasterLayer')))
 	stopifnot(inherits(spaces, c('NULL', 'RasterStack', 'RasterLayer', 'list')))
-	sapply(distance.metric, match.arg, c(
+	sapply(spaces.distance.metric, match.arg, c(
 		'euclidean', 'bray', 'manhattan','gower',
-		'altGower', 'canberra', 'mahalanobis',
+		'canberra', 'mahalanobis',
 		'jaccard', 'kulczynski'
 	))
+	sapply(geographic.distance.metric, match.arg, c(
+		'euclidean', 'bray', 'manhattan','gower',
+		'canberra', 'mahalanobis',
+		'jaccard', 'kulczynski'
+	))
+	stopifnot(length(geographic.distance.metric)==1)
 	
 	.cache<-new.env()
 	# coerce non-list items to list
 	if (!inherits(spaces, 'list'))
 		spaces=list(spaces)
 	# check length of distance.metric
-	if (is.null(spaces[[1]])) {
-		stopifnot(length(distance.metric)==1)
-	} else{
-		stopifnot(length(distance.metric)==(length(spaces)+include.geographic.space))
+	if (!is.null(spaces[[1]])) {
+		stopifnot(length(spaces.distance.metric)==(length(spaces)))
 	}
 		
 	# z-score spaces
@@ -454,6 +460,7 @@ make.RapData<-function(pus, species, spaces=NULL,
 		demand.points[[i]]=dpLST
 	}
 	# create AttributeSpace objects
+	distance.metric=c(spaces.distance.metric, geographic.distance.metric)
 	attribute.spaces=llply(seq_along(spaces), function(i) {
 		return(
 			AttributeSpace(
