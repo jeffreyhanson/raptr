@@ -262,14 +262,15 @@ NULL
 #' @param TimeLimit \code{integer} number of seconds to allow for solving.
 #' @param NumberSolutions \code{integer} number of solutions to generate.
 #' @param BLM \code{numeric} boundary length modifier.
-#' @param FailureMultiplier \code{numeric} multiplier for failure planning unit.
-#' @param MaxRLevel \code{numeric} maximum R failure level for approximation.
+#' @param failure.multiplier \code{numeric} multiplier for failure planning unit.
+#' @param max.r.level \code{numeric} maximum R failure level for approximation.
 #' @param formulation \code{character} indicating new problem formulation to use. This can be either 'unreliable' or 'reliable'. The default is \code{NULL} so that formulation in \code{object} is used.
 #' @param species \code{integer} or \code{character} denoting species for which targets or name should be updated.
 #' @param space \code{integer} denoting space for which targets should be updated.
 #' @param name \code{character} to rename species.
 #' @param amount.target \code{numeric} vector for new area targets (\%) for the specified species.
 #' @param space.target \code{numeric} vector for new attribute space targets (\%) for the specified species and attribute spaces.
+#' @param distance.metric \code{character} name of distance metric to use for attribute space representation calculations (see \code{link{AttributeSpace}} for more information).
 #' @param pu \code{integer} planning unit indices that need to be updated.
 #' @param status \code{integer} new statuses for specified planning units.
 #' @param cost \code{numeric} new costs for spcified planning units.
@@ -296,8 +297,8 @@ NULL
 #' print(y)
 #'
 #' # RapReliableOpts
-#' x <- RapReliableOpts(FailureMultiplier=2)
-#' y <- update(x, FailureMultiplier=4)
+#' x <- RapReliableOpts(failure.multiplier=2)
+#' y <- update(x, failure.multiplier=4)
 #' print(x)
 #' print(y)
 #'

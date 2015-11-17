@@ -54,6 +54,7 @@ Suggests:
     knitr,
     testthat,
     dplyr,
+    vegan,
     gurobi,
     gridExtra,
     rgl

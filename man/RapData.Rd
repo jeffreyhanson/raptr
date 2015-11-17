@@ -43,7 +43,7 @@ data(cs_pus, cs_spp, cs_space)
 attribute.spaces=list(
 	AttributeSpace(
 		pu=SimplePoints(rgeos::gCentroid(cs_pus[1:10,], byid=TRUE)@coords),
-		dp=list(
+		demand.points=list(
 			make.DemandPoints(
 				SpatialPoints(
 					coords=randomPoints(
@@ -54,11 +54,12 @@ attribute.spaces=list(
 				),
 				NULL
 			)
-		)
+		),
+		distance.metric='euclidean'
 	),
 	AttributeSpace(
 		pu=SimplePoints(extract(cs_space[[1]],cs_pus[1:10,],fun=mean)),
-		dp=list(
+		demand.points=list(
 			make.DemandPoints(
 				SpatialPoints(
 					coords=randomPoints(
@@ -69,7 +70,8 @@ attribute.spaces=list(
 				),
 				cs_space[[1]]
 			)
-		)
+		),
+		distance.metric='euclidean'
 	)
 )
 pu.species.probabilities=calcSpeciesAverageInPus(cs_pus[1:10,], cs_spp)

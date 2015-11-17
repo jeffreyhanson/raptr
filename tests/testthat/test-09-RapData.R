@@ -5,11 +5,13 @@ test_that('RapData', {
 	attribute.spaces=list(
 		AttributeSpace(
 			pu=SimplePoints(rgeos::gCentroid(cs_pus[1:10,], byid=TRUE)@coords),
-			dp=list(make.DemandPoints(SpatialPoints(coords=randomPoints(cs_spp[[1]], n=100, prob=TRUE))@coords))
+			demand.points=list(make.DemandPoints(SpatialPoints(coords=randomPoints(cs_spp[[1]], n=100, prob=TRUE))@coords)),
+			distance.metric='euclidean'
 		),
 		AttributeSpace(
 			pu=SimplePoints(extract(cs_space[[1]],cs_pus[1:10,],fun=mean)),
-			dp=list(make.DemandPoints(extract(cs_space[[1]], SpatialPoints(coords=randomPoints(cs_spp[[1]], n=100, prob=TRUE)))))
+			demand.points=list(make.DemandPoints(extract(cs_space[[1]], SpatialPoints(coords=randomPoints(cs_spp[[1]], n=100, prob=TRUE))))),
+			distance.metric='euclidean'
 		)
 	)
 	pu.species.probabilities=calcSpeciesAverageInPus(cs_pus[1:10,], cs_spp[[1]])
@@ -74,13 +76,13 @@ test_that('spp.subset.RapData', {
 	# tests
 	expect_equal(nrow(rd2@species), 1)
 	expect_true(all(rd2@pu.species.probabilities$species==1L))
-	expect_equal(length(rd2@attribute.spaces[[1]]@dp), 1)
+	expect_equal(length(rd2@attribute.spaces[[1]]@demand.points), 1)
 	expect_true(all(rd2@targets$species==1L))
 	expect_equal(nrow(rd2@targets), 2)
 	
 	expect_equal(nrow(rd3@species), 1)
 	expect_true(all(rd3@pu.species.probabilities$species==1L))
-	expect_equal(length(rd3@attribute.spaces[[1]]@dp), 1)
+	expect_equal(length(rd3@attribute.spaces[[1]]@demand.points), 1)
 	expect_true(all(rd3@targets$species==1L))
 	expect_equal(nrow(rd3@targets), 2)
 	
@@ -92,8 +94,8 @@ test_that('dp.subset.RapData', {
 	rd<-sim_ru@data
 	rd2<-dp.subset(rd, 1, 1, 1:10)
 	# tests
-	expect_equal(rd@attribute.spaces[[1]]@dp[[1]]@points@coords[1:10,], rd2@attribute.spaces[[1]]@dp[[1]]@points@coords)
-	expect_equal(rd@attribute.spaces[[1]]@dp[[1]]@weights[1:10], rd2@attribute.spaces[[1]]@dp[[1]]@weights)
+	expect_equal(rd@attribute.spaces[[1]]@demand.points[[1]]@points@coords[1:10,], rd2@attribute.spaces[[1]]@demand.points[[1]]@points@coords)
+	expect_equal(rd@attribute.spaces[[1]]@demand.points[[1]]@weights[1:10], rd2@attribute.spaces[[1]]@demand.points[[1]]@weights)
 })
 
 test_that('prob.subset.RapData', {
@@ -110,13 +112,13 @@ test_that('prob.subset.RapData', {
 	
 	expect_true(all(rd2@pu.species.probabilities[[3]][which(rd2@pu.species.probabilities[[1]]==3)]>0.7))
 })
-
+	
 test_that('update.RapData', {
 	# generate objects
 	data(sim_ru)
 	x=sim_ru@data
 	y=update(x, name=c('a', 'b', 'c'), amount.target=c(0.1,0.2,0.3), space.target=c(0.4,0.5,0.6))
-	z=update(y, species=1, name='a1', amount.target=0.9, space.target=0.8)
+	z=update(y, species=1, name='a1', amount.target=0.9, space.target=0.8, distance.metric='bray')
 	# y tests
 	expect_equal(y@species$name, c('a', 'b', 'c'))
 	expect_equal(y@targets$proportion[which(y@targets$target==0)], c(0.1,0.2,0.3))
@@ -125,7 +127,9 @@ test_that('update.RapData', {
 	expect_equal(z@species$name, c('a1', 'b', 'c'))
 	expect_equal(z@targets$proportion[which(z@targets$target==0)], c(0.9,0.2,0.3))
 	expect_equal(z@targets$proportion[which(z@targets$target==1)], c(0.8,0.5,0.6))
+	expect_equal(z@attribute.spaces[[1]]@distance.metric, 'bray')
 })
+
 
 test_that('amount.target.RapData', {
 	data(sim_ru)

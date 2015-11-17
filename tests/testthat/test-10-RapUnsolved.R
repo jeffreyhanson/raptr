@@ -45,6 +45,176 @@ test_that('Model compiler (reliable)', {
 	model$A<-Matrix::sparseMatrix(i=model$Ar[[1]]+1, j=model$Ar[[2]]+1, x=model$Ar[[3]], dims=c(max(model$Ar[[1]])+1, length(model$obj)))
 })
 
+test_that('Model compiler (euclidean distances)', {
+	# load RapUnsolved object
+	set.seed(500)
+	data(sim_ru)
+	sim_ru <- dp.subset(pu.subset(spp.subset(sim_ru, 1), c(1:5,80)), 1, 1, 1:5)
+	sim_ru@data@attribute.spaces[[1]]@distance.metric='euclidean'
+	# generate model code
+	model<-rcpp_generate_model_object(RapUnreliableOpts(), TRUE, sim_ru@data, FALSE)
+	# calculate weighted distances
+	pts<-rbind(sim_ru@data@attribute.spaces[[1]]@pu@coords,sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@points@coords)
+	dists<-unname(as.matrix(vegan::vegdist(pts, method='euclidean')))
+	dists<-dists[
+		nrow(sim_ru@data@attribute.spaces[[1]]@pu@coords)+seq_len(nrow(sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@points@coords)),
+		seq_len(nrow(sim_ru@data@attribute.spaces[[1]]@pu@coords))
+	]
+	dists<-(dists * matrix(sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@weights, byrow=TRUE, ncol=ncol(dists), nrow=nrow(dists)))+1e-5
+	# run tests
+	expect_equal(model$cache$wdist[[1]][[1]], dists)
+})
+
+test_that('Model compiler (bray distances)', {
+	# load RapUnsolved object
+	set.seed(500)
+	data(sim_ru)
+	sim_ru <- dp.subset(pu.subset(spp.subset(sim_ru, 1), c(1:5,80)), 1, 1, 1:5)
+	sim_ru@data@attribute.spaces[[1]]@distance.metric='bray'
+	# generate model code
+	model<-rcpp_generate_model_object(RapUnreliableOpts(), TRUE, sim_ru@data, FALSE)
+	# calculate weighted distances
+	pts<-rbind(sim_ru@data@attribute.spaces[[1]]@pu@coords,sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@points@coords)
+	dists<-suppressWarnings(unname(as.matrix(vegan::vegdist(pts, method='bray'))))
+	dists<-dists[
+		nrow(sim_ru@data@attribute.spaces[[1]]@pu@coords)+seq_len(nrow(sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@points@coords)),
+		seq_len(nrow(sim_ru@data@attribute.spaces[[1]]@pu@coords))
+	]
+	dists<-(dists * matrix(sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@weights, byrow=TRUE, ncol=ncol(dists), nrow=nrow(dists)))+1e-5
+	# run tests
+	expect_equal(round(model$cache$wdist[[1]][[1]][-1],4), round(dists[-1],4))
+})
+
+test_that('Model compiler (manhattan distances)', {
+	# load RapUnsolved object
+	set.seed(500)
+	data(sim_ru)
+	sim_ru <- dp.subset(pu.subset(spp.subset(sim_ru, 1), c(1:5,80)), 1, 1, 1:5)
+	sim_ru@data@attribute.spaces[[1]]@distance.metric='manhattan'
+	# generate model code
+	model<-rcpp_generate_model_object(RapUnreliableOpts(), TRUE, sim_ru@data, FALSE)	
+	# calculate weighted distances
+	pts<-rbind(sim_ru@data@attribute.spaces[[1]]@pu@coords,sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@points@coords)
+	dists<-unname(as.matrix(vegan::vegdist(pts, method='manhattan')))
+	dists<-dists[
+		nrow(sim_ru@data@attribute.spaces[[1]]@pu@coords)+seq_len(nrow(sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@points@coords)),
+		seq_len(nrow(sim_ru@data@attribute.spaces[[1]]@pu@coords))
+	]
+	dists<-(dists * matrix(sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@weights, byrow=TRUE, ncol=ncol(dists), nrow=nrow(dists)))+1e-5
+	# run tests
+	expect_equal(round(model$cache$wdist[[1]][[1]],5), round(dists,5))
+})
+
+test_that('Model compiler (gower distances)', {
+	# load RapUnsolved object
+	set.seed(500)
+	data(sim_ru)
+	sim_ru <- dp.subset(pu.subset(spp.subset(sim_ru, 1), c(1:5,80)), 1, 1, 1:5)
+	sim_ru@data@attribute.spaces[[1]]@pu@coords=sim_ru@data@attribute.spaces[[1]]@pu@coords+5
+	sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@points@coords=sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@points@coords+5
+	sim_ru@data@attribute.spaces[[1]]@distance.metric='gower'
+	# generate model code
+	model<-rcpp_generate_model_object(RapUnreliableOpts(), TRUE, sim_ru@data, FALSE)
+	# calculate weighted distances
+	pts<-rbind(sim_ru@data@attribute.spaces[[1]]@pu@coords,sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@points@coords)
+	dists<-unname(as.matrix(vegan::vegdist(pts, method='gower')))
+	dists<-dists[
+		nrow(sim_ru@data@attribute.spaces[[1]]@pu@coords)+seq_len(nrow(sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@points@coords)),
+		seq_len(nrow(sim_ru@data@attribute.spaces[[1]]@pu@coords))
+	]
+	dists<-(dists * matrix(sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@weights, byrow=TRUE, ncol=ncol(dists), nrow=nrow(dists)))+1e-5
+	# run tests
+	expect_equal(round(model$cache$wdist[[1]][[1]],5), round(dists,5))
+})
+
+test_that('Model compiler (canberra distances)', {
+	# load RapUnsolved object
+	set.seed(500)
+	data(sim_ru)
+	sim_ru <- dp.subset(pu.subset(spp.subset(sim_ru, 1), c(1:5,80)), 1, 1, 1:5)
+	sim_ru@data@attribute.spaces[[1]]@distance.metric='canberra'
+	# generate model code
+	model<-rcpp_generate_model_object(RapUnreliableOpts(), TRUE, sim_ru@data, FALSE)
+	# calculate weighted distances
+	pts<-rbind(sim_ru@data@attribute.spaces[[1]]@pu@coords,sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@points@coords)
+	dists<-matrix(NA, nrow=nrow(pts), ncol=nrow(pts))
+	for (i in seq_len(nrow(pts)))
+		for (j in seq_len(nrow(pts)))
+		dists[i,j]<-sum((abs(pts[i,]-pts[j,])+1e-5)/(abs(pts[i,])+abs(pts[j,])+1e-5))
+	dists<-dists[
+		nrow(sim_ru@data@attribute.spaces[[1]]@pu@coords)+seq_len(nrow(sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@points@coords)),
+		seq_len(nrow(sim_ru@data@attribute.spaces[[1]]@pu@coords))
+	]
+	dists<-(dists * matrix(sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@weights, byrow=TRUE, ncol=ncol(dists), nrow=nrow(dists)))+1e-5
+	# run tests
+	expect_equal(round(model$cache$wdist[[1]][[1]],5), round(dists,5))
+})
+
+test_that('Model compiler (jaccard distances)', {
+	# load RapUnsolved object
+	set.seed(500)
+	data(sim_ru)
+	sim_ru <- dp.subset(pu.subset(spp.subset(sim_ru, 1), c(1:5,80)), 1, 1, 1:5)
+	sim_ru@data@attribute.spaces[[1]]@distance.metric='jaccard'
+	# generate model code
+	model<-rcpp_generate_model_object(RapUnreliableOpts(), TRUE, sim_ru@data, FALSE)
+	# calculate weighted distances
+	pts<-rbind(sim_ru@data@attribute.spaces[[1]]@pu@coords,sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@points@coords)
+	dists<-suppressWarnings(unname(as.matrix(vegan::vegdist(pts, method='jaccard'))))
+	dists<-dists[
+		nrow(sim_ru@data@attribute.spaces[[1]]@pu@coords)+seq_len(nrow(sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@points@coords)),
+		seq_len(nrow(sim_ru@data@attribute.spaces[[1]]@pu@coords))
+	]
+	dists<-(dists * matrix(sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@weights, byrow=TRUE, ncol=ncol(dists), nrow=nrow(dists)))+1e-5
+	# run tests
+	expect_equal(round(model$cache$wdist[[1]][[1]][-1],4), round(dists[-1],4))	
+})
+
+test_that('Model compiler (kulczynski distances)', {
+	# load RapUnsolved object
+	set.seed(500)
+	data(sim_ru)
+	sim_ru <- dp.subset(pu.subset(spp.subset(sim_ru, 1), c(1:5,80)), 1, 1, 1:5)
+	sim_ru@data@attribute.spaces[[1]]@distance.metric='kulczynski'
+	# generate model code
+	model<-rcpp_generate_model_object(RapUnreliableOpts(), TRUE, sim_ru@data, FALSE)
+	# calculate weighted distances
+	pts<-rbind(sim_ru@data@attribute.spaces[[1]]@pu@coords,sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@points@coords)
+	dists<-suppressWarnings(unname(as.matrix(vegan::vegdist(pts, method='kulczynski'))))
+	dists<-dists[
+		nrow(sim_ru@data@attribute.spaces[[1]]@pu@coords)+seq_len(nrow(sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@points@coords)),
+		seq_len(nrow(sim_ru@data@attribute.spaces[[1]]@pu@coords))
+	]
+	dists<-(dists * matrix(sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@weights, byrow=TRUE, ncol=ncol(dists), nrow=nrow(dists)))+1e-5
+	# run tests
+	expect_equal(round(model$cache$wdist[[1]][[1]][is.finite(dists)],4), round(dists[is.finite(dists)],4))
+})
+
+test_that('Model compiler (mahalanobis distances)', {
+	# load RapUnsolved object
+	set.seed(500)
+	data(sim_ru)
+	sim_ru <- dp.subset(pu.subset(spp.subset(sim_ru, 1), c(1:5,80)), 1, 1, 1:5)
+	sim_ru@data@attribute.spaces[[1]]@distance.metric='mahalanobis'
+	# generate model code
+	model<-rcpp_generate_model_object(RapUnreliableOpts(), TRUE, sim_ru@data, FALSE)
+	# calculate weighted distances
+	pts<-rbind(sim_ru@data@attribute.spaces[[1]]@pu@coords,sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@points@coords)
+	pts<-apply(pts, 2, function(x){x-mean(x)})
+	cov_mat<-var(pts)
+	dists<-matrix(NA, nrow=nrow(pts), ncol=nrow(pts))
+	for (i in seq_len(nrow(pts)))
+		for (j in seq_len(nrow(pts)))
+		dists[i,j]<-sqrt(mahalanobis(pts[i,], pts[j,], cov_mat))
+	dists<-dists[
+		nrow(sim_ru@data@attribute.spaces[[1]]@pu@coords)+seq_len(nrow(sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@points@coords)),
+		seq_len(nrow(sim_ru@data@attribute.spaces[[1]]@pu@coords))
+	]
+	dists<-(dists * matrix(sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@weights, byrow=TRUE, ncol=ncol(dists), nrow=nrow(dists)))+1e-5
+	# run tests
+	expect_equal(round(model$cache$wdist[[1]][[1]],5), round(dists,5))
+})
+
 test_that('Gurobi solver (unreliable)', {
 	# skip if gurobi not installed
 	if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')
@@ -54,16 +224,17 @@ test_that('Gurobi solver (unreliable)', {
 	sim_ru <- pu.subset(spp.subset(sim_ru, 1:2), 1:10)
 	sim_ru@data@attribute.spaces[[1]] = AttributeSpace(
 		pu=sim_ru@data@attribute.spaces[[1]]@pu,
-		dp=list(
+		demand.points=list(
 			DemandPoints(
-				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[1]]@points@coords[1:10,]),
-				sim_ru@data@attribute.spaces[[1]]@dp[[1]]@weights[1:10]
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@weights[1:10]
 			),
 			DemandPoints(
-				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[2]]@points@coords[1:10,]),
-				sim_ru@data@attribute.spaces[[1]]@dp[[2]]@weights[1:10]
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@demand.points[[2]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@demand.points[[2]]@weights[1:10]
 			)
-		)
+		),
+		distance.metric='euclidean'
 	)
 	# generate model matrix
 	model<-rcpp_generate_model_object(RapUnreliableOpts(), TRUE, sim_ru@data, FALSE)
@@ -85,17 +256,18 @@ test_that('Gurobi solver (reliable)', {
 	sim_ru <- spp.subset(pu.subset(sim_ru, 1:10), 1:2)
 	sim_ru@data@attribute.spaces[[1]] = AttributeSpace(
 		pu=sim_ru@data@attribute.spaces[[1]]@pu,
-		dp=list(
+		demand.points=list(
 			DemandPoints(
-				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[1]]@points@coords[1:10,]),
-				sim_ru@data@attribute.spaces[[1]]@dp[[1]]@weights[1:10]
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@demand.points[[1]]@weights[1:10]
 			),
 			DemandPoints(
-				SimplePoints(sim_ru@data@attribute.spaces[[1]]@dp[[2]]@points@coords[1:10,]),
-				sim_ru@data@attribute.spaces[[1]]@dp[[2]]@weights[1:10]
+				SimplePoints(sim_ru@data@attribute.spaces[[1]]@demand.points[[2]]@points@coords[1:10,]),
+				sim_ru@data@attribute.spaces[[1]]@demand.points[[2]]@weights[1:10]
 			)
-		)
-	)	
+		),
+		distance.metric='euclidean'
+	)
 	# generate model code
 	model<-rcpp_generate_model_object(RapReliableOpts(), FALSE, sim_ru@data, FALSE)
 	model$A<-Matrix::sparseMatrix(i=model$Ar[[1]]+1, j=model$Ar[[2]]+1, x=model$Ar[[3]])
@@ -119,7 +291,7 @@ test_that('solve.RapUnsolved (unreliable - NUMREPS=1)', {
 	# skip if gurobi not installed
 	if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')
 	# load RapUnsolved object
-	set.seed(500)	
+	set.seed(500)
 	data(sim_ru)
 	sim_ru@data@targets[[3]]=c(0.1,0.1,0.1,0.5,0.5,0.5)
 	sim_ru@opts=RapUnreliableOpts()
@@ -156,8 +328,8 @@ test_that('solve.RapUnsolved (unreliable - NUMREPS=1)', {
 				sim_rs@data@pu.species.probabilities[[1]] == i
 			),]
 			pu_pts=sim_rs@data@attribute.spaces[[j]]@pu@coords[which(seq_len(nrow(sim_rs@data@pu)) %in% curr_df[[2]]),]
-			dp_pts=sim_rs@data@attribute.spaces[[j]]@dp[[i]]@points@coords
-			dp_wts=sim_rs@data@attribute.spaces[[j]]@dp[[i]]@weights
+			dp_pts=sim_rs@data@attribute.spaces[[j]]@demand.points[[i]]@points@coords
+			dp_wts=sim_rs@data@attribute.spaces[[j]]@demand.points[[i]]@weights
 			dist_mtx=fields::rdist(dp_pts, pu_pts)
 			dp_wts_mtx=matrix(rep(dp_wts, nrow(pu_pts)), ncol=nrow(pu_pts),nrow=length(dp_wts))
 			wdist_mtx=(dist_mtx*dp_wts_mtx) + 1e-05
@@ -183,7 +355,7 @@ test_that('solve.RapUnsolved (reliable - NUMREPS=1)', {
 	data(sim_ru)
 	sim_ru<- pu.subset(sim_ru, 1:10)
 	sim_ru<-dp.subset(sim_ru, species=1:3, space=1, points=1:3)
-	sim_ru@opts=RapReliableOpts(FailureMultiplier=10)
+	sim_ru@opts=RapReliableOpts(failure.multiplier=10)
 	sim_ru@data@targets[[3]]=c(0.5,0.5,0.5,0.99,0.99,0.99)
 	# solve it
 	sim_rs<-rapr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L))
@@ -219,18 +391,18 @@ test_that('solve.RapUnsolved (reliable - NUMREPS=1)', {
 				sim_rs@data@pu.species.probabilities[[1]] == i
 			),]
 			pu_pts=sim_rs@data@attribute.spaces[[j]]@pu@coords[which(seq_len(nrow(sim_rs@data@pu)) %in% curr_df[[2]]),]
-			dp_pts=sim_rs@data@attribute.spaces[[j]]@dp[[i]]@points@coords
-			dp_wts=sim_rs@data@attribute.spaces[[j]]@dp[[i]]@weights
+			dp_pts=sim_rs@data@attribute.spaces[[j]]@demand.points[[i]]@points@coords
+			dp_wts=sim_rs@data@attribute.spaces[[j]]@demand.points[[i]]@weights
 			dist_mtx=fields::rdist(dp_pts, pu_pts)
 			dp_wts_mtx=matrix(rep(dp_wts, nrow(pu_pts)), ncol=nrow(pu_pts),nrow=length(dp_wts))
 			wdist_mtx=(dist_mtx*dp_wts_mtx) + 1e-05
-			wdist_mtx=cbind(wdist_mtx, max(wdist_mtx)*sim_rs@opts@FailureMultiplier)
+			wdist_mtx=cbind(wdist_mtx, max(wdist_mtx)*sim_rs@opts@failure.multiplier)
 			# calculate space.held in solution
-			curr_solution=calcReliableSpaceHeld(wdist_mtx, curr_df[[3]], sim_rs@opts@MaxRLevel, pu_ids)
+			curr_solution=calcReliableSpaceHeld(wdist_mtx, curr_df[[3]], sim_rs@opts@max.r.level, pu_ids)
 			# calculate space.held in worst solution
-			curr_worst=max(sapply(curr_df$pu, calcReliableSpaceHeld, w=wdist_mtx, p=curr_df[[3]], maxr=sim_rs@opts@MaxRLevel))
+			curr_worst=max(sapply(curr_df$pu, calcReliableSpaceHeld, w=wdist_mtx, p=curr_df[[3]], maxr=sim_rs@opts@max.r.level))
 			# calculate space.held in best solution
-			curr_best=calcReliableSpaceHeld(wdist_mtx, curr_df[[3]], sim_rs@opts@MaxRLevel, curr_df$pu)
+			curr_best=calcReliableSpaceHeld(wdist_mtx, curr_df[[3]], sim_rs@opts@max.r.level, curr_df$pu)
 			# tests
 			expect_equal(
 				round(((curr_worst-curr_solution ) / (curr_worst-curr_best)),5),
@@ -288,8 +460,8 @@ test_that('solve.RapUnsolved (unreliable - NUMREPS=1 - sparse occupancy)', {
 			pu_pts=sim_rs@data@attribute.spaces[[j]]@pu@coords
 			rownames(pu_pts)=as.character(seq_len(nrow(sim_rs@data@pu)))
 			pu_pts=pu_pts[which(seq_len(nrow(pu_pts)) %in% curr_df[[2]]),]
-			dp_pts=sim_rs@data@attribute.spaces[[j]]@dp[[i]]@points@coords
-			dp_wts=sim_rs@data@attribute.spaces[[j]]@dp[[i]]@weights
+			dp_pts=sim_rs@data@attribute.spaces[[j]]@demand.points[[i]]@points@coords
+			dp_wts=sim_rs@data@attribute.spaces[[j]]@demand.points[[i]]@weights
 			dist_mtx=fields::rdist(dp_pts, pu_pts)
 			dp_wts_mtx=matrix(rep(dp_wts, nrow(pu_pts)), ncol=nrow(pu_pts),nrow=length(dp_wts))
 			wdist_mtx=(dist_mtx*dp_wts_mtx) + 1e-05
@@ -322,7 +494,7 @@ test_that('solve.RapUnsolved (reliable - NUMREPS=1 - sparse occupancy)', {
 	sim_ru@opts=RapReliableOpts()
 	sim_ru@data@targets[[3]]=c(0.5,0.5,0.5,0.9,0.9,0.9)
 	# solve it
-	sim_rs<-rapr::solve(sim_ru, GurobiOpts(MIPGap=0.15, Presolve=2L))
+	sim_rs<-rapr::solve(sim_ru, GurobiOpts(MIPGap=0.15, Presolve=2L), verbose=TRUE)
 	# check number of selections is 1
 	expect_equal(nrow(summary(sim_rs)), 1L)
 	expect_true(all(c(space.held(sim_rs))>=c(space.target(sim_rs))))
@@ -357,22 +529,22 @@ test_that('solve.RapUnsolved (reliable - NUMREPS=1 - sparse occupancy)', {
 			pu_pts=sim_rs@data@attribute.spaces[[j]]@pu@coords[curr_df[[2]],]
 			rownames(pu_pts)=as.character(curr_df$pu)
 			pu_pos=which(rownames(pu_pts) %in% as.character(pu_ids))			
-			dp_pts=sim_rs@data@attribute.spaces[[j]]@dp[[i]]@points@coords
-			dp_wts=sim_rs@data@attribute.spaces[[j]]@dp[[i]]@weights
+			dp_pts=sim_rs@data@attribute.spaces[[j]]@demand.points[[i]]@points@coords
+			dp_wts=sim_rs@data@attribute.spaces[[j]]@demand.points[[i]]@weights
 			dist_mtx=fields::rdist(dp_pts, pu_pts)
 			dp_wts_mtx=matrix(rep(dp_wts, nrow(pu_pts)), ncol=nrow(pu_pts),nrow=length(dp_wts))
 			wdist_mtx=(dist_mtx*dp_wts_mtx) + 1e-05
-			wdist_mtx=cbind(wdist_mtx, max(wdist_mtx)*sim_rs@opts@FailureMultiplier)
+			wdist_mtx=cbind(wdist_mtx, max(wdist_mtx)*sim_rs@opts@failure.multiplier)
 			# calculate space.held in solution
-			curr_solution=calcReliableSpaceHeld(wdist_mtx, curr_df[[3]], sim_rs@opts@MaxRLevel, pu_pos)
+			curr_solution=calcReliableSpaceHeld(wdist_mtx, curr_df[[3]], sim_rs@opts@max.r.level, pu_pos)
 			# calculate space.held in worst solution
-			curr_worst=max(sapply(seq_len(nrow(pu_pts)), calcReliableSpaceHeld, w=wdist_mtx, p=curr_df[[3]], maxr=sim_rs@opts@MaxRLevel))
+			curr_worst=max(sapply(seq_len(nrow(pu_pts)), calcReliableSpaceHeld, w=wdist_mtx, p=curr_df[[3]], maxr=sim_rs@opts@max.r.level))
 			# calculate space.held in best solution
-			curr_best=calcReliableSpaceHeld(wdist_mtx, curr_df[[3]], sim_rs@opts@MaxRLevel, seq_len(nrow(pu_pts)))
+			curr_best=calcReliableSpaceHeld(wdist_mtx, curr_df[[3]], sim_rs@opts@max.r.level, seq_len(nrow(pu_pts)))
 			# tests
 			expect_equal(
-				round(((curr_worst-curr_solution ) / (curr_worst-curr_best)),5),
-				round(space.held(sim_rs, species=i, space=j)[1],5)
+				round(((curr_worst-curr_solution ) / (curr_worst-curr_best)),3),
+				round(space.held(sim_rs, species=i, space=j)[1],3)
 			)
 		}
 })

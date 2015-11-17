@@ -10,9 +10,11 @@ This class is used to store planning unit points and demand points in an attribu
 \section{Slots}{
 
 \describe{
-\item{\code{dp}}{\code{SimplePoints} coordinates for planning unit in the space.}
+\item{\code{pu}}{\code{SimplePoints} coordinates for planning unit in the space.}
 
-\item{\code{pu}}{\code{list} of \code{DemandPoints} for each species.}
+\item{\code{demand.points}}{\code{list} of \code{DemandPoints} for each species.}
+
+\item{\code{distance.metric}}{\code{character} name of distance metric to use for comparing planning units to demand points.}
 }}
 \seealso{
 \code{\link{SimplePoints-class}}, \code{\link{DemandPoints-class}}.

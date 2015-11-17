@@ -88,7 +88,7 @@ setMethod(
 		# store results
 		results<-list(read.RapResults(a@opts, a@data, model, paste(readLines(log.pth), collapse="\n"), solution, verbose))
 		existing.solutions<-list(selections(results[[1]]))
-
+		
 		## subsequent runs
 		for (i in seq_len(b@NumberSolutions-1)) {
 			# create new model object, eacluding existing solutions as valid solutions to ensure a different solution is obtained
@@ -735,9 +735,9 @@ space.plot.RapSolved<-function(
 	pu$status[which(x@data@pu$status==2)]<-'Locked In'
 	pu$status[which(x@data@pu$status==3)]<-'Locked Out'
 	# extract dp data
-	dp<-as.data.frame(x@data@attribute.spaces[[space]]@dp[[spp_pos]]@points@coords)
+	dp<-as.data.frame(x@data@attribute.spaces[[space]]@demand.points[[spp_pos]]@points@coords)
 	names(dp)<-paste0('X',seq_len(ncol(dp)))
-	dp$weights=x@data@attribute.spaces[[space]]@dp[[spp_pos]]@weights
+	dp$weights=x@data@attribute.spaces[[space]]@demand.points[[spp_pos]]@weights
 	# make plots
 	do.call(
 		paste0('spacePlot.',ncol(x@data@attribute.spaces[[space]]@pu@coords),'d'),

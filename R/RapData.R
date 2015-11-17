@@ -135,7 +135,7 @@ setClass("RapData",
 				stop('argument to pu.species.probabilities$species must have values that correspond to rows in argument to species')
 			if (!all(seq_len(nrow(object@species)) %in% object@pu.species.probabilities$species))
 				stop('argument to species has species that do not occur at least once in pu.species.probabilities$species')
-			if (!all(laply(object@attribute.spaces, function(x) {length(x@dp)==nrow(object@species)})))
+			if (!all(laply(object@attribute.spaces, function(x) {length(x@demand.points)==nrow(object@species)})))
 				stop('arguments to attribute.space and species must have the same number of species')
 			if (!all(object@targets$species %in% seq_len(nrow(object@species))))
 				stop('arguments to targets must have species present in argument to species')
@@ -173,7 +173,7 @@ setClass("RapData",
 #' attribute.spaces=list(
 #' 	AttributeSpace(
 #' 		pu=SimplePoints(rgeos::gCentroid(cs_pus[1:10,], byid=TRUE)@@coords),
-#' 		dp=list(
+#' 		demand.points=list(
 #'			make.DemandPoints(
 #'				SpatialPoints(
 #'					coords=randomPoints(
@@ -184,11 +184,12 @@ setClass("RapData",
 #'				),
 #'				NULL
 #'			)
-#'		)
+#'		),
+#'		distance.metric='euclidean'
 #' 	),
 #' 	AttributeSpace(
 #' 		pu=SimplePoints(extract(cs_space[[1]],cs_pus[1:10,],fun=mean)),
-#' 		dp=list(
+#' 		demand.points=list(
 #'			make.DemandPoints(
 #'				SpatialPoints(
 #'					coords=randomPoints(
@@ -199,7 +200,8 @@ setClass("RapData",
 #'				),
 #'				cs_space[[1]]
 #'			)
-#'		)
+#'		),
+#'		distance.metric='euclidean'
 #' 	)
 #' )
 #' pu.species.probabilities=calcSpeciesAverageInPus(cs_pus[1:10,], cs_spp)
@@ -251,8 +253,9 @@ RapData<-function(pu, species, targets, pu.species.probabilities, attribute.spac
 #' @param include.geographic.space \code{logical} should the geographic space be considered an attribute space?
 #' @param species.points \code{list} of/or \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records. Use a \code{list} of objects to represent different species. Must have the same number of elements as \code{species}. If not supplied then use \code{n.species.points} to sample points from the species distributions.
 #' @param n.species.points \code{numeric} vector specfiying the number points to sample the species distributions to use to generate demand points. Defaults to 20\% of the distribution.
-#' @param ... additional arguments to \code{calcBoundaryData} and \code{calcPuVsSpeciesData}.
+#' @param distance.metric \code{character} specifying the distance metric to use for each attribute space. The length of this should equal the number of attribute spaces, including a geographic space if \code{include.geographic.space=TRUE}. Valid metrics are 'euclidean', 'bray', 'manhattan','gower', 'altGower', 'canberra', 'mahalanobis', 'jaccard', and 'kulczynski'. Argument defaults to 'bray' for each attribute space, except for the geographic space (if specified), which defaults to 'euclidean'. See \code{?AttributeSpace} for details on the distance metrics.
 #' @param verbose \code{logical} print statements during processing?
+#' @param ... additional arguments to \code{calcBoundaryData} and \code{calcPuVsSpeciesData}.
 #' @seealso \code{\link{RapData-class}}, \code{\link{RapData}}.
 #' @export make.RapData
 #' @examples
@@ -263,18 +266,33 @@ RapData<-function(pu, species, targets, pu.species.probabilities, attribute.spac
 #' print(x)
 make.RapData<-function(pus, species, spaces=NULL,
 	amount.target=0.2, space.target=0.2, n.demand.points=100L, kernel.method=c('ks', 'hyperbox')[1], quantile=0.2, scale=TRUE,
-	species.points=NULL, n.species.points=ceiling(0.2*cellStats(species, 'sum')), include.geographic.space=TRUE, verbose=FALSE, ...) {
-
+	species.points=NULL, n.species.points=ceiling(0.2*cellStats(species, 'sum')), include.geographic.space=TRUE, 
+	distance.metric={m<-c(); if(!is.null(spaces)) {m<-ifelse(inherits(spaces,'list'), rep('bray', length(spaces)), 'bray')}; if(include.geographic.space) m<-c(m, 'euclidean'); m},
+	verbose=FALSE, ...
+) {
 	## init
 	# check inputs for validity
 	stopifnot(inherits(species.points, c('SpatialPoints', 'SpatialPointsDataFrame', 'NULL')))
 	stopifnot(inherits(pus, c('SpatialPolygons')))
 	stopifnot(inherits(species, c('RasterStack', 'RasterLayer')))
 	stopifnot(inherits(spaces, c('NULL', 'RasterStack', 'RasterLayer', 'list')))
+	sapply(distance.metric, match.arg, c(
+		'euclidean', 'bray', 'manhattan','gower',
+		'altGower', 'canberra', 'mahalanobis',
+		'jaccard', 'kulczynski'
+	))
+	
 	.cache<-new.env()
 	# coerce non-list items to list
 	if (!inherits(spaces, 'list'))
 		spaces=list(spaces)
+	# check length of distance.metric
+	if (is.null(spaces[[1]])) {
+		stopifnot(length(distance.metric)==1)
+	} else{
+		stopifnot(length(distance.metric)==(length(spaces)+include.geographic.space))
+	}
+		
 	# z-score spaces
 	meansLST=list()
 	sdsLST=list()
@@ -440,7 +458,8 @@ make.RapData<-function(pus, species, spaces=NULL,
 		return(
 			AttributeSpace(
 				pu=pu.points[[i]],
-				dp=demand.points[[i]]
+				demand.points=demand.points[[i]],
+				distance.metric=distance.metric[i]
 			)
 		)
 	})
@@ -590,7 +609,7 @@ spp.subset.RapData<-function(x, species) {
 				function(x) {
 						AttributeSpace(
 							x@pu,
-							x@dp[species]
+							x@demand.points[species]
 					  )
 				}
 			),
@@ -637,7 +656,7 @@ pu.subset.RapData<-function(x, pu) {
 				function(x) {
 						AttributeSpace(
 							SimplePoints(x@pu@coords[pu,,drop=FALSE]),
-							x@dp[species]
+							x@demand.points[species]
 					  )
 				}
 			),
@@ -655,9 +674,9 @@ dp.subset.RapData<-function(x, space, species, points) {
 	attr.space<-x@attribute.spaces
 	for (i in seq_along(space)) {
 		for (j in seq_along(species)) {
-			attr.space[[space[i]]]@dp[[species[j]]]<-DemandPoints(
-				SimplePoints(attr.space[[space[i]]]@dp[[species[j]]]@points@coords[points,]),
-				attr.space[[space[i]]]@dp[[species[j]]]@weights[points]
+			attr.space[[space[i]]]@demand.points[[species[j]]]<-DemandPoints(
+				SimplePoints(attr.space[[space[i]]]@demand.points[[species[j]]]@points@coords[points,]),
+				attr.space[[space[i]]]@demand.points[[species[j]]]@weights[points]
 			)
 		}
 	}
@@ -704,7 +723,7 @@ prob.subset.RapData<-function(x, species, threshold) {
 #' @rdname update
 #' @export
 #' @method update RapData
-update.RapData<-function(object, species=NULL, space=NULL, name=NULL, amount.target=NULL, space.target=NULL, pu=NULL, cost=NULL, status=NULL, ...) {
+update.RapData<-function(object, species=NULL, space=NULL, name=NULL, amount.target=NULL, space.target=NULL, pu=NULL, cost=NULL, status=NULL, distance.metric=NULL, ...) {
 	# deparse species
 	if (is.null(species)) {
 		species<-seq_len(nrow(object@species))
@@ -731,6 +750,14 @@ update.RapData<-function(object, species=NULL, space=NULL, name=NULL, amount.tar
 	# update space targets
 	if (!is.null(space.target))
 		object@targets$proportion[which(object@targets$target %in% space & object@targets$species %in% species)]<-space.target
+	# update distance metrics
+	if (!is.null(distance.metric)) {
+		if (length(distance.metric)==1)
+			distance.metric<-rep(distance.metric, length(object@attribute.spaces))
+		for (i in seq_along(space)) {
+			object@attribute.spaces[[space[i]]]@distance.metric=distance.metric[i]
+		}
+	}
 	# check object for validity
 	validObject(object, test=FALSE)
 	# return object
@@ -851,9 +878,9 @@ space.plot.RapData<-function(
 	pu$status[which(x@pu$status==2)]<-'Locked In'
 	pu$status[which(x@pu$status==3)]<-'Locked Out'
 	# extract dp data
-	dp<-as.data.frame(x@attribute.spaces[[space]]@dp[[spp_pos]]@points@coords)
+	dp<-as.data.frame(x@attribute.spaces[[space]]@demand.points[[spp_pos]]@points@coords)
 	names(dp)<-paste0('X',seq_len(ncol(dp)))
-	dp$weights=x@attribute.spaces[[space]]@dp[[spp_pos]]@weights
+	dp$weights=x@attribute.spaces[[space]]@demand.points[[spp_pos]]@weights
 	# make plots
 	do.call(
 		paste0('spacePlot.',ncol(x@attribute.spaces[[space]]@pu@coords),'d'),

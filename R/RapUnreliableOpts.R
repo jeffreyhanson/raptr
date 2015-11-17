@@ -12,7 +12,7 @@ setClass("RapUnreliableOpts",
 	validity=function(object) {
 		# BLM
 		if (!is.numeric(object@BLM)) stop('argument to BLM is not numeric')
-		if (!is.finite(object@BLM)) stop('argument to BLM is NA or non-finite value')
+		if (!is.finite(object@BLM)) stop('argument to BLM is NA or non-finite value')		
 		return(TRUE)
 	}
 )

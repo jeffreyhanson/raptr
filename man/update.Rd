@@ -17,10 +17,10 @@
 
 \method{update}{RapData}(object, species = NULL, space = NULL,
   name = NULL, amount.target = NULL, space.target = NULL, pu = NULL,
-  cost = NULL, status = NULL, ...)
+  cost = NULL, status = NULL, distance.metric = NULL, ...)
 
 \method{update}{RapReliableOpts}(object, BLM = NULL,
-  FailureMultiplier = NULL, MaxRLevel = NULL, ...)
+  failure.multiplier = NULL, max.r.level = NULL, ...)
 
 \method{update}{RapUnsolOrSol}(object, ..., formulation = NULL,
   solve = TRUE)
@@ -58,11 +58,13 @@
 
 \item{status}{\code{integer} new statuses for specified planning units.}
 
+\item{distance.metric}{\code{character} name of distance metric to use for attribute space representation calculations (see \code{link{AttributeSpace}} for more information).}
+
 \item{BLM}{\code{numeric} boundary length modifier.}
 
-\item{FailureMultiplier}{\code{numeric} multiplier for failure planning unit.}
+\item{failure.multiplier}{\code{numeric} multiplier for failure planning unit.}
 
-\item{MaxRLevel}{\code{numeric} maximum R failure level for approximation.}
+\item{max.r.level}{\code{numeric} maximum R failure level for approximation.}
 
 \item{formulation}{\code{character} indicating new problem formulation to use. This can be either 'unreliable' or 'reliable'. The default is \code{NULL} so that formulation in \code{object} is used.}
 
@@ -91,8 +93,8 @@ print(x)
 print(y)
 
 # RapReliableOpts
-x <- RapReliableOpts(FailureMultiplier=2)
-y <- update(x, FailureMultiplier=4)
+x <- RapReliableOpts(failure.multiplier=2)
+y <- update(x, failure.multiplier=4)
 print(x)
 print(y)
 

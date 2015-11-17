@@ -17,19 +17,19 @@ test_that('update.RapUnreliableOpts', {
 test_that('RapReliableOpts generator function', {
 	# generate objects
 	x=RapReliableOpts()
-	y=RapReliableOpts(BLM=0, MaxRLevel=5L, FailureMultiplier=1.1)
+	y=RapReliableOpts(BLM=0, max.r.level=5L, failure.multiplier=1.1)
 	# check defaults are correct
 	expect_equal(x@BLM, y@BLM)
-	expect_equal(x@MaxRLevel, y@MaxRLevel)
-	expect_equal(x@FailureMultiplier, y@FailureMultiplier)
+	expect_equal(x@max.r.level, y@max.r.level)
+	expect_equal(x@failure.multiplier, y@failure.multiplier)
 })
 
 test_that('update.RapReliableOpts', {
 	# generate objects
 	x=RapReliableOpts()
-	y=update(x, BLM=50, MaxRLevel=10L, FailureMultiplier=100)
+	y=update(x, BLM=50, max.r.level=10L, failure.multiplier=100)
 	# tests
 	expect_equal(y@BLM, 50)
-	expect_equal(y@MaxRLevel, 10L)
-	expect_equal(y@FailureMultiplier, 100)
+	expect_equal(y@max.r.level, 10L)
+	expect_equal(y@failure.multiplier, 100)
 })

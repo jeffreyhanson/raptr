@@ -31,7 +31,7 @@ is.GurobiInstalled<-function(verbose=TRUE) {
 	licenseInstructions <- 'The Gurobi R package requires a Gurobi license to work:\n\t- visit this web-page for an overview: http://bit.ly/1OHEQCm\n\t- academics can obtain a license at no cost here: http://bit.ly/1iYg3LX'
 	
 	# check if gurobi installed
-	result<-suppressWarnings(system2('gurobi_cl','-v', stdout=FALSE))
+	result<-suppressWarnings(system2('gurobi_cl','-v', stdout=FALSE, stderr=FALSE))
 	if (result!=0) {
 		if (verbose) {
 			cat('The gorubi software is not installed\n')
