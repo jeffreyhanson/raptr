@@ -22,6 +22,7 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install curl; fi
   - if [ "$TRAVIS_OS_NAME" == "mac" ]; then brew install Caskroom/cask/xquartz; fi;
   - if [ "$TRAVIS_OS_NAME" == "mac" ]; then brew install gdal; fi;
+  - if [ "$TRAVIS_OS_NAME" == "mac" ]; then brew install gfortan; fi;
   - if [ "$TRAVIS_OS_NAME" == "mac" ]; then Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos'))"; fi;
   
 r_binary_packages:

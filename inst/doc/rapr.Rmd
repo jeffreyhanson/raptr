@@ -30,11 +30,17 @@ vignette: >
 # load rapr R package
 library(rapr)
 
+# load packages for vignette
+library(plyr)
+library(dplyr)
+library(ggplot2)
+library(RandomFields)
+
 # set cache globally
 knitr::opts_chunk$set(cache=TRUE)
 
 # use built-in solutions or Gurobi?
-use.Gurobi=TRUE
+use.Gurobi=FALSE
 if (use.Gurobi & !is.GurobiInstalled())
 	use.Gurobi=FALSE
 
@@ -65,9 +71,6 @@ Demand points are points that exist in an attribute space. They are designated b
 To illustrate these concepts, we will briefly describe a conservation planning scenario example involving attribute spaces and demand points. A decision maker may wish to develop a prioritisation for a single species. This species has four populations in the study area. These populations are in the process of divergent evolution, with different populations inhabiting different environmental conditions and accruing different adaptations. However, the decision maker can only afford to preserve three of the populations. The decision maker needs to select a set of populations that will be representative in terms of the species' intra-specific variation. To describe this intra-specific variation, the decision maker obtained data on the environmental conditions (rainfall (ml) and temperature ($^{\circ}$C)) where each population was found. The decision maker then used this environmental data to construct a two-dimensional environmental attribute space. Next, the decision maker generated demand points as equi-distant points between the range of values where the populations were found ($\pm$ 20% to avoid edge effects, see [@r218]). By comparing the distribution of the demand points to the distribution of the populations in the attribute space, the decision maker can identify a suitable prioritisation (Figure 1). We can see that if the decision maker preserves both popuations $A$ and $C$, they will effectively "double-up" on the same genetic variation, and in turn their waste resources. Instead, a representative sample of the intra-specific variation could be preserved by securing populations $A$, $B$, and $D$.
 
 ```{r, echo=FALSE, fig.height=2.5, fig.width=2.5, fig.cap="Example of an attribute space. This environmental attribute space has dimensions relating to annual temperature ($^{\\circ}$C)and rainfall (ml) values. Letters denote the environmental conditions associated with the geographic locations where four hypothetical populations are found. Points represent demand points. In this space, populations closer to each other are considered more similar to each other."}
-## load packages
-library(ggplot2)
-
 ## generate data
 # population data
 populations <- data.frame(
@@ -267,6 +270,19 @@ Table 1: Main classes the in `rapr` R package
 
 
 ## Package tutorial
+This tutorial is designed to provide users with an understanding of how to use the `rapr` R package to generate and compare solutions. This tutorial uses several additional packages, so first we will run the following code to load them.
+
+```{r, message=FALSE, result='hide'}
+# load packages for tutorial
+library(plyr)
+library(dplyr)
+library(ggplot2)
+library(RandomFields)
+
+# set seed for reproducibility
+set.seed(500)
+```
+
 ### Simple simulated species
 #### Data
 To investigate the behaviour of the problem, we will generate prioritisations for three simulated species. We will use the unreliable formulation of the problem to understand the basics, and later move onto the reliable formulation. The first species (termed 'uniform') will represent a hyper-generalist. This species will inhabit all areas with equal probability. The second species (termed 'normal') will represent a species with a single range core. The third species (termed 'bimodal') will represent a species with two distinct ecotypes, each with their own range core. To reduce computational time for this example, we will use a 10 $\times$ 10 grid of square planning units.
@@ -836,8 +852,7 @@ The `rapr` R package provides a suite of distance metrics that can be used to ca
 First, we will simulate a new species and a three-dimensional attribute space. Note that unlike the previous examples, the attribute space will not be geographic space. Rather, the each dimension in the attribute space will have values that map onto geographic space (eg. like climatic variables across the landscape). To add further complexity, we simulate their distributions using Gaussian processes.
 
 ```{r, markup='hide'}
-# load RandomFields package and set seed for simulations
-library(RandomFields)
+# set seed for simulations
 set.seed(500)
 
 # simulate planning units
@@ -1152,10 +1167,6 @@ cs_rs_aus <- update(cs_rs_amount, b=aus_selections)
 Now, let's plot the performance metrics for these prioritisations.
 
 ```{r, fig.height=3.5, fig.width=8, fig.cap="Prioritisations were generated using amount-based targets (20\\%), and with additional space-based targets (85\\%). These are compared to the Queensland reserve network. Data represent means and standard errors for the four species in each prioritisation."}
-# load packages
-library(dplyr)
-library(ggplot2)
-
 # define standard error function
 se=function(x){sd(x,na.rm=TRUE)/sqrt(sum(!is.na(x)))}
 
@@ -1365,10 +1376,6 @@ for (i in seq_along(space.targets)) {
 Now, we will extract the proportion of geographic and envrionmental space held in each solution, as well as the number of planning units in the solution.
 
 ```{r}
-# load packages
-library(plyr)
-library(dplyr)
-
 # make data.frame with results from each prioritisation 
 space_results <- ldply(solutions, .fun=function(x) {
 	return(
@@ -1392,9 +1399,6 @@ space_results <- ldply(solutions, .fun=function(x) {
 Finally, let's visualise the Pareto frontiers.
 
 ```{r, fig.height=3.5, fig.width=8, fig.cap="Data represent means and standard errors for the proportion of environmental and geographic space held in a prioritisation. Prioritsations were generated using $BLM$ parameters: 0.50, 0.55, 0.61, 0.66, 0.72, 0.77, 0.83, 0.88, 0.94, and 0.99"}
-# load package
-library(ggplot2)
-
 # plot Pareto frontiers
 ggplot(aes(x=n.planning.units, y=mean, color=space.name),data=space_results) +
 	geom_point() +
@@ -1414,7 +1418,7 @@ Here we can see that additional planning units are need to maximise space repres
 ## Implications and future directions
 The `rapr` R package provides a unified approach to reserve selection. This R package decision maker with the tools to generate prioritisations that secure an adequate amount of a representative sample of biodiversity patterns and processes. Additionally, the decision maker can accomodate uncertainty in the distribution of features, and also ensure identify suitably connected reserves. Both the simulated and case-study species suggest that conservation planning exercises need to explicitly consider biodiversity processes during the reserve selection process.
 
-One of the key advantages of the `rapr` R package is that it is general enough that any  any spatial variation could be considered an attribute space, regardless of whether this variation is intrinsic or extrinsic to the feature(s). As a consequence, in addition to biodiversity processes, this R package could be used to secure intra-specific (within feature) biodivery patterns. For example, advances in genomic fields produced high resolution data on genetic information (eg. amplified fragment length polymorphisms (AFLPs), single nucleotide polymorphisms (SNPs)). By using geostatistical analysis [eg. generalised dissimilarity modelling GDMs (@r370);  gradients forests (GFs)], this data has been used to generate maps describing the spatial distribution of genomic variation within a species [@r361; @r419]. These maps in turn could be used to construct a genomic attribute space, and in turn, could be used to generate prioritisations that secure a representative sample of genomic variation within a species. However, because the problem formulations used in this package are so general, this tools in this package can be misused, and could generate poor quality prioritisations.
+One of the key advantages of the `rapr` R package is that it is general enough that any  any spatial variation could be considered an attribute space, regardless of whether this variation is intrinsic or extrinsic to the feature(s). As a consequence, in addition to biodiversity processes, this R package could be used to secure intra-specific (within feature) biodivery patterns. For example, advances in genomic fields produced high resolution data on genetic information (eg. amplified fragment length polymorphisms (AFLPs), single nucleotide polymorphisms (SNPs)). By using geostatistical analysis [eg. generalised dissimilarity modelling GDMs (@r370);  gradients forests (GFs)], this data has been used to generate maps describing the spatial distribution of genomic variation within a species [@r361; @r419]. These maps in turn could be used to construct a genomic attribute space, and in turn, could be used to generate prioritisations that secure a representative sample of genomic variation within a species. However, because the problem formulations used in this package are so general, the tools in this package can be misused, and generate poor quality prioritisations.
 
 The degree to which a prioritisation truly secures a representative sample of a feature depends on the attribute spaces and distribution of demand points chosen by the decision maker. The space-based targets are set as a proportion based on the level of representation if all the planning units are selected, and the worst prioritisation containing only one planning unit. As a consequence, if the decision maker uses an inapropriate set of spatial variables to construct an attribute space, or an inapropriate set of demand points, then the optimal solution based on this data will not be a cost-effective prioritisation. We therefore stress that decision makers carefully consider which biodiversity processes need to preserved in the prioritisation, and what spatial data can be used to map these processes. To assist in the selection of apropriate demand points, the R package provides several routines for generating demand points (see the `make.DemandPoints` function). These routines essentially use the distribution of a feature in the attribute space to define a polygon. Demand points are then generated random points within the polygon. A kernel is then fit to distribution of the feature in the space [using @r231; @r450], and the demand points are weighted based on the estimated density of the feature at the demand points' coordinates.
 
