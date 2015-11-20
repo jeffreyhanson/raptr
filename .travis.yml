@@ -24,6 +24,7 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" == "mac" ]; then brew install gdal; fi;
   - if [ "$TRAVIS_OS_NAME" == "mac" ]; then brew install gfortan; fi;
   - if [ "$TRAVIS_OS_NAME" == "mac" ]; then Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos'))"; fi;
+  - if [ "$TRAVIS_OS_NAME" == "mac" ]; then Rscript -e "setRepositories(ind=1:2);install.packages('hypervolume',type='binary'))"; fi;
   
 r_binary_packages:
   - boot
@@ -37,7 +38,6 @@ r_binary_packages:
   - RColorBrewer
   - Rcpp
   - plyr
-  - hypervolume
   - mvtnorm
   - sp
   - raster
