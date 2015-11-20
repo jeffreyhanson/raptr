@@ -11,7 +11,8 @@
 \title{Update object}
 \usage{
 \method{update}{GurobiOpts}(object, Threads = NULL, MIPGap = NULL,
-  Presolve = NULL, TimeLimit = NULL, NumberSolutions = NULL, ...)
+  Method = NULL, Presolve = NULL, TimeLimit = NULL,
+  NumberSolutions = NULL, ...)
 
 \method{update}{ManualOpts}(object, NumberSolutions = NULL, ...)
 
@@ -33,6 +34,8 @@
 \item{Threads}{\code{integer} number of cores to use for processing.}
 
 \item{MIPGap}{\code{numeric} MIP gap specifying minimum solution quality.}
+
+\item{Method}{\code{integer} Algorithm to use for solving model.}
 
 \item{Presolve}{\code{integer} code for level of computation in presolve.}
 

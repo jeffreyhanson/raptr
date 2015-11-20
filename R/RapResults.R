@@ -6,12 +6,35 @@ NULL
 #' This class is used to store RASP results.
 #'
 #' @slot summary \code{data.frame} with summary information on solutions.
-#' @slot selections \code{matrix} with binary selections.
+#' @slot selections \code{matrix} with binary selections. The cell \eqn{x_{ij}} denotes if planning unit \eqn{j} is selected in the \eqn{i}'th solutuion.
 #' @slot amount.held \code{matrix} with the amount held for each species in each solution.
 #' @slot space.held \code{matrix} with the poportion of attribute space sampled for each species in each solution.
 #' @slot best \code{integer} with index of best solution.
 #' @slot logging.file \code{character} Gurobi log files.
 #' @slot .cache \code{environment} used to store extra data.
+#' @details The \code{summary} table follows Marxan conventions (summary.dat in \url{http://www.uq.edu.au/marxan/tutorial/module5.html}). The columns are:
+#' \tabular{cl}{
+#' \code{Run_Number}
+#' \tab The index of each solution in the object. \cr
+#' \code{Status}
+#' \tab The status of the solution. The values in this column correspond to outputs from the Gurobi software package (\url{http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html}).\cr
+#' \code{Score}
+#' \tab The objective function for the solution. \cr
+#' \code{Cost}
+#' \tab Total cost associated with a solution \cr
+#' \code{Planning_Units}
+#' \tab Number of planning units selected in a solution \cr
+#' \code{Connectivity_Total}
+#' \tab The total amount of shared boundary length between all planning units. All solutions in the same object should have equal values for this column. \cr
+#' \code{Connectivity_In}
+#' \tab The amount of shared boundary length among planning units selected in the solution \cr
+#' \code{Connectivity_Edge}
+#' \tab The amount of exposed boundary length in the solution \cr
+#' \code{Connectivity_Out}
+#' \tab The number of shared boundary length among planning units not selected in the solution  \cr
+#' \code{Connectivity_Fraction}
+#' \tab The ratio of shared boundary length in the solution (\code{Connectivity_In}) to the total amount of boundary length (\code{Connectivity_Edge}). This ratio is an indicator of solution quality. Solutions with a lower ratio will have less planning units and will be more efficient. \cr
+#' }
 #' @export
 #' @seealso \code{\link{RapResults}}, \code{\link{read.RapResults}}.
 setClass("RapResults",
@@ -78,12 +101,35 @@ setClass("RapResults",
 #'
 #' This function creates a new \code{RapResults} object.
 #'
-#' @param summary \code{data.frame} with summary information on solutions.
-#' @param selections \code{matrix} with binary selections.
+#' @param summary \code{data.frame} with summary information on solutions. See details below for more information.
+#' @param selections \code{matrix} with binary selections. The cell \eqn{x_{ij}} denotes if planning unit \eqn{j} is selected in the \eqn{i}'th solutuion.
 #' @param amount.held \code{matrix} with the amount held for each species in each solution.
-#' @param space.held \code{matrix} with the poportion of attribute space sampled for each species in each solution.
+#' @param space.held \code{matrix} with the poportion of attribute space sampled for each species in each solution. 
 #' @param logging.file \code{character} Gurobi log files.
 #' @param .cache \code{environmental} used to cache calculations.
+#' @details The \code{summary} table follows Marxan conventions (summary.dat in \url{http://www.uq.edu.au/marxan/tutorial/module5.html}). The columns are:
+#' \tabular{cl}{
+#' \code{Run_Number}
+#' \tab The index of each solution in the object. \cr
+#' \code{Status}
+#' \tab The status of the solution. The values in this column correspond to outputs from the Gurobi software package (\url{http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html}).\cr
+#' \code{Score}
+#' \tab The objective function for the solution. \cr
+#' \code{Cost}
+#' \tab Total cost associated with a solution \cr
+#' \code{Planning_Units}
+#' \tab Number of planning units selected in a solution \cr
+#' \code{Connectivity_Total}
+#' \tab The total amount of shared boundary length between all planning units. All solutions in the same object should have equal values for this column. \cr
+#' \code{Connectivity_In}
+#' \tab The amount of shared boundary length among planning units selected in the solution \cr
+#' \code{Connectivity_Edge}
+#' \tab The amount of exposed boundary length in the solution \cr
+#' \code{Connectivity_Out}
+#' \tab The number of shared boundary length among planning units not selected in the solution  \cr
+#' \code{Connectivity_Fraction}
+#' \tab The ratio of shared boundary length in the solution (\code{Connectivity_In}) to the total amount of boundary length (\code{Connectivity_Edge}). This ratio is an indicator of solution quality. Solutions with a lower ratio will have less planning units and will be more efficient. \cr
+#' }
 #' @export
 #' @note slot \code{best} is automatically determined based on data in \code{summary}.
 #' @return \code{RapResults} object

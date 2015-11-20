@@ -265,11 +265,15 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
  if (Rcpp::NumericVector::is_na(Score))
   Score=Cost + (blmDBL * Connectivity[2]);
 
+ // extract solution status
+ std::string solution_status=solution["status"];
+ 
  //// Exports
  if (verbose) Rcout << "Exporting data to R" << std::endl;
  Rcpp::S4 ret("RapResults");
  ret.slot("summary") = Rcpp::DataFrame::create(
 	 Rcpp::Named("Run_Number") = Rcpp::wrap(1),
+	 Rcpp::Named("Status") = Rcpp::wrap(solution_status),
 	 Rcpp::Named("Score")=Rcpp::wrap(Score),
 	 Rcpp::Named("Cost")= Rcpp::wrap(Cost),
 	 Rcpp::Named("Planning_Units")= Rcpp::wrap(Planning_Units),

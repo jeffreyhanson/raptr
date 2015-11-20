@@ -38,7 +38,7 @@ make.RapData(pus, species, spaces = NULL, amount.target = 0.2,
 
 \item{include.geographic.space}{\code{logical} should the geographic space be considered an attribute space?}
 
-\item{spaces.distance.metric}{\code{character} specifying the distance metric to use for each attribute space in \code{spaces}. Valid metrics are 'euclidean', 'bray', 'manhattan','gower', 'altGower', 'canberra', 'mahalanobis', 'jaccard', and 'kulczynski'. Argument defaults to 'bray' for each attribute space. See \code{?AttributeSpace} for details on the distance metrics.}
+\item{spaces.distance.metric}{\code{character} specifying the distance metric to use for each attribute space in \code{spaces}. Valid metrics are 'euclidean', 'bray', 'manhattan','gower', 'canberra', 'mahalanobis', 'jaccard', and 'kulczynski'. Argument defaults to 'bray' for each attribute space. See \code{?AttributeSpace} for details on the distance metrics.}
 
 \item{geographic.distance.metric}{\code{character} specifying the distance metric to use for the geographic attribute space (if \code{include.geographic.space=TRUE}). Defaults to 'euclidean'. See \code{?AttributeSpace} for details on the distance metrics.}
 

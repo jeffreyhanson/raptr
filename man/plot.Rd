@@ -6,7 +6,7 @@
 \alias{plot,RapSolved,RapSolved-method}
 \alias{plot,RapSolved,missing-method}
 \alias{plot,RapSolved,numeric-method}
-\title{Plot RASP object}
+\title{Plot object}
 \usage{
 \S4method{plot}{RapSolved,numeric}(x, y, basemap = "none",
   pu.color.palette = c("#e5f5f9", "#00441b", "#FFFF00", "#FF0000"),

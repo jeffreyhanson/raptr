@@ -181,6 +181,18 @@ test_that('space.target<-.RapData', {
 	expect_equal(unname(space.target(sim_rd)[,1]), c(0.5, 0.3, 0.3))
 })
 
+test_that('names.RapData', {
+	data(sim_ru)
+	expect_equal(names(sim_ru@data), sim_ru@data@species$names)
+})
+
+test_that('names<-.RapData', {
+	data(sim_ru)
+	sim_rd<-sim_ru@data
+	names(sim_rd) <- c('spp1', 'spp2', 'spp3')
+	expect_equal(names(sim_rd), c('spp1', 'spp2', 'spp3'))
+})
+
 test_that('spp.plot.RapData', {
 	data(sim_ru)
 	spp.plot(sim_ru@data, 1)
@@ -192,4 +204,5 @@ test_that('space.plot.RapData', {
 	space.plot(sim_ru@data, 1, 1)
 	space.plot(sim_ru@data, 'normal', 1)
 })
+
 

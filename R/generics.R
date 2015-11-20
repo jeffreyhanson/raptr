@@ -131,7 +131,7 @@ sim.space<-function(x, ...) UseMethod('sim.space')
 #' sim_rs4 <- solve(sim_ru, matrix(sample(c(0,1), size=500, replace=TRUE), ncol=100, nrow=5))
 setGeneric('solve', function(a, b, ...) standardGeneric('solve'))
 
-#' Plot RASP object
+#' Plot object
 #'
 #' This function plots the solutions contained in \code{RapSolved} objects. It can be used to show a single solution, or the the selection frequencies of planning
 #' units contained in a single \code{RapSolved} object. Additionally, two \code{RapSolved} objects can be supplied to plot the differences between them.
@@ -160,6 +160,25 @@ setGeneric('solve', function(a, b, ...) standardGeneric('solve'))
 #' plot(sim_rs, 2)
 #' # plot different between best and second solutions
 #' plot(sim_rs, sim_rs, 0 ,2)
+NULL
+
+#' Names
+#'
+#' This function sets or returns the species names in an object.
+#'
+#' @param x \code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.
+#' @param value new species names.
+#' @name names
+#' @seealso \code{\link{RapData}}, \code{\link{RapUnsolved}}, \code{\link{RapSolved}}.
+#' @examples
+#' # load data
+#' data(sim_rs)
+#' # show names
+#' names(sim_rs)
+#' # change names
+#' names(sim_rs) <- c('spp1', 'spp2', 'spp3')
+#' # show new names
+#' names(sim_rs)
 NULL
 
 #' Print objects
@@ -241,6 +260,29 @@ NULL
 #'
 #' @param object \code{RapResults}, or \code{RapSolved} object.
 #' @param ... not used.
+#' @details This table follows Marxan conventions (summary.dat in \url{http://www.uq.edu.au/marxan/tutorial/module5.html}). The columns are:
+#' \tabular{cl}{
+#' \code{Run_Number}
+#' \tab The index of each solution in the object. \cr
+#' \code{Status}
+#' \tab The status of the solution. The values in this column correspond to outputs from the Gurobi software package (\url{http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html}).\cr
+#' \code{Score}
+#' \tab The objective function for the solution. \cr
+#' \code{Cost}
+#' \tab Total cost associated with a solution \cr
+#' \code{Planning_Units}
+#' \tab Number of planning units selected in a solution \cr
+#' \code{Connectivity_Total}
+#' \tab The total amount of shared boundary length between all planning units. All solutions in the same object should have equal values for this column. \cr
+#' \code{Connectivity_In}
+#' \tab The amount of shared boundary length among planning units selected in the solution \cr
+#' \code{Connectivity_Edge}
+#' \tab The amount of exposed boundary length in the solution \cr
+#' \code{Connectivity_Out}
+#' \tab The number of shared boundary length among planning units not selected in the solution  \cr
+#' \code{Connectivity_Fraction}
+#' \tab The ratio of shared boundary length in the solution (\code{Connectivity_In}) to the total amount of boundary length (\code{Connectivity_Edge}). This ratio is an indicator of solution quality. Solutions with a lower ratio will have less planning units and will be more efficient. \cr
+#' }
 #' @name summary
 #' @return \code{data.frame}
 #' @seealso \code{\link{RapResults}}, \code{\link{RapSolved}}.
@@ -258,6 +300,7 @@ NULL
 #' @param object \code{GurobiOpts}, \code{RapUnreliableOpts}, \code{RapReliableOpts}, \code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.
 #' @param Threads \code{integer} number of cores to use for processing.
 #' @param MIPGap \code{numeric} MIP gap specifying minimum solution quality.
+#' @param Method \code{integer} Algorithm to use for solving model.
 #' @param Presolve \code{integer} code for level of computation in presolve.
 #' @param TimeLimit \code{integer} number of seconds to allow for solving.
 #' @param NumberSolutions \code{integer} number of solutions to generate.
@@ -448,11 +491,11 @@ logging.file<-function(x,y) UseMethod('logging.file')
 #' @export
 #' @examples
 #' data(sim_rs)
-#' # amount held (%) for each species in best solution
+#' # amount held (\%) for each species in best solution
 #' amount.held(sim_rs, 0)
-#' # amount held (%) for each species in second solution
+#' # amount held (\%) for each species in second solution
 #' amount.held(sim_rs, 2)
-#' # amount held (%) for each species in each solution
+#' # amount held (\%) for each species in each solution
 #' amount.held(sim_rs, NULL)
 amount.held<-function(x,y,species) {UseMethod('amount.held')}
 
@@ -497,11 +540,11 @@ amount.target<-function(x, species) {UseMethod('amount.target')}
 #' @export
 #' @examples
 #' data(sim_rs)
-#' # space held (%) for each species in best solution
+#' # space held (\%) for each species in best solution
 #' space.held(sim_rs, 0)
-#' # space held (%) for each species in second solution
+#' # space held (\%) for each species in second solution
 #' space.held(sim_rs, 2)
-#' # space held (%) for each species in each solution
+#' # space held (\%) for each species in each solution
 #' space.held(sim_rs)
 space.held<-function(x,y,species,space) {UseMethod('space.held')}
 

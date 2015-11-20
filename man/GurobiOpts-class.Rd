@@ -14,6 +14,8 @@ This class is used to store Gurobi input parameters.
 
 \item{\code{MIPGap}}{\code{numeric} MIP gap specifying minimum solution quality. Defaults to 0.05.}
 
+\item{\code{Method}}{\code{integer} Algorithm to use for solving model. Defaults to 0L.}
+
 \item{\code{Presolve}}{\code{integer} code for level of computation in presolve. Defaults to 2.}
 
 \item{\code{TimeLimit}}{\code{integer} number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.}

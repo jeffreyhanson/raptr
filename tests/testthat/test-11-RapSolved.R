@@ -120,3 +120,15 @@ test_that('space.target.RapSolved', {
 	data(sim_rs)
 	expect_equal(unname(space.target(sim_rs)[,1]), sim_rs@data@targets$proportion[which(sim_rs@data@targets$target==1)])
 })
+
+
+test_that('names.RapSolved', {
+	data(sim_rs)
+	expect_equal(names(sim_rs), sim_rs@data@species$names)
+})
+
+test_that('names<-.RapSolved', {
+	data(sim_rs)
+	names(sim_rs) <- c('spp1', 'spp2', 'spp3')
+	expect_equal(names(sim_rs), c('spp1', 'spp2', 'spp3'))
+})

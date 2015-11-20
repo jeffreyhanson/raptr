@@ -1,15 +1,25 @@
 ---
 title: "rapr: Representative and Adequate Prioritisations in R"
-author:
-  - "Jeffrey O. Hanson, Jonathan R. Rhodes, Hugh P. Possingham, Richard A. Fuller"
-date: "`r Sys.Date()`"
+author: |
+  | Jeffrey O. Hanson$^1$, Jonathan R. Rhodes$^2$, Hugh P. Possingham$^1$, Richard A. Fuller$^1$
+  | $^1$School of Biological Sciences, The University of Queensland, Brisbane, QLD, Australia
+  | $^2$School of Geography, Planning and Environmental Management, The University of Queensland, Brisbane, QLD, Australia
+  | Correspondance should be addressed to jeffrey.hanson@uqconnect.edu.au
+date: "`r format(Sys.time(), '%d %B %Y')`"
+tags: ["conservation", "biodiversity", "MILP", "reserve-selection"]
+abstract: "A central aim in conservation is to maximise the long-term persistence of biodiversity. To achieve this, reserve networks are used to safeguard biodiversity patterns and processes. But resources are limited. Reserve selection is often formulated as an optimisation problem to identify cost-effective prioritisations. However, most existing decision support tools are based on formulations that are not well suited for preserving biodiversity processes. To fill this gap in the conservation planning toolbox, we developed the `rapr` R package. This R package uses two new novel formulations of the reserve selection problem to identify prioritisations. Here, we explore the functionality of this R package using several simulated species and a case-study planning exercise in Queensland, Australia. We show how explicitly considering representativeness can alter a prioritisation. In most cases, we found that only a few additional plannning units are required to acheive far better representativeness."
 output:
-  rmarkdown::html_vignette:
+  rmarkdown::pdf_document:
     toc: true
+    toc_depth: 5
+    keep_tex: yes
+    fig_caption: yes
+    includes:
+      in_header: preamble-latex.tex
+fontsize: 11pt
+documentclass: article
 bibliography: Endnote_lib.bib
 csl: reference-style.csl
-header-includes:
-  - \usepackage{amsmath,amsfonts,assymb,hpyerref,color}
 vignette: >
   %\VignetteIndexEntry{rapr}
   %\VignetteEngine{knitr::rmarkdown}
@@ -19,36 +29,42 @@ vignette: >
 ```{r global, include=FALSE}
 # load rapr R package
 library(rapr)
+
+# set cache globally
+knitr::opts_chunk$set(cache=TRUE)
+
+# use built-in solutions or Gurobi?
+use.Gurobi=TRUE
+if (use.Gurobi & !is.GurobiInstalled())
+	use.Gurobi=FALSE
+
 # set seed for reproducibility
 set.seed(500)
 ```
 
-## Abstract
-A central aim in conservation is to maximise the long-term persistence of biodiversity. To achieve this, reserve networks are used to safeguard biodiversity patterns and processes. But resources are limited. Reserve selection is often formulated as an optimisation problem to identify cost-effective prioritisations. However, most existing decision support tools are based on formulations that are not well suited for preserving biodiversity processes. To fill this gap in the conservation planning toolbox, we developed the `rapr` R package. This R package uses two new novel formulations of the reserve selection problem to identify prioritisation. Here, we explore the package's functionality using several simulated and a case-study in Queensland, Australia. We show how explicitly considering representativeness can alter a prioritisation.
-
 ## Introduction
 <!-- conservation and reserve networks -->
-The overarching aim of conservation to maximise the long-term persistence of biodiversity [@r423; @r255]. To acheive this, conservation actions must preserve biodiversity patterns (eg. species, populations) and the processes that sustain them. One of the major tangible achievements of modern conservation has been the act of setting aside areas for preservation [@r440]. Reserve networks buffer species from threatening processes [@r63] and set the stage for direct management interventions [eg. captive breeding and reintroduction programs; @r290]. However, the resources available for conservation action are limited, and so reserve networks must be sited in places that satisfy conservation objectives for minimum cost [@r255]. To achieve this, reserve selection is often formulated as an optimisation problem and then solved to identify cost-effective candidate reserve systems [prioritisations; @r255].
+The overarching aim of conservation is to maximise the long-term persistence of biodiversity [@r423; @r255]. To acheive this, conservation actions must preserve biodiversity patterns (eg. species, populations) and the processes that sustain them. One of the major tangible achievements of modern conservation has been the act of setting aside areas for preservation [@r440]. Reserve networks buffer species from threatening processes [@r63] and set the stage for direct management interventions [eg. captive breeding and reintroduction programs; @r290]. However, the resources available for conservation action are limited, and so reserve networks must be sited in places that satisfy conservation objectives for minimum cost [@r255]. To achieve this, reserve selection is often formulated as an optimisation problem and then solved to identify cost-effective candidate reserve systems [prioritisations; @r255].
 
 <!-- biodiversity processes are important -->
-To fulfil the overarching aims of conservation, reserve networks must preserve both ecological and evolutionary biodiversity processes [@r255; @r3]. Ecological processes are required for biodiversity to persist over short time-scales. Examples of these processes include predator-prey interactions, pollination, and decomposition. Typically, they operate over small geographic domains, with exceptions such as mirgation and refugial habitats, and can be preserved using suitably large planning units [@r446] that represent contiguous habitat [@r448]. On the other hand, evolutionary processes are required for biodiversity to persist over long time-scales. Typically, they operate over large geographic domains. Adaptive evolutionary processes can be preserved by securing populations with different adaptations and/or along selection pressure gradients (eg. environmental gradients) [@r63, @r3, @r202, @r197]. Neutral evolutionary processes can be be preserved by securing populations with different evolutionary histories and/or with limited gene flow [@r63, @r2, @r200]. Due to advances in technology over the last few decades, a wealth of high quality data on biodiversity processes has become freely avaliable to conservation planners. Yet much of it is not being used for conservation planning [@r61].
+To fulfil the overarching aims of conservation, reserve networks must preserve both ecological and evolutionary biodiversity processes [@r255; @r3]. Ecological processes are required for biodiversity to persist over short time-scales. Examples of these processes include predator-prey interactions, pollination, and decomposition. Typically, they operate over small geographic domains, with exceptions such as mirgation and refugial habitats, and can be preserved using suitably large planning units [@r446] that represent discrete blocks of habitat [@r448]. On the other hand, evolutionary processes are required for biodiversity to persist over long time-scales. Typically, they operate over large geographic domains. Adaptive evolutionary processes can be preserved by securing populations with different adaptations and/or along selection pressure gradients [eg. environmental gradients; @r63; @r3; @r202; @r197]. Neutral evolutionary processes can be be preserved by securing populations with different evolutionary histories and/or with limited gene flow [@r63; @r2; @r200]. Due to advances in technology over the last few decades, a wealth of data on biodiversity processes has become freely avaliable to conservation planners. Yet this data is only rarely used in conservation planning exercises [@r61].
 
 <!-- but most decision support tools are poorly suited for biodiversity processses -->
-Existing decision support tools focus primarily on preserving biodiversity patterns or processes--but not both. Many tools have been developed to preserve biodiversity patterns [eg. C-Plan (@r445); ConsNet (@r446); Marxan (@r22); Zonation (@r429)]. They use targets (eg. Marxan) or weights (eg. Zonation) to identify prioritisations that contain an adequate amount of individuals or habitat for a set of species (features). To accomodate some information on biodiversity processes, conservation planners can split features into sub-features as a pre-processing step [@r2]. However, this approach is limited because data on biodiversity processes is often hyper-dimensional and continuous (eg. bioclimatic data; www.worldclim.org), and these problems cannot strucutre within and between sub-features [@r218]. On the other hand, very few tools have been developed with a specific focus on biodiversity processes. The DIVERSITY [@r203] decision support tool continuous data to site reserves in places that secure a representative sample of variation (eg. environmental variation). However, unlike tools that focus on biodiversity patterns, this tool has can only accomodate data on the distribution of a single feature. Additionally, due to the nature of its formulation, this tool can often deliver prioritisaitons that are excssively fragmented.
+Existing decision support tools focus primarily on preserving biodiversity patterns or processes--but not both. Many tools have been developed to preserve biodiversity patterns [eg. C-Plan (@r445); ConsNet (@r446); Marxan (@r22); Zonation (@r429)]. They use targets (eg. Marxan) or weights (eg. Zonation) to identify prioritisations that contain an adequate amount of individuals or habitat for a set of species (features). To accomodate some information on biodiversity processes, conservation planners can split features into sub-features as a pre-processing step [@r2]. However, this approach is limited because data on biodiversity processes is often hyper-dimensional and continuous (eg. [bioclimatic data](www.worldclim.org)), and these problems cannot structure within and between sub-features [@r218]. On the other hand, very few tools have been developed with a specific focus on biodiversity processes. The DIVERSITY decision support tool [@r203] uses continuous data to site reserves in places that secure a representative sample of variation (eg. environmental variation). However, unlike tools that primarily focus on biodiversity patterns, this tool can only accomodate data on the distribution of a single feature. Additionally, due to the nature of its optimisation problem, this tool can often deliver prioritisations that are excssively fragmented and provides no options to avoid this.
 
 <!-- aims of this paper -->
-Today, one of the key issues preventing decision makers from explicitly considering both biodiversity patterns and processes in the reserve seleciton process is the lack of a decision support tool that can accomodate data on both of them in a multi-species context. To fill this void, we present the `rapr` R package. This R package provides decision makers with the tools to identify, visaulise, and compare prioritisations. We develop two novel formulations of the reserve selection problem that use targets to ensure an adequate amount of habitat is preserved for each feature, and ensure that a sufficient proprotion of the diversity (eg. environmental, genetic, morphological) within each feature is also preserved. Finally, we provide a tutorial showcasing the functionality of this R package using three simulated species and a case-study species.
+Today, one of the key issues preventing decision makers from explicitly considering both biodiversity patterns and processes in the reserve seleciton process is the lack of a decision support tool that can accomodate data on both of them in a multi-species context. To fill this void, we present the `rapr` R package. This R package provides decision makers with the tools to identify, visaulise, and compare prioritisations. We develop two novel formulations of the reserve selection problem that use targets to ensure an adequate amount of a representative portion of habitat is preserved for each feature. Finally, we provide a tutorial showcasing the functionality of this R package using three simulated species and a case-study conservation planning scenario in Queensland, Australia.
 
 ## Problem formulations
-The `rapr` R package uses two novel formulations of the reserve selection problem to identify cost-effective prioritisations. Biodiversity features are defined as the entity(s) that the prioritisation is required to preserve. Spatial attributes are defined as the intra-feature variation that the prioritisation is required to sample. These attributes may be related to intra-feature biodiversity patterns, such as morphological or genetic variation within a species, or related to the processes that sustain intra-feature biodiversity patterns, such as environmental variation.
+The `rapr` R package uses two novel formulations of the reserve selection problem to identify cost-effective prioritisations. Biodiversity features are defined as the entity(s) that the prioritisation is required to preserve (eg. species, populations). Spatial attributes are defined as the intra-feature variation that the prioritisation is required to sample. These attributes are related to the biodiversity processes that the prioritisation needs to represent (eg. environmental variation).
 
 Each attribute is conceptualised as a space--an attribute space--and planning units are thought to occupy points inside each space. For example, a decision maker may require a prioritisation that preserves populations along climatic gradients. To achieve this, the decision maker might use an "climatic" attribute space with dimensions relating to mean annual temperature ($^{\circ}$C) and precipitation (mm). Any given combination of temperature and precipitation may be conceived as a point in this environmental space. By associating planning units with climatic data, they can be mapped from geographic space to this environmental attribute space.
 
-Demand points are points that exist in an attribute space. They are designated by the decision maker to indicate regions of the attribute space that should be preserved in the prioritisation. The degree to which a prioritisation represents a spatial attribute is a function of the distance between each demand point and each planning unit in the attribute space. The shorter the distances between the demand points and the planning units; the better the prioritisation is a representing the variation in the spatial attribute. In any attribute space there may exist points that are impossible (eg. mean annual rainfall -5 mm), do not occur in the study area (eg. mean annual temperature 30$^{\circ}$C in Antarctica), or are undesirable (eg. conditions known to be outside the physiological tolerance of a species). By placing demand points in desirable regions of an attribute space, the decision maker can ensure that prioritisations secure desirable values of a spatial attribute.
+Demand points are points that exist in an attribute space. They are designated by the decision maker to indicate regions of the attribute space that should be preserved in the prioritisation. The degree to which a prioritisation represents a spatial attribute is a function of the distance between each demand point and each planning unit in the attribute space. The shorter the distances between the demand points and the planning units; the better the prioritisation is at representing the variation in the spatial attribute. In any attribute space there may exist points that are impossible (eg. mean annual rainfall -5 mm), do not occur in the study area (eg. mean annual temperature 30$^{\circ}$C in Antarctica), or are undesirable (eg. conditions known to be outside the physiological tolerance of a species). By placing demand points in desirable regions of an attribute space, the decision maker can ensure that prioritisations secure desirable values of a spatial attribute.
 
-To illustrate these concepts, we will briefly describe a conservation planning scenario example involving attribute spaces and demand points. A decision maker may wish to develop a prioritisation for a single species. This species has four populations in the study area. These populations are in the process of divergent evolution, with different populations inhabiting different environmental conditions and accruing different adaptations. However, the decision maker can only afford to preserve three of the populations. The decision maker needs to select a set of populations that will be representative in terms of the species' intra-specific variation. To describe this intra-specific variation, the decision maker obtained data on the environmental conditions (rainfall (ml) and temperature ($^{\circ}$C) where each population was found. The decision maker then used this environmental data to construct a two-dimensional environmental attribute space. Next, the decision maker generated demand points as equi-distant points between the range of values where the populations were found ($\pm$ 20% to avoid edge effects, see [@r218]). By comparing the distribution of the demand points to the distribution of the populations in the attribute space, the decision maker can identify a suitable prioritisation (Figure 1). We can see that if the decision maker preserves both popuations $A$ and $C$ in the same prioritisation, they will effectively "double-up" on the same genetic variation, and in turn their waste resources. Instead, a representative sample of the species intra-specific variation can be preserved by securing populations $A$, $B$, and $D$.
+To illustrate these concepts, we will briefly describe a conservation planning scenario example involving attribute spaces and demand points. A decision maker may wish to develop a prioritisation for a single species. This species has four populations in the study area. These populations are in the process of divergent evolution, with different populations inhabiting different environmental conditions and accruing different adaptations. However, the decision maker can only afford to preserve three of the populations. The decision maker needs to select a set of populations that will be representative in terms of the species' intra-specific variation. To describe this intra-specific variation, the decision maker obtained data on the environmental conditions (rainfall (ml) and temperature ($^{\circ}$C)) where each population was found. The decision maker then used this environmental data to construct a two-dimensional environmental attribute space. Next, the decision maker generated demand points as equi-distant points between the range of values where the populations were found ($\pm$ 20% to avoid edge effects, see [@r218]). By comparing the distribution of the demand points to the distribution of the populations in the attribute space, the decision maker can identify a suitable prioritisation (Figure 1). We can see that if the decision maker preserves both popuations $A$ and $C$, they will effectively "double-up" on the same genetic variation, and in turn their waste resources. Instead, a representative sample of the intra-specific variation could be preserved by securing populations $A$, $B$, and $D$.
 
-```{r, echo=FALSE, fig.height=4, fig.width=4, fig.cap="Figure 1. An example of an environmental attribute space. This environmental space has dimensions relating to temperature and rainfall values. Points denote demand points. Letters denote populations. The populations A and C have relatively similar environmental conditions. Whereas, populations A and B have relatively different environmental conditions."}
+```{r, echo=FALSE, fig.height=2.5, fig.width=2.5, fig.cap="Example of an attribute space. This environmental attribute space has dimensions relating to annual temperature ($^{\\circ}$C)and rainfall (ml) values. Letters denote the environmental conditions associated with the geographic locations where four hypothetical populations are found. Points represent demand points. In this space, populations closer to each other are considered more similar to each other."}
 ## load packages
 library(ggplot2)
 
@@ -78,18 +94,18 @@ ggplot(aes(x=temperature, y=rainfall), data=populations) +
 	theme_classic()
 ```
 
-The reserve selection problems are based on uncapacitated facility location problems (all mathematical terms defined hereafter are described in Table S1 for convenience). For convenience, the cardinality of sets will be denoted using the same symbol used to denote the variable. Define $F$ to be the set of features (indexed by $f$). Let $J$ be a set of planning units (indexed by $j$). Also, let $A_j$ denote the area, and $c_j$ denote the cost of preserving planning unit $j \in J$. To assess the extent to which each feature is secured in a given prioritisation, let $q_{fj}$ denote the probability of feature $f$ occupying planning unit $j$. The level of fragmentation associated with a prioritisation is parametrised as the net exposed boundary length. Let the shared boundary length between each planning unit $j \in J$ and $k \in J$ be $b_{jk}$. In any real-world problem, some planning units will have edges that are not associated with any neighbouring planning units (eg. edges along coastlines), these cases will be denoted using $b_{jj}$ for $j \in J$.
+The problems used in the `rapr` R package are based on a combination of the Marxan reserve selection problem and uncapacitated facility location problems (all mathematical terms defined hereafter are described in Table S1 for convenience). For convenience, the cardinality of sets will be denoted using the same symbol used to denote the variable. Define $F$ to be the set of features (indexed by $f$). Let $J$ be a set of planning units (indexed by $j$). Also, let $A_j$ denote the area, and $c_j$ denote the cost of preserving planning unit $j \in J$. To assess the extent to which each feature is secured in a given prioritisation, let $q_{fj}$ denote the probability of feature $f$ occupying planning unit $j$. The level of fragmentation associated with a prioritisation is parametrised as the net exposed boundary length. Let the shared boundary length between each planning unit $j \in J$ and $k \in J$ be $b_{jk}$. In any real-world problem, some planning units will have edges that are not associated with any neighbouring planning units (eg. edges along coastlines), these cases will be denoted using $b_{jj}$ for $j \in J$.
 
 Let $S$ denote a set of attribute spaces (indexed by $s$). Each $j \in J$ is associated with spatially explicit data that represent coordinates for each attribute space $s \in S$. Let $I_{fsi}$ denote a set of demand points (indexed by $i$) for each feature $f \in F$ and each attribute space $s \in S$. Let $\lambda_{fsi}$ denote the weighting for each demand point $i \in I$ for each feature $f \in F$ and each attribute space $s \in S$. Let $d_{fsij}$ denote the distance between each demand point $i \in I$ and each planning unit $j \in J$ for each feature $f \in F$ and attribute space $s \in S$. The decision maker will need to choose an appropriate distance metric for each attribute space. For example, Euclidean, Mahalanobis [@r398], Bray-Curtis, or other distance metrics may be appropriate given the nature of the attribute space [@r449].
 
 Targets are used to ensure that prioritisations are sufficient in terms of their adequacy and representativeness. Let $\hat{T}_f$ denote the expected amount of area that needs to be preserved for each feature $f \in F$. Let $\bar{T}_{fs}$ denote the representativeness targets for feature $f \in F$ and attribute space $a \in A$. For convenience, these targets are expressed as proportions in the R package between the values for the worst possible prioritisation and the prioritisation that includes all the planning units.
 
-These formulations are based on the unreliable [@r442] and reliable uncapacitated facility location [@r16] the problems. The key difference between these formulations is that the reliable formulation explicitly considers the probability that the planning units are occupied when determining the level of representation that a prioritisation secures, and the unreliable formulation does not. As a consequence, the unreliable formulation is simpler and can be solved in a short period of time.
+These formulations are based on the unreliable [@r442] and reliable uncapacitated facility location [@r16] the problems. The key difference between these formulations is that the reliable formulation explicitly considers the probability that the planning units are occupied when determining the level of representation that a prioritisation secures, and the unreliable formulation does not.
 
 ### Unreliable formulation
 The control variables in the unreliable formulation are the $X$, $BLM$, $\hat{t}_{s}$, and $\bar{t}_{sa}$ variables.
 
-\[
+
 \begin{align*}
 X_j
 	&= \begin{cases}
@@ -103,11 +119,11 @@ X_j
 %
 BLM &= \text{boundary length modifier} \tag{1d}\\
 \end{align*}
-\]
 
-The unreliable formulation (URAP) is a multi-objective optimisation problem.
 
-\[
+The unreliable formulation (URAP) is a defined as a multi-objective optimisation problem.
+
+
 \begin{align*}
 & \text{(URAP)} & \text{Min } & \sum_{j=0}^{J-1} C_j + BLM \times \sum_{j=0}^{J-1} \sum_{k=j}^{J-1} X_j \left( 1-X_k \right) b_{jk} + BLM \times \sum_{j=0}^{J-1} x_j b_{jj} & & \tag{2a}\\
 %
@@ -130,7 +146,7 @@ The unreliable formulation (URAP) is a multi-objective optimisation problem.
 & & & & & 0 \leq i \leq I-1\\
 %
 \end{align*}
-\]
+
 
 The objective function (2a) determines the utility of a given prioritisation: a combination of the total cost of a prioritisation and how fragmented it is. Constraints (2b--2c) ensure that all the amount-based and space-based targets are met. Constraints (2d) ensure that only one planning unit is assigned to each demand point. Constraints (2e) ensure that demand points are only assigned to selected planning units. Constraints (2f) ensure that the $X$ and $Y$ variables are binary.
 
@@ -142,18 +158,18 @@ The first backup $r$-level is used to calculate the level of representation when
 
 A final backup $r$-level when $r=R$ is used to assess the level of representation when the features $f \in F$ do not occupy any selected planning units in a prioritisation. Each demand point $i \in I$ for each $s \in S$ and $f \in F$ is assigned to an "imaginary" planning unit $j=J$ at $r=R$. The distance variables associated with this imaginary planning unit $d_{fsiJ}$ denote the loss of biological value associated with failing to secure a representative sample of feature $f$ in attribute space $s$. However, the $d$ variables are in distance units which are meangingless units in this context. Thus these variables are calculated using a failure multiplier ($M$) and the maximum distance between the planning units and the demand points for $f \in F$, $s \in S$ (3).
 
-\[
+
 \begin{align*}
 & d_{fsiJ} = M \times \max\limits_{0 \leq i \leq I-1, 0 \leq j \leq J-1} d_{fsij} & \forall & 0 \leq f \leq F-1, \tag{3} \\
 & & & 0 \leq s \leq S-1\\
 \end{align*}
-\]
+
 
 Moderately-sized conservation planning problems often include several thousand planning units. It would simply not be feasible to solve this problem when considering all possible failure scenarios. As a consequence, the $R$ variable can be any $1 \leq R \leq J-1$. For instance, when $R=3$ only 2 backup levels are considered in addition to the final backup level. Cui et al. [-@r16] found that $R=5$ yields similar solutions to $R=J$ when $J >> 5$. However, depending on the number of features, demand points, attribute spaces, and planning units, decision makers will likely be limited to $R=1$.
 
 The control variables in the reliable formulation are the $X$, $BLM$, $\hat{t}_{s}$, $\bar{t}_{sa}$, $R$, and $M$  variables.
 
-\[
+
 \begin{align*}
 & \text{(1a--1d)} \\
 R &= \text{number of failure levels} \tag{4a} \\
@@ -161,11 +177,11 @@ R &= \text{number of failure levels} \tag{4a} \\
 M &= \text{failure multiplier} \tag{4b}\\
 %
 \end{align*}
-\]
+
 
 The reliable formulation (RRAP) is a multi-objective optimisation problem.
 
-\[
+
 \begin{align*}
 & \text{(RRAP)} & \text{Min } & \text{(2a)}\\
 %
@@ -210,15 +226,15 @@ The reliable formulation (RRAP) is a multi-objective optimisation problem.
 & & & & & 0 \leq j \leq J,\\
 & & & & & 0 \leq r \leq R\\
 \end{align*}
-\]
+
 
 The objective function for the reliable formulation is the same as for the unreliable formation (2a). Similar to the unreliable formulation, constraints (2b) and (5a) ensure that the amount-based and space-based targets are met. Constraint (5b--5c) ensure that each planning unit is only assigned to one backup $r$-level for $i \in I$. Constraints (5d) ensure that only selected planning units are assigned to demand points $i \in I$. Constraints (5e) ensure that the 
 imaginary planning unit is always assigned to the highest backup $r$-level. Constraints (5f--5g) determine the probability that planing unit $j$ will be used to sample demand point $i \in I$ for $s \in S$ and $f \in F$ [@r16]. Constraints (5h) ensure that the $X$ and $Y$ variables are binary.
 
 ### Optimisation
-The unreliable and reliable formulations are non-linear. However, the non-linear components can be linearised using existing techniques. First, the expression $X_j X_k$ in (2a) can be linearised using methods described by Beyer et al. [-@r426]. Second, the expression $P_{fsijr} Y_{jsijr}$ in (4a) can be linearised using techniques described by Sherali and Alameddine [-@r20] as implemented in Cui et al. [-@r16]. Linearised versions of the problem can be solved using commerical exact algorithm solvers (eg. [IBM CPLEX](http://www.ibm.com/software/commerce/optimization/cplex-optimizer); [Gurobi](http://www.gurobi.com)).
+The unreliable and reliable formulations are non-linear. However, the non-linear components can be linearised using existing techniques. First, the expression $X_j X_k$ in (2a) can be linearised using methods described by Beyer et al. [-@r426]. Second, the expression $P_{fsijr} Y_{jsijr}$ in (4a) can be linearised using techniques described by Sherali and Alameddine [-@r20] as implemented in Cui et al. [-@r16]. Linearised versions of the problems can be solved using commerical exact algorithm solvers (eg. [IBM CPLEX](http://www.ibm.com/software/commerce/optimization/cplex-optimizer); [Gurobi](http://www.gurobi.com)).
 
-The `rapr` R package provides functions to express conservation planning data as an optimisation problems using linearised versions of the unreliable and reliable formulations. These optimisation problems can then be solved to generate prioritisations using the commercial [Gurobi](http://www.gurobi.com) software package. Note that academics can easily obtain a [license at no cost after registering on the Gurobi website](http://user.gurobi.com/download/licenses/free-academic). After installing the Gurobi software packages, users will need to install the `Gurobi` R package. This R package can be installed on [Windows](http://www.gurobi.com/documentation/6.5/quickstart_windows/r_installing_the_r_package.html), [Mac OSX](http://www.gurobi.com/documentation/6.5/quickstart_mac/r_installing_the_r_package.html), or [Linux](http://www.gurobi.com/documentation/6.5/quickstart_linux/r_installing_the_r_package.html) operating systems.
+The `rapr` R package provides functions to express conservation planning data as an optimisation problems using linearised versions of the unreliable and reliable formulations. These optimisation problems can then be solved to generate prioritisations using the commercial [Gurobi](http://www.gurobi.com) software suite. Note that academics can easily obtain a [license at no cost from the Gurobi website](http://user.gurobi.com/download/licenses/free-academic). After installing the Gurobi software suite, users will need to install the `Gurobi` R package. This R package can be installed on [Windows](http://www.gurobi.com/documentation/6.5/quickstart_windows/r_installing_the_r_package.html), [Mac OSX](http://www.gurobi.com/documentation/6.5/quickstart_mac/r_installing_the_r_package.html), and [Linux](http://www.gurobi.com/documentation/6.5/quickstart_linux/r_installing_the_r_package.html) operating systems.
 
 ## Package overview
 To load the `rapr` R package and learn more about the package, type the following code into R.
@@ -233,25 +249,26 @@ library(rapr)
 
 The `rapr` R package uses a range of S4 classes to store conservation planning data, parameters, and prioritisations (Table 1).
 
-Table 1: Classes in `rapr` R package
+Table 1: Main classes the in `rapr` R package
 
-| Class Name          | Description                                                               | Slots																																														|
-| :-----------------: |:------------------------------------------------------------------------- | :-----------------------------------------------------------------------------------------------|
-| ManualOpts          | place-holder class for manually specified solutions 										  | NumberSolutions																																									|
-| GurobiOpts          | parameters for solving optimisation problems using Gurobi								  | Threads, MIPGap, Presolve, TimeLimit, NumberSolutions																						|
-| RapUnreliableOpts   | parameters for the unreliable problem formulation													| BLM																																															|
-| RapReliableOpts     | parameters for the reliable problem formulation														| failure.multiplier, max.r.level																																	|
-| SimplePoints        | stores coordinates in an n-dimensional space															| coords																																													|
-| DemandPoints        | demand points coordinates and weights for a species in an attribute space	| points, weights																																								  |
-| AttributeSpace      | planning unit coordinates and demand points data for an attribute space		| pu, demand.points, distance.metric																														  |
-| RapData             | planning unit, species, and attribute space data													| pu, species, targets, pu.species.probabilities,<br>attribute.spaces, boundary, polygons, .cache |
-| RapUnsolved         | data and parameters needed to generate prioritisations using RAP					| opts, data																																											|
-| RapResults          | prioritisations and summary statistics																		| summary, selections, amount.held, space.held, logging.file, .cache															|
-| RapSolved           | data, parameters, and prioritisations using them													| opts, data, results																																							|
+| Class Name          | Description                                                                   | Slots																																														|
+| :-----------------: |:----------------------------------------------------------------------------- | :-----------------------------------------------------------------------------------------------|
+| ManualOpts          | \makecell[l]{place-holder class for manually specified solutions} 												  | \makecell[l]{NumberSolutions}																																									|
+| GurobiOpts          | \makecell[l]{parameters for solving optimisation\\problems using Gurobi}								  | \makecell[l]{Threads, MIPGap,\\Presolve, TimeLimit,\\NumberSolutions}																						|
+| RapUnreliableOpts   | \makecell[l]{parameters for the unreliable problem formulation}															| \makecell[l]{BLM}																																															|
+| RapReliableOpts     | \makecell[l]{parameters for the reliable problem formulation}																| \makecell[l]{failure.multiplier,\\max.r.level}																																	|
+| SimplePoints        | \makecell[l]{stores coordinates in an n-dimensional space}																	| \makecell[l]{coords}																																													|
+| DemandPoints        | \makecell[l]{demand points coordinates and weights\\for a speciesin an attribute space}	| \makecell[l]{points, weights}																																								  |
+| AttributeSpace      | \makecell[l]{planning unit coordinates and demand\\points data for an attribute space}		| \makecell[l]{pu, demand.points,\\distance.metric}																														  |
+| RapData             | \makecell[l]{planning unit, species, and attribute space data}															| \makecell[l]{pu, species, targets,\\pu.species.probabilities,\\attribute.spaces,\\boundary, polygons,\\.cache} |
+| RapUnsolved         | \makecell[l]{data and parameters needed to generate\\prioritisationsusing RAP}						| \makecell[l]{opts, data}																																											|
+| RapResults          | \makecell[l]{prioritisations and summary statistics}																				| \makecell[l]{summary, selections,\\amount.held, space.held,\\logging.file, .cache}															|
+| RapSolved           | \makecell[l]{data, parameters, and prioritisations using them}															| \makecell[l]{opts, data, results}																																							|
 
 
-## Simulated examples
-### Data
+## Package tutorial
+### Simple simulated species
+#### Data
 To investigate the behaviour of the problem, we will generate prioritisations for three simulated species. We will use the unreliable formulation of the problem to understand the basics, and later move onto the reliable formulation. The first species (termed 'uniform') will represent a hyper-generalist. This species will inhabit all areas with equal probability. The second species (termed 'normal') will represent a species with a single range core. The third species (termed 'bimodal') will represent a species with two distinct ecotypes, each with their own range core. To reduce computational time for this example, we will use a 10 $\times$ 10 grid of square planning units.
 
 ```{r}
@@ -268,9 +285,9 @@ sim_spp <- lapply(
 )
 ```
 
-Let's see what these species' distributions look like. Each square represents a planning unit, and the color of each denotes square denotes the probability of the species in the planning unit.
+Let's see what these species' distributions look like.
 
-```{r, fig.width=7, fig.height=2.5}
+```{r, fig.width=7, fig.height=2.5, fig.cap="Distribution of three simulated species. Each square represents a planning unit. The color of each square denotes the probability that individuals from each species occupy it."}
 # plot species
 plot(
 	stack(sim_spp),
@@ -361,9 +378,9 @@ sim_rd <- RapData(
 sim_ru <- RapUnsolved(sim_ro, sim_rd)
 ```
 
-### Single-species prioritisations
-#### Amount-based targets
-Let's keep things simple to start off with. First we will generate a prioritisation for each species using only amount-based targets. Then, we will generate prioritisations for each species using a combination of amount-based and space-based targets. We will then compare the prioritisations to see how they differ to see how including space-based targets can change prioritisaitons under the simplest of circumstances.
+#### Single-species prioritisations
+##### Amount-based targets
+Let's keep things simple to start off with. First we will generate a prioritisation for each species using only amount-based targets. Then, we will generate prioritisations for each species using a combination of amount-based and space-based targets. We will then compare the prioritisations to see how they differ to see how including space-based targets can change prioritisations under the simplest of circumstances.
 
 Now we will generate a prioritisation for the uniform species using amount-based targets. To do this we will generate a new `sim_ru` object by subsetting out the data for the uniform species from the `sim_ru` object containing data for all the species. Then, we will update the targets in the new object. Finally, we will solve the object to generate a prioritisation that fulfills the targets for minimal cost.
 
@@ -375,18 +392,19 @@ sim_ru_s1 <- spp.subset(sim_ru, 'uniform')
 sim_ru_s1 <- update(sim_ru_s1, amount.target=0.2, space.target=0, solve=FALSE)
 ```
 
-```{r, eval=is.GurobiInstalled(verbose=FALSE)}
+```{r, eval=use.Gurobi}
 # solve problem to identify prioritisation
 sim_rs_s1_amount <- solve(sim_ru_s1)
 ```
 
-```{r, eval=!is.GurobiInstalled(verbose=FALSE), include=FALSE}
+```{r, eval=!use.Gurobi, include=FALSE}
 sim_rs_s1_amount <- solve(sim_ru_s1, b=81:100)
 ```
 
 ```{r}
 ## show summary
-# note the format for this is identical to that used by Marxan
+# note the format for this is similar to that used by Marxan
+# see ?rapr::summary for details on this table
 summary(sim_rs_s1_amount)
 
 # show amount held
@@ -396,16 +414,16 @@ amount.held(sim_rs_s1_amount)
 space.held(sim_rs_s1_amount)
 ```
 
-Now that we have generated a prioritisation, we will see what it looks like. We can use the `plot` method to visualise the spatial distribution of the planning units. Planning units with a dark green fill are selected for prioritisation, and those with a pale green color are not.
+Now that we have generated a prioritisation, we will see what it looks like. We can use the `plot` method to visualise the spatial distribution of the planning units.
 
-```{r, fig.height=5.5, fig.width=5.5}
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A prioritisation for the uniformly distributed species generated using amount-based targets (20\\%). Sqaures represent planning units. Planning units with a dark green fill are selected for prioritisation, and those with a pale green color are not."}
 # plot the first (and only) solution in the prioritisation
 plot(sim_rs_s1_amount, 1)
 ```
 
 We can use the `spp.plot` method to see how the prioritisation overlaps with the uniform species' distribution. The fill of the planning units indicates the probability that they are occupied by the species. Since all planning units have equal probabilities for this species, all planning units have the same fill. Planning units with a green border are included for prioritisation.
 
-```{r, fig.height=5.5, fig.width=5.5}
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center',fig.cap="A prioritisation for the uniformly distributed species generated using amount-based targets (20\\%). Sqaures represent planning units. Planning units with a green border are selected for prioritisation, and their color denotes the probability they are inhabited by the species."}
 # plot the prioritisation and the uniform species' distribution
 spp.plot(sim_rs_s1_amount, 1, main='Uniform species')
 ```
@@ -419,12 +437,12 @@ Now, we will generate a prioritisation for the normally distributed species usin
 sim_ru_s2 <- spp.subset(sim_ru, 'normal')
 ```
 
-```{r, eval=is.GurobiInstalled(verbose=FALSE)}
+```{r, eval=use.Gurobi}
 # update amount targets to 20% and space targets to 0% and solve it
 sim_rs_s2_amount <- update(sim_ru_s2, amount.target=0.2, space.target=0, solve=TRUE)
 ```
 
-```{r, eval=!is.GurobiInstalled(verbose=FALSE), include=FALSE}
+```{r, eval=!use.Gurobi, include=FALSE}
 # update amount targets to 20% and space targets to 0% and solve it
 sim_rs_s2_amount <- update(sim_ru_s2, amount.target=0.2, space.target=0, solve=FALSE)
 sim_rs_s2_amount <-solve(
@@ -446,10 +464,12 @@ space.held(sim_rs_s2_amount)
 
 Now let's visualise the prioritisation we made for the normal species.
 
-```{r, fig.height=5.5, fig.width=5.5}
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A prioritisation for the normally distributed species generated using amount-based targets (20\\%). See Figure 3 caption for conventions."}
 # plot the prioritisation
 plot(sim_rs_s2_amount, 1)
+```
 
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A prioritisation for the normally distributed species generated using amount-based targets (20\\%). See Figure 4 caption for conventions."}
 # plot the prioritisation and the normal species' distribution
 spp.plot(sim_rs_s2_amount, 1, main='Normal species')
 ```
@@ -463,12 +483,12 @@ Now, let's generate an amount-based target for the bimodally distributed species
 sim_ru_s3 <- spp.subset(sim_ru, 'bimodal')
 ```
 
-```{r, eval={is.GurobiInstalled(verbose=FALSE)}}
+```{r, eval={use.Gurobi}}
 # update amount targets to 20% and space targets to 0% and solve it
 sim_rs_s3_amount <- update(sim_ru_s3, amount.target=0.2, space.target=0)
 ```
 
-```{r, eval=!is.GurobiInstalled(verbose=FALSE), include=FALSE}
+```{r, eval=!use.Gurobi, include=FALSE}
 # update amount targets to 20% and space targets to 0% and solve it
 sim_rs_s3_amount <- update(sim_ru_s3, amount.target=0.2, space.target=0, solve=FALSE)
 sim_rs_s3_amount <- solve(
@@ -477,13 +497,18 @@ sim_rs_s3_amount <- solve(
 )
 ```
 
-```{r, fig.height=5.5, fig.width=5.5}
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A prioritisation for the bimodally distributed species generated using amount-based targets (20\\%). See Figure 3 caption for conventions."}
+
 # plot the prioritisation
 plot(sim_rs_s3_amount, 1)
+```
 
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A prioritisation for the bimodally distributed species generated using amount-based targets (20\\%). See Figure 4 caption for conventions."}
 # plot the prioritisation and the bimodal species' distribution
 spp.plot(sim_rs_s3_amount, 1, main='Bimodal species')
+```
 
+```{r}
 # show summary
 summary(sim_rs_s3_amount)
 
@@ -494,19 +519,19 @@ amount.held(sim_rs_s3_amount)
 space.held(sim_rs_s3_amount)
 ```
 
-The amount-based prioritisation for the bimodally distributed species only selects plannig units in the bottom left corner of the study area. This prioritisation only preserves individuals belonging to one of the two ecotypes. As a consequence, this prioritisaiton fails to preserve a representative sample of the genetic variation found inside this species.
+The amount-based prioritisation for the bimodally distributed species only selects plannig units in the bottom left corner of the study area. This prioritisation only preserves individuals belonging to one of the two ecotypes. As a consequence, this prioritisation fails to preserve a representative sample of the genetic variation found inside this species.
 
-#### Amount-based and space-based targets
+##### Amount-based and space-based targets
 Now that we have generated a prioritisation for each species using only amount-based targets, we will generate a prioritisations using both amount-based and space-targets. To do this we will update the space targets in our amount-based prioritisations to 85%, and store the new prioritisations in new objects.
 
 First, let's do this for the uniform species.
 
-```{r, eval=is.GurobiInstalled(verbose=FALSE)}
+```{r, eval=use.Gurobi}
 # make new prioritisation
 sim_rs_s1_space <- update(sim_rs_s1_amount, amount.target=0.2, space.target=0.85)
 ```
 
-```{r, eval=!is.GurobiInstalled(verbose=FALSE), include=FALSE}
+```{r, eval=!use.Gurobi, include=FALSE}
 # make new prioritisation
 sim_rs_s1_space <- update(sim_rs_s1_amount, amount.target=0.2, space.target=0.85, solve=FALSE)
 sim_rs_s1_space <- solve(sim_rs_s1_space, b=c(53L, 63L, 64L, 72L, 73L, 74L, 83L, 84L))
@@ -525,15 +550,18 @@ space.held(sim_rs_s1_space)
 
 Let's take a look at the prioritisation for the uniform species with amount-based and space-based targets. Then, let's compare the solutions for the amount-based prioritisation with the new prioritisation using both amount and space targets.
 
-```{r, fig.height=5.5, fig.width=5.5}
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A prioritisation for the uniformly distributed species generated using amount-based targets (20\\%) and space-based targets (85\\%). See Figure 3 caption for conventions."}
+
 # plot the prioritisation
 plot(sim_rs_s1_space, 1)
+```
 
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A prioritisation for the uniformly distributed species generated using amount-based targets (20\\%) and space-based targets (85\\%). See Figure 4 caption for conventions."}
 # plot the prioritisation and the uniform species' distribution
 spp.plot(sim_rs_s1_space, 'uniform', main='Uniform species')
 ```
 
-```{r, fig.height=5.5, fig.width=5.5}
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="Difference between two prioritisations for the uniformly distributed species. Prioritisation $X$ was generated using just amount-based targets (20\\%), and prioritisation $Y$ was generated using an additional space-based target (85\\%)."}
 # plot the difference between old and new prioritisations
 plot(sim_rs_s1_amount, sim_rs_s1_space, 1, 1, main='Difference between solutions')
 ```
@@ -542,19 +570,19 @@ Here we can see that by including a space-target, the prioritisation is spread o
 
 Now, let's generate a prioritisation for the normally distributed species that considers amount-based and space-based targets. Then, let's visualise the new prioritisation and compare it to the old amount-based prioritisation.
 
-```{r, eval=is.GurobiInstalled(verbose=FALSE)}
+```{r, eval=use.Gurobi}
 # make new prioritisation
 sim_rs_s2_space <- update(sim_rs_s2_amount, amount.target=0.2, space.target=0.85)
 ```
 
-```{r, eval=!is.GurobiInstalled(verbose=FALSE), include=FALSE}
+```{r, eval=!use.Gurobi, include=FALSE}
 # make new prioritisation
 sim_rs_s2_space <- update(sim_rs_s2_amount, amount.target=0.2, space.target=0.85, solve=FALSE)
 sim_rs_s2_space <- solve(sim_rs_s2_space, b=c(23L, 25L, 28L, 44L, 46L, 47L, 53L, 56L, 59L, 65L, 66L, 73L, 78L, 86L))
 
 ```
 
-```{r, fig.height=5.5, fig.width=5.5}
+```{r}
 # show summary
 summary(sim_rs_s2_space)
 
@@ -563,15 +591,20 @@ amount.held(sim_rs_s2_space)
 
 # show space held
 space.held(sim_rs_s2_space)
+```
 
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A prioritisation for the normally distributed species generated using amount-based targets (20\\%) and space-based targets (85\\%). See Figure 3 caption for conventions."}
 # plot the prioritisation
 plot(sim_rs_s2_space, 1)
+```
+
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A prioritisation for the normally distributed species generated using amount-based targets (20\\%) and space-based targets (85\\%). See Figure 4 caption for conventions."}
 
 # plot the prioritisation and the normal species' distribution
 spp.plot(sim_rs_s2_space, 'normal', main='Normal species')
 ```
 
-```{r, fig.height=5.5, fig.width=5.5}
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="Difference between two prioritisations for the normally distributed species. See Figure 11 caption for conventions."}
 # plot the difference between old and new prioritisations
 plot(sim_rs_s2_amount, sim_rs_s2_space, 1, 1, main='Difference between solutions')
 ```
@@ -580,18 +613,17 @@ We can see by using both amount-based and space-based targets we can obtain a pr
 
 Finally, let's generate a prioritisation for the bimodal species using amount-based and space-based targets.
 
-```{r, eval=is.GurobiInstalled(verbose=FALSE)}
+```{r, eval=use.Gurobi}
 # make new prioritisation
 sim_rs_s3_space <- update(sim_rs_s3_amount, amount.target=0.2, space.target=0.85)
 ```
 
-```{r, eval=!is.GurobiInstalled(verbose=FALSE), include=FALSE}
+```{r, eval=!use.Gurobi, include=FALSE}
 # make new prioritisation
 sim_rs_s3_space <- update(sim_rs_s3_amount, amount.target=0.2, space.target=0.85, solve=FALSE)
 sim_rs_s3_space <- solve(sim_rs_s3_space, b=c(18L, 29L, 42L, 55L, 63L, 64L, 72L, 74L, 76L, 84L))
 ```
-
-```{r, fig.height=5.5, fig.width=5.5}
+```{r}
 # show summary
 summary(sim_rs_s3_space)
 
@@ -601,14 +633,17 @@ amount.held(sim_rs_s3_space)
 # show space held
 space.held(sim_rs_s3_space)
 
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A prioritisation for the bimodally distributed species generated using amount-based targets (20\\%) and space-based targets (85\\%). See Figure 3 caption for conventions."}
 # plot the prioritisation
 plot(sim_rs_s3_space, 1)
+```
 
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A prioritisation for the normally distributed species generated using amount-based targets (20\\%) and space-based targets (85\\%). See Figure 4 caption for conventions."}
 # plot the prioritisation and the bimodal species' distribution
 spp.plot(sim_rs_s3_space, 'bimodal', main='Bimodal species')
 ```
 
-```{r, fig.height=5.5, fig.width=5.5}
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="Difference between two prioritisations for the bimodally distributed species. See Figure 11 caption for conventions."}
 # plot the difference between old and new prioritisations
 plot(sim_rs_s3_amount, sim_rs_s3_space, 1, 1, main='Difference between solutions')
 ```
@@ -617,17 +652,18 @@ Earlier we found that the amount-based prioritisation only preserved individuals
 
 Overall, these results demonstrate that under the simplest of conditions that the use of space-based targets can improve prioritisations. However, all these prioritisations were generated for a single species at a time. It is possible that by prioritisations generated using multiple species may do a better job at preserving the intra-specific variation for individuals species. We will investigate this in the next section.
 
-### Multi-species prioritisations
+#### Multi-species prioritisations
+##### Effects of including space-based targets
 So far we have generated prioritisations using only a single species at a time. However, real-world prioritisations are often generated for using multiple species to ensure that they preserve a comprehensive set of biodiversity. Here, we will generate multi-species prioritisations that preserve all three of the simulated species. First, we will generate a prioritisation using amount-based targets that only aims to preserve 20% of the area they occupy. Then, we will generate a prioritisation that also uses space-based targets to also preserve 85% of their geographic distribution. After doing this we will compare the two prioritisations.
 
-```{r, eval=is.GurobiInstalled(verbose=FALSE), cache=TRUE}
+```{r, eval=use.Gurobi}
 # make prioritisations
 sim_mrs_amount <- update(sim_ru, amount.target=c(0.2,0.2,0.2), space.target=c(0,0,0))
 
 sim_mrs_space <- update(sim_ru, amount.target=c(0.2,0.2,0.2), space.target=c(0.85, 0.85, 0.85))
 ```
 
-```{r, eval=!is.GurobiInstalled(verbose=FALSE), include=FALSE}
+```{r, eval=!use.Gurobi, include=FALSE}
 # make prioritisations
 sim_mrs_amount <- update(sim_ru, amount.target=c(0.2,0.2,0.2), space.target=c(0,0,0), solve=FALSE)
 sim_mrs_amount <- solve(sim_mrs_amount, b=c(14L, 35L, 36L, 46L, 47L, 53L, 54L, 55L, 57L, 62L, 63L, 65L, 69L, 71L, 72L, 73L, 74L, 75L, 83L, 93L))
@@ -636,7 +672,7 @@ sim_mrs_space <- update(sim_ru, amount.target=c(0.2,0.2,0.2), space.target=c(0.8
 sim_mrs_space <- solve(sim_mrs_space, b=c(3L, 16L, 17L, 22L, 25L, 30L, 36L, 38L, 43L, 46L, 56L, 62L, 64L, 66L, 69L, 70L, 73L, 85L, 87L, 92L, 100L))
 ```
 
-```{r, fig.height=5.5, fig.width=5.5}
+```{r}
 # show summaries
 summary(sim_mrs_amount)
 summary(sim_mrs_space)
@@ -648,125 +684,31 @@ amount.held(sim_mrs_space)
 # show space held for each prioritisation
 space.held(sim_mrs_amount)
 space.held(sim_mrs_space)
+```
 
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using just amount-based targets (20\\%). See Figure 3 caption for conventions."}
 # plot multi-species prioritisation with amount-based targets
 plot(sim_mrs_amount, 1, main='Amount-based targets')
+```
 
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\\%) and space-based targets (85\\%). See Figure 3 caption for conventions."}
 # plot multi-species prioritisation with amount- and space-based targets
 plot(sim_mrs_space, 1, main='Amount and space-based targets')
 ```
 
-```{r, eval={is.GurobiInstalled(verbose=FALSE)}, fig.height=5.5, fig.width=5.5}
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="Difference between two multi-species prioritisations. See Figure 11 caption for conventions."}
 # difference between the two prioritisations
 plot(sim_mrs_amount, sim_mrs_space, 1, 1, main='Difference between solutions')
 ```
 
-Here we can see that the inclusion of space-based targets changes which planning units are selected for prioritisation, but also the number of planning units that are selected. The amount-based prioritistion is comprised of 20 units, and the space-based prioritisation is comprised of 21 units. This result suggests that a adequate and representative prioritisation can be acheived for only a minor increase in cost.
+Here we can see that the inclusion of space-based targets changes which planning units are selected for prioritisation, but also the number of planning units that are selected. The amount-based prioritistion is comprised of `r sum(selections(sim_mrs_amount)==1)` units, and the space-based prioritisation is comprised of `r sum(selections(sim_mrs_space)==1)` units. This result suggests that a adequate and representative prioritisation can be acheived for only a minor increase in cost.
 
-### Fragmentation
-Fragmentation is an important consideration in real-world planning situations. Up until now, we haven't considered the effects of fragmentation on the viability of the prioritisation. As a consequence, our prioritisations have tended to contain planning units without any neighbors. We can use the `BLM` parameter to penalise fragmented solutions.
-
-Let's generate a new prioritisation that heavily penalises fragmention, by updating the `sim_mrs_space` object with a BLM of `1000`.
-
-<!-- ```{r, eval=is.GurobiInstalled(verbose=FALSE)} -->
-```{r, eval=FALSE}
-# update prioritisation
-sim_mrs_space_blm <- update(sim_mrs_space, BLM=100)
-```
-
-```{r, eval={!is.GurobiInstalled(verbose=FALSE) || !exists('sim_mrs_space_blm')}, include=FALSE}
-sim_mrs_space_blm <- update(sim_mrs_space, BLM=100, solve=FALSE)
-sim_mrs_space_blm <- solve(
-	sim_mrs_space_blm,
-	b=c(13L, 23L, 24L, 25L, 26L, 27L, 28L, 33L, 34L, 35L, 36L, 37L, 
-		38L, 43L, 44L, 45L, 46L, 47L, 48L, 53L, 54L, 55L, 56L, 57L, 58L, 
-		63L, 64L, 65L, 66L, 67L, 68L, 73L, 74L, 75L, 76L, 77L, 78L
-	)
-)
-```
-
-```{r, fig.height=5.5, fig.width=5.5}
-# show summary of prioritisation
-summary(sim_mrs_space_blm)
-
-# show amount held for each prioritisation
-amount.held(sim_mrs_space_blm)
-
-# show space held for each prioritisation
-space.held(sim_mrs_space_blm)
-
-# plot prioritisation
-plot(sim_mrs_space_blm, 1)
-```
-
-```{r, fig.height=5.5, fig.width=5.5}
-# difference between the two prioritisations
-plot(sim_mrs_space_blm, sim_mrs_space, 1, 1, main='Difference between solutions')
-```
-
-We can see that by increasing the `BLM` parameter, the prioritisation becomes more clustered. However, this particular solution is not very useful because it includes a lot of additional planning units to reduce fragmentation. It can be dificult to find a suitable `BLM` parameter--a value that yields a well-connected network for minimal cost. 
-
-To help identify a suitable `BLM` parameter, we can generate a suite of priortisations using different `BLM` parameters. Then, we can construct a Pareto frontier to visualise the relationship between cost, fragmentation, and find a suitable `BLM` parameter.
-
-```{r}
-# create a vector with BLM values
-blms <- seq(0, 100, length.out=10)
-
-# create empty list to store solutions
-solutions <- list()
-```
-
-```{r, eval=FALSE}
-# iterate over blms and create solutions
-for (i in seq_along(blms))
-	solutions[[i]] <- update(sim_mrs_space, BLM=blms[i])
-```
-
-```{r, eval={!is.GurobiInstalled(verbose=FALSE) | length(solutions)==0}, include=FALSE}
-# iterate over blms and create solutions
-for (i in seq_along(blms)) {
-	solutions[[i]] <- update(sim_mrs_space, BLM=blms[i], solve=FALSE)
-	solutions[[i]] <- solve(solutions[[i]], b=1:5)
-}
-```
-
-```{r}
-# create data.frame with BLM values, cost, and fragmentation
-blm_results <- data.frame(
-	BLM=blms,
-	cost=sapply(solutions, function(i) {summary(i)$Cost}),
-	fragmentation=sapply(solutions, function(i) {summary(i)$Connectivity_In_Fraction})
-)
-```
-
-Now, let's plot the relationship between `BLM`, cost, and fragmentation.
-
-```{r, fig.height=5.5, fig.width=7.5}
-# load ggplot2 package
-library(ggplot2)
-
-# plot showing cost, fragmentation, and 
-ggplot(aes(x=fragmentation, y=cost), data=blm_results) +
-	geom_line(color='grey60') +
-	geom_text(aes(label=BLM), size=3) +
-	ylab('Cost (number of planning units)') +
-	xlab('Fragmentation (ratio of edge lengths inside reserves to exposed lengths)') +
-	theme_classic()
-```
-
-Here, we can see that the prioritisation with a `BLM` value of 50 is relatively well-connected without being too costly. Let's take a look at it.
-
-```{r, fig.height=5.5, fig.width=5.5}
-# plot prioritisation with blm=50
-plot(solutions[[3]], 1)
-```
-
-### Uncertainty in species' distributions
+##### Uncertainty in species' distributions
 The unreliable formulation does not consider the probability that the planning units are occupied by features when calculating how well a given solution secures a representative sample of an attribute space. Thus solutions identified using the unreliable formulation may represent regions of an attribute space for a species using planning units only have a small chance of being occupied by the species. As a consequence, if the prioritisation is implemented, it may fail to secure regions of an attribute space if individuals do not inhabit these planning units, and ultimately fail to fulfil the space targets.
 
 A simple solution to this issue would be to ensure that planning units cannot be assigned to demand points if they have a low probability of occupancy. This can be acheived by setting a probability threshold for planning units, such that planning units with a probability of occupancy below the threshold are effectively set to zero.
 
-```{r, eval={is.GurobiInstalled(verbose=FALSE)}}
+```{r, eval={use.Gurobi}}
 # make new prioritisation with probability threshold of 0.5 for each species
 sim_mrs_space2 <- solve(
 	prob.subset(
@@ -777,7 +719,7 @@ sim_mrs_space2 <- solve(
 )
 ```
 
-```{r, eval=!is.GurobiInstalled(verbose=FALSE), include=FALSE}
+```{r, eval=!use.Gurobi, include=FALSE}
 # make new prioritisation with probability threshold of 0.5 for each species
 sim_mrs_space2 <- solve(
 	prob.subset(
@@ -792,27 +734,29 @@ sim_mrs_space2 <- solve(
 )
 ```
 
-```{r, fig.height=5.5, fig.width=5.5}
+```{r}
 # show summary
 summary(sim_mrs_space2)
+```
 
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\\%) and space-based targets (85\\%). This priorititisation was generated to be robust against low occupancy probabilities, by preventing planning units with low probabilities from being used to represent demand points. See Figure 3 caption for conventions."}
 # plot prioritisation
 plot(sim_mrs_space2, 1)
 ```
 
-```{r, fig.height=5.5, fig.width=5.5}
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="Difference between two multi-species prioritisations. See Figure 11 caption for conventions."}
 # difference between prioritisations that use and do not use thresholds
 plot(sim_mrs_space2, sim_mrs_space, 1, 1, main='Difference between solutions')
 ```
 
 But this method requires setting somewhat arbitrary thresholds. A more objective solution to this issue would be to actually use the probability that species occupy planning units to generate the prioritisations--this is what the reliable formulation does. Now we will generate a prioritisation using the reliable formulation. To reduce computational time, we will set the maximum backup $R$-level to 1.
 
-```{r, eval=is.GurobiInstalled(verbose=FALSE)}
+```{r, eval=use.Gurobi}
 # make new prioritisation using reliable formulation
 sim_mrs_space3 <- update(sim_mrs_space, formulation='reliable', max.r.level=1L)
 ```
 
-```{r, eval=!is.GurobiInstalled(verbose=FALSE), include=FALSE}
+```{r, eval=!use.Gurobi, include=FALSE}
 # make new prioritisation using reliable formulation
 sim_mrs_space3 <- update(sim_mrs_space, formulation='reliable', max.r.level=1L, solve=FALSE)
 sim_mrs_space3 <- solve(
@@ -823,29 +767,75 @@ sim_mrs_space3 <- solve(
 )
 ```
 
-```{r, fig.height=5.5, fig.width=5.5}
+```{r}
 # show summary
 summary(sim_mrs_space3)
+```
 
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\\%) and space-based targets (85\\%). This priorititisation was generated to be robust against low occupancy probabilities, by explicitly using the probability data when deriving a solution. See Figure 3 caption for conventions."}
 # plot prioritisation
 plot(sim_mrs_space3, 1)
 ```
 
-```{r, fig.height=5.5, fig.width=5.5}
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="Difference between two multi-species prioritisations. See Figure 11 caption for conventions."}
 # difference between prioritisations based on unreliable and reliable formulation
 plot(sim_mrs_space3, sim_mrs_space, 1, 1, main='Difference between solutions')
 ```
 
-We can see that more planning units were selected using the reliable formulation to ensure that if any single planning unit was not occupuied, then there would be a suitable backup planning unit. While the reliable formulation can deliver more robust prioritisations, it takes much longer to solve conservation planning problems expressed using this formulation than the unreliable formulation. As a consequence, the reliable formulation is only feasible for particularly small problems, such as those only involving few features and less than 100 planning units. 
+More planning units were selected using the reliable formulation. The prioritisation based on the unreliable formulation had `r sum(selections(sim_mrs_space)==1)` planning units, but the priortisation based on the reliable formlation has `r sum(selections(sim_mrs_space3)==1)` planning units. This occurs because the reliable formulation needs to ensure that all selected planning units with a low chance of being occupied have a suitable backup planning unit. While the reliable formulation can deliver more robust prioritisations, it takes much longer to solve conservation planning problems expressed using this formulation than the unreliable formulation. As a consequence, the reliable formulation is only feasible for particularly small problems, such as those only involving few features and less than several hundred planning units. 
 
-### Distance metrics
-In the previous examples, we have only used Euclidean distances to determine how much a prioritisation samples a set of demand points in an attribute space. However, Euclidean distances can be poor measures of distance for multivariate, binary, or correlated variables [@r449]. As a consequence this may lead to over- or under-estimates of how well a given prioritisation samples an attribute space.
+##### Fragmentation
+Fragmentation is an important consideration in real-world planning situations. Up until now, we haven't considered the effects of fragmentation on the viability of the prioritisation. As a consequence, our prioritisations have tended to contain planning units without any neighbors. We can use the `BLM` parameter to penalise fragmented solutions.
+
+Let's generate a new prioritisation that heavily penalises fragmention. Here, we will update the `sim_mrs_amount` object with `BLM` of 100.
+
+```{r, eval=use.Gurobi}
+# update prioritisation
+sim_mrs_amount_blm <- update(sim_mrs_amount, BLM=100)
+```
+
+```{r, eval=!use.Gurobi, include=FALSE}
+sim_mrs_amount_blm <- update(sim_mrs_amount, BLM=100, solve=FALSE)
+sim_mrs_amount_blm <- solve(
+	sim_mrs_amount_blm,
+	b=c(52L, 53L, 54L, 55L, 56L, 62L, 63L, 64L, 65L, 66L, 72L, 73L, 
+		74L, 75L, 76L, 82L, 83L, 84L, 85L, 86L
+	)
+)
+```
+
+```{r}
+# show summary of prioritisation
+summary(sim_mrs_amount_blm)
+
+# show amount held for each prioritisation
+amount.held(sim_mrs_amount_blm)
+
+# show space held for each prioritisation
+space.held(sim_mrs_amount_blm)
+
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using only amount-based targets (20\\%). Additionally, this priorititisation was generated to be well-connected, by using a high $BLM$ parameter. See Figure 3 caption for conventions."}
+
+# plot prioritisation
+plot(sim_mrs_amount_blm, 1)
+```
+
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="Difference between two multi-species prioritisations. See Figure 11 caption for conventions."}
+# difference between the two prioritisations
+plot(sim_mrs_amount_blm, sim_mrs_amount, 1, 1, main='Difference between solutions')
+```
+
+Here we can see that the prioritisation generated using a `BLM` parameter of 100 is much more clustered than the prioritisation generated using a `BLM` of 0. In practice, conservation planners will need to try a variety of `BLM` parameters to find a suitable prioritisation.
+
+### Complex simulated species
+#### Data
+In the previous examples, we have only used Euclidean distances to determine how much of an attribute space is sampled by a prioritisation. However, Euclidean distances can be poor measures of distance for multivariate, binary, or correlated variables [@r449]. As a consequence this may lead to over- or under-estimates of the quality of a given solution.
 
 The `rapr` R package provides a suite of distance metrics that can be used to calculate spatial representation. To illustrate how using different distance metrics can affect the the optimal solution, we will generate a new suite of prioritisations using different distance metrics.
 
 First, we will simulate a new species and a three-dimensional attribute space. Note that unlike the previous examples, the attribute space will not be geographic space. Rather, the each dimension in the attribute space will have values that map onto geographic space (eg. like climatic variables across the landscape). To add further complexity, we simulate their distributions using Gaussian processes.
 
-```{r}
+```{r, markup='hide'}
 # load RandomFields package and set seed for simulations
 library(RandomFields)
 set.seed(500)
@@ -858,9 +848,11 @@ sim_gspp <- sim.species(sim_pus, model=RPgauss(), n=1, res=0.1)
 
 # simulate space
 sim_gspace <- sim.space(sim_pus, model=RMgauss(scale=3), d=3, res=0.1)
+```
 
+```{r}
 # generate RapUnsolved object containing data to generate prioritisations
-sim_gru <- rap(
+sim_ru_gp <- rap(
 	sim_pus, sim_gspp, sim_gspace, 
 	amount.target=0.2, space.target=0.85,
 	n.demand.points=50L, kernel.method='hypervolume',
@@ -870,7 +862,7 @@ sim_gru <- rap(
 
 Let's visualise the species' distribution and the distribution of the attribute space across geographic space.
 
-```{r, fig.height=5.5, fig.width=5.5}
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="Distribution map of a species simulated using Gaussian prorceses. See Figure 2 caption for conventions."}
 # plot species distribution
 plot(
 	sim_gspp,
@@ -882,7 +874,7 @@ plot(
 lines(sim_pus)
 ```
 
-```{r, fig.width=7, fig.height=2.5}
+```{r, fig.height=2.5, fig.width=7, out.width='7in', out.height='2.5in', fig.align='center', fig.cap="Distribution of spatial variables across the species' geographic range. These variables each represent a dimension of a three-dimensional attribute space."}
 # plot distribution of each dimension in the attribute space across geographic space
 plot(
 	sim_gspace,
@@ -892,9 +884,10 @@ plot(
 )
 ```
 
+#### Distance metrics
 For each different distance metric, we will update the `sim_gru` object with the new distance metric, solve it, and store the solution in a list. 
 
-```{r, eval=is.GurobiInstalled(verbose=FALSE)}
+```{r, eval=use.Gurobi, markup='hide'}
 # create vector with distance metrics
 dist.metrics <- c(
 	'euclidean', 'bray', 'manhattan','gower',
@@ -905,11 +898,11 @@ dist.metrics <- c(
 # generate solutions
 solutions <- list()
 for (i in dist.metrics) {
-	solutions[[i]] <- update(sim_gru, distance.metric=i)
+	solutions[[i]] <- update(sim_ru_gp, distance.metric=i)
 }
 ```
 
-```{r, eval=!is.GurobiInstalled(verbose=FALSE), include=FALSE}
+```{r, eval=!use.Gurobi, include=FALSE}
 # create vector with distance metrics
 dist.metrics <- c(
 	'euclidean', 'bray', 'manhattan','gower',
@@ -927,44 +920,49 @@ selections <- structure(list(euclidean = c(6L, 9L, 10L, 22L, 25L), bray = c(17L,
 "gower", "canberra", "mahalanobis", "jaccard", "kulczynski"))
 
 # generate solutions
-soutions <- list()
+solutions <- list()
 for (i in dist.metrics) {
-	solutions[[i]] <- update(sim_gru, distance.metric=i, solve=FALSE)
+	solutions[[i]] <- update(sim_ru_gp, distance.metric=i, solve=FALSE)
 	solutions[[i]] <- solve(solutions[[i]],b=selections[[i]])
 }
 ```
 
 Now, let's plot the solutions to see how they differ.
 
-```{r, fig.height=8, fig.width=8}
-# set counter for plotting
-counter <- 1
+```{r, fig.height=8, fig.width=8, markup='hide', warning=FALSE, message=FALSE, fig.cap="Prioritisations generated using different distance metrics. See Figure 3 for conventions."}
+# set plotting window
+par(mfrow=c(3,3), mar=c(0, 0, 4.1, 0))
 
-# create plots showing the selected planning units (green) using each metric 
-plot(
-	stack(replicate(list(sim_gspp), n=length(dist.metrics))),
-	main=dist.metrics,
-	col=colorRampPalette(c("#FFFFD9", "#EDF8B1", "#C7E9B4", "#7FCDBB",
-		"#41B6C4", "#1D91C0", "#225EA8", "#253494", "#081D58"
-	))(100),
-	addfun=function() {
-		lines(sim_pus[selections(solutions[[counter]])==0,])
-		lines(sim_pus[selections(solutions[[counter]])==0,], col='green', lwd=2)
-		counter <<- counter + 1
-	}
-)
+## create plots showing the selected planning units (dark green)
+for (i in seq_along(solutions)) {
+	# plot i'th solution
+	plot(
+		sim_pus,
+		main=dist.metrics[i],
+		col=replace(
+			rep('#ccece6',nrow(sim_pus@data)),
+			which(selections(solutions[[i]])==1),
+			'#00441b'
+		),
+		axes=FALSE
+	)
+}
+
+# reset plotting window
+par(mfrow=c(1,1), mar=c(5.1, 4.1, 4.1, 2.1))
 ```
 
-It appears that main difference between the solutions is which planning units get selected in the bottom section of the study area. Some solutions tend to select a lot of planning units in this region (eg. Euclidean, Gower, and manhattan), whereas others select fewer planning units (eg. Bray-Curtis, Jaccard, and Kulczynski). Conservations planners should think carefully which distance metric is most apropriate for their attribute spaces. 
+It appears that main difference between the solutions is which planning units get selected in the bottom section of the study area. Some solutions tend to select a lot of planning units in this region (eg. Euclidean, Gower, and manhattan), whereas others select fewer planning units (eg. Bray-Curtis, Jaccard, and Kulczynski). Conservation planners should think carefully which distance metric is most apropriate for their attribute spaces. 
 
-## Case-study examples
-### Overview
+
+### Case-study examples
+#### Overview
 Here we will investigate how space-based targets can affect prioritisations using a more realistic dataset. We will generate prioritisations for the four bird species-- [blue-winged kookuburra](http://www.birdlife.org/datazone/speciesfactsheet.php?id=1092&gclid=CjwKEAiApYGyBRC-g_jIstuduV8SJABCEzhZoONUy8VlwRZqeFB1Z5M03CjyneIvX8KdVKIPZvckrRoCgJDw_wcB), [brown-backed honeyeater](http://www.birdlife.org/datazone/species/factsheet/22704394?gclid=CjwKEAiApYGyBRC-g_jIstuduV8SJABCEzhZHxCTcR38YnFlhePYt19gD31lqxxwrMmtIuWFhUwLmRoCGJjw_wcB), [brown falcon](http://www.birdlife.org/datazone/speciesfactsheet.php?id=3588), [pale-headed rosella](http://www.birdlife.org/datazone/speciesfactsheet.php?id=1466)--in Queensland, Australia. This region contains a broad range of different habitats--such as rainforests, woodlands, and deserts--making it ideal for our purposes. First, we will generate a typical amount-based prioritisation that aims to capture 20% of the species' distributions. Then we will generate a prioritisation that also aims to secure populations in representative parts of the species' distributions in terms of their geographic location and their environmental heterogeneity. To do this we will generate a prioritisation using 20% amount-based targets and 85% space-based targets. Finally, we will compare these prioritisations to Australia's existing protected network.
 
-### Data
+#### Data
 Survey data for the species were obtained from [BirdLife Australia](http://birdlife.org.au/projects/atlas-and-birdata). The survey data was rarefied using a 100km$^2$ grid, wherein the survey with the greatest number of repeat visits in each grid cell was chosen. To characterise the environmental variation at each survey location (site), [climatic data](http://www.worldclim.org/bioclim) (bio1, bio4, bio15, bio16, bio17) and [classifications of the vegetation at the site](http://www.environment.gov.au/fed/catalog/search/resource/details.page?uuid=%7BEBBCC6FA-8C13-422A-BCD7-24A9F8B52A9A%7D) were obtained. Occupancy-detection models [@r443] were fit using Stan [@r444; with parameters: adapt deta=0.9, maximum treedepth=20, chains=4 , warmup iterations=1000, total iterations=1500] using five-fold cross-validation. In each replicate, data were partitioned into training and test sites. A full model was fit using quadratic terms for environmental variables in the site-component, and an intercept in the detection-component of the model. The full model was then subject to a step-wise backwards term deletion routine. Terms were retained when their inclusion resulted in a model with a greater area under the curve (AUC) value as calculated using the test data. Maps were generated using the best models identifed in each replicate, and then averaging them togeather. To further improve the accuracy of these maps, areas well outside of the species' known distributions were set to 0. For each species, this was acheived by masking out [biogeographic regions](https://www.environment.gov.au/land/nrs/science/ibra) where the species was not observed, and regions that did not have a neighbor where the species was observed. The maps were then resampled (10km$^2$ resolution) and cropped to the study area. The resulting maps are stored in the `cs_spp` object. 
 
-```{r, fig.height=5.5, fig.width=5.5}
+```{r, fig.height=5, fig.width=5, fig.cap="Distribution map for four Australian bird species. Pixels colors denote probability of occupancy."}
 # load data
 data(cs_spp)
 
@@ -977,7 +975,7 @@ plot(cs_spp, main=c(
 
 Planning units (50km$^2$ resolution) were generated across Australia, and then clipped to the [Queensland state borders and coastline](http://www.abs.gov.au/ausstats/abs@.nsf/mf/1259.0.30.001?OpenDocument). **Note that we are using excessively coarse planning units so that our examples will complete relatively quickly. In a real-world planning exercise, we would use much finer planning units.** To compare our prioritisations to [Queensland's existing protected area network](http://www.protectedplanet.net/country/AU), this network was intersected with the planning units. Planning units with more than 50% of their area inside a protected area had their status set to 2 ([following conventions in Marxan](http://www.uq.edu.au/marxan/tutorial/module4.html)). Since we do not have cost data, the prioritisations will aim to select the minimum number of planning units required to meet the targets. The planning units are stored in the `cs_pu` object.
 
-```{r, fig.height=4, fig.width=4}
+```{r, fig.height=5, fig.width=5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="Planning units for the case-study examples. Yellow polygons represent planning units with more then 50\\% of their area already in existing reserves."}
 # load data
 data(cs_pus)
 
@@ -1007,7 +1005,7 @@ par(mar=c(5.1, 4.1, 4.1, 2.1))
 
 To map the distribution of environmental conditions across the species' range, 21 [bioclimatic layers](http://www.worldclim.org/bioclim) were obtained. These layers were cropped to Australia and subject to [detrended correspondance analysis](http://cc.oulu.fi/~jarioksa/softhelp/vegan/html/decorana.html) to produce two new variables. These layers are stored in the `cs_space` object.
 
-```{r, fig.height=3.5, fig.width=7.2}
+```{r, fig.height=2.5, fig.width=7, fig.cap="Broad-scale environmental variation across Australia. The variable DC1 describes the transition from wet and cool to dry and hot conditions. The variable DC2 describes the transition from wet and hot to dry and cool conditions."}
 # load data
 data(cs_space)
 
@@ -1015,46 +1013,50 @@ data(cs_space)
 plot(cs_space, main=c('DC1', 'DC2'))
 ```
 
-### Prioritisations
+#### Effectiveness of Australia's reserve network compared to optimal prioritisations
 To simplify the process of formatting data and generating prioritisations, we can use the `rap` function. First, we will generate an amount-based prioritisation that aims to capture 20% of the rosella's range. We will use 50 demand points to map the geographic and environmental spaces. **Be warned, the examples hereafter can take 5-10 minutes to run.**
 
-```{r, eval=is.GurobiInstalled(verbose=FALSE), cache=TRUE}
+```{r}
 # make amount-based prioritisation,
 # and ignore existing protected areas by discarding values in the 
 # status (third) column of the attribute table
 cs_rs_amount <- rap(
 	cs_pus[,-2], cs_spp, cs_space,
   amount.target=0.2, space.target=0, n.demand.points=50L,
-  include.geographic.space=TRUE, formulation='unreliable'
+  include.geographic.space=TRUE, formulation='unreliable',
+  solve=FALSE
 )
+
+# threshold probabilities to 0.5 for space calculations
+cs_rs_amount <- prob.subset(cs_rs_amount, species=1:4, threshold=rep(0.5,4))
 ```
 
-```{r, eval=!is.GurobiInstalled(verbose=FALSE), include=FALSE}
-cs_rs_amount <- rap(
-	cs_pus[,-2], cs_spp, cs_space,
-  amount.target=0.2, space.target=0, n.demand.points=50L,
-  include.geographic.space=TRUE, formulation='unreliable', solve=FALSE
-)
+```{r, eval=use.Gurobi}
+# generate prioritisation
+cs_rs_amount <- solve(cs_rs_amount)
+```
+
+```{r, eval=!use.Gurobi, include=FALSE}
 cs_rs_amount <- solve(
 	cs_rs_amount,
-	b=c(4L, 7L, 14L, 19L, 25L, 26L, 31L, 36L, 37L, 38L, 43L, 44L, 45L, 
-		52L, 53L, 54L, 61L, 62L, 81L, 86L, 97L, 98L, 103L, 104L, 115L, 
-		116L, 117L, 120L, 133L, 134L, 135L, 136L, 137L, 138L, 141L, 142L, 
-		152L, 153L, 154L, 155L, 156L, 159L, 160L, 173L, 174L, 175L, 192L, 
-		193L, 194L, 195L, 212L, 213L, 214L, 215L, 235L, 236L, 237L, 257L, 
-		258L, 259L, 518L, 519L, 547L, 552L, 553L, 570L, 574L, 575L, 576L, 
-		577L, 578L, 596L, 600L, 601L, 602L, 603L, 604L, 622L, 628L, 629L, 
-		630L, 631L, 632L, 633L, 635L, 646L, 647L, 650L, 651L, 652L, 653L, 
-		654L, 655L, 656L, 657L, 658L, 659L, 671L, 672L, 673L, 675L, 676L, 
-		677L, 678L, 679L, 680L, 681L, 682L, 683L, 695L, 696L, 697L, 698L, 
-		699L, 700L, 701L, 702L, 703L, 704L, 705L, 706L, 707L, 708L, 709L, 
-		710L, 722L, 723L, 724L, 725L, 726L, 727L, 731L, 732L, 733L, 734L, 
-		735L
+	b=c(4L, 7L, 14L, 19L, 25L, 26L, 36L, 37L, 43L, 44L, 52L, 53L, 61L, 
+		81L, 86L, 103L, 104L, 115L, 116L, 117L, 120L, 132L, 133L, 134L, 
+		135L, 136L, 137L, 138L, 152L, 153L, 154L, 155L, 156L, 173L, 174L, 
+		175L, 192L, 193L, 194L, 195L, 212L, 213L, 214L, 215L, 233L, 234L, 
+		235L, 236L, 237L, 524L, 525L, 552L, 553L, 554L, 574L, 577L, 578L, 
+		579L, 580L, 591L, 592L, 593L, 594L, 595L, 596L, 603L, 604L, 605L, 
+		617L, 618L, 619L, 620L, 621L, 622L, 629L, 630L, 631L, 632L, 633L, 
+		634L, 635L, 642L, 643L, 644L, 645L, 646L, 647L, 648L, 649L, 655L, 
+		656L, 657L, 658L, 659L, 667L, 668L, 669L, 670L, 671L, 672L, 673L, 
+		675L, 680L, 681L, 682L, 683L, 685L, 692L, 693L, 694L, 695L, 696L, 
+		697L, 698L, 699L, 700L, 701L, 704L, 705L, 706L, 707L, 708L, 709L, 
+		710L, 722L, 723L, 724L, 725L, 726L, 727L, 730L, 731L, 732L, 733L, 
+		734L, 735L
 	)
 )
 ```
 
-```{r, fig.height=5.5, fig.width=5.5}
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="Multi-species prioritisation generated for four bird species using amount-based tagets (20\\%). See Figure 3 captions for conventions."}
 # show summary
 summary(cs_rs_amount)
 
@@ -1064,73 +1066,77 @@ plot(cs_rs_amount, 1)
 
 We can also see how well the prioritisation secures the species' distributions in the geographic and environmental attribute spaces.
 
-```{r, fig.height=14, fig.width=7.2}
+```{r, fig.height=6, fig.width=9, fig.cap="Distribution of amount-based prioritisation in the geographic attribute space. Points denote combinations of environmental conditions. Green and grey points represent planning unit selected for and not selected for prioritisation (respectively). Blue points denote demand points, and their size indicates their weighting."}
 # plot prioritisation in geographic attribute space
 p1 <- space.plot(cs_rs_amount, 1, 2, main='Blue-winged kookuburra')
 p2 <- space.plot(cs_rs_amount, 2, 2, main='Brown-backed honeyeater')
 p3 <- space.plot(cs_rs_amount, 3, 2, main='Brown falcon')
 p4 <- space.plot(cs_rs_amount, 4, 2, main='Pale-headed rosella')
-gridExtra::grid.arrange(p1, p2, p3, p4, ncol=1)
+gridExtra::grid.arrange(p1, p2, p3, p4, ncol=2)
+```
 
+```{r, fig.height=6, fig.width=9, fig.cap="Distribution of amount-based prioritisation in the environmental attribute space. See Figure 34 caption for conventions."}
 # plot prioritisation in environmental attribute space
 p1 <- space.plot(cs_rs_amount, 1, 1, main='Blue-winged kookuburra')
 p2 <- space.plot(cs_rs_amount, 2, 1, main='Brown-backed honeyeater')
 p3 <- space.plot(cs_rs_amount, 3, 1, main='Brown falcon')
 p4 <- space.plot(cs_rs_amount, 4, 1, main='Pale-headed rosella')
-gridExtra::grid.arrange(p1, p2, p3, p4, ncol=1)
+gridExtra::grid.arrange(p1, p2, p3, p4, ncol=2)
 ```
 
 Next, let's generate a prioritisation using amount- and space-based targets. This prioritisation will secure 95% of the species distribution in geographic and environmental space.
 
-```{r, eval={is.GurobiInstalled(verbose=FALSE)}, cache=TRUE}
+```{r, eval={use.Gurobi}}
 # make amount- and space-based prioritisation
 cs_rs_space <- update(cs_rs_amount, space.target=0.85)
 ```
 
-```{r, eval={!is.GurobiInstalled(verbose=FALSE)}, include=FALSE}
+```{r, eval={!use.Gurobi}, include=FALSE}
 # make amount- and space-based prioritisation
 cs_rs_space <- update(cs_rs_amount, space.target=0.85, solve=FALSE)
 cs_rs_space <- solve(
 	cs_rs_space,
-	b=c(4L, 7L, 14L, 19L, 25L, 26L, 31L, 36L, 37L, 38L, 43L, 44L, 45L, 
-		52L, 53L, 54L, 61L, 62L, 81L, 86L, 97L, 98L, 103L, 104L, 115L, 
-		116L, 117L, 120L, 125L, 133L, 134L, 135L, 136L, 137L, 138L, 141L, 
-		142L, 152L, 153L, 155L, 156L, 160L, 173L, 174L, 175L, 192L, 193L, 
-		194L, 212L, 213L, 214L, 215L, 235L, 236L, 237L, 257L, 258L, 259L, 
-		262L, 266L, 291L, 518L, 519L, 526L, 547L, 552L, 553L, 570L, 574L, 
-		575L, 576L, 577L, 578L, 596L, 600L, 601L, 602L, 603L, 604L, 621L, 
-		622L, 628L, 629L, 630L, 631L, 632L, 633L, 635L, 646L, 647L, 650L, 
-		651L, 652L, 653L, 654L, 655L, 656L, 657L, 658L, 671L, 672L, 673L, 
-		675L, 676L, 677L, 678L, 679L, 680L, 681L, 682L, 683L, 695L, 696L, 
-		697L, 698L, 699L, 700L, 701L, 702L, 703L, 704L, 706L, 707L, 708L, 
-		709L, 710L, 722L, 723L, 724L, 725L, 726L, 727L, 731L, 732L, 733L, 
-		734L, 735L
+	b=c(7L, 14L, 19L, 25L, 36L, 39L, 44L, 52L, 53L, 81L, 86L, 103L, 
+		104L, 112L, 116L, 117L, 120L, 133L, 134L, 135L, 136L, 137L, 138L, 
+		148L, 152L, 153L, 155L, 156L, 162L, 163L, 166L, 172L, 173L, 174L, 
+		175L, 192L, 193L, 194L, 195L, 198L, 212L, 213L, 214L, 215L, 221L, 
+		233L, 234L, 235L, 236L, 237L, 305L, 319L, 347L, 410L, 440L, 463L, 
+		468L, 495L, 501L, 508L, 518L, 525L, 526L, 552L, 553L, 555L, 562L, 
+		565L, 574L, 577L, 578L, 591L, 594L, 603L, 604L, 617L, 618L, 619L, 
+		620L, 621L, 622L, 624L, 626L, 629L, 630L, 631L, 635L, 642L, 643L, 
+		644L, 645L, 646L, 647L, 648L, 655L, 656L, 657L, 658L, 664L, 667L, 
+		668L, 669L, 670L, 671L, 672L, 673L, 675L, 676L, 680L, 681L, 682L, 
+		683L, 692L, 693L, 694L, 695L, 696L, 697L, 698L, 700L, 701L, 704L, 
+		705L, 706L, 707L, 708L, 709L, 710L, 722L, 724L, 727L, 730L, 731L, 
+		732L, 733L, 734L, 735L, 755L
 	)
 )
 ```
 
-```{r, fig.height=5.5, fig.width=5.5}
+```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center'}
 # show summary
 summary(cs_rs_space)
 
 # plot prioritisation
-plot(cs_rs_space)
+plot(cs_rs_space,1)
 ```
 
-```{r, fig.height=14, fig.width=7.2}
+```{r, fig.height=6, fig.width=9, fig.cap="Distribution of the amount- and space-based prioritisation in the geographic attribute space. See Figure 34 caption for conventions."}
 # plot prioritisation in geographic attribute space
 p1 <- space.plot(cs_rs_space, 1, 2, main='Blue-winged kookuburra')
 p2 <- space.plot(cs_rs_space, 2, 2, main='Brown-backed honeyeater')
 p3 <- space.plot(cs_rs_space, 3, 2, main='Brown falcon')
 p4 <- space.plot(cs_rs_space, 4, 2, main='Pale-headed rosella')
-gridExtra::grid.arrange(p1, p2, p3, p4, ncol=1)
+gridExtra::grid.arrange(p1, p2, p3, p4, ncol=2)
+```
 
+```{r, fig.height=6, fig.width=9, fig.cap="Distribution of the amount- and space-based prioritisation in the environmental attribute space. See Figure 34 caption for conventions."}
 # plot prioritisation in environmental attribute space
 p1 <- space.plot(cs_rs_space, 1, 1, main='Blue-winged kookuburra')
 p2 <- space.plot(cs_rs_space, 2, 1, main='Brown-backed honeyeater')
 p3 <- space.plot(cs_rs_space, 3, 1, main='Brown falcon')
 p4 <- space.plot(cs_rs_space, 4, 1, main='Pale-headed rosella')
-gridExtra::grid.arrange(p1, p2, p3, p4, ncol=1)
+gridExtra::grid.arrange(p1, p2, p3, p4, ncol=2)
 ```
 
 Let's compare these prioritisations with Australia's existing protected areas system. To do this, we can create update the `cs_rs_space` with manually specified solutions to create a `RapSolved` object to represent the Australia's reserve network.
@@ -1145,7 +1151,7 @@ cs_rs_aus <- update(cs_rs_amount, b=aus_selections)
 
 Now, let's plot the performance metrics for these prioritisations.
 
-```{r, fig.height=4.5, fig.width=7.2}
+```{r, fig.height=3.5, fig.width=8, fig.cap="Prioritisations were generated using amount-based targets (20\\%), and with additional space-based targets (85\\%). These are compared to the Queensland reserve network. Data represent means and standard errors for the four species in each prioritisation."}
 # load packages
 library(dplyr)
 library(ggplot2)
@@ -1155,7 +1161,7 @@ se=function(x){sd(x,na.rm=TRUE)/sqrt(sum(!is.na(x)))}
 
 # create a table to store the values for the 3 prioritisations
 cs_results <- data.frame(
-	name=rep(rep(c('Amount-based prioritisation', 'Amount- & space-based prioritsation', 
+	name=rep(rep(c('Amount-based prioritisation', 'Amount+space-based prioritsation', 
 		'Australian reserve network'),each=4),3),
 	variable=rep(c('Amount', 'Geographic space', 'Environmental space'), each=12),
 	species=colnames(amount.held(cs_rs_amount)),
@@ -1179,7 +1185,7 @@ ggplot(aes(x=variable, y=mean, fill=name), data=cs_results) +
 	geom_bar(position=position_dodge(0.9), stat='identity') +
 	geom_errorbar(aes(ymin=mean-se, ymax=mean+se), position=position_dodge(0.9), width=0.2) +
 	xlab('Property of species') +
-	ylab('Proportion held in selected planning units (%)') +
+	ylab('Proportion held in\nselected planning units (%)') +
 	scale_fill_discrete(
 		name=''
 	) +
@@ -1187,9 +1193,233 @@ ggplot(aes(x=variable, y=mean, fill=name), data=cs_results) +
 	theme(legend.position='bottom',legend.direction='horizontal')
 ```
 
-These results suggest that prioritisations based just on amount-based targets can obtain a moderately representative sample of the species' geographic distribution and climatic niche. However, a much larger analysis is be required to verify this.
+These results suggest that prioritisations based just on amount-based targets can obtain a moderately representative sample of the species' geographic distribution and climatic niche. However, a much larger analysis is required to verify this.
 
-## Conclusions
+We can see that a greater number of planning units is needed to satisfy the space-based targets. The prioritisation generated using just amount-based targets has `r sum(selections(cs_rs_amount)==1)` planning units, and the prioritisations using amount-based and space-based targets has `r sum(selections(cs_rs_space)==1)` targets. But what is the relationship between the space-targets and the number of planning units needed to satisfy the target? 
+
+#### Trade-off between representativeness and cost
+
+To understand what the relationship between space-based targets and the size of a prioritisation, we will conduct another Pareto frontier analysis. 
+
+First, we will generate a suite of prioritisations using different space-based targets. 
+
+```{r}
+# set targets
+space.targets <- round(seq(0.5,0.99,length.out=10),2)
+```
+
+```{r, eval=use.Gurobi, markup='hide'}
+# create empty list to store solutions
+solutions <- list()
+
+# generate solutions
+for (i in seq_along(space.targets))
+	solutions[[i]] <- update(cs_rs_space, space.target=rep(space.targets[i],4))
+```
+
+```{r, eval=!use.Gurobi, include=FALSE}
+# create empty list to store solutions
+solutions <- list()
+
+# create selection list with optimal selections
+selections <- list(c(4L, 7L, 14L, 19L, 25L, 36L, 37L, 43L, 44L, 52L, 53L, 61L, 
+81L, 86L, 103L, 104L, 115L, 116L, 117L, 120L, 132L, 133L, 134L, 
+135L, 136L, 137L, 138L, 148L, 152L, 153L, 154L, 155L, 156L, 173L, 
+174L, 175L, 192L, 193L, 194L, 195L, 212L, 213L, 214L, 215L, 233L, 
+234L, 235L, 236L, 237L, 508L, 524L, 525L, 552L, 553L, 554L, 574L, 
+577L, 578L, 580L, 591L, 592L, 593L, 594L, 595L, 596L, 603L, 604L, 
+605L, 617L, 618L, 619L, 620L, 621L, 622L, 629L, 630L, 631L, 632L, 
+633L, 634L, 635L, 642L, 643L, 644L, 645L, 646L, 647L, 648L, 649L, 
+655L, 656L, 657L, 658L, 659L, 667L, 668L, 669L, 670L, 671L, 672L, 
+673L, 675L, 676L, 680L, 681L, 682L, 683L, 685L, 692L, 693L, 694L, 
+695L, 696L, 697L, 698L, 700L, 701L, 704L, 705L, 706L, 707L, 708L, 
+709L, 710L, 722L, 723L, 724L, 725L, 726L, 727L, 730L, 731L, 732L, 
+733L, 734L, 735L), c(4L, 7L, 14L, 19L, 25L, 36L, 37L, 43L, 44L, 
+52L, 53L, 61L, 81L, 86L, 103L, 104L, 115L, 116L, 117L, 120L, 
+133L, 134L, 135L, 136L, 137L, 138L, 148L, 152L, 153L, 154L, 155L, 
+156L, 173L, 174L, 175L, 192L, 193L, 194L, 195L, 198L, 212L, 213L, 
+214L, 215L, 233L, 234L, 235L, 236L, 237L, 305L, 508L, 524L, 525L, 
+552L, 553L, 554L, 574L, 577L, 578L, 579L, 580L, 591L, 592L, 593L, 
+594L, 595L, 596L, 603L, 604L, 605L, 617L, 618L, 619L, 620L, 621L, 
+622L, 629L, 630L, 631L, 632L, 634L, 635L, 642L, 643L, 644L, 645L, 
+646L, 647L, 648L, 655L, 656L, 657L, 658L, 659L, 667L, 668L, 669L, 
+670L, 671L, 672L, 673L, 675L, 676L, 680L, 681L, 682L, 683L, 685L, 
+692L, 693L, 694L, 695L, 696L, 697L, 698L, 700L, 701L, 704L, 705L, 
+706L, 707L, 708L, 709L, 710L, 722L, 723L, 724L, 725L, 726L, 727L, 
+730L, 731L, 732L, 733L, 734L, 735L), c(4L, 7L, 14L, 19L, 25L, 
+37L, 43L, 44L, 52L, 53L, 61L, 81L, 86L, 103L, 104L, 115L, 116L, 
+117L, 120L, 132L, 133L, 134L, 135L, 136L, 137L, 138L, 148L, 152L, 
+153L, 154L, 155L, 156L, 173L, 174L, 175L, 192L, 193L, 194L, 195L, 
+198L, 212L, 213L, 214L, 215L, 233L, 234L, 235L, 236L, 237L, 305L, 
+508L, 524L, 525L, 552L, 553L, 554L, 574L, 577L, 578L, 579L, 580L, 
+591L, 593L, 594L, 595L, 596L, 603L, 604L, 605L, 617L, 618L, 619L, 
+620L, 621L, 622L, 629L, 630L, 631L, 632L, 633L, 634L, 635L, 642L, 
+643L, 644L, 645L, 646L, 647L, 648L, 655L, 656L, 657L, 658L, 659L, 
+667L, 668L, 669L, 670L, 671L, 672L, 673L, 675L, 676L, 680L, 681L, 
+682L, 683L, 685L, 692L, 693L, 694L, 695L, 696L, 697L, 698L, 700L, 
+701L, 704L, 705L, 706L, 707L, 708L, 709L, 710L, 722L, 723L, 724L, 
+725L, 726L, 727L, 730L, 731L, 732L, 733L, 734L, 735L), c(4L, 
+7L, 14L, 19L, 25L, 36L, 37L, 43L, 44L, 52L, 53L, 61L, 81L, 86L, 
+103L, 104L, 115L, 116L, 117L, 120L, 133L, 134L, 135L, 136L, 137L, 
+138L, 148L, 152L, 153L, 154L, 155L, 156L, 172L, 173L, 174L, 175L, 
+192L, 193L, 194L, 195L, 198L, 212L, 213L, 214L, 215L, 233L, 234L, 
+235L, 236L, 237L, 305L, 508L, 524L, 525L, 552L, 553L, 554L, 574L, 
+577L, 578L, 579L, 580L, 591L, 592L, 593L, 594L, 595L, 596L, 603L, 
+604L, 605L, 617L, 618L, 619L, 620L, 621L, 622L, 629L, 630L, 631L, 
+632L, 633L, 634L, 635L, 642L, 643L, 644L, 645L, 646L, 647L, 648L, 
+655L, 656L, 657L, 658L, 659L, 667L, 668L, 669L, 670L, 671L, 672L, 
+673L, 675L, 676L, 680L, 681L, 682L, 683L, 684L, 685L, 692L, 693L, 
+694L, 695L, 696L, 697L, 698L, 700L, 704L, 705L, 706L, 707L, 708L, 
+709L, 710L, 722L, 724L, 725L, 727L, 730L, 731L, 732L, 733L, 734L, 
+735L), c(7L, 14L, 19L, 25L, 36L, 39L, 44L, 52L, 53L, 81L, 86L, 
+103L, 104L, 116L, 117L, 120L, 133L, 135L, 136L, 137L, 138L, 148L, 
+152L, 153L, 155L, 156L, 163L, 166L, 172L, 173L, 174L, 175L, 192L, 
+193L, 194L, 195L, 196L, 198L, 201L, 209L, 212L, 213L, 214L, 215L, 
+233L, 234L, 235L, 236L, 237L, 265L, 305L, 463L, 479L, 508L, 518L, 
+524L, 525L, 526L, 552L, 553L, 554L, 574L, 577L, 578L, 580L, 591L, 
+593L, 594L, 603L, 604L, 617L, 618L, 619L, 620L, 621L, 622L, 626L, 
+629L, 630L, 631L, 632L, 633L, 635L, 642L, 643L, 644L, 645L, 646L, 
+647L, 648L, 655L, 656L, 657L, 658L, 659L, 667L, 668L, 669L, 670L, 
+671L, 672L, 673L, 675L, 676L, 680L, 681L, 682L, 683L, 685L, 692L, 
+693L, 694L, 695L, 696L, 697L, 698L, 700L, 701L, 704L, 705L, 706L, 
+707L, 708L, 709L, 710L, 722L, 723L, 724L, 725L, 726L, 727L, 730L, 
+731L, 732L, 733L, 734L, 735L), c(7L, 14L, 19L, 25L, 36L, 39L, 
+44L, 52L, 53L, 81L, 86L, 103L, 104L, 112L, 116L, 117L, 133L, 
+134L, 135L, 136L, 137L, 138L, 148L, 152L, 153L, 155L, 156L, 162L, 
+163L, 164L, 166L, 172L, 173L, 174L, 175L, 192L, 193L, 194L, 196L, 
+198L, 201L, 212L, 213L, 214L, 215L, 234L, 235L, 236L, 237L, 265L, 
+305L, 347L, 440L, 463L, 479L, 508L, 518L, 525L, 533L, 552L, 553L, 
+554L, 555L, 565L, 574L, 577L, 578L, 580L, 591L, 593L, 594L, 595L, 
+603L, 604L, 617L, 618L, 619L, 620L, 621L, 622L, 626L, 629L, 630L, 
+631L, 635L, 642L, 643L, 644L, 645L, 646L, 647L, 655L, 656L, 657L, 
+658L, 667L, 668L, 669L, 670L, 671L, 672L, 673L, 675L, 676L, 680L, 
+681L, 682L, 683L, 685L, 692L, 693L, 694L, 695L, 696L, 697L, 698L, 
+700L, 701L, 704L, 705L, 706L, 707L, 708L, 709L, 710L, 722L, 723L, 
+724L, 725L, 726L, 727L, 730L, 731L, 732L, 733L, 734L, 735L), 
+    c(14L, 19L, 25L, 36L, 39L, 44L, 52L, 53L, 81L, 86L, 103L, 
+    104L, 115L, 116L, 117L, 120L, 130L, 133L, 134L, 135L, 136L, 
+    137L, 138L, 148L, 152L, 153L, 154L, 155L, 156L, 162L, 163L, 
+    166L, 172L, 173L, 174L, 175L, 192L, 193L, 194L, 195L, 198L, 
+    212L, 213L, 214L, 215L, 221L, 233L, 234L, 235L, 236L, 237L, 
+    305L, 347L, 440L, 463L, 468L, 479L, 508L, 518L, 525L, 526L, 
+    552L, 553L, 554L, 555L, 562L, 565L, 574L, 577L, 578L, 580L, 
+    591L, 594L, 603L, 604L, 617L, 618L, 619L, 620L, 621L, 622L, 
+    626L, 629L, 630L, 631L, 635L, 642L, 643L, 644L, 645L, 646L, 
+    647L, 648L, 655L, 656L, 657L, 658L, 664L, 667L, 668L, 669L, 
+    670L, 671L, 672L, 673L, 675L, 676L, 680L, 681L, 682L, 683L, 
+    685L, 692L, 693L, 694L, 695L, 696L, 697L, 698L, 700L, 701L, 
+    704L, 705L, 706L, 707L, 708L, 709L, 710L, 722L, 724L, 727L, 
+    730L, 731L, 732L, 733L, 734L, 735L, 755L), c(14L, 19L, 25L, 
+    36L, 39L, 52L, 53L, 81L, 86L, 103L, 104L, 112L, 116L, 117L, 
+    120L, 130L, 133L, 134L, 135L, 136L, 137L, 138L, 148L, 152L, 
+    153L, 155L, 156L, 162L, 163L, 164L, 166L, 172L, 173L, 174L, 
+    175L, 192L, 193L, 194L, 196L, 198L, 201L, 212L, 213L, 214L, 
+    215L, 221L, 234L, 235L, 236L, 237L, 265L, 305L, 319L, 347L, 
+    410L, 440L, 463L, 468L, 495L, 501L, 504L, 508L, 518L, 526L, 
+    533L, 540L, 553L, 555L, 562L, 565L, 574L, 577L, 578L, 591L, 
+    593L, 594L, 603L, 604L, 617L, 618L, 619L, 620L, 621L, 622L, 
+    624L, 626L, 629L, 630L, 631L, 642L, 643L, 644L, 645L, 646L, 
+    647L, 648L, 655L, 656L, 657L, 658L, 664L, 667L, 668L, 669L, 
+    670L, 671L, 672L, 673L, 675L, 676L, 680L, 681L, 682L, 683L, 
+    687L, 692L, 693L, 694L, 695L, 696L, 697L, 698L, 700L, 704L, 
+    705L, 706L, 707L, 708L, 710L, 722L, 724L, 727L, 730L, 731L, 
+    732L, 733L, 734L, 735L, 755L), c(7L, 25L, 31L, 36L, 39L, 
+    52L, 53L, 81L, 86L, 103L, 104L, 111L, 112L, 116L, 117L, 120L, 
+    129L, 130L, 133L, 134L, 135L, 136L, 137L, 138L, 148L, 152L, 
+    153L, 155L, 156L, 157L, 162L, 163L, 164L, 166L, 173L, 174L, 
+    175L, 192L, 193L, 194L, 198L, 199L, 204L, 212L, 213L, 214L, 
+    215L, 234L, 235L, 236L, 237L, 305L, 319L, 347L, 408L, 410L, 
+    422L, 440L, 463L, 468L, 495L, 501L, 503L, 504L, 508L, 518L, 
+    526L, 546L, 553L, 555L, 562L, 565L, 574L, 577L, 591L, 592L, 
+    593L, 594L, 595L, 596L, 603L, 604L, 617L, 618L, 619L, 620L, 
+    621L, 622L, 624L, 626L, 629L, 630L, 635L, 642L, 643L, 644L, 
+    645L, 646L, 647L, 648L, 649L, 655L, 656L, 664L, 667L, 668L, 
+    669L, 670L, 671L, 672L, 673L, 675L, 676L, 680L, 682L, 689L, 
+    692L, 693L, 694L, 695L, 696L, 697L, 698L, 700L, 704L, 705L, 
+    706L, 707L, 708L, 710L, 722L, 724L, 730L, 731L, 732L, 733L, 
+    734L, 735L, 755L, 757L), c(4L, 7L, 10L, 16L, 19L, 26L, 31L, 
+    39L, 52L, 53L, 55L, 67L, 70L, 80L, 81L, 109L, 111L, 112L, 
+    122L, 127L, 129L, 130L, 136L, 137L, 143L, 148L, 153L, 161L, 
+    162L, 163L, 164L, 166L, 167L, 170L, 172L, 174L, 186L, 189L, 
+    193L, 196L, 198L, 199L, 201L, 204L, 209L, 220L, 234L, 235L, 
+    237L, 245L, 251L, 255L, 256L, 265L, 276L, 282L, 288L, 291L, 
+    297L, 305L, 319L, 320L, 327L, 364L, 386L, 389L, 392L, 394L, 
+    408L, 422L, 430L, 440L, 448L, 463L, 468L, 471L, 495L, 497L, 
+    501L, 502L, 504L, 507L, 508L, 509L, 511L, 518L, 524L, 526L, 
+    527L, 533L, 541L, 546L, 548L, 555L, 562L, 565L, 574L, 577L, 
+    586L, 594L, 603L, 604L, 608L, 610L, 617L, 619L, 620L, 621L, 
+    626L, 631L, 642L, 643L, 644L, 645L, 646L, 647L, 654L, 655L, 
+    664L, 667L, 668L, 669L, 670L, 671L, 672L, 673L, 676L, 689L, 
+    692L, 693L, 694L, 695L, 696L, 697L, 698L, 700L, 704L, 707L, 
+    710L, 722L, 724L, 732L, 746L, 751L, 753L, 756L, 757L, 758L
+    ))
+
+
+# generate solutions
+for (i in seq_along(space.targets)) {
+	solutions[[i]] <- update(cs_rs_space, space.target=rep(space.targets[i],4), solve=FALSE)
+	solutions[[i]] <- solve(solutions[[i]], b=selections[[i]])
+}
+```
+
+Now, we will extract the proportion of geographic and envrionmental space held in each solution, as well as the number of planning units in the solution.
+
+```{r}
+# load packages
+library(plyr)
+library(dplyr)
+
+# make data.frame with results from each prioritisation 
+space_results <- ldply(solutions, .fun=function(x) {
+	return(
+		data.frame(
+			n.planning.units=summary(x)$Planning_Units[1],
+			space.target=space.target(x)[1],
+			space.name=rep(c('Environmental space', 'Geographic space'),4),
+			space.held=c(space.held(x))
+		)
+	)
+}) %>% group_by(
+	space.name,
+	space.target
+) %>% summarise(
+	n.planning.units=first(n.planning.units),
+	mean=mean(space.held),
+	se=se(space.held)
+)
+```
+
+Finally, let's visualise the Pareto frontiers.
+
+```{r, fig.height=3.5, fig.width=8, fig.cap="Data represent means and standard errors for the proportion of environmental and geographic space held in a prioritisation. Prioritsations were generated using $BLM$ parameters: 0.50, 0.55, 0.61, 0.66, 0.72, 0.77, 0.83, 0.88, 0.94, and 0.99"}
+# load package
+library(ggplot2)
+
+# plot Pareto frontiers
+ggplot(aes(x=n.planning.units, y=mean, color=space.name),data=space_results) +
+	geom_point() +
+	geom_line() +
+	geom_errorbar(aes(ymin=mean-se, ymax=mean+se), width=0.2) +
+	theme_classic() +
+	xlab('Cost of prioritisation (number of planning units in solution)') +
+	ylab('Proportion of attribute space held (%)') +
+	scale_color_manual(
+		name='Attribute space',
+		values=c('Environmental space'='#F8766D', 'Geographic space'='#00BFC4')
+	)
+```
+
+Here we can see that additional planning units are need to maximise space representation. However, only 10 extra planning units are needed to have extremely good representation of environmental and geographic space. It also appears that to fulfill environmental space-based targets, a large proportion of the geographic range of each species must also be captured. This result suggests that relying on geographic space-targets alone may fail to secure variation in environmental attribute spaces.
+
+## Implications and future directions
+The `rapr` R package provides a unified approach to reserve selection. This R package decision maker with the tools to generate prioritisations that secure an adequate amount of a representative sample of biodiversity patterns and processes. Additionally, the decision maker can accomodate uncertainty in the distribution of features, and also ensure identify suitably connected reserves. Both the simulated and case-study species suggest that conservation planning exercises need to explicitly consider biodiversity processes during the reserve selection process.
+
+One of the key advantages of the `rapr` R package is that it is general enough that any  any spatial variation could be considered an attribute space, regardless of whether this variation is intrinsic or extrinsic to the feature(s). As a consequence, in addition to biodiversity processes, this R package could be used to secure intra-specific (within feature) biodivery patterns. For example, advances in genomic fields produced high resolution data on genetic information (eg. amplified fragment length polymorphisms (AFLPs), single nucleotide polymorphisms (SNPs)). By using geostatistical analysis [eg. generalised dissimilarity modelling GDMs (@r370);  gradients forests (GFs)], this data has been used to generate maps describing the spatial distribution of genomic variation within a species [@r361; @r419]. These maps in turn could be used to construct a genomic attribute space, and in turn, could be used to generate prioritisations that secure a representative sample of genomic variation within a species. However, because the problem formulations used in this package are so general, this tools in this package can be misused, and could generate poor quality prioritisations.
+
+The degree to which a prioritisation truly secures a representative sample of a feature depends on the attribute spaces and distribution of demand points chosen by the decision maker. The space-based targets are set as a proportion based on the level of representation if all the planning units are selected, and the worst prioritisation containing only one planning unit. As a consequence, if the decision maker uses an inapropriate set of spatial variables to construct an attribute space, or an inapropriate set of demand points, then the optimal solution based on this data will not be a cost-effective prioritisation. We therefore stress that decision makers carefully consider which biodiversity processes need to preserved in the prioritisation, and what spatial data can be used to map these processes. To assist in the selection of apropriate demand points, the R package provides several routines for generating demand points (see the `make.DemandPoints` function). These routines essentially use the distribution of a feature in the attribute space to define a polygon. Demand points are then generated random points within the polygon. A kernel is then fit to distribution of the feature in the space [using @r231; @r450], and the demand points are weighted based on the estimated density of the feature at the demand points' coordinates.
+
+The `rapr` R package could be further extended to identify more effective prioritisations. First, the formulation of fragmentation used in this package may be too simplistic in some cases (eg. exercises involving multiple species with different dispersal capabilities), and more realistic measures of fragmentation (eg. those used in Zonation) could be used to identify more effective prioritisations. Second, the problem does not consider temporal dynamics. Here, conservation actions are assumed to be implemented simultaneously in all selected planning units and assumed to remain implemented for all time. As a consequence, this R package is not useful for scenarios where actions are implemented during multiple discrete periods in time (eg. actions are made adue to annual funding cycles), or scenarios involving threatening processes that vary across space and time [reviewed in @r11]. Future research may look into incorporating such elements into this R package.
+
 To maximise the long-term persistence of biodiversity--the stated goal of conservation--decision makers need to identify prioritisations that preserve existing patterns of biodiversity and the processes that support them. To achieve this, conservation planners need a decision support tool that can explicitly accommodate biodiverity patterns and processes. Here, we developed the `rapr` R package to fill this void. By exploring the funciontality of this package using several simulated species, we found that including space-based targets can radically change a prioritisation for the simpliest of species.
 
 ## Acknowledgements

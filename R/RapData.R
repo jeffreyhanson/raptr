@@ -986,3 +986,20 @@ space.target.RapData<-function(x, species=NULL, space=NULL) {
 	validObject(x, test=FALSE)
 	return(x)
 }
+
+#' @rdname names
+#' @export
+`names<-.RapData`<-function(x, value) {
+	# change names
+	x@species$names<-value
+	# check of validity
+	validObject(x, test=FALSE)
+	return(x)
+}
+
+#' @rdname names
+#' @export
+names.RapData <-function(x) {
+	return(x@species$names)
+}
+

@@ -24,11 +24,11 @@ This function returns the amount held for each species in a solution.
 }
 \examples{
 data(sim_rs)
-# amount held (\%) for each species in best solution
+# amount held (\\\%) for each species in best solution
 amount.held(sim_rs, 0)
-# amount held (\%) for each species in second solution
+# amount held (\\\%) for each species in second solution
 amount.held(sim_rs, 2)
-# amount held (\%) for each species in each solution
+# amount held (\\\%) for each species in each solution
 amount.held(sim_rs, NULL)
 }
 \seealso{

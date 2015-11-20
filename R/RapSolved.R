@@ -142,7 +142,8 @@ setMethod(
 				a@opts,a@data,model,"User specified solution",
 				list(
 					x=b[i,],
-					objval=NA
+					objval=NA,
+					status='MANUAL'
 				),
 				verbose
 			)
@@ -790,11 +791,11 @@ update.RapUnsolOrSol<-function(object, ..., formulation=NULL, solve=TRUE) {
 	# solve it
 	if (solve) {
 		# get any new specified GurobiOpts
-		goLST<-parseArgs2(c('Threads', 'MIPGap','NumberSolutions', 'TimeLimit', 'Presolve'), ...)
+		goLST<-parseArgs2(c('Threads', 'MIPGap','NumberSolutions', 'TimeLimit', 'Presolve', 'Method'), ...)
 		
 		# get old GurobiOpt
 		if (inherits(object, 'RapSolved')) {
-			oldGoLST=list(Threads=object@Threads, MIPGap=object@MIPGap, NumberSolutions=object@NumberSolutions, TimeLimit=object@TimeLimit, Presolve=object@Presolve)
+			oldGoLST=list(Threads=object@Threads, MIPGap=object@MIPGap, NumberSolutions=object@NumberSolutions, TimeLimit=object@TimeLimit, Presolve=object@Presolve, Method=object@Method)
 			if (any(!names(oldGoLST %in% names(goLST)))) {
 				goLST=append(
 					goLST,
@@ -845,3 +846,21 @@ space.target.RapUnsolOrSol<-function(x, species=NULL, space=NULL) {
 	x@data<-`space.target<-.RapData`(x@data, species, space, value)
 	return(x)
 }
+
+#' @rdname names
+#' @export
+`names<-.RapUnsolOrSol`<-function(x, value) {
+	# change names
+	x2=x@data
+	names(x2) <- value
+	x@data <- x2
+	# return object
+	return(x)
+}
+
+#' @rdname names
+#' @export
+names.RapUnsolOrSol <-function(x) {
+	return(names(x@data))
+}
+

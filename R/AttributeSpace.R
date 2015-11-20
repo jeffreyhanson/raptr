@@ -39,13 +39,13 @@ setClass("AttributeSpace",
 #' @param pu \code{SimplePoints} coordinates for planning unit in the space.
 #' @param demand.points \code{list} of \code{DemandPoints} for each species.
 #' @param distance.metric \code{character} name of distance metric to use for comparing planning units to demand points. Valid metrics are 'euclidean', 'bray', 'manhattan','gower', 'canberra', 'mahalanobis', 'jaccard', and 'kulczynski'. Defaults to 'euclidean'. See details for the equations used for each metric.
-#' @details A variety of distance metrics are provided for comparing planning units and demand points in an attribute space. Euclidean distances are recomended for geographic attribute spaces, providing they have been projected to an equal distance coordinate system. Bray-Curtis ('bray', ), Gower (Gower 1971), and Kulczynski distance have been found to work well for environmental gradients (Faith \emph{et al.} 1987). The Jaccard distances are computed as \eqn{2B/(1+B)} where B is Bray-Curtis dissimilarity. Bray-Curtis distances are recomended for binary data because they devolve to Sorenson distances (Sorenson 1957). The naming convention for distance metrics used here follows that for the \code{vegdist} function in the R package \pkg{vegan}. 
+#' @details A variety of distance metrics are provided for comparing planning units and demand points in an attribute space. Euclidean distances are recomended for geographic attribute spaces, providing they have been projected to an equal distance coordinate system. Bray-Curtis, Gower (Gower 1971), and Kulczynski distance have been found to work well for environmental gradients (Faith \emph{et al.} 1987). The Jaccard distances are computed as \eqn{2B/(1+B)} where B is Bray-Curtis dissimilarity. Bray-Curtis distances are recomended for binary data because they devolve to Sorenson distances (Sorenson 1957). The naming convention for distance metrics used here follows that for the \code{vegdist} function in the R package \pkg{vegan}. 
 #' The distance \eqn{d_{ij}} between demand point \eqn{i \in I} and planning unit \eqn{j \in J}, given an attribute space with \eqn{K} dimensions (indexed using \eqn{k}).
 #' \tabular{cl}{
 #' \code{euclidean}
 #' \tab \eqn{d_{ij} = \sqrt{sum_{k=1}^{K} (x_{ik} - x_{jk})^2}} \cr
 #' \code{bray}
-#' \tab \eqn{d_{ij} = \frac{\sum_{k=1}^{K} |x_{ik} -x_{jk} |}{\sum__{k=1}^{K} (x_{ik} + x_{jk})}} \cr
+#' \tab \eqn{d_{ij} = \frac{\sum_{k=1}^{K} |x_{ik} -x_{jk} |}{\sum_{k=1}^{K} (x_{ik} + x_{jk})}} \cr
 #' \code{manhattan}
 #' \tab \eqn{d_{ij} = \frac{\sum_{k=1}^{K}|x_{ik}-x_{jk}|}{\sum_{k=0}^{K} (x_{ik}+x_{jk})}} \cr
 #' \code{gower}
@@ -56,12 +56,12 @@ setClass("AttributeSpace",
 #' \tab where \eqn{NZ} is the number of non-zero entries. \cr
 #' \code{mahalanobis}
 #' \tab \eqn{d_{ij} = \sqrt{(s_{i,.} - x{j,.})^T Q^{-1} (s_{i,.} - x{j,.})}} \cr
-#' \tab where:\cr
+#' \tab where: \cr
 #' \tab \eqn{s} = x centered.\cr
-#' \tab \eqn{s_{ik}} = x_{ik} - mean(x_{.,k}) \cr
+#' \tab \eqn{s_{ik} = x_{ik} - mean(x_{.,k})} \cr
 #' \tab \eqn{Q} = covariance matrix planning units and demand points in attribute space.\cr
 #' \code{jaccard}
-#' \tab \eqn{d_{ij} = \eqn{2B_{ij}/(1+B_{ij})}} \cr 
+#' \tab \eqn{d_{ij} = 2B_{ij}/(1+B_{ij})} \cr 
 #' \tab where \eqn{B_{ij}} is the Bray-Curtis dissimilarity between \eqn{i} and \eqn{j}. \cr
 #' \code{kulczynski}
 #' \tab \eqn{d_{ij} =  1-0.5(\frac{\sum_{k=1}^{K} \min(x_{ik},x_{jk})}{\sum_{k=1}^{K} x_{ik}} + \frac{\sum_{k=1}^{K} \min(x_{ik},x_{jk})}{\sum_{k=1}^{K} x_{jk}} )} \cr

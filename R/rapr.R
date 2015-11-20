@@ -1,15 +1,7 @@
-#' rapr: identify prioritisations using the Representative and Adequate Sample Problem (RASP)
+#' rapr: Representative and Adequate Prioritisations in R
 #'
-#' Biodiversity is in crisis. The overarching aim of conservation
-#' is to preserve biodiversity patterns and processes. To this end, protected
-#' areas are established to buffer species and preserve biodiversity processes.
-#' But resources are limited and so protected areas must be cost-effective.
-#' This package contains functions to generate plans for protected areas--
-#' prioritisations--using the Representative and Adequate Sample Problem (RASP).
-#' Reserve selection problems are expressed as a mixed linear integer problem
-#' (MILP) and solved using exact-algorithm methods. Prioritisations can be obtained
-#' using Gurobi (obtained from <http://www.gurobi.com/>).
-#'
+#' Biodiversity is in crisis. The overarching aim of conservation is to preserve biodiversity patterns and processes. To this end, protected areas are established to buffer species and preserve biodiversity processes. But resources are limited and so protected areas must be cost-effective. This package contains functions to generate plans for protected areas. Conservation planning data are used to construct an optimisation problem, which in turn is then solved to yield prioritisations. Amount-based targets can be used to identify prioritisations that contain an adequate amount of the target species. Additionally, space-based targets can be used to ensure that a representative sample of the target species is preserved. To solve the optimisation problems in a feasible amount of time, this package uses the commerical 'Gurobi' software package (obtained from <http://www.gurobi.com/>).
+
 #' The main classes used in this package are used to store input data and prioritisations:
 #' \itemize{
 #'   \item \code{\link{GurobiOpts-class}}: parameters for solving optimisation problems using Gurobi.

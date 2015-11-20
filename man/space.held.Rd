@@ -26,11 +26,11 @@ This function returns the attribute space held for each species in a solution.
 }
 \examples{
 data(sim_rs)
-# space held (\%) for each species in best solution
+# space held (\\\%) for each species in best solution
 space.held(sim_rs, 0)
-# space held (\%) for each species in second solution
+# space held (\\\%) for each species in second solution
 space.held(sim_rs, 2)
-# space held (\%) for each species in each solution
+# space held (\\\%) for each species in each solution
 space.held(sim_rs)
 }
 \seealso{

@@ -109,3 +109,4 @@ space.plot.RapUnsolved<-function(
 	}
 	space.plot.RapData(x@data, species, space, pu.color.palette, main, ...)
 }
+

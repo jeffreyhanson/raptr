@@ -7,6 +7,7 @@ NULL
 #'
 #' @slot Threads \code{integer} number of cores to use for processing. Defaults to 1L.
 #' @slot MIPGap \code{numeric} MIP gap specifying minimum solution quality. Defaults to 0.05.
+#' @slot Method \code{integer} Algorithm to use for solving model. Defaults to 0L.
 #' @slot Presolve \code{integer} code for level of computation in presolve. Defaults to 2.
 #' @slot TimeLimit \code{integer} number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.
 #' @slot NumberSolutions \code{integer} number of solutions to generate. Defaults to 1L.
@@ -16,6 +17,7 @@ setClass("GurobiOpts",
 	representation(
 		Threads="integer",
 		MIPGap="numeric",
+		Method="integer",
 		Presolve="integer",
 		TimeLimit="integer",
 		NumberSolutions="integer"
@@ -23,6 +25,7 @@ setClass("GurobiOpts",
 	prototype=list(
 		Threads=1L,
 		MIPGap=0.05,
+		Method=0L,
 		Presolve=2L,
 		TimeLimit=NA_integer_,
 		NumberSolutions=1L
@@ -50,11 +53,18 @@ setClass("GurobiOpts",
 		if (!is.finite(object@Presolve)) stop('argument to Presolve is NA or non-finite values')
 		if (object@Presolve < -1 || object@Presolve > 2) stop('argument to Presolve must be between -1 and 2')
 
+		# Method
+		if (!is.integer(object@Method)) stop('argument to Method is not integer')
+		if (!is.finite(object@Method)) stop('argument to Method is NA or non-finite values')
+		if (object@Method < -1 || object@Method > 4) stop('argument to Presolve must be between -1 and 4')
+
 		# MIPGap
 		if (!is.numeric(object@MIPGap)) stop('argument to MIPGap is not numeric')
 		if (!is.finite(object@MIPGap)) stop('argument to MIPGap is NA or non-finite values')
 		if (object@MIPGap<0) stop('argument to MIPGap must be > 0')
 		return(TRUE)
+		
+		
 	}
 )
 
@@ -64,6 +74,7 @@ setClass("GurobiOpts",
 #'
 #' @param Threads \code{integer} number of cores to use for processing. Defaults to 1L.
 #' @param MIPGap \code{numeric} MIP gap specifying minimum solution quality. Defaults to 0.05.
+#' @param Method \code{integer} Algorithm to use for solving model. Defaults to 0L.
 #' @param Presolve \code{integer} code for level of computation in presolve (lp_solve parameter). Defaults to 2.
 #' @param TimeLimit \code{integer} number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.
 #' @param NumberSolutions \code{integer} number of solutions to generate. Defaults to 1L.
@@ -72,10 +83,11 @@ setClass("GurobiOpts",
 #' @export
 #' @examples
 #' # create GurobiOpts object using default parameters
-#' GurobiOpts(Threads=1L, MIPGap=0.05, Presolve=2L, TimeLimit=NA_integer_, NumberSolutions=1L)
+#' GurobiOpts(Threads=1L, MIPGap=0.05, Method=0L, 
+#' 	Presolve=2L, TimeLimit=NA_integer_, NumberSolutions=1L)
 #' @export
-GurobiOpts<-function(Threads=1L, MIPGap=0.05, Presolve=2L, TimeLimit=NA_integer_, NumberSolutions=1L) {
-	go<-new("GurobiOpts", Threads=Threads, MIPGap=MIPGap, Presolve=Presolve, TimeLimit=TimeLimit, NumberSolutions=NumberSolutions)
+GurobiOpts<-function(Threads=1L, MIPGap=0.05, Method=0L, Presolve=2L, TimeLimit=NA_integer_, NumberSolutions=1L) {
+	go<-new("GurobiOpts", Threads=Threads, MIPGap=MIPGap, Method=0L, Presolve=Presolve, TimeLimit=TimeLimit, NumberSolutions=NumberSolutions)
 	validObject(go, test=FALSE)
 	return(go)
 }
@@ -91,6 +103,7 @@ print.GurobiOpts=function(x, ..., header=TRUE) {
 	}
 	cat('  Threads:',x@Threads,'\n')
 	cat('  MIPGap:',x@MIPGap,'\n')
+	cat('  Method:',x@Method,'\n')
 	cat('  Presolve:',x@Presolve,'\n')
 	cat('  TimeLimit:',x@TimeLimit,'\n')
 	cat('  NumberSolutions:',x@NumberSolutions,'\n')
@@ -112,7 +125,8 @@ as.list.GurobiOpts<-function(x, ...) {
 	y=list(
 		Threads=x@Threads,
 		MIPGap=x@MIPGap,
-		Presolve=x@Presolve
+		Presolve=x@Presolve,
+		Method=x@Method
 	)
 	if (is.finite(x@TimeLimit))
 		y=append(y, list(TimeLimit=x@TimeLimit))
@@ -123,12 +137,14 @@ as.list.GurobiOpts<-function(x, ...) {
 #' @rdname update
 #' @method update GurobiOpts
 #' @export
-update.GurobiOpts<-function(object, Threads=NULL, MIPGap=NULL, Presolve=NULL, TimeLimit=NULL, NumberSolutions=NULL, ...) {
+update.GurobiOpts<-function(object, Threads=NULL, MIPGap=NULL, Method=NULL, Presolve=NULL, TimeLimit=NULL, NumberSolutions=NULL, ...) {
 	# update arguments
 	if (!is.null(Threads))
 		object@Threads<-Threads
 	if (!is.null(MIPGap))
 		object@MIPGap<-MIPGap
+	if (!is.null(Method))
+		object@Method<-Method
 	if (!is.null(Presolve))
 		object@Presolve<-Presolve
 	if (!is.null(TimeLimit))
