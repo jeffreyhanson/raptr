@@ -25,6 +25,8 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" == "mac" ]; then brew install gfortan; fi;
   - if [ "$TRAVIS_OS_NAME" == "mac" ]; then Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos'))"; fi;
   - if [ "$TRAVIS_OS_NAME" == "mac" ]; then Rscript -e "setRepositories(ind=1:2);install.packages('hypervolume',type='binary')"; fi;
+  - if [ "$TRAVIS_OS_NAME" == "mac" ]; then sudo tlmgr update --self; fi;
+  - if [ "$TRAVIS_OS_NAME" == "mac" ]; then sudo tlmgr install amsmath amsfonts float makecell tocloft titlesec framed titling; fi;
   
 r_binary_packages:
   - boot
