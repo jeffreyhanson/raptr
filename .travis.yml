@@ -21,15 +21,12 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install r-cran-rgl -y; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install r-cran-rgdal -y; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install curl; fi
-  - if [ "$TRAVIS_OS_NAME" == "mac" ]; then brew install Caskroom/cask/xquartz; fi;
-  - if [ "$TRAVIS_OS_NAME" == "mac" ]; then brew install gdal; fi;
-  - if [ "$TRAVIS_OS_NAME" == "mac" ]; then brew install gfortan; fi;
-  - if [ "$TRAVIS_OS_NAME" == "mac" ]; then Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos'))"; fi;
-  - if [ "$TRAVIS_OS_NAME" == "mac" ]; then Rscript -e "setRepositories(ind=1:2);install.packages('hypervolume',type='binary')"; fi;
-  - if [ "$TRAVIS_OS_NAME" == "mac" ]; then sudo /usr/texbin/tlmgr install amsmath amsfonts float makecell tocloft titlesec framed titling; fi;
-  - if [ "$TRAVIS_OS_NAME" == "mac" ]; then echo "here"; fi;
-  - if [ "$TRAVIS_OS_NAME" == "mac" ]; then sudo /usr/texbin/tlmgr list --only-installed; fi;
-  - if [ "$TRAVIS_OS_NAME" == "mac" ]; then echo "here2"; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install Caskroom/cask/xquartz; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install gdal; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install gfortan; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos'))"; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "setRepositories(ind=1:2);install.packages('hypervolume',type='binary')"; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo /usr/texbin/tlmgr install amsmath amsfonts float makecell tocloft titlesec framed titling; fi;
   
 r_binary_packages:
   - boot
