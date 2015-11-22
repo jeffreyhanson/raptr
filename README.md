@@ -26,15 +26,22 @@ brew install gdal
 Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos'))"
 ```
 
-To install the `rapr` R package, execute the following commands in R:
+To install the stable version of the package from CRAN, run the following command in R:
+
+```
+install_packages('rapr')
+```
+
+
+To install the development version, use the following R code:
 
 ```
 if (!require('devtools'))
 	install.packages('devtools', repo='http://cran.rstudio.com', dep=TRUE)
-devtools:::install_github('paleo13/rapsr')
+devtools:::install_github('paleo13/rapr')
 ```
 
-Once this package has been installed, you can read through the vignette for a tutorial on how to use it. You view it by running the code below in R:
+Once this package has been installed, you can read through the vignette for a tutorial on how to use it. View it by running the R code:
 
 ```
 # open vignette in web browser
