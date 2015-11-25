@@ -550,7 +550,8 @@ sim_rs_s1_space <- update(sim_rs_s1_amount, amount.target=0.2, space.target=0.85
 ```{r, eval=!use.Gurobi, include=FALSE}
 # make new prioritisation
 sim_rs_s1_space <- update(sim_rs_s1_amount, amount.target=0.2, space.target=0.85, solve=FALSE)
-sim_rs_s1_space <- solve(sim_rs_s1_space, b=c(53L, 63L, 64L, 72L, 73L, 74L, 83L, 84L))
+sim_rs_s1_space <- solve(sim_rs_s1_space, b=c(2L, 7L, 9L, 13L, 21L, 26L, 30L, 39L, 42L, 44L, 49L, 51L, 59L, 
+63L, 65L, 73L, 76L, 78L, 92L, 99L))
 ```
 
 ```{r}
@@ -674,9 +675,17 @@ So far we have generated prioritisations using only a single species at a time. 
 
 ```{r, eval=use.Gurobi}
 # make prioritisations
-sim_mrs_amount <- update(sim_ru, amount.target=c(0.2,0.2,0.2), space.target=c(0,0,0))
+sim_mrs_amount <- update(
+	sim_ru,
+	amount.target=c(0.2,0.2,0.2),
+	space.target=c(0,0,0)
+)
 
-sim_mrs_space <- update(sim_ru, amount.target=c(0.2,0.2,0.2), space.target=c(0.85, 0.85, 0.85))
+sim_mrs_space <- update(
+	sim_ru,
+	amount.target=c(0.2,0.2,0.2),
+	space.target=c(0.85, 0.85, 0.85)
+)
 ```
 
 ```{r, eval=!use.Gurobi, include=FALSE}
@@ -1172,12 +1181,14 @@ se=function(x){sd(x,na.rm=TRUE)/sqrt(sum(!is.na(x)))}
 
 # create a table to store the values for the 3 prioritisations
 cs_results <- data.frame(
-	name=rep(rep(c('Amount-based prioritisation', 'Amount+space-based prioritsation', 
-		'Australian reserve network'),each=4),3),
+	name=rep(rep(c('Amount-based prioritisation', 
+		'Amount+space-based prioritsation', 'Australian reserve network'),
+		each=4),3),
 	variable=rep(c('Amount', 'Geographic space', 'Environmental space'), each=12),
 	species=colnames(amount.held(cs_rs_amount)),
 	value=c(
-		amount.held(cs_rs_amount)[1,], amount.held(cs_rs_space)[1,], amount.held(cs_rs_aus)[1,],
+		amount.held(cs_rs_amount)[1,], amount.held(cs_rs_space)[1,],
+			amount.held(cs_rs_aus)[1,],
 		space.held(cs_rs_amount, space=2)[1,], space.held(cs_rs_space, space=2)[1,], 
 			space.held(cs_rs_aus, space=2)[1,],
 		space.held(cs_rs_amount, space=1)[1,], space.held(cs_rs_space, space=1)[1,],
@@ -1194,7 +1205,10 @@ cs_results <- data.frame(
 # plot the performance metrics
 ggplot(aes(x=variable, y=mean, fill=name), data=cs_results) +
 	geom_bar(position=position_dodge(0.9), stat='identity') +
-	geom_errorbar(aes(ymin=mean-se, ymax=mean+se), position=position_dodge(0.9), width=0.2) +
+	geom_errorbar(
+		aes(ymin=mean-se, ymax=mean+se), position=position_dodge(0.9),
+		width=0.2
+	) +
 	xlab('Property of species') +
 	ylab('Proportion held in\nselected planning units (%)') +
 	scale_fill_discrete(
