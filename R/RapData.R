@@ -8,7 +8,7 @@ NULL
 #' @slot polygons \code{PolySet} planning unit spatial data or \code{NULL} if data not available.
 #' @slot pu \code{data.frame} planning unit data. Columns are 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).
 #' @slot species \code{data.frame} with species data. Columns are 'name' (\code{character}.
-#' @slot targets \code{data.frame} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), and 'proportion' (\code{character}).
+#' @slot targets \code{data.frame} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), 'proportion' (\code{numeric}), and 'name' (\code{character}).
 #' @slot pu.species.probabilities \code{data.frame} with data on the probability of species in each planning unit. Columns are 'species' (\code{integer}), 'pu' (\code{integer}), and 'value' (\code{numeric}) columns.
 #' @slot attribute.spaces \code{list} of \code{AttributeSpace} objects with the demand points and planning unit coordinates.
 #' @slot boundary \code{data.frame} with data on the shared boundary length of planning units. Columns are with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'boundary' (\code{numeric}).
@@ -70,6 +70,11 @@ setClass("RapData",
 			if (any(!c('species','target','proportion') %in% names(object@targets)))
 				stop("argument to targets is missing one of these columns: 'species', 'target', or 'proportion'")
 
+			if (!'name' %in% names(object@targets))
+				object@targets$name <- as.character(seq_len(nrow(object@targets)))
+			if (!inherits(object@targets$name, c('character','factor')))
+				stop('argument to targets$name is not character or factor')
+			
 			if (!inherits(object@targets$species, c('integer')))
 				stop('argument to targets$species is not integer')
 			if (any(is.na(object@targets$species)))
@@ -155,7 +160,7 @@ setClass("RapData",
 #' @param polygons \code{PolySet} planning unit spatial data or \code{NULL} if data not available.
 #' @param pu \code{data.frame} planning unit data. Columns are 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).
 #' @param species \code{data.frame} with species data. Columns are 'name' (\code{character}).
-#' @param targets \code{data.frame} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), and 'proportion' (\code{character}).
+#' @param targets \code{data.frame} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), 'proportion' (\code{numeric}), and 'name' (\code{character}).
 #' @param pu.species.probabilities \code{data.frame} with data on the probability of species in each planning unit. Columns are 'species' (\code{integer}), 'pu' (\code{integer}), and 'value' (\code{numeric}) columns.
 #' @param attribute.spaces \code{list} of \code{AttributeSpace} objects with the demand points and planning unit coordinates.
 #' @param boundary \code{data.frame} with data on the shared boundary length of planning units. Columns are with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'boundary' (\code{integer}).
@@ -227,7 +232,7 @@ RapData<-function(pu, species, targets, pu.species.probabilities, attribute.spac
 	# remove extra columns
 	pu<-pu[,which(names(pu) %in% c('cost', 'area', 'status')),drop=FALSE]
 	species<-species[,which(names(species) %in% c('name')),drop=FALSE]
-	targets<-targets[,which(names(targets) %in% c('species','target','proportion')),drop=FALSE]
+	targets<-targets[,which(names(targets) %in% c('species','target','proportion','name')),drop=FALSE]
 	pu.species.probabilities<-pu.species.probabilities[,which(names(pu.species.probabilities) %in% c('pu', 'species', 'value')),drop=FALSE]
 	boundary<-boundary[,which(names(boundary) %in% c('id1', 'id2', 'boundary')),drop=FALSE]
 	# make object
@@ -533,7 +538,7 @@ print.RapData<-function(x, ..., header=TRUE) {
 	cat("  Number of attribute spaces:",length(x@attribute.spaces),"\n")
 }
 
-#' @describeIn show
+#' @rdname show
 #' @export
 setMethod(
 	'show',
@@ -542,7 +547,7 @@ setMethod(
 		print.RapData(object)
 )
 
-#' @describeIn is.cached
+#' @rdname is.cached
 setMethod(
 	f="is.cached",
 	signature(x="RapData", name="character"),
@@ -551,7 +556,7 @@ setMethod(
 	}
 )
 
-#' @describeIn cache
+#' @rdname cache
 setMethod(
 	f="cache",
 	signature(x="RapData", name="character", y="ANY"),
@@ -560,7 +565,7 @@ setMethod(
 	}
 )
 
-#' @describeIn cache
+#' @rdname cache
 setMethod(
 	f="cache",
 	signature(x="RapData", name="character", y="missing"),

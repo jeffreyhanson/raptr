@@ -45,7 +45,7 @@ print.RapUnreliableOpts=function(x, ..., header=TRUE) {
 	cat('  BLM:',x@BLM,'\n')
 }
 
-#' @describeIn show
+#' @rdname show
 #' @export
 setMethod(
 	'show',

@@ -49,7 +49,7 @@ print.RapUnsolved=function(x, ...) {
 	print.RapData(x@data, header=FALSE)
 }
 
-#' @describeIn show
+#' @rdname show
 #' @export
 setMethod(
 	'show',

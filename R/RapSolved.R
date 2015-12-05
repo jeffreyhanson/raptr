@@ -36,7 +36,7 @@ RapSolved<-function(unsolved, solver, results) {
 	return(new("RapSolved", opts=unsolved@opts, solver=solver, data=unsolved@data, results=results))
 }
 
-#' @describeIn solve
+#' @rdname solve
 #' @export
 setMethod(
 	'solve',
@@ -49,7 +49,7 @@ setMethod(
 	}
 )
 
-#' @describeIn solve
+#' @rdname solve
 #' @export
 setMethod(
 	'solve',
@@ -120,7 +120,7 @@ setMethod(
 	}
 )
 
-#' @describeIn solve
+#' @rdname solve
 #' @export
 setMethod(
 	'solve',
@@ -154,7 +154,7 @@ setMethod(
 	}
 )
 
-#' @describeIn solve
+#' @rdname solve
 #' @export
 setMethod(
 	'solve',
@@ -170,7 +170,7 @@ setMethod(
 	}
 )
 
-#' @describeIn solve
+#' @rdname solve
 #' @export
 setMethod(
 	'solve',
@@ -262,7 +262,7 @@ space.held.RapSolved<-function(x, y=0, species = NULL, space = NULL) {
 				seq_along(y),
 				paste0(
 					rep(x@data@species$name[species], each=length(space)),
-					rep(paste0(' (Space ',space, ')'), length(species))
+					rep(paste0(' (Space ',space,')'), length(species))
 				)
 			)
 		)
@@ -340,7 +340,7 @@ prob.subset.RapUnsolOrSol<-function(x, species, threshold) {
 	 )
 }
 
-#' @describeIn show
+#' @rdname show
 #' @export
 setMethod(
 	'show',
@@ -385,7 +385,7 @@ basemap.RapSolved<-function(x, basemap="none", grayscale=FALSE, force.reset=FALS
 	return(basemap.RapData(x@data, basemap, grayscale, force.reset))
 }
 
-#' @describeIn plot
+#' @rdname plot
 #' @export
 setMethod(
 	"plot",
@@ -437,7 +437,7 @@ setMethod(
 	}
 )
 
-#' @describeIn plot
+#' @rdname plot
 #' @export
 setMethod(
 	"plot",
@@ -485,7 +485,7 @@ setMethod(
 	}
 )
 
-#' @describeIn plot
+#' @rdname plot
 #' @export
 setMethod(
 	"plot",

@@ -68,7 +68,7 @@ print.RapReliableOpts=function(x, ..., header=TRUE) {
 	cat('  max.r.level:',x@max.r.level,'\n')
 }
 
-#' @describeIn show
+#' @rdname show
 #' @export
 setMethod(
 	'show',

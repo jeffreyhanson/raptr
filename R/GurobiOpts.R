@@ -109,7 +109,7 @@ print.GurobiOpts=function(x, ..., header=TRUE) {
 	cat('  NumberSolutions:',x@NumberSolutions,'\n')
 }
 
-#' @describeIn show
+#' @rdname show
 #' @export
 setMethod(
 	'show',

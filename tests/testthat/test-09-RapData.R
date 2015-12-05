@@ -17,11 +17,10 @@ test_that('RapData', {
 	pu.species.probabilities=calcSpeciesAverageInPus(cs_pus[1:10,], cs_spp[[1]])
 	polygons=SpatialPolygons2PolySet(cs_pus[1:10,])
 	boundary=calcBoundaryData(cs_pus[1:10,])
-
 	# create object
 	x<-RapData(
 		pu=cs_pus@data[1:10,],
-		targets=data.frame(species=1L, target=c(0L,1L), proportion=0.2),
+		targets=data.frame(species=1L, target=c(0L,1L), proportion=0.2, name=c('test_amount', 'test_space')),
 		species=data.frame(name='test'),
 		pu.species.probabilities=pu.species.probabilities,
 		attribute.spaces=attribute.spaces,

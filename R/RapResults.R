@@ -189,7 +189,7 @@ print.RapResults<-function(x, ..., header=TRUE) {
 	cat(paste0("  Best solution score: ", score(x,0), " (",sum(selections(x,0))," planning units)\n"))
 }
 
-#' @describeIn show
+#' @rdname show
 #' @export
 setMethod(
 	'show',
@@ -199,7 +199,7 @@ setMethod(
 )
 
 
-#' @describeIn is.cached
+#' @rdname is.cached
 setMethod(
 	f="is.cached",
 	signature(x="RapResults", name="character"),
@@ -208,7 +208,7 @@ setMethod(
 	}
 )
 
-#' @describeIn cache
+#' @rdname cache
 setMethod(
 	f="cache",
 	signature(x="RapResults", name="character", y="ANY"),
@@ -217,7 +217,7 @@ setMethod(
 	}
 )
 
-#' @describeIn cache
+#' @rdname cache
 setMethod(
 	f="cache",
 	signature(x="RapResults", name="character", y="missing"),
