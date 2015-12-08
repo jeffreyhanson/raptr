@@ -1,4 +1,4 @@
-rapr
+rapr (under development)
 ============
 
 [![Travis Build Status](https://img.shields.io/travis/paleo13/rapr/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/paleo13/rapr)
@@ -41,7 +41,9 @@ if (!require('devtools'))
 devtools:::install_github('paleo13/rapr')
 ```
 
-Once this package has been installed, you can read through the vignette for a tutorial on how to use it. View it by running the R code:
+Once this package has been installed, you can read through the vignette for a tutorial on how to use it.
+
+[View it here](https://github.com/paleo13/rapr/raw/master/inst/doc/rapr.pdf), or by running this R code:
 
 ```
 # open vignette in web browser
