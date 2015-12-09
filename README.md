@@ -26,13 +26,6 @@ brew install gdal
 Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos'))"
 ```
 
-To install the stable version of the package from CRAN, run the following command in R:
-
-```
-install_packages('rapr')
-```
-
-
 To install the development version, use the following R code:
 
 ```
