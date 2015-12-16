@@ -18,12 +18,10 @@ apt_packages:
 before_install: 
   - echo "TRAVIS_OS_NAME = $TRAVIS_OS_NAME"
   - echo "options(repos = c(CRAN='http://cran.rstudio.com'), rgl.useNULL=TRUE)" > ~/.Rprofile
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install r-cran-rgl -y; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install r-cran-rgdal -y; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install curl; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install r-cran-rgl r-cran-rgdal curl libssh2-1-dev -y; fi
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install Caskroom/cask/xquartz; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install ghostscript; fi;
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos'))"; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos','RandomFieldsUtils','RandomFields'))"; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo tlmgr update --self; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo /usr/texbin/tlmgr install amsmath amsfonts float makecell tocloft titlesec framed titling; fi;
   
@@ -44,7 +42,6 @@ r_binary_packages:
   - ks
 
 r_packages:
-  - RandomFields
   - covr
   - rmarkdown
   - testthat
