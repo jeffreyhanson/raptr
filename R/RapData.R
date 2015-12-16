@@ -242,7 +242,7 @@ RapData<-function(pu, species, targets, pu.species.probabilities, attribute.spac
 	return(rd)
 }
 
-#' Make data for RASP using minimal inputs
+#' Make data for RAP using minimal inputs
 #'
 #' This function prepares spatially explicit planning unit, species data, and landscape data layers for RASP processing.
 #'
