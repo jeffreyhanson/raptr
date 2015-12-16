@@ -48,6 +48,8 @@
 #' @importFrom methods new
 #' @importFrom methods slot
 #' @importFrom methods validObject
+#' @importFrom methods slotNames
+#' @importFrom methods slot<-
 
 #' @importFrom ks kde
 
