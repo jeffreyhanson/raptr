@@ -38,7 +38,8 @@ Imports:
     ks,
     gdalUtils,
     mvtnorm,
-    ggplot2
+    ggplot2,
+    rgl
 Depends:
     R(>= 3.1.0),
     methods,
@@ -56,8 +57,7 @@ Suggests:
     dplyr,
     vegan,
     gurobi,
-    gridExtra,
-    rgl
+    gridExtra
 SystemRequirements: C++11
 Collate:
     'dependencies.R'
