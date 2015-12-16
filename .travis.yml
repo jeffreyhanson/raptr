@@ -17,7 +17,7 @@ apt_packages:
     
 before_install: 
   - echo "TRAVIS_OS_NAME = $TRAVIS_OS_NAME"
-  - tlmgr update --self
+  - sudo tlmgr update --self
   - echo "options(repos = c(CRAN='http://cran.rstudio.com'), rgl.useNULL=TRUE)" > ~/.Rprofile
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install r-cran-rgl -y; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install r-cran-rgdal -y; fi
