@@ -3,9 +3,9 @@
 \docType{class}
 \name{RapUnreliableOpts-class}
 \alias{RapUnreliableOpts-class}
-\title{RapUnreliableOpts: An S4 class to represent parameters for the unreliable RASP problem}
+\title{RapUnreliableOpts: An S4 class to represent parameters for the unreliable RAP problem}
 \description{
-This class is used to store input parameters for the unreliable RASP problem formulation.
+This class is used to store input parameters for the unreliable RAP problem formulation.
 }
 \section{Slots}{
 

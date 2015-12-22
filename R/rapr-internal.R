@@ -550,7 +550,7 @@ mergeRapResults<-function(x) {
 }
 
 
-#' Read RASP results
+#' Read RAP results
 #'
 #' This function reads files output from Gurobi and returns a \code{RapResults} object.
 #'

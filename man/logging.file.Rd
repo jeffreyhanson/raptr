@@ -18,7 +18,7 @@ logging.file(x, y)
 \item{y}{\code{NULL} to return all values, \code{integer} 0 to return the log file for best solution, \code{integer} value greater than 0 for log file for the \code{y}'th solution.}
 }
 \description{
-This function returns the Gurobi log file (*.log) associated with solving RASP.
+This function returns the Gurobi log file (*.log) associated with solving RAP.
 }
 \note{
 The term logging file was used due to collisions with the \code{log} function in base R.

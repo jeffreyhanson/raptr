@@ -3,7 +3,7 @@ NULL
 
 #' Simulate planning units
 #'
-#' This function simulates planning units for RASP.
+#' This function simulates planning units for RAP.
 #'
 #' @param n \code{integer} number of planning units. \code{sqrt(n)} must yield a valid number.
 #' @param xmn \code{numeric} value for minimim x-coordinate.

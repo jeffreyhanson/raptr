@@ -3,9 +3,9 @@
 \docType{class}
 \name{RapReliableOpts-class}
 \alias{RapReliableOpts-class}
-\title{RapReliableOpts: An S4 class to represent input parameters for the reliable formulation of RASP.}
+\title{RapReliableOpts: An S4 class to represent input parameters for the reliable formulation of RAP.}
 \description{
-This class is used to store input parameters for the reliable formulation of RASP.
+This class is used to store input parameters for the reliable formulation of RAP.
 }
 \section{Slots}{
 

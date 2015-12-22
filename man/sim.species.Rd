@@ -4,7 +4,7 @@
 \alias{sim.species}
 \alias{sim.species.RasterLayer}
 \alias{sim.species.SpatialPolygons}
-\title{Simulate species distribution data for RASP}
+\title{Simulate species distribution data for RAP}
 \usage{
 sim.species(x, ...)
 
@@ -29,7 +29,7 @@ sim.species(x, ...)
 \code{RasterStack} with layers for each species.
 }
 \description{
-This function simulates species distributions for RASP.
+This function simulates species distributions for RAP.
 }
 \details{
 Distributions are simulated by passing \code{model} to \code{\link[RandomFields]{RFsimulate}} and converting to logistic values using \code{\link[boot]{inv.logit}}.

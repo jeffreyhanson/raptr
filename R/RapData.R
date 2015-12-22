@@ -1,9 +1,9 @@
 #' @include RcppExports.R rapr-internal.R generics.R DemandPoints.R calcBoundaryData.R calcSpeciesAverageInPus.R
 NULL
 
-#' RapData: An S4 class to represent RASP input data
+#' RapData: An S4 class to represent RAP input data
 #'
-#' This class is used to store RASP input data.
+#' This class is used to store RAP input data.
 #'
 #' @slot polygons \code{PolySet} planning unit spatial data or \code{NULL} if data not available.
 #' @slot pu \code{data.frame} planning unit data. Columns are 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).
@@ -244,7 +244,7 @@ RapData<-function(pu, species, targets, pu.species.probabilities, attribute.spac
 
 #' Make data for RAP using minimal inputs
 #'
-#' This function prepares spatially explicit planning unit, species data, and landscape data layers for RASP processing.
+#' This function prepares spatially explicit planning unit, species data, and landscape data layers for RAP processing.
 #'
 #' @param pus \code{SpatialPolygons} with planning unit data.
 #' @param species \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} with species probability distribution data.

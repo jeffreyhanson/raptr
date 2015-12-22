@@ -52,7 +52,7 @@ test_that('demand.points (ks, attribute space)', {
 	expect_equal(sum(is.na((dp@weights))), 0)
 })
 
-test_that('demand.points (hpyervolume, geographic space)', {
+test_that('demand.points (hypervolume, geographic space)', {
 	# load data
 	data(cs_spp)
 	# generate points

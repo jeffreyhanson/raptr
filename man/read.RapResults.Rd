@@ -2,7 +2,7 @@
 % Please edit documentation in R/rapr-internal.R
 \name{read.RapResults}
 \alias{read.RapResults}
-\title{Read RASP results}
+\title{Read RAP results}
 \usage{
 read.RapResults(opts, data, model.list, logging.file, solution.list,
   verbose = FALSE)

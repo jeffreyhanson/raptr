@@ -1,7 +1,7 @@
 #' @include RcppExports.R rapr-internal.R misc.R generics.R RapReliableOpts.R RapUnreliableOpts.R GurobiOpts.R RapData.R RapUnsolved.R RapResults.R RapSolved.R
 NULL
 
-#' Generate prioritisations using RASP
+#' Generate prioritisations using RAP
 #'
 #' This is a general function to create Rap objects from scratch and solve them to generate solutions.
 #'

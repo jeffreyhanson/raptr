@@ -2,7 +2,7 @@
 % Please edit documentation in R/DemandPoints.R
 \name{make.DemandPoints}
 \alias{make.DemandPoints}
-\title{Generate demand points for RASP}
+\title{Generate demand points for RAP}
 \usage{
 make.DemandPoints(points, n = 100L, quantile = 0.2,
   kernel.method = c("ks", "hypervolume")[1], ...)
@@ -22,7 +22,7 @@ make.DemandPoints(points, n = 100L, quantile = 0.2,
 \code{DemandPoints} object.
 }
 \description{
-This function generates demand points for RASP using kernels.
+This function generates demand points for RAP using kernels.
 }
 \details{
 The values of the species records in the rasters is extracted. A kernel is fit to the points in the attribute space. 

@@ -3,9 +3,9 @@
 \docType{class}
 \name{RapUnsolved-class}
 \alias{RapUnsolved-class}
-\title{RapUnsolved: An S4 class to represent RASP inputs}
+\title{RapUnsolved: An S4 class to represent RAP inputs}
 \description{
-This class is used to store RASP input data and input parameters.
+This class is used to store RAP input data and input parameters.
 }
 \section{Slots}{
 

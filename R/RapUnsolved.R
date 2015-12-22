@@ -1,9 +1,9 @@
 #' @include RcppExports.R rapr-internal.R misc.R generics.R RapReliableOpts.R RapUnreliableOpts.R RapData.R
 NULL
 
-#' RapUnsolved: An S4 class to represent RASP inputs
+#' RapUnsolved: An S4 class to represent RAP inputs
 #'
-#' This class is used to store RASP input data and input parameters.
+#' This class is used to store RAP input data and input parameters.
 #'
 #' @slot opts \code{RapReliableOpts} or \code{RapUnreliableOpts} object used to store input parameters.
 #' @slot data \code{RapData} object used to store input data.

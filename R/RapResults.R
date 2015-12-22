@@ -1,9 +1,9 @@
 #' @include misc.R rapr-internal.R generics.R
 NULL
 
-#' RapResults: An S4 class to represent RASP results
+#' RapResults: An S4 class to represent RAP results
 #'
-#' This class is used to store RASP results.
+#' This class is used to store RAP results.
 #'
 #' @slot summary \code{data.frame} with summary information on solutions.
 #' @slot selections \code{matrix} with binary selections. The cell \eqn{x_{ij}} denotes if planning unit \eqn{j} is selected in the \eqn{i}'th solutuion.

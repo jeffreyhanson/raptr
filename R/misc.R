@@ -215,7 +215,7 @@ randomPoints <- function(mask, n, prob=FALSE) {
 	if (prob) {
 		randomCells <- sample(validPos, n, prob=mask[validPos], replace=FALSE)
 	} else {
-		randomCells <- sample(validPos, n, , replace=FALSE)
+		randomCells <- sample(validPos, n, replace=FALSE)
 	}
 	# get coordinates of the cell centres
 	return(

@@ -8,7 +8,7 @@
 \alias{solve,RapUnsolOrSol,matrix-method}
 \alias{solve,RapUnsolOrSol,missing-method}
 \alias{solve,RapUnsolOrSol,numeric-method}
-\title{Solve RASP object}
+\title{Solve RAP object}
 \usage{
 solve(a, b, ...)
 

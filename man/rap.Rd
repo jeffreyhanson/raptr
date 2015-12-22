@@ -2,7 +2,7 @@
 % Please edit documentation in R/rap.R
 \name{rap}
 \alias{rap}
-\title{Generate prioritisations using RASP}
+\title{Generate prioritisations using RAP}
 \usage{
 rap(pus, species, spaces = NULL, ..., formulation = "unreliable",
   solve = TRUE)

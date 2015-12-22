@@ -1,9 +1,9 @@
 #' @include RcppExports.R rapr-internal.R misc.R
 NULL
 
-#' RapUnreliableOpts: An S4 class to represent parameters for the unreliable RASP problem
+#' RapUnreliableOpts: An S4 class to represent parameters for the unreliable RAP problem
 #'
-#' This class is used to store input parameters for the unreliable RASP problem formulation.
+#' This class is used to store input parameters for the unreliable RAP problem formulation.
 #'
 #' @slot BLM \code{numeric} boundary length modifier. Defaults to 0.
 #' @export

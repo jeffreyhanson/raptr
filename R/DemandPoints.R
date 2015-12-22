@@ -50,9 +50,9 @@ DemandPoints<-function(points, weights) {
 	return(dp)
 }
 
-#' Generate demand points for RASP
+#' Generate demand points for RAP
 #'
-#' This function generates demand points for RASP using kernels.
+#' This function generates demand points for RAP using kernels.
 #'
 #' @param points \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records.
 #' @param n \code{integer} number of demand points to use for each attribute space for each species. Defaults to 100L.

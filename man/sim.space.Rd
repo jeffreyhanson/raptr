@@ -4,7 +4,7 @@
 \alias{sim.space}
 \alias{sim.space.RasterLayer}
 \alias{sim.space.SpatialPolygons}
-\title{Simulate attribute space data for RASP}
+\title{Simulate attribute space data for RAP}
 \usage{
 sim.space(x, ...)
 
@@ -27,7 +27,7 @@ sim.space(x, ...)
 \code{RasterStack} with layers for each dimension of the space.
 }
 \description{
-This function simulates attribute space data for RASP.
+This function simulates attribute space data for RAP.
 }
 \details{
 Distributions are simulated by passing \code{model} to \code{\link[RandomFields]{RFsimulate}}.

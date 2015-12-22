@@ -27,9 +27,9 @@ NULL
 #' puvspr2.dat <- calcSpeciesAverageInPus(sim_pus, stack(sim_spp))
 calcSpeciesAverageInPus<-function(x, ...) UseMethod("calcSpeciesAverageInPus")
 
-#' Simulate species distribution data for RASP
+#' Simulate species distribution data for RAP
 #'
-#' This function simulates species distributions for RASP.
+#' This function simulates species distributions for RAP.
 #'
 #' @param x \code{RasterLayer} or \code{SpatialPolygons} object delineate the spatial extent to delineate study area.
 #' @param n \code{integer} number of species. Defaults to 1.
@@ -69,9 +69,9 @@ calcSpeciesAverageInPus<-function(x, ...) UseMethod("calcSpeciesAverageInPus")
 #' plot(s5, main='RPgauss()')
 sim.species<-function(x, ...) UseMethod('sim.species')
 
-#' Simulate attribute space data for RASP
+#' Simulate attribute space data for RAP
 #'
-#' This function simulates attribute space data for RASP.
+#' This function simulates attribute space data for RAP.
 #'
 #' @param x \code{RasterLayer} or \code{SpatialPolygons} object delineate the spatial extent to delineate study area.
 #' @param d \code{integer} number of dimensions. Defaults to 2.
@@ -104,7 +104,7 @@ sim.species<-function(x, ...) UseMethod('sim.species')
 #' plot(s3[[2]], main='s3: second dimension')
 sim.space<-function(x, ...) UseMethod('sim.space')
 
-#' Solve RASP object
+#' Solve RAP object
 #'
 #' This function uses Gurobi to find prioritisations using the input parameter and data stored in a \code{RapUsolved} object,
 #' and returns a \code{RapSolved} object with outputs in it.
@@ -462,7 +462,7 @@ score<-function(x, y) UseMethod('score')
 
 #' Log file
 #'
-#' This function returns the Gurobi log file (*.log) associated with solving RASP.
+#' This function returns the Gurobi log file (*.log) associated with solving RAP.
 #'
 #' @param x \code{RapResults} or \code{RapSolved} object.
 #' @param y \code{NULL} to return all values, \code{integer} 0 to return the log file for best solution, \code{integer} value greater than 0 for log file for the \code{y}'th solution.

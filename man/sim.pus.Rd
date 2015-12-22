@@ -22,7 +22,7 @@ sim.pus(n, xmn = -sqrt(n)/2, xmx = sqrt(n)/2, ymn = -sqrt(n)/2,
 \code{SpatialPolygons} with planning units.
 }
 \description{
-This function simulates planning units for RASP.
+This function simulates planning units for RAP.
 }
 \details{
 Square planning units are generated in the shape of a square. Default coordinate arguments are such that the planning units will be centered at origin.

@@ -1,9 +1,9 @@
 #' @include RcppExports.R rapr-internal.R misc.R
 NULL
 
-#' RapReliableOpts: An S4 class to represent input parameters for the reliable formulation of RASP.
+#' RapReliableOpts: An S4 class to represent input parameters for the reliable formulation of RAP.
 #'
-#' This class is used to store input parameters for the reliable formulation of RASP.
+#' This class is used to store input parameters for the reliable formulation of RAP.
 #'
 #' @slot BLM \code{numeric} boundary length modifier. Defaults to 0.
 #' @slot failure.multiplier \code{numeric} multiplier for failure planning unit. Defaults to 1.1.

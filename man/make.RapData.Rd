@@ -47,7 +47,7 @@ make.RapData(pus, species, spaces = NULL, amount.target = 0.2,
 \item{...}{additional arguments to \code{calcBoundaryData} and \code{calcPuVsSpeciesData}.}
 }
 \description{
-This function prepares spatially explicit planning unit, species data, and landscape data layers for RASP processing.
+This function prepares spatially explicit planning unit, species data, and landscape data layers for RAP processing.
 }
 \examples{
 # load data

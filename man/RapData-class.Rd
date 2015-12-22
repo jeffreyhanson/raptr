@@ -3,9 +3,9 @@
 \docType{class}
 \name{RapData-class}
 \alias{RapData-class}
-\title{RapData: An S4 class to represent RASP input data}
+\title{RapData: An S4 class to represent RAP input data}
 \description{
-This class is used to store RASP input data.
+This class is used to store RAP input data.
 }
 \section{Slots}{
 

@@ -3,9 +3,9 @@
 \docType{class}
 \name{RapResults-class}
 \alias{RapResults-class}
-\title{RapResults: An S4 class to represent RASP results}
+\title{RapResults: An S4 class to represent RAP results}
 \description{
-This class is used to store RASP results.
+This class is used to store RAP results.
 }
 \details{
 The \code{summary} table follows Marxan conventions (summary.dat in \url{http://www.uq.edu.au/marxan/tutorial/module5.html}). The columns are:

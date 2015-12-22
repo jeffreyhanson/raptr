@@ -1,9 +1,9 @@
 #' @include RcppExports.R rapr-internal.R misc.R generics.R RapReliableOpts.R RapUnreliableOpts.R RapData.R RapUnsolved.R RapResults.R
 NULL
 
-#' RapSolved: An S4 class to represent RASP inputs and outputs
+#' RapSolved: An S4 class to represent RAP inputs and outputs
 #'
-#' This class is used to store RASP input and output data in addition to input parameters.
+#' This class is used to store RAP input and output data in addition to input parameters.
 #'
 #' @slot opts \code{RapReliableOpts} or \code{RapUnreliableOpts} object used to store input parameters.
 #' @slot solver \code{GurobiOpts} or \code{ManualOpts} object used to store solver information/parameters.
