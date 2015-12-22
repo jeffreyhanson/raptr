@@ -2,7 +2,7 @@
 % Please edit documentation in R/RapData.R
 \name{make.RapData}
 \alias{make.RapData}
-\title{Make data for RASP using minimal inputs}
+\title{Make data for RAP using minimal inputs}
 \usage{
 make.RapData(pus, species, spaces = NULL, amount.target = 0.2,
   space.target = 0.2, n.demand.points = 100L, kernel.method = c("ks",
