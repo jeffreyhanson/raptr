@@ -97,10 +97,6 @@
 
 #' @importFrom utils capture.output
 
-#' @importFrom rgl open3d
-#' @importFrom rgl points3d
-#' @importFrom rgl title3d
-
 #' @import sp
 #' @import rgdal
 #' @import raster
