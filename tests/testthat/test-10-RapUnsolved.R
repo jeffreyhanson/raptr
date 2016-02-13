@@ -31,7 +31,7 @@ test_that('Model compiler (unreliable)', {
 	data(sim_ru)
 	sim_ru <- pu.subset(spp.subset(sim_ru, 1), 1:10)
 	# generate model code
-	model<-rcpp_generate_model_object(RapUnreliableOpts(), TRUE, sim_ru@data, FALSE)
+	model<-rcpp_generate_model_object(RapUnreliableOpts(), TRUE, sim_ru@data, TRUE)
 	model$A<-Matrix::sparseMatrix(i=model$Ar[[1]]+1, j=model$Ar[[2]]+1, x=model$Ar[[3]], dims=c(max(model$Ar[[1]])+1, length(model$obj)))
 })
 
@@ -41,7 +41,7 @@ test_that('Model compiler (reliable)', {
 	data(sim_ru)
 	sim_ru <- pu.subset(spp.subset(sim_ru, 1), 1:10)
 	# generate model code
-	model<-rcpp_generate_model_object(RapReliableOpts(), FALSE, sim_ru@data, FALSE)
+	model<-rcpp_generate_model_object(RapReliableOpts(), FALSE, sim_ru@data, TRUE)
 	model$A<-Matrix::sparseMatrix(i=model$Ar[[1]]+1, j=model$Ar[[2]]+1, x=model$Ar[[3]], dims=c(max(model$Ar[[1]])+1, length(model$obj)))
 })
 

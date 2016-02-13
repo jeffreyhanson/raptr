@@ -15,11 +15,11 @@ using namespace Rcpp;
 #include <RcppEigen.h>
 
 /* 
-The distance functions implemented here are designed to be
-equivalent to those implemented in vegan::vegdist. 
+
+The distance functions implemented here are based on those implemented in vegan::vegdist. 
 
 vegan::vegdist accepts a single matrix of points and computes all
-distances between them. The functions, however, accept two matrices
+distances between them. These functions, however, accept two matrices
 of points and compute distances between points in each matrix
 (and not points in the same matrix).
 
@@ -42,7 +42,7 @@ inline void euclidean_distance(
 			currArray=pu_coords.row(pu_ids[j]) - dp_coords.row(i);
 			dist_matrix(i,j) = std::sqrt(currArray.square().sum());
 		}
-	}
+	}	
 }
 
 inline void bray_distance(
@@ -206,8 +206,8 @@ inline void mahalanobis_distance(
 	
 	// calculate distances
 	for (std::size_t i=0; i<dp_coords.rows(); ++i) {
-		for (std::size_t j=0; j<pu_ids.size(); ++j) {			
-			currDiffMat.row(0) = total_centered.row(j+dp_coords.rows()) - total_centered.row(i);			
+		for (std::size_t j=0; j<pu_ids.size(); ++j) {
+			currDiffMat.row(0) = total_centered.row(j+dp_coords.rows()) - total_centered.row(i);
 			currDiffMat=currDiffMat * inv_cov * currDiffMat;
 			dist_matrix(i,j) = std::sqrt(currDiffMat(0,0));
 		}
