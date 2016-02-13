@@ -23,28 +23,28 @@ std::vector<double> calculateConnectivity(
 
 // unreliable - best space value
 double unreliable_space_value(
-	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> &weightdistMTX
+	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>&
 );
 
 // unreliable - space value for a prioritisation with 1 pu
 double unreliable_space_value(
-	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> &weightdistMTX,
-	std::size_t pu_id
-	);
+	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>&,
+	std::size_t
+);
 
 // unreliable - space value for a prioritisation with n pu's
 double unreliable_space_value(
-	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> &weightdistMTX,
-	std::vector<std::size_t> &pu_ids
+	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>&,
+	std::vector<std::size_t>&
 );
 
 // reliable - best space value
 double reliable_space_value(
-	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> &weightdistMTX,
-	std::vector<double> &pu_probs,
-	std::size_t maxrlevelINT
+	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>&,
+	std::vector<double>&,
+  std::size_t
 );
-	
+
 // reliable - space value for a prioritisation containing 1 pu
 double reliable_space_value(
 	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>&,
