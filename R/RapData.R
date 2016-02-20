@@ -89,8 +89,8 @@ setClass("RapData",
 				stop('argument to targets$proportion is not numeric')
 			if (any(is.na(object@targets$proportion)))
 				stop('argument to targets$proportion contains NA or non-finite values')
-			if (any(object@targets$proportion<0 | object@targets$proportion>1))
-				stop('argument to targets$proportion contains values >1 or <0')
+			if (any(object@targets$proportion>1))
+				stop('argument to targets$proportion contains values >1')
 
 			# pu.species.probabilities
 			if (any(!c('species','pu','value') %in% names(object@pu.species.probabilities)))

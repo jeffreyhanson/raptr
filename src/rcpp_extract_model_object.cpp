@@ -142,8 +142,8 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
  // load cached data
  if (verbose) Rcout << "\tcached data" << std::endl;
  std::vector<double> best_amountheld = cacheLST["best_amount_values"];
- Eigen::Map<Eigen::MatrixXd> best_speciesspaceMTX = Rcpp::as<Eigen::Map<Eigen::MatrixXd>>(Rcpp::as<Rcpp::NumericMatrix>(cacheLST["best_space_values"]));
- Eigen::Map<Eigen::MatrixXd> worst_speciesspaceMTX = Rcpp::as<Eigen::Map<Eigen::MatrixXd>>(Rcpp::as<Rcpp::NumericMatrix>(cacheLST["worst_space_values"]));
+ Eigen::Map<Eigen::MatrixXd> speciesspaceMTX = Rcpp::as<Eigen::Map<Eigen::MatrixXd>>(Rcpp::as<Rcpp::NumericMatrix>(cacheLST["space_targets"]));
+ Eigen::Map<Eigen::MatrixXd> tss_speciesspaceMTX = Rcpp::as<Eigen::Map<Eigen::MatrixXd>>(Rcpp::as<Rcpp::NumericMatrix>(cacheLST["tss_space_values"]));
 
  //// Main processing
  if (verbose) Rcout << "Main processing" << std::endl;
@@ -228,33 +228,26 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
 	 }
  }
 	
- /// calculate spatial representation metrics
+ // calculate spatial representation metrics
  if (verbose) Rcout << "\t\tcalculating representation props." << std::endl;
- // 	Rcpp::Rcout << "\tspaceheld vars" << std::endl;
  Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> spaceheldMTX(1, n_species*n_attribute_spaces);
  std::size_t currCol=-1;
 	if (unreliable_formulation) {
 	 for (std::size_t i=0; i<n_species; ++i) {
 		 for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-       ++currCol;
-       spaceheldMTX(0, currCol)=(
-         (worst_speciesspaceMTX(i,j) - unreliable_space_value(weightdistMTX(i,j),selected_species_pu_pos[i])) /
-         (worst_speciesspaceMTX(i,j)-best_speciesspaceMTX(i,j))
-       );
+				++currCol;
+				spaceheldMTX(0, currCol)=1.0-(unreliable_space_value(weightdistMTX(i,j),selected_species_pu_pos[i],true) / tss_speciesspaceMTX(i,j));
 		}
    }
  } else {
 	 for (std::size_t i=0; i<n_species; ++i) {
  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-      ++currCol;
-			spaceheldMTX(0, currCol)=(
-        (worst_speciesspaceMTX(i,j) - reliable_space_value(weightdistMTX(i,j),selected_species_pu_pos[i],species_pu_probs[i],species_rlevel[i])) / 
-        (worst_speciesspaceMTX(i,j)-best_speciesspaceMTX(i,j))
-      );
-    }
-   }
- }
-
+			++currCol;
+			spaceheldMTX(0, currCol)=1.0-(reliable_space_value(weightdistMTX(i,j),selected_species_pu_pos[i],species_pu_probs[i],species_rlevel[i],true) / tss_speciesspaceMTX(i,j));
+		}
+	}
+ } 
+ 
  /// calculated vars
  // extract summaryDF
  if (verbose) Rcout << "\tcalculating connectivity data" << std::endl;

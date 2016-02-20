@@ -4,24 +4,24 @@
 \alias{rap}
 \title{Generate prioritisations using RAP}
 \usage{
-rap(pus, species, spaces = NULL, ..., formulation = "unreliable",
-  solve = TRUE)
+rap(pus, species, spaces = NULL, formulation = "unreliable", solve = TRUE,
+  ...)
 }
 \arguments{
-\item{pus}{\code{SpatialPolyogns} object representing planning units.}
+\item{pus}{\code{\link[sp]{SpatialPolyogns}} object representing planning units.}
 
-\item{species}{\code{Raster} object with species distribution data.}
+\item{species}{\code{\link[raster]{RasterLayer}} object with species distribution data.}
 
 \item{spaces}{\code{list} of \code{RasterLayer} or \code{RasterStack} objects. Each elements denotes the spatial distribution for each space. Defaults to \code{NULL}.}
-
-\item{...}{arguments are passed to \code{GurobiOpts}, \code{RapData}, and \code{RapReliableOpts} or \code{RapUnreliableOpts} functions.}
 
 \item{formulation}{\code{character}  to indicate if 'unreliable' or 'reliable' formulation should be used to generate prioritisations. Defaults to 'unreliable'.}
 
 \item{solve}{\code{logical} should solutions be generated?}
+
+\item{...}{arguments are passed to \code{\link{GurobiOpts}}, \code{\link{make.RapData}}, and \code{\link{RapReliableOpts}} or \code{\link{RapUnreliableOpts}} functions.}
 }
 \value{
-\code{RapSolved} object if \code{solve} is \code{TRUE}, else \code{RapUnsolved}.
+\code{\link{RapSolved}} object if \code{solve} is \code{TRUE}, else \code{\link{RapUnsolved}}.
 }
 \description{
 This is a general function to create Rap objects from scratch and solve them to generate solutions.

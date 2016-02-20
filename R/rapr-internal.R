@@ -747,14 +747,17 @@ spacePlot.3d<-function(pu, dp, pu.color.palette, main) {
 
 
 # parse arguments function
-parseArgs<-function(fn, object=NULL, ...) {
+parseArgs<-function(fn, object=NULL, skip=-1, ...) {
   if (!is.null(object))
     fn<-paste0(fn, '.', class(object))
   ellipses.args<-list(...)
+  fn.args<-names(formals(fn))
+  if (!is.null(skip))
+		fn.args<-fn.args[skip]
   return(
     ellipses.args[intersect(
       names(ellipses.args),
-      names(formals(fn))[-1]
+      fn.args
     )]
   )
 }

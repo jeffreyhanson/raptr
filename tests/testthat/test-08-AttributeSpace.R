@@ -1,3 +1,5 @@
+context('08-AttributeSpace')
+
 test_that('AttributeSpace generator function', {
 	# load data
 	data(cs_spp, cs_pus)

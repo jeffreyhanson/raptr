@@ -1,3 +1,5 @@
+context('12-RapSolved')
+
 ### create RapSolved object
 ### tests
 test_that('plot (x=RapSolved, y=missing)', {

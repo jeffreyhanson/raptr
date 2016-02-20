@@ -1,3 +1,5 @@
+context('09-RapData')
+
 test_that('RapData', {
 	# load data
 	data(cs_pus, cs_spp, cs_space)

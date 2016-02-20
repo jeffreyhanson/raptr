@@ -136,7 +136,7 @@ The unreliable formulation (URAP) is a defined as a multi-objective optimisation
 %
 & & \text{s.t. } & \sum_{j=0}^{J-1} A_j q_{jf} \geq \bar{T}_{f} & \forall & 0 \leq f \leq F-1 \tag{2b}\\
 %
-& & & \sum_{i=0}^{I-1} \sum_{j=0}^{J-1} \lambda_{fsi} Y_{fsij} \leq \hat{T}_{fs}  & \forall & 0 \leq f \leq F-1, \tag{2c}\\
+& & & 1 - \frac{\sum_{i=0}^{I-1} \sum_{j=0}^{J-1} \left( \lambda_{fsi} d_{fsij} Y_{fsij} \right)^2}{\sum_{i=0}^{I-1} \sum_{l=0}^{I-1} \left( \lambda_{fsi} D_{fsil} \right)^2 } \geq \hat{T}_{fs}  & \forall & 0 \leq f \leq F-1, \tag{2c}\\
 & & & & & 0 \leq s \leq S-1\\
 %
 & & & \sum_{j=0}^{J-1} Y_{fsij} = 1 & \forall & 0 \leq f \leq F-1, \tag{2d}\\

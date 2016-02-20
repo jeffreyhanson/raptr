@@ -15,8 +15,7 @@ using namespace Rcpp;
 #include <RcppEigen.h>
 
 /* 
-The distance functions implemented here are designed to be
-equivalent to those implemented in vegan::vegdist. 
+The distance functions implemented here are based on those in vegan::vegdist. 
 
 vegan::vegdist accepts a single matrix of points and computes all
 distances between them. The functions, however, accept two matrices
@@ -58,7 +57,7 @@ inline void bray_distance(
 		for (std::size_t j=0; j<pu_ids.size(); ++j) {
 			currArray1=pu_coords.row(pu_ids[j])-dp_coords.row(i);
 			currArray2=pu_coords.row(pu_ids[j])+dp_coords.row(i);
-			dist_matrix(i,j) = (currArray1.abs().sum()+1.0e-5) / (currArray2.sum()+1.0e-5);
+			dist_matrix(i,j) = (currArray1.abs().sum()) / (currArray2.sum());
 		}
 	}
 }
@@ -89,28 +88,49 @@ inline void gower_distance(
 	/// where M is the number of columns (excluding missing values)
 	
 	// init
-	Eigen::ArrayXXd currArray1;
-	Eigen::ArrayXXd currArray2;
-	double inverse_M=1.0/static_cast<double>(dp_coords.cols());
-	// find minimum and maximum values
-	Eigen::ArrayXXd currMax=dp_coords.colwise().maxCoeff();
-	Eigen::ArrayXXd currMin=dp_coords.colwise().minCoeff();
+	double m;
+	double curr_min;
+	double curr_max;
+	double curr_diff;
+	Eigen::ArrayXXd currArray;
+	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> pu_coords_sub;
+	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> pu_coords_zs;
+	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> dp_coords_zs;
+	pu_coords_sub.resize(pu_ids.size(), pu_coords.cols());
+	pu_coords_zs.resize(pu_ids.size(), pu_coords.cols());
+	dp_coords_zs.resize(dp_coords.rows(), dp_coords.cols());
+	// copy across relevant pus
 	for (std::size_t j=0; j<pu_ids.size(); ++j) {
-		currArray1=pu_coords.row(pu_ids[j]);
-		for (std::size_t k=0; k<dp_coords.cols(); ++k) {
-			currMax(k)=std::max(currMax(k), currArray1(k));
-			currMin(k)=std::min(currMin(k), currArray1(k));
-		}
+		pu_coords_sub.row(j)=pu_coords.row(pu_ids[j]);
 	}
-	currArray1 = (currMax - currMin)+1.0e-5;
-	// calculate distances
+	// standardize values to between zero and one
+	for (std::size_t k=0; k<pu_coords_zs.cols(); ++k) {
+		// init
+		curr_min = std::min(pu_coords_sub.col(k).array().minCoeff(), dp_coords.col(k).array().minCoeff());
+		curr_max = std::max(pu_coords_sub.col(k).array().maxCoeff(), dp_coords.col(k).array().maxCoeff());
+		curr_diff = curr_max - curr_min;
+		if (curr_min < 0.0) {
+			m=curr_min;
+		} else {
+			m=std::numeric_limits<double>::epsilon();
+		}
+		curr_diff = std::max(curr_diff, m);
+		// update pus
+		pu_coords_zs.col(k).array()=(pu_coords_sub.col(k).array() - curr_min);
+		pu_coords_zs.col(k).array()/=curr_diff;
+		// update dps
+		dp_coords_zs.col(k).array()=(dp_coords.col(k).array() - curr_min);
+		dp_coords_zs.col(k).array()/=curr_diff;
+	}
+	
+	// calculate differences
 	for (std::size_t i=0; i<dp_coords.rows(); ++i) {
 		for (std::size_t j=0; j<pu_ids.size(); ++j) {
-			currArray2=pu_coords.row(pu_ids[j])-dp_coords.row(i);
-			currArray2=((currArray2.abs()+1.0e-5) / currArray1);
-			dist_matrix(i,j) = inverse_M * currArray2.sum();
+			currArray=pu_coords_zs.row(j)-dp_coords_zs.row(i);
+			dist_matrix(i,j)=currArray.abs().sum();
 		}
 	}
+	dist_matrix/=static_cast<double>(currArray.size());
 }
 
 inline void canberra_distance(
@@ -128,7 +148,7 @@ inline void canberra_distance(
 			currArray1=pu_coords.row(pu_ids[j]) - dp_coords.row(i);
 			currArray2=pu_coords.row(pu_ids[j]);
 			currArray3=dp_coords.row(i);
-			currArray1=(currArray1.abs()+1.0e-5) / (currArray2.abs() + currArray3.abs() + 1.0e-5);
+			currArray1=(currArray1.abs()) / (currArray2.abs() + currArray3.abs());
 			dist_matrix(i,j)=currArray1.sum();
 		}
 	}
@@ -152,7 +172,6 @@ inline void kulczynski_distance(
 		Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> &dist_matrix
 ) {
 	// d[jk] 1 - 0.5*((sum min(x[ij],x[ik])/(sum x[ij]) + (sum min(x[ij],x[ik])/(sum x[ik]))
-	Eigen::ArrayXXd currArray;
 	double currVal1;
 	double currVal2;
 	double currVal3;
@@ -166,13 +185,7 @@ inline void kulczynski_distance(
 				currVal2+=pu_coords(pu_ids[j],k);
 				currVal3+=dp_coords(i,k);
 			}
-			currVal1+=1.e-5;
-			currVal2+=1.e-5;
-			currVal3+=1.e-5;
-			dist_matrix(i,j)= 1.0 - (0.5 * (
-				(currVal1/currVal2) + 
-				(currVal1/currVal3)
-			));
+			dist_matrix(i,j) = 1.0 - (currVal1/currVal2/2.0) - (currVal1/currVal3/2.0);
 		}
 	}
 }
@@ -185,7 +198,7 @@ inline void mahalanobis_distance(
 		Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> &dist_matrix
 ) {
 	// init
-	double total_rows=static_cast<double>(dp_coords.rows()) + static_cast<double>(pu_ids.size());
+	double total_rows=static_cast<double>(dp_coords.rows()+pu_ids.size());
 	Eigen::MatrixXd inv_cov;
 	Eigen::MatrixXd total_centered(pu_ids.size() + dp_coords.rows(), dp_coords.cols());
 	Eigen::MatrixXd currDiffMat(1, dp_coords.cols());
@@ -198,21 +211,20 @@ inline void mahalanobis_distance(
 		total_centered.row(x) = pu_coords.row(pu_ids[j]);
 	
 	// centre matrix
-	total_centered.rowwise() -= total_centered.colwise().mean();
+	total_centered.rowwise() -= total_centered.colwise().mean();	
 	
 	// generate covariance matrices
-	inv_cov = (total_centered.adjoint() * total_centered) / (total_rows-1.0);		
+	inv_cov = (total_centered.adjoint() * total_centered) / (total_rows-1.0);
 	inv_cov=inv_cov.inverse();
 	
 	// calculate distances
 	for (std::size_t i=0; i<dp_coords.rows(); ++i) {
-		for (std::size_t j=0; j<pu_ids.size(); ++j) {			
-			currDiffMat.row(0) = total_centered.row(j+dp_coords.rows()) - total_centered.row(i);			
+		for (std::size_t j=0; j<pu_ids.size(); ++j) {
+			currDiffMat.row(0) = total_centered.row(j+dp_coords.rows()) - total_centered.row(i);
 			currDiffMat=currDiffMat * inv_cov * currDiffMat;
 			dist_matrix(i,j) = std::sqrt(currDiffMat(0,0));
 		}
 	}
 }
-
 
 #endif

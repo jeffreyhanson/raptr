@@ -1,0 +1,117 @@
+RapData                  package:rapr                  R Documentation
+
+_C_r_e_a_t_e _n_e_w _R_a_p_D_a_t_a _o_b_j_e_c_t
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     This function creates a "RapData" object using pre-processed data.
+
+_U_s_a_g_e:
+
+     RapData(pu, species, targets, pu.species.probabilities, attribute.spaces,
+       boundary, polygons = NA, skipchecks = FALSE, .cache = new.env())
+     
+_A_r_g_u_m_e_n_t_s:
+
+      pu: 'data.frame' planning unit data. Columns are 'cost'
+          ('numeric'), 'area' ('numeric'), and 'status' ('integer').
+
+ species: 'data.frame' with species data. Columns are 'name'
+          ('character').
+
+ targets: 'data.frame' with species data. Columns are 'species'
+          ('integer'), 'target' ('integer'), 'proportion' ('numeric'),
+          and 'name' ('character').
+
+pu.species.probabilities: 'data.frame' with data on the probability of
+          species in each planning unit. Columns are 'species'
+          ('integer'), 'pu' ('integer'), and 'value' ('numeric')
+          columns.
+
+attribute.spaces: 'list' of 'AttributeSpace' objects with the demand
+          points and planning unit coordinates.
+
+boundary: 'data.frame' with data on the shared boundary length of
+          planning units. Columns are with 'id1' ('integer'), 'id2'
+          ('integer'), and 'boundary' ('integer').
+
+polygons: 'PolySet' planning unit spatial data or 'NULL' if data not
+          available.
+
+skipchecks: 'logical' Skip data integrity checks? May improve speed for
+          big data sets.
+
+  .cache: 'environment' used to cache calculations.
+
+_V_a_l_u_e:
+
+     RapData object
+
+_N_o_t_e:
+
+     Generally, users are not encouraged to change arguments to
+     '.cache'.
+
+_S_e_e _A_l_s_o:
+
+     'PolySet', 'SpatialPoints', 'SpatialPointsDataFrame',
+     'make.RapData', 'RapData-class'.
+
+_E_x_a_m_p_l_e_s:
+
+     ## Not run:
+     
+     # load data
+     data(cs_pus, cs_spp, cs_space)
+     # create data for RapData object
+     attribute.spaces=list(
+             AttributeSpace(
+                     pu=SimplePoints(rgeos::gCentroid(cs_pus[1:10,], byid=TRUE)@coords),
+                     demand.points=list(
+                     make.DemandPoints(
+                             SpatialPoints(
+                                     coords=randomPoints(
+                                             cs_spp,
+                                             n=10,
+                                             prob=TRUE
+                                     )
+                             ),
+                             NULL
+                     )
+             ),
+             distance.metric='euclidean'
+             ),
+             AttributeSpace(
+                     pu=SimplePoints(extract(cs_space[[1]],cs_pus[1:10,],fun=mean)),
+                     demand.points=list(
+                     make.DemandPoints(
+                             SpatialPoints(
+                                     coords=randomPoints(
+                                             cs_spp,
+                                             n=10,
+                                             prob=TRUE
+                                     )
+                             ),
+                             cs_space[[1]]
+                     )
+             ),
+             distance.metric='euclidean'
+             )
+     )
+     pu.species.probabilities=calcSpeciesAverageInPus(cs_pus[1:10,], cs_spp)
+     polygons=SpatialPolygons2PolySet(cs_pus[1:10,])
+     boundary=calcBoundaryData(cs_pus[1:10,])
+     
+     x<-RapData(
+             pu=cs_pus@data[1:10,],
+             species=data.frame(name='test'),
+      target=data.frame(species=1, target=0:2, proportion=0.2),
+             pu.species.probabilities=pu.species.probabilities,
+             attribute.spaces=attribute.spaces,
+             polygons=polygons,
+             boundary=boundary
+     )
+     print(x)
+     ## End(Not run)
+     
+

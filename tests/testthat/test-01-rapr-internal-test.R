@@ -1,3 +1,5 @@
+context('01-internal-tests')
+
 test_that('rcpp_sum_duplicates', {
 	# create data
 	imat=matrix(c(

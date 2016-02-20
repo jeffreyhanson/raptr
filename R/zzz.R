@@ -10,3 +10,7 @@
 		)
 	}
 }
+
+.onUnload <- function(libpath) {
+	library.dynam.unload('rapr',libpath)
+}

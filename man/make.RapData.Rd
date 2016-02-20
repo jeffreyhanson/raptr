@@ -9,8 +9,8 @@ make.RapData(pus, species, spaces = NULL, amount.target = 0.2,
   "hyperbox")[1], quantile = 0.2, scale = TRUE, species.points = NULL,
   n.species.points = ceiling(0.2 * cellStats(species, "sum")),
   include.geographic.space = TRUE,
-  spaces.distance.metric = ifelse(inherits(spaces, "list"), rep("bray",
-  length(spaces)), "bray"), geographic.distance.metric = "euclidean",
+  spaces.distance.metric = ifelse(inherits(spaces, "list"), rep("euclidean",
+  length(spaces)), "euclidean"), geographic.distance.metric = "euclidean",
   verbose = FALSE, ...)
 }
 \arguments{
@@ -38,7 +38,7 @@ make.RapData(pus, species, spaces = NULL, amount.target = 0.2,
 
 \item{include.geographic.space}{\code{logical} should the geographic space be considered an attribute space?}
 
-\item{spaces.distance.metric}{\code{character} specifying the distance metric to use for each attribute space in \code{spaces}. Valid metrics are 'euclidean', 'bray', 'manhattan','gower', 'canberra', 'mahalanobis', 'jaccard', and 'kulczynski'. Argument defaults to 'bray' for each attribute space. See \code{?AttributeSpace} for details on the distance metrics.}
+\item{spaces.distance.metric}{\code{character} specifying the distance metric to use for each attribute space in \code{spaces}. Valid metrics are 'euclidean', 'bray', 'manhattan','gower', 'canberra', 'mahalanobis', 'jaccard', and 'kulczynski'. Argument defaults to 'euclidean' for each attribute space. See \code{?AttributeSpace} for details on the distance metrics.}
 
 \item{geographic.distance.metric}{\code{character} specifying the distance metric to use for the geographic attribute space (if \code{include.geographic.space=TRUE}). Defaults to 'euclidean'. See \code{?AttributeSpace} for details on the distance metrics.}
 
