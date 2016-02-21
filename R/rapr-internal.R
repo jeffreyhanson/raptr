@@ -144,20 +144,32 @@ categoricalLegend<-function(col,labels, ncol=1) {
 
 # functions to generate demand points
 demand.points.density1d<-function(pts, n, quantile=0, ...) {
+	# transform pts
+	curr.mean<-mean(pts[,1])
+	curr.sd<-sd(pts[,1])
+	pts[,1] <- (pts[,1] - curr.mean) / curr.sd
 	# generate points
 	quants=quantile(pts[,1], c((quantile/2), 1-(quantile/2)))
 	dp=runif(n, quants[[1]], quants[[2]])
 	# density kernel
 	est=kde(pts[,1], eval.points=dp, ...)
+	# back-transform demand point coordinates
+	dp.pts <- (matrix(est$eval.points, ncol=1) * curr.sd) + curr.mean
+	# return object
 	return(
 		list(
-			coords=matrix(est$eval.points, ncol=1),
+			coords=dp.pts,
 			weights=est$estimate
 		)
 	)
 }
 
 demand.points.density2d<-function(pts, n, quantile=0, ...) {
+	# transform pts
+	curr.mean<-apply(pts,2,mean)
+	curr.sd<-apply(pts,2,sd)
+	pts<-sweep(pts,MARGIN=2,FUN='-',curr.mean)
+	pts<-sweep(pts,MARGIN=2,FUN='/',curr.sd)
 	# generate points
 	dp=spsample(
 		mcp(SpatialPoints(coords=pts), percent=(100-quantile), unin = c("m"), unout = c("m2")),
@@ -166,6 +178,9 @@ demand.points.density2d<-function(pts, n, quantile=0, ...) {
 	)@coords[seq_len(n),]
 	# fit density kernel
 	est=kde(pts, eval.points=dp, ...)
+	# back-transform dps
+	dp<-sweep(dp,MARGIN=2,FUN='*',curr.sd)
+	dp<-sweep(dp,MARGIN=2,FUN='+',curr.mean)
 	# prepare data to return
 	return(
 		list(
@@ -176,6 +191,11 @@ demand.points.density2d<-function(pts, n, quantile=0, ...) {
 }
 
 demand.points.hypervolume<-function(pts, n, quantile=0, ...) {
+	# transform pts
+	curr.mean<-apply(pts,2,mean)
+	curr.sd<-apply(pts,2,sd)
+	pts<-sweep(pts,MARGIN=2,FUN='-',curr.mean)
+	pts<-sweep(pts,MARGIN=2,FUN='/',curr.sd) 
 	# fit density kernel
 	if (!exists("repsperpoint"))
 		repsperpoint=500*ncol(pts)
@@ -188,11 +208,16 @@ demand.points.hypervolume<-function(pts, n, quantile=0, ...) {
 	}
 	# fit kernel
 	hv=hypervolume(pts, bandwidth=bandwidth, quantile=quantile, ...)
-	# return demand points
+	# extract random points
 	rndpos=sample.int(nrow(hv@RandomUniformPointsThresholded), n)
+	# extract coordinates and back-transform
+	dp<-hv@RandomUniformPointsThresholded[rndpos,,drop=FALSE]
+	dp<-sweep(dp,MARGIN=2,FUN='*',curr.sd)
+	dp<-sweep(dp,MARGIN=2,FUN='+',curr.mean)
+	# return object
 	return(
 		list(
-			coords=hv@RandomUniformPointsThresholded[rndpos,,drop=FALSE],
+			coords=dp,
 			weights=hv@ProbabilityDensityAtRandomUniformPoints[rndpos]
 		)
 	)

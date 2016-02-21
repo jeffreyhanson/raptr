@@ -65,9 +65,6 @@ setMethod(
 			is.GurobiInstalled()
 		}
 
-		print('a@data@targets')
-		print(a@data@targets)
-		
 		# generate model object
 		model<-rcpp_generate_model_object(a@opts, inherits(a@opts, 'RapUnreliableOpts'), a@data, verbose)
 		model$A<-Matrix::sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value, dims=c(max(model$Ar$row)+1, length(model$obj)))
