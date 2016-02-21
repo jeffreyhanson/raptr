@@ -459,7 +459,7 @@ sim_rs_s2_amount <- update(sim_ru_s2, amount.target=0.2, space.target=0, solve=T
 sim_rs_s2_amount <- update(sim_ru_s2, amount.target=0.2, space.target=0, solve=FALSE)
 sim_rs_s2_amount <-solve(
 	sim_rs_s2_amount,
-	b=cache$sim_rs_s2_amount)
+	b=cache$sim_rs_s2_amount
 )
 ```
 
