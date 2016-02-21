@@ -5,8 +5,8 @@ NULL
 #'
 #' This is a general function to create Rap objects from scratch and solve them to generate solutions.
 #'
-#' @param pus \code{\link[sp]{SpatialPolyogns}} object representing planning units.
-#' @param species \code{\link[raster]{RasterLayer}} object with species distribution data.
+#' @param pus \code{SpatialPolygons} object representing planning units.
+#' @param species \code{RasterLayer} object with species distribution data.
 #' @param spaces \code{list} of \code{RasterLayer} or \code{RasterStack} objects. Each elements denotes the spatial distribution for each space. Defaults to \code{NULL}.
 #' @param formulation \code{character}  to indicate if 'unreliable' or 'reliable' formulation should be used to generate prioritisations. Defaults to 'unreliable'.
 #' @param solve \code{logical} should solutions be generated?
