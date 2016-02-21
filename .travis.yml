@@ -21,7 +21,7 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install r-cran-rgl r-cran-rgdal curl libssh2-1-dev -y; fi;
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then export RGL_USE_NULL=TRUE; fi;
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo tlmgr update --self; fi;
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo tlmgr install amsmath amsfonts float makecell tocloft titlesec framed titling; fi;
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then tlmgr install amsmath amsfonts float makecell tocloft titlesec framed titling; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install Caskroom/cask/xquartz; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install ghostscript; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos','RandomFieldsUtils','RandomFields'))"; fi;
