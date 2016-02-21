@@ -1,3 +1,5 @@
+context('06-SimplePoints')
+
 test_that('SimplePoints generator function', {
 	# create object
 	sp<-SimplePoints(

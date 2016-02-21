@@ -6,11 +6,11 @@
 \usage{
 make.RapData(pus, species, spaces = NULL, amount.target = 0.2,
   space.target = 0.2, n.demand.points = 100L, kernel.method = c("ks",
-  "hyperbox")[1], quantile = 0.2, scale = TRUE, species.points = NULL,
+  "hyperbox")[1], quantile = 0.2, species.points = NULL,
   n.species.points = ceiling(0.2 * cellStats(species, "sum")),
   include.geographic.space = TRUE,
-  spaces.distance.metric = ifelse(inherits(spaces, "list"), rep("bray",
-  length(spaces)), "bray"), geographic.distance.metric = "euclidean",
+  spaces.distance.metric = ifelse(inherits(spaces, "list"), rep("gower",
+  length(spaces)), "gower"), geographic.distance.metric = "euclidean",
   verbose = FALSE, ...)
 }
 \arguments{
@@ -30,15 +30,13 @@ make.RapData(pus, species, spaces = NULL, amount.target = 0.2,
 
 \item{quantile}{\code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.2.}
 
-\item{scale}{\code{logical} should attribute spaces be z-scored before generating demand points? Defaults to \code{TRUE}.}
-
 \item{species.points}{\code{list} of/or \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records. Use a \code{list} of objects to represent different species. Must have the same number of elements as \code{species}. If not supplied then use \code{n.species.points} to sample points from the species distributions.}
 
 \item{n.species.points}{\code{numeric} vector specfiying the number points to sample the species distributions to use to generate demand points. Defaults to 20\% of the distribution.}
 
 \item{include.geographic.space}{\code{logical} should the geographic space be considered an attribute space?}
 
-\item{spaces.distance.metric}{\code{character} specifying the distance metric to use for each attribute space in \code{spaces}. Valid metrics are 'euclidean', 'bray', 'manhattan','gower', 'canberra', 'mahalanobis', 'jaccard', and 'kulczynski'. Argument defaults to 'bray' for each attribute space. See \code{?AttributeSpace} for details on the distance metrics.}
+\item{spaces.distance.metric}{\code{character} specifying the distance metric to use for each attribute space in \code{spaces}. Valid metrics are 'euclidean', 'bray', 'manhattan','gower', 'canberra', 'mahalanobis', 'jaccard', and 'kulczynski'. Argument defaults to 'gower' for each attribute space. See \code{?AttributeSpace} for details on the distance metrics.}
 
 \item{geographic.distance.metric}{\code{character} specifying the distance metric to use for the geographic attribute space (if \code{include.geographic.space=TRUE}). Defaults to 'euclidean'. See \code{?AttributeSpace} for details on the distance metrics.}
 

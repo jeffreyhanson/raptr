@@ -30,9 +30,9 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	std::size_t n_species;
 	std::vector<std::size_t> n_demand_points;
 	bool boundary;
-	double boundary_threshold=1.0e-05;
-	double zero_adjust=1.e-05;
-	double sptarget_threshold=1.0e-5;
+	double boundary_threshold=1.0e-10;
+	double zero_adjust=0.0;
+	double sptarget_threshold=1.0e-10;
 	std::vector<std::string> distance_metrics;
 
 	//// Preliminary processing
@@ -140,7 +140,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	// demand points
 	if (verbose) Rcpp::Rcout << "\tdemand points data" << std::endl;
 	Eigen::Matrix<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> demandpoints_coords_MTX(n_species, n_attribute_spaces);
-	Eigen::Matrix<NumericVector, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> demandpoints_weights_MTX(n_species, n_attribute_spaces);
+	Eigen::Matrix<Eigen::VectorXd, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> demandpoints_weights_MTX(n_species, n_attribute_spaces);
 	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> currCoordinates;
 	Rcpp::NumericVector currWeights;
 	Eigen::Matrix<std::size_t, Eigen::Dynamic, Eigen::Dynamic> species_ndp(n_species, n_attribute_spaces);
@@ -158,9 +158,10 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 			Eigen::Map<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor>> tmpmat(pcv, tmp.nrow(), tmp.ncol());
 			demandpoints_coords_MTX(i,j) = tmpmat;
 			// weights
-			demandpoints_weights_MTX(i,j) = Rcpp::as<NumericVector>(currS4.slot("weights"));
+			Eigen::Map<Eigen::VectorXd> tmpvec(Rcpp::as<Eigen::Map<Eigen::VectorXd>>(currS4.slot("weights")));
+			demandpoints_weights_MTX(i,j) = tmpvec;
 			// store number dp for species i
-			species_ndp(i,j)=demandpoints_weights_MTX(i,j).size();
+			species_ndp(i,j)=tmpvec.size();
 		}
 	}
 
@@ -214,54 +215,48 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 		species_pu_probs[i].shrink_to_fit();
 		species_npu[i]=species_pu_ids[i].size();
 	}
-	
-	
 
-	/// create distance variables
-	if (verbose) 	Rcpp::Rcout << "\tdistance vars" << std::endl;
+	/// create centroid variables
+	if (verbose) Rcpp::Rcout << "\tdistance vars" << std::endl;
+	Eigen::Matrix<Eigen::VectorXd, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> centroidMTX(n_species, n_attribute_spaces);
+	for (std::size_t i=0; i<n_species; ++i) {
+		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
+			// calculate centroids
+			centroidMTX(i,j).resize(demandpoints_coords_MTX(i,j).cols());
+			centroidMTX(i,j)=demandpoints_coords_MTX(i,j).colwise().sum();
+			centroidMTX(i,j)/=static_cast<double>(species_ndp(i,j));
+		}
+	}
+
+	if (verbose) Rcpp::Rcout << "\tdistance vars" << std::endl;
 	Eigen::Matrix<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> weightdistMTX(n_species, n_attribute_spaces);
-  double currFailDist;
-  if (unreliable_formulation) {
-  	for (std::size_t i=0; i<n_species; ++i) {
-  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-  			// resize matrix
-  			weightdistMTX(i,j).resize(species_ndp(i,j),species_npu[i]);
-				// assign distance metric
-				if (distance_metrics[j]=="euclidean") {
-					distPtr=&euclidean_distance;
-				} else if (distance_metrics[j]=="bray") {
-					distPtr=&bray_distance;
-				} else if (distance_metrics[j]=="manhattan") {
-					distPtr=&manhattan_distance;
-				} else if (distance_metrics[j]=="gower") {
-					distPtr=&gower_distance;
-				} else if (distance_metrics[j]=="canberra") {
-					distPtr=&canberra_distance;
-				} else if (distance_metrics[j]=="jaccard") {
-					distPtr=&jaccard_distance;
-				} else if (distance_metrics[j]=="kulczynski") {
-					distPtr=&kulczynski_distance;
-				} else if (distance_metrics[j]=="mahalanobis") {
-					distPtr=&mahalanobis_distance;
+	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> tss_speciesspaceMTX(n_species, n_attribute_spaces);
+	{
+		Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> tmpMTX;
+		Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> tmpMTX2;
+		std::vector<std::size_t> tmp_species_pu_ids;
+		double currFailDist;
+		for (std::size_t i=0; i<n_species; ++i) {
+			for (std::size_t j=0; j<n_attribute_spaces; ++j) {
+				/// initialization
+				// resize matrices
+				tmpMTX.resize(pupointsMTX[j].rows()+1, pupointsMTX[j].cols());
+				if (unreliable_formulation) {
+					weightdistMTX(i,j).resize(species_ndp(i,j),species_npu[i]);
+					tmpMTX2.resize(species_ndp(i,j),species_npu[i]+1);
 				} else {
-					Rf_error("distance string not recognised");
+					weightdistMTX(i,j).resize(species_ndp(i,j),species_npu[i]+1);
+					tmpMTX2.resize(species_ndp(i,j),species_npu[i]+1);
 				}
-  			// calculate distances
-				(*distPtr)(species_pu_ids[i], pupointsMTX[j], demandpoints_coords_MTX(i,j), weightdistMTX(i,j));
-				// multiply distances by lambda to give weighted distances
-  			for (std::size_t k=0; k<species_ndp(i,j); ++k) {
-					weightdistMTX(i,j).row(k)*=demandpoints_weights_MTX(i,j)[k];
-				}
-				weightdistMTX(i,j).array()+=zero_adjust;
-  		}
-  	}
-  } else {
-    for (std::size_t i=0; i<n_species; ++i) {
-  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-  			// resize matrix
-  			weightdistMTX(i,j).resize(species_ndp(i,j),species_npu[i]+1);
+				tmp_species_pu_ids = species_pu_ids[i];
+				tmp_species_pu_ids.push_back(pupointsMTX[j].rows());
+				// set starting matrix values
 				weightdistMTX(i,j).setZero();
+				tmpMTX2.setZero();
+				tmpMTX.topRows(pupointsMTX[j].rows())=pupointsMTX[j];
+				tmpMTX.bottomRows<1>()=centroidMTX(i,j);
 				
+				/// preliminary processing
 				// assign distance metric
 				if (distance_metrics[j]=="euclidean") {
 					distPtr=&euclidean_distance;
@@ -282,21 +277,30 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 				} else {
 					Rf_error("distance string not recognised");
 				}
-  			// calculate distances
-				(*distPtr)(species_pu_ids[i], pupointsMTX[j], demandpoints_coords_MTX(i,j), weightdistMTX(i,j));
-				// multiply distances by lambda to give weighted distances + add zero distance 
-  			for (std::size_t k=0; k<species_ndp(i,j); ++k) {
+				/// calculate distances between demand points and (planning units + demand point centroid)
+				// calculate all distances
+				(*distPtr)(tmp_species_pu_ids, tmpMTX, demandpoints_coords_MTX(i,j), tmpMTX2);
+				// check all distances greater than zero
+				if (tmpMTX2.minCoeff() < 0.0) Rcpp::stop("Distances between demand points and planning units for species "+num2str<std::size_t>(i)+" and space "+num2str<std::size_t>(j)+" are negative. You must use a different distance metric or transform your data.");
+				// extract distances and lambda to give weighted distances
+				weightdistMTX(i,j).leftCols(species_npu[i]) = tmpMTX2.leftCols(species_npu[i]);
+				for (std::size_t k=0; k<species_ndp(i,j); ++k)
 					weightdistMTX(i,j).row(k)*=demandpoints_weights_MTX(i,j)[k];
-				}
+				// add small number to avoid zeros
 				weightdistMTX(i,j).array()+=zero_adjust;
-  			// failure pu
-  			currFailDist=weightdistMTX(i,j).maxCoeff() * failure_multiplier;
-				for (std::size_t k=0; k<species_ndp(i,j); ++k) {
-					weightdistMTX(i,j)(k,species_npu[i])+=currFailDist;
+				// failure pu if reliable formulation
+				if (!unreliable_formulation) {
+					// failure pu
+					currFailDist=weightdistMTX(i,j).maxCoeff() * failure_multiplier;
+					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
+						weightdistMTX(i,j)(k,species_npu[i])+=currFailDist;
+					}
 				}
-  		}
-  	}
-  }
+				tmpMTX2.rightCols(1).array()*=demandpoints_weights_MTX(i,j).array();
+				tss_speciesspaceMTX(i,j) = tmpMTX2.rightCols(1).array().square().sum();
+			}
+		}
+	}
 
   // resize vectors
   if (!unreliable_formulation) {
@@ -321,72 +325,13 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	}
   }
  
-	/// calculate best spacetargets
+  // calculate targets
 	if (verbose) Rcpp::Rcout << "\tspace targets" << std::endl;
-	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> best_speciesspaceMTX(n_species, n_attribute_spaces);
-  if (unreliable_formulation) {
-  	for (std::size_t i=0; i<n_species; ++i) {
-  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-  			best_speciesspaceMTX(i,j)=unreliable_space_value(
-					weightdistMTX(i,j)
-				);
-  		}
-  	}
-  } else {
-		for (std::size_t i=0; i<n_species; ++i) {
-  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				best_speciesspaceMTX(i,j)=reliable_space_value(
-					weightdistMTX(i,j),
-					species_pu_probs[i],
-					species_rlevel[i]
-				);
-			}
-		}
-  }
-
-	// calculate worst space targets
-	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> worst_speciesspaceMTX(n_species, n_attribute_spaces);
-	worst_speciesspaceMTX.setZero();
-	if (unreliable_formulation) {
-  	for (std::size_t i=0; i<n_species; ++i) {
-  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				for (std::size_t k=0; k<species_npu[i]; ++k) {
-	  			worst_speciesspaceMTX(i,j) = std::max(
-							worst_speciesspaceMTX(i,j),
-							unreliable_space_value(
-								weightdistMTX(i,j),
-								k
-							)
-					);
-				}
-  		}
-  	}
-  } else {
-		for (std::size_t i=0; i<n_species; ++i) {
-  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				for (std::size_t k=0; k<species_npu[i]; ++k) {
-	  			worst_speciesspaceMTX(i,j) = std::max(
-							worst_speciesspaceMTX(i,j),
-							reliable_space_value(
-								weightdistMTX(i,j),
-								k,
-								species_pu_probs[i][k],
-								weightdistMTX(i,j).col(species_npu[i]).sum()
-							)
-					);
-				}
-  		}
-  	}
-  }
-
-	// calculate targets
-	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> speciesspaceMTX(n_species, n_attribute_spaces);
-	for (std::size_t i=0; i<n_species; ++i) {
-		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-			speciesspaceMTX(i,j)=best_speciesspaceMTX(i,j) + ((worst_speciesspaceMTX(i,j) - best_speciesspaceMTX(i,j)) * (1.0 - spacetargetsMTX(i,j)));
-		}
-	}
-
+  Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> speciesspaceMTX(n_species, n_attribute_spaces);
+	for (std::size_t i=0; i<n_species; ++i)
+		for (std::size_t j=0; j<n_attribute_spaces; ++j)
+			speciesspaceMTX(i,j) = (spacetargetsMTX(i,j) - 1.0) * tss_speciesspaceMTX(i,j) * -1.0;
+ 
 	// cache integer string conversions
 	if (verbose) Rcout << "\tcaching integer/string conversions" << std::endl;
 	std::size_t maxINT;
@@ -540,7 +485,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 							currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l];
 							model_rows_INT.push_back(counter);
 							model_cols_INT.push_back(variableMAP[currSTR]);
-							model_vals_DBL.push_back(weightdistMTX(i,j)(k,l));
+							model_vals_DBL.push_back(Pow<2>(weightdistMTX(i,j)(k,l)));
 						}
 					}
 					senseSTR.push_back("<=");
@@ -559,7 +504,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 								currSTR="W_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
 								model_rows_INT.push_back(counter);
 								model_cols_INT.push_back(variableMAP[currSTR]);
-								model_vals_DBL.push_back(weightdistMTX(i,j)(k,l));
+								model_vals_DBL.push_back(Pow<2>(weightdistMTX(i,j)(k,l)));
 							}
 						}
 					}
@@ -1026,7 +971,27 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	}
   }
   
+  // calculate best space proportions
+  if (verbose) Rcpp::Rcout << "\tcalculating best possible space targets" << std::endl;
+	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> best_speciesspaceMTX(1, n_species*n_attribute_spaces);
+	std::size_t currCol=-1;
+	if (unreliable_formulation) {
+		for (std::size_t i=0; i<n_species; ++i) {
+			for (std::size_t j=0; j<n_attribute_spaces; ++j) {
+				++currCol;
+				best_speciesspaceMTX(0,currCol)=1.0-(unreliable_space_value(weightdistMTX(i,j),true) / tss_speciesspaceMTX(i,j));
+		}
+   }
+	} else {
+		for (std::size_t i=0; i<n_species; ++i) {
+			for (std::size_t j=0; j<n_attribute_spaces; ++j) {
+				++currCol;
+				best_speciesspaceMTX(0, currCol)=1.0-(reliable_space_value(weightdistMTX(i,j),species_pu_probs[i],species_rlevel[i],true) / tss_speciesspaceMTX(i,j));
+			}
+		}
+	}
 
+	// fix variablesSTR
 	std::vector<std::string> variablesSTR(variableMAP.size());
 	for (auto i : variableMAP)
 		variablesSTR[i.second]=i.first;
@@ -1043,7 +1008,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 			wdistLST[i][j]=weightdistMTX(i,j);
 		}
 	}
-	
+		
 	if (verbose) Rcpp::Rcout << "Sending data to R" << std::endl;
 	return(
 		Rcpp::List::create(
@@ -1061,8 +1026,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 			Rcpp::Named("cache") = Rcpp::List::create(
 				Rcpp::Named("best_amount_values") = Rcpp::wrap(speciesareaDBL),
 				Rcpp::Named("space_targets") = Rcpp::wrap(speciesspaceMTX),
+				Rcpp::Named("tss_space_values") = Rcpp::wrap(tss_speciesspaceMTX),
 				Rcpp::Named("best_space_values") = Rcpp::wrap(best_speciesspaceMTX),
-				Rcpp::Named("worst_space_values") = Rcpp::wrap(worst_speciesspaceMTX),
 				Rcpp::Named("variables") = Rcpp::wrap(variablesSTR),
 				Rcpp::Named("wdist") = Rcpp::wrap(wdistLST)
 			),

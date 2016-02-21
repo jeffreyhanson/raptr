@@ -1,3 +1,5 @@
+context('02-misc')
+
 test_that('gdal installation checks', {
 	is.gdalInstalled()
 })

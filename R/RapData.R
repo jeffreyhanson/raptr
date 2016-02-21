@@ -89,8 +89,8 @@ setClass("RapData",
 				stop('argument to targets$proportion is not numeric')
 			if (any(is.na(object@targets$proportion)))
 				stop('argument to targets$proportion contains NA or non-finite values')
-			if (any(object@targets$proportion<0 | object@targets$proportion>1))
-				stop('argument to targets$proportion contains values >1 or <0')
+			if (any(object@targets$proportion>1))
+				stop('argument to targets$proportion contains values >1')
 
 			# pu.species.probabilities
 			if (any(!c('species','pu','value') %in% names(object@pu.species.probabilities)))
@@ -254,11 +254,10 @@ RapData<-function(pu, species, targets, pu.species.probabilities, attribute.spac
 #' @param n.demand.points \code{integer} number of demand points to use for each attribute space for each species. Defaults to 100L.
 #' @param kernel.method \code{character} name of kernel method to use to generate demand points. Use either \code{ks} or \code{hypervolume}.
 #' @param quantile \code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.2.
-#' @param scale \code{logical} should attribute spaces be z-scored before generating demand points? Defaults to \code{TRUE}.
 #' @param include.geographic.space \code{logical} should the geographic space be considered an attribute space?
 #' @param species.points \code{list} of/or \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records. Use a \code{list} of objects to represent different species. Must have the same number of elements as \code{species}. If not supplied then use \code{n.species.points} to sample points from the species distributions.
 #' @param n.species.points \code{numeric} vector specfiying the number points to sample the species distributions to use to generate demand points. Defaults to 20\% of the distribution.
-#' @param spaces.distance.metric \code{character} specifying the distance metric to use for each attribute space in \code{spaces}. Valid metrics are 'euclidean', 'bray', 'manhattan','gower', 'canberra', 'mahalanobis', 'jaccard', and 'kulczynski'. Argument defaults to 'euclidean' for each attribute space. See \code{?AttributeSpace} for details on the distance metrics.
+#' @param spaces.distance.metric \code{character} specifying the distance metric to use for each attribute space in \code{spaces}. Valid metrics are 'euclidean', 'bray', 'manhattan','gower', 'canberra', 'mahalanobis', 'jaccard', and 'kulczynski'. Argument defaults to 'gower' for each attribute space. See \code{?AttributeSpace} for details on the distance metrics.
 #' @param geographic.distance.metric \code{character} specifying the distance metric to use for the geographic attribute space (if \code{include.geographic.space=TRUE}). Defaults to 'euclidean'. See \code{?AttributeSpace} for details on the distance metrics.
 #' @param verbose \code{logical} print statements during processing?
 #' @param ... additional arguments to \code{calcBoundaryData} and \code{calcPuVsSpeciesData}.
@@ -271,9 +270,9 @@ RapData<-function(pu, species, targets, pu.species.probabilities, attribute.spac
 #' x <- make.RapData(cs_pus[1:10,], cs_spp, cs_space, include.geographic.space=TRUE)
 #' print(x)
 make.RapData<-function(pus, species, spaces=NULL,
-	amount.target=0.2, space.target=0.2, n.demand.points=100L, kernel.method=c('ks', 'hyperbox')[1], quantile=0.2, scale=TRUE,
+	amount.target=0.2, space.target=0.2, n.demand.points=100L, kernel.method=c('ks', 'hyperbox')[1], quantile=0.2,
 	species.points=NULL, n.species.points=ceiling(0.2*cellStats(species, 'sum')), include.geographic.space=TRUE, 
-	spaces.distance.metric=ifelse(inherits(spaces,'list'), rep('euclidean', length(spaces)), 'euclidean'),
+	spaces.distance.metric=ifelse(inherits(spaces,'list'), rep('gower', length(spaces)), 'gower'),
 	geographic.distance.metric='euclidean',
 	verbose=FALSE, ...
 ) {
@@ -281,8 +280,8 @@ make.RapData<-function(pus, species, spaces=NULL,
 	# check inputs for validity
 	stopifnot(inherits(species.points, c('SpatialPoints', 'SpatialPointsDataFrame', 'NULL')))
 	stopifnot(inherits(pus, c('SpatialPolygons')))
-	stopifnot(inherits(species, c('RasterStack', 'RasterLayer')))
-	stopifnot(inherits(spaces, c('NULL', 'RasterStack', 'RasterLayer', 'list')))
+	stopifnot(inherits(species, c('RasterStack', 'RasterLayer', 'RasterBrick')))
+	stopifnot(inherits(spaces, c('NULL', 'RasterStack', 'RasterBrick', 'RasterLayer', 'list')))
 	sapply(spaces.distance.metric, match.arg, c(
 		'euclidean', 'bray', 'manhattan','gower',
 		'canberra', 'mahalanobis',
@@ -302,27 +301,6 @@ make.RapData<-function(pus, species, spaces=NULL,
 	# check length of distance.metric
 	if (!is.null(spaces[[1]])) {
 		stopifnot(length(spaces.distance.metric)==(length(spaces)))
-	}
-		
-	# z-score spaces
-	meansLST=list()
-	sdsLST=list()
-	if (scale) {
-		for (i in seq_along(spaces)) {
-			if (inherits(spaces[[i]], 'Raster')) {
-				# get means and sds
-				meansLST[[i]]=cellStats(spaces[[i]], 'mean')
-				sdsLST[[i]]=cellStats(spaces[[i]], 'sd')
-				# if sdsLST contains zeros then the SD is 1 due to bug in cellStats package
-				if (any(is.na(sdsLST[[i]])))
-					sdsLST[[i]][is.na(sdsLST[[i]])]=1
-				tmpLST=list()
-				for (j in seq_along(meansLST[[i]])) {
-					tmpLST[[j]]=(spaces[[i]][[j]] - meansLST[[i]][[j]]) / sdsLST[[i]][[j]]
-				}
-				spaces[[i]]=stack(tmpLST)
-			}
-		}
 	}
 	# create species.points from species
 	if (is.null(species.points)) {
@@ -352,7 +330,7 @@ make.RapData<-function(pus, species, spaces=NULL,
 	}
 	# set polygons
 	geoPolygons<-pus
-	if (!identical(geoPolygons, CRS('+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs'))) {
+	if (!identical(geoPolygons@proj4string, CRS('+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs')) & !identical(geoPolygons@proj4string, CRS())) {
 		if (verbose)
 			cat('Projecting polygons to WGS1984 for rendering.\n')
 		geoPolygons<-spTransform(geoPolygons, CRS('+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs'))
@@ -417,19 +395,9 @@ make.RapData<-function(pus, species, spaces=NULL,
 	}
 	# calculate positions in geographic space
 	if (include.geographic.space) {
-		pu_coords=gCentroid(pus, byid=TRUE)@coords
-		if (scale) {
-			pu_meansDBL=c()
-			pu_sdsDBL=c()
-			for (i in seq_len(ncol(pu_coords))) {
-				pu_meansDBL=c(pu_meansDBL,mean(pu_coords[,i]))
-				pu_sdsDBL=c(pu_sdsDBL,sd(pu_coords[,i]))
-				pu_coords[,i] = (pu_coords[,i] - pu_meansDBL[i]) / pu_sdsDBL[i]
-			}
-		}
 		pu.points=append(
 			pu.points,
-			list(SimplePoints(pu_coords))
+			list(SimplePoints(gCentroid(pus, byid=TRUE)@coords))
 		)
 	}
 	if (length(pu.points)==0) {
@@ -447,10 +415,6 @@ make.RapData<-function(pus, species, spaces=NULL,
 			# extract space points
 			if (is.null(spaces[[i]])) {
 				space.points=species.points[[j]]@coords
-				if (scale) {
-					for (k in seq_len(ncol(space.points)))
-						space.points[,k]=(species.points[[j]]@coords[,k] - pu_meansDBL[k]) / pu_sdsDBL[k]
-				}
 			} else {
 				space.points=extract(spaces[[i]], species.points[[j]])
 			}

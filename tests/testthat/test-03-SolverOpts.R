@@ -1,3 +1,5 @@
+context('03-SolverOpts')
+
 test_that('GurobiOpts generator function', {
 	# generate objects
 	x=GurobiOpts()

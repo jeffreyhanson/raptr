@@ -1,3 +1,4 @@
+context('05-simulate-data')
 
 test_that("simulate planning units functions", {
 # 	generate planning units

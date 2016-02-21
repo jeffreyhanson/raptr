@@ -59,7 +59,7 @@ setMethod(
 		# check that gurobi is installed
 		if (!is.null(options()$GurobiInstalled)) {
 			if (!options()$GurobiInstalled) {
-				stop('The gurobi R package has not been installed, or Girobi has not been installation has not been completed')
+				stop('The gurobi R package has not been installed, or Gurobi has not been installation has not been completed')
 			}
 		} else {
 			is.GurobiInstalled()
@@ -79,7 +79,16 @@ setMethod(
 		# check solution object
 		if (!is.null(solution$status))
 			if (solution$status=="INFEASIBLE") {
-				stop('No solution found because model is not feasible.')
+				tmpDF = data.frame(
+					Proportion=c(model$cache$best_space_values),
+					Target=paste0(
+						rep(a@data@species$name, each=length(a@data@attribute.spaces)),
+						rep(paste0(' (Space ',seq_along(a@data@attribute.spaces),')'), length(length(a@data@species$name)))
+					)
+				)
+				cat('Try setting lower space-based targets.\n\tBelow are the maximum targets for each species and space.\n')
+				print(tmpDF)
+				stop('No solution found because the problem cannot be solved.')
 			}
 		if (is.null(solution$x)) {
 			stop('No solution found because Gurobi parameters do not allow sufficient time.')
@@ -223,7 +232,7 @@ amount.held.RapSolved<-function(x, y=0, species = NULL) {
 	# return named vector
 	return(
 		structure(
-			x@results@amount.held[y,],
+			x@results@amount.held[y,species],
 			.Dim=c(
 				length(y),
 				length(species)

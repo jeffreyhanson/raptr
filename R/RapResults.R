@@ -66,7 +66,7 @@ setClass("RapResults",
 		if (!all(c(is.finite(object@space.held))))
 			stop('object@space.held contains NA or non-finite values')
 		if (any(object@space.held < 0))
-			stop('object@space.held contains values less than 0')
+			warning('object@space.held contains values less than 0, some species are really poorly represented')
 		if (any(object@space.held > 1))
 			warning('object@space.held contains values greater than 1, consider increasing the failure.multiplier')
 		

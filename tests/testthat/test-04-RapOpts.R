@@ -1,3 +1,5 @@
+context('04-RapOpts')
+
 test_that('RapUnreliableOpts generator function', {
 	# generate objects
 	x=RapUnreliableOpts()

@@ -1,3 +1,5 @@
+context('07-DemandPoints')
+
 test_that('DemandPoints generator function', {
 	# create object
 	dp<-DemandPoints(
