@@ -149,7 +149,7 @@ test_that('solve.RapUnsolved (reliable - NUMREPS=1 - sparse occupancy)', {
 	runReliableChecks(sim_rs)
 })
 
-test_that('solve.RapUnsolved (unreliable - NumberSolutions=2)', {
+test_that('solve.RapUnsolved (unreliable - NumberSolutions=3)', {
 	# skip if gurobi not installed
 	if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')
 	# load RapUnsolved object
@@ -159,13 +159,13 @@ test_that('solve.RapUnsolved (unreliable - NumberSolutions=2)', {
 	sim_ru@opts=RapUnreliableOpts()
 	sim_ru@data@targets[[3]]=c(0.1,0.1,0.1,-10,-10,-10)
 	# solve it
-	sim_rs<-rapr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L, NumberSolutions=2L))
+	sim_rs<-rapr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L, NumberSolutions=3L))
 	# run checks
-	expect_equal(nrow(summary(sim_rs)), 2L)
+	expect_equal(nrow(summary(sim_rs)), 3L)
 	runUnreliableChecks(sim_rs)
 })
 
-test_that('solve.RapUnsolved (reliable - NumberSolutions=2)', {
+test_that('solve.RapUnsolved (reliable - NumberSolutions=3)', {
 	# skip if gurobi not installed
 	if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')
 	# load RapUnsolved object
@@ -176,9 +176,9 @@ test_that('solve.RapUnsolved (reliable - NumberSolutions=2)', {
 	sim_ru@data@targets[[3]]=c(0.5,0.5,0.5,-10000,-10000,-10000)
 	sim_ru@opts=RapReliableOpts()
 	# solve it
-	sim_rs<-rapr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L, NumberSolutions=2L))
+	sim_rs<-rapr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L, NumberSolutions=3L))
 	# check number of selections is 1
-	expect_equal(nrow(summary(sim_rs)), 2L)
+	expect_equal(nrow(summary(sim_rs)), 3L)
 	runReliableChecks(sim_rs)
 })
 

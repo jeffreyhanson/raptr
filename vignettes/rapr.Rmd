@@ -408,7 +408,7 @@ To investigate the effects of space-based targets, we will generate a prioritisa
 sim_ru_s1 <- spp.subset(sim_ru, 'uniform')
 
 # update amount targets to 20% and space targets to 0%
-sim_ru_s1 <- update(sim_ru_s1, amount.target=0.2, space.target=0, solve=FALSE)
+sim_ru_s1 <- update(sim_ru_s1, amount.target=0.2, space.target=NA, solve=FALSE)
 ```
 
 ```{r, eval=use.Gurobi}
@@ -451,12 +451,12 @@ sim_ru_s2 <- spp.subset(sim_ru, 'normal')
 
 ```{r, eval=use.Gurobi}
 # update amount targets to 20% and space targets to 0% and solve it
-sim_rs_s2_amount <- update(sim_ru_s2, amount.target=0.2, space.target=0, solve=TRUE)
+sim_rs_s2_amount <- update(sim_ru_s2, amount.target=0.2, space.target=NA, solve=TRUE)
 ```
 
 ```{r, eval=!use.Gurobi, include=FALSE}
 # update amount targets to 20% and space targets to 0% and solve it
-sim_rs_s2_amount <- update(sim_ru_s2, amount.target=0.2, space.target=0, solve=FALSE)
+sim_rs_s2_amount <- update(sim_ru_s2, amount.target=0.2, space.target=NA, solve=FALSE)
 sim_rs_s2_amount <-solve(
 	sim_rs_s2_amount,
 	b=cache$sim_rs_s2_amount
@@ -492,12 +492,12 @@ sim_ru_s3 <- spp.subset(sim_ru, 'bimodal')
 
 ```{r, eval={use.Gurobi}}
 # update amount targets to 20% and space targets to 0% and solve it
-sim_rs_s3_amount <- update(sim_ru_s3, amount.target=0.2, space.target=0)
+sim_rs_s3_amount <- update(sim_ru_s3, amount.target=0.2, space.target=NA)
 ```
 
 ```{r, eval=!use.Gurobi, include=FALSE}
 # update amount targets to 20% and space targets to 0% and solve it
-sim_rs_s3_amount <- update(sim_ru_s3, amount.target=0.2, space.target=0, solve=FALSE)
+sim_rs_s3_amount <- update(sim_ru_s3, amount.target=0.2, space.target=NA, solve=FALSE)
 sim_rs_s3_amount <- solve(
 	sim_rs_s3_amount,
 	b=cache$sim_rs_s3_amount
@@ -879,7 +879,7 @@ sim_ru_gp <- rap(
 	sim_pus, sim_gspp, sim_gspace, 
 	amount.target=0.2, space.target=0.85,
 	n.demand.points=50L, kernel.method='hypervolume',
-	include.geographic.space=FALSE, solve=FALSE
+	include.geographic.space=FALSE, scale=FALSE, solve=FALSE
 )
 ```
 
@@ -1039,7 +1039,7 @@ To simplify the process of formatting data and generating prioritisations, we ca
 # status (third) column of the attribute table
 cs_rs_amount <- rap(
 	cs_pus[,-2], cs_spp, cs_space,
-  amount.target=0.2, space.target=0, n.demand.points=50L,
+  amount.target=0.2, space.target=NA, n.demand.points=50L,
   include.geographic.space=TRUE, formulation='unreliable',
   solve=FALSE
 )

@@ -19,6 +19,10 @@ setClass("DemandPoints",
 		if (!inherits(object@points, 'SimplePoints'))
 			stop('argument to points must be SimplePoints')
 		
+		# check coords have variance
+		if (max(apply(object@points@coords, 2, function(x) {length(unique(x))}))==1)
+			stop('demand points must not all be identical')
+		
 		# weights
 		if (!all(is.numeric(object@weights)))
 			stop('argument to weights must be numeric')

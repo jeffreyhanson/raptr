@@ -11,7 +11,7 @@ make.RapData(pus, species, spaces = NULL, amount.target = 0.2,
   include.geographic.space = TRUE,
   spaces.distance.metric = ifelse(inherits(spaces, "list"), rep("gower",
   length(spaces)), "gower"), geographic.distance.metric = "euclidean",
-  verbose = FALSE, ...)
+  scale = TRUE, verbose = FALSE, ...)
 }
 \arguments{
 \item{pus}{\code{SpatialPolygons} with planning unit data.}
@@ -39,6 +39,8 @@ make.RapData(pus, species, spaces = NULL, amount.target = 0.2,
 \item{spaces.distance.metric}{\code{character} specifying the distance metric to use for each attribute space in \code{spaces}. Valid metrics are 'euclidean', 'bray', 'manhattan','gower', 'canberra', 'mahalanobis', 'jaccard', and 'kulczynski'. Argument defaults to 'gower' for each attribute space. See \code{?AttributeSpace} for details on the distance metrics.}
 
 \item{geographic.distance.metric}{\code{character} specifying the distance metric to use for the geographic attribute space (if \code{include.geographic.space=TRUE}). Defaults to 'euclidean'. See \code{?AttributeSpace} for details on the distance metrics.}
+
+\item{scale}{\code{logical} scale the attribute spaces to unit mean and standard deviation? This prevents overflow. Defaults to \code{TRUE}.}
 
 \item{verbose}{\code{logical} print statements during processing?}
 

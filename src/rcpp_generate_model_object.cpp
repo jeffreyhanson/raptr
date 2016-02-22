@@ -32,7 +32,6 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	bool boundary;
 	double boundary_threshold=1.0e-10;
 	double zero_adjust=0.0;
-	double sptarget_threshold=1.0e-10;
 	std::vector<std::string> distance_metrics;
 
 	//// Preliminary processing
@@ -372,7 +371,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   if (unreliable_formulation) {
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (spacetargetsMTX(i,j)>sptarget_threshold) {
+				if (!isnan(spacetargetsMTX(i,j))) {
 					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
 						for (std::size_t l=0; l<species_npu[i]; ++l) {
 							// Y_var
@@ -387,7 +386,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   } else {
     for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (spacetargetsMTX(i,j)>sptarget_threshold) {
+				if (!isnan(spacetargetsMTX(i,j))) {
 					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
 						for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
 							for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
@@ -479,7 +478,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   if (unreliable_formulation) {
     for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (spacetargetsMTX(i,j)>sptarget_threshold) {
+				if (!isnan(spacetargetsMTX(i,j))) {
 					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
 						for (std::size_t l=0; l<species_npu[i]; ++l) {
 							currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l];
@@ -497,7 +496,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   } else {
     for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (spacetargetsMTX(i,j)>sptarget_threshold) {
+				if (!isnan(spacetargetsMTX(i,j))) {
 					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
 						for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
 							for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
@@ -595,7 +594,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	if (verbose) Rcpp::Rcout << "\t\teqn. 1b constraints" << std::endl;
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (spacetargetsMTX(i,j)>sptarget_threshold) {
+				if (!isnan(spacetargetsMTX(i,j))) {
 					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
 							for (std::size_t l=0; l<species_npu[i]; ++l) {
 								currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l];
@@ -616,7 +615,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	if (verbose) Rcpp::Rcout << "\t\teqn. 1c constraints" << std::endl;
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (spacetargetsMTX(i,j)>sptarget_threshold) {
+				if (!isnan(spacetargetsMTX(i,j))) {
 					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
 						for (std::size_t l=0; l<species_npu[i]; ++l) {
 							currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l];
@@ -640,7 +639,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
     if (verbose) Rcpp::Rcout << "\t\teqn. 1b constraints" << std::endl;
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (spacetargetsMTX(i,j)>sptarget_threshold) {
+				if (!isnan(spacetargetsMTX(i,j))) {
 					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
 						for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
 							
@@ -682,7 +681,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
     if (verbose) Rcpp::Rcout << "\t\teqn. 1b (extra) constraints" << std::endl;
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (spacetargetsMTX(i,j)>sptarget_threshold) {
+				if (!isnan(spacetargetsMTX(i,j))) {
 					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
 						for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
 							for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
@@ -705,7 +704,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	if (verbose) Rcpp::Rcout << "\t\teqn. 1c constraints" << std::endl;
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (spacetargetsMTX(i,j)>sptarget_threshold) {
+				if (!isnan(spacetargetsMTX(i,j))) {
 					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
 						for (std::size_t l=0; l<species_npu[i]; ++l) {
 							for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
@@ -731,7 +730,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	if (verbose) Rcpp::Rcout << "\t\teqn. 1d constraints" << std::endl;
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (spacetargetsMTX(i,j)>sptarget_threshold) {
+				if (!isnan(spacetargetsMTX(i,j))) {
 					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
 						
 						// original formulation
@@ -765,7 +764,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	if (verbose) Rcpp::Rcout << "\t\teqn. 1e constraints" << std::endl;
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (spacetargetsMTX(i,j)>sptarget_threshold) {
+				if (!isnan(spacetargetsMTX(i,j))) {
 					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
 						for (std::size_t l=0; l<species_npu[i]; ++l) {
 							// real pu
@@ -797,7 +796,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	if (verbose) Rcpp::Rcout << "\t\teqn. 1f constraints" << std::endl;
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (spacetargetsMTX(i,j)>sptarget_threshold) {
+				if (!isnan(spacetargetsMTX(i,j))) {
 					// assign values
 					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
 						for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
@@ -830,7 +829,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	if (verbose) Rcpp::Rcout << "\t\teqn 2. constraints" << std::endl;
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (spacetargetsMTX(i,j)>sptarget_threshold) {				
+				if (!isnan(spacetargetsMTX(i,j))) {				
 					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
 						for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
 							for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
@@ -920,7 +919,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	// 1g
     for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (spacetargetsMTX(i,j)>sptarget_threshold) {
+				if (!isnan(spacetargetsMTX(i,j))) {
 					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
 						for (std::size_t l=0; l<species_npu[i]; ++l) {
 							currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l];
@@ -935,7 +934,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	Rcpp::checkUserInterrupt();
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (spacetargetsMTX(i,j)>sptarget_threshold) {
+				if (!isnan(spacetargetsMTX(i,j))) {
 					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
 						for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
 							for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
@@ -953,7 +952,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   	if (verbose) Rcpp::Rcout << "\t\tsemi-continuous vars" << std::endl;
   	for (std::size_t i=0; i<n_species; ++i) {
   		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (spacetargetsMTX(i,j)>sptarget_threshold) {
+				if (!isnan(spacetargetsMTX(i,j))) {
 					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
 						for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
 							for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {

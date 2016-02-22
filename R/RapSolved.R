@@ -86,8 +86,9 @@ setMethod(
 						rep(paste0(' (Space ',seq_along(a@data@attribute.spaces),')'), length(length(a@data@species$name)))
 					)
 				)
-				cat('Try setting lower space-based targets.\n\tBelow are the maximum targets for each species and space.\n')
+				cat('\n\nTry setting lower space-based targets.\nBelow are the maximum targets for each species and space.\n\n')
 				print(tmpDF)
+				cat('\n')
 				stop('No solution found because the problem cannot be solved.')
 			}
 		if (is.null(solution$x)) {

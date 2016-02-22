@@ -23,6 +23,278 @@ if (!use.Gurobi)
 # set seed for reproducibility
 set.seed(500)
 
+## ------------------------------------------------------------------------
+# create new object with just the uniform species
+sim_ru_s1 <- spp.subset(sim_ru, 'uniform')
+
+# update amount targets to 20% and space targets to 0%
+sim_ru_s1 <- update(sim_ru_s1, amount.target=0.2, space.target=NA, solve=FALSE)
+
+## ---- eval=use.Gurobi----------------------------------------------------
+# solve problem to identify prioritisation
+sim_rs_s1_amount <- solve(sim_ru_s1)
+
+## ---- eval=!use.Gurobi, include=FALSE------------------------------------
+#  sim_rs_s1_amount <- solve(sim_ru_s1, b=cache$sim_rs_s1_amount)
+
+## ------------------------------------------------------------------------
+## show summary
+# note the format for this is similar to that used by Marxan
+# see ?rapr::summary for details on this table
+summary(sim_rs_s1_amount)
+
+# show amount held
+amount.held(sim_rs_s1_amount)
+
+# show space held
+space.held(sim_rs_s1_amount)
+
+## ---- fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center',fig.cap="A prioritisation for the uniformly distributed species generated using amount-based targets (20\\%). Sqaures represent planning units. Planning units with a green border are selected for prioritisation, and their colour denotes the probability they are inhabited by the species."----
+# plot the prioritisation and the uniform species' distribution
+spp.plot(sim_rs_s1_amount, 1, main='Uniform species')
+
+## ------------------------------------------------------------------------
+# create new object with just the normal species
+sim_ru_s2 <- spp.subset(sim_ru, 'normal')
+
+## ---- eval=use.Gurobi----------------------------------------------------
+# update amount targets to 20% and space targets to 0% and solve it
+sim_rs_s2_amount <- update(sim_ru_s2, amount.target=0.2, space.target=NA, solve=TRUE)
+
+## ---- eval=!use.Gurobi, include=FALSE------------------------------------
+#  # update amount targets to 20% and space targets to 0% and solve it
+#  sim_rs_s2_amount <- update(sim_ru_s2, amount.target=0.2, space.target=NA, solve=FALSE)
+#  sim_rs_s2_amount <-solve(
+#  	sim_rs_s2_amount,
+#  	b=cache$sim_rs_s2_amount
+#  )
+
+## ------------------------------------------------------------------------
+# show summary
+summary(sim_rs_s2_amount)
+
+# show amount held
+amount.held(sim_rs_s2_amount)
+
+# show space held
+space.held(sim_rs_s2_amount)
+
+## ---- fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A prioritisation for the normally distributed species generated using amount-based targets (20\\%). See Figure 3 caption for conventions."----
+# plot the prioritisation and the normal species' distribution
+spp.plot(sim_rs_s2_amount, 1, main='Normal species')
+
+## ------------------------------------------------------------------------
+# create new object with just the bimodal species
+sim_ru_s3 <- spp.subset(sim_ru, 'bimodal')
+
+## ---- eval={use.Gurobi}--------------------------------------------------
+# update amount targets to 20% and space targets to 0% and solve it
+sim_rs_s3_amount <- update(sim_ru_s3, amount.target=0.2, space.target=NA)
+
+## ---- eval=!use.Gurobi, include=FALSE------------------------------------
+#  # update amount targets to 20% and space targets to 0% and solve it
+#  sim_rs_s3_amount <- update(sim_ru_s3, amount.target=0.2, space.target=NA, solve=FALSE)
+#  sim_rs_s3_amount <- solve(
+#  	sim_rs_s3_amount,
+#  	b=cache$sim_rs_s3_amount
+#  )
+
+## ---- fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A prioritisation for the bimodally distributed species generated using amount-based targets (20\\%). See Figure 3 caption for conventions."----
+# plot the prioritisation and the bimodal species' distribution
+spp.plot(sim_rs_s3_amount, 1, main='Bimodal species')
+
+## ------------------------------------------------------------------------
+# show summary
+summary(sim_rs_s3_amount)
+
+# show amount held
+amount.held(sim_rs_s3_amount)
+
+# show space held
+space.held(sim_rs_s3_amount)
+
+## ---- eval=use.Gurobi----------------------------------------------------
+# make new prioritisation
+sim_rs_s1_space <- update(sim_rs_s1_amount, amount.target=0.2, space.target=0.5)
+
+## ---- eval=!use.Gurobi, include=FALSE------------------------------------
+#  # make new prioritisation
+#  sim_rs_s1_space <- update(sim_rs_s1_amount, amount.target=0.2, space.target=0.5, solve=FALSE)
+#  sim_rs_s1_space <- solve(
+#  	sim_rs_s1_space,
+#  	b=cache$sim_rs_s1_space
+#  )
+
+## ------------------------------------------------------------------------
+# show summary
+summary(sim_rs_s1_space)
+
+# show amount held
+amount.held(sim_rs_s1_space)
+
+# show space held
+space.held(sim_rs_s1_space)
+
+## ---- fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A prioritisation for the uniformly distributed species generated using amount-based targets (20\\%) and space-based targets (85\\%). See Figure 3 caption for conventions."----
+# plot the prioritisation and the uniform species' distribution
+spp.plot(sim_rs_s1_space, 'uniform', main='Uniform species')
+
+## ---- fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="Difference between two prioritisations for the uniformly distributed species. Prioritisation $X$ was generated using just amount-based targets (20\\%), and prioritisation $Y$ was generated using an additional space-based target (85\\%)."----
+# plot the difference between old and new prioritisations
+plot(sim_rs_s1_amount, sim_rs_s1_space, 1, 1, main='Difference between solutions')
+
+## ---- eval=use.Gurobi----------------------------------------------------
+# make new prioritisation
+sim_rs_s2_space <- update(sim_rs_s2_amount, amount.target=0.2, space.target=0.85)
+
+## ---- eval=!use.Gurobi, include=FALSE------------------------------------
+#  # make new prioritisation
+#  sim_rs_s2_space <- update(sim_rs_s2_amount, amount.target=0.2, space.target=0.85, solve=FALSE)
+#  sim_rs_s2_space <- solve(
+#  	sim_rs_s2_space,
+#  	b=cache$sim_rs_s2_space
+#  )
+
+## ------------------------------------------------------------------------
+# show summary
+summary(sim_rs_s2_space)
+
+# show amount held
+amount.held(sim_rs_s2_space)
+
+# show space held
+space.held(sim_rs_s2_space)
+
+## ---- fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A prioritisation for the normally distributed species generated using amount-based targets (20\\%) and space-based targets (85\\%). See Figure 3 caption for conventions."----
+
+# plot the prioritisation and the normal species' distribution
+spp.plot(sim_rs_s2_space, 'normal', main='Normal species')
+
+## ---- fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="Difference between two prioritisations for the normally distributed species. See Figure 7 caption for conventions."----
+# plot the difference between old and new prioritisations
+plot(sim_rs_s2_amount, sim_rs_s2_space, 1, 1, main='Difference between solutions')
+
+## ---- eval=use.Gurobi----------------------------------------------------
+# make new prioritisation
+sim_rs_s3_space <- update(sim_rs_s3_amount, amount.target=0.2, space.target=0.85)
+
+## ---- eval=!use.Gurobi, include=FALSE------------------------------------
+#  # make new prioritisation
+#  sim_rs_s3_space <- update(sim_rs_s3_amount, amount.target=0.2, space.target=0.85, solve=FALSE)
+#  sim_rs_s3_space <- solve(
+#  	sim_rs_s3_space,
+#  	b=cache$sim_rs_s3_space
+#  )
+
+## ------------------------------------------------------------------------
+# show summary
+summary(sim_rs_s3_space)
+
+# show amount held
+amount.held(sim_rs_s3_space)
+
+# show space held
+space.held(sim_rs_s3_space)
+
+
+## ---- fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A prioritisation for the normally distributed species generated using amount-based targets (20\\%) and space-based targets (85\\%). See Figure 3 caption for conventions."----
+# plot the prioritisation and the bimodal species' distribution
+spp.plot(sim_rs_s3_space, 'bimodal', main='Bimodal species')
+
+## ---- fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="Difference between two prioritisations for the bimodally distributed species. See Figure 7 caption for conventions."----
+# plot the difference between old and new prioritisations
+plot(sim_rs_s3_amount, sim_rs_s3_space, 1, 1, main='Difference between solutions')
+
+## ---- eval=use.Gurobi----------------------------------------------------
+# make prioritisations
+sim_mrs_amount <- update(
+	sim_ru,
+	amount.target=c(0.2,0.2,0.2),
+	space.target=c(0,0,0)
+)
+
+sim_mrs_space <- update(
+	sim_ru,
+	amount.target=c(0.2,0.2,0.2),
+	space.target=c(0.85, 0.85, 0.85)
+)
+
+## ---- eval=!use.Gurobi, include=FALSE------------------------------------
+#  # make prioritisations
+#  sim_mrs_amount <- update(sim_ru, amount.target=c(0.2,0.2,0.2), space.target=c(0,0,0), solve=FALSE)
+#  sim_mrs_amount <- solve(
+#  	sim_mrs_amount,
+#  	b=cache$sim_mrs_amount
+#  )
+#  
+#  sim_mrs_space <- update(sim_ru, amount.target=c(0.2,0.2,0.2), space.target=c(0.85, 0.85, 0.85), solve=FALSE)
+#  sim_mrs_space <- solve(
+#  	sim_mrs_space,
+#  	b=cache$sim_mrs_space
+#  )
+
+## ------------------------------------------------------------------------
+# show summaries
+summary(sim_mrs_amount)
+summary(sim_mrs_space)
+
+# show amount held for each prioritisation
+amount.held(sim_mrs_amount)
+amount.held(sim_mrs_space)
+
+# show space held for each prioritisation
+space.held(sim_mrs_amount)
+space.held(sim_mrs_space)
+
+## ---- fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using just amount-based targets (20\\%). Squares represent planning units. Dark green planning units are selected for preservation."----
+# plot multi-species prioritisation with amount-based targets
+plot(sim_mrs_amount, 1, main='Amount-based targets')
+
+## ---- fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\\%) and space-based targets (85\\%). See Figure 12 caption for conventions."----
+# plot multi-species prioritisation with amount- and space-based targets
+plot(sim_mrs_space, 1, main='Amount and space-based targets')
+
+## ---- fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="Difference between two multi-species prioritisations. See Figure 7 caption for conventions."----
+# difference between the two prioritisations
+plot(sim_mrs_amount, sim_mrs_space, 1, 1, main='Difference between solutions')
+
+## ---- eval={use.Gurobi}--------------------------------------------------
+# make new prioritisation with probability threshold of 0.5 for each species
+sim_mrs_space2 <- solve(
+	prob.subset(
+		sim_mrs_space,
+		species=1:3,
+		threshold=c(0.1,0.1,0.1)
+	)
+)
+
+## ---- eval=!use.Gurobi, include=FALSE------------------------------------
+#  # make new prioritisation with probability threshold of 0.5 for each species
+#  sim_mrs_space2 <- solve(
+#  	prob.subset(
+#  		sim_mrs_space,
+#  		species=1:3,
+#  		threshold=c(0.1,0.1,0.1)
+#  	),
+#  	b=cache$sim_mrs_space2
+#  )
+
+## ------------------------------------------------------------------------
+# show summary
+summary(sim_mrs_space2)
+
+## ---- fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\\%) and space-based targets (85\\%). This priorititisation was generated to be robust against low occupancy probabilities, by preventing planning units with low probabilities from being used to represent demand points. See Figure 12 caption for conventions."----
+# plot prioritisation
+plot(sim_mrs_space2, 1)
+
+## ---- fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="Difference between two multi-species prioritisations. See Figure 7 caption for conventions."----
+# difference between prioritisations that use and do not use thresholds
+plot(sim_mrs_space2, sim_mrs_space, 1, 1, main='Difference between solutions')
+
+## ------------------------------------------------------------------------
+# make new prioritisation using reliable formulation
+sim_mrs_space3 <- try(update(sim_mrs_space, formulation='reliable', max.r.level=1L))
+
 ## ---- eval=use.Gurobi----------------------------------------------------
 # make new prioritisation using reliable formulation and reduced targets
 sim_mrs_space3 <- update(
@@ -114,7 +386,7 @@ sim_ru_gp <- rap(
 	sim_pus, sim_gspp, sim_gspace, 
 	amount.target=0.2, space.target=0.85,
 	n.demand.points=50L, kernel.method='hypervolume',
-	include.geographic.space=FALSE, solve=FALSE
+	include.geographic.space=FALSE, scale=FALSE, solve=FALSE
 )
 
 ## ---- fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="Distribution map of a species simulated using Gaussian prorceses. See Figure 2 caption for conventions."----
@@ -241,7 +513,7 @@ plot(cs_space, main=c('DC1', 'DC2'))
 # status (third) column of the attribute table
 cs_rs_amount <- rap(
 	cs_pus[,-2], cs_spp, cs_space,
-  amount.target=0.2, space.target=0, n.demand.points=50L,
+  amount.target=0.2, space.target=NA, n.demand.points=50L,
   include.geographic.space=TRUE, formulation='unreliable',
   solve=FALSE
 )
@@ -403,13 +675,12 @@ if (use.Gurobi) {
 			)
 		}
 	)
+	names(cache2) <- list_names
 	# save cache
 	saveRDS(
 		append(cache, cache2),
 		file='vignette_solutions.rds'
 	)
-	system('touch -m -a -t 201512180130.09 vignette_solutions.rds')
+	try(system('touch -m -a -t 201512180130.09 vignette_solutions.rds'))
 }
-
-
 

@@ -247,6 +247,23 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
 		}
 	}
  } 
+
+ // print spatial metric calculations
+ {
+	if (verbose) {
+			std::size_t currCol=-1;
+			Rcout << "representation metrics" << std::endl;
+			for (std::size_t i=0; i<n_species; ++i) {
+			for (std::size_t j=0; j<n_attribute_spaces; ++j) {
+				++currCol;
+				Rcout << "\tspecies = " << i+1 << "; space = " << j+1;
+				Rcout << "; tss = " << tss_speciesspaceMTX(i,j);
+				Rcout << "; spaceheld = " << unreliable_space_value(weightdistMTX(i,j),selected_species_pu_pos[i],true);
+				Rcout << "; prop = " << spaceheldMTX(0, currCol) << std::endl;
+			}
+			}
+	}
+ }
  
  /// calculated vars
  // extract summaryDF

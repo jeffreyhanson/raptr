@@ -87,9 +87,7 @@ setClass("RapData",
 
 			if (!inherits(object@targets$proportion, c('numeric')))
 				stop('argument to targets$proportion is not numeric')
-			if (any(is.na(object@targets$proportion)))
-				stop('argument to targets$proportion contains NA or non-finite values')
-			if (any(object@targets$proportion>1))
+			if (any(object@targets$proportion>1,na.rm=TRUE))
 				stop('argument to targets$proportion contains values >1')
 
 			# pu.species.probabilities
@@ -260,6 +258,7 @@ RapData<-function(pu, species, targets, pu.species.probabilities, attribute.spac
 #' @param spaces.distance.metric \code{character} specifying the distance metric to use for each attribute space in \code{spaces}. Valid metrics are 'euclidean', 'bray', 'manhattan','gower', 'canberra', 'mahalanobis', 'jaccard', and 'kulczynski'. Argument defaults to 'gower' for each attribute space. See \code{?AttributeSpace} for details on the distance metrics.
 #' @param geographic.distance.metric \code{character} specifying the distance metric to use for the geographic attribute space (if \code{include.geographic.space=TRUE}). Defaults to 'euclidean'. See \code{?AttributeSpace} for details on the distance metrics.
 #' @param verbose \code{logical} print statements during processing?
+#' @param scale \code{logical} scale the attribute spaces to unit mean and standard deviation? This prevents overflow. Defaults to \code{TRUE}.
 #' @param ... additional arguments to \code{calcBoundaryData} and \code{calcPuVsSpeciesData}.
 #' @seealso \code{\link{RapData-class}}, \code{\link{RapData}}.
 #' @export make.RapData
@@ -273,7 +272,7 @@ make.RapData<-function(pus, species, spaces=NULL,
 	amount.target=0.2, space.target=0.2, n.demand.points=100L, kernel.method=c('ks', 'hyperbox')[1], quantile=0.2,
 	species.points=NULL, n.species.points=ceiling(0.2*cellStats(species, 'sum')), include.geographic.space=TRUE, 
 	spaces.distance.metric=ifelse(inherits(spaces,'list'), rep('gower', length(spaces)), 'gower'),
-	geographic.distance.metric='euclidean',
+	geographic.distance.metric='euclidean',scale=TRUE,
 	verbose=FALSE, ...
 ) {
 	## init
@@ -293,7 +292,7 @@ make.RapData<-function(pus, species, spaces=NULL,
 		'jaccard', 'kulczynski'
 	))
 	stopifnot(length(geographic.distance.metric)==1)
-	
+	stopifnot(inherits(scale,'logical'))
 	.cache<-new.env()
 	# coerce non-list items to list
 	if (!inherits(spaces, 'list'))
@@ -358,6 +357,18 @@ make.RapData<-function(pus, species, spaces=NULL,
 			warning('Planning unit areas are being calculated in a geographic coordinate system')
 	}
 	#### Attribute space data
+	## rescale spaces
+	if (scale & !is.null(spaces[[1]])) {
+		# calculate statistics
+		for (i in seq_along(spaces)) {
+			spaces.mean <- cellStats(spaces[[i]], 'mean')
+			spaces.sd <- cellStats(spaces[[i]], 'sd')
+			# replace NA values with 1 to account for bug in raster
+			spaces.sd <- replace(spaces.sd, which(is.na(spaces.sd)), 1)
+			spaces[[i]] <- (spaces[[i]]-spaces.mean) / spaces.sd
+		}
+	}
+	
 	## set pu.points
 	# set pu.points based spaces
 	pu.points<-list()
@@ -395,10 +406,17 @@ make.RapData<-function(pus, species, spaces=NULL,
 	}
 	# calculate positions in geographic space
 	if (include.geographic.space) {
-		pu.points=append(
-			pu.points,
-			list(SimplePoints(gCentroid(pus, byid=TRUE)@coords))
-		)
+		# get pu centroids
+		pu.coords <- gCentroid(pus, byid=TRUE)@coords
+		if (scale) {
+			# zscore pu coords
+			pu.means <- apply(pu.coords, 2, mean, na.rm=TRUE)
+			pu.sds <- apply(pu.coords, 2, sd, na.rm=TRUE)
+			pu.coords <- sweep(pu.coords, MARGIN=2, FUN='-', pu.means)
+			pu.coords <- sweep(pu.coords, MARGIN=2, FUN='/', pu.sds)
+		}
+		pu.points <- append(pu.points,list(SimplePoints(pu.coords)))
+		
 	}
 	if (length(pu.points)==0) {
 		stop('Attribute spaces must be specified. Either include.geographic.space=TRUE or spaces must contain at least one Raster object')
@@ -414,7 +432,15 @@ make.RapData<-function(pus, species, spaces=NULL,
 		for (j in seq_along(species.points)) {
 			# extract space points
 			if (is.null(spaces[[i]])) {
-				space.points=species.points[[j]]@coords
+				# get species coords
+				curr.species.points <- species.points[[j]]@coords
+				# zscore species coords
+				if (scale) {
+					curr.species.points <- sweep(curr.species.points, MARGIN=2, FUN='-', pu.means)
+					curr.species.points <- sweep(curr.species.points, MARGIN=2, FUN='/', pu.sds)
+				}
+				# save species points in the space
+				space.points=curr.species.points
 			} else {
 				space.points=extract(spaces[[i]], species.points[[j]])
 			}
