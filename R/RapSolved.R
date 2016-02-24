@@ -864,9 +864,9 @@ names.RapUnsolOrSol <-function(x) {
 	return(names(x@data))
 }
 
-#' @rdname maximum.space.targets
+#' @rdname maximum.targets
 #' @export
-maximum.space.targets.RapUnsolOrSol <- function(x, verbose=FALSE) {
+maximum.targets.RapUnsolOrSol <- function(x, verbose=FALSE) {
 	# generate model object
 	model<-rcpp_generate_model_object(x@opts, inherits(x@opts, 'RapUnreliableOpts'), x@data, verbose)
 	# create data.frame
@@ -878,6 +878,8 @@ maximum.space.targets.RapUnsolOrSol <- function(x, verbose=FALSE) {
 	# merge with targets to get target names
 	if ('name' %in% names(x@data@targets))
 		retDF <- merge(retDF, x@data@targets[,c(1,2,4),drop=FALSE], by=c('species', 'target'), all=TRUE)
+	# set amount-based targets to 1
+	retDF[which(retDF$target==0),'proportion'] <- 1
 	# return object
 	return(retDF)
 }

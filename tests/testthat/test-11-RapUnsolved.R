@@ -74,16 +74,17 @@ test_that('Gurobi solver (reliable)', {
 	))
 })
 
-test_that('maximum.space.targets (unreliable)', {
+test_that('maximum.targets (unreliable)', {
 	data(sim_ru)
-	x<-maximum.space.targets(sim_ru)
+	sim_ru@data@targets$name=paste0(sim_ru@data@species$name, ' (space', 1:3, ')')
+	x<-maximum.targets(sim_ru)
 	expect_equal(x$proportion,rep(1, nrow(x)))
 })
 
-test_that('maximum.space.targets (reliable)', {
+test_that('maximum.targets (reliable)', {
 	data(sim_ru)
 	sim_ru@opts <- RapReliableOpts(max.r.level = 1L)
-	x<-maximum.space.targets(sim_ru)
+	x<-maximum.targets(sim_ru)
 })
 
 test_that('solve.RapUnsolved (unreliable - NUMREPS=1)', {
