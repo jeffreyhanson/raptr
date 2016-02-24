@@ -667,3 +667,30 @@ space.plot<-function(
 ) {
   UseMethod('space.plot')
 }
+
+#' Maximum space-based targets
+#'
+#' This function accepts a \code{RapUnsolved} object and returns a \code{data.frame} describing the
+#' maximum level of representation that a prioritization could acheive for each species and attribute space. The 
+#' maximum level is calculated as the level of representation associated with a prioritization that contains
+#' all the planning units.
+#' 
+#' @param x \code{RapUnsolved} or \code{RapSolved} object.
+#' @param verbose \code{logical} should messages be printed during calculations? Defaults to \code{FALSE}.
+#' @details These metrics are useful to help guide the selection of space-based targets and verify adequacy of the
+#' planning units. If the maximum level of representation is negative, this suggests that the planning units do not
+#' align with the demand points in the attribute space. This may be due to a variety of reasons. For instance, if the
+#' attribute spaces have ben created manually, there may been an isuse in calculating the coordinates.  Alternatively,
+#' the spatial scale of the planning units may be too coarse. Plotting the distribution of planning units
+#' and demand points in the attribute spaces may aid in understanding the issue. 
+#' @return \code{data.frame} object.
+#' @export
+#' @examples
+#' # load RapSolved objects
+#' data(sim_ru)
+#' # calculate maximum metrics
+#' maximum.space.targets(sim_ru)
+maximum.space.targets <- function(x, verbose) {
+	UseMethod('maximum.space.targets')
+}
+

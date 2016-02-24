@@ -79,17 +79,7 @@ setMethod(
 		# check solution object
 		if (!is.null(solution$status))
 			if (solution$status=="INFEASIBLE") {
-				tmpDF = data.frame(
-					Proportion=c(model$cache$best_space_values),
-					Target=paste0(
-						rep(a@data@species$name, each=length(a@data@attribute.spaces)),
-						rep(paste0(' (Space ',seq_along(a@data@attribute.spaces),')'), length(length(a@data@species$name)))
-					)
-				)
-				cat('\n\nTry setting lower space-based targets.\nBelow are the maximum targets for each species and space.\n\n')
-				print(tmpDF)
-				cat('\n')
-				stop('No solution found because the problem cannot be solved.')
+				stop('No solution found because the problem cannot be solved because space-based targets are too high. Try setting lower space-based targets. See ?maximum.space.targets')
 			}
 		if (is.null(solution$x)) {
 			stop('No solution found because Gurobi parameters do not allow sufficient time.')
@@ -873,4 +863,23 @@ space.target.RapUnsolOrSol<-function(x, species=NULL, space=NULL) {
 names.RapUnsolOrSol <-function(x) {
 	return(names(x@data))
 }
+
+#' @rdname maximum.space.targets
+#' @export
+maximum.space.targets.RapUnsolOrSol <- function(x, verbose=FALSE) {
+	# generate model object
+	model<-rcpp_generate_model_object(x@opts, inherits(x@opts, 'RapUnreliableOpts'), x@data, verbose)
+	# create data.frame
+	retDF <- data.frame(
+		species=rep(seq_along(x@data@species$name), each=length(x@data@attribute.spaces)),
+		target=rep(seq_along(x@data@attribute.spaces), length(x@data@species$name)),
+		proportion=c(model$cache$best_space_values)
+	)
+	# merge with targets to get target names
+	if ('name' %in% names(x@data@targets))
+		retDF <- merge(retDF, x@data@targets[,c(1,2,4),drop=FALSE], by=c('species', 'target'), all=TRUE)
+	# return object
+	return(retDF)
+}
+
 

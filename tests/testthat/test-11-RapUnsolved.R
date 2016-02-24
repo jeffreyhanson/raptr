@@ -74,6 +74,18 @@ test_that('Gurobi solver (reliable)', {
 	))
 })
 
+test_that('maximum.space.targets (unreliable)', {
+	data(sim_ru)
+	x<-maximum.space.targets(sim_ru)
+	expect_equal(x$proportion,rep(1, nrow(x)))
+})
+
+test_that('maximum.space.targets (reliable)', {
+	data(sim_ru)
+	sim_ru@opts <- RapReliableOpts(max.r.level = 1L)
+	x<-maximum.space.targets(sim_ru)
+})
+
 test_that('solve.RapUnsolved (unreliable - NUMREPS=1)', {
 	# skip if gurobi not installed
 	if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')
