@@ -51,6 +51,15 @@ if (!use.Gurobi)
 # set seed for reproducibility
 set.seed(500)
 ```
+<!--  title page -->
+Short running title: Representative and adequate prioritizations \newline
+Word count: XXXXX \newline
+Number of references: XXXX \newline
+Number of figures, table and text boxes: 4 \newline
+\newpage
+
+<!-- add line numbers -->
+\begin{linenumbers}
 
 ## Introduction
 <!-- conservation and reserve networks -->
@@ -60,10 +69,10 @@ The overarching aim of conservation is to maximise the long-term persistence of 
 To fulfil the overarching aims of conservation, reserve networks must preserve both ecological and evolutionary processes [@r255; @r3]. Ecological processes, such as predator-prey interactions, pollination, and decomposition, are required for biodiversity to persist over short time-scales. Typically, they operate over small geographic domains--with exceptions such as migration and refugial habitats--and can be preserved using suitably large planning units [@r446] that each contain a discrete unit of habitat [@r448]. On the other hand, evolutionary processes are required for biodiversity to persist over long time-scales, and they typically operate over large geographic domains. Adaptive evolutionary processes can be preserved by securing populations with different adaptations and/or along selection pressure gradients [eg. environmental gradients; @r63; @r3; @r202; @r197]. Neutral evolutionary processes can be preserved by securing populations with different evolutionary histories and/or with limited gene flow [@r63; @r2; @r200]. Due to advances in technology in recent decades, a wealth of data on biodiversity processes has become freely available to conservation planners. Yet this data is only rarely used to guide conservation planning exercises [@r61]. Existing decision support tools focus primarily on preserving biodiversity patterns or occasionally processes--but not both.
 
 <!-- most decision support tools are poorly suited for biodiversity processses -->
-Many tools have been developed to assist conservation planners in preserving biodiversity patterns [eg. \texttt{C-Plan}, @r445; \texttt{ConsNet}, @r446; \texttt{Marxan}, @r22; \texttt{Zonation}, @r429]. They use targets (eg. \texttt{Marxan}) or weights (eg. \texttt{Zonation}) to identify prioritisations that contain an adequate amount of individuals or habitat for a set of species (features). To accommodate information on biodiversity processes, conservation planners can split features into sub-features as a pre-processing step [eg. @r2]. However, this approach is limited because data on biodiversity processes is often continuous and hyper-dimensional [eg. bioclimatic data; @r33], and therefore they often cannot be reduced to a few categories without significant information loss [@r218]. Additionally, these problem formulations cannot accommodate variation within sub-features, and nor can they account for relationships between sub-features [@r218]. 
+Many tools have been developed to assist conservation planners in preserving biodiversity patterns [eg. \texttt{C-Plan}, @r445; \texttt{ ConsNet}, @r446; \texttt{ Marxan}, @r22; \texttt{ Zonation}, @r429]. They use targets (eg. \texttt{Marxan}) or weights (eg. \texttt{Zonation}) to identify prioritisations that contain an adequate amount of individuals or habitat for a set of species (features). To accommodate information on biodiversity processes, conservation planners can split features into sub-features as a pre-processing step [eg. @r2]. However, this approach is limited because data on biodiversity processes is often continuous and hyper-dimensional [eg. bioclimatic data; @r33], and therefore they often cannot be reduced to a few categories without significant information loss [@r218]. Additionally, these problem formulations cannot accommodate variation within sub-features, and nor can they account for relationships between sub-features [@r218]. 
 
 <!-- notable example of decision support tools that is well suited for biodiversity processses -->
-Very few tools have been developed with a specific focus on biodiversity processes. The \texttt{DIVERSITY} decision support tool [@r203] uses continuous data to site reserves in places that secure a representative sample of variation across a study area (eg. environmental variation). Originally, this tool was developed to identify prioritizations that secure a comprehensive set of habitats without using any species-level data. As a consequence, the effectiveness of this tool has been highly contested [@346; @347; @344]. Additionally, this tool tended to deliver excessively fragmented prioritisations (cf. \texttt{Marxan}). However, unlike tools that primarily focus on biodiversity patterns, this tool can only accommodate data on the distribution of a single feature.
+Very few tools have been developed with a specific focus on biodiversity processes. The \texttt{DIVERSITY} decision support tool [@r203] uses continuous data to site reserves in places that secure a representative sample of variation across a study area (eg. environmental variation). Originally, this tool was developed to identify prioritizations that secure a comprehensive set of habitats without using any species-level data. As a consequence, the effectiveness of this tool has been highly contested [@r346; @r347; @r344]. Additionally, this tool tended to deliver excessively fragmented prioritisations (cf. \texttt{Marxan}). However, unlike tools that primarily focus on biodiversity patterns, this tool can only accommodate data on the distribution of a single feature.
 
 <!-- aims of this paper -->
 Today, one of the key issues preventing decision makers from explicitly considering both biodiversity patterns and processes in the reserve selection process is the lack of a decision support tool that can accommodate data on both in a multi-species context. To fill this void, we present the \texttt{rapr R} package. This \texttt{R} package provides decision makers with the tools to identify prioritisations that preserve biodiversity patterns and processes. These prioritisations are generated by solving novel formulations of the reserve selection problem that use adequacy- and representation-based targets. We also provide a tutorial showcasing the functionality of this \texttt{R} package using simulated species and a case-study conservation planning scenario in Queensland, Australia.
@@ -106,14 +115,14 @@ ggplot(aes(x=temperature, y=rainfall), data=populations) +
 
 The problem formulations used to guide reserve selection in the \texttt{rapr R} package are based on a combination of the \texttt{Marxan} reserve selection problem and uncapacitated facility location problems (all mathematical terms defined hereafter are described in Table S1 for convenience). For convenience, the cardinality of sets will be denoted using the same symbol used to denote the variable. Define $F$ to be the set of features (indexed by $f$). Let $J$ be a set of planning units (indexed by $j$). Also, let $A_j$ denote the area, and $C_j$ denote the cost of preserving planning unit $j \in J$. To assess the extent to which each feature is secured in a given prioritisation, let $q_{fj}$ denote the probability of feature $f$ occupying planning unit $j$. The level of fragmentation associated with a prioritisation is parametrised as the net exposed boundary length. Let the shared boundary length between each planning unit $j \in J$ and $k \in J$ be $b_{jk}$. In any real-world problem, some planning units will have edges that are not associated with any neighbouring planning units (eg. edges along coastlines), these cases will be denoted using $b_{jj}$ for $j \in J$.
 
-Let $S$ denote a set of attribute spaces (indexed by $s$). Each $j \in J$ is associated with spatially explicit data that represent coordinates for each attribute space $s \in S$. Let $I_{fsi}$ denote a set of demand points (indexed by $i$) for each feature $f \in F$ and each attribute space $s \in S$. Let $\lambda_{fsi}$ denote the weighting for each demand point $i \in I$, $f \in F$ and $s \in S$. Let $d_{fsij}$ denote the distance between each demand point $i \in I$ and each planning unit $j \in J$ for each feature $f \in F$ and attribute space $s \in S$. Demand points with greater weight $\lambda_{fsi}$ are more important, and the optimal solution will be likely to select planning units close to highly weighted demand points. As a consequence, the decision maker will need to choose an appropriate weighting for each demand point. The decision maker will also need to choose an appropriate distance metric for each attribute space. For example, Euclidean, Mahalanobis [@r398], Bray-Curtis, or other distance metrics may be appropriate given the nature of the attribute space [@r449].
+Let $S$ denote a set of attribute spaces (indexed by $s$). Each $j \in J$ is associated with spatially explicit data that represent coordinates for each attribute space $s \in S$. Let $I_{fsi}$ denote a set of demand points (indexed by $i$) for each feature $f \in F$ and each attribute space $s \in S$. Let $\lambda_{fsi}$ denote the weighting for each demand point $i \in I$, $f \in F$ and $s \in S$. Let $d_{fsij}$ denote the distance between each demand point $i \in I$ and each planning unit $j \in J$ for each feature $f \in F$ and attribute space $s \in S$. Let $\hat{d}_{fsi}$ denote the distance between each demand point $i \in I$ and the centroid of the demand points. Demand points with greater weight $\lambda_{fsi}$ are more important, and the optimal solution will be likely to select planning units close to highly weighted demand points. As a consequence, the decision maker will need to choose an appropriate weighting for each demand point. The decision maker will also need to choose an appropriate distance metric for each attribute space. For example, Euclidean, Mahalanobis [@r398], Bray-Curtis, or other distance metrics may be appropriate given the nature of the attribute space [@r449].
 
 Targets are used to ensure that prioritisations adequately preserve each species. Amount-based targets are used to ensure that the total amount of habitat preserved is sufficient. Let $\hat{T}_f$ denote the expected amount of area that needs to be preserved for each feature $f \in F$. Space-based targets are ensure that a sufficient proportion of the intra-specific variation is secured. Let $\bar{T}_{fs}$ denote the space-based targets for feature $f \in F$ and attribute space $a \in A$. For convenience, these both types of targets are expressed as proportions in the \texttt{R} package.
 
 The \texttt{R} package provides two formulations for reserve selection. They are based on the unreliable [@r442] and reliable uncapacitated facility location [@r16] problems. The key difference between them is that the reliable formulation explicitly considers the probability that the planning units are occupied when calculating the proportion of variation that a given solution secures, whereas the unreliable formulation does not.
 
 ### Unreliable formulation
-In the unreliable formulation, the control variables are the $BLM$, $\hat{t}_{s}$, and $\bar{t}_{sa}$ variables, and the decision variables are the $X$ and $Y_{fsi}$ variables.
+In the unreliable formulation, the control variables are the $BLM$, $\hat{t}_{s}$, and $\bar{t}_{sa}$ variables, and the decision variables are the $X_j$ and $Y_{fsi}$ variables.
 
 \begin{align*}
 X_j
@@ -136,11 +145,12 @@ Y_{fsi} &= \begin{cases}
 The unreliable formulation (URAP) is a defined as a multi-objective optimisation problem.
 
 \begin{align*}
-& \text{(URAP)} & \text{Min } & \sum_{j=0}^{J-1} C_j + BLM \times \sum_{j=0}^{J-1} \sum_{k=j}^{J-1} X_j \left( 1-X_k \right) b_{jk} + BLM \times \sum_{j=0}^{J-1} x_j b_{jj} & & \tag{2a}\\
+& \text{(URAP)} & \text{Min } & \sum_{j=0}^{J-1} C_j + BLM \times \sum_{j=0}^{J-1} \sum_{k=j}^{J-1} X_j \left( 1-X_k \right) b_{jk} + & & \tag{2a} \\
+& & & BLM \times \sum_{j=0}^{J-1} x_j b_{jj} & & & \\
 %
 & & \text{s.t. } & \sum_{j=0}^{J-1} A_j q_{jf} \geq \bar{T}_{f} & \forall & 0 \leq f \leq F-1 \tag{2b}\\
 %
-& & & 1 - \frac{\sum_{i=0}^{I-1} \sum_{j=0}^{J-1} \left( \lambda_{fsi} d_{fsij} Y_{fsij} \right)^2}{\sum_{i=0}^{I-1} \sum_{l=0}^{I-1} \left( \lambda_{fsi} D_{fsil} \right)^2 } \geq \hat{T}_{fs}  & \forall & 0 \leq f \leq F-1, \tag{2c}\\
+& & & 1 - \frac{\sum_{i=0}^{I-1} \sum_{j=0}^{J-1} \left( \lambda_{fsi} d_{fsij} Y_{fsij} \right)^2}{\sum_{i=0}^{I-1} \left( \lambda_{fsi} \hat{d}_{fsi} \right)^2 } \geq \hat{T}_{fs}  & \forall & 0 \leq f \leq F-1, \tag{2c}\\
 & & & & & 0 \leq s \leq S-1\\
 %
 & & & \sum_{j=0}^{J-1} Y_{fsij} = 1 & \forall & 0 \leq f \leq F-1, \tag{2d}\\
@@ -174,7 +184,7 @@ A final backup $r$-level when $r=R$ is used to assess the level of representatio
 
 Moderately-sized conservation planning problems often include several thousand planning units. It is currently not be feasible to solve this problem when considering all possible failure scenarios. As a consequence, the $R$ variable can be any $1 \leq R \leq J-1$. For instance, when $R=3$ only 2 backup levels are considered in addition to the final backup level. Cui et al. [-@r16] found that $R=5$ yields similar solutions to $R=J$ when $J >> 5$. However, depending on the number of features, demand points, attribute spaces, and planning units, decision makers will likely be limited to $R=1$ to obtain prioritisations in a feasible amount of time.
 
-In the reliable formulation, the control variables are the $X$, $BLM$, $\hat{t}_{s}$, $\bar{t}_{sa}$, $R$, and $M$ variables and the decision variables are the $P_{fsijr}$ variables.
+In the reliable formulation, the control variables are the $BLM$, $\hat{t}_{s}$, $\bar{t}_{sa}$, $R$, and $M$ variables. The decision variables are the $X_j$, $Y_{fsijr}$, $P_{fsijr}$ variables.
 
 \begin{align*}
 & \text{(1a--1d)} \\
@@ -182,7 +192,7 @@ R &= \text{number of failure levels} \tag{4a} \\
 %
 M &= \text{failure multiplier} \tag{4b}\\
 %
-P_{fsijr} &= \text{probability that demand point $i$ is assigned to planning unit $j$ at back-up level $r$ for feature $f$ and space $s$} \tag{4c}\\
+P_{fsijr} &= \parbox{25em}{probability that demand point $i$ is assigned to planning unit $j$ at back-up level $r$ for feature $f$ and space $s$} \tag{4c}\\
 \end{align*}
 
 The reliable formulation (RRAP) is a multi-objective optimisation problem.
@@ -192,7 +202,7 @@ The reliable formulation (RRAP) is a multi-objective optimisation problem.
 %
 & & \text{s.t. } & \text{(2b)}\\
 %
-& & & \sum_{i=0}^{I-1} \sum_{j=0}^{J} \sum_{r=0}^{R} \lambda_{fsijr} P_{fsijr} Y_{fsijr} \leq \hat{T}_{fs} & \forall & 0 \leq f \leq F-1, \tag{5a}\\
+& & & 1 - \frac{\sum_{i=0}^{I-1} \sum_{j=0}^{J-1} \left( \lambda_{fsi} d_{fsij} P_{fsijr} Y_{fsij} \right)^2}{\sum_{i=0}^{I-1} \left( \lambda_{fsi} \hat{d}_{fsi} \right)^2 } \geq \hat{T}_{fs}  & \forall & 0 \leq f \leq F-1, \tag{5a}\\
 & & & & & 0 \leq s \leq S-1\\
 %
 & & & \sum_{j=0}^{J-1} Y_{fsijr} = 1 & \forall & 0 \leq f \leq F-1, \tag{5b}\\
