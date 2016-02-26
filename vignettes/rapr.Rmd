@@ -10,8 +10,7 @@ tags: ["conservation", "biodiversity", "MILP", "reserve-selection"]
 abstract: "A central aim in conservation is to maximise the long-term persistence of biodiversity. To fulfil this aim, reserve networks are used to safeguard biodiversity patterns (eg. species, populations) and processes (eg. evolutionary processes that underpin genetic variation). Reserve selection is often formulated as an optimisation problem to identify cost-effective prioritisations. However, most existing decision support tools are based on formulations that are well suited for preserving biodiversity patterns, but not biodiversity processes. To fill this gap in the conservation planning toolbox, we developed the `rapr` R package. This R package provides functions to solve reserve selection problems using two novel formulations. Here, we explore the functionality of this R package using simulated species and a conservation planning exercise in Queensland, Australia as a case-study. We demonstrate how explicitly considering biodiversity processes can alter a prioritisation. In most cases, we found that only a few additional plannning units are required to sufficiently preserve of biodiversity processes."
 output:
   rmarkdown::pdf_document:
-    toc: true
-    toc_depth: 5
+    toc: false
     keep_tex: yes
     fig_caption: yes
     includes:
@@ -40,7 +39,7 @@ library(RandomFields)
 knitr::opts_chunk$set(cache=TRUE)
 
 # use built-in solutions or Gurobi?
-use.Gurobi=TRUE
+use.Gurobi=FALSE
 if (use.Gurobi & !is.GurobiInstalled())
 	use.Gurobi=FALSE
 
@@ -58,8 +57,12 @@ Number of references: XXXX \newline
 Number of figures, table and text boxes: 4 \newline
 \newpage
 
-<!-- add line numbers -->
-\begin{linenumbers}
+<!-- add table of contents -->
+\newpage
+\setcounter{tocdepth}{5}
+\hypersetup{linkcolor=black}
+\tableofcontents
+\newpage
 
 ## Introduction
 <!-- conservation and reserve networks -->
@@ -1255,3 +1258,5 @@ if (use.Gurobi) {
 	try(system('touch -m -a -t 201512180130.09 vignette_solutions.rds'))
 }
 ```
+
+\end{linenumbers}

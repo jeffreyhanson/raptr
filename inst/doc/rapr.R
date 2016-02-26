@@ -12,7 +12,7 @@ library(RandomFields)
 knitr::opts_chunk$set(cache=TRUE)
 
 # use built-in solutions or Gurobi?
-use.Gurobi=TRUE
+use.Gurobi=FALSE
 if (use.Gurobi & !is.GurobiInstalled())
 	use.Gurobi=FALSE
 
