@@ -24,7 +24,6 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install Caskroom/cask/xquartz; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install ghostscript; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos','RandomFieldsUtils','RandomFields'))"; fi;
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:$PATH"; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo tlmgr update --self; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo /usr/texbin/tlmgr install amsmath amsfonts float makecell tocloft titlesec framed titling; fi;
   
