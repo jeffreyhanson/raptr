@@ -37,7 +37,7 @@ is.GurobiInstalled<-function(verbose=TRUE) {
 	if (result!=0) {
 		if (verbose) {
 			cat('The gorubi software is not installed\n')
-			cat('\n', gurobiInstallationInstructions,'\n\n',licenseInstructions,'\n\n',rInstallationInstructions,'\n\n')
+			cat('\n', gurobiInstallationInstructions,'\n\n',licenseInstructions,'\n\n',rInstallationInstructions1,'\n\n', rInstallationInstructions2, '\n\n')
 		}
 		options(GurobiInstalled=list(gurobi=FALSE, rgurobi=FALSE))
 		return(FALSE)
