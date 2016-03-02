@@ -18,7 +18,7 @@ setClass("ManualOpts",
 	contains='SolverOpts',
 	validity=function(object) {
 		# NumberSolutions
-		if (!is.integer(object@NumberSolutions)) stop('argument to NumberSolutionsEPS is not integer')
+		if (!is.integer(object@NumberSolutions)) stop('argument to NumberSolutions is not integer')
 		if (!is.finite(object@NumberSolutions)) stop('argument to NumberSolutions is NA or non-finite values')
 		return(TRUE)
 	}

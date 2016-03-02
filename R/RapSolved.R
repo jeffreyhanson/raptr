@@ -57,23 +57,35 @@ setMethod(
 	function(a, b, verbose=FALSE) {
 		## init
 		# check that gurobi is installed
-		if (!is.null(options()$GurobiInstalled)) {
-			if (!options()$GurobiInstalled) {
-				stop('The gurobi R package has not been installed, or Gurobi has not been installation has not been completed')
-			}
-		} else {
+		if (!is.null(options()$GurobiInstalled))
+				is.GurobiInstalled()
+		if (!options()$GurobiInstalled$gurobi) {
 			is.GurobiInstalled()
+			if (!options()$GurobiInstalled$gurobi)
+				stop("The 'Gurobi' software package and the 'gurobi' R package must be intalled.")
 		}
-
+		if (!options()$GurobiInstalled$rgurobi & b@MultipleSolutionsMethod=='solution.pool') {
+			is.GurobiInstalled()
+			stop("The 'rgurobi' R package must be intalled to access the solution pool.")
+		}
+		
 		# generate model object
 		model<-rcpp_generate_model_object(a@opts, inherits(a@opts, 'RapUnreliableOpts'), a@data, verbose)
 		model$A<-Matrix::sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value, dims=c(max(model$Ar$row)+1, length(model$obj)))
 		
-		## first run
+		## Initial run
 		# run model
 		log.pth<-tempfile(fileext='.log')
 		gparams<-append(as.list(b), list("LogFile"=log.pth))
-		solution<-gurobi::gurobi(model, gparams)
+		if (b@MultipleSolutionsMethod=='benders.cuts') {
+			if (options()$GurobiInstalled$gurobi) {
+				solution<-gurobi::gurobi(model, gparams)
+			}
+		} else {
+			if (options()$GurobiInstalled$rgurobi) {
+				solution<-rgurobi::gurobi(model, gparams, NumberSolutions=b@NumberSolutions)
+			}
+		}
 		if (file.exists('gurobi.log')) unlink('gurobi.log')
 
 		# check solution object
@@ -84,36 +96,51 @@ setMethod(
 		if (is.null(solution$x)) {
 			stop('No solution found because Gurobi parameters do not allow sufficient time.')
 		}
-
-		# store results
-		results<-list(read.RapResults(a@opts, a@data, model, paste(readLines(log.pth), collapse="\n"), solution, verbose))
-		existing.solutions<-list(selections(results[[1]]))
 		
-		## subsequent runs
-		for (i in seq_len(b@NumberSolutions-1)) {
-			# create new model object, eacluding existing solutions as valid solutions to ensure a different solution is obtained
-			model<-rcpp_append_model_object(model, existing.solutions[length(existing.solutions)])
-			model$A<-Matrix::sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value, dims=c(max(model$Ar$row)+1, length(model$obj)))
+		## Subsequent runs if using Bender's cuts to obtain multiple solutions
+		if (b@MultipleSolutionsMethod=='benders.cuts') {
+			# store results
+			results<-list(read.RapResults(a@opts, a@data, model, paste(readLines(log.pth), collapse="\n"), solution, verbose))
+			existing.solutions<-list(selections(results[[1]]))
+			
+			## subsequent runs
+			for (i in seq_len(b@NumberSolutions-1)) {
+				# create new model object, eacluding existing solutions as valid solutions to ensure a different solution is obtained
+				model<-rcpp_append_model_object(model, existing.solutions[length(existing.solutions)])
+				model$A<-Matrix::sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value, dims=c(max(model$Ar$row)+1, length(model$obj)))
 
-			# run model
-			solution<-gurobi::gurobi(model, gparams)
-			if (file.exists('gurobi.log')) unlink('gurobi.log')
+				# run model
+				solution<-gurobi::gurobi(model, gparams)
+				if (file.exists('gurobi.log')) unlink('gurobi.log')
 
-			# load results
-			if (!is.null(solution$status))
-				if (solution$status=="INFEASIBLE") {
+				# load results
+				if (!is.null(solution$status))
+					if (solution$status=="INFEASIBLE") {
+						warning(paste0('only ',i,' solutions found\n'))
+						break
+					}
+				if (is.null(solution$x)) {
 					warning(paste0('only ',i,' solutions found\n'))
 					break
 				}
-			if (is.null(solution$x)) {
-				warning(paste0('only ',i,' solutions found\n'))
-				break
-			}
 
-			# store results
-			currResult<-read.RapResults(a@opts,a@data, model, paste(readLines(log.pth), collapse="\n"), solution, verbose)
-			results<-append(results,currResult)
-			existing.solutions<-append(existing.solutions, list(selections(currResult)))
+				# store results
+				currResult<-read.RapResults(a@opts,a@data, model, paste(readLines(log.pth), collapse="\n"), solution, verbose)
+				results<-append(results,currResult)
+				existing.solutions<-append(existing.solutions, list(selections(currResult)))
+			}
+		} else {
+			# init results list
+			results <- list()
+			# extract solutions
+			for (i in seq_along(solution$obj)) {
+				# generate result object
+				currList <- solution
+				currList$x <- solution$x[i,,drop=TRUE]
+				currList$objval <- solution$objval[i]
+				currResult <- read.RapResults(a@opts,a@data,model,paste(readLines(log.pth),collapse="\n"),currList,verbose)
+				results=append(results,currResult)
+			}
 		}
 		# return RapSolved object
 		return(RapSolved(unsolved=a, solver=b, results=mergeRapResults(results)))
@@ -134,11 +161,11 @@ setMethod(
 		if (any(b!= 0 & b!= 1))
 			stop('argument to b must be binary selections when b is a matrix')
 		# generate result objects
-		model=rcpp_generate_model_object(a@opts, inherits(a@opts, 'RapUnreliableOpts'), a@data, verbose)
-		results=list()
+		model <- rcpp_generate_model_object(a@opts, inherits(a@opts, 'RapUnreliableOpts'), a@data, verbose)
+		results <- list()
 		for (i in seq_len(nrow(b))) {
 			# generate result object
-			currResult=read.RapResults(
+			currResult <- read.RapResults(
 				a@opts,a@data,model,"User specified solution",
 				list(
 					x=b[i,],
@@ -147,7 +174,7 @@ setMethod(
 				),
 				verbose
 			)
-			results=append(results,currResult)
+			results <- append(results,currResult)
 		}
 		# return RapSolved object
 		return(RapSolved(unsolved=a, solver=ManualOpts(NumberSolutions=nrow(b)), results=mergeRapResults(results)))
@@ -791,11 +818,11 @@ update.RapUnsolOrSol<-function(object, ..., formulation=NULL, solve=TRUE) {
 	# solve it
 	if (solve) {
 		# get any new specified GurobiOpts
-		goLST<-parseArgs2(c('Threads', 'MIPGap','NumberSolutions', 'TimeLimit', 'Presolve', 'Method'), ...)
+		goLST<-parseArgs2(c('Threads', 'MIPGap','NumberSolutions', 'TimeLimit', 'Presolve', 'Method', 'MultipleSolutionsMethod'), ...)
 		
 		# get old GurobiOpt
 		if (inherits(object, 'RapSolved')) {
-			oldGoLST=list(Threads=object@Threads, MIPGap=object@MIPGap, NumberSolutions=object@NumberSolutions, TimeLimit=object@TimeLimit, Presolve=object@Presolve, Method=object@Method)
+			oldGoLST=list(Threads=object@Threads, MIPGap=object@MIPGap, NumberSolutions=object@NumberSolutions, TimeLimit=object@TimeLimit, Presolve=object@Presolve, Method=object@Method, MultipleSolutionsMethod=object@MultipleSolutionsMethod)
 			if (any(!names(oldGoLST %in% names(goLST)))) {
 				goLST=append(
 					goLST,

@@ -56,6 +56,7 @@ Suggests:
     dplyr,
     vegan,
     gurobi,
+    rgurobi,
     gridExtra,
     rgl
 SystemRequirements: C++11

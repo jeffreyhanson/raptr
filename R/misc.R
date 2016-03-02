@@ -23,11 +23,13 @@ is.GurobiInstalled<-function(verbose=TRUE) {
 		c('Linux'='http://bit.ly/1ksXUaQ','Windows'='http://bit.ly/1MrjXWc', 'Darwin'='http://bit.ly/1N0AlT0')[Sys.info()[['sysname']]]
 	)
 	
-	rInstallationInstructions <- paste(
-		'Follow these instructions to install the Gurobi R package:\n\t-',
+	rInstallationInstructions1 <- paste(
+		'Follow these instructions to install the "gurobi" R package:\n\t-',
 		c('Linux'='http://bit.ly/1HLCRoE','Windows'='http://bit.ly/1MMSZaH','Darwin'='http://bit.ly/1Pr2WRG')[Sys.info()[['sysname']]]
 	)
-	
+		
+	rInstallationInstructions2 <- 'To access multiple solutions from the solution pool,\n\tfollow these instructions to install the "rgurobi" R package from GitHub: \n\thttp://bit.ly/1RF19XO'
+		
 	licenseInstructions <- 'The Gurobi R package requires a Gurobi license to work:\n\t- visit this web-page for an overview: http://bit.ly/1OHEQCm\n\t- academics can obtain a license at no cost here: http://bit.ly/1iYg3LX'
 	
 	# check if gurobi installed
@@ -37,18 +39,30 @@ is.GurobiInstalled<-function(verbose=TRUE) {
 			cat('The gorubi software is not installed\n')
 			cat('\n', gurobiInstallationInstructions,'\n\n',licenseInstructions,'\n\n',rInstallationInstructions,'\n\n')
 		}
-		options(GurobiInstalled=FALSE)
+		options(GurobiInstalled=list(gurobi=FALSE, rgurobi=FALSE))
 		return(FALSE)
 	}
-	# check if R package installed
-	if (!'gurobi' %in% unlist(sapply(.libPaths(), dir), recursive=FALSE, use.names=TRUE)) {
+	# check if R packages installed
+	pkgs.installed <- list(
+		gurobi='gurobi' %in% unlist(sapply(.libPaths(), dir), recursive=FALSE, use.names=TRUE), 
+		rgurobi='rgurobi' %in% unlist(sapply(.libPaths(), dir), recursive=FALSE, use.names=TRUE)
+	)
+	if (!pkgs.installed[[1]]) {
 		if (verbose) {
 			cat('The gorubi R package is not installed\n')
-			cat('\n', rInstallationInstructions, '\n\n')
+			cat('\n', rInstallationInstructions1, '\n\n')
 		}
-		options(GurobiInstalled=FALSE)
-		return(FALSE)
 	}
+	if (!pkgs.installed[[2]]) {
+		if (verbose) {
+			cat('The rgorubi R package is not installed\n')
+			cat('\n', rInstallationInstructions2, '\n\n')
+		}
+	}
+	options(GurobiInstalled=pkgs.installed)
+	if (!pkgs.installed[[1]])
+		return(FALSE)
+	
 	# try running example problem - from the gurobi help file
 	tmp<-capture.output(
 		{
@@ -72,7 +86,7 @@ is.GurobiInstalled<-function(verbose=TRUE) {
 			cat(paste(tmp, collapse='\n'),'\n',sep='')
 			cat('\nThis might be due to licensing issues.\n',licenseInstructions, '\n',sep='')
 		}
-		options(GurobiInstalled=FALSE)
+		options(GurobiInstalled=list(gurobi=FALSE, rgurobi=FALSE))
 		return(FALSE)
 	}
 	return(TRUE)

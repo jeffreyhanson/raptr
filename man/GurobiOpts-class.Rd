@@ -21,6 +21,8 @@ This class is used to store Gurobi input parameters.
 \item{\code{TimeLimit}}{\code{integer} number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.}
 
 \item{\code{NumberSolutions}}{\code{integer} number of solutions to generate. Defaults to 1L.}
+
+\item{\code{MultipleSolutionsMethod}}{\code{character} name of method to obtain multiple solutions \code{NumberSolutions} > 1. Avalilable options are 'benders.cuts' and 'solution.pool'. Defaults to 'benders.cuts'. Note that the \code{rgurobi} package must be to use the 'solution.pool' method.}
 }}
 \seealso{
 \code{\link{GurobiOpts}}.

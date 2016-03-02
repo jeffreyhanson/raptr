@@ -12,7 +12,7 @@
 \usage{
 \method{update}{GurobiOpts}(object, Threads = NULL, MIPGap = NULL,
   Method = NULL, Presolve = NULL, TimeLimit = NULL,
-  NumberSolutions = NULL, ...)
+  NumberSolutions = NULL, MultipleSolutionsMethod = NULL, ...)
 
 \method{update}{ManualOpts}(object, NumberSolutions = NULL, ...)
 
@@ -42,6 +42,8 @@
 \item{TimeLimit}{\code{integer} number of seconds to allow for solving.}
 
 \item{NumberSolutions}{\code{integer} number of solutions to generate.}
+
+\item{MultipleSolutionsMethod}{\code{character} name of method to obtain multiple solutions \code{NumberSolutions} > 1. Avalilable options are 'benders.cuts' and 'solution.pool'. Defaults to 'benders.cuts'. Note that the \code{rgurobi} package must be to use the 'solution.pool' method.}
 
 \item{...}{parameters passed to \code{update.RapReliableOpts}, \code{update.RapUnreliableOpts}, or \code{update.RapData}.}
 

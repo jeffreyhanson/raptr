@@ -11,6 +11,7 @@ NULL
 #' @slot Presolve \code{integer} code for level of computation in presolve. Defaults to 2.
 #' @slot TimeLimit \code{integer} number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.
 #' @slot NumberSolutions \code{integer} number of solutions to generate. Defaults to 1L.
+#' @slot MultipleSolutionsMethod \code{character} name of method to obtain multiple solutions \code{NumberSolutions} > 1. Avalilable options are 'benders.cuts' and 'solution.pool'. Defaults to 'benders.cuts'. Note that the \code{rgurobi} package must be to use the 'solution.pool' method.
 #' @seealso \code{\link{GurobiOpts}}.
 #' @export
 setClass("GurobiOpts",
@@ -20,7 +21,8 @@ setClass("GurobiOpts",
 		Method="integer",
 		Presolve="integer",
 		TimeLimit="integer",
-		NumberSolutions="integer"
+		NumberSolutions="integer",
+		MultipleSolutionsMethod='character'
 	),
 	prototype=list(
 		Threads=1L,
@@ -28,7 +30,8 @@ setClass("GurobiOpts",
 		Method=0L,
 		Presolve=2L,
 		TimeLimit=NA_integer_,
-		NumberSolutions=1L
+		NumberSolutions=1L,
+		MultipleSolutionsMethod='benders.cuts'
 	),
 	contains='SolverOpts',
 	validity=function(object) {
@@ -48,6 +51,9 @@ setClass("GurobiOpts",
 			object@Threads<-detectCores(logical=TRUE)
 		}
 
+		# MultipleSolutionsMethod
+		match.arg(object@MultipleSolutionsMethod, c('benders.cuts', 'solution.pool'))
+		
 		# Presolve
 		if (!is.integer(object@Presolve)) stop('argument to Presolve is not integer')
 		if (!is.finite(object@Presolve)) stop('argument to Presolve is NA or non-finite values')
@@ -63,8 +69,6 @@ setClass("GurobiOpts",
 		if (!is.finite(object@MIPGap)) stop('argument to MIPGap is NA or non-finite values')
 		if (object@MIPGap<0) stop('argument to MIPGap must be > 0')
 		return(TRUE)
-		
-		
 	}
 )
 
@@ -78,6 +82,7 @@ setClass("GurobiOpts",
 #' @param Presolve \code{integer} code for level of computation in presolve (lp_solve parameter). Defaults to 2.
 #' @param TimeLimit \code{integer} number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.
 #' @param NumberSolutions \code{integer} number of solutions to generate. Defaults to 1L.
+#' @param MultipleSolutionsMethod \code{character} name of method to obtain multiple solutions \code{NumberSolutions} > 1. Avalilable options are 'benders.cuts' and 'solution.pool'. Defaults to 'benders.cuts'. Note that the \code{rgurobi} package must be to use the 'solution.pool' method.
 #' @return \code{GurobiOpts} object
 #' @seealso \code{\link{GurobiOpts-class}}.
 #' @export
@@ -86,8 +91,8 @@ setClass("GurobiOpts",
 #' GurobiOpts(Threads=1L, MIPGap=0.05, Method=0L, 
 #' 	Presolve=2L, TimeLimit=NA_integer_, NumberSolutions=1L)
 #' @export
-GurobiOpts<-function(Threads=1L, MIPGap=0.05, Method=0L, Presolve=2L, TimeLimit=NA_integer_, NumberSolutions=1L) {
-	go<-new("GurobiOpts", Threads=Threads, MIPGap=MIPGap, Method=0L, Presolve=Presolve, TimeLimit=TimeLimit, NumberSolutions=NumberSolutions)
+GurobiOpts<-function(Threads=1L, MIPGap=0.05, Method=0L, Presolve=2L, TimeLimit=NA_integer_, NumberSolutions=1L, MultipleSolutionsMethod='benders.cuts') {
+	go<-new("GurobiOpts", Threads=Threads, MIPGap=MIPGap, Method=0L, Presolve=Presolve, TimeLimit=TimeLimit, NumberSolutions=NumberSolutions, MultipleSolutionsMethod=MultipleSolutionsMethod)
 	validObject(go, test=FALSE)
 	return(go)
 }
@@ -107,6 +112,7 @@ print.GurobiOpts=function(x, ..., header=TRUE) {
 	cat('  Presolve:',x@Presolve,'\n')
 	cat('  TimeLimit:',x@TimeLimit,'\n')
 	cat('  NumberSolutions:',x@NumberSolutions,'\n')
+	cat('  MultipleSolutionsMethod:',x@MultipleSolutionsMethod,'\n')
 }
 
 #' @rdname show
@@ -137,7 +143,7 @@ as.list.GurobiOpts<-function(x, ...) {
 #' @rdname update
 #' @method update GurobiOpts
 #' @export
-update.GurobiOpts<-function(object, Threads=NULL, MIPGap=NULL, Method=NULL, Presolve=NULL, TimeLimit=NULL, NumberSolutions=NULL, ...) {
+update.GurobiOpts<-function(object, Threads=NULL, MIPGap=NULL, Method=NULL, Presolve=NULL, TimeLimit=NULL, NumberSolutions=NULL, MultipleSolutionsMethod=NULL, ...) {
 	# update arguments
 	if (!is.null(Threads))
 		object@Threads<-Threads
@@ -151,6 +157,8 @@ update.GurobiOpts<-function(object, Threads=NULL, MIPGap=NULL, Method=NULL, Pres
 		object@TimeLimit<-TimeLimit
 	if (!is.null(NumberSolutions))
 		object@NumberSolutions<-NumberSolutions
+	if (!is.null(MultipleSolutionsMethod))
+		object@MultipleSolutionsMethod<-MultipleSolutionsMethod
 	# check object for validity
 	validObject(object, test=FALSE)
 	# return object

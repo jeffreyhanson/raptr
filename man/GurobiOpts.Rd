@@ -5,7 +5,8 @@
 \title{Create GurobiOpts object}
 \usage{
 GurobiOpts(Threads = 1L, MIPGap = 0.05, Method = 0L, Presolve = 2L,
-  TimeLimit = NA_integer_, NumberSolutions = 1L)
+  TimeLimit = NA_integer_, NumberSolutions = 1L,
+  MultipleSolutionsMethod = "benders.cuts")
 }
 \arguments{
 \item{Threads}{\code{integer} number of cores to use for processing. Defaults to 1L.}
@@ -19,6 +20,8 @@ GurobiOpts(Threads = 1L, MIPGap = 0.05, Method = 0L, Presolve = 2L,
 \item{TimeLimit}{\code{integer} number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.}
 
 \item{NumberSolutions}{\code{integer} number of solutions to generate. Defaults to 1L.}
+
+\item{MultipleSolutionsMethod}{\code{character} name of method to obtain multiple solutions \code{NumberSolutions} > 1. Avalilable options are 'benders.cuts' and 'solution.pool'. Defaults to 'benders.cuts'. Note that the \code{rgurobi} package must be to use the 'solution.pool' method.}
 }
 \value{
 \code{GurobiOpts} object

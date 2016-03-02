@@ -245,7 +245,7 @@ NULL
 #' @param ... not used.
 #' @name as.list
 #' @return \code{list}
-#' @note This function will not include the \code{NumberSolutions} slot or the \code{TimeLimit} slot if it is not finite.
+#' @note This function will not include the \code{NumberSolutions} slot, the \code{MultipleSolutionsMethod} slot, or the \code{TimeLimit} slot if it is not finite.
 #' @seealso \code{GurobiOpts}.
 #' @examples
 #' # make GuboriOpts object
@@ -304,6 +304,7 @@ NULL
 #' @param Presolve \code{integer} code for level of computation in presolve.
 #' @param TimeLimit \code{integer} number of seconds to allow for solving.
 #' @param NumberSolutions \code{integer} number of solutions to generate.
+#' @param MultipleSolutionsMethod \code{character} name of method to obtain multiple solutions \code{NumberSolutions} > 1. Avalilable options are 'benders.cuts' and 'solution.pool'. Defaults to 'benders.cuts'. Note that the \code{rgurobi} package must be to use the 'solution.pool' method.
 #' @param BLM \code{numeric} boundary length modifier.
 #' @param failure.multiplier \code{numeric} multiplier for failure planning unit.
 #' @param max.r.level \code{numeric} maximum R failure level for approximation.
