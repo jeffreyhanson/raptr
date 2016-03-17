@@ -11,7 +11,7 @@ AttributeSpace(pu, demand.points, distance.metric = "euclidean")
 
 \item{demand.points}{\code{list} of \code{DemandPoints} for each species.}
 
-\item{distance.metric}{\code{character} name of distance metric to use for comparing planning units to demand points. Valid metrics are 'euclidean', 'bray', 'manhattan','gower', 'canberra', 'mahalanobis', 'jaccard', 'kulczynski', 'minkowski'. Defaults to 'euclidean'. See details for the equations used for each metric.}
+\item{distance.metric}{\code{character} name of distance metric to use for comparing planning units to demand points. Valid metrics are 'euclidean', 'bray', 'manhattan','gower', 'canberra', 'mahalanobis', 'jaccard', 'kulczynski', and 'minkowski'. Defaults to 'euclidean'. See details for the equations used for each metric.}
 }
 \description{
 This function creates a new \code{AttributeSpace} object.

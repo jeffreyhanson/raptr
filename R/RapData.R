@@ -255,7 +255,7 @@ RapData<-function(pu, species, targets, pu.species.probabilities, attribute.spac
 #' @param include.geographic.space \code{logical} should the geographic space be considered an attribute space?
 #' @param species.points \code{list} of/or \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records. Use a \code{list} of objects to represent different species. Must have the same number of elements as \code{species}. If not supplied then use \code{n.species.points} to sample points from the species distributions.
 #' @param n.species.points \code{numeric} vector specfiying the number points to sample the species distributions to use to generate demand points. Defaults to 20\% of the distribution.
-#' @param spaces.distance.metric \code{character} specifying the distance metric to use for each attribute space in \code{spaces}. Valid metrics are 'euclidean', 'bray', 'manhattan','gower', 'canberra', 'mahalanobis', 'jaccard', and 'kulczynski'. Argument defaults to 'gower' for each attribute space. See \code{?AttributeSpace} for details on the distance metrics.
+#' @param spaces.distance.metric \code{character} specifying the distance metric to use for each attribute space in \code{spaces}. Valid metrics are 'euclidean', 'bray', 'manhattan','gower', 'canberra', 'mahalanobis', 'jaccard', 'kulczynski', 'minkowski'. Argument defaults to 'gower' for each attribute space. See \code{?AttributeSpace} for details on the distance metrics.
 #' @param geographic.distance.metric \code{character} specifying the distance metric to use for the geographic attribute space (if \code{include.geographic.space=TRUE}). Defaults to 'euclidean'. See \code{?AttributeSpace} for details on the distance metrics.
 #' @param verbose \code{logical} print statements during processing?
 #' @param scale \code{logical} scale the attribute spaces to unit mean and standard deviation? This prevents overflow. Defaults to \code{TRUE}.
@@ -284,12 +284,12 @@ make.RapData<-function(pus, species, spaces=NULL,
 	sapply(spaces.distance.metric, match.arg, c(
 		'euclidean', 'bray', 'manhattan','gower',
 		'canberra', 'mahalanobis',
-		'jaccard', 'kulczynski'
+		'jaccard', 'kulczynski', 'minkowski'
 	))
 	sapply(geographic.distance.metric, match.arg, c(
 		'euclidean', 'bray', 'manhattan','gower',
 		'canberra', 'mahalanobis',
-		'jaccard', 'kulczynski'
+		'jaccard', 'kulczynski', 'minkowski'
 	))
 	stopifnot(length(geographic.distance.metric)==1)
 	stopifnot(inherits(scale,'logical'))
