@@ -5,7 +5,7 @@ test_that('GurobiOpts generator function', {
 	x=GurobiOpts()
 	y=GurobiOpts(
 		Threads=1L,
-		MIPGap=0.05,
+		MIPGap=0.1,
 		Presolve=2L,
 		Method=0L,
 		TimeLimit=NA_integer_,

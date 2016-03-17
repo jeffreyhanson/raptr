@@ -4,7 +4,7 @@
 \alias{make.DemandPoints}
 \title{Generate demand points for RAP}
 \usage{
-make.DemandPoints(points, n = 100L, quantile = 0.2,
+make.DemandPoints(points, n = 100L, quantile = 0.5,
   kernel.method = c("ks", "hypervolume")[1], ...)
 }
 \arguments{
@@ -12,7 +12,7 @@ make.DemandPoints(points, n = 100L, quantile = 0.2,
 
 \item{n}{\code{integer} number of demand points to use for each attribute space for each species. Defaults to 100L.}
 
-\item{quantile}{\code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{points} intersect. Defaults to 0.2.}
+\item{quantile}{\code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{points} intersect. Defaults to 0.5.}
 
 \item{kernel.method}{\code{character} name of kernel method to use to generate demand points. Defaults to 'ks'.}
 

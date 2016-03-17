@@ -149,8 +149,8 @@ demand.points.density1d<-function(pts, n, quantile=0, ...) {
 	curr.sd<-sd(pts[,1])
 	pts[,1] <- (pts[,1] - curr.mean) / curr.sd
 	# generate points
-	quants=quantile(pts[,1], c((quantile/2), 1-(quantile/2)))
-	dp=runif(n, quants[[1]], quants[[2]])
+	quants<-quantile(pts[,1], c((quantile/2), 1-(quantile/2)))
+	dp<-runif(n, quants[[1]], quants[[2]])
 	# density kernel
 	est=kde(pts[,1], eval.points=dp, ...)
 	# back-transform demand point coordinates
@@ -177,7 +177,7 @@ demand.points.density2d<-function(pts, n, quantile=0, ...) {
 		type='random'
 	)@coords[seq_len(n),]
 	# fit density kernel
-	est=kde(pts, eval.points=dp, ...)
+	est<-kde(pts, eval.points=dp, ...)
 	# back-transform dps
 	dp<-sweep(dp,MARGIN=2,FUN='*',curr.sd)
 	dp<-sweep(dp,MARGIN=2,FUN='+',curr.mean)

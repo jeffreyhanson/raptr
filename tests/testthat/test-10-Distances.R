@@ -23,7 +23,7 @@ test_that('Model compiler (reliable)', {
 })
 
 # check distance calculations
-dist.names <-  c('euclidean', 'bray', 'manhattan', 'gower', 'canberra', 'jaccard', 'kulczynski', 'mahalanobis')
+dist.names <-  c('euclidean', 'bray', 'manhattan', 'gower', 'canberra', 'jaccard', 'kulczynski', 'mahalanobis', 'minkowski')
 for (d in dist.names) {
 	test_that(paste0('unreliable distance calculations (',d,')'), {
 		set.seed(500)

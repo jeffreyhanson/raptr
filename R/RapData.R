@@ -251,7 +251,7 @@ RapData<-function(pu, species, targets, pu.species.probabilities, attribute.spac
 #' @param space.target \code{numeric} vector for attribute space targets (\%) for each species. Defaults to 0.2 for each attribute space for each species and each space.
 #' @param n.demand.points \code{integer} number of demand points to use for each attribute space for each species. Defaults to 100L.
 #' @param kernel.method \code{character} name of kernel method to use to generate demand points. Use either \code{ks} or \code{hypervolume}.
-#' @param quantile \code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.2.
+#' @param quantile \code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.5.
 #' @param include.geographic.space \code{logical} should the geographic space be considered an attribute space?
 #' @param species.points \code{list} of/or \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records. Use a \code{list} of objects to represent different species. Must have the same number of elements as \code{species}. If not supplied then use \code{n.species.points} to sample points from the species distributions.
 #' @param n.species.points \code{numeric} vector specfiying the number points to sample the species distributions to use to generate demand points. Defaults to 20\% of the distribution.
@@ -269,7 +269,7 @@ RapData<-function(pu, species, targets, pu.species.probabilities, attribute.spac
 #' x <- make.RapData(cs_pus[1:10,], cs_spp, cs_space, include.geographic.space=TRUE)
 #' print(x)
 make.RapData<-function(pus, species, spaces=NULL,
-	amount.target=0.2, space.target=0.2, n.demand.points=100L, kernel.method=c('ks', 'hyperbox')[1], quantile=0.2,
+	amount.target=0.2, space.target=0.2, n.demand.points=100L, kernel.method=c('ks', 'hyperbox')[1], quantile=0.5,
 	species.points=NULL, n.species.points=ceiling(0.2*cellStats(species, 'sum')), include.geographic.space=TRUE, 
 	spaces.distance.metric=ifelse(inherits(spaces,'list'), rep('gower', length(spaces)), 'gower'),
 	geographic.distance.metric='euclidean',scale=TRUE,
@@ -467,7 +467,7 @@ make.RapData<-function(pus, species, spaces=NULL,
 	})
 	## set boundary
 	if (identical(pus@proj4string, CRS('+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs')))
-		warning("creating boundary length data from pus in WGS1984; consider supplying in an object a projected CRS.")
+		warning("creating boundary length data from pus in WGS1984; consider supplying an object in a projected CRS.")
 	if (verbose)
 		cat("Calculating boundary data.\n")
 	boundary<-calcBoundaryData(rcpp_Polygons2PolySet(pus@polygons), ...)

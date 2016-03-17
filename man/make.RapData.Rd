@@ -6,7 +6,7 @@
 \usage{
 make.RapData(pus, species, spaces = NULL, amount.target = 0.2,
   space.target = 0.2, n.demand.points = 100L, kernel.method = c("ks",
-  "hyperbox")[1], quantile = 0.2, species.points = NULL,
+  "hyperbox")[1], quantile = 0.5, species.points = NULL,
   n.species.points = ceiling(0.2 * cellStats(species, "sum")),
   include.geographic.space = TRUE,
   spaces.distance.metric = ifelse(inherits(spaces, "list"), rep("gower",
@@ -28,7 +28,7 @@ make.RapData(pus, species, spaces = NULL, amount.target = 0.2,
 
 \item{kernel.method}{\code{character} name of kernel method to use to generate demand points. Use either \code{ks} or \code{hypervolume}.}
 
-\item{quantile}{\code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.2.}
+\item{quantile}{\code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.5.}
 
 \item{species.points}{\code{list} of/or \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records. Use a \code{list} of objects to represent different species. Must have the same number of elements as \code{species}. If not supplied then use \code{n.species.points} to sample points from the species distributions.}
 

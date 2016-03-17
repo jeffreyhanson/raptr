@@ -273,6 +273,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 					distPtr=&kulczynski_distance;
 				} else if (distance_metrics[j]=="mahalanobis") {
 					distPtr=&mahalanobis_distance;
+				} else if (distance_metrics[j]=="minkowski") {
+					distPtr=&minkowski_distance;
 				} else {
 					Rf_error("distance string not recognised");
 				}

@@ -227,4 +227,22 @@ inline void mahalanobis_distance(
 	}
 }
 
+inline void minkowski_distance(
+		std::vector<std::size_t> &pu_ids,
+		Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> &pu_coords,
+		Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> &dp_coords,
+		Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> &dist_matrix
+) {
+	// d[ij] = sum(abs(x[ik]-x[jk])^d)^(1/d)
+	Eigen::ArrayXXd currArray;
+	double d=static_cast<double>(pu_coords.cols());
+	double d1=1.0/d;
+	for (std::size_t i=0; i<dp_coords.rows(); ++i) {
+		for (std::size_t j=0; j<pu_ids.size(); ++j) {
+			currArray=pu_coords.row(pu_ids[j]) - dp_coords.row(i);
+			dist_matrix(i,j) = std::pow(currArray.abs().pow(d).sum(), d1);
+		}
+	}
+}
+
 #endif

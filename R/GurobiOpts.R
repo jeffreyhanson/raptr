@@ -6,7 +6,7 @@ NULL
 #' This class is used to store Gurobi input parameters.
 #'
 #' @slot Threads \code{integer} number of cores to use for processing. Defaults to 1L.
-#' @slot MIPGap \code{numeric} MIP gap specifying minimum solution quality. Defaults to 0.05.
+#' @slot MIPGap \code{numeric} MIP gap specifying minimum solution quality. Defaults to 0.1.
 #' @slot Method \code{integer} Algorithm to use for solving model. Defaults to 0L.
 #' @slot Presolve \code{integer} code for level of computation in presolve. Defaults to 2.
 #' @slot TimeLimit \code{integer} number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.
@@ -26,7 +26,7 @@ setClass("GurobiOpts",
 	),
 	prototype=list(
 		Threads=1L,
-		MIPGap=0.05,
+		MIPGap=0.1,
 		Method=0L,
 		Presolve=2L,
 		TimeLimit=NA_integer_,
@@ -77,7 +77,7 @@ setClass("GurobiOpts",
 #' This function creates a new GurobiOpts object.
 #'
 #' @param Threads \code{integer} number of cores to use for processing. Defaults to 1L.
-#' @param MIPGap \code{numeric} MIP gap specifying minimum solution quality. Defaults to 0.05.
+#' @param MIPGap \code{numeric} MIP gap specifying minimum solution quality. Defaults to 0.1.
 #' @param Method \code{integer} Algorithm to use for solving model. Defaults to 0L.
 #' @param Presolve \code{integer} code for level of computation in presolve (lp_solve parameter). Defaults to 2.
 #' @param TimeLimit \code{integer} number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.
@@ -88,10 +88,10 @@ setClass("GurobiOpts",
 #' @export
 #' @examples
 #' # create GurobiOpts object using default parameters
-#' GurobiOpts(Threads=1L, MIPGap=0.05, Method=0L, 
+#' GurobiOpts(Threads=1L, MIPGap=0.1, Method=0L, 
 #' 	Presolve=2L, TimeLimit=NA_integer_, NumberSolutions=1L)
 #' @export
-GurobiOpts<-function(Threads=1L, MIPGap=0.05, Method=0L, Presolve=2L, TimeLimit=NA_integer_, NumberSolutions=1L, MultipleSolutionsMethod='benders.cuts') {
+GurobiOpts<-function(Threads=1L, MIPGap=0.1, Method=0L, Presolve=2L, TimeLimit=NA_integer_, NumberSolutions=1L, MultipleSolutionsMethod='benders.cuts') {
 	go<-new("GurobiOpts", Threads=Threads, MIPGap=MIPGap, Method=0L, Presolve=Presolve, TimeLimit=TimeLimit, NumberSolutions=NumberSolutions, MultipleSolutionsMethod=MultipleSolutionsMethod)
 	validObject(go, test=FALSE)
 	return(go)

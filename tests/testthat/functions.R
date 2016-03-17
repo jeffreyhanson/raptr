@@ -9,6 +9,13 @@ calcDists<-function(x, method='euclidean') {
 				dists[i,j]<-sum((abs(x[i,]-x[j,]))/(abs(x[i,])+abs(x[j,])))
 			return(dists)
 		},
+		"minkowski"={
+			dists<-matrix(NA, nrow=nrow(x), ncol=nrow(x))
+			for (i in seq_len(nrow(x)))
+				for (j in seq_len(nrow(x)))
+				dists[i,j]<-sum(abs(x[i,]-x[j,])^ncol(x))
+			return(dists^(1/ncol(x)))
+		},
 		"mahalanobis"={
 			x<-apply(x, 2, function(x){x-mean(x)})
 			cov_mat<-var(x)

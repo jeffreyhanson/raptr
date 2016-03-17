@@ -4,14 +4,14 @@
 \alias{GurobiOpts}
 \title{Create GurobiOpts object}
 \usage{
-GurobiOpts(Threads = 1L, MIPGap = 0.05, Method = 0L, Presolve = 2L,
+GurobiOpts(Threads = 1L, MIPGap = 0.1, Method = 0L, Presolve = 2L,
   TimeLimit = NA_integer_, NumberSolutions = 1L,
   MultipleSolutionsMethod = "benders.cuts")
 }
 \arguments{
 \item{Threads}{\code{integer} number of cores to use for processing. Defaults to 1L.}
 
-\item{MIPGap}{\code{numeric} MIP gap specifying minimum solution quality. Defaults to 0.05.}
+\item{MIPGap}{\code{numeric} MIP gap specifying minimum solution quality. Defaults to 0.1.}
 
 \item{Method}{\code{integer} Algorithm to use for solving model. Defaults to 0L.}
 
@@ -31,7 +31,7 @@ This function creates a new GurobiOpts object.
 }
 \examples{
 # create GurobiOpts object using default parameters
-GurobiOpts(Threads=1L, MIPGap=0.05, Method=0L, 
+GurobiOpts(Threads=1L, MIPGap=0.1, Method=0L, 
 	Presolve=2L, TimeLimit=NA_integer_, NumberSolutions=1L)
 }
 \seealso{

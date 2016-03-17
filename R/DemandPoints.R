@@ -60,7 +60,7 @@ DemandPoints<-function(points, weights) {
 #'
 #' @param points \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records.
 #' @param n \code{integer} number of demand points to use for each attribute space for each species. Defaults to 100L.
-#' @param quantile \code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{points} intersect. Defaults to 0.2. 
+#' @param quantile \code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{points} intersect. Defaults to 0.5. 
 #' @param kernel.method \code{character} name of kernel method to use to generate demand points. Defaults to 'ks'.
 #' @param ... arguments passed to kernel density estimating functions
 #' @return \code{DemandPoints} object.
@@ -87,7 +87,7 @@ DemandPoints<-function(points, weights) {
 #'	points=env.points,
 #'	kernel.method='hypervolume'
 #' )
-make.DemandPoints<-function(points, n=100L, quantile=0.2, kernel.method=c('ks', 'hypervolume')[1], ...) {
+make.DemandPoints<-function(points, n=100L, quantile=0.5, kernel.method=c('ks', 'hypervolume')[1], ...) {
 	# check inputs for validityhod
 	match.arg(kernel.method, c('ks', 'hypervolume'))
 	# convert to matrix
