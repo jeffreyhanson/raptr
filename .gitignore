@@ -10,6 +10,9 @@
 # log files
 gurobi.log
 
+# system files
+.directory
+
 # vignette cache
 /vignettes/rapr_files
 /vignettes/rapr_cache
