@@ -118,8 +118,8 @@ sim_dps <- lapply(
 	function(x) {
 		return(
 			DemandPoints(
-				SimplePoints(pu_coords@coords),
-				c(x)
+				pu_coords@coords,
+				weights=c(x)
 			)
 		)
 	}
@@ -154,9 +154,26 @@ pu_probabilities <- calcSpeciesAverageInPus(sim_pus, stack(sim_spp))
 ## create AttributeSpace object
 # this stores the coordinates of the planning units in an attribute space
 # and the coordinates and weights of demand points in the space
-attr_space <- AttributeSpace(
-  SimplePoints(pu_coords@coords),
-  sim_dps
+pu_points <- PlanningUnitPoints(
+	coords=pu_coords@matrix,
+	ids=seq_len(nrow(sim_pus@data)
+)
+
+attr_spaces <- AttributeSpace(
+	list(
+		AttributeSpace(
+			planning.unit.points=pu_points,
+			demand.points=sim_dps[[1]],
+		),
+		AttributeSpace(
+			planning.unit.points=pu_points,
+			demand.points=sim_dps[[2]]
+		),
+		AttributeSpace(
+			planning.unit.points=pu_points,
+			demand.points=sim_dps[[3]]
+		)
+	)
 )
 
 # generate boundary data information
@@ -169,7 +186,7 @@ sim_rd <- RapData(
   species,
   targets,
   pu_probabilities,
-  list(attr_space),
+  list(attr_spaces),
   boundary,
   SpatialPolygons2PolySet(sim_pus)
 )
