@@ -20,12 +20,10 @@ before_install:
   - echo "options(repos = c(CRAN='http://cran.rstudio.com'), rgl.useNULL=TRUE)" > ~/.Rprofile
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install r-cran-rgl r-cran-rgdal curl libssh2-1-dev qpdf -y; fi;
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then export RGL_USE_NULL=TRUE; fi;
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then tlmgr install amsmath amsfonts float makecell tocloft titlesec framed titling; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install Caskroom/cask/xquartz; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install ghostscript; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos','RandomFieldsUtils','RandomFields'))"; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo tlmgr update --self; fi;
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo /usr/texbin/tlmgr install amsmath amsfonts float makecell tocloft titlesec framed titling; fi;
   
 r_binary_packages:
   - boot
