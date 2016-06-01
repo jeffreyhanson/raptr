@@ -4,19 +4,19 @@
 \alias{DemandPoints}
 \title{Create new DemandPoints object}
 \usage{
-DemandPoints(points, weights)
+DemandPoints(coords, weights)
 }
 \arguments{
-\item{points}{\code{SimplePoints} coordinates for each demand point in the attribute space.}
+\item{coords}{\code{matrix} of coordinates for each demand point.}
 
 \item{weights}{\code{numeric} weights for each demand poont.}
 }
 \description{
-This funciton creates a new DemandPoints object
+This function creates a new DemandPoints object
 }
 \examples{
 dps <- DemandPoints(
-SimplePoints(matrix(rnorm(100), ncol=2)),
+matrix(rnorm(100), ncol=2),
 runif(50)
 )
 }

@@ -25,6 +25,13 @@ calcDists<-function(x, method='euclidean') {
 				dists[i,j]<-sqrt(mahalanobis(x[i,,drop=FALSE], x[j,,drop=FALSE], cov=cov_mat, inverted=FALSE))
 			return(dists)
 		},
+		"total_sums_of_squares"={
+			dists<-matrix(NA, nrow=nrow(x), ncol=nrow(x))
+			for (i in seq_len(nrow(x)))
+				for (j in seq_len(nrow(x)))
+					dists[i,j]<-sum((x[i,]-x[j,])^2)
+			return(dists)
+		},
 		{
 			return(unname(as.matrix(vegan::vegdist(x, method=method))))
 		}
@@ -38,7 +45,7 @@ calcAmountHeld <- function(x, species, solution=NULL) {
 	),]
 	if (is.null(solution))
 		solution=curr_df$pu
-	curr_df$area=sim_rs@data@pu$area[curr_df$pu]
+	curr_df$area=x@pu$area[curr_df$pu]
 	curr_df$benefit=curr_df[[3]] * curr_df[[4]]
 	# calculate metrics
 	curr_max<-sum(curr_df$benefit)
@@ -91,32 +98,36 @@ calcReliableSpaceHeld<-function(w, p, maxr, pus) {
 calcUnreliableMetrics<-function(x, space, species, solution=NULL) {
 	# extract valid pus
 	curr_df<-x@pu.species.probabilities[which(x@pu.species.probabilities[[1]] == species),]
-	pu_pts<-x@attribute.spaces[[space]]@pu@coords[sort(curr_df$pu),]
+	pu_pts<-x@attribute.spaces[[space]]@spaces[[species]]@planning.unit.points@coords
+	pu_pts <- pu_pts[match(x@attribute.spaces[[space]]@spaces[[species]]@planning.unit.points@ids, curr_df$pu),]
 	# calculate distances
 	pts<-rbind(
 		pu_pts,
-		apply(x@attribute.spaces[[space]]@demand.points[[species]]@points@coords, 2, mean),
-		x@attribute.spaces[[space]]@demand.points[[species]]@points@coords
+		apply(x@attribute.spaces[[space]]@spaces[[species]]@demand.points@coords, 2, mean),
+		x@attribute.spaces[[space]]@spaces[[species]]@demand.points@coords
 	)
-	dists<-calcDists(pts, method=x@attribute.spaces[[space]]@distance.metric)
+	dists<-calcDists(pts, method='total_sums_of_squares')
 	wdist_mtx<-dists[
-		nrow(pu_pts)+1+seq_len(nrow(x@attribute.spaces[[space]]@demand.points[[species]]@points@coords)),
+		nrow(pu_pts)+1+seq_len(nrow(x@attribute.spaces[[space]]@spaces[[species]]@demand.points@coords)),
 		seq_len(nrow(pu_pts))
 	]
-	wdist_mtx<-((wdist_mtx * matrix(rep(x@attribute.spaces[[space]]@demand.points[[species]]@weights,each=nrow(pu_pts)), byrow=TRUE, ncol=ncol(wdist_mtx), nrow=nrow(wdist_mtx))))
+	wdist_mtx<-((wdist_mtx * matrix(rep(x@attribute.spaces[[space]]@spaces[[species]]@demand.points@weights,each=nrow(pu_pts)), byrow=TRUE, ncol=ncol(wdist_mtx), nrow=nrow(wdist_mtx))))
 	# caclulate tss
 	tss_mtx=dists[
-		nrow(pu_pts)+1+seq_len(nrow(x@attribute.spaces[[space]]@demand.points[[species]]@points@coords)),
+		nrow(pu_pts)+1+seq_len(nrow(x@attribute.spaces[[space]]@spaces[[species]]@demand.points@coords)),
 		nrow(pu_pts)+1
-	]	
-	tss_mtx=((tss_mtx*x@attribute.spaces[[space]]@demand.points[[species]]@weights))^2
-	# if no solution specified than make all avaliable planning units
+	]
+	tss_mtx=((tss_mtx*x@attribute.spaces[[space]]@spaces[[species]]@demand.points@weights))
+	# set defaults solution to include all plannnig units if no solution specified
 	if (is.null(solution)) {
-		solution <- seq_len(nrow(pu_pts))
-	} else {
-		solution=c(na.omit(match(solution, sort(curr_df$pu))))
+		solution=seq_len(nrow(x@pu))
 	}
-	spaceheld=calcUnreliableSpaceHeld(wdist_mtx, solution)
+	# calculate relative positions of pus 
+	relative_solution=na.omit(match(
+		solution,
+		x@attribute.spaces[[space]]@spaces[[species]]@planning.unit.points@ids
+	))
+	spaceheld=calcUnreliableSpaceHeld(wdist_mtx, relative_solution)
 	# exports
 	return(
 		list(
@@ -132,43 +143,50 @@ calcUnreliableMetrics<-function(x, space, species, solution=NULL) {
 calcReliableMetrics<-function(x, species, space, opts, solution=NULL) {
 	## init
 	# extract coordinates
-	curr_df=x@pu.species.probabilities[which(x@pu.species.probabilities[[1]] == species),]
-	pu_pts<-x@attribute.spaces[[space]]@pu@coords[sort(curr_df$pu),]
-	dp_pts=x@attribute.spaces[[space]]@demand.points[[species]]@points@coords
-	dp_wts=x@attribute.spaces[[space]]@demand.points[[species]]@weights
-	# merge into single matrx
+	curr_df<-x@pu.species.probabilities[which(x@pu.species.probabilities[[1]] == species),]
+	pu_pts<-x@attribute.spaces[[space]]@spaces[[species]]@planning.unit.points@coords
+	dp_pts<-x@attribute.spaces[[space]]@spaces[[species]]@demand.points@coords
+	dp_wts<-x@attribute.spaces[[space]]@spaces[[species]]@demand.points@weights
+	# merge into single matrix
 	pts<-rbind(
 		pu_pts,
-		apply(x@attribute.spaces[[space]]@demand.points[[species]]@points@coords, 2, mean),
-		x@attribute.spaces[[space]]@demand.points[[species]]@points@coords
+		apply(x@attribute.spaces[[space]]@spaces[[species]]@demand.points@coords, 2, mean),
+		x@attribute.spaces[[space]]@spaces[[species]]@demand.points@coords
 	)
 	## wdist
 	# calculate raw distances
-	dists<-calcDists(pts, method=x@attribute.spaces[[space]]@distance.metric)
+	dists<-calcDists(pts, method='total_sums_of_squares')
 	wdist_mtx<-dists[
-		nrow(pu_pts)+1+seq_len(nrow(x@attribute.spaces[[space]]@demand.points[[species]]@points@coords)),
+		nrow(pu_pts)+1+seq_len(nrow(x@attribute.spaces[[space]]@spaces[[species]]@demand.points@coords)),
 		seq_len(nrow(pu_pts))
-	]
-	
+	]	
 	# scale + pad distances
 	dp_wts_mtx=matrix(rep(dp_wts, each=nrow(pu_pts)), byrow=TRUE, ncol=nrow(pu_pts),nrow=length(dp_wts))
 	wdist_mtx=(wdist_mtx*dp_wts_mtx)
-	
 	# include failure pu
 	wdist_mtx=cbind(wdist_mtx, max(wdist_mtx)*opts@failure.multiplier)
 	## tss
 	tss_mtx=dists[
-		nrow(pu_pts)+1+seq_len(nrow(x@attribute.spaces[[space]]@demand.points[[species]]@points@coords)),
+		nrow(pu_pts)+1+seq_len(nrow(x@attribute.spaces[[space]]@spaces[[species]]@demand.points@coords)),
 		nrow(pu_pts)+1
 	]
-	tss_mtx=((tss_mtx*dp_wts))^2
-	## calculate metrics
+	tss_mtx=((tss_mtx*dp_wts))
+	# set default solution as all planning units if non-supplied
 	if (is.null(solution)) {
-		solution=seq_along(curr_df$pu)
-	} else {
-		solution=c(na.omit(match(solution, sort(curr_df$pu))))
+		solution=seq_len(nrow(x@pu))
 	}
-	spaceheld=calcReliableSpaceHeld(wdist_mtx, curr_df$value[order(curr_df$pu)], opts@max.r.level ,solution)
+	# calculate relative positions of pus 
+	relative_solution=na.omit(match(
+		solution,
+		x@attribute.spaces[[space]]@spaces[[species]]@planning.unit.points@ids
+	))
+	relative_probabilities=na.omit(curr_df$value[match(
+		curr_df$pu,
+		x@attribute.spaces[[space]]@spaces[[species]]@planning.unit.points@ids
+	)])
+	
+	## calculate metrics
+	spaceheld=calcReliableSpaceHeld(wdist_mtx, relative_probabilities, opts@max.r.level, relative_solution)
 	## exports
 	return(
 		list(
@@ -184,7 +202,7 @@ calcReliableMetrics<-function(x, species, space, opts, solution=NULL) {
 runUnreliableChecks<-function(x) {
 	expect_true(all(round(c(amount.held(x)),5)>=round(c(amount.target(x)),5)))
 	expect_true(all(c(space.held(x))>=c(space.target(x))))
-	# check that amount.held is correct
+	## check that amount.held is correct
 	for (r in seq_len(nrow(summary(x)))) {
 		pu_ids<-which(as.logical(x@results@selections[r,]))
 		for (i in seq_along(x@data@species$name)) {
@@ -198,13 +216,12 @@ runUnreliableChecks<-function(x) {
 	# run tests
 	for (r in seq_len(nrow(summary(x)))) {
 		pu_ids<-which(as.logical(x@results@selections[r,]))
-		for (i in seq_along(x@data@species$name)) {
-			for (j in seq_along(x@data@attribute.spaces)) {
+		for (j in seq_along(x@data@attribute.spaces)) {
+			for (i in seq_along(x@data@attribute.spaces[[j]]@spaces)) {
 				# tests
-				expect_equal(
-					round(calcUnreliableMetrics(x@data, species=i, space=j, solution=pu_ids)$prop,5),
-					round(space.held(x, y=r, species=i, space=j)[1],5)
-				)
+				R_eval<-round(calcUnreliableMetrics(x@data, species=i, space=j, solution=pu_ids)$prop,5)
+				cpp_eval<-round(space.held(x, y=r, species=i, space=j)[1],5)
+				expect_equal(R_eval, cpp_eval)
 			}
 		}
 	}
@@ -218,23 +235,21 @@ runReliableChecks<-function(x) {
 	for (r in seq_len(nrow(summary(x)))) {
 		pu_ids<-which(as.logical(x@results@selections[r,]))
 		for (i in seq_along(x@data@species$name)) {
-			expect_equal(
-				round(calcAmountHeld(x@data, species=i, solution=pu_ids),5),
-				round(amount.held(x,y=r,species=i)[[1]],5)
-			)
+			R_eval <- round(calcAmountHeld(x@data, species=i, solution=pu_ids),5)
+			cpp_eval <- round(amount.held(x,y=r,species=i)[[1]],5)
+			expect_equal(R_eval, cpp_eval)
 		}
 	}
 	## check that space.held is correct
 	# run tests
 	for (r in seq_len(nrow(summary(x)))) {
 		pu_ids<-which(as.logical(x@results@selections[r,]))
-		for (i in seq_along(x@data@species$name)) {
-			for (j in seq_along(x@data@attribute.spaces)) {
+		for (j in seq_along(x@data@attribute.spaces)) {
+			for (i in seq_along(x@data@attribute.spaces[[j]]@spaces)) {
 				# tests
-				expect_equal(
-					round(calcReliableMetrics(x@data, species=i, space=j, x@opts, solution=pu_ids)$prop,5),
-					round(space.held(x, y=r, species=i, space=j)[1],5)
-				)
+				R_eval<-round(calcReliableMetrics(x@data, species=i, space=j, x@opts, solution=pu_ids)$prop,5)
+				cpp_eval<-round(space.held(x, y=r, species=i, space=j)[1],5)
+				expect_equal(R_eval, cpp_eval)
 			}
 		}
 	}

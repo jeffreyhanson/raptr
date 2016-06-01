@@ -9,8 +9,6 @@
 \format{\code{SpatialPolyognsDataFrame}, \code{RasterStack}, \code{list} of \code{DemandPoint} objects.}
 \usage{
 sim_ru
-
-sim_rs
 }
 \description{
 This dataset contains all the data needed to generate prioritisations for three simulated species. This dataset contains planning units, species distribution

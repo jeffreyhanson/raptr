@@ -37,8 +37,10 @@ NULL
 #' @rdname simulated_data
 "sim_ru"
 
-#' @rdname simulated_data
-"sim_rs"
+
+#### remove sim_rs
+# @rdname simulated_data
+#"sim_rs"
 
 #' Case-study dataset for a conservation planning exercise
 #'

@@ -10,7 +10,7 @@ test_that('Gurobi installation checks', {
 
 test_that("blank.raster function", {
 	#	generate planning units
-	rst=blank.raster(sim.pus(n=225L),1)
+	rst<-blank.raster(sim.pus(n=225L),1)
 	# check simulated dataset
 	expect_true(inherits(rst, 'RasterLayer'))
 	expect_equal(ncell(rst),225L)

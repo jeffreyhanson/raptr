@@ -8,10 +8,7 @@ make.RapData(pus, species, spaces = NULL, amount.target = 0.2,
   space.target = 0.2, n.demand.points = 100L, kernel.method = c("ks",
   "hyperbox")[1], quantile = 0.5, species.points = NULL,
   n.species.points = ceiling(0.2 * cellStats(species, "sum")),
-  include.geographic.space = TRUE,
-  spaces.distance.metric = ifelse(inherits(spaces, "list"), rep("gower",
-  length(spaces)), "gower"), geographic.distance.metric = "euclidean",
-  scale = TRUE, verbose = FALSE, ...)
+  include.geographic.space = TRUE, scale = TRUE, verbose = FALSE, ...)
 }
 \arguments{
 \item{pus}{\code{SpatialPolygons} with planning unit data.}
@@ -35,10 +32,6 @@ make.RapData(pus, species, spaces = NULL, amount.target = 0.2,
 \item{n.species.points}{\code{numeric} vector specfiying the number points to sample the species distributions to use to generate demand points. Defaults to 20\% of the distribution.}
 
 \item{include.geographic.space}{\code{logical} should the geographic space be considered an attribute space?}
-
-\item{spaces.distance.metric}{\code{character} specifying the distance metric to use for each attribute space in \code{spaces}. Valid metrics are 'euclidean', 'bray', 'manhattan','gower', 'canberra', 'mahalanobis', 'jaccard', 'kulczynski', 'minkowski'. Argument defaults to 'gower' for each attribute space. See \code{?AttributeSpace} for details on the distance metrics.}
-
-\item{geographic.distance.metric}{\code{character} specifying the distance metric to use for the geographic attribute space (if \code{include.geographic.space=TRUE}). Defaults to 'euclidean'. See \code{?AttributeSpace} for details on the distance metrics.}
 
 \item{scale}{\code{logical} scale the attribute spaces to unit mean and standard deviation? This prevents overflow. Defaults to \code{TRUE}.}
 

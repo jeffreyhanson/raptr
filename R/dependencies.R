@@ -8,6 +8,16 @@
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom RColorBrewer brewer.pal.info
 
+#' @importFrom testthat test_that
+#' @importFrom testthat expect_true
+#' @importFrom testthat expect_false
+#' @importFrom testthat expect_equal
+#' @importFrom testthat expect_gte
+#' @importFrom testthat expect_lte
+#' @importFrom testthat expect_identical
+#' @importFrom testthat expect_equal
+#' @importFrom testthat expect_is
+
 #' @importFrom ggplot2 ggplot
 #' @importFrom ggplot2 geom_point
 #' @importFrom ggplot2 theme_classic

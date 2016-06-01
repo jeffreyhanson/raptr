@@ -8,9 +8,9 @@ NULL
 #' @slot polygons \code{PolySet} planning unit spatial data or \code{NULL} if data not available.
 #' @slot pu \code{data.frame} planning unit data. Columns are 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).
 #' @slot species \code{data.frame} with species data. Columns are 'name' (\code{character}.
-#' @slot targets \code{data.frame} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), 'proportion' (\code{numeric}), and 'name' (\code{character}).
+#' @slot targets \code{data.frame} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), 'proportion' (\code{numeric}).
 #' @slot pu.species.probabilities \code{data.frame} with data on the probability of species in each planning unit. Columns are 'species' (\code{integer}), 'pu' (\code{integer}), and 'value' (\code{numeric}) columns.
-#' @slot attribute.spaces \code{list} of \code{AttributeSpace} objects with the demand points and planning unit coordinates.
+#' @slot attribute.spaces \code{list} of \code{AttributeSpaces} objects with the demand points and planning unit coordinates.
 #' @slot boundary \code{data.frame} with data on the shared boundary length of planning units. Columns are with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'boundary' (\code{numeric}).
 #' @slot skipchecks \code{logical} Skip data integrity checks? May improve speed for big data sets.
 #' @slot .cache \code{environment} used to cache calculations.
@@ -32,119 +32,78 @@ setClass("RapData",
 		if (!object@skipchecks) {
 			### check column names of inputs
 			# pu
-			if (any(!c("cost","area","status") %in% names(object@pu)))
-				stop("argument to pu is missing one of these columns: 'cost', 'area', or 'status'")
-
-			if (!inherits(object@pu$cost, 'numeric'))
-				stop('argument to pu$cost is not numeric')
-			if (any(!is.finite(object@pu$cost)))
-				stop('argument to pu$cost contains NA or non-finite values')
-
-			if (!inherits(object@pu$area, 'numeric'))
-				stop('argument to pu$area is not numeric')
-			if (any(!is.finite(object@pu$area)))
-				stop('argument to pu$cost contains NA or non-finite values')
-
-			if (!inherits(object@pu$status, 'integer'))
-				stop('argument to pu$status is not integer')
-			if (any(!is.finite(object@pu$status)))
-				stop('argument to pu$status contains NA or non-finite values')
-			if (any(!object@pu$status %in% 0L:3L))
-				stop('argument to pu$status must not contain values other than 0L, 1L, 2L, 3L')
-
-			if (!all(laply(object@pu[,grep('^coords.*$', names(object@pu)),drop=FALSE], is.numeric)))
-				stop('argument to pu has columns starting with "coords" that are not numeric')
+			expect_true(all(c("cost","area","status") %in% names(object@pu)), info="argument to pu is missing one of these columns: 'cost', 'area', or 'status'")
+			expect_is(object@pu$cost, 'numeric', info='argument to pu$cost is not numeric')
+			expect_true(all(is.finite(object@pu$cost)),info='argument to pu$cost contains NA or non-finite values')
+			expect_is(object@pu$area, 'numeric', info='argument to pu$area is not numeric')
+			expect_true(all(is.finite(object@pu$area)), info='argument to pu$cost contains NA or non-finite values')
+			expect_is(object@pu$status, 'integer', info='argument to pu$status is not integer')
+			expect_true(all(is.finite(object@pu$status)), info='argument to pu$status contains NA or non-finite values')
+			expect_true(all(object@pu$status %in% 0L:3L), info='argument to pu$status must not contain values other than 0L, 1L, 2L, 3')
 
 			# species
 			if (!is.null(object@species$name)) {
 				object@species$name<-gsub("[[:punct:]]", "", object@species$name)
 				if (is.factor(object@species$name))
 					object@species$name<-as.character(object@species$name)
-				if (!inherits(object@species$name, 'character'))
-					stop('argument to species$name is not character')
-				if (any(is.na(object@species$name)))
-					stop('argument to species$name contains NA values')
+				expect_is(object@species$name, 'character', info='argument to species$name is not character')
+				expect_true(all(!is.na(object@species$name)), info='argument to species$name contains NA values')
 			}
-
-			# targets
-			if (any(!c('species','target','proportion') %in% names(object@targets)))
-				stop("argument to targets is missing one of these columns: 'species', 'target', or 'proportion'")
-
-			if (!'name' %in% names(object@targets))
-				object@targets$name <- as.character(seq_len(nrow(object@targets)))
-			if (!inherits(object@targets$name, c('character','factor')))
-				stop('argument to targets$name is not character or factor')
 			
-			if (!inherits(object@targets$species, c('integer')))
-				stop('argument to targets$species is not integer')
-			if (any(is.na(object@targets$species)))
-				stop('argument to targets$species contains NA or non-finite values')
-
-			if (!inherits(object@targets$target, c('integer')))
-				stop('argument to targets$target is not integer')
-			if (any(is.na(object@targets$target)))
-				stop('argument to targets$target contains NA or non-finite values')
-
-			if (!inherits(object@targets$proportion, c('numeric')))
-				stop('argument to targets$proportion is not numeric')
-			if (any(object@targets$proportion>1,na.rm=TRUE))
-				stop('argument to targets$proportion contains values >1')
+			# targets
+			expect_true(all(c('species','target','proportion') %in% names(object@targets)), info="argument to targets is missing one of these columns: 'species', 'target', or 'proportion'")
+			expect_is(object@targets$species, c('integer'), info='argument to targets$species is not integer')
+			expect_true(all(!is.na(object@targets$species)), info='argument to targets$species contains NA or non-finite values')
+			expect_is(object@targets$target, c('integer'), info='argument to targets$target is not integer')
+			expect_true(all(!is.na(object@targets$target)), info='argument to targets$target contains NA or non-finite values')
+			expect_is(object@targets$proportion, c('numeric'), info='argument to targets$proportion is not numeric')
+			expect_false(any(object@targets$proportion>1,na.rm=TRUE), info='argument to targets$proportion contains values >1')
 
 			# pu.species.probabilities
-			if (any(!c('species','pu','value') %in% names(object@pu.species.probabilities)))
-				stop("argument to pu.species.probabilities is missing one of these columns: 'species', 'pu', or 'value'")
-			if (!inherits(object@pu.species.probabilities$pu, 'integer'))
-				stop('argument to pu.species.probabilities$pu is not integer')
-			if (!inherits(object@pu.species.probabilities$species, 'integer'))
-				stop('argument to pu.species.probabilities$species is not integer')
-			if (any(!is.finite(object@pu.species.probabilities$value)))
-				stop('argument to pu.species.probabilities$value contains NA or non-finite values')
-			if (any(object@pu.species.probabilities$value<0 | object@pu.species.probabilities$value>1))
-				stop('argument to pu.species.probabilities$value contains values >1 or <0')
+			expect_true(all(c('species','pu','value') %in% names(object@pu.species.probabilities)), info="argument to pu.species.probabilities is missing one of these columns: 'species', 'pu', or 'value'")
+			expect_is(object@pu.species.probabilities$pu, 'integer',info='argument to pu.species.probabilities$pu is not integer')
+			expect_is(object@pu.species.probabilities$species, 'integer', info='argument to pu.species.probabilities$species is not integer')
+			expect_true(all(!is.na(object@pu.species.probabilities$value)), info='argument to pu.species.probabilities$value contains NA or non-finite values')
+			expect_false(any(object@pu.species.probabilities$value<0 | object@pu.species.probabilities$value>1), info='argument to pu.species.probabilities$value contains values >1 or <0')
 
 			# attribute.space
-				# all validity checks are internal in the object
+			## check that each attribute spaces object has different name
+			expect_equal(sum(duplicated(sapply(object@attribute.spaces, slot, 'name'))), 0, info='AttributeSpaces should have unique names')
 
 			# boundary
-			if (any(!c('id1','id2','boundary') %in% names(object@boundary)))
-				stop("argument to boundary is missing one of these columns: 'id1', 'id2', or 'boundary'")
-			if (!inherits(object@boundary$id1, 'integer'))
-				stop('argument to boundary$id1 is not integer')
-			if (any(!is.finite(object@boundary$id1)))
-				stop('argument to boundary$id1 contains NA or non-finite values')
-
-			if (!inherits(object@boundary$id2, 'integer'))
-				stop('argument to boundary$id2 is not integer')
-			if (any(!is.finite(object@boundary$id2)))
-				stop('argument to boundary$id2 contains NA or non-finite values')
-
-			if (!inherits(object@boundary$boundary, 'numeric'))
-				stop('argument to boundary$boundary is not numeric')
-			if (any(!is.finite(object@boundary$boundary)))
-				stop('argument to boundary$boundary contains NA or non-finite values')
+			expect_true(all(c('id1','id2','boundary') %in% names(object@boundary)), info="argument to boundary is missing one of these columns: 'id1', 'id2', or 'boundary'")
+			expect_is(object@boundary$id1, 'integer', info='argument to boundary$id1 is not integer')
+			expect_true(all(is.finite(object@boundary$id1)), info='argument to boundary$id1 contains NA or non-finite values')
+			expect_is(object@boundary$id2, 'integer', info='argument to boundary$id2 is not integer')
+			expect_true(all(is.finite(object@boundary$id2)), info='argument to boundary$id2 contains NA or non-finite values')
+			expect_is(object@boundary$boundary, 'numeric', info='argument to boundary$boundary is not numeric')
+			expect_true(all(is.finite(object@boundary$boundary)), info='argument to boundary$boundary contains NA or non-finite values')
 
 			## cross table dependencies
 			# check all planning units match
-			if (!all(object@boundary$id1 %in% seq_len(nrow(object@pu))))
-				stop('argument to boundary$id1 must have values that correspond to rows in argument to pu')
-			if (!all(object@boundary$id2 %in% seq_len(nrow(object@pu))))
-				stop('argument to boundary$id2 must have values that correspond to rows in argument to pu')
-			if (!all(object@pu.species.probabilities$pu %in% seq_len(nrow(object@pu))))
-				stop('argument to pu.species.probabilities$pu must have values that correspond to rows in argument to pu')
-			if (!all(laply(object@attribute.spaces, function(x) {nrow(x@pu@coords)==nrow(object@pu)})))
-				stop('arguments to attribute.space and pu must have the same number of planning units')
+			expect_true(all(object@boundary$id1 %in% seq_len(nrow(object@pu))), info='argument to boundary$id1 must have values that correspond to rows in argument to pu')
+			expect_true(all(object@boundary$id2 %in% seq_len(nrow(object@pu))), info='argument to boundary$id2 must have values that correspond to rows in argument to pu')
+			expect_true(all(object@pu.species.probabilities$pu %in% seq_len(nrow(object@pu))), info='argument to pu.species.probabilities$pu must have values that correspond to rows in argument to pu')
+			for (i in seq_along(object@attribute.spaces)) {
+				for (j in seq_along(object@attribute.spaces[[i]])) {
+					expect_true(all(object@attribute.spaces[[i]]@spaces[[j]]@planning.unit.points@ids %in% seq_along(object@pu[[1]])), info=paste0('object@attribute.spaces[[',i,']]@spaces[[',j,']] is contains planning units not in argument to pu'))
+					expect_true(all(object@attribute.spaces[[i]]@spaces[[j]]@planning.unit.points@ids %in%
+					object@pu.species.probabilities$pu[object@pu.species.probabilities$species==object@attribute.spaces[[i]]@spaces[[j]]@species]),
+					info=paste0('object@attribute.spaces[[',i,']]@spaces[[',j,']] is contains planning units associated with the species species ',object@attribute.spaces[[i]]@spaces[[j]]@species,' not in argument to pu.species.probabilities'))
+				}
+			}
+			
 			# check all species match
-			if (!all(object@pu.species.probabilities$species %in% seq_len(nrow(object@species))))
-				stop('argument to pu.species.probabilities$species must have values that correspond to rows in argument to species')
-			if (!all(seq_len(nrow(object@species)) %in% object@pu.species.probabilities$species))
-				stop('argument to species has species that do not occur at least once in pu.species.probabilities$species')
-			if (!all(laply(object@attribute.spaces, function(x) {length(x@demand.points)==nrow(object@species)})))
-				stop('arguments to attribute.space and species must have the same number of species')
-			if (!all(object@targets$species %in% seq_len(nrow(object@species))))
-				stop('arguments to targets must have species present in argument to species')
+			expect_true(all(object@pu.species.probabilities$species %in% seq_len(nrow(object@species))), info='argument to pu.species.probabilities$species must have values that correspond to rows in argument to species')
+			expect_true(all(seq_len(nrow(object@species)) %in% object@pu.species.probabilities$species), info='argument to species has species that do not occur at least once in pu.species.probabilities$species')
+			for (i in seq_along(object@attribute.spaces)) {
+				for (j in seq_along(object@attribute.spaces[[i]])) {
+					expect_true(object@attribute.spaces[[i]]@spaces[[j]]@species %in% seq_along(object@species[[1]]), info=paste0('object@attribute.spaces[[',i,']]@spaces[[',j,']] is associated with a species not in argument to species'))
+				}
+			}
+			expect_true(all(object@targets$species %in% seq_len(nrow(object@species))), info='arguments to targets must have species present in argument to species')
 			# check that attribute spaces match
-			if (!all(object@targets$target %in% 0:length(object@attribute.spaces)))
-				stop('argument to targets must have values in values that are zero or correspond to elements in argument to attribute.spaces')
+			expect_true(all(object@targets$target %in% 0:length(object@attribute.spaces)), info='argument to targets must have values in values that are zero or correspond to elements in argument to attribute.spaces')
 		}
 		return(TRUE)
 	}
@@ -158,9 +117,9 @@ setClass("RapData",
 #' @param polygons \code{PolySet} planning unit spatial data or \code{NULL} if data not available.
 #' @param pu \code{data.frame} planning unit data. Columns are 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).
 #' @param species \code{data.frame} with species data. Columns are 'name' (\code{character}).
-#' @param targets \code{data.frame} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), 'proportion' (\code{numeric}), and 'name' (\code{character}).
+#' @param targets \code{data.frame} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), 'proportion' (\code{numeric}).
 #' @param pu.species.probabilities \code{data.frame} with data on the probability of species in each planning unit. Columns are 'species' (\code{integer}), 'pu' (\code{integer}), and 'value' (\code{numeric}) columns.
-#' @param attribute.spaces \code{list} of \code{AttributeSpace} objects with the demand points and planning unit coordinates.
+#' @param attribute.spaces \code{list} of \code{AttributeSpaces} objects with the demand points and planning unit coordinates.
 #' @param boundary \code{data.frame} with data on the shared boundary length of planning units. Columns are with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'boundary' (\code{integer}).
 #' @param skipchecks \code{logical} Skip data integrity checks? May improve speed for big data sets.
 #' @param .cache \code{environment} used to cache calculations.
@@ -173,43 +132,49 @@ setClass("RapData",
 #' # load data
 #' data(cs_pus, cs_spp, cs_space)
 #' # create data for RapData object
-#' attribute.spaces=list(
-#' 	AttributeSpace(
-#' 		pu=SimplePoints(rgeos::gCentroid(cs_pus[1:10,], byid=TRUE)@@coords),
-#' 		demand.points=list(
-#'			make.DemandPoints(
-#'				SpatialPoints(
-#'					coords=randomPoints(
-#'						cs_spp,
-#'						n=10,
-#'						prob=TRUE
-#'					)
+#' attribute.spaces <- list(
+#' 	AttributeSpaces(
+#'		list(
+#' 			AttributeSpace(
+#'				planning.unit.points=PlanningUnitPoints(
+#'					rgeos::gCentroid(cs_pus[1:10,], byid=TRUE)@@coords,
+#'					seq_len(10)
+#'				)
+#' 				demand.points=make.DemandPoints(
+#'					SpatialPoints(
+#'						coords=randomPoints(
+#'							cs_spp,
+#'							n=10,
+#'							prob=TRUE
+#'						)
+#'					),
+#						NULL
 #'				),
-#'				NULL
-#'			)
-#'		),
-#'		distance.metric='euclidean'
-#' 	),
-#' 	AttributeSpace(
-#' 		pu=SimplePoints(extract(cs_space[[1]],cs_pus[1:10,],fun=mean)),
-#' 		demand.points=list(
-#'			make.DemandPoints(
-#'				SpatialPoints(
-#'					coords=randomPoints(
-#'						cs_spp,
-#'						n=10,
-#'						prob=TRUE
-#'					)
+#'				species=1L
+#'			),
+#' 			AttributeSpace(
+#' 				planning.unit.points=PlanningUnitPoints(
+#'					extract(cs_space[[1]],cs_pus[1:10,],fun=mean),
+#'					seq_len(10)
 #'				),
-#'				cs_space[[1]]
+#' 				demand.points=make.DemandPoints(
+#'					SpatialPoints(
+#'						coords=randomPoints(
+#'							cs_spp,
+#'							n=10,
+#'							prob=TRUE
+#'						)
+#'					),
+#'					cs_space[[1]]
+#'				),
+#'				species=1L
 #'			)
-#'		),
-#'		distance.metric='euclidean'
+#' 		)
 #' 	)
 #' )
-#' pu.species.probabilities=calcSpeciesAverageInPus(cs_pus[1:10,], cs_spp)
-#' polygons=SpatialPolygons2PolySet(cs_pus[1:10,])
-#' boundary=calcBoundaryData(cs_pus[1:10,])
+#' pu.species.probabilities <- calcSpeciesAverageInPus(cs_pus[1:10,], cs_spp)
+#' polygons <- SpatialPolygons2PolySet(cs_pus[1:10,])
+#' boundary <- calcBoundaryData(cs_pus[1:10,])
 #'
 # # create RapData object
 #' x<-RapData(
@@ -255,8 +220,6 @@ RapData<-function(pu, species, targets, pu.species.probabilities, attribute.spac
 #' @param include.geographic.space \code{logical} should the geographic space be considered an attribute space?
 #' @param species.points \code{list} of/or \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records. Use a \code{list} of objects to represent different species. Must have the same number of elements as \code{species}. If not supplied then use \code{n.species.points} to sample points from the species distributions.
 #' @param n.species.points \code{numeric} vector specfiying the number points to sample the species distributions to use to generate demand points. Defaults to 20\% of the distribution.
-#' @param spaces.distance.metric \code{character} specifying the distance metric to use for each attribute space in \code{spaces}. Valid metrics are 'euclidean', 'bray', 'manhattan','gower', 'canberra', 'mahalanobis', 'jaccard', 'kulczynski', 'minkowski'. Argument defaults to 'gower' for each attribute space. See \code{?AttributeSpace} for details on the distance metrics.
-#' @param geographic.distance.metric \code{character} specifying the distance metric to use for the geographic attribute space (if \code{include.geographic.space=TRUE}). Defaults to 'euclidean'. See \code{?AttributeSpace} for details on the distance metrics.
 #' @param verbose \code{logical} print statements during processing?
 #' @param scale \code{logical} scale the attribute spaces to unit mean and standard deviation? This prevents overflow. Defaults to \code{TRUE}.
 #' @param ... additional arguments to \code{calcBoundaryData} and \code{calcPuVsSpeciesData}.
@@ -271,36 +234,19 @@ RapData<-function(pu, species, targets, pu.species.probabilities, attribute.spac
 make.RapData<-function(pus, species, spaces=NULL,
 	amount.target=0.2, space.target=0.2, n.demand.points=100L, kernel.method=c('ks', 'hyperbox')[1], quantile=0.5,
 	species.points=NULL, n.species.points=ceiling(0.2*cellStats(species, 'sum')), include.geographic.space=TRUE, 
-	spaces.distance.metric=ifelse(inherits(spaces,'list'), rep('gower', length(spaces)), 'gower'),
-	geographic.distance.metric='euclidean',scale=TRUE,
-	verbose=FALSE, ...
+	scale=TRUE, verbose=FALSE, ...
 ) {
 	## init
 	# check inputs for validity
-	stopifnot(inherits(species.points, c('SpatialPoints', 'SpatialPointsDataFrame', 'NULL')))
-	stopifnot(inherits(pus, c('SpatialPolygons')))
-	stopifnot(inherits(species, c('RasterStack', 'RasterLayer', 'RasterBrick')))
-	stopifnot(inherits(spaces, c('NULL', 'RasterStack', 'RasterBrick', 'RasterLayer', 'list')))
-	sapply(spaces.distance.metric, match.arg, c(
-		'euclidean', 'bray', 'manhattan','gower',
-		'canberra', 'mahalanobis',
-		'jaccard', 'kulczynski', 'minkowski'
-	))
-	sapply(geographic.distance.metric, match.arg, c(
-		'euclidean', 'bray', 'manhattan','gower',
-		'canberra', 'mahalanobis',
-		'jaccard', 'kulczynski', 'minkowski'
-	))
-	stopifnot(length(geographic.distance.metric)==1)
-	stopifnot(inherits(scale,'logical'))
+	expect_is(species.points, c('SpatialPoints', 'SpatialPointsDataFrame', 'NULL'))
+	expect_is(pus, c('SpatialPolygons'))
+	expect_is(species, c('RasterStack', 'RasterLayer', 'RasterBrick'))
+	expect_is(spaces, c('NULL', 'RasterStack', 'RasterBrick', 'RasterLayer', 'list'))
+	expect_is(scale,'logical')
 	.cache<-new.env()
 	# coerce non-list items to list
 	if (!inherits(spaces, 'list'))
 		spaces=list(spaces)
-	# check length of distance.metric
-	if (!is.null(spaces[[1]])) {
-		stopifnot(length(spaces.distance.metric)==(length(spaces)))
-	}
 	# create species.points from species
 	if (is.null(species.points)) {
 		species.points=llply(
@@ -368,10 +314,10 @@ make.RapData<-function(pus, species, spaces=NULL,
 			spaces[[i]] <- (spaces[[i]]-spaces.mean) / spaces.sd
 		}
 	}
-	
 	## set pu.points
 	# set pu.points based spaces
 	pu.points<-list()
+	space.names <- c()
 	# if spaces is not NULL
 	if (!is.null(spaces[[1]])) {
 		# create initial rasterized version of the pus
@@ -398,9 +344,8 @@ make.RapData<-function(pus, species, spaces=NULL,
 					vals<-rcpp_groupmean(getValues(pu.rast), getValues(x[[i]]))
 					coordMTX[attr(vals, 'ids'),i]<-c(vals)
 				}
-				if (any(is.na(coordMTX[])))
-					stop('Some planning units do not intersect with an attribute space layer.')
-				return(SimplePoints(coords=coordMTX))
+				ids <- which(rowSums(is.na(coordMTX))==0)
+				return(PlanningUnitPoints(coords=coordMTX[ids,], ids=ids))
 			}
 		)
 	}
@@ -415,23 +360,23 @@ make.RapData<-function(pus, species, spaces=NULL,
 			pu.coords <- sweep(pu.coords, MARGIN=2, FUN='-', pu.means)
 			pu.coords <- sweep(pu.coords, MARGIN=2, FUN='/', pu.sds)
 		}
-		pu.points <- append(pu.points,list(SimplePoints(pu.coords)))
-		
+		pu.points <- append(pu.points, list(PlanningUnitPoints(coords=pu.coords, ids=seq_len(nrow(pu.coords)))))
 	}
 	if (length(pu.points)==0) {
-		stop('Attribute spaces must be specified. Either include.geographic.space=TRUE or spaces must contain at least one Raster object')
+		stop('Attribute spaces must be specified. Either include.geographic.space=TRUE or spaces must contain at least one Raster* object')
 	}
 	## set demand.points
 	# include geographic space if set
 	if (!is.null(spaces[[1]]) & include.geographic.space)
-		spaces=append(spaces, list(NULL))
+		spaces <- append(spaces, list(NULL))
 	# generate demand points
-	demand.points=list()
+	demand.points <- list()
 	for (i in seq_along(spaces)) {
-		dpLST=list()
+		dpLST <- list()
 		for (j in seq_along(species.points)) {
 			# extract space points
 			if (is.null(spaces[[i]])) {
+				# save name
 				# get species coords
 				curr.species.points <- species.points[[j]]@coords
 				# zscore species coords
@@ -440,9 +385,9 @@ make.RapData<-function(pus, species, spaces=NULL,
 					curr.species.points <- sweep(curr.species.points, MARGIN=2, FUN='/', pu.sds)
 				}
 				# save species points in the space
-				space.points=curr.species.points
+				space.points <- curr.species.points
 			} else {
-				space.points=extract(spaces[[i]], species.points[[j]])
+				space.points <- extract(spaces[[i]], species.points[[j]])
 			}
 			# generate demand points
 			dpLST[[j]]=make.DemandPoints(
@@ -454,15 +399,36 @@ make.RapData<-function(pus, species, spaces=NULL,
 		}
 		demand.points[[i]]=dpLST
 	}
+	# save space names
+	space.names <- c()
+	for (i in seq_along(spaces)) {
+		if (is.null(spaces[[i]])) {
+			space.names[i] <- 'geographic'
+		} else if (!is.null(names(spaces)[i]) && (nchar(names(spaces)[i])>0)) {
+			space.names[i] <- names(spaces)[i]
+		} else if (inherits(spaces[[i]], c('RasterLayer', 'RasterStack', 'RasterBrick')) &&
+			(nchar(spaces[[i]]@file@name) > 0)) {
+			space.names[i] <- basename(spaces[[i]]@file@name)
+		} else {
+			space.names[i] <- paste0('space_',i)
+		}
+	}
 	# create AttributeSpace objects
-	distance.metric=c(spaces.distance.metric, geographic.distance.metric)
+	
+	demand.points<<-demand.points
+	pu.points<<-pu.points
+	spaces<<-spaces
+	
 	attribute.spaces=llply(seq_along(spaces), function(i) {
-		return(
-			AttributeSpace(
-				pu=pu.points[[i]],
-				demand.points=demand.points[[i]],
-				distance.metric=distance.metric[i]
-			)
+		AttributeSpaces(
+			llply(seq_along(demand.points[[i]]), function(d) {
+				AttributeSpace(
+					planning.unit.points=pu.points[[i]],
+					demand.points=demand.points[[i]][[d]],
+					species=d
+				)
+			}),
+			name=space.names[i]
 		)
 	})
 	## set boundary
@@ -585,13 +551,9 @@ setMethod(
 #' @export
 spp.subset.RapData<-function(x, species) {
 	# convert species names to integers
-	if (inherits(species, 'character')) {
-		if (!'name' %in% names(x@species))
-			stop('argument to x does not have names for species.')
+	if (inherits(species, 'character'))
 		species <- match(species, x@species$name)
-		if (any(is.na(species)))
-			stop('argument to species contains names not present in object.')
-	}
+	expect_true(all(!is.na(species)) & all(species %in% seq_len(nrow(x@species))), info='argument to species contains names or ids not present in object.')
 	# create new objects
 	pu.species.probabilities<-x@pu.species.probabilities[which(
 			x@pu.species.probabilities$species %in% species
@@ -608,11 +570,18 @@ spp.subset.RapData<-function(x, species) {
 			pu.species.probabilities=pu.species.probabilities,
 			attribute.spaces=lapply(
 				x@attribute.spaces,
-				function(x) {
-						AttributeSpace(
-							x@pu,
-							x@demand.points[species]
-					  )
+				function(z1) {
+					curr.species <- sapply(z1@spaces, slot, 'species')
+					curr.spaces <- z1@spaces[na.omit(match(curr.species, species))]
+					curr.spaces <- lapply(seq_along(curr.spaces), function(z2) {
+						z3<-z1@spaces[[z2]]
+						z3@species<-z2
+						return(z3)
+					})
+					AttributeSpaces(
+						spaces=curr.spaces,
+						name=z1@name
+					)
 				}
 			),
 			boundary=x@boundary,
@@ -625,6 +594,9 @@ spp.subset.RapData<-function(x, species) {
 #' @method pu.subset RapData
 #' @export
 pu.subset.RapData<-function(x, pu) {
+	# check that all pus are valid
+	expect_is(pu, 'integer')
+	expect_true(all(pu %in% seq_len(nrow(x@pu))), info='argument to pu includes ids for non-existant planning units')
 	## create objects
 	# pu.species.probabilities
 	pu.species.probabilities<-x@pu.species.probabilities[which(
@@ -655,11 +627,23 @@ pu.subset.RapData<-function(x, pu) {
 			pu.species.probabilities=pu.species.probabilities,
 			attribute.spaces=lapply(
 				x@attribute.spaces,
-				function(x) {
-						AttributeSpace(
-							SimplePoints(x@pu@coords[pu,,drop=FALSE]),
-							x@demand.points[species]
-					  )
+				function(z) {
+					AttributeSpaces(
+						spaces=lapply(z@spaces, function(y) {
+							curr.ids <- na.omit(match(y@planning.unit.points@ids, pu))
+							attributes(curr.ids)<-NULL
+							curr.pu <- pu[which(pu %in% y@planning.unit.points@ids)]
+							AttributeSpace(
+								planning.unit.points=PlanningUnitPoints(
+									coords=y@planning.unit.points@coords[curr.pu,,drop=FALSE],
+									ids=curr.ids
+								),
+								demand.points=y@demand.points,
+								species=y@species
+							)
+						}),
+						name=z@name
+					)
 				}
 			),
 			boundary=boundary,
@@ -672,13 +656,20 @@ pu.subset.RapData<-function(x, pu) {
 #' @method dp.subset RapData
 #' @export
 dp.subset.RapData<-function(x, space, species, points) {
+	# coerce character arguments to ids
+	if (is.character(space))
+		space <- match(space, sapply(x@attribute.spaces, slot, 'name'))
+	expect_true(all(!is.na(space)) & all(space %in% seq_along(x@attribute.spaces)), info='argument to space contains name for non-existant space')
+	if (inherits(species, 'character'))
+		species <- match(species, x@species$name)
+	expect_true(all(!is.na(species)) & all(species %in% seq_len(nrow(x@species))), info='argument to species contains names or ids not present in object.')
 	# create objects
 	attr.space<-x@attribute.spaces
 	for (i in seq_along(space)) {
 		for (j in seq_along(species)) {
-			attr.space[[space[i]]]@demand.points[[species[j]]]<-DemandPoints(
-				SimplePoints(attr.space[[space[i]]]@demand.points[[species[j]]]@points@coords[points,]),
-				attr.space[[space[i]]]@demand.points[[species[j]]]@weights[points]
+			attr.space[[space[[i]]]]@spaces[[species[[j]]]]@demand.points<-DemandPoints(
+				attr.space[[space[[i]]]]@spaces[[species[[j]]]]@demand.points@coords[points,,drop=FALSE],
+				attr.space[[space[[i]]]]@spaces[[species[[j]]]]@demand.points@weights[points]
 			)
 		}
 	}
@@ -725,7 +716,7 @@ prob.subset.RapData<-function(x, species, threshold) {
 #' @rdname update
 #' @export
 #' @method update RapData
-update.RapData<-function(object, species=NULL, space=NULL, name=NULL, amount.target=NULL, space.target=NULL, pu=NULL, cost=NULL, status=NULL, distance.metric=NULL, ...) {
+update.RapData<-function(object, species=NULL, space=NULL, name=NULL, amount.target=NULL, space.target=NULL, pu=NULL, cost=NULL, status=NULL, ...) {
 	# deparse species
 	if (is.null(species)) {
 		species<-seq_len(nrow(object@species))
@@ -752,14 +743,6 @@ update.RapData<-function(object, species=NULL, space=NULL, name=NULL, amount.tar
 	# update space targets
 	if (!is.null(space.target))
 		object@targets$proportion[which(object@targets$target %in% space & object@targets$species %in% species)]<-space.target
-	# update distance metrics
-	if (!is.null(distance.metric)) {
-		if (length(distance.metric)==1)
-			distance.metric<-rep(distance.metric, length(object@attribute.spaces))
-		for (i in seq_along(space)) {
-			object@attribute.spaces[[space[i]]]@distance.metric=distance.metric[i]
-		}
-	}
 	# check object for validity
 	validObject(object, test=FALSE)
 	# return object
@@ -854,38 +837,34 @@ space.plot.RapData<-function(
 	# data checks
 	stopifnot(length(species)==1)
 	if (is.character(species)) {
-		if (!species %in% x@species$name)
-			stop('argument to species is not a species name in argument to x')
 		spp_pos<-match(species, x@species$name)
-	}
-	if (is.numeric(species)) {
-		if (!species %in% seq_along(x@species$name))
-			stop('argument to species is not a valid index for species in argument to x')
+	} else {
 		spp_pos <- species
+		species <- x@species$name[spp_pos]
 	}
+	expect_true(all(!is.na(species)) & all(spp_pos %in% seq_len(nrow(x@species))), info='argument to species contains names or ids not present in object.')
 	# set title
 	if (is.null(main)) {
 		if ('name' %in% names(x@species) & is.numeric(species)) {
-			main=paste0(x@species$name[species], ' in space ', space)
+			main<-paste0(x@species$name[species], ' in space ', space)
 		} else if (is.numeric(species)) {
-			main=paste0('Species ', species, ' in space ', space)
+			main<-paste0('Species ', species, ' in space ', space)
 		} else {
-			main=paste0(species, ' in space ', space)
+			main<-paste0(species, ' in space ', space)
 		}
 	}
 	# extract pu data
-	pu<-as.data.frame(x@attribute.spaces[[space]]@pu@coords)
+	pu<-as.data.frame(x@attribute.spaces[[space]]@spaces[[spp_pos]]@planning.unit.points@coords)
 	names(pu)<-paste0('X',seq_len(ncol(pu)))
-	pu$status	<-'Not Selected'
+	pu$status<-'Not Selected'
 	pu$status[which(x@pu$status==2)]<-'Locked In'
 	pu$status[which(x@pu$status==3)]<-'Locked Out'
 	# extract dp data
-	dp<-as.data.frame(x@attribute.spaces[[space]]@demand.points[[spp_pos]]@points@coords)
+	dp<-as.data.frame(x@attribute.spaces[[space]]@spaces[[spp_pos]]@demand.points@coords)
 	names(dp)<-paste0('X',seq_len(ncol(dp)))
-	dp$weights=x@attribute.spaces[[space]]@demand.points[[spp_pos]]@weights
+	dp$weights<-x@attribute.spaces[[space]]@spaces[[spp_pos]]@demand.points@weights
 	# make plots
-	do.call(
-		paste0('spacePlot.',ncol(x@attribute.spaces[[space]]@pu@coords),'d'),
+	do.call(paste0('spacePlot.',ncol(x@attribute.spaces[[space]]@spaces[[spp_pos]]@planning.unit.points@coords),'d'),
 		list(
 			pu,
 			dp,

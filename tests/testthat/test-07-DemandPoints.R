@@ -3,13 +3,13 @@ context('07-DemandPoints')
 test_that('DemandPoints generator function', {
 	# create object
 	dp<-DemandPoints(
-		points=SimplePoints(matrix(runif(100), ncol=2)),
-		weights=rnorm(50)
+		matrix(runif(100), ncol=2),
+		runif(50)
 	)
 	# check object
 	expect_is(dp, 'DemandPoints')
-	expect_equal(ncol(dp@points@coords), 2)
-	expect_equal(nrow(dp@points@coords), 50)
+	expect_equal(ncol(dp@coords), 2)
+	expect_equal(nrow(dp@coords), 50)
 	expect_equal(length(dp@weights), 50)
 })
 
@@ -17,18 +17,18 @@ test_that('demand.points (ks, geographic space)', {
 	# load data
 	sim_spp <- sim.species(sim.pus(225L), model='normal', res=1)
 	# generate points
-	pts<-SpatialPoints(coords=randomPoints(sim_spp, n=10, prob=TRUE))
+	pts<-randomPoints(sim_spp, n=10, prob=TRUE)
 	# create demand points
 	dp<-make.DemandPoints(
-		points=pts@coords,
+		points=pts,
 		n=100L,
 		kernel.method='ks'
 	)
 	# check objects
 	expect_is(dp, 'DemandPoints')
-	expect_equal(ncol(dp@points@coords), 2)
-	expect_equal(nrow(dp@points@coords), 100)
-	expect_equal(sum(is.na(dp@points@coords)), 0)
+	expect_equal(ncol(dp@coords), 2)
+	expect_equal(nrow(dp@coords), 100)
+	expect_equal(sum(is.na(dp@coords)), 0)
 	expect_equal(length(dp@weights), 100)
 	expect_equal(sum(is.na((dp@weights))), 0)
 })
@@ -47,9 +47,9 @@ test_that('demand.points (ks, attribute space)', {
 	)
 	# check objects
 	expect_is(dp, 'DemandPoints')
-	expect_equal(ncol(dp@points@coords), 1)
-	expect_equal(nrow(dp@points@coords), 100)
-	expect_equal(sum(is.na(dp@points@coords)), 0)
+	expect_equal(ncol(dp@coords), 1)
+	expect_equal(nrow(dp@coords), 100)
+	expect_equal(sum(is.na(dp@coords)), 0)
 	expect_equal(length(dp@weights), 100)
 	expect_equal(sum(is.na((dp@weights))), 0)
 })
@@ -67,9 +67,9 @@ test_that('demand.points (hypervolume, geographic space)', {
 	)
 	# check objects
 	expect_is(dp, 'DemandPoints')
-	expect_equal(ncol(dp@points@coords), 2)
-	expect_equal(nrow(dp@points@coords), 100)
-	expect_equal(sum(is.na(dp@points@coords)), 0)
+	expect_equal(ncol(dp@coords), 2)
+	expect_equal(nrow(dp@coords), 100)
+	expect_equal(sum(is.na(dp@coords)), 0)
 	expect_equal(length(dp@weights), 100)
 	expect_equal(sum(is.na((dp@weights))), 0)
 })
@@ -87,9 +87,9 @@ test_that('demand.points (hypervolume, attribute space)', {
 	)
 	# check objects
 	expect_is(dp, 'DemandPoints')
-	expect_equal(ncol(dp@points@coords), 2)
-	expect_equal(nrow(dp@points@coords), 100)
-	expect_equal(sum(is.na(dp@points@coords)), 0)
+	expect_equal(ncol(dp@coords), 2)
+	expect_equal(nrow(dp@coords), 100)
+	expect_equal(sum(is.na(dp@coords)), 0)
 	expect_equal(length(dp@weights), 100)
 	expect_equal(sum(is.na((dp@weights))), 0)
 })

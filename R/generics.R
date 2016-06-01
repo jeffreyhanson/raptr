@@ -314,7 +314,6 @@ NULL
 #' @param name \code{character} to rename species.
 #' @param amount.target \code{numeric} vector for new area targets (\%) for the specified species.
 #' @param space.target \code{numeric} vector for new attribute space targets (\%) for the specified species and attribute spaces.
-#' @param distance.metric \code{character} name of distance metric to use for attribute space representation calculations (see \code{link{AttributeSpace}} for more information).
 #' @param pu \code{integer} planning unit indices that need to be updated.
 #' @param status \code{integer} new statuses for specified planning units.
 #' @param cost \code{numeric} new costs for spcified planning units.
@@ -492,11 +491,13 @@ logging.file<-function(x,y) UseMethod('logging.file')
 #' @export
 #' @examples
 #' data(sim_rs)
-#' # amount held (\%) for each species in best solution
+#' # amount held (\%) in best solution for each species 
 #' amount.held(sim_rs, 0)
-#' # amount held (\%) for each species in second solution
+#' # amount held (\%) in best solution for species 1
+#' amount.held(sim_rs, 0, 1)
+#' # amount held (\%) in second solution for each species 
 #' amount.held(sim_rs, 2)
-#' # amount held (\%) for each species in each solution
+#' # amount held (\%) in each solution for each species
 #' amount.held(sim_rs, NULL)
 amount.held<-function(x,y,species) {UseMethod('amount.held')}
 

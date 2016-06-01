@@ -16,11 +16,11 @@ This class is used to store RAP input data.
 
 \item{\code{species}}{\code{data.frame} with species data. Columns are 'name' (\code{character}.}
 
-\item{\code{targets}}{\code{data.frame} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), 'proportion' (\code{numeric}), and 'name' (\code{character}).}
+\item{\code{targets}}{\code{data.frame} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), 'proportion' (\code{numeric}).}
 
 \item{\code{pu.species.probabilities}}{\code{data.frame} with data on the probability of species in each planning unit. Columns are 'species' (\code{integer}), 'pu' (\code{integer}), and 'value' (\code{numeric}) columns.}
 
-\item{\code{attribute.spaces}}{\code{list} of \code{AttributeSpace} objects with the demand points and planning unit coordinates.}
+\item{\code{attribute.spaces}}{\code{list} of \code{AttributeSpaces} objects with the demand points and planning unit coordinates.}
 
 \item{\code{boundary}}{\code{data.frame} with data on the shared boundary length of planning units. Columns are with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'boundary' (\code{numeric}).}
 

@@ -56,6 +56,9 @@ setMethod(
 	representation(a='RapUnsolOrSol', b='GurobiOpts'),
 	function(a, b, verbose=FALSE) {
 		## init
+		# run object checks
+		if (!a@data@skipchecks) validObject(a@data, test=FALSE)
+		validObject(a@opts, test=FALSE)
 		# check that gurobi is installed
 		if (!is.null(options()$GurobiInstalled))
 				is.GurobiInstalled()
@@ -72,7 +75,8 @@ setMethod(
 		# generate model object
 		model<-rcpp_generate_model_object(a@opts, inherits(a@opts, 'RapUnreliableOpts'), a@data, verbose)
 		model$A<-Matrix::sparseMatrix(i=model$Ar$row+1, j=model$Ar$col+1, x=model$Ar$value, dims=c(max(model$Ar$row)+1, length(model$obj)))
-		
+		# run basic checks that the model matrix has been constructed correctly
+		expect_true(sum(!is.finite(model$Ar$value))==0, info='Invalid model matrix constructed.')
 		## Initial run
 		# run model
 		log.pth<-tempfile(fileext='.log')
@@ -91,7 +95,7 @@ setMethod(
 		# check solution object
 		if (!is.null(solution$status))
 			if (solution$status=="INFEASIBLE") {
-				stop('No solution found because the problem cannot be solved because space-based targets are too high. Try setting lower space-based targets. See ?maximum.space.targets')
+				stop('No solution found because the problem cannot be solved because space-based targets are too high. Try setting lower space-based targets. See ?maximum.targets')
 			}
 		if (is.null(solution$x)) {
 			stop('No solution found because Gurobi parameters do not allow sufficient time.')
@@ -756,19 +760,19 @@ space.plot.RapSolved<-function(
 		}
 	}
 	# extract pu data
-	pu<-as.data.frame(x@data@attribute.spaces[[space]]@pu@coords)
+	pu<-as.data.frame(x@data@attribute.spaces[[space]]@spaces[[spp_pos]]@planning.unit.points@coords)
 	names(pu)<-paste0('X',seq_len(ncol(pu)))
 	pu$status<-'Not Selected'
 	pu$status[which(as.logical(selections(x, y)))]<-'Selected'
 	pu$status[which(x@data@pu$status==2)]<-'Locked In'
 	pu$status[which(x@data@pu$status==3)]<-'Locked Out'
 	# extract dp data
-	dp<-as.data.frame(x@data@attribute.spaces[[space]]@demand.points[[spp_pos]]@points@coords)
+	dp<-as.data.frame(x@data@attribute.spaces[[space]]@spaces[[spp_pos]]@demand.points@coords)
 	names(dp)<-paste0('X',seq_len(ncol(dp)))
-	dp$weights=x@data@attribute.spaces[[space]]@demand.points[[spp_pos]]@weights
+	dp$weights<-x@data@attribute.spaces[[space]]@spaces[[spp_pos]]@demand.points@weights
 	# make plots
 	do.call(
-		paste0('spacePlot.',ncol(x@data@attribute.spaces[[space]]@pu@coords),'d'),
+		paste0('spacePlot.',ncol(x@data@attribute.spaces[[space]]@spaces[[spp_pos]]@planning.unit.points@coords),'d'),
 		list(
 			pu,
 			dp,
@@ -900,7 +904,7 @@ maximum.targets.RapUnsolOrSol <- function(x, verbose=FALSE) {
 	retDF <- data.frame(
 		species=rep(seq_along(x@data@species$name), each=length(x@data@attribute.spaces)),
 		target=rep(seq_along(x@data@attribute.spaces), length(x@data@species$name)),
-		proportion=c(model$cache$best_space_values)
+		proportion=c(model$cache$species_space_best_DBL)
 	)
 	# merge with targets to get target names
 	if ('name' %in% names(x@data@targets))

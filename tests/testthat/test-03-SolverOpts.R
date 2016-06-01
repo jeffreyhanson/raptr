@@ -2,8 +2,8 @@ context('03-SolverOpts')
 
 test_that('GurobiOpts generator function', {
 	# generate objects
-	x=GurobiOpts()
-	y=GurobiOpts(
+	x<-GurobiOpts()
+	y<-GurobiOpts(
 		Threads=1L,
 		MIPGap=0.1,
 		Presolve=2L,
@@ -22,8 +22,8 @@ test_that('GurobiOpts generator function', {
 
 test_that('as.list.GurobiOpts ', {
 	# generate objects
-	x=GurobiOpts()
-	y=as.list(x)
+	x<-GurobiOpts()
+	y<-as.list(x)
 	# tests
 	expect_equal(x@Threads,y$Threads)
 	expect_equal(x@MIPGap,y$MIPGap)
@@ -36,8 +36,8 @@ test_that('as.list.GurobiOpts ', {
 
 test_that('update.GurobiOpts', {
 	# generate objects
-	x=GurobiOpts()
-	y=update(x, Presolve=1L, Method=-1L, MIPGap=0.4, TimeLimit=5L, NumberSolutions=5L)
+	x<-GurobiOpts()
+	y<-update(x, Presolve=1L, Method=-1L, MIPGap=0.4, TimeLimit=5L, NumberSolutions=5L)
 	# tests
 	expect_equal(y@Method, -1L)
 	expect_equal(y@Presolve, 1L)
@@ -49,14 +49,14 @@ test_that('update.GurobiOpts', {
 
 test_that('ManualOpts', {
 	# generate object
-	x=ManualOpts()
+	x<-ManualOpts()
 	# tests
 	expect_equal(x@NumberSolutions, 1L)
 })
 
 test_that('update.ManualOpts', {
 	# generate object
-	x=ManualOpts()
+	x<-ManualOpts()
 	# tests
 	expect_error(update(x, NumberSolutions=5L))
 })

@@ -1,8 +1,8 @@
 Package: rapr
 Type: Package
 Title: Representative and Adequate Prioritisations in R
-Version: 1.0.0
-Date: 2015-11-2
+Version: 2.0.0
+Date: 2016-05-24
 Authors@R: c(person(c("Jeffrey", "O"), "Hanson", email='jeffrey.hanson@uqconnect.edu.au', role = c("aut", "cre")),
 	person(c("Jonathon", "R"), "Rhodes", role = c("aut")),
 	person(c("Hugh", "P"), "Possingham", role = c("aut")),
@@ -39,6 +39,7 @@ Imports:
     gdalUtils,
     mvtnorm,
     ggplot2,
+    testthat
 Depends:
     R(>= 3.1.0),
     methods,
@@ -52,7 +53,6 @@ License: GPL-3
 VignetteBuilder: knitr
 Suggests:
     knitr,
-    testthat,
     dplyr,
     vegan,
     gurobi,
@@ -64,11 +64,12 @@ Collate:
     'dependencies.R'
     'RcppExports.R'
     'rapr-internal.R'
-    'misc.R'
     'generics.R'
-    'SimplePoints.R'
     'DemandPoints.R'
+    'misc.R'
+    'PlanningUnitPoints.R'
     'AttributeSpace.R'
+    'AttributeSpaces.R'
     'GurobiOpts.R'
     'ManualOpts.R'
     'calcSpeciesAverageInPus.R'

@@ -23,397 +23,400 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	if (verbose) Rcpp::Rcout << "Initialization" << std::endl;
 	// create variables
 	std::size_t counter=0;
-	std::size_t n_attribute_spaces;
-	std::size_t n_pu;
-	std::size_t n_edges;
-	std::size_t n_edges2=0;
-	std::size_t n_species;
-	std::vector<std::size_t> n_demand_points;
+	std::size_t n_attribute_spaces_INT;
+	std::size_t n_pu_INT;
+	std::size_t n_edges_INT;
+	std::size_t n_edges2_INT=0;
+	std::size_t n_species_INT;
 	bool boundary;
 	double boundary_threshold=1.0e-10;
 	double zero_adjust=0.0;
-	std::vector<std::string> distance_metrics;
 
 	//// Preliminary processing
 	if (verbose) Rcpp::Rcout << "Preliminary processing" << std::endl;
 	Rcpp::checkUserInterrupt();
 	/// extract parameters from Rcpp::S4 opts
-	double blmDBL=Rcpp::as<double>(opts.slot("BLM"));
-	boundary = blmDBL > boundary_threshold;
-  double failure_multiplier=0.0;
-  std::size_t maxrlevelINT=0;
+	double blm_DBL=Rcpp::as<double>(opts.slot("BLM"));
+	boundary = blm_DBL > boundary_threshold;
+  double failure_multiplier_DBL=0.0;
+  std::size_t maxrlevel_INT=0;
   if (!unreliable_formulation) {
-    failure_multiplier=Rcpp::as<double>(opts.slot("failure.multiplier"));
-  	maxrlevelINT=Rcpp::as<double>(opts.slot("max.r.level"));
+    failure_multiplier_DBL=Rcpp::as<double>(opts.slot("failure.multiplier"));
+  	maxrlevel_INT=Rcpp::as<double>(opts.slot("max.r.level"));
   }
 
-  // assign function pointer for distance calculations
-	void (*distPtr)(
-		std::vector<std::size_t>&,
-		Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>&,
-		Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>&,
-		Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>&
-	);
-		
 	/// extract data from Rcpp::S4 data
 	// species data
 	if (verbose) Rcpp::Rcout << "\tSpecies data" << std::endl;
-	Rcpp::DataFrame speciesDF=Rcpp::as<Rcpp::DataFrame>(data.slot("species"));
-	n_species=speciesDF.nrows();
+	Rcpp::DataFrame species_DF=Rcpp::as<Rcpp::DataFrame>(data.slot("species"));
+	n_species_INT=species_DF.nrows();
 	// planning unit data
 	if (verbose) Rcpp::Rcout << "\tpu data" << std::endl;
-	Rcpp::DataFrame puDF=Rcpp::as<Rcpp::DataFrame>(data.slot("pu"));
-	std::vector<double> puDF_area = puDF["area"];
-	std::vector<double> puDF_cost = puDF["cost"];
-	std::vector<std::size_t> puDF_status = puDF["status"];
-	n_pu=puDF_area.size();
-	std::vector<std::string> puDF_id_STR(n_pu+1);
-	for (std::size_t i=0; i<n_pu; ++i)
-		puDF_id_STR[i]="pu_"+num2str<std::size_t>(i);
+	Rcpp::DataFrame pu_DF=Rcpp::as<Rcpp::DataFrame>(data.slot("pu"));
+	std::vector<double> pu_DF_area = pu_DF["area"];
+	std::vector<double> pu_DF_cost = pu_DF["cost"];
+	std::vector<std::size_t> pu_DF_status = pu_DF["status"];
+	n_pu_INT=pu_DF_area.size();
+	std::vector<std::string> pu_DF_id_STR(n_pu_INT+1);
+	for (std::size_t i=0; i<n_pu_INT; ++i)
+		pu_DF_id_STR[i]="pu_"+num2str<std::size_t>(i);
 
 	// pu.species.probabilities
 	if (verbose) Rcpp::Rcout << "\tpuvspecies data" << std::endl;
-	Rcpp::DataFrame puvspeciesDF=Rcpp::as<Rcpp::DataFrame>(data.slot("pu.species.probabilities"));
-	std::vector<std::size_t> puvspeciesDF_pu = puvspeciesDF["pu"];
-	std::vector<std::size_t> puvspeciesDF_species = puvspeciesDF["species"];
-	std::vector<double> puvspeciesDF_value = puvspeciesDF["value"];
-	for (std::size_t i=0; i<puvspeciesDF_pu.size(); ++i) {
-		puvspeciesDF_pu[i]-=1;
-		puvspeciesDF_species[i]-=1;
+	Rcpp::DataFrame puvspecies_DF=Rcpp::as<Rcpp::DataFrame>(data.slot("pu.species.probabilities"));
+	std::vector<std::size_t> puvspecies_DF_pu = puvspecies_DF["pu"];
+	std::vector<std::size_t> puvspecies_DF_species = puvspecies_DF["species"];
+	std::vector<double> puvspecies_DF_value = puvspecies_DF["value"];
+	for (std::size_t i=0; i<puvspecies_DF_pu.size(); ++i) {
+		puvspecies_DF_pu[i]-=1;
+		puvspecies_DF_species[i]-=1;
 	}
 
 	// boundary
 	if (verbose) Rcpp::Rcout << "\tboundary data" << std::endl;
-	Rcpp::DataFrame boundaryDF=Rcpp::as<Rcpp::DataFrame>(data.slot("boundary"));
-	std::vector<std::size_t> boundaryDF_id1 = boundaryDF["id1"];
-	std::vector<std::size_t> boundaryDF_id2 = boundaryDF["id2"];
-	std::vector<double> boundaryDF_boundary = boundaryDF["boundary"];
-	n_edges=boundaryDF_boundary.size();
-	std::vector<std::size_t> edge_pos;
-	std::vector<std::string> boundaryDF_idpair_STR;
+	Rcpp::DataFrame boundary_DF=Rcpp::as<Rcpp::DataFrame>(data.slot("boundary"));
+	std::vector<std::size_t> boundary_DF_id1 = boundary_DF["id1"];
+	std::vector<std::size_t> boundary_DF_id2 = boundary_DF["id2"];
+	std::vector<double> boundary_DF_boundary = boundary_DF["boundary"];
+	n_edges_INT=boundary_DF_boundary.size();
+	std::vector<std::size_t> edge_pos_INT;
+	std::vector<std::string> boundary_DF_idpair_STR;
 	if (boundary) {
-		boundaryDF_idpair_STR.reserve(n_edges);
-		edge_pos.reserve(n_edges);
-		for (std::size_t i=0; i<n_edges; ++i) {
+		boundary_DF_idpair_STR.reserve(n_edges_INT);
+		edge_pos_INT.reserve(n_edges_INT);
+		for (std::size_t i=0; i<n_edges_INT; ++i) {
 			// convert to base-0 indexing
-			boundaryDF_id1[i]-=1;
-			boundaryDF_id2[i]-=1;
+			boundary_DF_id1[i]-=1;
+			boundary_DF_id2[i]-=1;
 			// main processing
-			if (boundaryDF_id1[i]!=boundaryDF_id2[i]) {
-				/// if boundaryDF_id1[i] != boundaryDF_id2[i]
+			if (boundary_DF_id1[i]!=boundary_DF_id2[i]) {
+				/// if boundary_DF_id1[i] != boundary_DF_id2[i]
 				// store quadratic variable
-				boundaryDF_idpair_STR.push_back(
-					"pu_" + num2str<std::size_t>(boundaryDF_id1[i]) + "_" + num2str<std::size_t>(boundaryDF_id2[i])
+				boundary_DF_idpair_STR.push_back(
+					"pu_" + num2str<std::size_t>(boundary_DF_id1[i]) + "_" + num2str<std::size_t>(boundary_DF_id2[i])
 				);
 				// cache location of quadratic variable
-				edge_pos.push_back(i);
+				edge_pos_INT.push_back(i);
 			}
 			// increase cost variable with boundary
-			puDF_cost[boundaryDF_id1[i]] += (blmDBL * boundaryDF_boundary[i]);
+			pu_DF_cost[boundary_DF_id1[i]] += (blm_DBL * boundary_DF_boundary[i]);
 		}
-		boundaryDF_idpair_STR.shrink_to_fit();
-		n_edges2=boundaryDF_idpair_STR.size();
+		boundary_DF_idpair_STR.shrink_to_fit();
+		n_edges2_INT=boundary_DF_idpair_STR.size();
 	}
 
 	/// attribute.space
 	if (verbose) Rcpp::Rcout << "\tattribute space data" << std::endl;
-	Rcpp::List attributespaceLST=Rcpp::as<Rcpp::List>(data.slot("attribute.spaces"));
-	n_attribute_spaces=attributespaceLST.size();
-	distance_metrics.reserve(n_attribute_spaces);
-	Rcpp::S4 currS4;
-	Rcpp::S4 currS4_2;
-	Rcpp::List currLST;
+	Rcpp::List attributespaces_LST=Rcpp::as<Rcpp::List>(data.slot("attribute.spaces"));
+	n_attribute_spaces_INT=attributespaces_LST.size();
 	
-	// planning unit points
-	if (verbose) Rcpp::Rcout << "\tpu points data" << std::endl;
-	Rcpp::NumericMatrix tmp;
-	std::vector<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>> pupointsMTX(n_attribute_spaces);
-	for (std::size_t i=0; i<n_attribute_spaces; ++i) {
-		currS4=Rcpp::as<Rcpp::S4>(Rcpp::as<Rcpp::S4>(attributespaceLST[i]).slot("pu"));
-		tmp=Rcpp::as<Rcpp::NumericMatrix>(currS4.slot("coords"));
-		double *pcv = &tmp(0,0);
-		Eigen::Map<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor>> tmpmat(pcv, tmp.nrow(), tmp.ncol());
-		pupointsMTX[i] = tmpmat;
-	}
+	/// extract objects from S4 AttributeSpaces objects
+	if (verbose) Rcpp::Rcout << "\tAttributeSpaces data" << std::endl;
+	// important variables
+	std::vector<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>> species_space_dpcoords_MTX;
+	std::vector<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>> species_space_pucoords_MTX;
+	std::vector<Eigen::VectorXd> species_space_dpweights_VXD;
+	std::vector<Rcpp::IntegerVector> species_space_puids_RIV;
+	std::vector<std::size_t> species_space_ndp_INT;
+	std::vector<std::size_t> species_space_npu_INT;
+	std::vector<std::size_t> species_attributespace_species_INT;
+	std::vector<std::size_t> species_attributespace_space_INT;
+	
+	std::size_t preallocate_INT=n_species_INT*n_attribute_spaces_INT;
+	species_space_dpcoords_MTX.reserve(preallocate_INT);
+	species_space_pucoords_MTX.reserve(preallocate_INT);
+	species_space_dpweights_VXD.reserve(preallocate_INT);
+	species_space_puids_RIV.reserve(preallocate_INT);
+	species_space_ndp_INT.reserve(preallocate_INT);
+	species_space_npu_INT.reserve(preallocate_INT);
+	species_attributespace_species_INT.reserve(preallocate_INT);
+	species_attributespace_space_INT.reserve(preallocate_INT);
+	
+	{
+		// temporary variables
+		std::size_t curr_spp;
+		Rcpp::S4 tmp_dp_S4;
+		Rcpp::S4 tmp_pu_S4;
+		Rcpp::S4 tmp1_S4;
+		Rcpp::S4 tmp2_S4;
+		Rcpp::List tmp_LST;
+		Rcpp::NumericVector currWeights_DBL;
+		Rcpp::IntegerVector currIds_INT;
+		Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> tmp1_MTX;
+		Rcpp::NumericMatrix tmp2_MTX;
+		
+		for (std::size_t i=0; i<n_attribute_spaces_INT; ++i) {
+			if (verbose) Rcpp::Rcout << "\t\tstarting AttributeSpaces " << i << std::endl;
+			// init
+			tmp_LST=Rcpp::as<Rcpp::List>(Rcpp::as<Rcpp::S4>(attributespaces_LST[i]).slot("spaces"));
+			for (std::size_t j=0; j<tmp_LST.size(); ++j) {
+				// init
+				if (verbose) Rcpp::Rcout << "\t\t\tstarting species " << j << std::endl;
+				tmp1_S4=Rcpp::as<Rcpp::S4>(tmp_LST[j]);
+				tmp_pu_S4=Rcpp::as<Rcpp::S4>(tmp1_S4.slot("planning.unit.points"));
+				tmp_dp_S4=Rcpp::as<Rcpp::S4>(tmp1_S4.slot("demand.points"));
+				curr_spp=Rcpp::as<std::size_t>(tmp1_S4.slot("species"));
+				species_attributespace_species_INT.push_back(curr_spp-1);
+				species_attributespace_space_INT.push_back(i);
 
-	// demand points
-	if (verbose) Rcpp::Rcout << "\tdemand points data" << std::endl;
-	Eigen::Matrix<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> demandpoints_coords_MTX(n_species, n_attribute_spaces);
-	Eigen::Matrix<Eigen::VectorXd, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> demandpoints_weights_MTX(n_species, n_attribute_spaces);
-	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> currCoordinates;
-	Rcpp::NumericVector currWeights;
-	Eigen::Matrix<std::size_t, Eigen::Dynamic, Eigen::Dynamic> species_ndp(n_species, n_attribute_spaces);
-	for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-		currLST=Rcpp::as<Rcpp::S4>(attributespaceLST[j]).slot("demand.points");
-		currS4=Rcpp::as<Rcpp::S4>(attributespaceLST[j]);
-		distance_metrics.push_back(Rcpp::as<std::string>(currS4.slot("distance.metric")));
-		for (std::size_t i=0; i<n_species; ++i) {
-			// extract species i demand points for space j
-			currS4=Rcpp::as<Rcpp::S4>(currLST[i]);
-			currS4_2=Rcpp::as<Rcpp::S4>(currS4.slot("points"));
-			// coords
-			tmp=Rcpp::as<Rcpp::NumericMatrix>(currS4_2.slot("coords"));
-			double *pcv = &tmp(0,0);
-			Eigen::Map<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor>> tmpmat(pcv, tmp.nrow(), tmp.ncol());
-			demandpoints_coords_MTX(i,j) = tmpmat;
-			// weights
-			Eigen::Map<Eigen::VectorXd> tmpvec(Rcpp::as<Eigen::Map<Eigen::VectorXd>>(currS4.slot("weights")));
-			demandpoints_weights_MTX(i,j) = tmpvec;
-			// store number dp for species i
-			species_ndp(i,j)=tmpvec.size();
+				// planning unit points
+				if (verbose) Rcpp::Rcout << "\t\t\tpu points coordinates" << std::endl;
+				tmp2_MTX=Rcpp::as<Rcpp::NumericMatrix>(tmp_pu_S4.slot("coords"));
+				double *pcv = &tmp2_MTX(0,0);
+				Eigen::Map<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor>> tmp1_MTX(pcv, tmp2_MTX.nrow(), tmp2_MTX.ncol());
+				species_space_pucoords_MTX.push_back(tmp1_MTX);
+
+				if (verbose) Rcpp::Rcout << "\t\t\tpu points ids " << std::endl;
+				Rcpp::IntegerVector tmpvec(tmp_pu_S4.slot("ids"));
+				species_space_puids_RIV.push_back(tmpvec-1);
+
+				if (verbose) Rcpp::Rcout << "\t\t\tnumber of planning units" << std::endl;
+				species_space_npu_INT.push_back(tmpvec.size());
+				
+				// demand points
+				if (verbose) Rcpp::Rcout << "\t\t\tdemand point coordinates" << std::endl;
+				tmp2_MTX=Rcpp::as<Rcpp::NumericMatrix>(tmp_dp_S4.slot("coords"));
+				double *pcv2 = &tmp2_MTX(0,0);
+				Eigen::Map<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor>> tmp3_MTX(pcv2, tmp2_MTX.nrow(), tmp2_MTX.ncol());
+				species_space_dpcoords_MTX.push_back(tmp3_MTX);
+				
+				if (verbose) Rcpp::Rcout << "\t\t\tdemand point weights" << std::endl;
+				Eigen::Map<Eigen::VectorXd> tmpvec2(Rcpp::as<Eigen::Map<Eigen::VectorXd>>(tmp_dp_S4.slot("weights")));
+				species_space_dpweights_VXD.push_back(tmpvec2);
+				
+				if (verbose) Rcpp::Rcout << "\t\t\tnumber of demand points" << std::endl;
+				species_space_ndp_INT.push_back(tmpvec2.size());
+			}
 		}
 	}
 
+	species_space_dpcoords_MTX.shrink_to_fit();
+	species_space_pucoords_MTX.shrink_to_fit();
+	species_space_dpweights_VXD.shrink_to_fit();
+	species_space_puids_RIV.shrink_to_fit();
+	species_space_ndp_INT.shrink_to_fit();
+	species_space_npu_INT.shrink_to_fit();
+	species_attributespace_species_INT.shrink_to_fit();
+	species_attributespace_space_INT.shrink_to_fit();
+	std::size_t n_species_attributespace_INT=species_attributespace_species_INT.size();
+		
 	// target data
 	if (verbose) Rcpp::Rcout << "\ttarget data" << std::endl;
-	Rcpp::DataFrame targetDF=Rcpp::as<Rcpp::DataFrame>(data.slot("targets"));
-	std::vector<std::size_t> targetDF_species = targetDF["species"];
-	std::vector<std::size_t> targetDF_target = targetDF["target"];
-	std::vector<double> targetDF_value = targetDF["proportion"];
-	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor> spacetargetsMTX(n_species, n_attribute_spaces);
-	spacetargetsMTX.setZero(n_species, n_attribute_spaces);
-	std::vector<double> areatargetsDBL(n_species, 0.0);
-	for (std::size_t i=0; i<targetDF_species.size(); ++i) {
-		if (targetDF_target[i]==0) {
-			areatargetsDBL[targetDF_species[i]-1] = targetDF_value[i];
+	Rcpp::DataFrame target_DF=Rcpp::as<Rcpp::DataFrame>(data.slot("targets"));
+	std::vector<std::size_t> target_DF_species = target_DF["species"];
+	std::vector<std::size_t> target_DF_target = target_DF["target"];
+	std::vector<double> target_DF_value = target_DF["proportion"];
+	std::vector<double> species_space_proptargets_DBL(n_species_attributespace_INT, NAN);
+	std::vector<double> species_areatargets_DBL(n_species_INT, 0.0);
+	for (std::size_t i=0; i<target_DF_species.size(); ++i) {
+		if (target_DF_target[i]==0) {
+			species_areatargets_DBL[target_DF_species[i]-1] = target_DF_value[i];
 		} else {
-			spacetargetsMTX(targetDF_species[i]-1, targetDF_target[i]-1) = targetDF_value[i];
+			if (!std::isnan(target_DF_value[i])) {
+				for (std::size_t a=0, ii=species_attributespace_species_INT[a], jj=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, ii=species_attributespace_species_INT[a], jj=species_attributespace_space_INT[a]) {
+					if (ii==(target_DF_species[i]-1) & jj==(target_DF_target[i]-1)) {
+						species_space_proptargets_DBL[a]=target_DF_value[i];
+						break;
+					}
+				}
+			}
 		}
 	}
-
+	
 	/// preprocessing for area targets
 	if (verbose) Rcpp::Rcout << "\tpre-process area targets" << std::endl;
 	// ini
 	if (verbose) Rcpp::Rcout << "\t\tinitializing" << std::endl;
 	double currArea;
-	std::vector<double> speciesareaDBL(n_species, 0.0);
-	std::vector<std::vector<std::size_t>> species_pu_ids(n_species);
-	std::vector<std::vector<double>> species_pu_probs(n_species);
-	std::vector<std::size_t> species_npu(n_species);
-	std::vector<std::size_t> species_rlevel(n_species);
-	for (std::size_t i=0; i<n_species; ++i) {
-		species_pu_ids[i].reserve(puvspeciesDF_pu.size());
-		species_pu_probs[i].reserve(puvspeciesDF_pu.size());
+	std::vector<double> species_totalarea_DBL(n_species_INT, 0.0);
+	std::vector<Rcpp::IntegerVector> species_pu_ids_INT(n_species_INT);
+	std::vector<std::vector<double>> species_pu_probs_DBL(n_species_INT);
+	std::vector<std::size_t> species_npu_INT(n_species_INT);
+	for (std::size_t i=0; i<n_species_INT; ++i) {
+		species_pu_probs_DBL[i].reserve(n_pu_INT);
 	}
 
 	// calcs
 	if (verbose) Rcpp::Rcout << "\t\tcalculate numbers" << std::endl;
-	for (std::size_t i=0; i<puvspeciesDF_pu.size(); ++i) {
+	for (std::size_t i=0; i<puvspecies_DF_pu.size(); ++i) {
 		// calculate area
-		currArea=puvspeciesDF_value[i] * puDF_area[puvspeciesDF_pu[i]];
+		currArea=puvspecies_DF_value[i] * pu_DF_area[puvspecies_DF_pu[i]];
 		// sum area occupied by species
-		speciesareaDBL[puvspeciesDF_species[i]]+=currArea;
+		species_totalarea_DBL[puvspecies_DF_species[i]]+=currArea;
 		// assign pu to species vector
-		species_pu_ids[puvspeciesDF_species[i]].push_back(puvspeciesDF_pu[i]);
+		species_pu_ids_INT[puvspecies_DF_species[i]].push_back(puvspecies_DF_pu[i]);
 		// assign prob to species vector
-		species_pu_probs[puvspeciesDF_species[i]].push_back(puvspeciesDF_value[i]);
+		species_pu_probs_DBL[puvspecies_DF_species[i]].push_back(puvspecies_DF_value[i]);
 	}
 	if (verbose) Rcpp::Rcout << "\t\tresize vectors" << std::endl;
-	for (std::size_t i=0; i<n_species; ++i) {
-		species_pu_ids[i].shrink_to_fit();
-		species_pu_probs[i].shrink_to_fit();
-		species_npu[i]=species_pu_ids[i].size();
+	for (std::size_t i=0; i<n_species_INT; ++i) {
+		species_pu_probs_DBL[i].shrink_to_fit();
 	}
-
+	
 	/// create centroid variables
-	if (verbose) Rcpp::Rcout << "\tdistance vars" << std::endl;
-	Eigen::Matrix<Eigen::VectorXd, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> centroidMTX(n_species, n_attribute_spaces);
-	for (std::size_t i=0; i<n_species; ++i) {
-		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-			// calculate centroids
-			centroidMTX(i,j).resize(demandpoints_coords_MTX(i,j).cols());
-			centroidMTX(i,j)=demandpoints_coords_MTX(i,j).colwise().sum();
-			centroidMTX(i,j)/=static_cast<double>(species_ndp(i,j));
-		}
+	if (verbose) Rcpp::Rcout << "\tcentroid positions" << std::endl;
+	std::vector<Eigen::RowVectorXd> species_space_centroid_VXD(n_species_attributespace_INT);
+	for (std::size_t a=0; a<n_species_attributespace_INT; ++a) {
+		species_space_centroid_VXD[a]=species_space_dpcoords_MTX[a].colwise().sum();
+		species_space_centroid_VXD[a]/=static_cast<double>(species_space_ndp_INT[a]);
 	}
 
 	if (verbose) Rcpp::Rcout << "\tdistance vars" << std::endl;
-	Eigen::Matrix<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> weightdistMTX(n_species, n_attribute_spaces);
-	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> tss_speciesspaceMTX(n_species, n_attribute_spaces);
+	std::vector<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>> species_space_weightdist_MTX(n_species_attributespace_INT);
+	std::vector<double> species_space_tss_DBL(n_species_attributespace_INT);
 	{
-		Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> tmpMTX;
-		Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> tmpMTX2;
-		std::vector<std::size_t> tmp_species_pu_ids;
+		Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> tmp1_MTX;
+		Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> tmp2_MTX;
+		Eigen::ArrayXd tmp_AXD;
 		double currFailDist;
-		for (std::size_t i=0; i<n_species; ++i) {
-			for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				/// initialization
-				// resize matrices
-				tmpMTX.resize(pupointsMTX[j].rows()+1, pupointsMTX[j].cols());
-				if (unreliable_formulation) {
-					weightdistMTX(i,j).resize(species_ndp(i,j),species_npu[i]);
-					tmpMTX2.resize(species_ndp(i,j),species_npu[i]+1);
-				} else {
-					weightdistMTX(i,j).resize(species_ndp(i,j),species_npu[i]+1);
-					tmpMTX2.resize(species_ndp(i,j),species_npu[i]+1);
+		for (std::size_t a=0; a<n_species_attributespace_INT; ++a) {
+			/// initialization
+			/// preliminary processing
+			if (unreliable_formulation) {
+				species_space_weightdist_MTX[a].resize(species_space_ndp_INT[a], species_space_npu_INT[a]);
+			} else {
+				species_space_weightdist_MTX[a].resize(species_space_ndp_INT[a], species_space_npu_INT[a]+1);
+			}
+			species_space_weightdist_MTX[a].setZero();
+			// calculate all distances between pus and dps
+			for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
+				for (std::size_t l=0; l<species_space_npu_INT[a]; ++l) {
+					tmp_AXD=species_space_pucoords_MTX[a].row(l) - species_space_dpcoords_MTX[a].row(k);
+					species_space_weightdist_MTX[a](k,l) = tmp_AXD.square().sum() * species_space_dpweights_VXD[a][k];
 				}
-				tmp_species_pu_ids = species_pu_ids[i];
-				tmp_species_pu_ids.push_back(pupointsMTX[j].rows());
-				// set starting matrix values
-				weightdistMTX(i,j).setZero();
-				tmpMTX2.setZero();
-				tmpMTX.topRows(pupointsMTX[j].rows())=pupointsMTX[j];
-				tmpMTX.bottomRows<1>()=centroidMTX(i,j);
-				
-				/// preliminary processing
-				// assign distance metric
-				if (distance_metrics[j]=="euclidean") {
-					distPtr=&euclidean_distance;
-				} else if (distance_metrics[j]=="bray") {
-					distPtr=&bray_distance;
-				} else if (distance_metrics[j]=="manhattan") {
-					distPtr=&manhattan_distance;
-				} else if (distance_metrics[j]=="gower") {
-					distPtr=&gower_distance;
-				} else if (distance_metrics[j]=="canberra") {
-					distPtr=&canberra_distance;
-				} else if (distance_metrics[j]=="jaccard") {
-					distPtr=&jaccard_distance;
-				} else if (distance_metrics[j]=="kulczynski") {
-					distPtr=&kulczynski_distance;
-				} else if (distance_metrics[j]=="mahalanobis") {
-					distPtr=&mahalanobis_distance;
-				} else if (distance_metrics[j]=="minkowski") {
-					distPtr=&minkowski_distance;
-				} else {
-					Rf_error("distance string not recognised");
+			}
+			species_space_weightdist_MTX[a].array()+=zero_adjust; 
+			// calculate distances for centroid
+			species_space_tss_DBL[a]=zero_adjust;
+			for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
+				tmp_AXD=species_space_centroid_VXD[a] - species_space_dpcoords_MTX[a].row(k);
+				species_space_tss_DBL[a]+=(tmp_AXD.square().sum() * species_space_dpweights_VXD[a][k]);				
+			}
+			
+			// failure pu if reliable formulation
+			if (!unreliable_formulation) {
+				// failure pu
+				currFailDist=species_space_weightdist_MTX[a].maxCoeff()*failure_multiplier_DBL;
+				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
+					species_space_weightdist_MTX[a](k,species_space_npu_INT[a])+=currFailDist;
 				}
-				/// calculate distances between demand points and (planning units + demand point centroid)
-				// calculate all distances
-				(*distPtr)(tmp_species_pu_ids, tmpMTX, demandpoints_coords_MTX(i,j), tmpMTX2);
-				// check all distances greater than zero
-				if (tmpMTX2.minCoeff() < 0.0) Rcpp::stop("Distances between demand points and planning units for species "+num2str<std::size_t>(i)+" and space "+num2str<std::size_t>(j)+" are negative. You must use a different distance metric or transform your data.");
-				// extract distances and lambda to give weighted distances
-				weightdistMTX(i,j).leftCols(species_npu[i]) = tmpMTX2.leftCols(species_npu[i]);
-				for (std::size_t k=0; k<species_ndp(i,j); ++k)
-					weightdistMTX(i,j).row(k)*=demandpoints_weights_MTX(i,j)[k];
-				// add small number to avoid zeros
-				weightdistMTX(i,j).array()+=zero_adjust;
-				// failure pu if reliable formulation
-				if (!unreliable_formulation) {
-					// failure pu
-					currFailDist=weightdistMTX(i,j).maxCoeff() * failure_multiplier;
-					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
-						weightdistMTX(i,j)(k,species_npu[i])+=currFailDist;
-					}
-				}
-				tmpMTX2.rightCols(1).array()*=demandpoints_weights_MTX(i,j).array();
-				tss_speciesspaceMTX(i,j) = tmpMTX2.rightCols(1).array().square().sum();
 			}
 		}
 	}
 
   // resize vectors
+  std::vector<std::size_t> species_space_rlevel_INT(n_species_attributespace_INT);
   if (!unreliable_formulation) {
-    for (std::size_t i=0; i<n_species; ++i) {
-      species_pu_ids[i].push_back(n_pu);
-  		species_pu_ids[i].shrink_to_fit();
-  		species_pu_probs[i].push_back(1.0);
-  		species_pu_probs[i].shrink_to_fit();
-			species_rlevel[i]=std::min(maxrlevelINT, species_npu[i]-1);
+    for (std::size_t a=0; a<n_species_attributespace_INT; ++a) {
+			species_space_rlevel_INT[a]=std::min(maxrlevel_INT, species_space_npu_INT[a]-1);
 		}
 	}
+	
+	
 
-	/// transitional probabilities
+	/// species space probs and transitional probabilities
 	if (verbose) Rcpp::Rcout << "\ttransitional probs" << std::endl;
-	std::vector<std::vector<double>> species_pu_tprobs(n_species);
-  if (!unreliable_formulation) {
-  	for (std::size_t i=0; i<n_species; ++i) {
-  		species_pu_tprobs[i].reserve(species_npu[i]);
-  		for (std::size_t j=0; j<species_npu[i]; ++j) {
-  			species_pu_tprobs[i][j] = (1.0 - species_pu_probs[i][j]) / species_pu_probs[i][j];
-  		}
-  	}
-  }
- 
+	std::vector<Rcpp::NumericVector> species_space_pu_probs_RDV(n_species_attributespace_INT);
+	std::vector<Rcpp::NumericVector> species_space_pu_tprobs_RDV(n_species_attributespace_INT);
+	std::vector<Rcpp::IntegerVector> species_space_pupos_RIV(n_species_attributespace_INT);
+	if (!unreliable_formulation) {
+		for (std::size_t a=0; a<n_species_attributespace_INT; ++a) {
+			/// initialization
+			species_space_pupos_RIV[a]=Rcpp::match(species_space_puids_RIV[a],species_pu_ids_INT[species_attributespace_species_INT[a]])-1;
+			// add in real pus
+			for (std::size_t l=0; l<species_space_npu_INT[a]; ++l) {
+				species_space_pu_probs_RDV[a].push_back(species_pu_probs_DBL[species_attributespace_species_INT[a]][species_space_pupos_RIV[a][l]]);
+				species_space_pu_tprobs_RDV[a].push_back((1.0 - species_space_pu_probs_RDV[a][l]) / species_space_pu_probs_RDV[a][l]);
+			}
+			// add in failure pu
+			species_space_pu_probs_RDV[a].push_back(1.0);
+		}
+	}
+	
   // calculate targets
 	if (verbose) Rcpp::Rcout << "\tspace targets" << std::endl;
-  Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> speciesspaceMTX(n_species, n_attribute_spaces);
-	for (std::size_t i=0; i<n_species; ++i)
-		for (std::size_t j=0; j<n_attribute_spaces; ++j)
-			speciesspaceMTX(i,j) = (spacetargetsMTX(i,j) - 1.0) * tss_speciesspaceMTX(i,j) * -1.0;
- 
+	std::vector<double> species_space_rawtargets_DBL(n_species_attributespace_INT);
+	for (std::size_t a=0; a<n_species_attributespace_INT; ++a)
+		species_space_rawtargets_DBL[a] = (species_space_proptargets_DBL[a] - 1.0) * species_space_tss_DBL[a] * -1.0;
+	
 	// cache integer string conversions
 	if (verbose) Rcout << "\tcaching integer/string conversions" << std::endl;
 	std::size_t maxINT;
 	maxINT=std::max(
-		n_pu,
+		n_pu_INT,
 		std::max(
-			n_species,
+			n_species_INT,
 			std::max(
-				n_attribute_spaces,
-				species_ndp.maxCoeff()
+				n_species_attributespace_INT,
+				static_cast<std::size_t>(std::accumulate(species_space_ndp_INT.begin(), species_space_ndp_INT.end(), 0))
 			)
 		)
 	) + 2;
 
-	std::vector<std::string> intSTR(maxINT);
+	std::vector<std::string> int_STR(maxINT);
 	for (std::size_t i=0; i<maxINT; i++)
-		intSTR[i] = num2str<std::size_t>(i);
+		int_STR[i] = num2str<std::size_t>(i);
 
 	/// create unordered map with variable names
 	if (verbose) Rcout << "\tcreating undordered_map with variable names" << std::endl;
-	std::unordered_map<std::string, std::size_t> variableMAP;
-	std::string currSTR;
+	std::unordered_map<std::string, std::size_t> variable_MAP;
+	std::string curr_STR;
+	
 	// pu vars
-	for (std::size_t i=0; i<n_pu; ++i) {
-		variableMAP[puDF_id_STR[i]] = counter;
+	for (std::size_t i=0; i<n_pu_INT; ++i) {
+		variable_MAP[pu_DF_id_STR[i]] = counter;
 		++counter;
 	}
 
 	// pu_pu boundary vars
 	if (boundary) {
-		for (std::size_t i=0; i<n_edges2; ++i) {
-			variableMAP[boundaryDF_idpair_STR[i]] = counter;
+		for (std::size_t i=0; i<n_edges2_INT; ++i) {
+			variable_MAP[boundary_DF_idpair_STR[i]] = counter;
 			++counter;
 		}
 	}
 
 	// space vars
-  if (unreliable_formulation) {
-  	for (std::size_t i=0; i<n_species; ++i) {
-  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (!std::isnan(spacetargetsMTX(i,j))) {
-					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
-						for (std::size_t l=0; l<species_npu[i]; ++l) {
+	if (unreliable_formulation) {
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+			if (!std::isnan(species_space_proptargets_DBL[a])) {
+				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
+					for (std::size_t l=0; l<species_space_npu_INT[a]; ++l) {
+						// Y_var
+						curr_STR="Y_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l];
+						variable_MAP[curr_STR] = counter;
+						++counter;
+					}
+				}
+			}
+		}
+	} else {
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+			if (!std::isnan(species_space_proptargets_DBL[a])) {
+				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
+					for (std::size_t l=0; l<(species_space_npu_INT[a]+1); ++l) {
+						for (std::size_t r=0; r<(species_space_rlevel_INT[a]+1); ++r) {
 							// Y_var
-							currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l];
-							variableMAP[currSTR] = counter;
+							curr_STR="Y_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l]+"_"+int_STR[r];
+							variable_MAP[curr_STR] = counter;
+							++counter;
+
+							// P_var
+							curr_STR="P_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l]+"_"+int_STR[r];
+							variable_MAP[curr_STR] = counter;
+							++counter;
+
+							// W_var
+							curr_STR="W_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l]+"_"+int_STR[r];
+							variable_MAP[curr_STR] = counter;
 							++counter;
 						}
 					}
 				}
-  		}
-  	}
-  } else {
-    for (std::size_t i=0; i<n_species; ++i) {
-  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (!std::isnan(spacetargetsMTX(i,j))) {
-					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
-						for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
-							for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
-								// Y_var
-								currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
-								variableMAP[currSTR] = counter;
-								++counter;
-
-								// P_var
-								currSTR="P_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
-								variableMAP[currSTR] = counter;
-								++counter;
-
-								// W_var
-								currSTR="W_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
-								variableMAP[currSTR] = counter;
-								++counter;
-							}
-						}
-					}
-				}
-  		}
-  	}
-  }
-
+			}
+		}
+	}
+	
 	//// Main processing
 	if (verbose) Rcpp::Rcout << "Main processing" << std::endl;
 	Rcpp::checkUserInterrupt();
@@ -421,19 +424,19 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	/// objective function
 	Rcpp::checkUserInterrupt();
 	if (verbose) Rcpp::Rcout << "\tobjective function" << std::endl;
-	std::vector<double> objDBL(variableMAP.size());
+	std::vector<double> obj_DBL(variable_MAP.size());
 
 	// cost variables
 	if (verbose) Rcpp::Rcout << "\t\tcost variables" << std::endl;
-	for (std::size_t i=0; i<n_pu; ++i) {
-		objDBL[variableMAP[puDF_id_STR[i]]] = puDF_cost[i];
+	for (std::size_t i=0; i<n_pu_INT; ++i) {
+		obj_DBL[variable_MAP[pu_DF_id_STR[i]]] = pu_DF_cost[i];
 	}
 
 	// boundary variables
 	if (verbose) Rcpp::Rcout << "\t\tboundary variables" << std::endl;
 	if (boundary) {
-		for (std::size_t i=0; i<n_edges2; ++i) {
-			objDBL[variableMAP[boundaryDF_idpair_STR[i]]] = -(blmDBL * boundaryDF_boundary[edge_pos[i]]);
+		for (std::size_t i=0; i<n_edges2_INT; ++i) {
+			obj_DBL[variable_MAP[boundary_DF_idpair_STR[i]]] = -(blm_DBL * boundary_DF_boundary[edge_pos_INT[i]]);
 		}
 	}
 
@@ -443,98 +446,93 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	std::vector<std::size_t> model_rows_INT;
 	std::vector<std::size_t> model_cols_INT;
 	std::vector<double> model_vals_DBL;
-	std::vector<std::string> senseSTR;
-	std::vector<double> rhsDBL;
-  if (unreliable_formulation) {
-  	model_rows_INT.reserve(n_pu * n_species * n_attribute_spaces * species_ndp.sum());
-  	model_cols_INT.reserve(n_pu * n_species * n_attribute_spaces * species_ndp.sum());
-  	model_vals_DBL.reserve(n_pu * n_species * n_attribute_spaces * species_ndp.sum());
-  	senseSTR.reserve(n_pu * n_species * n_attribute_spaces * species_ndp.sum());
-  	rhsDBL.reserve(n_pu * n_species * n_attribute_spaces * species_ndp.sum());
-  } else {
-    model_rows_INT.reserve(n_pu * n_species * n_attribute_spaces * species_ndp.sum() * maxrlevelINT);
-  	model_cols_INT.reserve(n_pu * n_species * n_attribute_spaces * species_ndp.sum() * maxrlevelINT);
-  	model_vals_DBL.reserve(n_pu * n_species * n_attribute_spaces * species_ndp.sum() * maxrlevelINT);
-  	senseSTR.reserve(n_pu * n_species * n_attribute_spaces * species_ndp.sum() * maxrlevelINT);
-  	rhsDBL.reserve(n_pu * n_species * n_attribute_spaces * species_ndp.sum() * maxrlevelINT);
+	std::vector<std::string> sense_STR;
+	std::vector<double> rhs_DBL;
+	counter=0;
+
+	// preallocate variables storing model matrix
+	preallocate_INT=n_pu_INT * n_species_INT * n_attribute_spaces_INT * 
+		static_cast<std::size_t>(std::accumulate(species_space_ndp_INT.cbegin(), species_space_ndp_INT.cend(), 0));
+  if (!unreliable_formulation) {
+		preallocate_INT*=maxrlevel_INT;
   }
+	model_rows_INT.reserve(preallocate_INT);
+	model_cols_INT.reserve(preallocate_INT);
+	model_vals_DBL.reserve(preallocate_INT);
+	sense_STR.reserve(preallocate_INT);
+	rhs_DBL.reserve(preallocate_INT);
 
 	// area target constraints
 	Rcpp::checkUserInterrupt();
 	if (verbose) Rcpp::Rcout << "\t\tarea constraints" << std::endl;
-	counter=0;
-	for (std::size_t i=0; i<n_species; ++i) {
-		for (std::size_t j=0; j<species_pu_ids[i].size(); ++j) {
+	for (std::size_t i=0; i<n_species_INT; ++i) {
+		for (std::size_t j=0; j<species_pu_ids_INT[i].size(); ++j) {
 			model_rows_INT.push_back(counter);
-			model_cols_INT.push_back(variableMAP[puDF_id_STR[species_pu_ids[i][j]]]);
-			model_vals_DBL.push_back(species_pu_probs[i][j] * puDF_area[species_pu_ids[i][j]]);
+			model_cols_INT.push_back(variable_MAP[pu_DF_id_STR[species_pu_ids_INT[i][j]]]);
+			model_vals_DBL.push_back(species_pu_probs_DBL[i][j] * pu_DF_area[species_pu_ids_INT[i][j]]);
 		}
-		senseSTR.push_back(">=");
-		rhsDBL.push_back(speciesareaDBL[i] * areatargetsDBL[i]);
+		sense_STR.push_back(">=");
+		rhs_DBL.push_back(species_totalarea_DBL[i] * species_areatargets_DBL[i]);
 		++counter;
 	}
 
 	// space target constraints
 	Rcpp::checkUserInterrupt();
 	if (verbose) Rcpp::Rcout << "\t\tspace constraints" << std::endl;
-  if (unreliable_formulation) {
-    for (std::size_t i=0; i<n_species; ++i) {
-  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (!std::isnan(spacetargetsMTX(i,j))) {
-					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
-						for (std::size_t l=0; l<species_npu[i]; ++l) {
-							currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l];
+	if (unreliable_formulation) {
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+			if (!std::isnan(species_space_proptargets_DBL[a])) {
+				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
+					for (std::size_t l=0; l<species_space_npu_INT[a]; ++l) {
+						curr_STR="Y_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l];
+						model_rows_INT.push_back(counter);
+						model_cols_INT.push_back(variable_MAP[curr_STR]);
+						model_vals_DBL.push_back(Pow<2>(species_space_weightdist_MTX[a](k,l)));
+					}
+				}
+				sense_STR.push_back("<=");
+				rhs_DBL.push_back(species_space_rawtargets_DBL[a]);
+				++counter;
+			}
+		}
+	} else {
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+			if (!std::isnan(species_space_proptargets_DBL[a])) {
+				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
+					for (std::size_t l=0; l<(species_space_npu_INT[a]+1); ++l) {
+						for (std::size_t r=0; r<(species_space_rlevel_INT[a]+1); ++r) {
+							curr_STR="W_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l]+"_"+int_STR[r];
 							model_rows_INT.push_back(counter);
-							model_cols_INT.push_back(variableMAP[currSTR]);
-							model_vals_DBL.push_back(Pow<2>(weightdistMTX(i,j)(k,l)));
+							model_cols_INT.push_back(variable_MAP[curr_STR]);
+							model_vals_DBL.push_back(Pow<2>(species_space_weightdist_MTX[a](k,l)));
 						}
 					}
-					senseSTR.push_back("<=");
-					rhsDBL.push_back(speciesspaceMTX(i,j));
-					++counter;
 				}
+				sense_STR.push_back("<=");
+				rhs_DBL.push_back(species_space_rawtargets_DBL[a]);
+				++counter;
 			}
-  	}
-  } else {
-    for (std::size_t i=0; i<n_species; ++i) {
-  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (!std::isnan(spacetargetsMTX(i,j))) {
-					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
-						for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
-							for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
-								currSTR="W_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
-								model_rows_INT.push_back(counter);
-								model_cols_INT.push_back(variableMAP[currSTR]);
-								model_vals_DBL.push_back(Pow<2>(weightdistMTX(i,j)(k,l)));
-							}
-						}
-					}
-					senseSTR.push_back("<=");
-					rhsDBL.push_back(speciesspaceMTX(i,j));
-					++counter;
-				}
-			}
-  	}
-  }
-
+		}
+	}
+  
 	// pu status constraints
 	if (verbose) Rcpp::Rcout << "\t\tpu status constraints" << std::endl;
-	for (std::size_t i=0; i<n_pu; ++i) {
-		if (puDF_status[i]==2) {
+	for (std::size_t i=0; i<n_pu_INT; ++i) {
+		if (pu_DF_status[i]==2) {
 			// locked in
 			model_rows_INT.push_back(counter);
-			model_cols_INT.push_back(variableMAP[puDF_id_STR[i]]);
+			model_cols_INT.push_back(variable_MAP[pu_DF_id_STR[i]]);
 			model_vals_DBL.push_back(1);
-			senseSTR.push_back("=");
-			rhsDBL.push_back(1.0);
+			sense_STR.push_back("=");
+			rhs_DBL.push_back(1.0);
 			++counter;
-		} else if (puDF_status[i]==3) {
+		} else if (pu_DF_status[i]==3) {
 			// locked  out
 			model_rows_INT.push_back(counter);
-			model_cols_INT.push_back(variableMAP[puDF_id_STR[i]]);
+			model_cols_INT.push_back(variable_MAP[pu_DF_id_STR[i]]);
 			model_vals_DBL.push_back(1);
-			senseSTR.push_back("=");
-			rhsDBL.push_back(0.0);
+			sense_STR.push_back("=");
+			rhs_DBL.push_back(0.0);
 			++counter;
 		}
 	}
@@ -543,46 +541,46 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	Rcpp::checkUserInterrupt();
 	if (verbose) Rcpp::Rcout << "\t\tboundary constraints" << std::endl;
 	if (boundary) {
-		for (std::size_t i=0; i<n_edges2; ++i) {
-			/// constraints if boundaryDF_id1[i] != boundaryDF_id2[i]				
-			// model+=boundaryDF_idpair_STR[i] + " - " + puDF_id_STR[boundaryDF_id1[i]] + " <= 0\n";
+		for (std::size_t i=0; i<n_edges2_INT; ++i) {
+			/// constraints if boundary_DF_id1[i] != boundary_DF_id2[i]
+			// model+=boundary_DF_idpair_STR[i] + " - " + pu_DF_id_STR[boundary_DF_id1[i]] + " <= 0\n";
 			model_rows_INT.push_back(counter);
 			model_rows_INT.push_back(counter);
-			model_cols_INT.push_back(variableMAP[boundaryDF_idpair_STR[i]]);
-			model_cols_INT.push_back(variableMAP[puDF_id_STR[boundaryDF_id1[edge_pos[i]]]]);
+			model_cols_INT.push_back(variable_MAP[boundary_DF_idpair_STR[i]]);
+			model_cols_INT.push_back(variable_MAP[pu_DF_id_STR[boundary_DF_id1[edge_pos_INT[i]]]]);
 			model_vals_DBL.push_back(1.0);
 			model_vals_DBL.push_back(-1.0);
-			senseSTR.push_back("<=");
-			rhsDBL.push_back(0.0);
+			sense_STR.push_back("<=");
+			rhs_DBL.push_back(0.0);
 			++counter;
 
-			// model+=boundaryDF_idpair_STR[i] + " - " + puDF_id_STR[boundaryDF_id2[i]] + " <= 0\n";
+			// model+=boundary_DF_idpair_STR[i] + " - " + pu_DF_id_STR[boundary_DF_id2[i]] + " <= 0\n";
 			model_rows_INT.push_back(counter);
 			model_rows_INT.push_back(counter);
-			model_cols_INT.push_back(variableMAP[boundaryDF_idpair_STR[i]]);
-			model_cols_INT.push_back(variableMAP[puDF_id_STR[boundaryDF_id2[edge_pos[i]]]]);
+			model_cols_INT.push_back(variable_MAP[boundary_DF_idpair_STR[i]]);
+			model_cols_INT.push_back(variable_MAP[pu_DF_id_STR[boundary_DF_id2[edge_pos_INT[i]]]]);
 			model_vals_DBL.push_back(1.0);
 			model_vals_DBL.push_back(-1.0);
-			senseSTR.push_back("<=");
-			rhsDBL.push_back(0.0);
+			sense_STR.push_back("<=");
+			rhs_DBL.push_back(0.0);
 			++counter;
 
-			// model+=boundaryDF_idpair_STR[i] + " - " +
-				// puDF_id_STR[boundaryDF_id1[i]] + " - " +
-				// puDF_id_STR[boundaryDF_id2[i]] + " >= -1\n";
+			// model+=boundary_DF_idpair_STR[i] + " - " +
+				// pu_DF_id_STR[boundary_DF_id1[i]] + " - " +
+				// pu_DF_id_STR[boundary_DF_id2[i]] + " >= -1\n";
 			
 			// constraints not strictly needed since decision variables are binary
 // 			model_rows_INT.push_back(counter);
 // 			model_rows_INT.push_back(counter);
 // 			model_rows_INT.push_back(counter);
-// 			model_cols_INT.push_back(variableMAP[boundaryDF_idpair_STR[i]]);
-// 			model_cols_INT.push_back(variableMAP[puDF_id_STR[boundaryDF_id1[edge_pos[i]]]]);
-// 			model_cols_INT.push_back(variableMAP[puDF_id_STR[boundaryDF_id2[edge_pos[i]]]]);
+// 			model_cols_INT.push_back(variable_MAP[boundary_DF_idpair_STR[i]]);
+// 			model_cols_INT.push_back(variable_MAP[pu_DF_id_STR[boundary_DF_id1[edge_pos_INT[i]]]]);
+// 			model_cols_INT.push_back(variable_MAP[pu_DF_id_STR[boundary_DF_id2[edge_pos_INT[i]]]]);
 // 			model_vals_DBL.push_back(1);
 // 			model_vals_DBL.push_back(-1);
 // 			model_vals_DBL.push_back(-1);
-// 			senseSTR.push_back(">=");
-// 			rhsDBL.push_back(-1.0);
+// 			sense_STR.push_back(">=");
+// 			rhs_DBL.push_back(-1.0);
 // 			++counter;
 		}
 	}
@@ -591,425 +589,386 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   std::string currP;
   std::string currY;
   if (unreliable_formulation) {
-  	// 1b
-	  Rcpp::checkUserInterrupt();
-  	if (verbose) Rcpp::Rcout << "\t\teqn. 1b constraints" << std::endl;
-  	for (std::size_t i=0; i<n_species; ++i) {
-  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (!std::isnan(spacetargetsMTX(i,j))) {
-					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
-							for (std::size_t l=0; l<species_npu[i]; ++l) {
-								currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l];
-								model_rows_INT.push_back(counter);
-								model_cols_INT.push_back(variableMAP[currSTR]);
-								model_vals_DBL.push_back(1.0);
-							}
-							senseSTR.push_back("=");
-							rhsDBL.push_back(1.0);
-							++counter;
+		// 1b
+		Rcpp::checkUserInterrupt();
+		if (verbose) Rcpp::Rcout << "\t\teqn. 1b constraints" << std::endl;
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+			if (!std::isnan(species_space_proptargets_DBL[a])) {
+				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
+					for (std::size_t l=0; l<species_space_npu_INT[a]; ++l) {
+						curr_STR="Y_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l];
+						model_rows_INT.push_back(counter);
+						model_cols_INT.push_back(variable_MAP[curr_STR]);
+						model_vals_DBL.push_back(1.0);
+					}
+					sense_STR.push_back("=");
+					rhs_DBL.push_back(1.0);
+					++counter;
+				}
+			}
+		}
+
+		// 1c
+		Rcpp::checkUserInterrupt();
+		if (verbose) Rcpp::Rcout << "\t\teqn. 1c constraints" << std::endl;
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+			if (!std::isnan(species_space_proptargets_DBL[a])) {
+				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
+					for (std::size_t l=0; l<species_space_npu_INT[a]; ++l) {
+						curr_STR="Y_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l];
+						model_rows_INT.push_back(counter);
+						model_cols_INT.push_back(variable_MAP[curr_STR]);
+						model_vals_DBL.push_back(1.0);
+
+						model_rows_INT.push_back(counter);
+						model_cols_INT.push_back(variable_MAP[pu_DF_id_STR[species_space_puids_RIV[a][l]]]);
+						model_vals_DBL.push_back(-1.0);
+
+						sense_STR.push_back("<=");
+						rhs_DBL.push_back(0.0);
+						++counter;
 					}
 				}
-  		}
-  	}
-
-  	// 1c
-  	Rcpp::checkUserInterrupt();
-  	if (verbose) Rcpp::Rcout << "\t\teqn. 1c constraints" << std::endl;
-  	for (std::size_t i=0; i<n_species; ++i) {
-  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (!std::isnan(spacetargetsMTX(i,j))) {
-					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
-						for (std::size_t l=0; l<species_npu[i]; ++l) {
-							currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l];
-							model_rows_INT.push_back(counter);
-							model_cols_INT.push_back(variableMAP[currSTR]);
-							model_vals_DBL.push_back(1.0);
-
-							model_rows_INT.push_back(counter);
-							model_cols_INT.push_back(variableMAP[puDF_id_STR[species_pu_ids[i][l]]]);
-							model_vals_DBL.push_back(-1.0);
-
-							senseSTR.push_back("<=");
-							rhsDBL.push_back(0.0);
-							++counter;
-						}
-					}
-				}
-  		}
-  	}
-  } else {
-    if (verbose) Rcpp::Rcout << "\t\teqn. 1b constraints" << std::endl;
-  	for (std::size_t i=0; i<n_species; ++i) {
-  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (!std::isnan(spacetargetsMTX(i,j))) {
-					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
-						for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
-							
-							// original formulation
-// 							for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
-// 								currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
+			}
+		}
+	} else {
+		if (verbose) Rcpp::Rcout << "\t\teqn. 1b constraints (rows " << counter << ", ";
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+			if (!std::isnan(species_space_proptargets_DBL[a])) {
+				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
+					for (std::size_t r=0; r<(species_space_rlevel_INT[a]+1); ++r) {
+						
+						// original formulation
+// 							for (std::size_t l=0; l<(species_space_npu_INT(i,j)+1); ++l) {
+// 								curr_STR="Y_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l]+"_"+int_STR[r];
 // 								model_rows_INT.push_back(counter);
-// 								model_cols_INT.push_back(variableMAP[currSTR]);
+// 								model_cols_INT.push_back(variable_MAP[curr_STR]);
 // 								model_vals_DBL.push_back(1.0);
 // 							}
 // 							for (std::size_t r2=0; r2<r; ++r2) {
-// 								currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[species_npu[i]]+"_"+intSTR[r2];
+// 								curr_STR="Y_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[species_space_npu_INT(i,j)]+"_"+int_STR[r2];
 // 								model_rows_INT.push_back(counter);
-// 								model_cols_INT.push_back(variableMAP[currSTR]);
+// 								model_cols_INT.push_back(variable_MAP[curr_STR]);
 // 								model_vals_DBL.push_back(1.0);
 // 							}
-// 							senseSTR.push_back("=");
-// 							rhsDBL.push_back(1.0);
+// 							sense_STR.push_back("=");
+// 							rhs_DBL.push_back(1.0);
 // 							++counter;
 // 						}
 
-							// force each R-level to be assigned to a pu
-							for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
-								currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
-								model_rows_INT.push_back(counter);
-								model_cols_INT.push_back(variableMAP[currSTR]);
-								model_vals_DBL.push_back(1.0);
-							}
-							senseSTR.push_back("=");
-							rhsDBL.push_back(1.0);
-							++counter;
+						// force each R-level to be assigned to a pu
+						for (std::size_t l=0; l<(species_space_npu_INT[a]+1); ++l) {
+							curr_STR="Y_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l]+"_"+int_STR[r];
+							model_rows_INT.push_back(counter);
+							model_cols_INT.push_back(variable_MAP[curr_STR]);
+							model_vals_DBL.push_back(1.0);
 						}
+						sense_STR.push_back("=");
+						rhs_DBL.push_back(1.0);
+						++counter;
 					}
 				}
-  		}
-  	}
+			}
+		}
+		if (verbose) Rcpp::Rcout << counter << ")" << std::endl;
+		
+		// 1b extra - force each pu to be assigned to only 1 r-level
+		if (verbose) Rcpp::Rcout << "\t\teqn. 1b (extra) constraints (rows " << counter << ", ";
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+			if (!std::isnan(species_space_proptargets_DBL[a])) {
+				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
+					for (std::size_t l=0; l<(species_space_npu_INT[a]+1); ++l) {
+						for (std::size_t r=0; r<(species_space_rlevel_INT[a]+1); ++r) {
+							curr_STR="Y_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l]+"_"+int_STR[r];
+							model_rows_INT.push_back(counter);
+							model_cols_INT.push_back(variable_MAP[curr_STR]);
+							model_vals_DBL.push_back(1.0);
+						}
+						sense_STR.push_back("<=");
+						rhs_DBL.push_back(1.0);
+						++counter;
+					}
+				}
+			}
+		}
+		if (verbose) Rcpp::Rcout << counter << ")" << std::endl;
+		
+		// 1c
+		Rcpp::checkUserInterrupt();
+		if (verbose) Rcpp::Rcout << "\t\teqn. 1c constraints (rows " << counter << ", ";
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+			if (!std::isnan(species_space_proptargets_DBL[a])) {
+				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
+					for (std::size_t l=0; l<species_space_npu_INT[a]; ++l) {
+						for (std::size_t r=0; r<(species_space_rlevel_INT[a]+1); ++r) {
+							curr_STR="Y_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l]+"_"+int_STR[r];
+							model_rows_INT.push_back(counter);
+							model_cols_INT.push_back(variable_MAP[curr_STR]);
+							model_vals_DBL.push_back(1.0);
+						}
+						model_rows_INT.push_back(counter);
+						model_cols_INT.push_back(variable_MAP[pu_DF_id_STR[species_space_puids_RIV[a][l]]]);
+						model_vals_DBL.push_back(-1.0);
+						sense_STR.push_back("<=");
+						rhs_DBL.push_back(0.0);
+						++counter;
+					}
+				}
+			}
+		}
+		if (verbose) Rcpp::Rcout << counter << ")" << std::endl;
+		
+		// 1d
+		Rcpp::checkUserInterrupt();
+		if (verbose) Rcpp::Rcout << "\t\teqn. 1d constraints (rows " << counter << ", ";
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+			if (!std::isnan(species_space_proptargets_DBL[a])) {
+				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
+						
+						// original formulation
+	// 						for (std::size_t r=0; r<(species_space_rlevel_INT(i,j)+1); ++r) {
+	// 							curr_STR="Y_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[species_space_npu_INT(i,j)]+"_"+int_STR[r];
+	// 							model_rows_INT.push_back(counter);
+	// 							model_cols_INT.push_back(variable_MAP[curr_STR]);
+	// 							model_vals_DBL.push_back(1.0);
+	// 						}
+	// 						sense_STR.push_back("=");
+	// 						rhs_DBL.push_back(1.0);
+	// 						++counter;
+						
+					// ensure that failure planning unit is assigned to last r-level
+					curr_STR="Y_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[species_space_npu_INT[a]]+"_"+int_STR[species_space_rlevel_INT[a]];
+					model_rows_INT.push_back(counter);
+					model_cols_INT.push_back(variable_MAP[curr_STR]);
+					model_vals_DBL.push_back(1.0);
+					sense_STR.push_back("=");
+					rhs_DBL.push_back(1.0);
+					++counter;
+				}
+			}
+		}
+		if (verbose) Rcpp::Rcout << counter << ")" << std::endl;
 
-  	// 1b extra - force each pu to be assigned to only 1 r-level
-    if (verbose) Rcpp::Rcout << "\t\teqn. 1b (extra) constraints" << std::endl;
-  	for (std::size_t i=0; i<n_species; ++i) {
-  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (!std::isnan(spacetargetsMTX(i,j))) {
-					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
-						for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
-							for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
-								currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
+		// 1e
+		Rcpp::checkUserInterrupt();
+		if (verbose) Rcpp::Rcout << "\t\teqn. 1e constraints (rows " << counter << ", ";
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+			if (!std::isnan(species_space_proptargets_DBL[a])) {
+				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
+					for (std::size_t l=0; l<species_space_npu_INT[a]; ++l) {
+						// real pu
+						curr_STR="P_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l]+"_0";
+						model_rows_INT.push_back(counter);
+						model_cols_INT.push_back(variable_MAP[curr_STR]);
+						model_vals_DBL.push_back(1.0);
+
+						sense_STR.push_back("=");
+						rhs_DBL.push_back(species_space_pu_probs_RDV[a][l]);
+						++counter;
+					}
+
+					// failure pu
+					curr_STR="P_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[species_space_npu_INT[a]]+"_0";
+					model_rows_INT.push_back(counter);
+					model_cols_INT.push_back(variable_MAP[curr_STR]);
+					model_vals_DBL.push_back(1.0);
+
+					sense_STR.push_back("=");
+					rhs_DBL.push_back(1.0);
+					++counter;
+				}
+			}
+		}
+		if (verbose) Rcpp::Rcout << counter << ")" << std::endl;
+
+		// 1f
+		Rcpp::checkUserInterrupt();
+		if (verbose) Rcpp::Rcout << "\t\teqn. 1f constraints (rows " << counter << ", ";
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+			if (!std::isnan(species_space_proptargets_DBL[a])) {
+				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
+					for (std::size_t l=0; l<(species_space_npu_INT[a]+1); ++l) {
+						for (std::size_t r=1, r2=0; r<(species_space_rlevel_INT[a]+1); ++r, ++r2) {
+							curr_STR="P_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l]+"_"+int_STR[r];
+							model_rows_INT.push_back(counter);
+							model_cols_INT.push_back(variable_MAP[curr_STR]);
+							model_vals_DBL.push_back(1.0);
+
+							for (std::size_t l2=0; l2<species_space_npu_INT[a]; ++l2) {
+								curr_STR="W_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l2]+"_"+int_STR[r2];
 								model_rows_INT.push_back(counter);
-								model_cols_INT.push_back(variableMAP[currSTR]);
-								model_vals_DBL.push_back(1.0);
+								model_cols_INT.push_back(variable_MAP[curr_STR]);
+								model_vals_DBL.push_back(-(species_space_pu_probs_RDV[a][l] * species_space_pu_tprobs_RDV[a][l2]));
 							}
-							senseSTR.push_back("<=");
-							rhsDBL.push_back(1.0);
+
+							sense_STR.push_back("=");
+							rhs_DBL.push_back(0.0);
 							++counter;
 						}
 					}
 				}
 			}
 		}
-  	
-  	// 1c
-  	Rcpp::checkUserInterrupt();
-  	if (verbose) Rcpp::Rcout << "\t\teqn. 1c constraints" << std::endl;
-  	for (std::size_t i=0; i<n_species; ++i) {
-  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (!std::isnan(spacetargetsMTX(i,j))) {
-					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
-						for (std::size_t l=0; l<species_npu[i]; ++l) {
-							for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
-								currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
-								model_rows_INT.push_back(counter);
-								model_cols_INT.push_back(variableMAP[currSTR]);
-								model_vals_DBL.push_back(1.0);
-							}
-							model_rows_INT.push_back(counter);
-							model_cols_INT.push_back(variableMAP[puDF_id_STR[species_pu_ids[i][l]]]);
-							model_vals_DBL.push_back(-1.0);
-							senseSTR.push_back("<=");
-							rhsDBL.push_back(0.0);
-							++counter;
-						}
-					}
-				}
-			}
-  	}
+		if (verbose) Rcpp::Rcout << counter << ")" << std::endl;
 
-  	// 1d
-  	Rcpp::checkUserInterrupt();
-  	if (verbose) Rcpp::Rcout << "\t\teqn. 1d constraints" << std::endl;
-  	for (std::size_t i=0; i<n_species; ++i) {
-  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (!std::isnan(spacetargetsMTX(i,j))) {
-					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
-						
-						// original formulation
-// 						for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
-// 							currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[species_npu[i]]+"_"+intSTR[r];
-// 							model_rows_INT.push_back(counter);
-// 							model_cols_INT.push_back(variableMAP[currSTR]);
-// 							model_vals_DBL.push_back(1.0);
-// 						}
-// 						senseSTR.push_back("=");
-// 						rhsDBL.push_back(1.0);
-// 						++counter;
-						
-						// ensure that failure planning unit is assigned to last r-level
-						currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[species_npu[i]]+"_"+intSTR[species_rlevel[i]];
-						model_rows_INT.push_back(counter);
-						model_cols_INT.push_back(variableMAP[currSTR]);
-						model_vals_DBL.push_back(1.0);
-						senseSTR.push_back("=");
-						rhsDBL.push_back(1.0);
-						++counter;
-						
-						
-					}
-				}
-			}
-  	}
-
-  	// 1e
-  	Rcpp::checkUserInterrupt();
-  	if (verbose) Rcpp::Rcout << "\t\teqn. 1e constraints" << std::endl;
-  	for (std::size_t i=0; i<n_species; ++i) {
-  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (!std::isnan(spacetargetsMTX(i,j))) {
-					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
-						for (std::size_t l=0; l<species_npu[i]; ++l) {
-							// real pu
-							currSTR="P_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_0";
+		/// W variables
+		Rcpp::checkUserInterrupt();
+		if (verbose) Rcpp::Rcout << "\t\teqn 2. constraints (rows " << counter << ", ";
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+			if (!std::isnan(species_space_proptargets_DBL[a])) {
+				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
+					for (std::size_t l=0; l<(species_space_npu_INT[a]+1); ++l) {
+						for (std::size_t r=0; r<(species_space_rlevel_INT[a]+1); ++r) {
+							// init
+							currW="W_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l]+"_"+int_STR[r];
+							currP="P_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l]+"_"+int_STR[r];
+							currY="Y_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l]+"_"+int_STR[r];
+							// 2a
+							//model+=currW + " - " + currP + " <= 0\n";
 							model_rows_INT.push_back(counter);
-							model_cols_INT.push_back(variableMAP[currSTR]);
+							model_rows_INT.push_back(counter);
+							model_cols_INT.push_back(variable_MAP[currW]);
+							model_cols_INT.push_back(variable_MAP[currP]);
 							model_vals_DBL.push_back(1.0);
-							senseSTR.push_back("=");
-							rhsDBL.push_back(species_pu_probs[i][l]);
+							model_vals_DBL.push_back(-1.0);
+							sense_STR.push_back("<=");
+							rhs_DBL.push_back(0.0);
+							++counter;
+							// 2b
+							//model+=currW + " - " + currY + " <= 0\n";
+							model_rows_INT.push_back(counter);
+							model_rows_INT.push_back(counter);
+							model_cols_INT.push_back(variable_MAP[currW]);
+							model_cols_INT.push_back(variable_MAP[currY]);
+							model_vals_DBL.push_back(1.0);
+							model_vals_DBL.push_back(-1.0);
+							sense_STR.push_back("<=");
+							rhs_DBL.push_back(0.0);
+							++counter;
+							// 2c
+							//model+=currW + " >= 0\n";
+							model_rows_INT.push_back(counter);
+							model_cols_INT.push_back(variable_MAP[currW]);
+							model_vals_DBL.push_back(1.0);
+							sense_STR.push_back(">=");
+							rhs_DBL.push_back(0.0);
+							++counter;
+							// 2d
+							//model+= currW + " - " + currP + " - " + currY + " >= -1\n";
+							//model+= currW + " >= " + currP + " + " + currY + " - 1\n";
+							model_rows_INT.push_back(counter);
+							model_rows_INT.push_back(counter);
+							model_rows_INT.push_back(counter);
+							model_cols_INT.push_back(variable_MAP[currW]);
+							model_cols_INT.push_back(variable_MAP[currP]);
+							model_cols_INT.push_back(variable_MAP[currY]);
+							model_vals_DBL.push_back(1.0);
+							model_vals_DBL.push_back(-1.0);
+							model_vals_DBL.push_back(-1.0);
+							sense_STR.push_back(">=");
+							rhs_DBL.push_back(-1.0);
 							++counter;
 						}
-
-						// failure pu
-						currSTR="P_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[species_npu[i]]+"_0";
-						model_rows_INT.push_back(counter);
-						model_cols_INT.push_back(variableMAP[currSTR]);
-						model_vals_DBL.push_back(1.0);
-
-						senseSTR.push_back("=");
-						rhsDBL.push_back(1.0);
-						++counter;
 					}
 				}
 			}
-  	}
-
-  	// 1f
-  	Rcpp::checkUserInterrupt();
-  	if (verbose) Rcpp::Rcout << "\t\teqn. 1f constraints" << std::endl;
-  	for (std::size_t i=0; i<n_species; ++i) {
-  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (!std::isnan(spacetargetsMTX(i,j))) {
-					// assign values
-					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
-						for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
-							for (std::size_t r=1, r2=0; r<(species_rlevel[i]+1); ++r, ++r2) {
-
-								currSTR="P_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
-								model_rows_INT.push_back(counter);
-								model_cols_INT.push_back(variableMAP[currSTR]);
-								model_vals_DBL.push_back(1.0);
-
-								for (std::size_t l2=0; l2<species_npu[i]; ++l2) {
-									currSTR="W_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l2]+"_"+intSTR[r2];
-									model_rows_INT.push_back(counter);
-									model_cols_INT.push_back(variableMAP[currSTR]);
-									model_vals_DBL.push_back(-(species_pu_probs[i][l] * species_pu_tprobs[i][l2]));
-								}
-
-								senseSTR.push_back("=");
-								rhsDBL.push_back(0.0);
-								++counter;
-							}
-						}
-					}
-				}
-  		}
-  	}
-
-  	/// W variables
-  	Rcpp::checkUserInterrupt();
-  	if (verbose) Rcpp::Rcout << "\t\teqn 2. constraints" << std::endl;
-  	for (std::size_t i=0; i<n_species; ++i) {
-  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (!std::isnan(spacetargetsMTX(i,j))) {				
-					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
-						for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
-							for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
-								// init
-								currW="W_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
-								currP="P_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
-								currY="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
-								// 2a
-								//model+=currW + " - " + currP + " <= 0\n";
-								model_rows_INT.push_back(counter);
-								model_rows_INT.push_back(counter);
-								model_cols_INT.push_back(variableMAP[currW]);
-								model_cols_INT.push_back(variableMAP[currP]);
-								model_vals_DBL.push_back(1.0);
-								model_vals_DBL.push_back(-1.0);
-								senseSTR.push_back("<=");
-								rhsDBL.push_back(0.0);
-								++counter;
-								// 2b
-								//model+=currW + " - " + currY + " <= 0\n";
-								model_rows_INT.push_back(counter);
-								model_rows_INT.push_back(counter);
-								model_cols_INT.push_back(variableMAP[currW]);
-								model_cols_INT.push_back(variableMAP[currY]);
-								model_vals_DBL.push_back(1.0);
-								model_vals_DBL.push_back(-1.0);
-								senseSTR.push_back("<=");
-								rhsDBL.push_back(0.0);
-								++counter;
-								// 2c
-								//model+=currW + " >= 0\n";
-								model_rows_INT.push_back(counter);
-								model_cols_INT.push_back(variableMAP[currW]);
-								model_vals_DBL.push_back(1.0);
-								senseSTR.push_back(">=");
-								rhsDBL.push_back(0.0);
-								++counter;
-								// 2d
-								//model+= currW + " - " + currP + " - " + currY + " >= -1\n";
-								//model+= currW + " >= " + currP + " + " + currY + " - 1\n";
-								model_rows_INT.push_back(counter);
-								model_rows_INT.push_back(counter);
-								model_rows_INT.push_back(counter);
-								model_cols_INT.push_back(variableMAP[currW]);
-								model_cols_INT.push_back(variableMAP[currP]);
-								model_cols_INT.push_back(variableMAP[currY]);
-								model_vals_DBL.push_back(1.0);
-								model_vals_DBL.push_back(-1.0);
-								model_vals_DBL.push_back(-1.0);
-								senseSTR.push_back(">=");
-								rhsDBL.push_back(-1.0);
-								++counter;
-							}
-						}
-					}
-				}
-  		}
-  	}
-  }
-  
+		}
+		if (verbose) Rcpp::Rcout << counter << ")" << std::endl;
+	}
+	
 	////// variable types and bounds
 	Rcpp::checkUserInterrupt();
 	if (verbose) Rcpp::Rcout << "\tvariable types" << std::endl;
-	std::vector<std::string> vtypeSTR(objDBL.size());
-	std::vector<std::size_t> lbINT(objDBL.size(), 0);
-	std::vector<std::size_t> ubINT(objDBL.size(), 1);
+	std::vector<std::string> vtype_STR(obj_DBL.size());
+	std::vector<std::size_t> lb_INT(obj_DBL.size(), 0);
+	std::vector<std::size_t> ub_INT(obj_DBL.size(), 1);
 
 	///// binary
 	if (verbose) Rcpp::Rcout << "\t\t binary vars" << std::endl;
 
 	// 1g
 	Rcpp::checkUserInterrupt();
-	for (std::size_t i=0; i<n_pu; ++i) {
-		vtypeSTR[variableMAP[puDF_id_STR[i]]]="B";
+	for (std::size_t i=0; i<n_pu_INT; ++i) {
+		vtype_STR[variable_MAP[pu_DF_id_STR[i]]]="B";
 	}
 
 	// boundary variables
 	Rcpp::checkUserInterrupt();
 	if (boundary) {
-		for (std::size_t i=0; i<n_edges2; ++i)
-			vtypeSTR[variableMAP[boundaryDF_idpair_STR[i]]]="B";
+		for (std::size_t i=0; i<n_edges2_INT; ++i)
+			vtype_STR[variable_MAP[boundary_DF_idpair_STR[i]]]="B";
 	}
 
   // 1g constraints
   Rcpp::checkUserInterrupt();
-  if (unreliable_formulation) {
-  	// 1g
-    for (std::size_t i=0; i<n_species; ++i) {
-  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (!std::isnan(spacetargetsMTX(i,j))) {
-					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
-						for (std::size_t l=0; l<species_npu[i]; ++l) {
-							currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l];
-							vtypeSTR[variableMAP[currSTR]]="B";
-						}
-					}
-				}
-  		}
-  	}
-  } else {
-    // 1g
-  	Rcpp::checkUserInterrupt();
-  	for (std::size_t i=0; i<n_species; ++i) {
-  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (!std::isnan(spacetargetsMTX(i,j))) {
-					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
-						for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
-							for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
-								currSTR="Y_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
-								vtypeSTR[variableMAP[currSTR]]="B";
-							}
-						}
-					}
-				}
-  		}
-  	}
-
-  	///// semi-continuous
-  	Rcpp::checkUserInterrupt();
-  	if (verbose) Rcpp::Rcout << "\t\tsemi-continuous vars" << std::endl;
-  	for (std::size_t i=0; i<n_species; ++i) {
-  		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				if (!std::isnan(spacetargetsMTX(i,j))) {
-					for (std::size_t k=0; k<species_ndp(i,j); ++k) {
-						for (std::size_t l=0; l<(species_npu[i]+1); ++l) {
-							for (std::size_t r=0; r<(species_rlevel[i]+1); ++r) {
-								// w variables
-								currW="W_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
-								vtypeSTR[variableMAP[currW]]="S";
-								// p variables
-								currP="P_"+intSTR[i]+"_"+intSTR[j]+"_"+intSTR[k]+"_"+intSTR[l]+"_"+intSTR[r];
-								vtypeSTR[variableMAP[currP]]="S";
-							}
-						}
-					}
-				}
-  		}
-  	}
-  }
-  
-  // calculate best space proportions
-  if (verbose) Rcpp::Rcout << "\tcalculating best possible space targets" << std::endl;
-	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> best_speciesspaceMTX(1, n_species*n_attribute_spaces);
-	std::size_t currCol=-1;
 	if (unreliable_formulation) {
-		for (std::size_t i=0; i<n_species; ++i) {
-			for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				++currCol;
-				best_speciesspaceMTX(0,currCol)=1.0-(unreliable_space_value(weightdistMTX(i,j),true) / tss_speciesspaceMTX(i,j));
+		// 1g
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+			if (!std::isnan(species_space_proptargets_DBL[a])) {
+				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
+					for (std::size_t l=0; l<species_space_npu_INT[a]; ++l) {
+						curr_STR="Y_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l];
+						vtype_STR[variable_MAP[curr_STR]]="B";
+					}
+				}
+			}
 		}
-   }
 	} else {
-		for (std::size_t i=0; i<n_species; ++i) {
-			for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-				++currCol;
-				best_speciesspaceMTX(0, currCol)=1.0-(reliable_space_value(weightdistMTX(i,j),species_pu_probs[i],species_rlevel[i],true) / tss_speciesspaceMTX(i,j));
+		// 1g
+		Rcpp::checkUserInterrupt();
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+			if (!std::isnan(species_space_proptargets_DBL[a])) {
+				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
+					for (std::size_t l=0; l<(species_space_npu_INT[a]+1); ++l) {
+						for (std::size_t r=0; r<(species_space_rlevel_INT[a]+1); ++r) {
+							curr_STR="Y_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l]+"_"+int_STR[r];
+							vtype_STR[variable_MAP[curr_STR]]="B";
+						}
+					}
+				}
+			}
+		}
+		
+		///// semi-continuous
+		Rcpp::checkUserInterrupt();
+		if (verbose) Rcpp::Rcout << "\t\tsemi-continuous vars" << std::endl;
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+			if (!std::isnan(species_space_proptargets_DBL[a])) {
+				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
+					for (std::size_t l=0; l<(species_space_npu_INT[a]+1); ++l) {
+						for (std::size_t r=0; r<(species_space_rlevel_INT[a]+1); ++r) {
+							// w variables
+							currW="W_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l]+"_"+int_STR[r];
+							vtype_STR[variable_MAP[currW]]="S";
+							// p variables
+							currP="P_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l]+"_"+int_STR[r];
+							vtype_STR[variable_MAP[currP]]="S";
+						}
+					}
+				}
 			}
 		}
 	}
-
+	
+  // calculate best space proportions
+  if (verbose) Rcpp::Rcout << "\tcalculating best possible space targets" << std::endl;
+	std::vector<double> species_space_best_DBL(n_species_attributespace_INT);
+	if (unreliable_formulation) {
+		for (std::size_t a=0; a<n_species_attributespace_INT; ++a) {
+			species_space_best_DBL[a]=1.0-(unreliable_space_value(species_space_weightdist_MTX[a],true) / species_space_tss_DBL[a]);
+		}
+	} else {
+		for (std::size_t a=0; a<n_species_attributespace_INT; ++a)
+			species_space_best_DBL[a]=1.0-(reliable_space_value(species_space_weightdist_MTX[a],species_space_pu_probs_RDV[a],species_space_rlevel_INT[a],true) / species_space_tss_DBL[a]);
+	}
+	
 	// fix variablesSTR
-	std::vector<std::string> variablesSTR(variableMAP.size());
-	for (auto i : variableMAP)
-		variablesSTR[i.second]=i.first;
-	if (!unreliable_formulation)
-		variablesSTR.pop_back();
+	std::vector<std::string> variables_STR(variable_MAP.size());
+	for (auto i : variable_MAP)
+		variables_STR[i.second]=i.first;
 
 	//// Exports
-	Rcpp::checkUserInterrupt();
-	if (verbose) Rcpp::Rcout << "Caching distance calculations" << std::endl;
-	std::vector<std::vector<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>>> wdistLST(n_species);
-	for (std::size_t i=0; i<n_species; ++i) {
-		wdistLST[i].resize(n_attribute_spaces);
-		for (std::size_t j=0; j<n_attribute_spaces; ++j) {
-			wdistLST[i][j]=weightdistMTX(i,j);
-		}
-	}
-		
+	Rcpp::checkUserInterrupt();		
 	if (verbose) Rcpp::Rcout << "Sending data to R" << std::endl;
 	return(
 		Rcpp::List::create(
@@ -1018,19 +977,27 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 				Rcpp::Named("col") = Rcpp::wrap(model_cols_INT),
 				Rcpp::Named("value") = Rcpp::wrap(model_vals_DBL)
 			),
-			Rcpp::Named("obj") = Rcpp::wrap(objDBL),
-			Rcpp::Named("sense") = Rcpp::wrap(senseSTR),
-			Rcpp::Named("rhs") = Rcpp::wrap(rhsDBL),
-			Rcpp::Named("vtype") = Rcpp::wrap(vtypeSTR),
-			Rcpp::Named("lb") = Rcpp::wrap(lbINT),
-			Rcpp::Named("ub") = Rcpp::wrap(ubINT),
+			Rcpp::Named("obj") = Rcpp::wrap(obj_DBL),
+			Rcpp::Named("sense") = Rcpp::wrap(sense_STR),
+			Rcpp::Named("rhs") = Rcpp::wrap(rhs_DBL),
+			Rcpp::Named("vtype") = Rcpp::wrap(vtype_STR),
+			Rcpp::Named("lb") = Rcpp::wrap(lb_INT),
+			Rcpp::Named("ub") = Rcpp::wrap(ub_INT),
 			Rcpp::Named("cache") = Rcpp::List::create(
-				Rcpp::Named("best_amount_values") = Rcpp::wrap(speciesareaDBL),
-				Rcpp::Named("space_targets") = Rcpp::wrap(speciesspaceMTX),
-				Rcpp::Named("tss_space_values") = Rcpp::wrap(tss_speciesspaceMTX),
-				Rcpp::Named("best_space_values") = Rcpp::wrap(best_speciesspaceMTX),
-				Rcpp::Named("variables") = Rcpp::wrap(variablesSTR),
-				Rcpp::Named("wdist") = Rcpp::wrap(wdistLST)
+				Rcpp::Named("species_attributespace_species_INT") = Rcpp::wrap(species_attributespace_species_INT),
+				Rcpp::Named("species_attributespace_space_INT") = Rcpp::wrap(species_attributespace_space_INT),
+				Rcpp::Named("species_space_pu_probs_RDV") = Rcpp::wrap(species_space_pu_probs_RDV),
+				Rcpp::Named("species_space_puids_RIV") = Rcpp::wrap(species_space_puids_RIV),
+				Rcpp::Named("species_space_pupos_RIV") = Rcpp::wrap(species_space_pupos_RIV),
+				Rcpp::Named("species_areatargets_DBL") = Rcpp::wrap(species_areatargets_DBL),
+				Rcpp::Named("species_totalarea_DBL") = Rcpp::wrap(species_totalarea_DBL),
+				Rcpp::Named("species_space_rawtargets_DBL") = Rcpp::wrap(species_space_rawtargets_DBL),
+				Rcpp::Named("species_space_tss_DBL") = Rcpp::wrap(species_space_tss_DBL),
+				Rcpp::Named("species_space_best_DBL") = Rcpp::wrap(species_space_best_DBL),
+				Rcpp::Named("species_space_proptargets_DBL") = Rcpp::wrap(species_space_proptargets_DBL),
+				Rcpp::Named("species_space_rlevel_INT") = Rcpp::wrap(species_space_rlevel_INT),
+				Rcpp::Named("variables") = Rcpp::wrap(variables_STR),
+				Rcpp::Named("wdist") = Rcpp::wrap(species_space_weightdist_MTX)
 			),
 			Rcpp::Named("modelsense") = "min"
 		)

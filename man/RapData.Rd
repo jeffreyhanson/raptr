@@ -12,11 +12,11 @@ RapData(pu, species, targets, pu.species.probabilities, attribute.spaces,
 
 \item{species}{\code{data.frame} with species data. Columns are 'name' (\code{character}).}
 
-\item{targets}{\code{data.frame} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), 'proportion' (\code{numeric}), and 'name' (\code{character}).}
+\item{targets}{\code{data.frame} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), 'proportion' (\code{numeric}).}
 
 \item{pu.species.probabilities}{\code{data.frame} with data on the probability of species in each planning unit. Columns are 'species' (\code{integer}), 'pu' (\code{integer}), and 'value' (\code{numeric}) columns.}
 
-\item{attribute.spaces}{\code{list} of \code{AttributeSpace} objects with the demand points and planning unit coordinates.}
+\item{attribute.spaces}{\code{list} of \code{AttributeSpaces} objects with the demand points and planning unit coordinates.}
 
 \item{boundary}{\code{data.frame} with data on the shared boundary length of planning units. Columns are with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'boundary' (\code{integer}).}
 
@@ -40,43 +40,48 @@ Generally, users are not encouraged to change arguments to \code{.cache}.
 # load data
 data(cs_pus, cs_spp, cs_space)
 # create data for RapData object
-attribute.spaces=list(
-	AttributeSpace(
-		pu=SimplePoints(rgeos::gCentroid(cs_pus[1:10,], byid=TRUE)@coords),
-		demand.points=list(
-		make.DemandPoints(
-			SpatialPoints(
-				coords=randomPoints(
-					cs_spp,
-					n=10,
-					prob=TRUE
-				)
+attribute.spaces <- list(
+	AttributeSpaces(
+	list(
+			AttributeSpace(
+			planning.unit.points=PlanningUnitPoints(
+				rgeos::gCentroid(cs_pus[1:10,], byid=TRUE)@coords,
+				seq_len(10)
+			)
+				demand.points=make.DemandPoints(
+				SpatialPoints(
+					coords=randomPoints(
+						cs_spp,
+						n=10,
+						prob=TRUE
+					)
+				),
 			),
-			NULL
-		)
-	),
-	distance.metric='euclidean'
-	),
-	AttributeSpace(
-		pu=SimplePoints(extract(cs_space[[1]],cs_pus[1:10,],fun=mean)),
-		demand.points=list(
-		make.DemandPoints(
-			SpatialPoints(
-				coords=randomPoints(
-					cs_spp,
-					n=10,
-					prob=TRUE
-				)
+			species=1L
+		),
+			AttributeSpace(
+				planning.unit.points=PlanningUnitPoints(
+				extract(cs_space[[1]],cs_pus[1:10,],fun=mean),
+				seq_len(10)
 			),
-			cs_space[[1]]
+				demand.points=make.DemandPoints(
+				SpatialPoints(
+					coords=randomPoints(
+						cs_spp,
+						n=10,
+						prob=TRUE
+					)
+				),
+				cs_space[[1]]
+			),
+			species=1L
 		)
-	),
-	distance.metric='euclidean'
+		)
 	)
 )
-pu.species.probabilities=calcSpeciesAverageInPus(cs_pus[1:10,], cs_spp)
-polygons=SpatialPolygons2PolySet(cs_pus[1:10,])
-boundary=calcBoundaryData(cs_pus[1:10,])
+pu.species.probabilities <- calcSpeciesAverageInPus(cs_pus[1:10,], cs_spp)
+polygons <- SpatialPolygons2PolySet(cs_pus[1:10,])
+boundary <- calcBoundaryData(cs_pus[1:10,])
 
 x<-RapData(
 	pu=cs_pus@data[1:10,],

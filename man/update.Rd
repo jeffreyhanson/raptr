@@ -18,7 +18,7 @@
 
 \method{update}{RapData}(object, species = NULL, space = NULL,
   name = NULL, amount.target = NULL, space.target = NULL, pu = NULL,
-  cost = NULL, status = NULL, distance.metric = NULL, ...)
+  cost = NULL, status = NULL, ...)
 
 \method{update}{RapReliableOpts}(object, BLM = NULL,
   failure.multiplier = NULL, max.r.level = NULL, ...)
@@ -62,8 +62,6 @@
 \item{cost}{\code{numeric} new costs for spcified planning units.}
 
 \item{status}{\code{integer} new statuses for specified planning units.}
-
-\item{distance.metric}{\code{character} name of distance metric to use for attribute space representation calculations (see \code{link{AttributeSpace}} for more information).}
 
 \item{BLM}{\code{numeric} boundary length modifier.}
 

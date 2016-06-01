@@ -65,7 +65,7 @@ double unreliable_space_value(
 // reliable - best space value
 double reliable_space_value(
 	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> &weightdistMTX,
-	std::vector<double> &pu_probs,
+	Rcpp::NumericVector &pu_probs,
 	std::size_t maxrlevelINT,
 	bool square=false
 ) {
@@ -116,13 +116,15 @@ double reliable_space_value(
 double reliable_space_value(
 	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> &weightdistMTX,
 	std::vector<std::size_t> pu_ids,
-	std::vector<double> &pu_probs,
+	Rcpp::NumericVector &pu_probs,
 	std::size_t maxrlevelINT,
 	bool square=false
 ) {
 	double value=0.0;
 	double currProb;
 	double curr_value;
+	
+	
 	for (std::size_t k=0; k<static_cast<std::size_t>(weightdistMTX.rows()); ++k) {
 		// sort pus in order of distance
 		std::partial_sort(

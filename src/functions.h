@@ -43,7 +43,7 @@ double unreliable_space_value(
 // reliable - best space value
 double reliable_space_value(
 	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>&,
-	std::vector<double>&,
+	Rcpp::NumericVector&,
   std::size_t,
 	bool
 );
@@ -60,7 +60,7 @@ double reliable_space_value(
 double reliable_space_value(
 	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> &,
 	std::vector<std::size_t>,
-	std::vector<double>&,
+	Rcpp::NumericVector&,
 	std::size_t,
 	bool
 );

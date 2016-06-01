@@ -5,18 +5,18 @@
 \alias{AttributeSpace-class}
 \title{AttributeSpace: An S4 class to represent an attribute space.}
 \description{
-This class is used to store planning unit points and demand points in an attribute space.
+This class is used to store planning unit points and demand points for a single species in an attribute space.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{pu}}{\code{SimplePoints} coordinates for planning unit in the space.}
+\item{\code{planning.unit.points}}{\code{PlanningUnitPoints} for planning unit in the space.}
 
-\item{\code{demand.points}}{\code{list} of \code{DemandPoints} for each species.}
+\item{\code{demand.points}}{\code{DemandPoints} object for the space.}
 
-\item{\code{distance.metric}}{\code{character} name of distance metric to use for comparing planning units to demand points.}
+\item{\code{species}}{\code{integer} species id to indicate which species the space is associated with.}
 }}
 \seealso{
-\code{\link{SimplePoints-class}}, \code{\link{DemandPoints-class}}.
+\code{\link{DemandPoints-class}}, \code{\link{PlanningUnitPoints-class}}.
 }
 

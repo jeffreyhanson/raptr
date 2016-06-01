@@ -2,7 +2,7 @@ context('01-internal-tests')
 
 test_that('rcpp_sum_duplicates', {
 	# create data
-	imat=matrix(c(
+	imat<-matrix(c(
 		1,1,6,
 		1,2,4,
 		2,1,2,
@@ -10,14 +10,14 @@ test_that('rcpp_sum_duplicates', {
 		1,1,7,
 		2,2,1
 	), byrow=TRUE, ncol=3)
-	omat1=matrix(c(
+	omat1<-matrix(c(
 		1,1,13,
 		1,2,4,
 		2,1,2,
 		2,2,6
 	), byrow=TRUE, ncol=3)
-	omat2=as.matrix(rcpp_sum_duplicates(as.integer(imat[,1]), as.integer(imat[,2]), imat[,3]))
-	omat2=omat2[order(paste0(omat2[,1], '_', omat2[,2])),]
+	omat2<-as.matrix(rcpp_sum_duplicates(as.integer(imat[,1]), as.integer(imat[,2]), imat[,3]))
+	omat2<-omat2[order(paste0(omat2[,1], '_', omat2[,2])),]
 	# run tests
 	expect_equal(omat1[,1], omat2[,1])
 	expect_equal(omat1[,2], omat2[,2])

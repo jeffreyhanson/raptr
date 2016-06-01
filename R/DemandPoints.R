@@ -1,55 +1,53 @@
-#' @include RcppExports.R rapr-internal.R generics.R SimplePoints.R
+#' @include RcppExports.R rapr-internal.R generics.R
 NULL
 
 #' DemandPoints: An S4 class to represent demand points
 #'
 #' This class is used to store demand point information.
 #'
-#' @slot points \code{SimplePoints} coordinates for each demand point in the attribute space.
-#' @slot weights \code{numeric} weights for each demand poont.
+#' @slot coords \code{matrix} of coordinates for each demand point.
+#' @slot weights \code{numeric} weights for each demand point.
 #' @seealso \code{\link{DemandPoints}}
 #' @export
 setClass("DemandPoints",
 	representation(
-		points='SimplePoints',
+		coords='matrix',
 		weights='numeric'
 	),
 	validity=function(object) {
-		# coords
-		if (!inherits(object@points, 'SimplePoints'))
-			stop('argument to points must be SimplePoints')
-		
 		# check coords have variance
-		if (max(apply(object@points@coords, 2, function(x) {length(unique(x))}))==1)
-			stop('demand points must not all be identical')
+		expect_false(max(apply(object@coords, 2, function(x) {length(unique(x))}))==1, info='demand points must not all be identical')
+
+		# check coords are not NA
+		expect_true(all(is.finite(c(object@coords))), info='argument to coords contains NA or non-finite values')
+		expect_true(nrow(object@coords)>1, info='argument to coords must have at least one row')
 		
 		# weights
-		if (!all(is.numeric(object@weights)))
-			stop('argument to weights must be numeric')
-		if (!all(is.finite(object@weights)))
-			stop('argument to weights contains NA or non-finite values')
-		
+		expect_true(all(is.finite(object@weights)), info='argument to weights contains NA or non-finite values')
+		expect_true(length(object@weights)>1, info='argument to weights must have at least one element')
+		expect_true(all(object@weights>0), info='argument to weights must have positive numbers')
+
 		# cross-slot dependencies
-		if (nrow(object@points@coords)!=length(object@weights))
-			stop('argument to points must have have the same number of rows as the length of weights')
+		expect_equal(nrow(object@coords), length(object@weights), info='argument to points must have have the same number of rows as the length of weights')
+		return(TRUE)
 	}
 )
 
 #' Create new DemandPoints object
 #'
-#' This funciton creates a new DemandPoints object
+#' This function creates a new DemandPoints object
 #'
-#' @param points \code{SimplePoints} coordinates for each demand point in the attribute space.
+#' @param coords \code{matrix} of coordinates for each demand point.
 #' @param weights \code{numeric} weights for each demand poont.
 #' @seealso \code{\link{DemandPoints-class}}
 #' @export
 #' @examples
 #' dps <- DemandPoints(
-#'	SimplePoints(matrix(rnorm(100), ncol=2)),
+#'	matrix(rnorm(100), ncol=2),
 #'	runif(50)
 #' )
-DemandPoints<-function(points, weights) {
-	dp<-new("DemandPoints", points=points, weights=weights)
+DemandPoints<-function(coords, weights) {
+	dp<-new("DemandPoints", coords=coords, weights=weights)
 	validObject(dp, test=FALSE)
 	return(dp)
 }
@@ -83,7 +81,7 @@ DemandPoints<-function(points, weights) {
 #'	kernel.method='ks'
 #' )
 #' # generate demand points for a 2d space using hypervolume
-#' dps12 <- make.DemandPoints(
+#' dps2 <- make.DemandPoints(
 #'	points=env.points,
 #'	kernel.method='hypervolume'
 #' )
@@ -109,7 +107,7 @@ make.DemandPoints<-function(points, n=100L, quantile=0.5, kernel.method=c('ks', 
 	# return demand points
 	return(
 		DemandPoints(
-			points=SimplePoints(dp$coords),
+			coords=dp$coords,
 			weights=dp$weights
 		)
 	)
