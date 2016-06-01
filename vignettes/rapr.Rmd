@@ -58,6 +58,7 @@ This tutorial is designed to provide users with an understanding of how to use t
 
 ```{r, message=FALSE, result='hide'}
 # load packages for tutorial
+library(parallel)
 library(plyr)
 library(dplyr)
 library(ggplot2)
@@ -66,6 +67,10 @@ library(rgeos)
 
 # set seed for reproducibility
 set.seed(500)
+
+# set number of threads for computation
+threads <- detectCores()-1
+
 ```
 
 ### Simple simulated species
@@ -210,7 +215,7 @@ sim_ru_s1 <- update(sim_ru_s1, amount.target=0.2, space.target=NA, solve=FALSE)
 
 ```{r}
 # solve problem to identify prioritisation
-sim_rs_s1_amount <- solve(sim_ru_s1)
+sim_rs_s1_amount <- solve(sim_ru_s1, Threads=threads)
 ```
 
 ```{r}
@@ -244,7 +249,7 @@ sim_ru_s2 <- spp.subset(sim_ru, 'normal')
 
 ```{r}
 # update amount targets to 20% and space targets to 0% and solve it
-sim_rs_s2_amount <- update(sim_ru_s2, amount.target=0.2, space.target=NA, solve=TRUE)
+sim_rs_s2_amount <- update(sim_ru_s2, amount.target=0.2, space.target=NA, solve=TRUE, Threads=threads)
 ```
 
 ```{r}
@@ -276,7 +281,7 @@ sim_ru_s3 <- spp.subset(sim_ru, 'bimodal')
 
 ```{r}
 # update amount targets to 20% and space targets to 0% and solve it
-sim_rs_s3_amount <- update(sim_ru_s3, amount.target=0.2, space.target=NA)
+sim_rs_s3_amount <- update(sim_ru_s3, amount.target=0.2, space.target=NA, Threads=threads)
 ```
 
 ```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A prioritisation for the bimodally distributed species generated using amount-based targets (20\\%). See Figure 3 caption for conventions."}
@@ -304,7 +309,7 @@ First, let's do this for the uniform species.
 
 ```{r}
 # make new prioritisation
-sim_rs_s1_space <- update(sim_rs_s1_amount, amount.target=0.2, space.target=0.85)
+sim_rs_s1_space <- update(sim_rs_s1_amount, amount.target=0.2, space.target=0.85, Threads=threads)
 ```
 
 ```{r}
@@ -336,7 +341,7 @@ Now, let's generate a prioritisation for the normally distributed species that c
 
 ```{r}
 # make new prioritisation
-sim_rs_s2_space <- update(sim_rs_s2_amount, amount.target=0.2, space.target=0.85)
+sim_rs_s2_space <- update(sim_rs_s2_amount, amount.target=0.2, space.target=0.85, Threads=threads)
 ```
 
 ```{r}
@@ -367,7 +372,7 @@ Finally, let's generate a prioritisation for the bimodal species using amount-ba
 
 ```{r}
 # make new prioritisation
-sim_rs_s3_space <- update(sim_rs_s3_amount, amount.target=0.2, space.target=0.85)
+sim_rs_s3_space <- update(sim_rs_s3_amount, amount.target=0.2, space.target=0.85, Threads=threads)
 ```
 
 ```{r}
@@ -403,13 +408,15 @@ So far we have generated prioritisations using only a single species at a time. 
 sim_mrs_amount <- update(
 	sim_ru,
 	amount.target=c(0.2,0.2,0.2),
-	space.target=c(0,0,0)
+	space.target=c(0,0,0),
+	Threads=threads
 )
 
 sim_mrs_space <- update(
 	sim_ru,
 	amount.target=c(0.2,0.2,0.2),
-	space.target=c(0.85, 0.85, 0.85)
+	space.target=c(0.85, 0.85, 0.85),
+	Threads=threads
 )
 ```
 
@@ -455,7 +462,8 @@ sim_mrs_space2 <- solve(
 	prob.subset(
 		sim_mrs_space,
 		species=1:3,
-		threshold=c(0.1,0.1,0.1)
+		threshold=c(0.1,0.1,0.1),
+		Threads=threads
 	)
 )
 ```
@@ -479,7 +487,7 @@ But this method requires setting somewhat arbitrary thresholds. A more robust so
 
 ```{r}
 # make new prioritisation using reliable formulation
-sim_mrs_space3 <- try(update(sim_mrs_space, formulation='reliable', max.r.level=1L))
+sim_mrs_space3 <- try(update(sim_mrs_space, formulation='reliable', max.r.level=1L, Threads=threads))
 ```
 
 However, this fails. The reason why we cannot generate a prioritisation that fulfills these targets is because even the solution that contains all the planning units is still insufficient when we consider probabilities. The negative maximum targets printed in the error message indicate that planning units have low probabilities of occupancy. To fulfill the targets, we must obtain more planning units with higher probabilities of occupancy. We also could attempt resolving the problem using a higher $R$-level. Instead, we will set lower targets and generate solution.
@@ -490,7 +498,8 @@ sim_mrs_space3 <- update(
 	sim_mrs_space,
 	formulation='reliable',
 	max.r.level=1L,
-	space.target=-25
+	space.target=-25,
+	Threads=threads)
 )
 ```
 
@@ -518,7 +527,7 @@ Let's generate a new prioritisation that heavily penalises fragmentation. Here, 
 
 ```{r}
 # update prioritisation
-sim_mrs_amount_blm <- update(sim_mrs_amount, BLM=100)
+sim_mrs_amount_blm <- update(sim_mrs_amount, BLM=100, Threads=threads)
 ```
 
 ```{r}
@@ -543,67 +552,6 @@ plot(sim_mrs_amount_blm, sim_mrs_amount, 1, 1, main='Difference between solution
 ```
 
 Here we can see that the prioritisation generated using a `BLM` parameter of 100 is much more clustered than the prioritisation generated using a `BLM` of 0. In practice, conservation planners will need to try a variety of `BLM` parameters to find a suitable prioritisation.
-
-### Complex simulated species
-#### Data
-In the previous examples, we have only used Euclidean distances to determine how much of an attribute space is sampled by a prioritisation. However, Euclidean distances can be poor measures of distance for multivariate, binary, or correlated variables [@r449]. As a consequence this may lead to over- or under-estimates of the quality of a given solution.
-
-The \texttt{rapr} R package provides a suite of distance metrics that can be used to calculate spatial representation (see `?AttributeSpace` for available metrics). To illustrate how using different distance metrics can affect the resulting solution, we will generate a new suite of prioritisations using different distance metrics.
-
-First, we will simulate a new species and a three-dimensional attribute space. Note that unlike the previous examples, the attribute space will not be geographic space. Rather, each dimension in the attribute space will have values that map onto geographic space (eg. like climatic variables across the landscape). To add further complexity, we simulate their distributions using Gaussian processes.
-
-```{r, message=FALSE}
-# set seed for simulations
-set.seed(500)
-
-## simulate planning units
-sim_pus <- sim.pus(25L)
-
-# simulate species
-sim_gspp <- sim.species(sim_pus, model=RPgauss(), n=1, res=0.1)
-
-# simulate space
-sim_gspace <- sim.space(sim_pus, model=RMgauss(scale=3), d=3, res=0.1)
-
-# increment simulated space values by 100 so there are no negative values
-# so we can investigate all distance metrics
-sim_gspace <- sim_gspace + 100
-
-```
-
-```{r, message=FALSE}
-# generate RapUnsolved object containing data to generate prioritisations
-sim_ru_gp <- rap(
-	sim_pus, sim_gspp, sim_gspace, 
-	amount.target=0.2, space.target=0.9,
-	n.demand.points=50L, kernel.method='hypervolume',
-	include.geographic.space=FALSE, scale=FALSE, solve=FALSE
-)
-```
-
-Let's visualise the species' distribution and the distribution of the attribute space across geographic space.
-
-```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="Distribution map of a species simulated using Gaussian prorceses. See Figure 2 caption for conventions."}
-# plot species distribution
-plot(
-	sim_gspp,
-	main='Simulated species',
-	col=colorRampPalette(c("#FFFFD9", "#EDF8B1", "#C7E9B4", "#7FCDBB",
-		"#41B6C4", "#1D91C0", "#225EA8", "#253494", "#081D58"
-	))(100)
-)
-lines(sim_pus)
-```
-
-```{r, fig.height=2.5, fig.width=7, out.width='7in', out.height='2.5in', fig.align='center', fig.cap="Distribution of spatial variables across the species' geographic range. These variables each represent a dimension of a three-dimensional attribute space."}
-# plot distribution of each dimension in the attribute space across geographic space
-plot(
-	sim_gspace,
-	main=c('Attribute space (d=1)', 'Attribute space (d=2)', 'Attribute space (d=3)'),
-	addfun=function(){lines(sim_pus)},
-	nc=3
-)
-```
 
 ### Case-study examples
 #### Overview
@@ -684,7 +632,7 @@ cs_rs_amount <- rap(
 
 ```{r}
 # generate prioritisation
-cs_rs_amount <- solve(cs_rs_amount, MIPGap=0.1)
+cs_rs_amount <- solve(cs_rs_amount, MIPGap=0.1, Threads=threads)
 ```
 
 ```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="Multi-species prioritisation generated for four bird species using amount-based targets (20\\%). See Figure 12 captions for conventions."}
@@ -719,7 +667,7 @@ Next, let's generate a prioritisation using amount- and space-based targets. Thi
 
 ```{r}
 # make amount- and space-based prioritisation
-cs_rs_space <- update(cs_rs_amount, space.target=0.9)
+cs_rs_space <- update(cs_rs_amount, space.target=0.9, Threads=threads)
 ```
 
 ```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center'}
@@ -755,7 +703,7 @@ Let's compare these prioritisations with Queensland's existing protected areas s
 aus_selections <- which(cs_pus$status>0)
 
 # create new object with Australia's network
-cs_rs_aus <- update(cs_rs_amount, b=aus_selections)
+cs_rs_aus <- update(cs_rs_amount, b=aus_selections, Threads=threads)
 ```
 
 Now, let's plot the performance metrics for these prioritisations.
