@@ -4,10 +4,10 @@ test_that('rap (unreliable - default RapOpts and GurobiOpts - solve=FALSE)', {
   # load data
   set.seed(500)
   data(cs_pus, cs_spp)
-  cs_pus<-cs_pus[1:10,]
+  cs_pus<-cs_pus
   # run function
   cs_ru<-rap(
-    pus=cs_pus,
+    pus=cs_pus[1:10,],
     species=cs_spp,
     formulation='unreliable',
     amount.target=0.2,
@@ -33,6 +33,42 @@ test_that('rap (unreliable - default RapOpts and GurobiOpts - solve=FALSE)', {
   expect_equal(cs_ru@data@targets$target,rep(0:1, each=4))
   expect_equal(cs_ru@data@targets$proportion, rep(c(0.2, -10000), each=4))
 })
+
+test_that('rap (unreliable - default RapOpts and GurobiOpts and sparse occupancy - solve=FALSE)', {
+  # load data
+  set.seed(500)
+  data(cs_pus, cs_spp)
+  cs_pus<-cs_pus
+  # run function
+  cs_ru<-rap(
+    pus=cs_pus,
+    species=cs_spp,
+    spaces=cs_space,
+    formulation='unreliable',
+    amount.target=0.2,
+    space.target=0.1,
+    n.demand.points=3L,
+    include.geographic.space=TRUE,
+    solve=FALSE,
+    verbose=TRUE
+  )
+  # check correct parameters
+  expect_is(cs_ru@opts, 'RapUnreliableOpts')  
+  
+  expect_equal(nrow(cs_ru@data@species), nlayers(cs_spp))
+  expect_equal(length(cs_ru@data@attribute.spaces), 2)
+  expect_equal(cs_ru@data@attribute.spaces[[2]]@name, 'geographic')
+  expect_equal(length(cs_ru@data@attribute.spaces[[1]]@spaces), nlayers(cs_spp))
+  sapply(cs_ru@data@attribute.spaces[[1]]@spaces, function(x) {
+		expect_equal(nrow(x@demand.points@coords),3)
+  })
+  
+  expect_equal(nrow(cs_ru@data@targets),12)
+  expect_equal(cs_ru@data@targets$species,rep(1:4, 3))
+  expect_equal(cs_ru@data@targets$target,rep(0:2, each=4))
+  expect_equal(cs_ru@data@targets$proportion, rep(c(0.2, 0.1, 0.1), each=4))
+}) 
+
 
 test_that('rap (unreliable - custom RapOpts and GurobiOpts - solve=TRUE)', {
   if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')

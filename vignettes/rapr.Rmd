@@ -491,35 +491,35 @@ But this method requires setting somewhat arbitrary thresholds. A more robust so
 
 ```{r}
 # make new prioritisation using reliable formulation
-# sim_mrs_space3 <- try(update(sim_mrs_space, formulation='reliable', max.r.level=1L, Threads=threads))
+sim_mrs_space3 <- try(update(sim_mrs_space, formulation='reliable', max.r.level=1L, Threads=threads))
 ```
 
 However, this fails. The reason why we cannot generate a prioritisation that fulfills these targets is because even the solution that contains all the planning units is still insufficient when we consider probabilities. The negative maximum targets printed in the error message indicate that planning units have low probabilities of occupancy. To fulfill the targets, we must obtain more planning units with higher probabilities of occupancy. We also could attempt resolving the problem using a higher $R$-level. Instead, we will set lower targets and generate solution.
 
 ```{r}
 # make new prioritisation using reliable formulation and reduced targets
-#sim_mrs_space3 <- update(
-#	sim_mrs_space,
-#	formulation='reliable',
-#	max.r.level=1L,
-#	space.target=-1000,
-#	Threads=threads
-#)
+sim_mrs_space3 <- update(
+	sim_mrs_space,
+	formulation='reliable',
+	max.r.level=1L,
+	space.target=-1000,
+	Threads=threads
+)
 ```
 
 ```{r}
 # show summary
-#summary(sim_mrs_space3)
+summary(sim_mrs_space3)
 ```
 
 ```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\\%) and space-based targets (85\\%). This priorititisation was generated to be robust against low occupancy probabilities, by explicitly using the probability of occupancy data when deriving a solution. See Figure 12 caption for conventions."}
 # plot prioritisation
-#plot(sim_mrs_space3, 1)
+plot(sim_mrs_space3, 1)
 ```
 
 ```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="Difference between two multi-species prioritisations. See Figure 7 caption for conventions."}
 # difference between prioritisations based on unreliable and reliable formulation
-#plot(sim_mrs_space3, sim_mrs_space, 1, 1, main='Difference between solutions')
+plot(sim_mrs_space3, sim_mrs_space, 1, 1, main='Difference between solutions')
 ```
 
 An additional planning unit was selected using the reliable formulation. The prioritisation based on the unreliable formulation had `r sum(selections(sim_mrs_space)==1)` planning units, but the prioritisation based on the reliable formlation has `r sum(selections(sim_mrs_space3)==1)` planning units. This differnce occurs because the reliable formulation needs to ensure that all selected planning units with a low chance of being occupied have a suitable backup planning unit. While the reliable formulation can deliver more robust prioritisations, it takes much longer to solve conservation planning problems expressed using this formulation than the unreliable formulation. As a consequence, the reliable formulation is only feasible for particularly small problems, such as those involving few features and less than several hundred planning units. 
@@ -630,7 +630,7 @@ cs_rs_amount <- rap(
 	cs_pus[,-2], cs_spp, cs_space,
   amount.target=0.2, space.target=NA, n.demand.points=50L,
   include.geographic.space=TRUE, formulation='unreliable',
-  kernel.method='hypervolume', quantile=0.7, solve=FALSE,
+  kernel.method='hypervolume', quantile=0.7, solve=FALSE
 )
 ```
 

@@ -29,6 +29,8 @@ setClass("RapData",
 		.cache="environment"
 	),
 	validity=function(object) {
+		o1<<-object
+	
 		if (!object@skipchecks) {
 			### check column names of inputs
 			# pu
@@ -365,6 +367,16 @@ make.RapData<-function(pus, species, spaces=NULL,
 	if (length(pu.points)==0) {
 		stop('Attribute spaces must be specified. Either include.geographic.space=TRUE or spaces must contain at least one Raster* object')
 	}
+	## set pu.species.probabilities
+	projPolygons<-pus
+	if (!identical(projPolygons@proj4string, species@crs)) {
+		if (verbose)
+			cat("Projecting polygons to rasters' CRS.\n")
+		projPolygons<-spTransform(projPolygons, species@crs)
+	}
+	if (verbose)
+		cat("Calculating average species probability in planning units.\n")
+	pu.species.probabilities<-calcSpeciesAverageInPus(projPolygons, species, ...)	
 	## set demand.points
 	# include geographic space if set
 	if (!is.null(spaces[[1]]) & include.geographic.space)
@@ -414,16 +426,18 @@ make.RapData<-function(pus, species, spaces=NULL,
 		}
 	}
 	# create AttributeSpace objects
-	
-	demand.points<<-demand.points
-	pu.points<<-pu.points
-	spaces<<-spaces
-	
 	attribute.spaces=llply(seq_along(spaces), function(i) {
 		AttributeSpaces(
 			llply(seq_along(demand.points[[i]]), function(d) {
+				# subset planning unit points to the planning units occupied by the speces
+				curr.ids <- pu.species.probabilities$pu[which(pu.species.probabilities$species==d)]
+				curr.pu.points <- PlanningUnitPoints(
+					coords=pu.points[[i]]@coords[curr.ids,,drop=FALSE],
+					ids=curr.ids
+				)
+				# create AttributeSpace object
 				AttributeSpace(
-					planning.unit.points=pu.points[[i]],
+					planning.unit.points=curr.pu.points,
 					demand.points=demand.points[[i]][[d]],
 					species=d
 				)
@@ -437,16 +451,6 @@ make.RapData<-function(pus, species, spaces=NULL,
 	if (verbose)
 		cat("Calculating boundary data.\n")
 	boundary<-calcBoundaryData(rcpp_Polygons2PolySet(pus@polygons), ...)
-	## set pu.species.probabilities
-	projPolygons=pus
-	if (!identical(projPolygons@proj4string, species@crs)) {
-		if (verbose)
-			cat("Projecting polygons to rasters' CRS.\n")
-		projPolygons<-spTransform(projPolygons, species@crs)
-	}
-	if (verbose)
-		cat("Calculating average species probability in planning units.\n")
-	pu.species.probabilities<-calcSpeciesAverageInPus(projPolygons, species, ...)
 	## set species
 	species<-data.frame(
 		name=names(species),
