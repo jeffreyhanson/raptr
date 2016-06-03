@@ -69,8 +69,7 @@ library(rgeos)
 set.seed(500)
 
 # set number of threads for computation
-threads <- detectCores()-1
-
+threads <- as.integer(max(1, detectCores()-2))
 ```
 
 ### Simple simulated species
@@ -159,26 +158,31 @@ pu_probabilities <- calcSpeciesAverageInPus(sim_pus, stack(sim_spp))
 ## create AttributeSpace object
 # this stores the coordinates of the planning units in an attribute space
 # and the coordinates and weights of demand points in the space
+
 pu_points <- PlanningUnitPoints(
-	coords=pu_coords@matrix,
-	ids=seq_len(nrow(sim_pus@data)
+	coords=pu_coords@coords,
+	ids=seq_len(nrow(sim_pus@data))
 )
 
-attr_spaces <- AttributeSpace(
+attr_spaces <- AttributeSpaces(
 	list(
 		AttributeSpace(
 			planning.unit.points=pu_points,
 			demand.points=sim_dps[[1]],
+			species=1L
 		),
 		AttributeSpace(
 			planning.unit.points=pu_points,
-			demand.points=sim_dps[[2]]
+			demand.points=sim_dps[[2]],
+			species=2L
 		),
 		AttributeSpace(
 			planning.unit.points=pu_points,
-			demand.points=sim_dps[[3]]
+			demand.points=sim_dps[[3]],
+			species=3L
 		)
-	)
+	),
+	name='geographic'
 )
 
 # generate boundary data information
@@ -462,9 +466,9 @@ sim_mrs_space2 <- solve(
 	prob.subset(
 		sim_mrs_space,
 		species=1:3,
-		threshold=c(0.1,0.1,0.1),
-		Threads=threads
-	)
+		threshold=c(0.1,0.1,0.1)
+	),
+	Threads=threads
 )
 ```
 
@@ -487,35 +491,35 @@ But this method requires setting somewhat arbitrary thresholds. A more robust so
 
 ```{r}
 # make new prioritisation using reliable formulation
-sim_mrs_space3 <- try(update(sim_mrs_space, formulation='reliable', max.r.level=1L, Threads=threads))
+# sim_mrs_space3 <- try(update(sim_mrs_space, formulation='reliable', max.r.level=1L, Threads=threads))
 ```
 
 However, this fails. The reason why we cannot generate a prioritisation that fulfills these targets is because even the solution that contains all the planning units is still insufficient when we consider probabilities. The negative maximum targets printed in the error message indicate that planning units have low probabilities of occupancy. To fulfill the targets, we must obtain more planning units with higher probabilities of occupancy. We also could attempt resolving the problem using a higher $R$-level. Instead, we will set lower targets and generate solution.
 
 ```{r}
 # make new prioritisation using reliable formulation and reduced targets
-sim_mrs_space3 <- update(
-	sim_mrs_space,
-	formulation='reliable',
-	max.r.level=1L,
-	space.target=-25,
-	Threads=threads)
-)
+#sim_mrs_space3 <- update(
+#	sim_mrs_space,
+#	formulation='reliable',
+#	max.r.level=1L,
+#	space.target=-1000,
+#	Threads=threads
+#)
 ```
 
 ```{r}
 # show summary
-summary(sim_mrs_space3)
+#summary(sim_mrs_space3)
 ```
 
 ```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\\%) and space-based targets (85\\%). This priorititisation was generated to be robust against low occupancy probabilities, by explicitly using the probability of occupancy data when deriving a solution. See Figure 12 caption for conventions."}
 # plot prioritisation
-plot(sim_mrs_space3, 1)
+#plot(sim_mrs_space3, 1)
 ```
 
 ```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center', fig.cap="Difference between two multi-species prioritisations. See Figure 7 caption for conventions."}
 # difference between prioritisations based on unreliable and reliable formulation
-plot(sim_mrs_space3, sim_mrs_space, 1, 1, main='Difference between solutions')
+#plot(sim_mrs_space3, sim_mrs_space, 1, 1, main='Difference between solutions')
 ```
 
 An additional planning unit was selected using the reliable formulation. The prioritisation based on the unreliable formulation had `r sum(selections(sim_mrs_space)==1)` planning units, but the prioritisation based on the reliable formlation has `r sum(selections(sim_mrs_space3)==1)` planning units. This differnce occurs because the reliable formulation needs to ensure that all selected planning units with a low chance of being occupied have a suitable backup planning unit. While the reliable formulation can deliver more robust prioritisations, it takes much longer to solve conservation planning problems expressed using this formulation than the unreliable formulation. As a consequence, the reliable formulation is only feasible for particularly small problems, such as those involving few features and less than several hundred planning units. 
@@ -624,9 +628,9 @@ To simplify the process of formatting data and generating prioritisations, we ca
 # status (third) column of the attribute table
 cs_rs_amount <- rap(
 	cs_pus[,-2], cs_spp, cs_space,
-  amount.target=0.1, space.target=NA, n.demand.points=50L,
+  amount.target=0.2, space.target=NA, n.demand.points=50L,
   include.geographic.space=TRUE, formulation='unreliable',
-  kernel.method='hypervolume', quantile=0.7, solve=FALSE
+  kernel.method='hypervolume', quantile=0.7, solve=FALSE,
 )
 ```
 
@@ -663,11 +667,11 @@ p4 <- space.plot(cs_rs_amount, 4, 1, main='Pale-headed rosella')
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol=2)
 ```
 
-Next, let's generate a prioritisation using amount- and space-based targets. This prioritisation will secure 50% of the species distribution in geographic and environmental space.
+Next, let's generate a prioritisation using amount- and space-based targets. This prioritisation will secure 95% of the species distribution in geographic and environmental space.
 
 ```{r}
 # make amount- and space-based prioritisation
-cs_rs_space <- update(cs_rs_amount, space.target=0.9, Threads=threads)
+cs_rs_space <- update(cs_rs_amount, space.target=0.95, Threads=threads)
 ```
 
 ```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center'}
