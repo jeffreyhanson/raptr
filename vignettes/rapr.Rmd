@@ -667,11 +667,11 @@ p4 <- space.plot(cs_rs_amount, 4, 1, main='Pale-headed rosella')
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol=2)
 ```
 
-Next, let's generate a prioritisation using amount- and space-based targets. This prioritisation will secure 95% of the species distribution in geographic and environmental space.
+Next, let's generate a prioritisation using amount- and space-based targets. This prioritisation will secure 70% of the species distribution in geographic and environmental space.
 
 ```{r}
 # make amount- and space-based prioritisation
-cs_rs_space <- update(cs_rs_amount, space.target=0.95, Threads=threads)
+cs_rs_space <- update(cs_rs_amount, space.target=0.7, Threads=threads)
 ```
 
 ```{r, fig.height=5.5, fig.width=5.5, out.width='3.5in', out.height='3.5in', fig.align='center'}

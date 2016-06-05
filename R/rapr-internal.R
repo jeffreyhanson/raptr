@@ -694,7 +694,8 @@ spacePlot.1d<-function(pu, dp, pu.color.palette, main) {
     axis.title.y=element_blank(),
     axis.ticks.y=element_blank(),
     axis.text.y=element_blank(),
-    axis.line.y=element_blank()
+    axis.line.y=element_line(),
+    axis.line.x=element_line()
   ) +
   ggtitle(main) +
   xlab('Dimension 1') +
@@ -741,7 +742,10 @@ spacePlot.2d<-function(pu, dp, pu.color.palette, main) {
   theme_classic() +
   coord_equal() +
   theme(
-    legend.position='right'
+    legend.position='right',
+    axis.line.y=element_line(),
+    axis.line.x=element_line()
+    
   ) +
   ggtitle(main) +
   xlab('Dimension 1') +

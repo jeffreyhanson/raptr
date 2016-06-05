@@ -762,10 +762,11 @@ space.plot.RapSolved<-function(
 	# extract pu data
 	pu<-as.data.frame(x@data@attribute.spaces[[space]]@spaces[[spp_pos]]@planning.unit.points@coords)
 	names(pu)<-paste0('X',seq_len(ncol(pu)))
+	pu_ids<-x@data@attribute.spaces[[space]]@spaces[[spp_pos]]@planning.unit.points@ids
 	pu$status<-'Not Selected'
-	pu$status[which(as.logical(selections(x, y)))]<-'Selected'
-	pu$status[which(x@data@pu$status==2)]<-'Locked In'
-	pu$status[which(x@data@pu$status==3)]<-'Locked Out'
+	pu$status[as.logical(selections(x, y)[pu_ids])]<-'Selected'
+	pu$status[which(x@data@pu$status[pu_ids]==2)]<-'Locked In'
+	pu$status[which(x@data@pu$status[pu_ids]==3)]<-'Locked Out'
 	# extract dp data
 	dp<-as.data.frame(x@data@attribute.spaces[[space]]@spaces[[spp_pos]]@demand.points@coords)
 	names(dp)<-paste0('X',seq_len(ncol(dp)))

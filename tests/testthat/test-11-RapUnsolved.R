@@ -423,3 +423,41 @@ test_that('space.target<-.RapUnsolved', {
 	expect_equal(unname(space.target(sim_ru)[,1]), c(0.5, 0.3, 0.3))
 })
 
+test_that('space.plot.RapUnsolved (sparse)', {
+	# skip if gurobi not installed
+	if (!is.GurobiInstalled(FALSE)) skip('Gurobi not installed on system')
+	# load RapUnsolved object
+	set.seed(500)
+	data(sim_ru)
+	sim_ru<-pu.subset(sim_ru, 1:10)
+	sim_ru<-dp.subset(sim_ru, species=1:3, space=1, points=1:30)
+	sim_ru@data@targets[[3]]=c(0.5,0.5,0.5,-1000000,-1000000,-1000000)
+	sim_ru@opts=RapUnreliableOpts()
+	sim_ru@data@pu.species.probabilities=sim_ru@data@pu.species.probabilities[sample(
+		seq_len(nrow(sim_ru@data@pu.species.probabilities)),
+		size=ceiling(nrow(sim_ru@data@pu.species.probabilities)*0.7)
+	),]
+	sim_ru@data@attribute.spaces <- lapply(seq_along(sim_ru@data@attribute.spaces), function(i) {
+		AttributeSpaces(
+			spaces=lapply(
+				seq_along(sim_ru@data@attribute.spaces[[i]]@spaces),
+				function(j) {
+					curr.pu <- sim_ru@data@pu.species.probabilities$pu[which(sim_ru@data@pu.species.probabilities$species==j)]
+					AttributeSpace(
+						species=sim_ru@data@attribute.spaces[[i]]@spaces[[j]]@species,
+						demand.points=sim_ru@data@attribute.spaces[[i]]@spaces[[j]]@demand.points,
+						planning.unit.points=PlanningUnitPoints(
+							coords=sim_ru@data@attribute.spaces[[i]]@spaces[[j]]@planning.unit.points@coords[curr.pu,],
+							ids=curr.pu
+						)
+					)
+				}
+			),
+			name=sim_ru@data@attribute.spaces[[i]]@name
+		)
+	})
+	# try plotting spase data
+	space.plot(sim_rs, 1, 1, main='spp1')
+	space.plot(sim_rs, 2, 1, main='spp2')
+	space.plot(sim_rs, 3, 1, main='spp3')
+})

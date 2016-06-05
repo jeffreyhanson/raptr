@@ -236,4 +236,3 @@ test_that('space.plot.RapData', {
 	space.plot(sim_ru@data, 'normal', 1)
 })
 
-
