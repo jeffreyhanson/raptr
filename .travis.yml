@@ -10,6 +10,8 @@ env:
   global:
     - NOT_CRAN=true
     - _R_CHECK_FORCE_SUGGESTS_=FALSE
+    - _R_check_latex_vignettes=FALSE
+    - _R_check_weave_vignettes=FALSE
 
 apt_packages:
   - libgeos-dev
