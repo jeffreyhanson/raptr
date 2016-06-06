@@ -745,6 +745,6 @@ ggplot(aes(x=variable, y=mean, fill=name), data=cs_results) +
 	theme(legend.position='bottom',legend.direction='horizontal',
 		axis.line.x=element_line(),axis.line.y=element_line())
 ```
-We can see that a greater number of planning units is needed to satisfy the space-based targets. The prioritisation generated using just amount-based targets has `r sum(selections(cs_rs_amount)==1)` planning units, and the prioritisations using amount-based and space-based targets has `r sum(selections(cs_rs_space)==1)` planning units.  These results suggest that prioritisations generated using only amount-based targets can obtain a moderately representative sample of the species' geographic distribution and climatic niche. 
+We can see that a greater number of planning units is needed to satisfy the space-based targets. The prioritisation generated using just amount-based targets has `r sum(selections(cs_rs_amount)==1)` planning units, and the prioritisations using amount-based and space-based targets has `r sum(selections(cs_rs_space)==1)` planning units.  These results suggest only a few additional planning units can result in significant improvements in the effectivenss of a prioritisation.
 
 
