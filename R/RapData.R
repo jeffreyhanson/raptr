@@ -561,8 +561,9 @@ spp.subset.RapData<-function(x, species) {
 	pu.species.probabilities$species<-match(pu.species.probabilities$species, species)
 	targets<-x@targets[which(x@targets$species %in% species),,drop=FALSE]
 	targets$species<-match(targets$species, species)
-	# create attribute spaces
+	# subset attribute spaces
 	attribute.spaces<-list()
+	as.pos <- c(0)
 	for (i in seq_along(x@attribute.spaces)) {
 		curr.species <- sapply(x@attribute.spaces[[i]]@spaces, slot, 'species')
 		if (any(species %in% curr.species)) {
@@ -576,9 +577,13 @@ spp.subset.RapData<-function(x, species) {
 				attribute.spaces,
 				list(AttributeSpaces(spaces=curr.spaces,name=x@attribute.spaces[[i]]@name))
 			)
+			as.pos <- c(as.pos, i)
 		}
 	}
-
+	# subset targets to include only remaining attribute spaces 
+	targets <- targets[which(targets$target %in% as.pos),]
+	# update relative indices of targets to reflect new ordering of attribute spaces
+	targets$target <- as.integer(match(targets$target, as.pos)-1)
 	# return new object
 	return(
 		RapData(
