@@ -561,6 +561,24 @@ spp.subset.RapData<-function(x, species) {
 	pu.species.probabilities$species<-match(pu.species.probabilities$species, species)
 	targets<-x@targets[which(x@targets$species %in% species),,drop=FALSE]
 	targets$species<-match(targets$species, species)
+	# create attribute spaces
+	attribute.spaces<-list()
+	for (i in seq_along(x@attribute.spaces)) {
+		curr.species <- sapply(x@attribute.spaces[[i]]@spaces, slot, 'species')
+		curr.spaces <- x@attribute.spaces[[i]]@spaces[match(species, curr.species)]
+		if (length(curr.spaces)>0) {
+			curr.spaces <- lapply(seq_along(curr.spaces), function(j) {
+				a<-curr.spaces[[j]]
+				a@species<-j
+				return(a)
+			})
+			attribute.spaces<-append(
+				attribute.spaces,
+				list(AttributeSpaces(spaces=curr.spaces,name=x@attribute.spaces[[i]]@name))
+			)
+		}
+	}
+
 	# return new object
 	return(
 		RapData(
@@ -568,22 +586,7 @@ spp.subset.RapData<-function(x, species) {
 			species=x@species[species,,drop=FALSE],
 			targets=targets,
 			pu.species.probabilities=pu.species.probabilities,
-			attribute.spaces=lapply(
-				x@attribute.spaces,
-				function(z1) {
-					curr.species <- sapply(z1@spaces, slot, 'species')
-					curr.spaces <- z1@spaces[match(species, curr.species)]
-					curr.spaces <- lapply(seq_along(curr.spaces), function(z2) {
-						z3<-curr.spaces[[z2]]
-						z3@species<-z2
-						return(z3)
-					})
-					AttributeSpaces(
-						spaces=curr.spaces,
-						name=z1@name
-					)
-				}
-			),
+			attribute.spaces=attribute.spaces,
 			boundary=x@boundary,
 			polygons=x@polygons
 	  )
