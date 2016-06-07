@@ -565,8 +565,8 @@ spp.subset.RapData<-function(x, species) {
 	attribute.spaces<-list()
 	for (i in seq_along(x@attribute.spaces)) {
 		curr.species <- sapply(x@attribute.spaces[[i]]@spaces, slot, 'species')
-		curr.spaces <- x@attribute.spaces[[i]]@spaces[match(species, curr.species)]
-		if (length(curr.spaces)>0) {
+		if (any(species %in% curr.species)) {
+			curr.spaces <- x@attribute.spaces[[i]]@spaces[match(species, curr.species)]
 			curr.spaces <- lapply(seq_along(curr.spaces), function(j) {
 				a<-curr.spaces[[j]]
 				a@species<-j
