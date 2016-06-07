@@ -63,9 +63,9 @@ setClass("RapResults",
 			stop('object@amount.held contains values less than 0 or greater than 1')
 		
 		# space.held
-		if (any(object@space.held < 0))
+		if (any(na.omit(object@space.held) < 0))
 			warning('object@space.held contains values less than 0, some species are really poorly represented')
-		if (any(object@space.held > 1))
+		if (any(na.omit(object@space.held) > 1))
 			warning('object@space.held contains values greater than 1, consider increasing the failure.multiplier')
 		
 		# logging.file
