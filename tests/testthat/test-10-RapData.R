@@ -98,25 +98,58 @@ test_that('spp.subset.RapData', {
 	rd3<-spp.subset(rd, 'uniform')
 	rd4<-spp.subset(rd, 3)
 	# tests
+	validObject(rd2)
 	expect_equal(nrow(rd2@species), 1)
 	expect_true(all(rd2@pu.species.probabilities$species==1L))
 	expect_equal(length(rd2@attribute.spaces[[1]]@spaces), 1)
 	expect_true(all(rd2@targets$species==1L))
 	expect_equal(nrow(rd2@targets), 2)
+	expect_equal(rd@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points, rd2@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points)
+	expect_equal(rd@attribute.spaces[[1]]@spaces[[1]]@demand.points, rd2@attribute.spaces[[1]]@spaces[[1]]@demand.points)
 	
+	validObject(rd3)
 	expect_equal(nrow(rd3@species), 1)
 	expect_true(all(rd3@pu.species.probabilities$species==1L))
 	expect_equal(length(rd3@attribute.spaces[[1]]@spaces), 1)
 	expect_true(all(rd3@targets$species==1L))
 	expect_equal(nrow(rd3@targets), 2)
+	expect_equal(rd@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points, rd3@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points)
+	expect_equal(rd@attribute.spaces[[1]]@spaces[[1]]@demand.points, rd3@attribute.spaces[[1]]@spaces[[1]]@demand.points)
 
+	
+	validObject(rd4)
 	expect_equal(nrow(rd4@species), 1)
 	expect_true(all(rd4@pu.species.probabilities$species==1L))
 	expect_equal(length(rd4@attribute.spaces[[1]]@spaces), 1)
 	expect_true(all(rd4@targets$species==1L))
 	expect_equal(nrow(rd4@targets), 2)
-
+	expect_equal(rd@attribute.spaces[[1]]@spaces[[3]]@planning.unit.points, rd4@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points)
+	expect_equal(rd@attribute.spaces[[1]]@spaces[[3]]@demand.points, rd4@attribute.spaces[[1]]@spaces[[1]]@demand.points)
+	
 })
+
+test_that('spp.subset.RapData (sparse occupancy)', {
+	rd<-sim_ru@data
+	curr_pos<-sample(seq_along(rd@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points@ids), ceiling(nrow(rd@pu)*0.7))
+	rd@attribute.spaces[[1]]@spaces[[1]]<-AttributeSpace(
+		planning.unit.points=PlanningUnitPoints(
+			coords=rd@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points@coords[curr_pos,,drop=FALSE],
+			ids=rd@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points@ids[curr_pos]),
+		demand.points=rd@attribute.spaces[[1]]@spaces[[1]]@demand.points,
+		species=rd@attribute.spaces[[1]]@spaces[[1]]@species)
+	rd2 <- spp.subset(rd, 2)
+	
+	# tests
+	validObject(rd2)
+	expect_equal(nrow(rd2@species), 1)
+	expect_true(all(rd2@pu.species.probabilities$species==1L))
+	expect_equal(length(rd2@attribute.spaces[[1]]@spaces), 1)
+	expect_true(all(rd2@targets$species==1L))
+	expect_equal(nrow(rd2@targets), 2)
+	expect_equal(rd@attribute.spaces[[1]]@spaces[[2]]@planning.unit.points, rd2@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points)
+	expect_equal(rd@attribute.spaces[[1]]@spaces[[2]]@demand.points, rd2@attribute.spaces[[1]]@spaces[[1]]@demand.points)	
+})
+
 
 test_that('dp.subset.RapData', {
 	# create RapUnsolved object

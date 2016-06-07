@@ -29,8 +29,6 @@ setClass("RapData",
 		.cache="environment"
 	),
 	validity=function(object) {
-		o1<<-object
-	
 		if (!object@skipchecks) {
 			### check column names of inputs
 			# pu
@@ -559,9 +557,7 @@ spp.subset.RapData<-function(x, species) {
 		species <- match(species, x@species$name)
 	expect_true(all(!is.na(species)) & all(species %in% seq_len(nrow(x@species))), info='argument to species contains names or ids not present in object.')
 	# create new objects
-	pu.species.probabilities<-x@pu.species.probabilities[which(
-			x@pu.species.probabilities$species %in% species
-	),]
+	pu.species.probabilities<-x@pu.species.probabilities[which(x@pu.species.probabilities$species %in% species),]
 	pu.species.probabilities$species<-match(pu.species.probabilities$species, species)
 	targets<-x@targets[which(x@targets$species %in% species),,drop=FALSE]
 	targets$species<-match(targets$species, species)
@@ -576,9 +572,9 @@ spp.subset.RapData<-function(x, species) {
 				x@attribute.spaces,
 				function(z1) {
 					curr.species <- sapply(z1@spaces, slot, 'species')
-					curr.spaces <- z1@spaces[na.omit(match(curr.species, species))]
+					curr.spaces <- z1@spaces[match(species, curr.species)]
 					curr.spaces <- lapply(seq_along(curr.spaces), function(z2) {
-						z3<-z1@spaces[[z2]]
+						z3<-curr.spaces[[z2]]
 						z3@species<-z2
 						return(z3)
 					})
