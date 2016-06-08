@@ -275,16 +275,26 @@ space.held.RapSolved<-function(x, y=0, species = NULL, space = NULL) {
 	if (is.null(y))
 		y<-seq_len(nrow(x@results@selections))
 	if (all(y==0))
-		y=x@results@best
-	# get species numbers
+		y<-x@results@best
+	# convert species to numeric
+	if (is.character(species)) {
+		species <- match(species, x@data@species[[1]])
+		expect_false(any(is.na(species)), info='argument to species not found in argument to x')
+	}
+	# convert space to numeric
+	if (is.character(space)) {
+		space <- match(space, sapply(x@data@attribute.spaces, slot, 'name'))
+		expect_false(any(is.na(space)), info='argument to species not found in argument to x')
+	}
+	# get species number
 	if (is.null(species))
 		species<-seq_len(nrow(x@data@species))
 	# get space numbers
 	if (is.null(space))
 		space<-seq_along(x@data@attribute.spaces)
 	# return named array
-	as_ind=rep(seq_along(x@data@attribute.spaces), nrow(x@data@species))
-	sp_ind=rep(seq_len(nrow(x@data@species)), each=length(x@data@attribute.spaces))
+	as_ind<-rep(seq_along(x@data@attribute.spaces), nrow(x@data@species))
+	sp_ind<-rep(seq_len(nrow(x@data@species)), each=length(x@data@attribute.spaces))
 	return(
 		structure(
 			c(x@results@space.held[y, sp_ind %in% species & as_ind %in% space]),

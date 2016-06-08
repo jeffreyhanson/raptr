@@ -88,6 +88,8 @@ test_that('space.held.RapSolved', {
 	expect_identical(unname(c(space.held(sim_rs))), sim_rs@results@space.held[sim_rs@results@best,])
 	expect_identical(unname(c(space.held(sim_rs, y=NULL))), c(sim_rs@results@space.held))
 	expect_identical(unname(c(space.held(sim_rs, y=1))), c(sim_rs@results@space.held[1,]))
+	expect_identical(unname(c(space.held(sim_rs, y=1, species='normal'))), c(sim_rs@results@space.held[1,2]))
+	expect_identical(unname(c(space.held(sim_rs, y=1, space='geographic', species='normal'))), c(sim_rs@results@space.held[1,2]))
 })
 
 test_that('summary.RapSolved', {
