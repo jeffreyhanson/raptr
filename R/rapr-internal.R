@@ -204,12 +204,12 @@ demand.points.hypervolume<-function(pts, n, quantile=0, ...) {
 	}
 	# estimate bandwidth for kernel
 	if (!exists('bandwidth')) {
-		bandwidth=estimate_bandwidth(pts)
+		bandwidth<-estimate_bandwidth(pts)
 	}
 	# fit kernel
-	hv=hypervolume(pts, bandwidth=bandwidth, quantile=quantile, ...)
+	hv<-hypervolume(pts, bandwidth=bandwidth, quantile=quantile, repsperpoint=repsperpoint)
 	# extract random points
-	rndpos=sample.int(nrow(hv@RandomUniformPointsThresholded), n)
+	rndpos<-sample.int(nrow(hv@RandomUniformPointsThresholded), n)
 	# extract coordinates and back-transform
 	dp<-hv@RandomUniformPointsThresholded[rndpos,,drop=FALSE]
 	dp<-sweep(dp,MARGIN=2,FUN='*',curr.sd)
