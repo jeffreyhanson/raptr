@@ -197,17 +197,18 @@ demand.points.hypervolume<-function(pts, n, quantile=0, ...) {
 	pts<-sweep(pts,MARGIN=2,FUN='-',curr.mean)
 	pts<-sweep(pts,MARGIN=2,FUN='/',curr.sd) 
 	# fit density kernel
-	if (!exists("repsperpoint"))
-		repsperpoint=500*ncol(pts)
-	if (repsperpoint*nrow(pts) < n) {
+	args<-list(...)
+	if (!'repsperpoint' %in% names(args))
+		args$repsperpoint=500*ncol(pts)
+	if (args$repsperpoint*nrow(pts) < n) {
 		stop('argument to n.demand.points is too high. Set a higher value in the argument to repsperpoint (defaults to 500*dimensions in attribute space).')
 	}
 	# estimate bandwidth for kernel
-	if (!exists('bandwidth')) {
-		bandwidth<-estimate_bandwidth(pts)
+	if (!'bandwidth' %in% names(args)) {
+		args$bandwidth<-estimate_bandwidth(pts)
 	}
 	# fit kernel
-	hv<-hypervolume(pts, bandwidth=bandwidth, quantile=quantile, repsperpoint=repsperpoint)
+	hv<-do.call(hypervolume, append(list(data=pts, quantile=quantile), args))
 	# extract random points
 	rndpos<-sample.int(nrow(hv@RandomUniformPointsThresholded), n)
 	# extract coordinates and back-transform
