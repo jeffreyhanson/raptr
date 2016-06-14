@@ -29,7 +29,7 @@ calcDists<-function(x, method='euclidean') {
 			dists<-matrix(NA, nrow=nrow(x), ncol=nrow(x))
 			for (i in seq_len(nrow(x)))
 				for (j in seq_len(nrow(x)))
-					dists[i,j]<-sum((x[i,]-x[j,])^2)
+					dists[i,j]<-sum(abs(x[i,]-x[j,])^2)
 			return(dists)
 		},
 		{
