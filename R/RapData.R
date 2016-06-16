@@ -429,9 +429,10 @@ make.RapData<-function(pus, species, spaces=NULL,
 			llply(seq_along(demand.points[[i]]), function(d) {
 				# subset planning unit points to the planning units occupied by the speces
 				curr.ids <- pu.species.probabilities$pu[which(pu.species.probabilities$species==d)]
+				curr.pos <- na.omit(match(curr.ids, pu.points[[i]]@ids))
 				curr.pu.points <- PlanningUnitPoints(
-					coords=pu.points[[i]]@coords[curr.ids,,drop=FALSE],
-					ids=curr.ids
+					coords=pu.points[[i]]@coords[curr.pos,,drop=FALSE],
+					ids=pu.points[[i]]@ids[curr.pos]
 				)
 				# create AttributeSpace object
 				AttributeSpace(
