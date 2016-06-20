@@ -23,8 +23,7 @@ std::vector<double> calculateConnectivity(
 
 // unreliable - best space value
 double unreliable_space_value(
-	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>&,
-	bool
+	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>&
 );
 
 // unreliable - space value for a prioritisation with 1 pu
@@ -36,16 +35,14 @@ double unreliable_space_value(
 // unreliable - space value for a prioritisation with n pu's
 double unreliable_space_value(
 	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>&,
-	std::vector<std::size_t>&,
-	bool
+	std::vector<std::size_t>&
 );
 
 // reliable - best space value
 double reliable_space_value(
 	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>&,
 	Rcpp::NumericVector&,
-  std::size_t,
-	bool
+  std::size_t
 );
 
 // reliable - space value for a prioritisation containing 1 pu
@@ -61,8 +58,7 @@ double reliable_space_value(
 	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> &,
 	std::vector<std::size_t>,
 	Rcpp::NumericVector&,
-	std::size_t,
-	bool
+	std::size_t
 );
 
 // power function, templated to use compile-time loop unrolling

@@ -955,11 +955,11 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	std::vector<double> species_space_best_DBL(n_species_attributespace_INT);
 	if (unreliable_formulation) {
 		for (std::size_t a=0; a<n_species_attributespace_INT; ++a) {
-			species_space_best_DBL[a]=1.0-(unreliable_space_value(species_space_weightdist_MTX[a],true) / species_space_tss_DBL[a]);
+			species_space_best_DBL[a]=1.0-(unreliable_space_value(species_space_weightdist_MTX[a]) / species_space_tss_DBL[a]);
 		}
 	} else {
 		for (std::size_t a=0; a<n_species_attributespace_INT; ++a)
-			species_space_best_DBL[a]=1.0-(reliable_space_value(species_space_weightdist_MTX[a],species_space_pu_probs_RDV[a],species_space_rlevel_INT[a],true) / species_space_tss_DBL[a]);
+			species_space_best_DBL[a]=1.0-(reliable_space_value(species_space_weightdist_MTX[a],species_space_pu_probs_RDV[a],species_space_rlevel_INT[a]) / species_space_tss_DBL[a]);
 	}
 	
 	// fix variablesSTR

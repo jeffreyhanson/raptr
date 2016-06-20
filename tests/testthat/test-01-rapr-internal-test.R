@@ -1,4 +1,26 @@
 context('01-internal-tests')
+source('functions.R')
+
+test_that('space calculations (unreliable)', {
+	## create artificial space that is a kmeans problem
+	# subset data
+	data(sim_ru)
+	sim_rd <- spp.subset(sim_ru, 3) %>% pu.subset(1:3) %>% slot('data')
+	sim_rd@attribute.spaces[[1]]@spaces[[1]]@demand.points@weights=rep(1, 5)
+	# run initial k-means using r-builtin
+	km <- kmeans(sim_rd@attribute.spaces[[1]]@spaces[[1]]@demand.points@coords, centers=3)
+	# update planning units
+	sim_rd@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points@coords <- km$centers
+	# calculate metrics
+	metrics <- calcUnreliableMetrics(sim_rd, 1, 1, solution=1:3)
+	## tests
+	# compare totss
+	expect_equal(km$totss, metrics$tss)
+	# compare withinss
+	expect_equal(km$tot.withinss, metrics$spaceheld)
+	# compare proportions
+	expect_equal((km$betweenss / km$totss), metrics$prop)
+})
 
 test_that('rcpp_sum_duplicates', {
 	# create data

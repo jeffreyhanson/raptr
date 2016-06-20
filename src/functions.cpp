@@ -20,15 +20,8 @@ std::vector<double> calculateConnectivity(
 }
 
 // unreliable - best space value
-double unreliable_space_value(
-	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> &weightdistMTX,
-	bool square=false
-) {
-	if (square) {
-		return(weightdistMTX.rowwise().minCoeff().array().square().sum());
-	} else {
-		return(weightdistMTX.rowwise().minCoeff().sum());
-	}
+double unreliable_space_value(Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> &weightdistMTX) {
+	return(weightdistMTX.rowwise().minCoeff().sum());
 }
 
 // unreliable - space value for a prioritisation with 1 pu
@@ -40,11 +33,7 @@ double unreliable_space_value(
 }
 
 // unreliable - space value for a prioritisation with n pu's
-double unreliable_space_value(
-	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> &weightdistMTX,
-	std::vector<std::size_t> &pu_ids,
-	bool square=false
-) {
+double unreliable_space_value(Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> &weightdistMTX,std::vector<std::size_t> &pu_ids) {
 	double value=0.0;
 	double minWDist;
 	for (std::size_t k=0; k<static_cast<std::size_t>(weightdistMTX.rows()); ++k) {
@@ -53,8 +42,6 @@ double unreliable_space_value(
 		for (std::size_t m=1; m<pu_ids.size(); ++m) {
 			minWDist=std::min(minWDist, weightdistMTX(k,pu_ids[m]));
 		}
-		// if sqaure then square the value
-		if (square) minWDist*=minWDist;
 		// calculate weighted distance value for closest pu
 		value+=minWDist;
 	}
@@ -66,9 +53,7 @@ double unreliable_space_value(
 double reliable_space_value(
 	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> &weightdistMTX,
 	Rcpp::NumericVector &pu_probs,
-	std::size_t maxrlevelINT,
-	bool square=false
-) {
+	std::size_t maxrlevelINT) {
 	double value=0.0;
 	double curr_value;
 	double currProb;
@@ -91,8 +76,6 @@ double reliable_space_value(
 		}
 		// calculate expected weighted distance for failure PU
 		curr_value+=(currProb*weightdistMTX(k, weightdistMTX.cols()-1));
-		// square term if specified
-		if (square) curr_value*=curr_value;
 		// update value
 		value+=curr_value;
 	}
@@ -117,9 +100,7 @@ double reliable_space_value(
 	Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> &weightdistMTX,
 	std::vector<std::size_t> pu_ids,
 	Rcpp::NumericVector &pu_probs,
-	std::size_t maxrlevelINT,
-	bool square=false
-) {
+	std::size_t maxrlevelINT) {
 	double value=0.0;
 	double currProb;
 	double curr_value;
@@ -142,9 +123,6 @@ double reliable_space_value(
 		}
 		// calculate expected weighted distance for failure PU
 		curr_value+=(currProb*weightdistMTX(k, weightdistMTX.cols()-1));
-		// square the expected distance if specified
-		if (square)
-			curr_value*=curr_value;
 		// update value
 		value += curr_value;
 	}

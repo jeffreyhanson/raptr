@@ -29,7 +29,7 @@ calcDists<-function(x, method='euclidean') {
 			dists<-matrix(NA, nrow=nrow(x), ncol=nrow(x))
 			for (i in seq_len(nrow(x)))
 				for (j in seq_len(nrow(x)))
-					dists[i,j]<-sum(abs(x[i,]-x[j,])^2)
+					dists[i,j]<-sum((x[i,]-x[j,])^2)
 			return(dists)
 		},
 		{
@@ -53,12 +53,11 @@ calcAmountHeld <- function(x, species, solution=NULL) {
 	return(curr_amount/curr_max)
 }
 
-
 # calculate unreliable space.held
 calcUnreliableSpaceHeld<-function(w, pus) {
 	return(
 		sum(
-			apply(w[,pus, drop=FALSE], 1, min)^2
+			apply(w[,pus, drop=FALSE], 1, min)
 		)
 	)
 }
@@ -85,9 +84,7 @@ calcReliableSpaceHeld<-function(w, p, maxr, pus) {
 		}
 		# failure pu
 		curr_value<-curr_value+(curr_prob * w[k,ncol(w)])
-		# sqaure term
-		curr_value<-curr_value^2
-		# update  value
+		# update value
 		value<-value+curr_value
 	}
 	# return value
@@ -113,21 +110,21 @@ calcUnreliableMetrics<-function(x, space, species, solution=NULL) {
 	]
 	wdist_mtx<-((wdist_mtx * matrix(rep(x@attribute.spaces[[space]]@spaces[[species]]@demand.points@weights,each=nrow(pu_pts)), byrow=TRUE, ncol=ncol(wdist_mtx), nrow=nrow(wdist_mtx))))
 	# caclulate tss
-	tss_mtx=dists[
+	tss_mtx<-dists[
 		nrow(pu_pts)+1+seq_len(nrow(x@attribute.spaces[[space]]@spaces[[species]]@demand.points@coords)),
 		nrow(pu_pts)+1
 	]
-	tss_mtx=((tss_mtx*x@attribute.spaces[[space]]@spaces[[species]]@demand.points@weights))
+	tss_mtx<-((tss_mtx*x@attribute.spaces[[space]]@spaces[[species]]@demand.points@weights))
 	# set defaults solution to include all plannnig units if no solution specified
 	if (is.null(solution)) {
-		solution=seq_len(nrow(x@pu))
+		solution<-seq_len(nrow(x@pu))
 	}
 	# calculate relative positions of pus 
-	relative_solution=na.omit(match(
+	relative_solution<-na.omit(match(
 		solution,
 		x@attribute.spaces[[space]]@spaces[[species]]@planning.unit.points@ids
 	))
-	spaceheld=calcUnreliableSpaceHeld(wdist_mtx, relative_solution)
+	spaceheld<-calcUnreliableSpaceHeld(wdist_mtx, relative_solution)
 	# exports
 	return(
 		list(

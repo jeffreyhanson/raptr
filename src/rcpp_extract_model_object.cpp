@@ -197,8 +197,7 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
 				1.0-(
 					unreliable_space_value(
 						species_space_weightdist_MTX[a],
-						selected_species_space_pupos_INT[a],
-						true
+						selected_species_space_pupos_INT[a]
 					) / species_space_tss_DBL[a]
 				)
 			);
@@ -214,8 +213,7 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
 							species_space_weightdist_MTX[a],
 							selected_species_space_pupos_INT[a],
 							species_space_pu_probs_RDV[a],
-							species_space_rlevel_INT[a],
-							true
+							species_space_rlevel_INT[a]
 					) / species_space_tss_DBL[a]
 				)
 			);
