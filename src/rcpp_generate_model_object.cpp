@@ -292,7 +292,6 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 				tmp_AXD=species_space_centroid_VXD[a] - species_space_dpcoords_MTX[a].row(k);
 				species_space_tss_DBL[a]+=(tmp_AXD.square().sum() * species_space_dpweights_VXD[a][k]);				
 			}
-			
 			// failure pu if reliable formulation
 			if (!unreliable_formulation) {
 				// failure pu
@@ -487,7 +486,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 						curr_STR="Y_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l];
 						model_rows_INT.push_back(counter);
 						model_cols_INT.push_back(variable_MAP[curr_STR]);
-						model_vals_DBL.push_back(Pow<2>(species_space_weightdist_MTX[a](k,l)));
+						model_vals_DBL.push_back(species_space_weightdist_MTX[a](k,l));
 					}
 				}
 				sense_STR.push_back("<=");
@@ -504,7 +503,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 							curr_STR="W_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l]+"_"+int_STR[r];
 							model_rows_INT.push_back(counter);
 							model_cols_INT.push_back(variable_MAP[curr_STR]);
-							model_vals_DBL.push_back(Pow<2>(species_space_weightdist_MTX[a](k,l)));
+							model_vals_DBL.push_back(species_space_weightdist_MTX[a](k,l));
 						}
 					}
 				}
