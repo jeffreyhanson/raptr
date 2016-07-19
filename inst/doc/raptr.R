@@ -351,3 +351,183 @@ plot(sim_mrs_space3, 1)
 # difference between prioritisations based on unreliable and reliable formulation
 plot(sim_mrs_space3, sim_mrs_space, 1, 1, main='Difference between solutions')
 
+## ------------------------------------------------------------------------
+# update prioritisation
+sim_mrs_amount_blm <- update(sim_mrs_amount, BLM=100, Threads=threads)
+
+## ------------------------------------------------------------------------
+# show summary of prioritisation
+summary(sim_mrs_amount_blm)
+
+# show amount held for each prioritisation
+amount.held(sim_mrs_amount_blm)
+
+# show space held for each prioritisation
+space.held(sim_mrs_amount_blm)
+
+
+## ---- fig.height=3.5, fig.width=4.5,fig.align='center', fig.cap="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using only amount-based targets (20\\%). Additionally, this priorititisation was specified to have high connectivity, by using a high $BLM$ parameter. See Figure 12 caption for conventions._"----
+
+# plot prioritisation
+plot(sim_mrs_amount_blm, 1)
+
+## ---- fig.height=3.5, fig.width=4.5,fig.align='center', fig.cap="_Difference between two multi-species prioritisations. See Figure 7 caption for conventions._"----
+# difference between the two prioritisations
+plot(sim_mrs_amount_blm, sim_mrs_amount, 1, 1, main='Difference between solutions')
+
+## ---- fig.height=4, fig.width=5,fig.align='center', fig.cap="_Distribution map for four Australian bird species. Pixel colours denote probability of occupancy._"----
+# load data
+data(cs_spp)
+
+# remove areas with low occupancy (prob < 0.6)
+cs_spp[cs_spp<0.6] <- NA
+
+# plot species' distributions
+plot(cs_spp, main=c(
+	"Blue-winged kookaburra", "Brown-backed honeyeater", 
+	"Brown falcon", "Pale-headed rosella"
+))
+
+## ---- fig.height=3.5, fig.width=4.5, fig.align='center', fig.cap="_Planning units for the case-study examples. Polygons denote planning units. Yellow units have more than 50\\% of their area already in a reserve.)"----
+# load data
+data(cs_pus)
+
+## plot planning units
+# convert SpatialPolygons to PolySet for quick plotting
+cs_pus2 <- SpatialPolygons2PolySet(cs_pus)
+
+# create vector of colours for planning units
+# + light green: units not already inside reserve
+# + yellow: units already inside reserve
+cs_pus_cols <- rep('#c7e9c0', nrow(cs_pus@data))
+cs_pus_cols[which(cs_pus$status==2)] <- 'yellow'
+
+# set plotting window
+par(mar=c(0.1, 0.1, 4.1, 0.1))
+
+# plot polygons
+PBSmapping::plotPolys(
+	cs_pus2, col=cs_pus_cols, border='gray30', 
+	xlab='', ylab='', axes=FALSE, 
+	main='Case-study planning units',
+	cex=1.8
+)
+
+# reset plotting window
+par(mar=c(5.1, 4.1, 4.1, 2.1))
+
+## ---- fig.height=2.5, fig.width=7, fig.align='center', fig.cap="_Broad-scale environmental variation across Australia. The variable DC1 describes the transition from wet and cool to dry and hot conditions. The variable DC2 describes the transition from wet and hot to dry and cool conditions._"----
+# load data
+data(cs_space)
+
+# plot variables
+plot(cs_space, main=c('DC1', 'DC2'), legend=FALSE, axes=FALSE)
+
+## ---- message=FALSE------------------------------------------------------
+# make amount-based prioritisation
+# and ignore existing protected areas by discarding values in the 
+# status (third) column of the attribute table
+cs_rs_amount <- rap(
+	cs_pus[,-2], cs_spp, cs_space,
+	amount.target=0.2, space.target=NA, n.demand.points=50L,
+	include.geographic.space=TRUE, formulation='unreliable',
+	kernel.method='hypervolume', quantile=0.7, solve=FALSE
+)
+
+## ------------------------------------------------------------------------
+# generate prioritisation
+cs_rs_amount <- solve(cs_rs_amount, MIPGap=0.1, Threads=threads)
+
+## ---- fig.height=3.5, fig.width=4.5,fig.align='center', fig.cap="_Multi-species prioritisation generated for four bird species using amount-based targets (20\\%). See Figure 12 captions for conventions._"----
+# show summary
+summary(cs_rs_amount)
+
+# plot prioritisation
+plot(cs_rs_amount, 1)
+
+## ---- fig.height=4.5, fig.width=10,  fig.align='center', fig.cap="_Distribution of amount-based prioritisation in the geographic attribute space. Points denote combinations of environmental conditions. Green and grey points represent planning unit selected for and not selected for prioritisation (respectively). Blue points denote demand points, and their size indicates their weighting._"----
+# plot prioritisation in geographic attribute space
+p1 <- space.plot(cs_rs_amount, 1, 2, main='Blue-winged\nkookaburra')
+p2 <- space.plot(cs_rs_amount, 2, 2, main='Brown-backed\nhoneyeater')
+p3 <- space.plot(cs_rs_amount, 3, 2, main='Brown falcon')
+p4 <- space.plot(cs_rs_amount, 4, 2, main='Pale-headed\nrosella')
+gridExtra::grid.arrange(p1, p2, p3, p4, ncol=2)
+
+## ---- fig.height=4.5, fig.width=10,  fig.align='center', fig.cap="_Distribution of amount-based prioritisation in the environmental attribute space. See Figure 28 caption for conventions._"----
+# plot prioritisation in environmental attribute space
+p1 <- space.plot(cs_rs_amount, 1, 1, main='Blue-winged\nkookaburra')
+p2 <- space.plot(cs_rs_amount, 2, 1, main='Brown-backed\nhoneyeater')
+p3 <- space.plot(cs_rs_amount, 3, 1, main='Brown falcon')
+p4 <- space.plot(cs_rs_amount, 4, 1, main='Pale-headed\nrosella')
+gridExtra::grid.arrange(p1, p2, p3, p4, ncol=2)
+
+## ------------------------------------------------------------------------
+# make amount- and space-based prioritisation
+cs_rs_space <- update(cs_rs_amount, space.target=0.7, Threads=threads)
+
+## ---- fig.height=3.5, fig.width=4.5, fig.align='center', fig.caption='_Prioritisation generated using amount, environmental, and geographic targets._'----
+# show summary
+summary(cs_rs_space)
+
+# plot prioritisation
+plot(cs_rs_space,1)
+
+## ---- fig.height=4.5, fig.width=10,  fig.cap="_Distribution of the amount- and space-based prioritisation in the geographic attribute space. See Figure 28 caption for conventions._"----
+# plot prioritisation in geographic attribute space
+p1 <- space.plot(cs_rs_space, 1, 2, main='Blue-winged\nkookaburra')
+p2 <- space.plot(cs_rs_space, 2, 2, main='Brown-backed\nhoneyeater')
+p3 <- space.plot(cs_rs_space, 3, 2, main='Brown falcon')
+p4 <- space.plot(cs_rs_space, 4, 2, main='Pale-headed\nrosella')
+gridExtra::grid.arrange(p1, p2, p3, p4, ncol=2)
+
+## ---- fig.height=4.5, fig.width=10,  fig.align='center', fig.cap="_Distribution of the amount- and space-based prioritisation in the environmental attribute space. See Figure 28 caption for conventions._"----
+# plot prioritisation in environmental attribute space
+p1 <- space.plot(cs_rs_space, 1, 1, main='Blue-winged\nkookaburra')
+p2 <- space.plot(cs_rs_space, 2, 1, main='Brown-backed\nhoneyeater')
+p3 <- space.plot(cs_rs_space, 3, 1, main='Brown falcon')
+p4 <- space.plot(cs_rs_space, 4, 1, main='Pale-headed\nrosella')
+gridExtra::grid.arrange(p1, p2, p3, p4, ncol=2)
+
+## ------------------------------------------------------------------------
+# generate vector with Australia's selections
+aus_selections <- which(cs_pus$status>0)
+
+# create new object with Australia's network
+cs_rs_aus <- update(cs_rs_amount, b=aus_selections)
+
+## ---- fig.height=3.5, fig.width=8,  fig.align='center', fig.cap="_Prioritisations were generated using amount-based targets (20\\%), and with additional space-based targets (85\\%). These are compared to the Queensland reserve network. Data represent means and standard errors for the four species in each prioritisation._"----
+# define standard error function
+se=function(x){sd(x,na.rm=TRUE)/sqrt(sum(!is.na(x)))}
+
+# create a table to store the values for the 3 prioritisations
+cs_results <- data.frame(
+	name=factor(rep(rep(c('Amount-based\nprioritisation', 
+		'Amount & space-based\nprioritisation', 'Queensland reserve\nnetwork'),
+		each=4),3), levels=c(c('Amount-based\nprioritisation', 
+		'Amount & space-based\nprioritisation', 'Queensland reserve\nnetwork'))),
+	variable=rep(c('Amount', 'Geographic space', 'Environmental space'), each=12),
+	species=colnames(amount.held(cs_rs_amount)),
+	value=c(
+		amount.held(cs_rs_amount)[1,], amount.held(cs_rs_space)[1,],
+			amount.held(cs_rs_aus)[1,],
+		space.held(cs_rs_amount, space=2)[1,], space.held(cs_rs_space, space=2)[1,], 
+			space.held(cs_rs_aus, space=2)[1,],
+		space.held(cs_rs_amount, space=1)[1,], space.held(cs_rs_space, space=1)[1,],
+			space.held(cs_rs_aus, space=1)[1,]
+	)
+) %>% group_by(name,variable) %>%
+	summarise(mean=mean(value),se=se(value))
+
+# plot the performance metrics
+ggplot(aes(x=variable, y=mean, fill=name), data=cs_results) +
+	geom_bar(position=position_dodge(0.9), stat='identity') +
+	geom_errorbar(
+		aes(ymin=mean-se, ymax=mean+se), position=position_dodge(0.9),
+		width=0.2) +
+	xlab('Property of species') +
+	ylab('Proportion held in\nselected planning units (%)') +
+	scale_fill_discrete(name='') +
+	theme_classic() +
+	theme(legend.position='bottom',legend.direction='horizontal',
+		axis.line.x=element_line(),axis.line.y=element_line())
+
