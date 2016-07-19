@@ -14,5 +14,5 @@ gurobi.log
 .directory
 
 # vignette cache
-/vignettes/rapr_files
-/vignettes/rapr_cache
+/vignettes/raptr_files
+/vignettes/raptr_cache

@@ -1,4 +1,4 @@
-#' @include RcppExports.R rapr-internal.R generics.R misc.R
+#' @include RcppExports.R raptr-internal.R generics.R misc.R
 NULL
 
 #' PlanningUnitPoints: An S4 class to represent planning units in an attribute space

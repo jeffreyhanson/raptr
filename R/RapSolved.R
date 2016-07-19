@@ -1,4 +1,4 @@
-#' @include RcppExports.R rapr-internal.R misc.R generics.R RapReliableOpts.R RapUnreliableOpts.R RapData.R RapUnsolved.R RapResults.R
+#' @include RcppExports.R raptr-internal.R misc.R generics.R RapReliableOpts.R RapUnreliableOpts.R RapData.R RapUnsolved.R RapResults.R
 NULL
 
 #' RapSolved: An S4 class to represent RAP inputs and outputs
@@ -847,7 +847,7 @@ update.RapUnsolOrSol<-function(object, ..., formulation=NULL, solve=TRUE) {
 		}
 		# generate new RapSolved object
 		object<-do.call(
-			rapr::solve,
+			raptr::solve,
 			append(
 				append(
 					list(a=object),

@@ -1,4 +1,4 @@
- #' @include RcppExports.R rapr-internal.R
+ #' @include RcppExports.R raptr-internal.R
 NULL
 
 #' @rdname SpatialPolygons2PolySet

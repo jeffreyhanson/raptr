@@ -50,7 +50,7 @@ test_that('demand.points.density1d', {
 	# make points
 	pts<-matrix(rnorm(100), ncol=1)
 	# make demand points
-	dp<-rapr:::demand.points.density1d(pts, 1000)
+	dp<-raptr:::demand.points.density1d(pts, 1000)
 	# check properties of demand points
 	expect_true(ncol(dp$coords)==1)
 	expect_true(nrow(dp$coords)==1000)
@@ -62,7 +62,7 @@ test_that('demand.points.density2d', {
 	# make points
 	pts<-matrix(rnorm(100), ncol=2)
 	# make demand points
-	dp<-rapr:::demand.points.density2d(pts, 1000)
+	dp<-raptr:::demand.points.density2d(pts, 1000)
 	# check properties of demand points
 	expect_true(ncol(dp$coords)==2)
 	expect_true(nrow(dp$coords)==1000)
@@ -74,7 +74,7 @@ test_that('demand.points.hypervolume', {
 	# make points
 	pts<-matrix(rnorm(999), ncol=3)
 	# make demand points
-	dp<-rapr:::demand.points.hypervolume(pts, 1000)
+	dp<-raptr:::demand.points.hypervolume(pts, 1000)
 	# check properties of demand points
 	expect_true(ncol(dp$coords)==3)
 	expect_true(nrow(dp$coords)==1000)
@@ -161,8 +161,8 @@ test_that("ZonalMean functions", {
 	purast<-disaggregate(raster(matrix(1:9, ncol=3)),fact=100)
 	species<-purast*abs(rnorm(ncell(purast)))
 	z1<-zonal(species, purast, fun='mean')
-	z2<-rapr:::zonalMean(purast, species[[1]], ncores=2)
-	z3<-rapr:::zonalMean(purast, species[[1]])
+	z2<-raptr:::zonalMean(purast, species[[1]], ncores=2)
+	z3<-raptr:::zonalMean(purast, species[[1]])
 	expect_equal(round(z1[,2],5), round(z2[[3]],5), round(z3[[3]],5))
 })
 
@@ -179,7 +179,7 @@ test_that("calcSpeciesAverageInPus functions", {
 test_that("PolySet conversion function", {
 	template<-disaggregate(raster(matrix(1:9, ncol=3), xmn=0, xmx=1, ymn=0, ymx=1, crs=CRS('+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs ')),fact=5)
 	polys<-rasterToPolygons(template, n=4, dissolve=TRUE)
-	pdf1<-rapr:::rcpp_Polygons2PolySet(polys@polygons)
+	pdf1<-raptr:::rcpp_Polygons2PolySet(polys@polygons)
 	pdf2<-structure(list(PID = c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 2L,
 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,

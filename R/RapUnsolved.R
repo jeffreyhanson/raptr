@@ -1,4 +1,4 @@
-#' @include RcppExports.R rapr-internal.R misc.R generics.R RapReliableOpts.R RapUnreliableOpts.R RapData.R
+#' @include RcppExports.R raptr-internal.R misc.R generics.R RapReliableOpts.R RapUnreliableOpts.R RapData.R
 NULL
 
 #' RapUnsolved: An S4 class to represent RAP inputs

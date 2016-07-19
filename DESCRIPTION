@@ -1,8 +1,8 @@
-Package: rapr
+Package: raptr
 Type: Package
-Title: Representative and Adequate Prioritisations in R
-Version: 2.0.0
-Date: 2016-05-24
+Title: Representative and Adequate Prioritisation Toolkit in R
+Version: 3.0.0
+Date: 2016-07-19
 Authors@R: c(person(c("Jeffrey", "O"), "Hanson", email='jeffrey.hanson@uqconnect.edu.au', role = c("aut", "cre")),
 	person(c("Jonathon", "R"), "Rhodes", role = c("aut")),
 	person(c("Hugh", "P"), "Possingham", role = c("aut")),
@@ -63,7 +63,7 @@ SystemRequirements: C++11
 Collate:
     'dependencies.R'
     'RcppExports.R'
-    'rapr-internal.R'
+    'raptr-internal.R'
     'generics.R'
     'DemandPoints.R'
     'misc.R'
@@ -83,7 +83,7 @@ Collate:
     'SpatialPolygons2PolySet.R'
     'data.R'
     'rap.R'
-    'rapr.R'
+    'raptr.R'
     'sim.pus.R'
     'sim.space.R'
     'sim.species.R'

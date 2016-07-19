@@ -6,7 +6,7 @@
 \usage{
 make.RapData(pus, species, spaces = NULL, amount.target = 0.2,
   space.target = 0.2, n.demand.points = 100L, kernel.method = c("ks",
-  "hyperbox")[1], quantile = 0.5, species.points = NULL,
+  "hypervolume")[1], quantile = 0.5, species.points = NULL,
   n.species.points = ceiling(0.2 * cellStats(species, "sum")),
   include.geographic.space = TRUE, scale = TRUE, verbose = FALSE, ...)
 }

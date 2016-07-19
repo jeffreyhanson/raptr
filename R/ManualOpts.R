@@ -1,4 +1,4 @@
- #' @include RcppExports.R rapr-internal.R misc.R
+ #' @include RcppExports.R raptr-internal.R misc.R
 NULL
 
 #' ManualOpts: An S4 class to represent parameters for manually specified solutions

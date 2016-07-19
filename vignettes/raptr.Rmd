@@ -1,5 +1,5 @@
 ---
-title: "rapr: Representative and Adequate Prioritisations in R"
+title: "raptr: Representative and Adequate Prioritisation Toolkit in R"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 tags: ["conservation", "biodiversity", "MILP", "reserve-selection"]
 output:
@@ -9,7 +9,7 @@ output:
 fontsize: 11pt
 documentclass: article
 vignette: >
-  %\VignetteIndexEntry{rapr}
+  %\VignetteIndexEntry{raptr}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
@@ -17,24 +17,25 @@ vignette: >
 ```{r global, include=FALSE}
 # set cache globally
 knitr::opts_chunk$set(cache=TRUE)
+library(raptr)
 ```
 
 # Overview
-This vignette illustrates the basic usage of the _rapr R_ package.
+This vignette illustrates the basic usage of the _raptr R_ package.
 
-To load the _rapr R_ package and learn more about the package, type the following code into R.
+To load the _raptr R_ package and learn more about the package, type the following code into R.
 
 ```{r, eval=FALSE}
-# load rapr R package
-library(rapr)
+# load raptr R package
+library(raptr)
 
 # show package overview
-?rapr
+?raptr
 ```
 
-The _rapr R_ package uses a range of S4 classes to store conservation planning data, parameters, and prioritisations (Table 1).
+The _raptr R_ package uses a range of S4 classes to store conservation planning data, parameters, and prioritisations (Table 1).
 
-Table 1: Main classes in the _rapr R_ package
+Table 1: Main classes in the _raptr R_ package
 
 | **Class**          | **Description**       |
 | :-----------------: |:----------------------------------------------------------------------------- |
@@ -51,7 +52,7 @@ Table 1: Main classes in the _rapr R_ package
 | `RapSolved`           | stores the input data and output results |
 
 # Getting started
-This tutorial is designed to provide users with an understanding of how to use the _rapr R_ package to generate and compare solutions. This tutorial uses several additional packages, so first we will run the following code to load them.
+This tutorial is designed to provide users with an understanding of how to use the _raptr R_ package to generate and compare solutions. This tutorial uses several additional packages, so first we will run the following code to load them.
 
 ```{r, message=FALSE, result='hide'}
 # load packages for tutorial
@@ -222,7 +223,7 @@ sim_rs_s1_amount <- solve(sim_ru_s1, Threads=threads)
 ```{r}
 ## show summary
 # note the format for this is similar to that used by Marxan
-# see ?rapr::summary for details on this table
+# see ?raptr::summary for details on this table
 summary(sim_rs_s1_amount)
 
 # show amount held

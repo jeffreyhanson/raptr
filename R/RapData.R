@@ -1,4 +1,4 @@
-#' @include RcppExports.R rapr-internal.R generics.R DemandPoints.R calcBoundaryData.R calcSpeciesAverageInPus.R
+#' @include RcppExports.R raptr-internal.R generics.R DemandPoints.R calcBoundaryData.R calcSpeciesAverageInPus.R
 NULL
 
 #' RapData: An S4 class to represent RAP input data
@@ -232,7 +232,7 @@ RapData<-function(pu, species, targets, pu.species.probabilities, attribute.spac
 #' x <- make.RapData(cs_pus[1:10,], cs_spp, cs_space, include.geographic.space=TRUE)
 #' print(x)
 make.RapData<-function(pus, species, spaces=NULL,
-	amount.target=0.2, space.target=0.2, n.demand.points=100L, kernel.method=c('ks', 'hyperbox')[1], quantile=0.5,
+	amount.target=0.2, space.target=0.2, n.demand.points=100L, kernel.method=c('ks', 'hypervolume')[1], quantile=0.5,
 	species.points=NULL, n.species.points=ceiling(0.2*cellStats(species, 'sum')), include.geographic.space=TRUE, 
 	scale=TRUE, verbose=FALSE, ...
 ) {
@@ -374,7 +374,7 @@ make.RapData<-function(pus, species, spaces=NULL,
 	}
 	if (verbose)
 		cat("Calculating average species probability in planning units.\n")
-	pu.species.probabilities<-calcSpeciesAverageInPus(projPolygons, species, ...)	
+	pu.species.probabilities<-calcSpeciesAverageInPus(projPolygons, species, ...)
 	## set demand.points
 	# include geographic space if set
 	if (!is.null(spaces[[1]]) & include.geographic.space)

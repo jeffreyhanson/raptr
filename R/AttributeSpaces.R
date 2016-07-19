@@ -1,4 +1,4 @@
-#' @include RcppExports.R rapr-internal.R generics.R misc.R PlanningUnitPoints.R DemandPoints.R AttributeSpace.R
+#' @include RcppExports.R raptr-internal.R generics.R misc.R PlanningUnitPoints.R DemandPoints.R AttributeSpace.R
 NULL
 
 #' AttributeSpaces: An S4 class to represent a collection of attribute spaces for different species.

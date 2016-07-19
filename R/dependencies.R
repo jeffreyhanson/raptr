@@ -55,6 +55,7 @@
 #' @importFrom methods setOldClass
 #' @importFrom methods setClassUnion
 #' @importFrom methods setClass
+#' @importFrom methods removeClass
 #' @importFrom methods as
 #' @importFrom methods new
 #' @importFrom methods slot
@@ -113,5 +114,5 @@
 #' @import raster
 NULL
 
-#' @useDynLib rapr
+#' @useDynLib raptr
 NULL

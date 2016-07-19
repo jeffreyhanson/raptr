@@ -218,21 +218,21 @@ test_that('amount.target<-.RapData', {
 
 test_that('space.target.RapData', {
 	data(sim_ru)
-	expect_equal(
+		expect_equal(
 		unname(space.target(sim_ru@data)[,1]),
-		rep(0.2, 3)
+		rep(0.85, 3)
 	)
 	expect_equal(
 		unname(space.target(sim_ru@data, species=1)[,1]),
-		rep(0.2)
+		rep(0.85)
 	)
 	expect_equal(
 		unname(space.target(sim_ru@data, space=1)[,1]),
-		rep(0.2, 3)
+		rep(0.85, 3)
 	)
 	expect_equal(
 		unname(space.target(sim_ru@data, species=1, space=1)[,1]),
-		0.2
+		0.85
 	)
 })
 

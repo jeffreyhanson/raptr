@@ -1,4 +1,4 @@
- #' @include RcppExports.R rapr-internal.R misc.R
+ #' @include RcppExports.R raptr-internal.R misc.R
 NULL
 
 #' GurobiOpts: An S4 class to represent Gurobi parameters

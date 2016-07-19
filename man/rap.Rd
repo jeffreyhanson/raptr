@@ -27,7 +27,7 @@ rap(pus, species, spaces = NULL, formulation = "unreliable", solve = TRUE,
 This is a general function to create Rap objects from scratch and solve them to generate solutions.
 }
 \note{
-Type \code{vignette('rapr')} to see the package vignette for help.
+Type \code{vignette('raptr')} to see the package vignette for help.
 }
 \seealso{
 \code{\link{GurobiOpts}}, \code{\link{RapReliableOpts}}, \code{\link{RapUnreliableOpts}} \code{\link{RapData}}, \code{\link{RapResults}}, \code{\link{RapUnsolved}}, \code{\link{RapSolved}}.

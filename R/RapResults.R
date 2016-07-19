@@ -1,4 +1,4 @@
-#' @include misc.R rapr-internal.R generics.R
+#' @include misc.R raptr-internal.R generics.R
 NULL
 
 #' RapResults: An S4 class to represent RAP results

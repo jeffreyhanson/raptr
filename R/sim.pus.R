@@ -1,4 +1,4 @@
-#' @include RcppExports.R rapr-internal.R generics.R
+#' @include RcppExports.R raptr-internal.R generics.R
 NULL
 
 #' Simulate planning units

@@ -12,5 +12,5 @@
 }
 
 .onUnload <- function(libpath) {
-	library.dynam.unload('rapr',libpath)
+	library.dynam.unload('raptr', libpath)
 }

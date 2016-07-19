@@ -2,34 +2,34 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 rcpp_Polygons2PolySet <- function(polys, n_preallocate = 10000L) {
-    .Call('rapr_rcpp_Polygons2PolySet', PACKAGE = 'rapr', polys, n_preallocate)
+    .Call('raptr_rcpp_Polygons2PolySet', PACKAGE = 'raptr', polys, n_preallocate)
 }
 
 rcpp_append_model_object <- function(model, existing_sols) {
-    .Call('rapr_rcpp_append_model_object', PACKAGE = 'rapr', model, existing_sols)
+    .Call('raptr_rcpp_append_model_object', PACKAGE = 'raptr', model, existing_sols)
 }
 
 rcpp_calcBoundaryDF <- function(df, tolerance = 0.001, lengthFactor = 1.0, edgeFactor = 1.0) {
-    .Call('rapr_rcpp_calcBoundaryDF', PACKAGE = 'rapr', df, tolerance, lengthFactor, edgeFactor)
+    .Call('raptr_rcpp_calcBoundaryDF', PACKAGE = 'raptr', df, tolerance, lengthFactor, edgeFactor)
 }
 
 rcpp_extract_model_object <- function(opts, unreliable_formulation, data, model, logging_file, solution, verbose) {
-    .Call('rapr_rcpp_extract_model_object', PACKAGE = 'rapr', opts, unreliable_formulation, data, model, logging_file, solution, verbose)
+    .Call('raptr_rcpp_extract_model_object', PACKAGE = 'raptr', opts, unreliable_formulation, data, model, logging_file, solution, verbose)
 }
 
 rcpp_generate_model_object <- function(opts, unreliable_formulation, data, verbose) {
-    .Call('rapr_rcpp_generate_model_object', PACKAGE = 'rapr', opts, unreliable_formulation, data, verbose)
+    .Call('raptr_rcpp_generate_model_object', PACKAGE = 'raptr', opts, unreliable_formulation, data, verbose)
 }
 
 rcpp_groupcombine <- function(group_means) {
-    .Call('rapr_rcpp_groupcombine', PACKAGE = 'rapr', group_means)
+    .Call('raptr_rcpp_groupcombine', PACKAGE = 'raptr', group_means)
 }
 
 rcpp_groupmean <- function(cat_vec, val_vec) {
-    .Call('rapr_rcpp_groupmean', PACKAGE = 'rapr', cat_vec, val_vec)
+    .Call('raptr_rcpp_groupmean', PACKAGE = 'raptr', cat_vec, val_vec)
 }
 
 rcpp_sum_duplicates <- function(ids1, ids2, boundary) {
-    .Call('rapr_rcpp_sum_duplicates', PACKAGE = 'rapr', ids1, ids2, boundary)
+    .Call('raptr_rcpp_sum_duplicates', PACKAGE = 'raptr', ids1, ids2, boundary)
 }
 

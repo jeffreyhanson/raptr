@@ -1,4 +1,4 @@
-#' @include RcppExports.R rapr-internal.R misc.R generics.R RapReliableOpts.R RapUnreliableOpts.R GurobiOpts.R RapData.R RapUnsolved.R RapResults.R RapSolved.R
+#' @include RcppExports.R raptr-internal.R misc.R generics.R RapReliableOpts.R RapUnreliableOpts.R GurobiOpts.R RapData.R RapUnsolved.R RapResults.R RapSolved.R
 NULL
 
 #' Generate prioritisations using RAP
@@ -12,7 +12,7 @@ NULL
 #' @param solve \code{logical} should solutions be generated?
 #' @param ... arguments are passed to \code{\link{GurobiOpts}}, \code{\link{make.RapData}}, and \code{\link{RapReliableOpts}} or \code{\link{RapUnreliableOpts}} functions.
 #' @export
-#' @note Type \code{vignette('rapr')} to see the package vignette for help.
+#' @note Type \code{vignette('raptr')} to see the package vignette for help.
 #' @return \code{\link{RapSolved}} object if \code{solve} is \code{TRUE}, else \code{\link{RapUnsolved}}.
 #' @seealso \code{\link{GurobiOpts}}, \code{\link{RapReliableOpts}}, \code{\link{RapUnreliableOpts}} \code{\link{RapData}}, \code{\link{RapResults}}, \code{\link{RapUnsolved}}, \code{\link{RapSolved}}.
 rap<-function(pus, species, spaces=NULL, formulation='unreliable', solve=TRUE, ...) {
