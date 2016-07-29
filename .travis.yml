@@ -1,6 +1,8 @@
 language: r
 sudo: required
 warnings_are_errors: true
+r_build_args: --no-build-vignettes
+r_check_args: --no-build-vignettes
 
 os:
   - linux
@@ -10,8 +12,6 @@ env:
   global:
     - NOT_CRAN=true
     - _R_CHECK_FORCE_SUGGESTS_=FALSE
-    - _R_CHECK_LATEX_VIGNETTES=FALSE
-    - _R_CHECK_WEAVE_VIGNETTES=FALSE
 
 apt_packages:
   - libgeos-dev
