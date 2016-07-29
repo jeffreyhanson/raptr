@@ -106,6 +106,7 @@
 
 #' @importFrom stats runif
 #' @importFrom stats sd
+#' @importFrom stats na.omit
 
 #' @importFrom utils capture.output
 
