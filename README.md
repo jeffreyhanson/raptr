@@ -36,7 +36,7 @@ devtools:::install_github('paleo13/raptr')
 
 Once this package has been installed, you can read through the vignette for a tutorial on how to use it.
 
-[View it here](https://github.com/paleo13/raptr/raw/master/inst/doc/raptr.pdf), or by running this R code:
+[View it here](https://github.com/paleo13/raptr/raw/master/inst/doc/raptr.html), or by running this R code:
 
 ```
 # open vignette in web browser
