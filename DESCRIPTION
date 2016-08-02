@@ -50,6 +50,8 @@ LinkingTo: Rcpp,
     RcppEigen
 LazyData: true
 License: GPL-3
+URL: https://github.com/paleo13/raptr
+BugReports: https://github.com/paleo13/raptr/issues
 VignetteBuilder: knitr
 Suggests:
     knitr,
