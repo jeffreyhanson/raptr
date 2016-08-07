@@ -8,7 +8,7 @@
 #' @return \code{numeric} value indicating the proportion of variation that \code{x} explains in \code{y}
 #' @export
 #' @examples
-#' proportion.held(iris[1:2,-5], iris[1:5,-5])
+#' urap.proportion.held(iris[1:2,-5], iris[1:5,-5])
 urap.proportion.held <- function(x, y, y.weights=rep(1, nrow(y))) {
 	x <- as.matrix(x)
 	y <- as.matrix(y)
