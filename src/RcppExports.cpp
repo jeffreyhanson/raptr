@@ -6,6 +6,19 @@
 
 using namespace Rcpp;
 
+// rcpp_proportion_held
+double rcpp_proportion_held(Rcpp::NumericMatrix x, Rcpp::NumericMatrix y, Rcpp::NumericVector y_weights);
+RcppExport SEXP raptr_rcpp_proportion_held(SEXP xSEXP, SEXP ySEXP, SEXP y_weightsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type y(ySEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type y_weights(y_weightsSEXP);
+    __result = Rcpp::wrap(rcpp_proportion_held(x, y, y_weights));
+    return __result;
+END_RCPP
+}
 // rcpp_Polygons2PolySet
 Rcpp::DataFrame rcpp_Polygons2PolySet(Rcpp::List polys, std::size_t n_preallocate);
 RcppExport SEXP raptr_rcpp_Polygons2PolySet(SEXP polysSEXP, SEXP n_preallocateSEXP) {

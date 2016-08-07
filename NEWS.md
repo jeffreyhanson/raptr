@@ -1,3 +1,8 @@
+# raptr 3.0.1
+
+* Additional functions
++ `urap.proportion.held` to calculate the proportion of variation that one set of points captures in another set of points
+
 # raptr 3.0.0
 
 * Rename to "raptr"
@@ -10,7 +15,7 @@
 
 # raptr 1.0.0
 
-* First complete releease.
+* First complete release.
 
 # raptr 0.0.0
 

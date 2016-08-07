@@ -1,7 +1,7 @@
 Package: raptr
 Type: Package
 Title: Representative and Adequate Prioritisation Toolkit in R
-Version: 3.0.0
+Version: 3.0.1
 Date: 2016-07-19
 Authors@R: c(person(c("Jeffrey", "O"), "Hanson", email='jeffrey.hanson@uqconnect.edu.au', role = c("aut", "cre")),
 	person(c("Jonathon", "R"), "Rhodes", role = c("aut")),
@@ -18,7 +18,9 @@ Description: Biodiversity is in crisis. The overarching aim of conservation
     Additionally, space-based targets can be used to ensure that a representative
     sample of the target species are preserved. To solve the optimisation problems
     in a feasible amount of time, this package uses the commerical 'Gurobi' software
-    package (obtained from <http://www.gurobi.com/>).
+    package (obtained from <http://www.gurobi.com/>). Additinally, the 'rgurobi'
+    package can be installed to provide extra functionality (obtained from <http://
+    github.com/paleo13/rgurobi>).
 Imports:
     utils,
     boot,
@@ -89,5 +91,6 @@ Collate:
     'sim.pus.R'
     'sim.space.R'
     'sim.species.R'
+    'urap.proportion.held.R'
     'zzz.R'
 RoxygenNote: 5.0.1

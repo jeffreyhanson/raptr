@@ -28,3 +28,11 @@ test_that("randomPoints function", {
 	expect_equal(nrow(pts), 10)
 	expect_equal(sum(is.na(c(pts))), 0)
 })
+
+test_that('urap.proportion.held', {
+	km <- kmeans(iris[1:5,-5], centers=3)
+	prop <- urap.proportion.held(km$centers,iris[1:5,-5])
+	## tests
+	# compare proportions
+	expect_equal((km$betweenss / km$totss), prop)
+})

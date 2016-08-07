@@ -1,9 +1,8 @@
 ## Test environments
-* ubuntu 14.04, RRO 3.2.2 (local system)
-* ubuntu 12.04, R 3.2.2 (travis-ci)
-* Mac OSX 10.9.5, R 3.2.2 (travis-ci)
+* ubuntu 14.04, RRO 3.3.1 (local system)
+* ubuntu 12.04, R 3.3.1 (travis-ci)
+* Mac OSX 10.9.5, R 3.3.1 (travis-ci)
 * Windows Server 2012 R2 (x64) (appveyor)
-* win-builder (devel and release) 
 
 ## R CMD check results
 There were no ERRORs or WARNINGs.
@@ -17,25 +16,30 @@ There were 3 NOTEs
   This is my first submission to CRAN.
 
 * checking package dependencies ... NOTE
-	Package suggested but not available for checking: 'gurobi' 
+  package suggested but not available for checking: 'gurobi', 'rgurobi'
   
-  This package depends heavily on the gurobi R package. It would not be practical to use another R package (eg. lpSolveAPI) because non-commerical exact algorithm
-  solvers cannot solve moderately sized problems in a feasible amount of time. Additionally, several existing R packages on CRAN use the gurobi R package (eg. cherry, DESP).
+  This package depends heavily on the gurobi software platform. Installation instructions for both of these packages are contained in this package's description.
+  
+  The 'gurobi' R package is an R package that is distributed along with the gurobi program. It would not be practical to use another R package (eg. lpSolveAPI) because non-commercial exact algorithm solvers cannot solve moderately sized problems in a feasible amount of time. Several existing R packages on CRAN use the gurobi R package (eg. cherry, DESP).
+  
+  The 'rgurobi' provides additional functionality not contained in the gurobi package. This is a package I have written and placed on github. This package offers additional functionality. Note that users cannot install rgurobi package without the gurobi program already having been installed on their system because it contains compiled code that uses header files distributed with the program. Thus the rgurobi package cannot be submitted to CRAN.
   
 * checking installed package size ... NOTE
   installed size is  9.1Mb
   sub-directories of 1Mb or more:
-    data   2.2Mb
-    libs   6.4Mb
+    data   4.4Mb
+    doc    4.1Mb
+    libs   9.2Mb
 
-  +data: The ./data directory contains case-study data for a vignette. Although a seperate package could be created to store the case-study data, this
-  seems unnecessary because the datsets are used in both package testing in the vignette. I would prefer to keep the datasets in this pacakge for simplicity.
+  +data: The ./data directory contains case-study data for a vignette. Although a separate package could be created to store the case-study data, this
+  seems unnecessary because the data sets are used in both package testing in the vignette. I would prefer to keep the data sets in this package for simplicity.
+  
+  + doc: The documentation for this package is comprehensive. It contains a html vignette that provides several detailed examples on how to use it.
   
   +libs: To improve performance, many functions in the package are written in C++. This has resulted in a large ./libs folder. The ./libs folder could be reduced
-  in size by rewriting the functions in R, however, this would severly reduce the useability of the package. I would prefer to keep the C++ functions and the
+  in size by rewriting the functions in R, however, this would severely reduce the usability of the package. I would prefer to keep the C++ functions and the
   large ./libs folder.
 
-  
 ## Downstream dependencies
-This package is not present on CRAN and therefore has no pacakges depending on it. As a consequence, there were no issues detected when running devtools::revdep_check().
+This package is not present on CRAN and therefore has no packages depending on it. As a consequence, there were no issues detected when running devtools::revdep_check().
 The results of this check are in ./revdep

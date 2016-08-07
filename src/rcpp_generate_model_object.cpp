@@ -290,7 +290,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 			species_space_tss_DBL[a]=zero_adjust;
 			for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 				tmp_AXD=species_space_centroid_VXD[a] - species_space_dpcoords_MTX[a].row(k);
-				species_space_tss_DBL[a]+=(tmp_AXD.square().sum() * species_space_dpweights_VXD[a][k]);				
+				species_space_tss_DBL[a]+=(tmp_AXD.square().sum() * species_space_dpweights_VXD[a][k]);
 			}
 			// failure pu if reliable formulation
 			if (!unreliable_formulation) {
