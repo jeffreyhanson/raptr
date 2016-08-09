@@ -2,6 +2,7 @@
 #' @importFrom parallel stopCluster
 #' @importFrom parallel clusterExport
 #' @importFrom parallel clusterEvalQ
+#' @importFrom parallel detectCores
 
 #' @importFrom doParallel registerDoParallel
 
@@ -84,8 +85,6 @@
 #' @importFrom RandomFields RFsimulate
 #' @importFrom RandomFields RMgauss
 #' @importFrom RandomFields RPgauss
-
-#' @importFrom parallel detectCores
 
 #' @importFrom RgoogleMaps GetMap.bbox
 #' @importFrom RgoogleMaps PlotOnStaticMap

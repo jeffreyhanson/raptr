@@ -14,9 +14,6 @@ double rcpp_proportion_held(Rcpp::NumericMatrix x, Rcpp::NumericMatrix y, Rcpp::
 	Eigen::MatrixXd x_MTX(Rcpp::as<Eigen::MatrixXd>(x));
 	Eigen::MatrixXd y_MTX(Rcpp::as<Eigen::MatrixXd>(y));
 		
-	Rcout << "x_MTX" << std::endl;
-	Rcout << x_MTX << std::endl;
-	
 	//// Preliminary processing
 	// declare variables
 	std::size_t N_x_INT = x_MTX.rows();

@@ -24,7 +24,10 @@ Description: Biodiversity is in crisis. The overarching aim of conservation
 Imports:
     utils,
     boot,
+    grDevices,
     PBSmapping,
+    graphics,
+    stats,
     scales,
     shape,
     Matrix,
