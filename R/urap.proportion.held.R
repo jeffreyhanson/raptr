@@ -13,7 +13,6 @@ urap.proportion.held <- function(x, y, y.weights=rep(1, nrow(y))) {
 	x <- as.matrix(x)
 	y <- as.matrix(y)
 	y.weights <- as.numeric(y.weights)
-	print(y.weights)
 	stopifnot(ncol(x)==ncol(x))
 	stopifnot(nrow(y)==length(y.weights))
 	rcpp_proportion_held(x, y, y.weights)
