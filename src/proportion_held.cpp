@@ -36,15 +36,16 @@ double rcpp_proportion_held(Rcpp::NumericMatrix x, Rcpp::NumericMatrix y, Rcpp::
 	}
 	
 	/// calculate wss
-	// calculate all distances between x and y
-	for (std::size_t i=0; i < N_x_INT; ++i) {
-		for (std::size_t j=0; j < N_y_INT; ++j) {
+	double wss_DBL = 0.0;
+	double curr_lowest_DBL;
+	for (std::size_t j=0; j < N_y_INT; ++j) {
+		curr_lowest_DBL = std::numeric_limits<double>::max();
+		for (std::size_t i=0; i < N_x_INT; ++i) {
 			tmp_AXD = x_MTX.row(i) - y_MTX.row(j);
-			d_MTX(i,j) = (tmp_AXD.square().sum() * y_weights[i]);
+			curr_lowest_DBL = std::min(tmp_AXD.square().sum() * y_weights[i], curr_lowest_DBL);
 		}
+		wss_DBL += curr_lowest_DBL;
 	}
-	// wss
-	double wss_DBL = d_MTX.colwise().minCoeff().sum();
 
 	//// Exports
 	// return proportion held
