@@ -19,7 +19,6 @@ double rcpp_proportion_held(Rcpp::NumericMatrix x, Rcpp::NumericMatrix y, Rcpp::
 	std::size_t N_x_INT = x_MTX.rows();
 	std::size_t N_y_INT = y_MTX.rows(); 
 	std::size_t N_k_INT = y_MTX.cols(); 
-	Eigen::MatrixXd d_MTX(N_x_INT, N_y_INT);
 	Eigen::ArrayXd tmp_AXD;
 
 	//// Main processing	
