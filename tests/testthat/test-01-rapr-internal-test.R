@@ -317,13 +317,25 @@ test_that("boundary length data functions", {
 })
 
 
-test_that('yrap.squared.distance', {
+test_that('urap.squared.distance', {
 	# make test data
+	data(iris)
 	test1.MTX <- as.matrix(iris[1:10,-5])
 	test2.MTX <- as.matrix(iris[,-5])
 	# generate distances
 	d1 <- urap.squared.distance(test1.MTX, test2.MTX)
-	d2 <- apply(fields::rdist(test1.MTX, test2.MTX), 2, min)^2
+	d2 <- apply(test2.MTX, 1, function(x) {
+		min(
+			as.matrix(
+				dist(
+					rbind(
+						matrix(x, nrow=1),
+						test1.MTX
+					)
+				)
+			)[-1,1]
+		)
+	})^2
 	# compare them
 	expect_equal(d1, d2)
 	expect_length(d1, nrow(test2.MTX))
