@@ -33,6 +33,10 @@ rcpp_proportion_held <- function(x, y, y_weights) {
     .Call('raptr_rcpp_proportion_held', PACKAGE = 'raptr', x, y, y_weights)
 }
 
+rcpp_squared_distance <- function(x, y, y_weights) {
+    .Call('raptr_rcpp_squared_distance', PACKAGE = 'raptr', x, y, y_weights)
+}
+
 rcpp_sum_duplicates <- function(ids1, ids2, boundary) {
     .Call('raptr_rcpp_sum_duplicates', PACKAGE = 'raptr', ids1, ids2, boundary)
 }

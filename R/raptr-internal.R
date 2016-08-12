@@ -814,3 +814,14 @@ emptyPolySet<-function() {
     )
   )
 }
+
+
+# calculate squared distances betewen points
+urap.squared.distance <- function(x, y, y.weights=rep(1, nrow(y))) {
+	x <- as.matrix(x)
+	y <- as.matrix(y)
+	y.weights <- as.numeric(y.weights)
+	stopifnot(ncol(x)==ncol(x))
+	stopifnot(nrow(y)==length(y.weights))
+	rcpp_squared_distance(x, y, y.weights)
+}
