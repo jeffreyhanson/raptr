@@ -138,7 +138,6 @@ rasterizeGDAL<-function(x,y, field=NULL) {
 	return(gdal_rasterize(file.path(tempdir(), 'polys.shp'), file.path(tempdir(), 'rast.tif'), l="polys", a=field, output_Raster=TRUE)[[1]])
 }
 
-
 #' Blank raster
 #'
 #' This functions creates a blank raster based on the spatial extent of a Spatial object.
@@ -155,9 +154,18 @@ blank.raster<-function(x, res) {
 	# init
 	if (length(res)==1)
 		res=c(res, res)
+	# extract coordinates
+	if ((xmax(x)-xmin(x) <= res[1])) {
+		xpos <- c(xmin(x), res[1])
+	} else {
+		xpos<-seq(xmin(x), xmax(x)+(res[1]*(((xmax(x)-xmin(x)) %% res[1])!=0)), res[1])
+	}
+	if ((ymax(x)-ymin(x) <= res[2])) {
+		ypos <- c(ymin(x), res[2])
+	} else {
+		ypos<-seq(ymin(x), ymax(x)+(res[2]*(((ymax(x)-ymin(x)) %% res[2])!=0)), res[2])
+	}
 	# generate raster from sp
-	xpos<-seq(xmin(x), xmax(x)+res[1]*(((xmax(x)-xmax(x)) %% res[1])!=0), res[1])
-	ypos<-seq(ymin(x), ymax(x)+res[2]*(((ymax(x)-ymax(x)) %% res[2])!=0), res[2])
 	rast<-raster(xmn=min(xpos), xmx=max(xpos), ymn=min(ypos), ymx=max(ypos), nrow=length(ypos)-1, ncol=length(xpos)-1)
 	return(setValues(rast, 1))
 }
