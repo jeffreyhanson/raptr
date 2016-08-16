@@ -26,6 +26,7 @@ Imports:
     boot,
     grDevices,
     png,
+    RJSONIO,
     PBSmapping,
     graphics,
     stats,

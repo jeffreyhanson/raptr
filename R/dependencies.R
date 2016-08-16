@@ -91,6 +91,8 @@
 #' @importFrom RgoogleMaps PlotOnStaticMap
 #' @importFrom RgoogleMaps PlotPolysOnStaticMap
 
+#' @importFrom RJSIONIO toJSON
+
 #' @importFrom scales rescale
 #' @importFrom scales alpha
 
