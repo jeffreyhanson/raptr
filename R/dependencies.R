@@ -99,6 +99,8 @@
 #' @importFrom grDevices colorRamp
 #' @importFrom grDevices rgb
 
+#' @importFrom png readPNG
+
 #' @importFrom graphics layout
 #' @importFrom graphics legend
 #' @importFrom graphics mtext

@@ -25,6 +25,7 @@ Imports:
     utils,
     boot,
     grDevices,
+    png,
     PBSmapping,
     graphics,
     stats,
