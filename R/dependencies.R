@@ -85,13 +85,10 @@
 #' @importFrom RandomFields RFsimulate
 #' @importFrom RandomFields RMgauss
 #' @importFrom RandomFields RPgauss
-#' @importFrom RandomFieldsUtils RFoptions
 
 #' @importFrom RgoogleMaps GetMap.bbox
 #' @importFrom RgoogleMaps PlotOnStaticMap
 #' @importFrom RgoogleMaps PlotPolysOnStaticMap
-
-#' @importFrom RJSIONIO toJSON
 
 #' @importFrom scales rescale
 #' @importFrom scales alpha
@@ -100,8 +97,6 @@
 
 #' @importFrom grDevices colorRamp
 #' @importFrom grDevices rgb
-
-#' @importFrom png readPNG
 
 #' @importFrom graphics layout
 #' @importFrom graphics legend
