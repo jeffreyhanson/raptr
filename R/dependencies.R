@@ -85,6 +85,7 @@
 #' @importFrom RandomFields RFsimulate
 #' @importFrom RandomFields RMgauss
 #' @importFrom RandomFields RPgauss
+#' @importFrom RandomFieldsUtils RFoptions
 
 #' @importFrom RgoogleMaps GetMap.bbox
 #' @importFrom RgoogleMaps PlotOnStaticMap
