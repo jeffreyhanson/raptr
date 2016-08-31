@@ -91,6 +91,7 @@ Collate:
     'data.R'
     'rap.R'
     'raptr.R'
+    'rrap.proportion.held.R'
     'sim.pus.R'
     'sim.space.R'
     'sim.species.R'

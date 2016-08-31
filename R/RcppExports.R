@@ -33,6 +33,10 @@ rcpp_proportion_held <- function(x, y, y_weights) {
     .Call('raptr_rcpp_proportion_held', PACKAGE = 'raptr', x, y, y_weights)
 }
 
+rcpp_rrap_proportion_held <- function(pu_coordinates, pu_probabilities, dp_coordinates, dp_weights, failure_distance, maximum_r_level) {
+    .Call('raptr_rcpp_rrap_proportion_held', PACKAGE = 'raptr', pu_coordinates, pu_probabilities, dp_coordinates, dp_weights, failure_distance, maximum_r_level)
+}
+
 rcpp_squared_distance <- function(x, y, y_weights) {
     .Call('raptr_rcpp_squared_distance', PACKAGE = 'raptr', x, y, y_weights)
 }

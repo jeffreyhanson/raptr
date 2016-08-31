@@ -15,6 +15,7 @@
 #' @importFrom testthat expect_equal
 #' @importFrom testthat expect_gte
 #' @importFrom testthat expect_lte
+#' @importFrom testthat expect_length
 #' @importFrom testthat expect_identical
 #' @importFrom testthat expect_equal
 #' @importFrom testthat expect_is

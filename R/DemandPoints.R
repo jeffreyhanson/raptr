@@ -20,11 +20,11 @@ setClass("DemandPoints",
 
 		# check coords are not NA
 		expect_true(all(is.finite(c(object@coords))), info='argument to coords contains NA or non-finite values')
-		expect_true(nrow(object@coords)>1, info='argument to coords must have at least one row')
+		expect_true(nrow(object@coords)>0, info='argument to coords must have at least one row')
 		
 		# weights
 		expect_true(all(is.finite(object@weights)), info='argument to weights contains NA or non-finite values')
-		expect_true(length(object@weights)>1, info='argument to weights must have at least one element')
+		expect_true(length(object@weights)>0, info='argument to weights must have at least one element')
 		expect_true(all(object@weights>0), info='argument to weights must have positive numbers')
 
 		# cross-slot dependencies

@@ -17,10 +17,10 @@ setClass("PlanningUnitPoints",
 	validity=function(object) {
 		# coords
 		expect_true(all(is.finite(object@coords)), info='argument to coords contains NA or non-finite values')
-		expect_true(nrow(object@coords)>1, info='argument to coords must contain at least one row')
+		expect_true(nrow(object@coords)>0, info='argument to coords must contain at least one row')
 		# ids
 		expect_true(all(is.finite(object@ids)), info='argument to ids contains NA of non-finite values')
-		expect_true(length(object@ids)>1, info='argument to ids must contain at least one element')
+		expect_true(length(object@ids)>0, info='argument to ids must contain at least one element')
 		# cross checks
 		expect_equal(length(object@ids), nrow(object@coords), info='length of ids is not equal to number of rows in coordinates')
 		return(TRUE)

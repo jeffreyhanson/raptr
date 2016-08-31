@@ -79,7 +79,7 @@ calcReliableSpaceHeld<-function(w, p, maxr, pus) {
 		## main
 		# real pus
 		for (r in seq_len(maxr)) {
-			curr_value <- curr_value+(p[curr_pus[r]] * curr_prob * w[k,curr_pus[r]]);
+			curr_value <- curr_value+(p[curr_pus[r]] * curr_prob * w[k,curr_pus[r]])
 			curr_prob <- curr_prob*(1-p[curr_pus[r]])
 		}
 		# failure pu
@@ -181,7 +181,7 @@ calcReliableMetrics<-function(x, species, space, opts, solution=NULL) {
 		curr_df$pu,
 		x@attribute.spaces[[space]]@spaces[[species]]@planning.unit.points@ids
 	)])
-	
+		
 	## calculate metrics
 	spaceheld=calcReliableSpaceHeld(wdist_mtx, relative_probabilities, opts@max.r.level, relative_solution)
 	## exports

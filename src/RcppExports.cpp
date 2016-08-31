@@ -111,6 +111,22 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// rcpp_rrap_proportion_held
+double rcpp_rrap_proportion_held(Rcpp::NumericMatrix pu_coordinates, Rcpp::NumericVector pu_probabilities, Rcpp::NumericMatrix dp_coordinates, Rcpp::NumericVector dp_weights, double failure_distance, std::size_t maximum_r_level);
+RcppExport SEXP raptr_rcpp_rrap_proportion_held(SEXP pu_coordinatesSEXP, SEXP pu_probabilitiesSEXP, SEXP dp_coordinatesSEXP, SEXP dp_weightsSEXP, SEXP failure_distanceSEXP, SEXP maximum_r_levelSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type pu_coordinates(pu_coordinatesSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type pu_probabilities(pu_probabilitiesSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type dp_coordinates(dp_coordinatesSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type dp_weights(dp_weightsSEXP);
+    Rcpp::traits::input_parameter< double >::type failure_distance(failure_distanceSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type maximum_r_level(maximum_r_levelSEXP);
+    __result = Rcpp::wrap(rcpp_rrap_proportion_held(pu_coordinates, pu_probabilities, dp_coordinates, dp_weights, failure_distance, maximum_r_level));
+    return __result;
+END_RCPP
+}
 // rcpp_squared_distance
 std::vector<double> rcpp_squared_distance(Rcpp::NumericMatrix x, Rcpp::NumericMatrix y, Rcpp::NumericVector y_weights);
 RcppExport SEXP raptr_rcpp_squared_distance(SEXP xSEXP, SEXP ySEXP, SEXP y_weightsSEXP) {

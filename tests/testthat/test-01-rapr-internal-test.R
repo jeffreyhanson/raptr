@@ -22,6 +22,37 @@ test_that('space calculations (unreliable)', {
 	expect_equal((km$betweenss / km$totss), metrics$prop)
 })
 
+test_that('space calculations (reliable: 0%)', {
+	## create artificial space that has the planning units as the centroids
+	# data
+	data(sim_ru)
+	sim_rd <- spp.subset(sim_ru, 3L) %>% pu.subset(1L) %>% slot('data')
+	sim_rd@pu.species.probabilities$value <- 1
+	sim_rd@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points@coords <- matrix(colMeans(sim_rd@attribute.spaces[[1]]@spaces[[1]]@demand.points@coords), ncol=2)
+	sim_rd@attribute.spaces[[1]]@spaces[[1]]@demand.points@weights <- rep(1, nrow(sim_rd@attribute.spaces[[1]]@spaces[[1]]@demand.points@coords))
+	# calculate metrics
+	metrics <- calcReliableMetrics(sim_rd, 1, 1, RapReliableOpts(), solution=1)
+	## tests
+	# compare proportions
+	expect_equal(0, metrics$prop)
+})
+
+test_that('space calculations (reliable: 100%)', {
+	## create artificial space that has the planning units and the 
+	# data
+	data(sim_ru)
+	sim_rd <- spp.subset(sim_ru, 3) %>% slot('data')
+	sim_rd@pu.species.probabilities$value <- 1
+	sim_rd@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points@coords <- sim_rd@attribute.spaces[[1]]@spaces[[1]]@demand.points@coords
+	sim_rd@attribute.spaces[[1]]@spaces[[1]]@demand.points@weights <- rep(1, nrow(sim_rd@attribute.spaces[[1]]@spaces[[1]]@demand.points@coords))
+	# calculate metrics
+	metrics <- calcReliableMetrics(sim_rd, 1, 1, RapReliableOpts(), solution=1:100)
+	## tests
+	# compare proportions
+	expect_equal(1, metrics$prop)
+})
+
+
 test_that('rcpp_sum_duplicates', {
 	# create data
 	imat<-matrix(c(

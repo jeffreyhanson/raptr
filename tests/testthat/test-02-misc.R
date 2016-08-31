@@ -36,3 +36,21 @@ test_that('urap.proportion.held', {
 	# compare proportions
 	expect_equal((km$betweenss / km$totss), prop)
 })
+
+test_that('rrap.proportion.held', {
+	data(sim_ru)
+	sim_rd <- sim_ru %>% spp.subset(3L) %>% pu.subset(1:5) %>% dp.subset(1, 1, 10:11) %>% slot('data')	
+	# rrap.proportion.held
+	prop1 <- rrap.proportion.held(
+		sim_rd@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points@coords,
+		sim_rd@pu.species.probabilities$value,
+		sim_rd@attribute.spaces[[1]]@spaces[[1]]@demand.points@coords,
+		sim_rd@attribute.spaces[[1]]@spaces[[1]]@demand.points@weights,
+		0,
+		3L
+	)
+	# calcReliableMetrics
+	prop2 <- calcReliableMetrics(sim_rd, 1, 1, RapReliableOpts(failure.multiplier=0, max.r.level=3L))$prop
+	# compare proportions
+	expect_equal(prop1, prop2)
+})
