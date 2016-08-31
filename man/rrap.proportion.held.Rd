@@ -6,7 +6,7 @@
 \usage{
 rrap.proportion.held(pu.coordinates, pu.probabilities, dp.coordinates,
   dp.weights, failure.distance,
-  maximum.r.level = as.intger(length(pu.probabilities)))
+  maximum.r.level = as.integer(length(pu.probabilities)))
 }
 \arguments{
 \item{pu.coordinates}{\code{matrix} of planning unit coordinates.}
@@ -29,6 +29,6 @@ This is a convenience function to quickly calculate the proportion of variation 
 in a another set of points using the reliable formulation.
 }
 \examples{
-rrap.proportion.held(as.matrix(iris[1:2,-5]), runif(1:2), as.matrix(iris[1:5,-5]), runif(1:5))
+rrap.proportion.held(as.matrix(iris[1:2,-5]), runif(1:2), as.matrix(iris[1:5,-5]), runif(1:5), 10)
 }
 
