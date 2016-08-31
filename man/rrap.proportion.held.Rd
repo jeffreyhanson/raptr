@@ -29,6 +29,6 @@ This is a convenience function to quickly calculate the proportion of variation 
 in a another set of points using the reliable formulation.
 }
 \examples{
-rrap.proportion.held(iris[1:2,-5], runif(1:2), iris[1:5,-5], runif(1:5))
+rrap.proportion.held(as.matrix(iris[1:2,-5]), runif(1:2), as.matrix(iris[1:5,-5]), runif(1:5))
 }
 

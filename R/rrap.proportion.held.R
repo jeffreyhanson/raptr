@@ -11,8 +11,8 @@
 #' @return \code{numeric} value indicating the proportion of variation that the demand points explain in the planning units
 #' @export
 #' @examples
-#' rrap.proportion.held(iris[1:2,-5], runif(1:2), iris[1:5,-5], runif(1:5))
-rrap.proportion.held <- function(pu.coordinates, pu.probabilities, dp.coordinates, dp.weights, failure.distance, maximum.r.level=as.intger(length(pu.probabilities))) {
+#' rrap.proportion.held(as.matrix(iris[1:2,-5]), runif(1:2), as.matrix(iris[1:5,-5]), runif(1:5), 10)
+rrap.proportion.held <- function(pu.coordinates, pu.probabilities, dp.coordinates, dp.weights, failure.distance, maximum.r.level=as.integer(length(pu.probabilities))) {
 	# data integreity checks
 	expect_is(pu.coordinates, 'matrix')
 	expect_is(dp.coordinates, 'matrix')
