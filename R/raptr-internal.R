@@ -816,7 +816,7 @@ emptyPolySet<-function() {
 }
 
 
-# calculate squared distances betewen points
+# calculate squared distances between points
 urap.squared.distance <- function(x, y, y.weights=rep(1, nrow(y))) {
 	x <- as.matrix(x)
 	y <- as.matrix(y)
@@ -825,3 +825,30 @@ urap.squared.distance <- function(x, y, y.weights=rep(1, nrow(y))) {
 	stopifnot(nrow(y)==length(y.weights))
 	rcpp_squared_distance(x, y, y.weights)
 }
+
+# calculate distances between points using RRAP
+rrap.squared.distance <- function(pu.coordinates, pu.probabilities, dp.coordinates, dp.weights, failure.distance, maximum.r.level=as.integer(length(pu.probabilities))) {
+	# data integreity checks
+	expect_is(pu.coordinates, 'matrix')
+	expect_is(dp.coordinates, 'matrix')
+	expect_is(pu.probabilities, 'numeric')
+	expect_is(dp.weights, 'numeric')
+	expect_is(failure.distance, 'numeric')
+	expect_is(maximum.r.level, 'integer')
+	expect_length(failure.distance, 1)
+	expect_length(maximum.r.level, 1)
+	expect_equal(nrow(pu.coordinates), length(pu.probabilities))
+	expect_equal(nrow(dp.coordinates), length(dp.weights))
+	expect_equal(ncol(dp.coordinates), ncol(pu.coordinates))
+	expect_true(all(is.finite(c(dp.weights))))
+	expect_true(all(is.finite(c(pu.probabilities))))
+	expect_true(all(is.finite(c(pu.coordinates))))
+	expect_true(all(is.finite(c(dp.coordinates))))
+	expect_true(all(is.finite(c(failure.distance))))
+	expect_true(all(is.finite(c(maximum.r.level))))
+	expect_true(maximum.r.level <= nrow(pu.coordinates))
+	
+	# main processing
+	rcpp_rrap_squared_distance(pu.coordinates, pu.probabilities, dp.coordinates, dp.weights, failure.distance, maximum.r.level)
+}
+ 
