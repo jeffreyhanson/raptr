@@ -8,12 +8,16 @@
 #' @return \code{numeric} value indicating the proportion of variation that \code{x} explains in \code{y}
 #' @export
 #' @examples
-#' urap.proportion.held(iris[1:2,-5], iris[1:5,-5])
+#' urap.proportion.held(as.matrix(iris[1:2,-5]), as.matrix(iris[1:5,-5]))
 urap.proportion.held <- function(x, y, y.weights=rep(1, nrow(y))) {
-	x <- as.matrix(x)
-	y <- as.matrix(y)
-	y.weights <- as.numeric(y.weights)
-	stopifnot(ncol(x)==ncol(x))
-	stopifnot(nrow(y)==length(y.weights))
+	# data integreity checks
+	expect_is(x, 'matrix')
+	expect_is(y, 'matrix')
+	expect_is(y.weights, 'numeric')
+	expect_equal(nrow(y), length(y.weights))
+	expect_true(all(is.finite(c(x))))
+	expect_true(all(is.finite(c(y))))
+	expect_true(all(is.finite(c(y.weights))))
+	expect_true(all(y.weights >=  0))
 	rcpp_proportion_held(x, y, y.weights)
 }

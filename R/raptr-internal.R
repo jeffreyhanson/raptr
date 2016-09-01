@@ -818,11 +818,14 @@ emptyPolySet<-function() {
 
 # calculate squared distances between points
 urap.squared.distance <- function(x, y, y.weights=rep(1, nrow(y))) {
-	x <- as.matrix(x)
-	y <- as.matrix(y)
-	y.weights <- as.numeric(y.weights)
-	stopifnot(ncol(x)==ncol(x))
-	stopifnot(nrow(y)==length(y.weights))
+	expect_is(x, 'matrix')
+	expect_is(y, 'matrix')
+	expect_is(y.weights, 'numeric')
+	expect_equal(nrow(y), length(y.weights))
+	expect_true(all(is.finite(c(x))))
+	expect_true(all(is.finite(c(y))))
+	expect_true(all(is.finite(c(y.weights))))
+	expect_true(all(y.weights >=  0))
 	rcpp_squared_distance(x, y, y.weights)
 }
 
@@ -847,7 +850,11 @@ rrap.squared.distance <- function(pu.coordinates, pu.probabilities, dp.coordinat
 	expect_true(all(is.finite(c(failure.distance))))
 	expect_true(all(is.finite(c(maximum.r.level))))
 	expect_true(maximum.r.level <= nrow(pu.coordinates))
-	
+	expect_true(maximum.r.level >=  1)
+	expect_true(failure.distance >=  0)
+	expect_true(nrow(pu.coordinates)>=1)
+	expect_true(nrow(dp.coordinates)>=1)
+
 	# main processing
 	rcpp_rrap_squared_distance(pu.coordinates, pu.probabilities, dp.coordinates, dp.weights, failure.distance, maximum.r.level)
 }

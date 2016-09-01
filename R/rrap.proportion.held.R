@@ -32,6 +32,10 @@ rrap.proportion.held <- function(pu.coordinates, pu.probabilities, dp.coordinate
 	expect_true(all(is.finite(c(failure.distance))))
 	expect_true(all(is.finite(c(maximum.r.level))))
 	expect_true(maximum.r.level <= nrow(pu.coordinates))
+	expect_true(maximum.r.level >=  1)
+	expect_true(failure.distance >=  0)
+	expect_true(nrow(pu.coordinates)>=1)
+	expect_true(nrow(dp.coordinates)>=1)
 	
 	# main processing
 	rcpp_rrap_proportion_held(pu.coordinates, pu.probabilities, dp.coordinates, dp.weights, failure.distance, maximum.r.level)

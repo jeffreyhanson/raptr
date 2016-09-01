@@ -31,7 +31,7 @@ test_that("randomPoints function", {
 
 test_that('urap.proportion.held', {
 	km <- kmeans(iris[1:5,-5], centers=3)
-	prop <- urap.proportion.held(km$centers,iris[1:5,-5])
+	prop <- urap.proportion.held(km$centers, as.matrix(iris[1:5,-5]))
 	## tests
 	# compare proportions
 	expect_equal((km$betweenss / km$totss), prop)

@@ -21,6 +21,6 @@ This is a convenience function to quickly calculate the proportion of variation 
 in a another set of points using the unreliable formulation.
 }
 \examples{
-urap.proportion.held(iris[1:2,-5], iris[1:5,-5])
+urap.proportion.held(as.matrix(iris[1:2,-5]), as.matrix(iris[1:5,-5]))
 }
 
