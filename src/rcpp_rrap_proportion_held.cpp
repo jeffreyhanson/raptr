@@ -27,51 +27,44 @@ double rcpp_rrap_proportion_held(Rcpp::NumericMatrix pu_coordinates, Rcpp::Numer
 	dp_centroid_MTX = dp_coordinates_MTX.colwise().sum();
 	dp_centroid_MTX /= static_cast<double>(N_dp_INT);
 	// tss
-	double tss_DBL=0.0;
-	Eigen::ArrayXd tmp_AXD;
-	for (std::size_t i=0; i<N_dp_INT; ++i) {
-		tmp_AXD = dp_centroid_MTX - dp_coordinates_MTX.row(i);
-		tss_DBL += (tmp_AXD.square().sum() * dp_weights[i]);
-	}
+	Eigen::ArrayXd tmp_AXD(N_dp_INT);
+	tmp_AXD = (dp_coordinates_MTX.rowwise() - dp_centroid_MTX.row(0)).rowwise().squaredNorm().transpose();
+	tmp_AXD *= Rcpp::as<Eigen::ArrayXd>(dp_weights);
+	double tss_DBL = tmp_AXD.sum();
 	
 	/// calculate wss
 	double wss_DBL = 0.0;
 	double currProb;
 	double curr_value;
-	Eigen::ArrayXd tmp_AXD2(N_k_INT);
-	Eigen::ArrayXd tmp_AXD3(N_pu_INT);
+	Eigen::ArrayXd tmp_AXD2(N_pu_INT);
 	std::vector<size_t> pu_ids(N_pu_INT);
 	for (std::size_t j=0; j < N_dp_INT; ++j) {
 		// init
 		std::iota(pu_ids.begin(), pu_ids.end(), 0);
 		// calculate distances
-		for (std::size_t i=0; i < N_pu_INT; ++i) {
-			tmp_AXD2 = pu_coordinates_MTX.row(i) - dp_coordinates_MTX.row(j);
-			tmp_AXD3[i] = tmp_AXD2.square().sum();
-		}
-		tmp_AXD3 *= dp_weights[j];
+		tmp_AXD2 = (pu_coordinates_MTX.rowwise() - dp_coordinates_MTX.row(j)).rowwise().squaredNorm().transpose();
 		
 		// sort pus in order of distance
 		std::partial_sort(
 			pu_ids.begin(), pu_ids.begin()+maximum_r_level, pu_ids.end(),
 			[&](const std::size_t p1, const std::size_t p2) {
-				return(tmp_AXD3[p1] < tmp_AXD3[p2]);
+				return(tmp_AXD2[p1] < tmp_AXD2[p2]);
 			}
 		);
 		
 		// calculate expected weighted distances for real pus
 		currProb=1.0;
 		curr_value=0.0;
-		for (std::size_t r=0; r<maximum_r_level; ++r) {
-			curr_value+=(pu_probabilities[pu_ids[r]] * currProb * tmp_AXD3[pu_ids[r]]);
-			currProb*=(1.0 - pu_probabilities[pu_ids[r]]);
+		for (auto i = pu_ids.cbegin(); i<pu_ids.cbegin()+maximum_r_level; ++i) {
+			curr_value+=(pu_probabilities[*i] * currProb * tmp_AXD2[*i] * dp_weights[j]);
+			currProb*=(1.0 - pu_probabilities[*i]);
 		}
 		// calculate expected weighted distance for failure PU
 		curr_value+=(currProb*failure_distance);
 		// update value
 		wss_DBL += curr_value;
 	}
-	
+
 	//// Exports
 	// return proportion held
 	return (1.0 - (wss_DBL / tss_DBL));

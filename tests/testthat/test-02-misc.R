@@ -39,7 +39,7 @@ test_that('urap.proportion.held', {
 
 test_that('rrap.proportion.held', {
 	data(sim_ru)
-	sim_rd <- sim_ru %>% spp.subset(3L) %>% pu.subset(1:5) %>% dp.subset(1, 1, 10:11) %>% slot('data')	
+	sim_rd <- sim_ru %>% spp.subset(3L) %>% pu.subset(1:5) %>% dp.subset(1, 1, 10:11) %>% slot('data')
 	# rrap.proportion.held
 	prop1 <- rrap.proportion.held(
 		sim_rd@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points@coords,
