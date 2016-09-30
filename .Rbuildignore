@@ -5,4 +5,5 @@ NEWS.md
 gurobi.log
 cran-comments.md
 ^revdep$
+^docs$
 ^appveyor\.yml$
