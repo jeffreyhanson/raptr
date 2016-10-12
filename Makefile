@@ -10,7 +10,7 @@ compile:
 
 move:
 	mv inst/vign/raptr.md vignettes;\
-	mv -r inst/vign/figure vignettes/figure/
+	mv inst/vign/figure vignettes/figure/
 
 rmd2md:
 	cd vignettes;\
