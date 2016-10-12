@@ -1,6 +1,6 @@
 all: move rmd2md
 
-vignettes:
+vignette:
 	cd inst/vign;\
 	Rscript -e "knitr::knit('raptr.Rmd')"
 
