@@ -2,7 +2,7 @@ all: move rmd2md
 
 vignettes:
 	cd inst/vign;\
-	Rscript -e "library(knitr);knit('raptr.Rmd')"
+	Rscript -e "knitr::knit('raptr.Rmd')"
 
 move:
 	cp inst/vign/raptr.md vignettes;\
