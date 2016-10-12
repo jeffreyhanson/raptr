@@ -1,12 +1,16 @@
-all: move rmd2md
+all: compile move rmd2md
 
-vignette:
+clean:
+	rm -rf vignettes/raptr.Rmd
+	rm -rf vignettes/figures
+
+compile:
 	cd inst/vign;\
 	Rscript -e "knitr::knit('raptr.Rmd')"
 
 move:
-	cp inst/vign/raptr.md vignettes;\
-	cp -r inst/vign/figure vignettes/figure/
+	mv inst/vign/raptr.md vignettes;\
+	mv -r inst/vign/figure vignettes/figure/
 
 rmd2md:
 	cd vignettes;\
