@@ -2,8 +2,10 @@
 ^\.Rproj\.user$
 ^\.travis\.yml$
 NEWS.md
-gurobi.log
+^gurobi\.log$
 cran-comments.md
 ^revdep$
 ^docs$
 ^appveyor\.yml$
+^\.gitkeep$
+^Makefile$
