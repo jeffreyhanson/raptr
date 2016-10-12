@@ -20,81 +20,34 @@ Description: Biodiversity is in crisis. The overarching aim of conservation
     in a feasible amount of time, this package uses the commerical 'Gurobi' software
     package (obtained from <http://www.gurobi.com/>). Additinally, the 'rgurobi'
     package can be installed to provide extra functionality (obtained from <http://
-    github.com/paleo13/rgurobi>).
-Imports:
-    utils,
-    boot,
-    grDevices,
-    PBSmapping,
-    graphics,
-    stats,
-    scales,
-    shape,
-    Matrix,
-    adehabitatHR,
-    RgoogleMaps,
-    RandomFields,
-    RColorBrewer,
-    plyr,
-    parallel,
-    doParallel,
-    rgeos,
-    hypervolume,
-    ks,
-    gdalUtils,
-    mvtnorm,
-    ggplot2,
-    testthat
-Depends:
-    R(>= 3.1.0),
-    methods,
-    sp,
-    rgdal,
-    raster
-LinkingTo: Rcpp,
-    RcppEigen
+    github.com/jeffreyhanson/rgurobi>).
+Imports: utils, boot, grDevices, PBSmapping, graphics, stats, scales,
+        shape, Matrix, adehabitatHR, RgoogleMaps, RandomFields,
+        RColorBrewer, plyr, parallel, doParallel, rgeos, hypervolume,
+        ks, gdalUtils, mvtnorm, ggplot2, testthat
+Depends: R(>= 3.1.0), methods, sp, rgdal, raster
+LinkingTo: Rcpp, RcppEigen
 LazyData: true
 License: GPL-3
-URL: https://github.com/paleo13/raptr
-BugReports: https://github.com/paleo13/raptr/issues
+URL: https://github.com/jeffreyhanson/raptr
+BugReports: https://github.com/jeffreyhanson/raptr/issues
 VignetteBuilder: knitr
-Suggests:
-    knitr,
-    dplyr,
-    vegan,
-    gurobi,
-    rgurobi,
-    gridExtra,
-    rgl
+Suggests: knitr, dplyr, vegan, gurobi, rgurobi, gridExtra, rgl
 SystemRequirements: C++11
-Collate:
-    'dependencies.R'
-    'RcppExports.R'
-    'raptr-internal.R'
-    'generics.R'
-    'DemandPoints.R'
-    'misc.R'
-    'PlanningUnitPoints.R'
-    'AttributeSpace.R'
-    'AttributeSpaces.R'
-    'GurobiOpts.R'
-    'ManualOpts.R'
-    'calcSpeciesAverageInPus.R'
-    'calcBoundaryData.R'
-    'RapData.R'
-    'RapReliableOpts.R'
-    'RapResults.R'
-    'RapUnreliableOpts.R'
-    'RapUnsolved.R'
-    'RapSolved.R'
-    'SpatialPolygons2PolySet.R'
-    'data.R'
-    'rap.R'
-    'raptr.R'
-    'rrap.proportion.held.R'
-    'sim.pus.R'
-    'sim.space.R'
-    'sim.species.R'
-    'urap.proportion.held.R'
-    'zzz.R'
+Collate: 'dependencies.R' 'RcppExports.R' 'raptr-internal.R'
+        'generics.R' 'DemandPoints.R' 'misc.R' 'PlanningUnitPoints.R'
+        'AttributeSpace.R' 'AttributeSpaces.R' 'GurobiOpts.R'
+        'ManualOpts.R' 'calcSpeciesAverageInPus.R' 'calcBoundaryData.R'
+        'RapData.R' 'RapReliableOpts.R' 'RapResults.R'
+        'RapUnreliableOpts.R' 'RapUnsolved.R' 'RapSolved.R'
+        'SpatialPolygons2PolySet.R' 'data.R' 'rap.R' 'raptr.R'
+        'rrap.proportion.held.R' 'sim.pus.R' 'sim.space.R'
+        'sim.species.R' 'urap.proportion.held.R' 'zzz.R'
 RoxygenNote: 5.0.1
+NeedsCompilation: yes
+Packaged: 2016-10-12 05:54:05 UTC; jeff
+Author: Jeffrey O Hanson [aut, cre],
+  Jonathon R Rhodes [aut],
+  Hugh P Possingham [aut],
+  Richard A Fuller [aut]
+Maintainer: Jeffrey O Hanson <jeffrey.hanson@uqconnect.edu.au>
