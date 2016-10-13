@@ -1,6 +1,6 @@
 Package: raptr
 Type: Package
-Title: Representative and Adequate Prioritisation Toolkit in R
+Title: Representative and Adequate Prioritization Toolkit in R
 Version: 0.0.1
 Date: 2016-10-10
 Authors@R: c(person(c("Jeffrey", "O"), "Hanson", email='jeffrey.hanson@uqconnect.edu.au', role = c("aut", "cre")),
@@ -12,8 +12,8 @@ Description: Biodiversity is in crisis. The overarching aim of conservation
     areas are established to buffer species and preserve biodiversity processes.
     But resources are limited and so protected areas must be cost-effective. This
     package contains tools to generate plans for protected areas (prioritizations). 
-    Conservation planning data are used to construct an optimisation problem, which in turn
-    is then solved to yield prioritisations. To solve the optimisation problems
+    Conservation planning data are used to construct an optimisation problem, which
+    is then solved to yield prioritizations. To solve the optimisation problems
     in a feasible amount of time, this package uses the commercial 'Gurobi' software
     package (obtained from <http://www.gurobi.com/>). Additionally, the 'rgurobi'
     package can also be installed to provide extra functionality (obtained from <http://
