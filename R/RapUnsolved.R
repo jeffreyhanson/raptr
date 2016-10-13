@@ -27,6 +27,7 @@ setClass("RapUnsolved",
 #' @seealso \code{\link{RapReliableOpts-class}}, \code{\link{RapUnreliableOpts-class}}, \code{\link{RapData-class}}.
 #' @examples
 #' # load data
+#' \dontrun{
 #' data(cs_pus, cs_spp)
 #' # create inputs for RapUnsolved
 #' ro <- RapUnreliableOpts()
@@ -34,6 +35,7 @@ setClass("RapUnsolved",
 #' # create RapUnsolved object
 #' ru <- RapUnsolved(ro, rd)
 #' print(ru)
+#' }
 RapUnsolved<-function(opts, data) {
 	return(new("RapUnsolved", opts=opts, data=data))
 }

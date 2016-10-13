@@ -4,7 +4,7 @@ raptr
 [![Travis Build Status](https://img.shields.io/travis/jeffreyhanson/raptr/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/jeffreyhanson/raptr)
 [![AppVeyor Build Status](https://img.shields.io/appveyor/ci/jeffreyhanson/raptr/master.svg?label=Windows)](https://ci.appveyor.com/project/jeffreyhanson/raptr)
 [![Coverage Status](https://codecov.io/github/jeffreyhanson/raptr/coverage.svg?branch=master)](https://codecov.io/github/jeffreyhanson/raptr?branch=master)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/raptr)](http://cran.r-project.org/package=raptr)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/raptr)](http://CRAN.R-project.org/package=raptr)
 
 #### Biodiversity is in crisis. The overarching aim of conservation is to preserve biodiversity patterns and processes. To this end, protected areas are established to buffer species and preserve biodiversity processes. But resources are limited and so protected areas must be cost-effective. This package contains functions to generate plans for protected areas. Conservation planning data are used to construct an optimisation problem, which in turn is then solved to yield prioritisations. Amount-based targets can be used to identify prioritisations that contain an adequate amount of the target species. Additionally, space-based targets can be used to ensure that a representative sample of the target species are preserved. To solve the optimisation problems in a feasible amount of time, this package uses the commerical 'Gurobi' software package (obtained from <http://www.gurobi.com/>).
 

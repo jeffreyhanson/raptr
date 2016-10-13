@@ -43,11 +43,13 @@ make.RapData(pus, species, spaces = NULL, amount.target = 0.2,
 This function prepares spatially explicit planning unit, species data, and landscape data layers for RAP processing.
 }
 \examples{
+\dontrun{
 # load data
 data(cs_pus, cs_spp, cs_space)
 # make RapData object using the 1st 10 planning units
 x <- make.RapData(cs_pus[1:10,], cs_spp, cs_space, include.geographic.space=TRUE)
 print(x)
+}
 }
 \seealso{
 \code{\link{RapData-class}}, \code{\link{RapData}}.

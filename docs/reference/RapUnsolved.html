@@ -103,21 +103,15 @@
     
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load data</span>
-<span class='fu'>data</span>(<span class='no'>cs_pus</span>, <span class='no'>cs_spp</span>)
-<span class='co'># create inputs for RapUnsolved</span>
-<span class='no'>ro</span> <span class='kw'>&lt;-</span> <span class='fu'>RapUnreliableOpts</span>()
-<span class='no'>rd</span> <span class='kw'>&lt;-</span> <span class='fu'>make.RapData</span>(<span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,], <span class='no'>cs_spp</span>, <span class='kw'>NULL</span>, <span class='kw'>include.geographic.space</span><span class='kw'>=</span><span class='fl'>TRUE</span>,<span class='kw'>n.demand.points</span><span class='kw'>=</span><span class='fl'>5L</span>)
-<span class='co'># create RapUnsolved object</span>
-<span class='no'>ru</span> <span class='kw'>&lt;-</span> <span class='fu'>RapUnsolved</span>(<span class='no'>ro</span>, <span class='no'>rd</span>)
-<span class='fu'>print</span>(<span class='no'>ru</span>)</div><div class='output co'>#&gt; RapUnsolved object
-#&gt; 
-#&gt; Parameters
-#&gt;   BLM: 0 
-#&gt; Data
-#&gt;   Number of planning units: 10 
-#&gt;   Number of species: 4 
-#&gt;   Number of attribute spaces: 1 
-#&gt; </div></pre>
+<span class='co'>## Not run: ------------------------------------</span>
+<span class='co'># data(cs_pus, cs_spp)</span>
+<span class='co'># # create inputs for RapUnsolved</span>
+<span class='co'># ro &lt;- RapUnreliableOpts()</span>
+<span class='co'># rd &lt;- make.RapData(cs_pus[1:10,], cs_spp, NULL, include.geographic.space=TRUE,n.demand.points=5L)</span>
+<span class='co'># # create RapUnsolved object</span>
+<span class='co'># ru &lt;- RapUnsolved(ro, rd)</span>
+<span class='co'># print(ru)</span>
+<span class='co'>## ---------------------------------------------</span></div></pre>
   </div>
   <div class="col-md-3">
   </div>

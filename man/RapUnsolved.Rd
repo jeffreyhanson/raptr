@@ -19,6 +19,7 @@ This function creates a \code{RapUnsolved} object using a \code{GurobiOpts}, a \
 }
 \examples{
 # load data
+\dontrun{
 data(cs_pus, cs_spp)
 # create inputs for RapUnsolved
 ro <- RapUnreliableOpts()
@@ -26,6 +27,7 @@ rd <- make.RapData(cs_pus[1:10,], cs_spp, NULL, include.geographic.space=TRUE,n.
 # create RapUnsolved object
 ru <- RapUnsolved(ro, rd)
 print(ru)
+}
 }
 \seealso{
 \code{\link{RapReliableOpts-class}}, \code{\link{RapUnreliableOpts-class}}, \code{\link{RapData-class}}.

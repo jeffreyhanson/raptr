@@ -124,15 +124,13 @@
     </div>
     
     <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># load data</span>
-<span class='fu'>data</span>(<span class='no'>cs_pus</span>, <span class='no'>cs_spp</span>, <span class='no'>cs_space</span>)
-<span class='co'># make RapData object using the 1st 10 planning units</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>make.RapData</span>(<span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,], <span class='no'>cs_spp</span>, <span class='no'>cs_space</span>, <span class='kw'>include.geographic.space</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='fu'>print</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; RapData object.
-#&gt;   Number of planning units: 10 
-#&gt;   Number of species: 4 
-#&gt;   Number of attribute spaces: 2 
-#&gt; </div></pre>
+    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
+<span class='co'># # load data</span>
+<span class='co'># data(cs_pus, cs_spp, cs_space)</span>
+<span class='co'># # make RapData object using the 1st 10 planning units</span>
+<span class='co'># x &lt;- make.RapData(cs_pus[1:10,], cs_spp, cs_space, include.geographic.space=TRUE)</span>
+<span class='co'># print(x)</span>
+<span class='co'>## ---------------------------------------------</span></div></pre>
   </div>
   <div class="col-md-3">
   </div>

@@ -226,11 +226,13 @@ RapData<-function(pu, species, targets, pu.species.probabilities, attribute.spac
 #' @seealso \code{\link{RapData-class}}, \code{\link{RapData}}.
 #' @export make.RapData
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(cs_pus, cs_spp, cs_space)
 #' # make RapData object using the 1st 10 planning units
 #' x <- make.RapData(cs_pus[1:10,], cs_spp, cs_space, include.geographic.space=TRUE)
 #' print(x)
+#' }
 make.RapData<-function(pus, species, spaces=NULL,
 	amount.target=0.2, space.target=0.2, n.demand.points=100L, kernel.method=c('ks', 'hypervolume')[1], quantile=0.5,
 	species.points=NULL, n.species.points=ceiling(0.2*cellStats(species, 'sum')), include.geographic.space=TRUE, 
