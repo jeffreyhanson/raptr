@@ -2,7 +2,6 @@ Submission to CRAN comments
 ===========================
 
 # Test environments
-* ubuntu 14.04, R 3.3.1 (local system)
 * ubuntu 12.04, R 3.3.1 (travis-ci)
 * Mac OSX 10.9.5, R 3.3.1 (travis-ci)
 * Windows Server 2012 R2 (x64), R 3.3.1 (appveyor)
