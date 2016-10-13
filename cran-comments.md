@@ -1,13 +1,18 @@
-## Test environments
+Submission to CRAN comments
+===========================
+
+# Test environments
 * ubuntu 14.04, R 3.3.1 (local system)
 * ubuntu 12.04, R 3.3.1 (travis-ci)
 * Mac OSX 10.9.5, R 3.3.1 (travis-ci)
-* Windows Server 2012 R2 (x64) (appveyor)
+* Windows Server 2012 R2 (x64), R 3.3.1 (appveyor)
+* Windows Server 2008 (x64), R 3.3.1 (win-builder)
+* Windows Server 2008 (x64), R 3.4.0 (win-builder)
 
-## R CMD check results
+# R CMD check results
 There were no ERRORs or WARNINGs.
 
-There were 3 NOTEs
+There were 4 NOTEs
 
 * checking CRAN incoming feasibility ... NOTE
   Maintainer: 'Jeffrey O Hanson <jeffrey.hanson@uqconnect.edu.au>'
@@ -34,12 +39,18 @@ There were 3 NOTEs
   +data: The ./data directory contains case-study data for a vignette. Although a separate package could be created to store the case-study data, this
   seems unnecessary because the data sets are used in both package testing in the vignette. I would prefer to keep the data sets in this package for simplicity.
   
-  + doc: The documentation for this package is comprehensive. It contains a html vignette that provides several detailed examples on how to use it.
+  + doc: The documentation for this package is comprehensive. It contains a html vignette with several detailed examples.
   
   +libs: To improve performance, many functions in the package are written in C++. This has resulted in a large ./libs folder. The ./libs folder could be reduced
   in size by rewriting the functions in R, however, this would severely reduce the usability of the package. I would prefer to keep the C++ functions and the
   large ./libs folder.
 
-## Downstream dependencies
+* checking files in 'vignettes' ... NOTE
+  The following directory looks like a leftover from 'knitr':
+  'figure'
+  
+  The vignette uses packages listed under 'Suggests' that are not available on CRAN. Since CRAN attempts to build package vignettes during the checking process, this would normally result in an ERROR. To avoid this, I have adopted the method used by Scott Chamberlain (eg. in the elastic R package) to pre-compile Rmarkdown vignettes as regular markdown documents on my computer.
+
+# Downstream dependencies
 This package is not present on CRAN and therefore has no packages depending on it. As a consequence, there were no issues detected when running devtools::revdep_check().
 The results of this check are in ./revdep

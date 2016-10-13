@@ -12,7 +12,7 @@ NULL
 #' @slot best \code{integer} with index of best solution.
 #' @slot logging.file \code{character} Gurobi log files.
 #' @slot .cache \code{environment} used to store extra data.
-#' @details The \code{summary} table follows Marxan conventions (summary.dat in \url{http://www.uq.edu.au/marxan/tutorial/module5.html}). The columns are:
+#' @details The \code{summary} table follows Marxan conventions (summary.dat in \url{http://marxan.net/downloads/uq_marxan_web_2/module5.html}). The columns are:
 #' \tabular{cl}{
 #' \code{Run_Number}
 #' \tab The index of each solution in the object. \cr
@@ -105,7 +105,7 @@ setClass("RapResults",
 #' @param space.held \code{matrix} with the poportion of attribute space sampled for each species in each solution. 
 #' @param logging.file \code{character} Gurobi log files.
 #' @param .cache \code{environmental} used to cache calculations.
-#' @details The \code{summary} table follows Marxan conventions (summary.dat in \url{http://www.uq.edu.au/marxan/tutorial/module5.html}). The columns are:
+#' @details The \code{summary} table follows Marxan conventions (summary.dat in \url{http://marxan.net/downloads/uq_marxan_web_2/module5.html}). The columns are:
 #' \tabular{cl}{
 #' \code{Run_Number}
 #' \tab The index of each solution in the object. \cr

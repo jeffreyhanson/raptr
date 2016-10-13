@@ -9,4 +9,3 @@ cran-comments.md
 ^appveyor\.yml$
 .gitkeep
 ^Makefile$
-vignettes/figure
