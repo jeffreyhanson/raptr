@@ -1,4 +1,4 @@
-all: compile move rmd2md
+all: rmd html
 
 clean:
 	rm -rf vignettes/raptr.Rmd
@@ -8,11 +8,16 @@ compile:
 	cd inst/vign;\
 	Rscript -e "knitr::knit('raptr.Rmd')"
 
-move:
+move: compile
 	mv inst/vign/raptr.md vignettes;\
 	mv inst/vign/figure vignettes/figure/
 
-rmd2md:
+rmd: move
 	cd vignettes;\
 	mv raptr.md raptr.Rmd
 
+html: move
+	cd vignettes;\
+	Rscript -e "render('raptr.Rmd')"
+	mv vignettes/raptr.html
+	mv inst/doc/raptr.html
