@@ -36,7 +36,7 @@ There were 4 NOTEs
   sub-directories of 1Mb or more:
     data   4.4Mb
     doc    4.1Mb
-    libs   9.2Mb
+    libs   13.0Mb
 
   + _data: The ./data directory contains case-study data for a vignette. Although a separate package could be created to store the case-study data, this
   seems unnecessary because the data sets are used in both package testing in the vignette. I would prefer to keep the data sets in this package for simplicity._
