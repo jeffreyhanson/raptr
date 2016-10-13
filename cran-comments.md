@@ -1,10 +1,10 @@
-Submission to CRAN comments
-===========================
+Comments for submission to CRAN 
+===============================
 
 # Test environments
-* (ubuntu 12.04, R 3.3.1 (travis-ci))[https://travis-ci.org/jeffreyhanson/raptr/builds]
-* (Mac OSX 10.9.5, R 3.3.1 (travis-ci))[https://travis-ci.org/jeffreyhanson/raptr/builds]
-* (Windows Server 2012 R2 (x64), R 3.3.1 (appveyor)[https://ci.appveyor.com/project/jeffreyhanson/raptr]
+* [ubuntu 12.04, R 3.3.1 (travis-ci)](https://travis-ci.org/jeffreyhanson/raptr/builds)
+* [Mac OSX 10.9.5, R 3.3.1 (travis-ci](https://travis-ci.org/jeffreyhanson/raptr/builds)
+* [Windows Server 2012 R2 (x64), R 3.3.1 (appveyor)](https://ci.appveyor.com/project/jeffreyhanson/raptr)
 * Windows Server 2008 (x64), R 3.3.1 (win-builder)
 * Windows Server 2008 (x64), R 3.4.0 (win-builder)
 
@@ -20,7 +20,7 @@ There were 4 NOTEs
   Possibly mis-spelled words in DESCRIPTION:
     prioritizations (14:67, 16:29)
     
-  _The appearance of this note can be attributed to two reasons. First, this is my first submission to CRAN. Second, the spell-checker used does not recognise the "prioritizations" as a word. This is a commonly used word in conservation science, (for instance it is present in the title of this paper)[http://onlinelibrary.wiley.com/doi/10.1111/acv.12222/full], and not a mis-spelling on my part._
+  _The appearance of this note can be attributed to two reasons. First, this is my first submission to CRAN. Second, the spell-checker used does not recognize the "prioritizations" as a word. This is a commonly used word in conservation science, [for instance it is present in the title of this paper](http://onlinelibrary.wiley.com/doi/10.1111/acv.12222/full), and not a mis-spelling on my part._
   
 * checking package dependencies ... NOTE
   package suggested but not available for checking: 'gurobi', 'rgurobi'
@@ -51,7 +51,7 @@ There were 4 NOTEs
   The following directory looks like a leftover from 'knitr':
   'figure'
   
-  _The vignette uses packages listed under 'Suggests' that are not available on CRAN. Since CRAN attempts to build package vignettes during the checking process, this would normally result in an ERROR. To avoid this, I have adopted the method used by Scott Chamberlain (eg. in the elastic R package) to pre-compile Rmarkdown vignettes as regular markdown documents on my computer._
+  _The vignette uses packages listed under 'Suggests' that are not available on CRAN. Since CRAN attempts to build package vignettes during the checking process, this would normally result in an ERROR. To avoid this, I have adopted the method used by Scott Chamberlain (eg. in the [elastic R package](https://github.com/ropensci/elastic) to pre-compile Rmarkdown vignettes as regular markdown documents on my computer._
 
 # Downstream dependencies
 This package is not present on CRAN and therefore has no packages depending on it. As a consequence, there were no issues detected when running devtools::revdep_check().
