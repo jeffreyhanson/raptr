@@ -35,12 +35,12 @@ There were 4 NOTEs
     doc    4.1Mb
     libs   9.2Mb
 
-  +data: The ./data directory contains case-study data for a vignette. Although a separate package could be created to store the case-study data, this
+  + data: The ./data directory contains case-study data for a vignette. Although a separate package could be created to store the case-study data, this
   seems unnecessary because the data sets are used in both package testing in the vignette. I would prefer to keep the data sets in this package for simplicity.
   
   + doc: The documentation for this package is comprehensive. It contains a html vignette with several detailed examples.
   
-  +libs: To improve performance, many functions in the package are written in C++. This has resulted in a large ./libs folder. The ./libs folder could be reduced
+  + libs: To improve performance, many functions in the package are written in C++. This has resulted in a large ./libs folder. The ./libs folder could be reduced
   in size by rewriting the functions in R, however, this would severely reduce the usability of the package. I would prefer to keep the C++ functions and the
   large ./libs folder.
 
