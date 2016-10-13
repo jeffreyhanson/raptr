@@ -16,7 +16,7 @@ rmd: move
 	cd vignettes;\
 	mv raptr.md raptr.Rmd
 
-html: move
+html: rmd
 	cd vignettes;\
 	Rscript -e "render('raptr.Rmd')"
 	mv vignettes/raptr.html
