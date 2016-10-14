@@ -76,8 +76,14 @@
 <div class="row">
   <div class="col-md-9">
     
-    <p>Biodiversity is in crisis. The overarching aim of conservation is to preserve biodiversity patterns and processes. To this end, protected areas are established to buffer species and preserve biodiversity processes. But resources are limited and so protected areas must be cost-effective. This package contains functions to generate plans for protected areas. Conservation planning data are used to construct an optimisation problem, which in turn is then solved to yield prioritisations. Amount-based targets can be used to identify prioritisations that contain an adequate amount of the target species. Additionally, space-based targets can be used to ensure that a representative sample of the target species is preserved. To solve the optimisation problems in a feasible amount of time, this package uses the commerical &#39;Gurobi&#39; software package (obtained from &lt;http://www.gurobi.com/&gt;).
-The main classes used in this package are used to store input data and prioritisations:
+    <p>Biodivesity is in crisis. The overarching aim of conservation is to preserve biodiversity patterns and processes. To this end, protected areas are established to buffer species and preserve biodiversity processes. But resources are limited and so protected areas must be cost-effective. This package contains tools to generate plans for protected areas (prioritizations). Conservation planning data are used to construct an optimisation problem, which is then solved to yield prioritizations. To solve the optimisation problems in a feasible amount of time, this package uses the commercial &#39;Gurobi&#39; software package (obtained from &lt;http://www.gurobi.com/&gt;). Additionally, the &#39;rgurobi&#39; package can also be installed to provide extra functionality (obtained from &lt;http://github.com/jeffreyhanson/rgurobi&gt;).</p>
+    
+
+        
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>The main classes used in this package are used to store input data and prioritisations:
 <ul>
 <li> <code>GurobiOpts-class</code>: parameters for solving optimisation problems using Gurobi.
   </li>
@@ -94,12 +100,6 @@ The main classes used in this package are used to store input data and prioritis
 <li> <code>RapSolved-class</code>: contains all the input data, parameters and output data. This class contains all the objects in a <code>RapUnsolved</code> object and also a <code>RapResults-class</code> object.
 </li>
 </ul></p>
-    
-
-        
-    <div class="Details">
-      <h2>Details</h2>
-
       <p>Type <code>vignette(&#39;raptr&#39;)</code> for a tutorial on how to use this package.</p>
     </div>
       </div>
