@@ -37,7 +37,7 @@ spp.plot(x, species, ...)
 
 \item{basemap}{\code{character} object indicating the type of basemap to use (see \code{link{basemap}}). Use either 'none', 'roadmap', 'mobile', 'satellite', 'terrain', 'hybrid', 'mapmaker-roadmap', 'mapmaker-hybrid'. Defaults to 'none'.}
 
-\item{alpha}{\code{numeric} value to indicate how transparent the planning unit colors shoud be.}
+\item{alpha}{\code{numeric} value to indicate how transparent the planning unit colors should be.}
 
 \item{grayscale}{\code{logical} should the basemap be gray-scaled?}
 

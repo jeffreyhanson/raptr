@@ -38,7 +38,7 @@ setClass("DemandPoints",
 #' This function creates a new DemandPoints object
 #'
 #' @param coords \code{matrix} of coordinates for each demand point.
-#' @param weights \code{numeric} weights for each demand poont.
+#' @param weights \code{numeric} weights for each demand point.
 #' @seealso \code{\link{DemandPoints-class}}
 #' @export
 #' @examples
@@ -67,7 +67,7 @@ DemandPoints<-function(coords, weights) {
 #' as random points inside the volume. A kernel is fit to the species records and used to predict the density at each of the demand points.
 #' By using 'ks' as an argument in \code{kernel.method}, the volume is fit as a minimum convex polygon using \code{\link[adehabitatHR]{mcp}} and 
 #' \code{\link[ks]{kde}} is used to fit the kernel. Note this can only be used when the data is low-dimensional (d<3). By using
-#' 'hypervolume' as an argument, the \code{\link[hypervolume]{hypervolume}} function is used. This can be used for hyer-dimensional data.
+#' 'hypervolume' as an argument, the \code{\link[hypervolume]{hypervolume}} function is used. This can be used for hyper-dimensional data.
 #' @seealso \code{\link[hypervolume]{hypervolume}}, \code{\link[ks]{kde}}, \code{\link[adehabitatHR]{mcp}}.
 #' @export
 #' @examples

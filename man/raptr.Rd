@@ -6,7 +6,9 @@
 \alias{raptr-package}
 \title{raptr: Representative and Adequate Prioritisation Toolkit in R}
 \description{
-Biodiversity is in crisis. The overarching aim of conservation is to preserve biodiversity patterns and processes. To this end, protected areas are established to buffer species and preserve biodiversity processes. But resources are limited and so protected areas must be cost-effective. This package contains functions to generate plans for protected areas. Conservation planning data are used to construct an optimisation problem, which in turn is then solved to yield prioritisations. Amount-based targets can be used to identify prioritisations that contain an adequate amount of the target species. Additionally, space-based targets can be used to ensure that a representative sample of the target species is preserved. To solve the optimisation problems in a feasible amount of time, this package uses the commerical 'Gurobi' software package (obtained from <http://www.gurobi.com/>).
+Biodivesity is in crisis. The overarching aim of conservation is to preserve biodiversity patterns and processes. To this end, protected areas are established to buffer species and preserve biodiversity processes. But resources are limited and so protected areas must be cost-effective. This package contains tools to generate plans for protected areas (prioritizations). Conservation planning data are used to construct an optimisation problem, which is then solved to yield prioritizations. To solve the optimisation problems in a feasible amount of time, this package uses the commercial 'Gurobi' software package (obtained from <http://www.gurobi.com/>). Additionally, the 'rgurobi' package can also be installed to provide extra functionality (obtained from <http://github.com/jeffreyhanson/rgurobi>).
+}
+\details{
 The main classes used in this package are used to store input data and prioritisations:
 \itemize{
   \item \code{\link{GurobiOpts-class}}: parameters for solving optimisation problems using Gurobi.
@@ -17,8 +19,7 @@ The main classes used in this package are used to store input data and prioritis
   \item \code{\link{RapResults-class}}: prioritisations and summary statistics on their performance.
   \item \code{\link{RapSolved-class}}: contains all the input data, parameters and output data. This class contains all the objects in a \code{\link{RapUnsolved}} object and also a \code{\link{RapResults-class}} object.
 }
-}
-\details{
+
 Type \code{vignette('raptr')} for a tutorial on how to use this package.
 }
 

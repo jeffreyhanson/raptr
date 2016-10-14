@@ -2,7 +2,7 @@
 % Please edit documentation in R/urap.proportion.held.R
 \name{urap.proportion.held}
 \alias{urap.proportion.held}
-\title{Proportion held using unrelible RAP formulation.}
+\title{Proportion held using unreliable RAP formulation.}
 \usage{
 urap.proportion.held(x, y, y.weights = rep(1, nrow(y)))
 }

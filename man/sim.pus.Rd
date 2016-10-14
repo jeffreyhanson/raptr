@@ -10,11 +10,11 @@ sim.pus(n, xmn = -sqrt(n)/2, xmx = sqrt(n)/2, ymn = -sqrt(n)/2,
 \arguments{
 \item{n}{\code{integer} number of planning units. \code{sqrt(n)} must yield a valid number.}
 
-\item{xmn}{\code{numeric} value for minimim x-coordinate.}
+\item{xmn}{\code{numeric} value for minimum x-coordinate.}
 
 \item{xmx}{\code{numeric} value for maximum x-coordinate.}
 
-\item{ymn}{\code{numeric} value for minimim y-coordinate.}
+\item{ymn}{\code{numeric} value for minimum y-coordinate.}
 
 \item{ymx}{\code{numeric} value for maximum y-coordinate.}
 }

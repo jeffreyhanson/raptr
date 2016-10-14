@@ -37,11 +37,11 @@ The \code{summary} table follows Marxan conventions (summary.dat in \url{http://
 \describe{
 \item{\code{summary}}{\code{data.frame} with summary information on solutions.}
 
-\item{\code{selections}}{\code{matrix} with binary selections. The cell \eqn{x_{ij}} denotes if planning unit \eqn{j} is selected in the \eqn{i}'th solutuion.}
+\item{\code{selections}}{\code{matrix} with binary selections. The cell \eqn{x_{ij}} denotes if planning unit \eqn{j} is selected in the \eqn{i}'th solution}
 
 \item{\code{amount.held}}{\code{matrix} with the amount held for each species in each solution.}
 
-\item{\code{space.held}}{\code{matrix} with the poportion of attribute space sampled for each species in each solution.}
+\item{\code{space.held}}{\code{matrix} with the proportion of attribute space sampled for each species in each solution.}
 
 \item{\code{best}}{\code{integer} with index of best solution.}
 

@@ -9,7 +9,7 @@ NULL
 #' If argument set to \code{SpatialPolygons} or \code{SpatialPolygonsDataFrame}, this will be converted to PolySet before processing.
 #'
 #' @param x \code{PolySet}, \code{SpatialPolygons} or \code{SpatialPolyognsDataFrame} object.
-#' @param tol \code{numeric} to specify precision of calculations (ie. how far apart do vertices have to be to be considered different).
+#' @param tol \code{numeric} to specify precision of calculations (that is, how far apart do vertices have to be to be considered different).
 #' @param length.factor \code{numeric} to scale boundary lengths.
 #' @param edge.factor \code{numeric} to scale boundary lengths for edges that do not have any neighbors, such as those that occur along the margins.
 #' @param ... not used.

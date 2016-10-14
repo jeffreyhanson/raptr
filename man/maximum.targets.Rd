@@ -20,7 +20,7 @@ maximum.targets(x, verbose)
 \description{
 This function accepts a \code{RapUnsolved} object and returns a \code{data.frame} containing the
 amount-based and space-based targets for each species and attribute space. These are calculated using a
-prioritization that contains all the avaliable planning units. Note that the maximum amount-based targets are always 1.
+prioritisation that contains all the available planning units. Note that the maximum amount-based targets are always 1.
 }
 \examples{
 # load RapSolved objects

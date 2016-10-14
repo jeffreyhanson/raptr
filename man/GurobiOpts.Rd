@@ -21,7 +21,7 @@ GurobiOpts(Threads = 1L, MIPGap = 0.1, Method = 0L, Presolve = 2L,
 
 \item{NumberSolutions}{\code{integer} number of solutions to generate. Defaults to 1L.}
 
-\item{MultipleSolutionsMethod}{\code{character} name of method to obtain multiple solutions \code{NumberSolutions} > 1. Avalilable options are 'benders.cuts' and 'solution.pool'. Defaults to 'benders.cuts'. Note that the \code{rgurobi} package must be to use the 'solution.pool' method.}
+\item{MultipleSolutionsMethod}{\code{character} name of method to obtain multiple solutions \code{NumberSolutions} > 1. Available options are 'benders.cuts' and 'solution.pool'. Defaults to 'benders.cuts'. Note that the \code{rgurobi} package must be to use the 'solution.pool' method.}
 }
 \value{
 \code{GurobiOpts} object

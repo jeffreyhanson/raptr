@@ -5,7 +5,7 @@
 #' and the probability that they are occupied by the species. Note that methodology is not encouraged for real-world conservation planning.
 #' The species were simulated to represent different simplified versions of species distributions encountered:
 #' \itemize{
-#'	\item uniform: This species has an equal probability (0.5) of occuring in all planning units.
+#'	\item uniform: This species has an equal probability (0.5) of occurring in all planning units.
 #'	\item normal: This species has a single range-core where it is most likely to be found. It is less likely to be found in areas further away from the centre of its range.
 #'	\item bimodal: This species has two distinct ecotypes. Each ecotype has its own range cores and range marginal areas.
 #' }
@@ -40,8 +40,6 @@ NULL
 #' @rdname simulated_data
 "sim_rs"
 
-
-#### remove sim_rs
 # @rdname simulated_data
 #"sim_rs"
 
@@ -50,7 +48,7 @@ NULL
 #' This dataset contains data to generate example prioritisations for the pale-headed Rosella (\emph{Platycercus adscitus}) in Queensland, Australia. Specific objects in the dataset include:
 #' \itemize{
 #'	\item cs_pus: \code{SpatialPolygonsDataFrame} planning units. The units were generated as \eqn{30km^2} squares across the species' range, and then clipped to the Queensland, Australia (using data obtained from the \href{Australia Bureau of Statistics}{http://www.abs.gov.au/ausstats/abs@@.nsf/mf/1259.0.30.001?OpenDocument}). They were then overliad with Australia's protected area network (obtained from the World Database on Protected Areas (WDPA) at \url{http://www.protectedplanet.net/}). This attribute table has 3 fields. The 'area' field contains the units' area, the 'cost' field is set to 1 for all units, and the 'status' filed indicates if 50\% or more of the units' extent is covered by protected areas.
-#'	\item cs_spp: \code{RasterLayer} probability distribution map for the \emph{P. adscitus} clipped to Queensland, Australia. This map was dervived from records in the BirdLife Altas Database (\url{http://birdata.com.au/}).
+#'	\item cs_spp: \code{RasterLayer} probability distribution map for the \emph{P. adscitus} clipped to Queensland, Australia. This map was derived from records obtained from The Atlas of Living Australia (\url{http://ala.org.au/}).
 #'	\item cs_space: \code{RasterStack} describing broad-scale variation across Queensland. containing the projections of the first two axes from a annual precipitation data across the species range (obtained from \url{http://www.worldclim.org/} as BIO12, and resampled to \eqn{10km^2} resolution).
 #' }
 #'

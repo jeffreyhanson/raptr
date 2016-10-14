@@ -142,7 +142,7 @@ setGeneric('solve', function(a, b, ...) standardGeneric('solve'))
 #' @param j \code{NULL} to plot selection frequencies. \code{numeric} to plot the i'th solution, or 0 to plot the best solution. Only used when \code{y} is a \code{RapSolved} object. Defaults to \code{j}.
 #' @param basemap \code{character} object indicating the type of basemap to use (see \code{link{basemap}}). Use either 'none', 'roadmap', 'mobile', 'satellite', 'terrain', 'hybrid', 'mapmaker-roadmap', 'mapmaker-hybrid'. Defaults to 'none'.
 #' @param pu.color.palette \code{character} name of colors or color palette (\code{\link[RColorBrewer]{brewer.pal}}) to indicate planning unit statuses. Defaults to \code{c('grey30', 'green', 'yellow', 'black', 'gray80', 'red', 'orange')}.
-#' @param alpha \code{numeric} value to indicate how transparent the planning unit colors shoud be.
+#' @param alpha \code{numeric} value to indicate how transparent the planning unit colors should be.
 #' @param grayscale \code{logical} should the basemap be gray-scaled?
 #' @param main \code{character} title for the plot. Defaults to \code{NULL} and a default title is used.
 #' @param force.reset \code{logical} if basemap data has been cached, should it be re-downloaded?
@@ -304,7 +304,7 @@ NULL
 #' @param Presolve \code{integer} code for level of computation in presolve.
 #' @param TimeLimit \code{integer} number of seconds to allow for solving.
 #' @param NumberSolutions \code{integer} number of solutions to generate.
-#' @param MultipleSolutionsMethod \code{character} name of method to obtain multiple solutions \code{NumberSolutions} > 1. Avalilable options are 'benders.cuts' and 'solution.pool'. Defaults to 'benders.cuts'. Note that the \code{rgurobi} package must be to use the 'solution.pool' method.
+#' @param MultipleSolutionsMethod \code{character} name of method to obtain multiple solutions \code{NumberSolutions} > 1. Available options are 'benders.cuts' and 'solution.pool'. Defaults to 'benders.cuts'. Note that the \code{rgurobi} package must be to use the 'solution.pool' method.
 #' @param BLM \code{numeric} boundary length modifier.
 #' @param failure.multiplier \code{numeric} multiplier for failure planning unit.
 #' @param max.r.level \code{numeric} maximum R failure level for approximation.
@@ -316,7 +316,7 @@ NULL
 #' @param space.target \code{numeric} vector for new attribute space targets (\%) for the specified species and attribute spaces.
 #' @param pu \code{integer} planning unit indices that need to be updated.
 #' @param status \code{integer} new statuses for specified planning units.
-#' @param cost \code{numeric} new costs for spcified planning units.
+#' @param cost \code{numeric} new costs for specified planning units.
 #' @param ... parameters passed to \code{update.RapReliableOpts}, \code{update.RapUnreliableOpts}, or \code{update.RapData}.
 #' @param solve \code{logical} should the problem be solved? This argument is only valid for \code{RapUnsolved} and \code{RapSolved} objects. Defaults to \code{TRUE}.
 #' @name update
@@ -626,7 +626,7 @@ SpatialPolygons2PolySet<-function(x, n_preallocate) UseMethod("SpatialPolygons2P
 #' @param prob.color.palette \code{character} name of color palette to denote probability of occupancy of the species in planning units (see \code{\link[RColorBrewer]{brewer.pal}}). Defaults to 'YlGnBu'.
 #' @param pu.color.palette \code{character} name of colors or color palette (\code{\link[RColorBrewer]{brewer.pal}}) to indicate planning unit statuses. Defaults to \code{c('grey30', 'green', 'black', 'red')} which indicate non selected, selected, locked in, and locked out (respectively).
 #' @param basemap \code{character} object indicating the type of basemap to use (see \code{link{basemap}}). Use either 'none', 'roadmap', 'mobile', 'satellite', 'terrain', 'hybrid', 'mapmaker-roadmap', 'mapmaker-hybrid'. Defaults to 'none'.
-#' @param alpha \code{numeric} value to indicate how transparent the planning unit colors shoud be.
+#' @param alpha \code{numeric} value to indicate how transparent the planning unit colors should be.
 #' @param grayscale \code{logical} should the basemap be gray-scaled?
 #' @param main \code{character} title for the plot. Defaults to \code{NULL} and a default title is used.
 #' @param force.reset \code{logical} if basemap data has been cached, should it be re-downloaded?
@@ -674,7 +674,7 @@ space.plot<-function(
 #'
 #' This function accepts a \code{RapUnsolved} object and returns a \code{data.frame} containing the
 #' amount-based and space-based targets for each species and attribute space. These are calculated using a
-#' prioritization that contains all the avaliable planning units. Note that the maximum amount-based targets are always 1.
+#' prioritisation that contains all the available planning units. Note that the maximum amount-based targets are always 1.
 #' 
 #' @param x \code{RapUnsolved} or \code{RapSolved} object.
 #' @param verbose \code{logical} should messages be printed during calculations? Defaults to \code{FALSE}.

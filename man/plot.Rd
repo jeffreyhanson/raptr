@@ -31,7 +31,7 @@
 
 \item{pu.color.palette}{\code{character} name of colors or color palette (\code{\link[RColorBrewer]{brewer.pal}}) to indicate planning unit statuses. Defaults to \code{c('grey30', 'green', 'yellow', 'black', 'gray80', 'red', 'orange')}.}
 
-\item{alpha}{\code{numeric} value to indicate how transparent the planning unit colors shoud be.}
+\item{alpha}{\code{numeric} value to indicate how transparent the planning unit colors should be.}
 
 \item{grayscale}{\code{logical} should the basemap be gray-scaled?}
 

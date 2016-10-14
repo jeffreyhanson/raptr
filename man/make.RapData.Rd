@@ -15,7 +15,7 @@ make.RapData(pus, species, spaces = NULL, amount.target = 0.2,
 
 \item{species}{\code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} with species probability distribution data.}
 
-\item{spaces}{\code{list} of/or \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} representing projects of attribute space over geographic space. Use a \code{list} to denote seperate attribute spaces.}
+\item{spaces}{\code{list} of/or \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} representing projects of attribute space over geographic space. Use a \code{list} to denote separate attribute spaces.}
 
 \item{amount.target}{\code{numeric} vector for area targets (\%) for each species. Defaults to 0.2 for each attribute space for each species.}
 
@@ -29,7 +29,7 @@ make.RapData(pus, species, spaces = NULL, amount.target = 0.2,
 
 \item{species.points}{\code{list} of/or \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records. Use a \code{list} of objects to represent different species. Must have the same number of elements as \code{species}. If not supplied then use \code{n.species.points} to sample points from the species distributions.}
 
-\item{n.species.points}{\code{numeric} vector specfiying the number points to sample the species distributions to use to generate demand points. Defaults to 20\% of the distribution.}
+\item{n.species.points}{\code{numeric} vector specifiying the number points to sample the species distributions to use to generate demand points. Defaults to 20\% of the distribution.}
 
 \item{include.geographic.space}{\code{logical} should the geographic space be considered an attribute space?}
 

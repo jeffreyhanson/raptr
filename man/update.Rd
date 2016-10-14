@@ -43,7 +43,7 @@
 
 \item{NumberSolutions}{\code{integer} number of solutions to generate.}
 
-\item{MultipleSolutionsMethod}{\code{character} name of method to obtain multiple solutions \code{NumberSolutions} > 1. Avalilable options are 'benders.cuts' and 'solution.pool'. Defaults to 'benders.cuts'. Note that the \code{rgurobi} package must be to use the 'solution.pool' method.}
+\item{MultipleSolutionsMethod}{\code{character} name of method to obtain multiple solutions \code{NumberSolutions} > 1. Available options are 'benders.cuts' and 'solution.pool'. Defaults to 'benders.cuts'. Note that the \code{rgurobi} package must be to use the 'solution.pool' method.}
 
 \item{...}{parameters passed to \code{update.RapReliableOpts}, \code{update.RapUnreliableOpts}, or \code{update.RapData}.}
 
@@ -59,7 +59,7 @@
 
 \item{pu}{\code{integer} planning unit indices that need to be updated.}
 
-\item{cost}{\code{numeric} new costs for spcified planning units.}
+\item{cost}{\code{numeric} new costs for specified planning units.}
 
 \item{status}{\code{integer} new statuses for specified planning units.}
 

@@ -10,11 +10,11 @@ RapResults(summary, selections, amount.held, space.held, logging.file,
 \arguments{
 \item{summary}{\code{data.frame} with summary information on solutions. See details below for more information.}
 
-\item{selections}{\code{matrix} with binary selections. The cell \eqn{x_{ij}} denotes if planning unit \eqn{j} is selected in the \eqn{i}'th solutuion.}
+\item{selections}{\code{matrix} with binary selections. The cell \eqn{x_{ij}} denotes if planning unit \eqn{j} is selected in the \eqn{i}'th solution.}
 
 \item{amount.held}{\code{matrix} with the amount held for each species in each solution.}
 
-\item{space.held}{\code{matrix} with the poportion of attribute space sampled for each species in each solution.}
+\item{space.held}{\code{matrix} with the proportion of attribute space sampled for each species in each solution.}
 
 \item{logging.file}{\code{character} Gurobi log files.}
 

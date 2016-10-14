@@ -9,7 +9,7 @@ DemandPoints(coords, weights)
 \arguments{
 \item{coords}{\code{matrix} of coordinates for each demand point.}
 
-\item{weights}{\code{numeric} weights for each demand poont.}
+\item{weights}{\code{numeric} weights for each demand point.}
 }
 \description{
 This function creates a new DemandPoints object

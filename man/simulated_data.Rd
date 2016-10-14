@@ -18,7 +18,7 @@ maps, and demand points for each species. For the purposes of exploring the beha
 and the probability that they are occupied by the species. Note that methodology is not encouraged for real-world conservation planning.
 The species were simulated to represent different simplified versions of species distributions encountered:
 \itemize{
-\item uniform: This species has an equal probability (0.5) of occuring in all planning units.
+\item uniform: This species has an equal probability (0.5) of occurring in all planning units.
 \item normal: This species has a single range-core where it is most likely to be found. It is less likely to be found in areas further away from the centre of its range.
 \item bimodal: This species has two distinct ecotypes. Each ecotype has its own range cores and range marginal areas.
 }

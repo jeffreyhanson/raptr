@@ -17,7 +17,7 @@ calcBoundaryData(x, tol, length.factor, edge.factor)
 \arguments{
 \item{x}{\code{PolySet}, \code{SpatialPolygons} or \code{SpatialPolyognsDataFrame} object.}
 
-\item{tol}{\code{numeric} to specify precision of calculations (ie. how far apart do vertices have to be to be considered different).}
+\item{tol}{\code{numeric} to specify precision of calculations (that is, how far apart do vertices have to be to be considered different).}
 
 \item{length.factor}{\code{numeric} to scale boundary lengths.}
 

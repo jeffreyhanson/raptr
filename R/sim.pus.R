@@ -6,9 +6,9 @@ NULL
 #' This function simulates planning units for RAP.
 #'
 #' @param n \code{integer} number of planning units. \code{sqrt(n)} must yield a valid number.
-#' @param xmn \code{numeric} value for minimim x-coordinate.
+#' @param xmn \code{numeric} value for minimum x-coordinate.
 #' @param xmx \code{numeric} value for maximum x-coordinate.
-#' @param ymn \code{numeric} value for minimim y-coordinate.
+#' @param ymn \code{numeric} value for minimum y-coordinate.
 #' @param ymx \code{numeric} value for maximum y-coordinate.
 #' @return \code{SpatialPolygons} with planning units.
 #' @details Square planning units are generated in the shape of a square. Default coordinate arguments are such that the planning units will be centered at origin.

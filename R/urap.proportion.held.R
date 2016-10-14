@@ -1,4 +1,4 @@
-#' Proportion held using unrelible RAP formulation.
+#' Proportion held using unreliable RAP formulation.
 #'
 #' This is a convenience function to quickly calculate the proportion of variation that one set of points captures
 #' in a another set of points using the unreliable formulation.
