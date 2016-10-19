@@ -4,23 +4,23 @@ context('12-RapSolved')
 ### tests
 test_that('plot (x=RapSolved, y=missing)', {
 	data(sim_rs)
-	sim_rs@data@pu$status[1]=2
-	sim_rs@data@pu$status[2]=3
+	sim_rs@data@pu$status[1]<-2
+	sim_rs@data@pu$status[2]<-3
 	plot(sim_rs)
 })
 
 test_that('plot (x=RapSolved, y=0)', {
 	data(sim_rs)
-	sim_rs@data@pu$status[1]=2
-	sim_rs@data@pu$status[2]=3
+	sim_rs@data@pu$status[1]<-2
+	sim_rs@data@pu$status[2]<-3
 	plot(sim_rs, 0)
 })
 
 
 test_that('plot (x=RapSolved, y=1)', {
 	data(sim_rs)
-	sim_rs@data@pu$status[1]=2
-	sim_rs@data@pu$status[2]=3
+	sim_rs@data@pu$status[1]<-2
+	sim_rs@data@pu$status[2]<-3
 	plot(sim_rs, 1)
 })
 
@@ -29,36 +29,36 @@ test_that('plot (x=RapSolved, y=RapSolved, i=NULL, j=NULL)', {
 	sim_rs2<-sim_rs
 	sim_rs2@results@selections[]<-sample(c(0,1), size=prod(dim(sim_rs@results@selections)), replace=TRUE)
 	sim_rs2@results@.cache<-new.env()
-	sim_rs@data@pu$status[1]=2
-	sim_rs@data@pu$status[2]=3
-	sim_rs@data@pu$status[3]=2
-	sim_rs@data@pu$status[4]=3
+	sim_rs@data@pu$status[1]<-2
+	sim_rs@data@pu$status[2]<-3
+	sim_rs@data@pu$status[3]<-2
+	sim_rs@data@pu$status[4]<-3
 	plot(sim_rs, sim_rs2)
 })
 
 test_that('plot (x=RapSolved, y=RapSolved, i=0, j=1)', {
 	data(sim_rs)
 	sim_rs2<-sim_rs
-	sim_rs2@results@selections[]=sample(c(0,1), size=prod(dim(sim_rs@results@selections)), replace=TRUE)
+	sim_rs2@results@selections[]<-sample(c(0,1), size=prod(dim(sim_rs@results@selections)), replace=TRUE)
 	sim_rs2@results@.cache<-new.env()
-	sim_rs@data@pu$status[1]=2
-	sim_rs@data@pu$status[2]=3
-	sim_rs@data@pu$status[3]=2
-	sim_rs@data@pu$status[4]=3
+	sim_rs@data@pu$status[1]<-2
+	sim_rs@data@pu$status[2]<-3
+	sim_rs@data@pu$status[3]<-2
+	sim_rs@data@pu$status[4]<-3
 	plot(sim_rs, sim_rs2, 0, 1)
 })
 
 test_that('spp.plot (x=RapSolved, y=0)', {
 	data(sim_rs)
-	sim_rs@data@pu$status[1]=2
-	sim_rs@data@pu$status[2]=3
+	sim_rs@data@pu$status[1]<-2
+	sim_rs@data@pu$status[2]<-3
 	spp.plot(sim_rs, 1)
 })
 
 test_that('space.plot (x=RapSolved, species=1, space=1, y=0)', {
 	data(sim_rs)
-	sim_rs@data@pu$status[1]=2
-	sim_rs@data@pu$status[2]=3
+	sim_rs@data@pu$status[1]<-2
+	sim_rs@data@pu$status[2]<-3
 	space.plot(sim_rs, 1, 1)
 })
 

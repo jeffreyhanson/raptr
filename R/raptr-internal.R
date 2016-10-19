@@ -3,23 +3,23 @@ NULL
 
 ## define built-in functions
 # affine transformation
-affineTrans=function(OldValue, OldMax, OldMin, NewMax, NewMin) {
-    OldRange = (OldMax - OldMin)
-    NewRange = (NewMax - NewMin)
-    NewValue = (((OldValue - OldMin) * NewRange) / OldRange) + NewMin
+affineTrans <- function(OldValue, OldMax, OldMin, NewMax, NewMin) {
+    OldRange <- (OldMax - OldMin)
+    NewRange <- (NewMax - NewMin)
+    NewValue <- (((OldValue - OldMin) * NewRange) / OldRange) + NewMin
     return(NewValue)
 }
 
 # niche simulation functions
-normal_niche=function(x, y) {
+normal_niche <- function(x, y) {
 	return(dmvnorm(x=matrix(c(x,y), ncol=2), mean=c(0,0), sigma=matrix(c(8.5,0,0,8.5), ncol=2))*40)
 }
 
-uniform_niche=function(x, y) {
+uniform_niche <- function(x, y) {
 	return(rep(0.5, length(x)))
 }
 
-bimodal_niche=function(x, y) {
+bimodal_niche <- function(x, y) {
 	return(
 		apply(
 			matrix(
@@ -41,7 +41,7 @@ hashCall<-function(expr, skipargs=c(), env=parent.frame()) {
 	expr<-expr[which(names(expr)!="force.reset")]
 	for (i in seq_along(names(expr)))
 		if (inherits(expr[[i]], c("name")))
-			expr[[i]]=eval(expr[[i]], envir=env)
+			expr[[i]] <- eval(expr[[i]], envir=env)
 	return(paste(deparse(expr), collapse=";"))
 }
 
@@ -57,10 +57,10 @@ prettyGeoplot<-function(polygons, col, basemap, main, fun, beside=TRUE, border=N
 	}
 	# convert to list if not
 	if (!inherits(polygons, 'list')) {
-		polygons=list(polygons)
-		col=list(col)
-		border=list(border)
-		lwd=list(lwd)
+		polygons <- list(polygons)
+		col <-list(col)
+		border <- list(border)
+		lwd <- list(lwd)
 	}
 	
 	# make title
@@ -76,7 +76,7 @@ prettyGeoplot<-function(polygons, col, basemap, main, fun, beside=TRUE, border=N
 			suppressWarnings(PlotPolysOnStaticMap(basemap, polygons[[i]], col=col[[i]], border=border[[i]], add=TRUE, lwd=lwd[[i]]))
 		}
 	} else {
-		allpolygons=do.call(rbind, polygons)
+		allpolygons <- do.call(rbind, polygons)
 		plotPolys(polygons[[1]], col=col[[1]], axes=FALSE, xlab="", ylab="", border=border[[1]], lwd=lwd[[1]], xlim=range(allpolygons$X), ylim=range(allpolygons$Y))
 		for (i in seq_along(polygons)[-1]) {
 			if (nrow(polygons[[i]])>0)
@@ -92,7 +92,7 @@ brewerCols<-function(values, pal, alpha=1, n=NULL) {
 	if (is.null(n) & length(pal)==1) {
 		n<-brewer.pal.info$maxcolors[which(rownames(brewer.pal.info)==pal)]
 	} else {
-		n=length(values)
+		n<-length(values)
 	}
 	if (length(pal)==1) {
 		suppressWarnings(r<-colorRamp(brewer.pal(n, pal))(values))
@@ -152,7 +152,7 @@ demand.points.density1d<-function(pts, n, quantile=0, ...) {
 	quants<-quantile(pts[,1], c((quantile/2), 1-(quantile/2)))
 	dp<-runif(n, quants[[1]], quants[[2]])
 	# density kernel
-	est=kde(pts[,1], eval.points=dp, ...)
+	est<-kde(pts[,1], eval.points=dp, ...)
 	# back-transform demand point coordinates
 	dp.pts <- (matrix(est$eval.points, ncol=1) * curr.sd) + curr.mean
 	# return object
@@ -171,7 +171,7 @@ demand.points.density2d<-function(pts, n, quantile=0, ...) {
 	pts<-sweep(pts,MARGIN=2,FUN='-',curr.mean)
 	pts<-sweep(pts,MARGIN=2,FUN='/',curr.sd)
 	# generate points
-	dp=spsample(
+	dp<-spsample(
 		mcp(SpatialPoints(coords=pts), percent=(100-quantile), unin = c("m"), unout = c("m2")),
 		n*1.1,
 		type='random'
@@ -199,7 +199,7 @@ demand.points.hypervolume<-function(pts, n, quantile=0, ...) {
 	# fit density kernel
 	args<-list(...)
 	if (!'repsperpoint' %in% names(args))
-		args$repsperpoint=500*ncol(pts)
+		args$repsperpoint<-500*ncol(pts)
 	if (args$repsperpoint*nrow(pts) < n) {
 		stop('argument to n.demand.points is too high. Set a higher value in the argument to repsperpoint (defaults to 500*dimensions in attribute space).')
 	}
@@ -284,11 +284,11 @@ findGdalInstallationPaths<-function (search_path = NULL, rescan = FALSE, ignore.
 		names(result) <- path
 		for (i in seq_along(drivers_raw)) {
 			drivers_raw[[i]] <- drivers_raw[[i]][-1]
-			drivers = strsplit(drivers_raw[[i]], ":")
-			driver_names = gsub("^ ", "", sapply(drivers, function(x) {x[2]}))
-			driver_codes_perm = strsplit(sapply(drivers, function(x) {x[1]}), "\\(")
-			driver_codes = gsub(" ", "", sapply(driver_codes_perm, function(x) {x[1]}), fixed = TRUE)
-			driver_perm = gsub("\\)", "", sapply(driver_codes_perm, function(x) {x[2]}))
+			drivers <- strsplit(drivers_raw[[i]], ":")
+			driver_names <- gsub("^ ", "", sapply(drivers, function(x) {x[2]}))
+			driver_codes_perm <- strsplit(sapply(drivers, function(x) {x[1]}), "\\(")
+			driver_codes <- gsub(" ", "", sapply(driver_codes_perm, function(x) {x[1]}), fixed = TRUE)
+			driver_perm <- gsub("\\)", "", sapply(driver_codes_perm, function(x) {x[2]}))
 			r <- w <- u <- v <- s <- rep(FALSE, length(driver_perm))
 			r[grep(driver_perm, pattern = "r")] <- TRUE
 			w[grep(driver_perm, pattern = "w")] <- TRUE
@@ -382,7 +382,7 @@ findGdalInstallationPaths<-function (search_path = NULL, rescan = FALSE, ignore.
 				return(FALSE)
 			} else {
 			cmd <- paste0("\"", cmd, "\"", " --version")
-			validity = length(try(gdal <- system(cmd, intern = TRUE), silent = TRUE))
+			validity <- length(try(gdal <- system(cmd, intern = TRUE), silent = TRUE))
 			return(as.logical(validity))
 			}
 			}
@@ -397,9 +397,9 @@ findGdalInstallationPaths<-function (search_path = NULL, rescan = FALSE, ignore.
 		on.exit(options(warn = owarn))
 		if (missing(checkValidity)) {
 			if (is.null(getOption("gdalUtils_gdalPath"))) {
-				checkValidity = TRUE
+				checkValidity <- TRUE
 			} else {
-				checkValidity = FALSE
+				checkValidity <- FALSE
 			}
 		}
 		path <- NULL
@@ -479,7 +479,7 @@ findGdalInstallationPaths<-function (search_path = NULL, rescan = FALSE, ignore.
 				}
 			}
 			if (!ignore.full_scan && length(path) == 0) {
-				force_full_scan = TRUE
+				force_full_scan <- TRUE
 			}
 		}
 		if (force_full_scan) {
@@ -545,7 +545,7 @@ findGdalInstallationPaths<-function (search_path = NULL, rescan = FALSE, ignore.
 		return(gdal_installation_results)
 	}
 	if (is.null(getOption("gdalUtils_gdalPath")))
-		rescan = TRUE
+		rescan <- TRUE
 	gdal_installation_out <- gdal_installation(search_path = search_path,
 												rescan = rescan,
 												ignore.full_scan = ignore.full_scan,
@@ -564,7 +564,7 @@ findGdalInstallationPaths<-function (search_path = NULL, rescan = FALSE, ignore.
 
 # merge list of RapResults into a single object
 mergeRapResults<-function(x) {
-	x=RapResults(
+	x <-RapResults(
 		summary=ldply(x, slot, name="summary"),
 		selections=do.call(rbind, llply(x, slot, name="selections")),
 		amount.held=do.call(rbind, llply(x, slot, name="amount.held")),
@@ -589,12 +589,12 @@ mergeRapResults<-function(x) {
 #' @keywords internal
 #' @return \code{RapResults} object
 #' @seealso \code{\link{RapReliableOpts}}, \code{\link{RapUnreliableOpts}}, \code{\link{RapData}}, \code{\link{RapResults}}.
-read.RapResults=function(opts, data, model.list, logging.file, solution.list, verbose=FALSE) {
-  x=rcpp_extract_model_object(
+read.RapResults <- function(opts, data, model.list, logging.file, solution.list, verbose=FALSE) {
+  x <- rcpp_extract_model_object(
     opts, inherits(opts, 'RapUnreliableOpts'),
     data, model.list, logging.file, solution.list, verbose
   )
-	x@.cache=new.env()
+	x@.cache <- new.env()
 	return(x)
 }
 

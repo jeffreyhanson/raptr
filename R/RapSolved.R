@@ -143,7 +143,7 @@ setMethod(
 				currList$x <- solution$x[i,,drop=TRUE]
 				currList$objval <- solution$objval[i]
 				currResult <- read.RapResults(a@opts,a@data,model,paste(readLines(log.pth),collapse="\n"),currList,verbose)
-				results=append(results,currResult)
+				results<-append(results,currResult)
 			}
 		}
 		# return RapSolved object
@@ -245,7 +245,7 @@ amount.held.RapSolved<-function(x, y=0, species = NULL) {
 	if (is.null(y))
 		y<-seq_len(nrow(x@results@selections))
 	if (all(y==0))
-		y=x@results@best
+		y<-x@results@best
 	# get species numbers
 	if (is.null(species))
 		species<-seq_len(nrow(x@data@species))
@@ -461,9 +461,9 @@ setMethod(
 		# set title
 		if (is.null(main)) {
 			if (y==x@results@best) {
-				main=paste0('Best solution (', y, ')')
+				main<-paste0('Best solution (', y, ')')
 			} else {
-				main=paste0('Solution ', y)
+				main<-paste0('Solution ', y)
 			}
 		}
 		prettyGeoplot(
@@ -503,7 +503,7 @@ setMethod(
 			basemap<-basemap.RapData(x@data, basemap, grayscale, force.reset)
 		# set title
 		if (is.null(main)) {
-			main='Selection frequencies (%)'
+			main<-'Selection frequencies (%)'
 		}
 		# main processing
 		if (force.reset || !is.cached(x@results, "selectionfreqs")) {
@@ -558,7 +558,7 @@ setMethod(
 		# main processing
 		cols<-character(nrow(x@data@pu))
 		if (is.null(i) || is.null(j)) {
-			if (is.null(main)) main="Difference in selection frequencies (%)"
+			if (is.null(main)) main<-"Difference in selection frequencies (%)"
 		
 			cols[which(x@data@pu$status==2)]<-pu.color.palette[2]
 			cols[which(y@data@pu$status==2)]<-pu.color.palette[2]
@@ -572,11 +572,11 @@ setMethod(
 				cache(y@results, "selectionfreqs", colMeans(y@results@selections))
 			ysc<-cache(y@results, "selectionfreqs")[which(nchar(cols)==0)]
 			values<-xsc-ysc
-			col.pos=which(nchar(cols)==0)
+			col.pos<-which(nchar(cols)==0)
 			cols[col.pos]<-brewerCols(rescale(values,to=c(0,1)), pu.color.palette[1], alpha)
 			# determine legend function
 			if (length(unique(round(values, 5)))>1) {
-				legend.fun=continuousLegend(
+				legend.fun<-continuousLegend(
 					values,
 					pu.color.palette[1],
 					posx=c(0.3, 0.4),
@@ -584,26 +584,26 @@ setMethod(
 					center=TRUE,
 					endlabs=c('+X','+Y')
 				)
-				beside=TRUE
+				beside<-TRUE
 			} else {
 				# create legend entries
-				leg.cols=c(cols[col.pos[1]])
-				leg.labs=c(values[1])
+				leg.cols<-c(cols[col.pos[1]])
+				leg.labs<-c(values[1])
 				if (any(x@data@pu$status==2) | any(y@data@pu$status==2)) {
-					leg.cols=c(leg.cols, pu.color.palette[2])
-					leg.labs=c(leg.labs, "Locked in")
+					leg.cols<-c(leg.cols, pu.color.palette[2])
+					leg.labs<-c(leg.labs, "Locked in")
 				}
 				if (any(x@data@pu$status==3) | any(y@data@pu$status==3)) {
-					leg.cols=c(leg.cols, pu.color.palette[3])
-					leg.labs=c(leg.labs, "Locked out")
+					leg.cols<-c(leg.cols, pu.color.palette[3])
+					leg.labs<-c(leg.labs, "Locked out")
 				}
 				# create legend function
-				legend.fun=categoricalLegend(
+				legend.fun<-categoricalLegend(
 					leg.cols,
 					leg.labs,
 					ncol=1
 				)
-				beside=FALSE
+				beside<-FALSE
 			}
 			prettyGeoplot(
 				x@data@polygons,
@@ -632,7 +632,7 @@ setMethod(
 			cols[which(y@data@pu$status==3)]<-cols2[8]
 
 			if (is.null(main)) {
-				main=paste0("Difference between solution ",i,ifelse(i==x@results@best, " (best)", ""), " and solution ",j, ifelse(j==y@results@best, " (best)", ""))
+				main<-paste0("Difference between solution ",i,ifelse(i==x@results@best, " (best)", ""), " and solution ",j, ifelse(j==y@results@best, " (best)", ""))
 			}
 
 			prettyGeoplot(
@@ -688,11 +688,11 @@ spp.plot.RapSolved<-function(
 	# set title
 	if (is.null(main)) {
 		if ('name' %in% names(x@data@species) & is.numeric(species)) {
-			main=paste0(x@data@species$name[species])
+			main<-paste0(x@data@species$name[species])
 		} else if (is.numeric(species)) {
-			main=paste0('Species ', species)
+			main<-paste0('Species ', species)
 		} else {
-			main=paste0(species)
+			main<-paste0(species)
 		}
 	}	
 	# get basemap
@@ -762,11 +762,11 @@ space.plot.RapSolved<-function(
 	# set title
 	if (is.null(main)) {
 		if ('name' %in% names(x@data@species) & is.numeric(species)) {
-			main=paste0(x@data@species$name[species], ' in space ', space)
+			main<-paste0(x@data@species$name[species], ' in space ', space)
 		} else if (is.numeric(species)) {
-			main=paste0('Species ', species, ' in space ', space)
+			main<-paste0('Species ', species, ' in space ', space)
 		} else {
-			main=paste0(species, ' in space ', space)
+			main<-paste0(species, ' in space ', space)
 		}
 	}
 	# extract pu data
@@ -810,7 +810,7 @@ update.RapUnsolOrSol<-function(object, ..., formulation=NULL, solve=TRUE) {
 		# fill in matching slots
 		for (i in slotNames(object@opts)) {
 			if (i %in% slotNames(opts))
-				slot(opts, i)=slot(object@opts, i)
+				slot(opts, i)<-slot(object@opts, i)
 		}
 	}
 	# return updated object
@@ -837,9 +837,9 @@ update.RapUnsolOrSol<-function(object, ..., formulation=NULL, solve=TRUE) {
 		
 		# get old GurobiOpt
 		if (inherits(object, 'RapSolved')) {
-			oldGoLST=list(Threads=object@Threads, MIPGap=object@MIPGap, NumberSolutions=object@NumberSolutions, TimeLimit=object@TimeLimit, Presolve=object@Presolve, Method=object@Method, MultipleSolutionsMethod=object@MultipleSolutionsMethod)
+			oldGoLST<-list(Threads=object@Threads, MIPGap=object@MIPGap, NumberSolutions=object@NumberSolutions, TimeLimit=object@TimeLimit, Presolve=object@Presolve, Method=object@Method, MultipleSolutionsMethod=object@MultipleSolutionsMethod)
 			if (any(!names(oldGoLST %in% names(goLST)))) {
-				goLST=append(
+				goLST<-append(
 					goLST,
 					oldGoLST[!names(oldGoLST %in% names(goLST))]
 				)
@@ -893,9 +893,7 @@ space.target.RapUnsolOrSol<-function(x, species=NULL, space=NULL) {
 #' @export
 `names<-.RapUnsolOrSol`<-function(x, value) {
 	# change names
-	x2=x@data
-	names(x2) <- value
-	x@data <- x2
+	x@data <- `names<-`(x@data, value)
 	# return object
 	return(x)
 }

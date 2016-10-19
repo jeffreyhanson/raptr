@@ -150,10 +150,10 @@ rasterizeGDAL<-function(x,y, field=NULL) {
 #' polys <- sim.pus(225L)
 #' # make RasterLayer from SpatialPolygons
 #' blank.raster(polys, 1)
-blank.raster<-function(x, res) {
+blank.raster <- function(x, res) {
 	# init
 	if (length(res)==1)
-		res=c(res, res)
+		res <- c(res, res)
 	# extract coordinates
 	if ((xmax(x)-xmin(x) <= res[1])) {
 		xpos <- c(xmin(x), res[1])

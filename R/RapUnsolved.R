@@ -43,7 +43,7 @@ RapUnsolved<-function(opts, data) {
 #' @method print RapUnsolved
 #' @rdname print
 #' @export
-print.RapUnsolved=function(x, ...) {
+print.RapUnsolved <- function(x, ...) {
 	cat("RapUnsolved object\n\n")
 	cat("Parameters\n")
 	print(x@opts, header=FALSE)
@@ -78,11 +78,11 @@ spp.plot.RapUnsolved<-function(
 	# set title
 	if (is.null(main)) {
 		if ('name' %in% names(x@data@species) & is.numeric(species)) {
-			main=paste0(x@data@species$name[species])
+			main <- paste0(x@data@species$name[species])
 		} else if (is.numeric(species)) {
-			main=paste0('Species ', species)
+			main <- paste0('Species ', species)
 		} else {
-			main=paste0(species)
+			main <- paste0(species)
 		}
 	}
 	spp.plot(x=x@data, species=species, prob.color.palette=prob.color.palette, pu.color.palette=pu.color.palette, basemap=basemap, alpha=alpha, grayscale=grayscale, main=main, force.reset=force.reset, ...)
@@ -102,11 +102,11 @@ space.plot.RapUnsolved<-function(
 	# set title
 	if (is.null(main)) {
 		if ('name' %in% names(x@data@species) & is.numeric(species)) {
-			main=paste0(x@data@species$name[species], ' in space ', space)
+			main <- paste0(x@data@species$name[species], ' in space ', space)
 		} else if (is.numeric(species)) {
-			main=paste0('Species ', species, ' in space ', space)
+			main <- paste0('Species ', species, ' in space ', space)
 		} else {
-			main=paste0(species, ' in space ', space)
+			main <- paste0(species, ' in space ', space)
 		}
 	}
 	space.plot.RapData(x@data, species, space, pu.color.palette, main, ...)

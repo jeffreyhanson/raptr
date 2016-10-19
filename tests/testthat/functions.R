@@ -40,13 +40,13 @@ calcDists<-function(x, method='euclidean') {
 
 # calculate amount.held 
 calcAmountHeld <- function(x, species, solution=NULL) {
-	curr_df=x@pu.species.probabilities[which(
+	curr_df <- x@pu.species.probabilities[which(
 		x@pu.species.probabilities[[1]] == species
 	),]
 	if (is.null(solution))
-		solution=curr_df$pu
-	curr_df$area=x@pu$area[curr_df$pu]
-	curr_df$benefit=curr_df[[3]] * curr_df[[4]]
+		solution <- curr_df$pu
+	curr_df$area <- x@pu$area[curr_df$pu]
+	curr_df$benefit <- curr_df[[3]] * curr_df[[4]]
 	# calculate metrics
 	curr_max<-sum(curr_df$benefit)
 	curr_amount<-sum(curr_df$benefit[curr_df$pu %in% solution])
@@ -158,32 +158,32 @@ calcReliableMetrics<-function(x, species, space, opts, solution=NULL) {
 		seq_len(nrow(pu_pts))
 	]	
 	# scale + pad distances
-	dp_wts_mtx=matrix(rep(dp_wts, each=nrow(pu_pts)), byrow=TRUE, ncol=nrow(pu_pts),nrow=length(dp_wts))
-	wdist_mtx=(wdist_mtx*dp_wts_mtx)
+	dp_wts_mtx <- matrix(rep(dp_wts, each=nrow(pu_pts)), byrow=TRUE, ncol=nrow(pu_pts),nrow=length(dp_wts))
+	wdist_mtx <- (wdist_mtx*dp_wts_mtx)
 	# include failure pu
-	wdist_mtx=cbind(wdist_mtx, max(wdist_mtx)*opts@failure.multiplier)
+	wdist_mtx <- cbind(wdist_mtx, max(wdist_mtx)*opts@failure.multiplier)
 	## tss
-	tss_mtx=dists[
+	tss_mtx <- dists[
 		nrow(pu_pts)+1+seq_len(nrow(x@attribute.spaces[[space]]@spaces[[species]]@demand.points@coords)),
 		nrow(pu_pts)+1
 	]
-	tss_mtx=((tss_mtx*dp_wts))
+	tss_mtx <- ((tss_mtx*dp_wts))
 	# set default solution as all planning units if non-supplied
 	if (is.null(solution)) {
-		solution=seq_len(nrow(x@pu))
+		solution <- seq_len(nrow(x@pu))
 	}
 	# calculate relative positions of pus 
-	relative_solution=na.omit(match(
+	relative_solution<-na.omit(match(
 		solution,
 		x@attribute.spaces[[space]]@spaces[[species]]@planning.unit.points@ids
 	))
-	relative_probabilities=na.omit(curr_df$value[match(
+	relative_probabilities<-na.omit(curr_df$value[match(
 		curr_df$pu,
 		x@attribute.spaces[[space]]@spaces[[species]]@planning.unit.points@ids
 	)])
 		
 	## calculate metrics
-	spaceheld=calcReliableSpaceHeld(wdist_mtx, relative_probabilities, opts@max.r.level, relative_solution)
+	spaceheld<-calcReliableSpaceHeld(wdist_mtx, relative_probabilities, opts@max.r.level, relative_solution)
 	## exports
 	return(
 		list(

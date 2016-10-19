@@ -100,7 +100,7 @@ GurobiOpts<-function(Threads=1L, MIPGap=0.1, Method=0L, Presolve=2L, TimeLimit=N
 #' @method print GurobiOpts
 #' @rdname print
 #' @export
-print.GurobiOpts=function(x, ..., header=TRUE) {
+print.GurobiOpts <- function(x, ..., header=TRUE) {
 	if (header) {
 		cat("GurobiOpts object.\n")
 	} else {
@@ -128,14 +128,14 @@ setMethod(
 #' @rdname as.list
 #' @export
 as.list.GurobiOpts<-function(x, ...) {
-	y=list(
+	y <- list(
 		Threads=x@Threads,
 		MIPGap=x@MIPGap,
 		Presolve=x@Presolve,
 		Method=x@Method
 	)
 	if (is.finite(x@TimeLimit))
-		y=append(y, list(TimeLimit=x@TimeLimit))
+		y <- append(y, list(TimeLimit=x@TimeLimit))
 	return(y)
 }
 

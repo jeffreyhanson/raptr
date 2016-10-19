@@ -248,10 +248,10 @@ make.RapData<-function(pus, species, spaces=NULL,
 	.cache<-new.env()
 	# coerce non-list items to list
 	if (!inherits(spaces, 'list'))
-		spaces=list(spaces)
+		spaces <- list(spaces)
 	# create species.points from species
 	if (is.null(species.points)) {
-		species.points=llply(
+		species.points <- llply(
 			seq_len(nlayers(species)),
 			function(i) {
 				SpatialPoints(coords=randomPoints(species[[i]], n=n.species.points[[i]]), proj4string=species[[i]]@crs)
@@ -261,17 +261,17 @@ make.RapData<-function(pus, species, spaces=NULL,
 		if (!inherits(species.points, 'list')) {
 			if (inherits(species.points, 'SpatialDataFrame')) {
 				if ('id' %in% names(species.points@data)) {
-					species.points=llply(
+					species.points <- llply(
 						sort(unique(species@data$id)),
 						function(x) {
 							return(species.points[which(species.points$id==x),])
 						}
 					)
 				} else {
-					species.points=list(SpatialPoints(species.points))
+					species.points<-list(SpatialPoints(species.points))
 				}
 			} else {
-				species.points=list(species.points)
+				species.points<-list(species.points)
 			}
 		}
 	}
@@ -299,7 +299,7 @@ make.RapData<-function(pus, species, spaces=NULL,
 		warning("argument to pus does not have a 'status' column, creating default with all status=0L")
 	}
 	if (!'area' %in% names(pu)) {
-		pu$area=gArea(pus,byid=TRUE)
+		pu$area <- gArea(pus,byid=TRUE)
 		warning("argument to pus does not have a 'area' column, creating default using area of polygons")
 		if (identical(pus@proj4string, CRS('+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs')))
 			warning('Planning unit areas are being calculated in a geographic coordinate system')
@@ -402,14 +402,14 @@ make.RapData<-function(pus, species, spaces=NULL,
 				space.points <- extract(spaces[[i]], species.points[[j]])
 			}
 			# generate demand points
-			dpLST[[j]]=make.DemandPoints(
+			dpLST[[j]] <- make.DemandPoints(
 				points=space.points,
 				kernel.method=kernel.method,
 				n=n.demand.points,
 				quantile=quantile
 			)
 		}
-		demand.points[[i]]=dpLST
+		demand.points[[i]]<-dpLST
 	}
 	# save space names
 	space.names <- c()
@@ -426,7 +426,7 @@ make.RapData<-function(pus, species, spaces=NULL,
 		}
 	}
 	# create AttributeSpace objects
-	attribute.spaces=llply(seq_along(spaces), function(i) {
+	attribute.spaces<-llply(seq_along(spaces), function(i) {
 		AttributeSpaces(
 			llply(seq_along(demand.points[[i]]), function(d) {
 				# subset planning unit points to the planning units occupied by the speces
@@ -522,7 +522,7 @@ setMethod(
 	f="cache",
 	signature(x="RapData", name="character", y="ANY"),
 	function(x, name, y) {
-		x@.cache[[name]]=y
+		x@.cache[[name]]<-y
 	}
 )
 
@@ -806,11 +806,11 @@ spp.plot.RapData<-function(
 	# set title
 	if (is.null(main)) {
 		if ('name' %in% names(x@species) & is.numeric(species)) {
-			main=paste0(x@species$name[species])
+			main<-paste0(x@species$name[species])
 		} else if (is.numeric(species)) {
-			main=paste0('Species ', species)
+			main<-paste0('Species ', species)
 		} else {
-			main=paste0(species)
+			main<-paste0(species)
 		}
 	}	
 	# get selected rows

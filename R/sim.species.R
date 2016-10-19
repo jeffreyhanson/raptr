@@ -5,7 +5,7 @@ NULL
 #' @method sim.species RasterLayer
 #' @export
 sim.species.RasterLayer <- function(x, n=1, model=list('uniform', 'normal', 'bimodal', RPgauss())[[1]], ...) {
-	ret=list()
+	ret <- list()
 	# generate raster layers
 	if (inherits(model, 'RMmodel')) {
 		x<-sim.space(x, d=n, ...)

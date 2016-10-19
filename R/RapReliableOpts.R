@@ -60,7 +60,7 @@ RapReliableOpts<-function(BLM=0, failure.multiplier=1.1, max.r.level=5L) {
 #' @method print RapReliableOpts
 #' @rdname print
 #' @export
-print.RapReliableOpts=function(x, ..., header=TRUE) {
+print.RapReliableOpts <- function(x, ..., header=TRUE) {
 	if (header)
 		cat("RapReliableOpts object.\n")
 	cat('  BLM:',x@BLM,'\n')

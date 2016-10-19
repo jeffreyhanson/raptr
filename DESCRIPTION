@@ -2,7 +2,6 @@ Package: raptr
 Type: Package
 Title: Representative and Adequate Prioritization Toolkit in R
 Version: 0.0.1
-Date: 2016-10-10
 Authors@R: c(person(c("Jeffrey", "O"), "Hanson", email='jeffrey.hanson@uqconnect.edu.au', role = c("aut", "cre")),
 	person(c("Jonathon", "R"), "Rhodes", role = c("aut")),
 	person(c("Hugh", "P"), "Possingham", role = c("aut")),

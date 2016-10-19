@@ -14,9 +14,9 @@ test_that('RapData', {
 		),
 		name='test_space'
 	)
-	pu.species.probabilities=calcSpeciesAverageInPus(cs_pus[1:10,], cs_spp[[1]])
-	polygons=SpatialPolygons2PolySet(cs_pus[1:10,])
-	boundary=calcBoundaryData(cs_pus[1:10,])
+	pu.species.probabilities<-calcSpeciesAverageInPus(cs_pus[1:10,], cs_spp[[1]])
+	polygons<-SpatialPolygons2PolySet(cs_pus[1:10,])
+	boundary<-calcBoundaryData(cs_pus[1:10,])
 	# create object
 	x<-RapData(
 		pu=cs_pus@data[1:10,],

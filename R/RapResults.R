@@ -132,7 +132,7 @@ setClass("RapResults",
 #' @note slot \code{best} is automatically determined based on data in \code{summary}.
 #' @return \code{RapResults} object
 #' @seealso \code{\link{RapResults-class}} \code{\link{read.RapResults}}
-RapResults=function(summary, selections, amount.held, space.held, logging.file, .cache=new.env()) {
+RapResults <- function(summary, selections, amount.held, space.held, logging.file, .cache=new.env()) {
 	return(new("RapResults", summary=summary, selections=selections, amount.held=amount.held, space.held=space.held, logging.file=logging.file, best=which.min(summary$Score), .cache=new.env()))
 }
 
@@ -211,7 +211,7 @@ setMethod(
 	f="cache",
 	signature(x="RapResults", name="character", y="ANY"),
 	function(x, name, y) {
-		x@.cache[[name]]=y
+		x@.cache[[name]]<-y
 	}
 )
 

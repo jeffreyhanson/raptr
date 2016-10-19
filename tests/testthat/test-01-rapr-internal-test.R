@@ -6,7 +6,7 @@ test_that('space calculations (unreliable)', {
 	# subset data
 	data(sim_ru)
 	sim_rd <- spp.subset(sim_ru, 3) %>% pu.subset(1:3) %>% slot('data')
-	sim_rd@attribute.spaces[[1]]@spaces[[1]]@demand.points@weights=rep(1, 5)
+	sim_rd@attribute.spaces[[1]]@spaces[[1]]@demand.points@weights<-rep(1, 5)
 	# run initial k-means using r-builtin
 	km <- kmeans(sim_rd@attribute.spaces[[1]]@spaces[[1]]@demand.points@coords, centers=3)
 	# update planning units
@@ -333,14 +333,14 @@ test_that("boundary length data functions", {
 	bldf2[[2]]<-as.integer(bldf2[[2]]) # convert to integer for floating point comparisons
 
 	# sort by ids
-	bldf1$ids=apply(as.matrix(bldf1[,1:2,drop=FALSE]), 1, function(x) {
+	bldf1$ids<-apply(as.matrix(bldf1[,1:2,drop=FALSE]), 1, function(x) {
 		return(paste(sort(x), collapse='_'))
 	})
-	bldf2$ids=apply(as.matrix(bldf2[,1:2,drop=FALSE]), 1, function(x) {
+	bldf2$ids<-apply(as.matrix(bldf2[,1:2,drop=FALSE]), 1, function(x) {
 		return(paste(sort(x), collapse='_'))
 	})
-	bldf1=bldf1[order(bldf1$ids),]
-	bldf2=bldf2[order(bldf2$ids),]
+	bldf1<-bldf1[order(bldf1$ids),]
+	bldf2<-bldf2[order(bldf2$ids),]
 
 	# check that values are correct
 	expect_equal(bldf1$ids, bldf2$ids)

@@ -67,7 +67,7 @@ test_that('solve.RapUnsolved (unreliable - NumberSolutions=1 - MultipleSolutions
 	data(sim_ru)
 	sim_ru<-pu.subset(sim_ru, 1:10)
 	sim_ru<-dp.subset(sim_ru, species=1:3, space=1, points=1:5)
-	sim_ru@data@targets[[3]]=c(0.5,0.5,0.5,-10,-10,-10)
+	sim_ru@data@targets[[3]] <- c(0.5,0.5,0.5,-10,-10,-10)
 	# solve it
 	sim_rs<-raptr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L), verbose=TRUE)
 	# run checks
@@ -83,8 +83,8 @@ test_that('solve.RapUnsolved (reliable - NumberSolutions=1 - MultipleSolutionsMe
 	data(sim_ru)
 	sim_ru<-pu.subset(sim_ru, 1:10)
 	sim_ru<-dp.subset(sim_ru, species=1:3, space=1, points=1:5)
-	sim_ru@opts=RapReliableOpts(failure.multiplier=10)
-	sim_ru@data@targets[[3]]=c(0.5,0.5,0.5,-10000,-10000,-10000)
+	sim_ru@opts<-RapReliableOpts(failure.multiplier=10)
+	sim_ru@data@targets[[3]]<-c(0.5,0.5,0.5,-10000,-10000,-10000)
 	# solve it
 	sim_rs<-raptr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L), verbose=TRUE)
 	# run checks
@@ -100,7 +100,7 @@ test_that('solve.RapUnsolved (unreliable - NumberSolutions=1 - MultipleSolutions
 	data(sim_ru)
 	sim_ru<-pu.subset(sim_ru, 1:10)
 	sim_ru<-dp.subset(sim_ru, species=1:3, space=1, points=1:5)
-	sim_ru@data@targets[[3]]=c(0.5,0.5,0.5,-10,-10,-10)
+	sim_ru@data@targets[[3]]<-c(0.5,0.5,0.5,-10,-10,-10)
 	# solve it
 	sim_rs<-raptr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L, MultipleSolutionsMethod='solution.pool'), verbose=TRUE)
 	# run checks
@@ -116,8 +116,8 @@ test_that('solve.RapUnsolved (reliable - NumberSolutions=1 - MultipleSolutionsMe
 	data(sim_ru)
 	sim_ru<-pu.subset(sim_ru, 1:10)
 	sim_ru<-dp.subset(sim_ru, species=1:3, space=1, points=1:5)
-	sim_ru@opts=RapReliableOpts(failure.multiplier=10)
-	sim_ru@data@targets[[3]]=c(0.5,0.5,0.5,-10000,-10000,-10000)
+	sim_ru@opts<-RapReliableOpts(failure.multiplier=10)
+	sim_ru@data@targets[[3]]<-c(0.5,0.5,0.5,-10000,-10000,-10000)
 	# solve it
 	sim_rs<-raptr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L, MultipleSolutionsMethod='solution.pool'), verbose=TRUE)
 	# run checks
@@ -133,9 +133,9 @@ test_that('solve.RapUnsolved (unreliable - NumberSolutions=1 - sparse occupancy)
 	data(sim_ru)
 	sim_ru<-pu.subset(sim_ru, 1:10)
 	sim_ru<-dp.subset(sim_ru, species=1:3, space=1, points=1:30)
-	sim_ru@data@targets[[3]]=c(0.5,0.5,0.5,-1000000,-1000000,-1000000)
-	sim_ru@opts=RapUnreliableOpts()
-	sim_ru@data@pu.species.probabilities=sim_ru@data@pu.species.probabilities[sample(
+	sim_ru@data@targets[[3]]<-c(0.5,0.5,0.5,-1000000,-1000000,-1000000)
+	sim_ru@opts<-RapUnreliableOpts()
+	sim_ru@data@pu.species.probabilities<-sim_ru@data@pu.species.probabilities[sample(
 		seq_len(nrow(sim_ru@data@pu.species.probabilities)),
 		size=ceiling(nrow(sim_ru@data@pu.species.probabilities)*0.7)
 	),]
@@ -173,7 +173,7 @@ test_that('solve.RapUnsolved (reliable - NumberSolutions=1 - sparse occupancy)',
 	data(sim_ru)
 	sim_ru<- pu.subset(sim_ru, 1:10)
 	sim_ru<-dp.subset(sim_ru, species=1:3, space=1, points=1:30)
-	sim_ru@data@pu.species.probabilities=sim_ru@data@pu.species.probabilities[sample(
+	sim_ru@data@pu.species.probabilities<-sim_ru@data@pu.species.probabilities[sample(
 		seq_len(nrow(sim_ru@data@pu.species.probabilities)),
 		ceiling(nrow(sim_ru@data@pu.species.probabilities)*0.7)
 	),]
@@ -196,8 +196,8 @@ test_that('solve.RapUnsolved (reliable - NumberSolutions=1 - sparse occupancy)',
 			name=sim_ru@data@attribute.spaces[[i]]@name
 		)
 	})
-	sim_ru@opts=RapReliableOpts()
-	sim_ru@data@targets[[3]]=c(0.5,0.5,0.5,-1000000,-1000000,-1000000)
+	sim_ru@opts<-RapReliableOpts()
+	sim_ru@data@targets[[3]]<-c(0.5,0.5,0.5,-1000000,-1000000,-1000000)
 	# solve it
 	sim_rs<-raptr::solve(sim_ru, GurobiOpts(MIPGap=0.15, Presolve=2L), verbose=TRUE)
 	# run checks
@@ -213,8 +213,8 @@ test_that('solve.RapUnsolved (unreliable - NumberSolutions=3 - MultipleSolutions
 	data(sim_ru)
 	sim_ru<- pu.subset(sim_ru, 1:20)
 	sim_ru<-dp.subset(sim_ru, species=1:3, space=1, points=1:5)
-	sim_ru@opts=RapUnreliableOpts()
-	sim_ru@data@targets[[3]]=c(0.5,0.5,0.5,-10000,-10000,-10000)
+	sim_ru@opts<-RapUnreliableOpts()
+	sim_ru@data@targets[[3]]<-c(0.5,0.5,0.5,-10000,-10000,-10000)
 	# solve it
 	sim_rs<-raptr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L, NumberSolutions=3L))
 	# run checks
@@ -228,10 +228,10 @@ test_that('solve.RapUnsolved (reliable - NumberSolutions=3 - MultipleSolutionsMe
 	# load RapUnsolved object
 	set.seed(500)
 	data(sim_ru)
-	sim_ru<- pu.subset(sim_ru, 1:20)
+	sim_ru<-pu.subset(sim_ru, 1:20)
 	sim_ru<-dp.subset(sim_ru, species=1:3, space=1, points=1:3)
-	sim_ru@data@targets[[3]]=c(0.5,0.5,0.5,-10000,-10000,-10000)
-	sim_ru@opts=RapReliableOpts()
+	sim_ru@data@targets[[3]]<-c(0.5,0.5,0.5,-10000,-10000,-10000)
+	sim_ru@opts<-RapReliableOpts()
 	# solve it
 	sim_rs<-raptr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L, NumberSolutions=3L))
 	# check number of selections is 1
@@ -247,8 +247,8 @@ test_that('solve.RapUnsolved (unreliable - NumberSolutions=2 - MultipleSolutions
 	data(sim_ru)
 	sim_ru<- pu.subset(sim_ru, 1:20)
 	sim_ru<-dp.subset(sim_ru, species=1:3, space=1, points=1:5)
-	sim_ru@opts=RapUnreliableOpts()
-	sim_ru@data@targets[[3]]=c(0.5,0.5,0.5,-10000,-10000,-10000)
+	sim_ru@opts<-RapUnreliableOpts()
+	sim_ru@data@targets[[3]]<-c(0.5,0.5,0.5,-10000,-10000,-10000)
 	# solve it
 	sim_rs<-raptr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L, NumberSolutions=2L, MultipleSolutionsMethod='solution.pool'))
 	# run checks
@@ -264,8 +264,8 @@ test_that('solve.RapUnsolved (reliable - NumberSolutions=2 - MultipleSolutionsMe
 	data(sim_ru)
 	sim_ru<- pu.subset(sim_ru, 1:20)
 	sim_ru<-dp.subset(sim_ru, species=1:3, space=1, points=1:3)
-	sim_ru@data@targets[[3]]=c(0.5,0.5,0.5,-10000,-10000,-10000)
-	sim_ru@opts=RapReliableOpts()
+	sim_ru@data@targets[[3]]<-c(0.5,0.5,0.5,-10000,-10000,-10000)
+	sim_ru@opts<-RapReliableOpts()
 	# solve it
 	sim_rs<-raptr::solve(sim_ru, GurobiOpts(MIPGap=0.5, Presolve=2L, NumberSolutions=2L, MultipleSolutionsMethod='solution.pool'))
 	# check number of selections is 1
@@ -281,12 +281,12 @@ test_that('solve.RapUnsolved (unreliable - STATUS test)', {
 	data(sim_ru)
 	sim_ru<- pu.subset(sim_ru, 1:10)
 	sim_ru<-dp.subset(sim_ru, species=1:3, space=1, points=1:30)
-	sim_ru@data@targets[[3]]=c(0.5,0.5,0.5,-10000,-10000,-10000)
-	sim_ru@opts=RapUnreliableOpts()
+	sim_ru@data@targets[[3]]<-c(0.5,0.5,0.5,-10000,-10000,-10000)
+	sim_ru@opts<-RapUnreliableOpts()
 	# lock in and lock out planning units
-	sim_ru@data@pu$status[1]=0L
-	sim_ru@data@pu$status[2]=2L
-	sim_ru@data@pu$status[3]=3L
+	sim_ru@data@pu$status[1]<-0L
+	sim_ru@data@pu$status[2]<-2L
+	sim_ru@data@pu$status[3]<-3L
 	# solve it
 	sim_rs<-raptr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L))
 	# run checks
@@ -305,12 +305,12 @@ test_that('solve.RapUnsolved (reliable - STATUS test)', {
 	data(sim_ru)
 	sim_ru<- pu.subset(sim_ru, 1:10)
 	sim_ru<-dp.subset(sim_ru, species=1:3, space=1, points=1:30)
-	sim_ru@data@targets[[3]]=c(0.5,0.5,0.5,-10000,-10000,-10000)
-	sim_ru@opts=RapReliableOpts()
+	sim_ru@data@targets[[3]]<-c(0.5,0.5,0.5,-10000,-10000,-10000)
+	sim_ru@opts<-RapReliableOpts()
 	# lock in and lock out planning units
-	sim_ru@data@pu$status[1]=0L
-	sim_ru@data@pu$status[2]=2L
-	sim_ru@data@pu$status[3]=3L
+	sim_ru@data@pu$status[1]<-0L
+	sim_ru@data@pu$status[2]<-2L
+	sim_ru@data@pu$status[3]<-3L
 	# solve it
 	sim_rs<-raptr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L))
 	# run checks
@@ -327,9 +327,9 @@ test_that('solve.RapUnsolved (unreliable - BLM test)', {
 	set.seed(500)
 	data(sim_ru)
 	sim_ru<- pu.subset(sim_ru, 1:10)
-	sim_ru@opts=RapUnreliableOpts(BLM=100)
+	sim_ru@opts<-RapUnreliableOpts(BLM=100)
 	sim_ru<-dp.subset(sim_ru, species=1:3, space=1, points=1:30)
-	sim_ru@data@targets[[3]]=c(0.5,0.5,0.5,-10000,-10000,-10000)
+	sim_ru@data@targets[[3]]<-c(0.5,0.5,0.5,-10000,-10000,-10000)
 	# solve it
 	sim_rs<-raptr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L))
 	# run checks
@@ -344,8 +344,8 @@ test_that('solve.RapUnsolved (reliable - BLM test)', {
 	data(sim_ru)
 	sim_ru<- pu.subset(sim_ru, 1:10)
 	sim_ru<-dp.subset(sim_ru, species=1:3, space=1, points=1:30)
-	sim_ru@opts=RapReliableOpts(BLM=100)
-	sim_ru@data@targets[[3]]=c(0.5,0.5,0.5,-10000,-10000,-10000)
+	sim_ru@opts<-RapReliableOpts(BLM=100)
+	sim_ru@data@targets[[3]]<-c(0.5,0.5,0.5,-10000,-10000,-10000)
 	# solve it
 	sim_rs<-raptr::solve(sim_ru, GurobiOpts(MIPGap=0.99, Presolve=2L))
 	# run checks
@@ -368,7 +368,7 @@ test_that('update.RapUnsolved (formulation argument)', {
 	set.seed(500)
 	data(sim_ru)
 	# update object
-	sim_ru@opts@BLM=100
+	sim_ru@opts@BLM<-100
 	sim_ru2 <- update(sim_ru, formulation='reliable', solve=FALSE)
 	# checks
 	expect_equal(sim_ru2@opts@BLM, 100)
@@ -431,9 +431,9 @@ test_that('space.plot.RapUnsolved (sparse)', {
 	data(sim_ru)
 	sim_ru<-pu.subset(sim_ru, 1:10)
 	sim_ru<-dp.subset(sim_ru, species=1:3, space=1, points=1:30)
-	sim_ru@data@targets[[3]]=c(0.5,0.5,0.5,-1000000,-1000000,-1000000)
-	sim_ru@opts=RapUnreliableOpts()
-	sim_ru@data@pu.species.probabilities=sim_ru@data@pu.species.probabilities[sample(
+	sim_ru@data@targets[[3]]<-c(0.5,0.5,0.5,-1000000,-1000000,-1000000)
+	sim_ru@opts<-RapUnreliableOpts()
+	sim_ru@data@pu.species.probabilities<-sim_ru@data@pu.species.probabilities[sample(
 		seq_len(nrow(sim_ru@data@pu.species.probabilities)),
 		size=ceiling(nrow(sim_ru@data@pu.species.probabilities)*0.7)
 	),]

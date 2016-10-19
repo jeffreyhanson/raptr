@@ -36,7 +36,7 @@ setClass("ManualOpts",
 #' # create ManualOpts object
 #' ManualOpts(NumberSolutions=1L)
 #' @export
-ManualOpts<-function(NumberSolutions=1L) {
+ManualOpts <- function(NumberSolutions=1L) {
 	mo<-new("ManualOpts", NumberSolutions=NumberSolutions)
 	validObject(mo, test=FALSE)
 	return(mo)
@@ -45,7 +45,7 @@ ManualOpts<-function(NumberSolutions=1L) {
 #' @method print ManualOpts
 #' @rdname print
 #' @export
-print.ManualOpts=function(x, ..., header=TRUE) {
+print.ManualOpts <- function(x, ..., header=TRUE) {
 	if (header) {
 		cat("ManualOpts object.\n")
 	} else {
@@ -66,7 +66,7 @@ setMethod(
 #' @rdname update
 #' @method update ManualOpts
 #' @export
-update.ManualOpts<-function(object, NumberSolutions=NULL, ...) {
+update.ManualOpts <- function(object, NumberSolutions=NULL, ...) {
 	if (!is.null(NumberSolutions))
 		stop('Solver parameters cannot be updated for manually specified solutions.')
 	return(object)

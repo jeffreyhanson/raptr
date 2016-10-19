@@ -39,7 +39,7 @@ RapUnreliableOpts<-function(BLM=0) {
 #' @method print RapUnreliableOpts
 #' @rdname print
 #' @export
-print.RapUnreliableOpts=function(x, ..., header=TRUE) {
+print.RapUnreliableOpts <- function(x, ..., header=TRUE) {
 	if (header)
 		cat("RapUnreliableOpts object.\n")
 	cat('  BLM:',x@BLM,'\n')
