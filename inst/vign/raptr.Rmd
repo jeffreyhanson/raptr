@@ -17,8 +17,6 @@ vignette: >
 ```{r global, include=FALSE}
 # set cache globally
 knitr::opts_chunk$set(cache=TRUE)
-# load package
-library(raptr)
 ```
 
 # Overview
