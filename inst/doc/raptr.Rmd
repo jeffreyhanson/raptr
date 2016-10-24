@@ -500,21 +500,21 @@ sim_rs_s1_space <- update(sim_rs_s1_amount, amount.target=0.2, space.target=0.85
 ##   RHS range       [1e+00, 1e+02]
 ## Found heuristic solution: objective 88
 ## Presolve removed 36 rows and 0 columns
-## Presolve time: 2.41s
+## Presolve time: 2.19s
 ## Presolved: 10066 rows, 10100 columns, 40104 nonzeros
 ## Variable types: 0 continuous, 10100 integer (10100 binary)
 ## Presolved: 10066 rows, 10100 columns, 40104 nonzeros
 ## 
 ## Presolve removed 10066 rows and 10100 columns
 ## 
-## Root relaxation: objective 2.000000e+01, 621 iterations, 0.10 seconds
+## Root relaxation: objective 2.000000e+01, 621 iterations, 0.09 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
 ## *    0     0               0      20.0000000   20.00000  0.00%     -    2s
 ## 
-## Explored 0 nodes (1086 simplex iterations) in 2.60 seconds
+## Explored 0 nodes (1086 simplex iterations) in 2.36 seconds
 ## Thread count was 22 (of 24 available processors)
 ## 
 ## Optimal solution found (tolerance 1.00e-01)
@@ -594,7 +594,7 @@ sim_rs_s2_space <- update(sim_rs_s2_amount, amount.target=0.2, space.target=0.85
 ##   RHS range       [1e+00, 6e+01]
 ## Found heuristic solution: objective 91
 ## Presolve removed 220 rows and 0 columns
-## Presolve time: 1.94s
+## Presolve time: 1.58s
 ## Presolved: 9882 rows, 10100 columns, 41664 nonzeros
 ## Variable types: 0 continuous, 10100 integer (10100 binary)
 ## Presolved: 9882 rows, 10100 columns, 41664 nonzeros
@@ -606,10 +606,10 @@ sim_rs_s2_space <- update(sim_rs_s2_amount, amount.target=0.2, space.target=0.85
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0   12.32570    0  290   91.00000   12.32570  86.5%     -    2s
+##      0     0   12.32570    0  290   91.00000   12.32570  86.5%     -    1s
 ## H    0     0                      13.0000000   12.32570  5.19%     -    2s
 ## 
-## Explored 0 nodes (4369 simplex iterations) in 2.37 seconds
+## Explored 0 nodes (4369 simplex iterations) in 2.03 seconds
 ## Thread count was 22 (of 24 available processors)
 ## 
 ## Optimal solution found (tolerance 1.00e-01)
@@ -687,14 +687,14 @@ sim_rs_s3_space <- update(sim_rs_s3_amount, amount.target=0.2, space.target=0.85
 ##   RHS range       [1e+00, 7e+01]
 ## Found heuristic solution: objective 86
 ## Presolve removed 589 rows and 15 columns
-## Presolve time: 3.40s
+## Presolve time: 3.67s
 ## Presolved: 9513 rows, 10085 columns, 51461 nonzeros
 ## Variable types: 0 continuous, 10085 integer (10085 binary)
 ## Presolved: 9513 rows, 10085 columns, 51461 nonzeros
 ## 
 ## Presolve removed 9513 rows and 10085 columns
 ## 
-## Root relaxation: objective 8.980792e+00, 6437 iterations, 0.53 seconds
+## Root relaxation: objective 8.980792e+00, 6437 iterations, 0.44 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
@@ -707,7 +707,7 @@ sim_rs_s3_space <- update(sim_rs_s3_amount, amount.target=0.2, space.target=0.85
 ##   Gomory: 1
 ##   Zero half: 1
 ## 
-## Explored 0 nodes (6761 simplex iterations) in 4.47 seconds
+## Explored 0 nodes (6761 simplex iterations) in 4.70 seconds
 ## Thread count was 22 (of 24 available processors)
 ## 
 ## Optimal solution found (tolerance 1.00e-01)
@@ -792,21 +792,21 @@ sim_mrs_amount <- update(
 ##   Bounds range    [1e+00, 1e+00]
 ##   RHS range       [1e+00, 8e+02]
 ## Found heuristic solution: objective 98
-## Presolve time: 1.42s
+## Presolve time: 1.35s
 ## Presolved: 30306 rows, 30100 columns, 120000 nonzeros
 ## Variable types: 0 continuous, 30100 integer (30100 binary)
 ## Presolved: 30306 rows, 30100 columns, 120000 nonzeros
 ## 
 ## Presolve removed 30306 rows and 30100 columns
 ## 
-## Root relaxation: objective 2.000000e+01, 2021 iterations, 1.38 seconds
+## Root relaxation: objective 2.000000e+01, 2021 iterations, 1.90 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
 ## *    0     0               0      20.0000000   20.00000  0.00%     -    3s
 ## 
-## Explored 0 nodes (4785 simplex iterations) in 3.43 seconds
+## Explored 0 nodes (4785 simplex iterations) in 3.92 seconds
 ## Thread count was 22 (of 24 available processors)
 ## 
 ## Optimal solution found (tolerance 1.00e-01)
@@ -831,9 +831,9 @@ sim_mrs_space <- update(
 ##   Bounds range    [1e+00, 1e+00]
 ##   RHS range       [1e+00, 1e+02]
 ## Found heuristic solution: objective 100
-## Presolve removed 271 rows and 15 columns (presolve time = 5s) ...
+## Presolve removed 269 rows and 15 columns (presolve time = 5s) ...
 ## Presolve removed 360 rows and 15 columns
-## Presolve time: 7.36s
+## Presolve time: 8.02s
 ## Presolved: 29946 rows, 30085 columns, 131504 nonzeros
 ## Variable types: 0 continuous, 30085 integer (30085 binary)
 ## Presolve removed 53 rows and 1 columns
@@ -844,18 +844,19 @@ sim_mrs_space <- update(
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    1.0000000e+02   0.000000e+00   1.000000e+02      8s
-##     4358    2.0000000e+01   0.000000e+00   0.000000e+00      9s
-##     4358    2.0000000e+01   0.000000e+00   0.000000e+00      9s
+##        0    1.0000000e+02   0.000000e+00   1.000000e+02      9s
+##     4358    2.0000000e+01   0.000000e+00   0.000000e+00     10s
+##     4358    2.0000000e+01   0.000000e+00   0.000000e+00     10s
 ## 
-## Root relaxation: objective 2.000000e+01, 4358 iterations, 1.84 seconds
+## Root relaxation: objective 2.000000e+01, 4358 iterations, 1.77 seconds
+## Total elapsed time = 10.01s
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-## *    0     0               0      20.0000000   20.00000  0.00%     -    9s
+## *    0     0               0      20.0000000   20.00000  0.00%     -   10s
 ## 
-## Explored 0 nodes (6369 simplex iterations) in 9.53 seconds
+## Explored 0 nodes (6369 simplex iterations) in 10.13 seconds
 ## Thread count was 22 (of 24 available processors)
 ## 
 ## Optimal solution found (tolerance 1.00e-01)
@@ -983,7 +984,7 @@ sim_mrs_space2 <- solve(
 ## Found heuristic solution: objective 100
 ## Presolve removed 271 rows and 15 columns (presolve time = 5s) ...
 ## Presolve removed 360 rows and 15 columns
-## Presolve time: 7.14s
+## Presolve time: 7.99s
 ## Presolved: 29946 rows, 30085 columns, 131478 nonzeros
 ## Variable types: 0 continuous, 30085 integer (30085 binary)
 ## Presolve removed 53 rows and 1 columns
@@ -994,19 +995,20 @@ sim_mrs_space2 <- solve(
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    1.0000000e+02   0.000000e+00   1.000000e+02      8s
-##     3717    2.0000000e+01   0.000000e+00   0.000000e+00      9s
-##     3717    2.0000000e+01   0.000000e+00   0.000000e+00      9s
+##        0    1.0000000e+02   0.000000e+00   1.000000e+02      9s
+##     3717    2.0000000e+01   0.000000e+00   0.000000e+00     10s
+##     3717    2.0000000e+01   0.000000e+00   0.000000e+00     10s
 ## 
-## Root relaxation: objective 2.000000e+01, 3717 iterations, 1.44 seconds
+## Root relaxation: objective 2.000000e+01, 3717 iterations, 1.96 seconds
+## Total elapsed time = 10.00s
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0   20.00000    0  216  100.00000   20.00000  80.0%     -    9s
-## H    0     0                      22.0000000   20.00000  9.09%     -    9s
+##      0     0   20.00000    0  216  100.00000   20.00000  80.0%     -   10s
+## H    0     0                      22.0000000   20.00000  9.09%     -   10s
 ## 
-## Explored 0 nodes (7281 simplex iterations) in 9.32 seconds
+## Explored 0 nodes (7281 simplex iterations) in 10.98 seconds
 ## Thread count was 22 (of 24 available processors)
 ## 
 ## Optimal solution found (tolerance 1.00e-01)
@@ -1060,10 +1062,11 @@ sim_mrs_space3 <- try(update(sim_mrs_space, formulation='reliable', max.r.level=
 ##   Objective range [1e+00, 1e+00]
 ##   Bounds range    [1e+00, 1e+00]
 ##   RHS range       [7e-03, 1e+02]
+## Presolve removed 313400 rows and 65500 columns (presolve time = 5s) ...
 ## Presolve removed 338706 rows and 90806 columns
-## Presolve time: 3.95s
+## Presolve time: 6.50s
 ## 
-## Explored 0 nodes (0 simplex iterations) in 5.31 seconds
+## Explored 0 nodes (0 simplex iterations) in 9.79 seconds
 ## Thread count was 1 (of 24 available processors)
 ## 
 ## Model is infeasible
@@ -1094,7 +1097,7 @@ sim_mrs_space3 <- update(
 ##   RHS range       [7e-03, 8e+05]
 ## Presolve removed 333703 rows and 151600 columns (presolve time = 5s) ...
 ## Presolve removed 333903 rows and 151800 columns
-## Presolve time: 9.94s
+## Presolve time: 7.50s
 ## Presolved: 30303 rows, 30100 columns, 90300 nonzeros
 ## Variable types: 0 continuous, 30100 integer (30100 binary)
 ## Found heuristic solution: objective 27.0000000
@@ -1105,18 +1108,18 @@ sim_mrs_space3 <- update(
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    1.0000000e+02   0.000000e+00   1.000000e+02     12s
-##      129    2.0000000e+01   0.000000e+00   0.000000e+00     12s
-##      129    2.0000000e+01   0.000000e+00   0.000000e+00     12s
+##        0    1.0000000e+02   0.000000e+00   1.000000e+02      9s
+##      129    2.0000000e+01   0.000000e+00   0.000000e+00      9s
+##      129    2.0000000e+01   0.000000e+00   0.000000e+00      9s
 ## 
-## Root relaxation: objective 2.000000e+01, 129 iterations, 0.52 seconds
+## Root relaxation: objective 2.000000e+01, 129 iterations, 0.44 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-## *    0     0               0      20.0000000   20.00000  0.00%     -   11s
+## *    0     0               0      20.0000000   20.00000  0.00%     -    9s
 ## 
-## Explored 0 nodes (176 simplex iterations) in 12.08 seconds
+## Explored 0 nodes (176 simplex iterations) in 9.56 seconds
 ## Thread count was 22 (of 24 available processors)
 ## 
 ## Optimal solution found (tolerance 1.00e-01)
@@ -1181,7 +1184,7 @@ sim_mrs_amount_blm <- update(sim_mrs_amount, BLM=100, Threads=threads)
 ##   Bounds range    [1e+00, 1e+00]
 ##   RHS range       [1e+00, 8e+02]
 ## Found heuristic solution: objective 4498
-## Presolve time: 1.52s
+## Presolve time: 1.35s
 ## Presolved: 30666 rows, 30280 columns, 120720 nonzeros
 ## Variable types: 0 continuous, 30280 integer (30280 binary)
 ## Presolved: 30666 rows, 30280 columns, 120720 nonzeros
@@ -1191,50 +1194,50 @@ sim_mrs_amount_blm <- update(sim_mrs_amount, BLM=100, Threads=threads)
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##     5348    6.9973229e+02   0.000000e+00   1.578526e+05      5s
-##     7593    4.6444444e+02   0.000000e+00   0.000000e+00      7s
+##     5558    6.1282405e+02   0.000000e+00   9.029674e+05      5s
+##     7593    4.6444444e+02   0.000000e+00   0.000000e+00      6s
 ##     7593    4.6444444e+02   0.000000e+00   0.000000e+00      7s
 ## 
-## Root relaxation: objective 4.644444e+02, 7593 iterations, 5.28 seconds
+## Root relaxation: objective 4.644444e+02, 7593 iterations, 5.13 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0  464.44444    0 1725 4498.00000  464.44444  89.7%     -    7s
-## H    0     0                    1531.0000000  464.44444  69.7%     -   21s
-## H    0     0                    1122.0000000  464.44444  58.6%     -   22s
-##      0     0  519.36948    0 1447 1122.00000  519.36948  53.7%     -   23s
-##      0     0  519.36948    0 1451 1122.00000  519.36948  53.7%     -   25s
-##      0     0  556.17021    0 1520 1122.00000  556.17021  50.4%     -   26s
-##      0     0  556.17021    0 1527 1122.00000  556.17021  50.4%     -   26s
-##      0     0  556.17021    0 1540 1122.00000  556.17021  50.4%     -   27s
-##      0     0  556.17021    0 1542 1122.00000  556.17021  50.4%     -   27s
-##      0     0  556.17021    0 1499 1122.00000  556.17021  50.4%     -   29s
-##      0     0  556.17021    0 1500 1122.00000  556.17021  50.4%     -   31s
-##      0     0  556.17021    0 1477 1122.00000  556.17021  50.4%     -   34s
-##      0     0  556.17021    0 1480 1122.00000  556.17021  50.4%     -   37s
-## H    0     0                    1120.0000000  556.17021  50.3%     -   38s
-##      0     0  556.17021    0 1483 1120.00000  556.17021  50.3%     -   39s
-##      0     0  556.17021    0 1481 1120.00000  556.17021  50.3%     -   39s
-##      0     2  556.17021    0 1456 1120.00000  556.17021  50.3%     -   44s
-##      1     3  578.70383    1 1468 1120.00000  561.88348  49.8%  3656   45s
-##     13    17  613.99508    7 1437 1120.00000  600.00000  46.4%  1408   50s
-##     95   109  693.30843   14 1217 1120.00000  625.08266  44.2%  1005   56s
-##    180   175  720.00000   16 1009 1120.00000  625.08266  44.2%   818   60s
-##    458   391  960.00000   23  339 1120.00000  625.08266  44.2%   618   68s
-##    584   484 1020.00000   34    2 1120.00000  637.61095  43.1%   621   74s
-## H  649   436                    1020.0000000  637.61095  37.5%   559   74s
+##      0     0  464.44444    0 1725 4498.00000  464.44444  89.7%     -    6s
+## H    0     0                    1531.0000000  464.44444  69.7%     -   20s
+## H    0     0                    1122.0000000  464.44444  58.6%     -   21s
+##      0     0  519.36948    0 1447 1122.00000  519.36948  53.7%     -   22s
+##      0     0  519.36948    0 1451 1122.00000  519.36948  53.7%     -   24s
+##      0     0  556.17021    0 1520 1122.00000  556.17021  50.4%     -   25s
+##      0     0  556.17021    0 1527 1122.00000  556.17021  50.4%     -   25s
+##      0     0  556.17021    0 1540 1122.00000  556.17021  50.4%     -   25s
+##      0     0  556.17021    0 1542 1122.00000  556.17021  50.4%     -   26s
+##      0     0  556.17021    0 1499 1122.00000  556.17021  50.4%     -   27s
+##      0     0  556.17021    0 1500 1122.00000  556.17021  50.4%     -   29s
+##      0     0  556.17021    0 1477 1122.00000  556.17021  50.4%     -   32s
+##      0     0  556.17021    0 1480 1122.00000  556.17021  50.4%     -   35s
+## H    0     0                    1120.0000000  556.17021  50.3%     -   35s
+##      0     0  556.17021    0 1483 1120.00000  556.17021  50.3%     -   36s
+##      0     0  556.17021    0 1481 1120.00000  556.17021  50.3%     -   36s
+##      0     2  556.17021    0 1456 1120.00000  556.17021  50.3%     -   42s
+##      9    13  612.82407    6 1387 1120.00000  586.72961  47.6%  1267   47s
+##     33    47  632.55911   10 1090 1120.00000  612.02586  45.4%  1071   50s
+##     95   109  693.30843   14 1217 1120.00000  625.08266  44.2%  1005   55s
+##    303   264  834.28571   19  615 1120.00000  625.08266  44.2%   631   62s
+##    458   391  960.00000   23  339 1120.00000  625.08266  44.2%   618   65s
+##    584   484 1020.00000   34    2 1120.00000  637.61095  43.1%   621   71s
+## H  649   436                    1020.0000000  637.61095  37.5%   559   71s
 ## H  821   350                     920.0000000  653.33333  29.0%   567   88s
 ##    906   309  833.88199   13 1026  920.00000  654.69388  28.8%   560   96s
 ##   1311   332  870.00000   20  985  920.00000  736.32265  20.0%   528  105s
-##   1755   272     cutoff   20       920.00000  778.17223  15.4%   522  116s
-##   2375    48     cutoff   25       920.00000  816.00000  11.3%   495  124s
+##   1755   272     cutoff   20       920.00000  778.17223  15.4%   522  117s
+##   2375    48     cutoff   25       920.00000  816.00000  11.3%   495  128s
 ## 
 ## Cutting planes:
 ##   Gomory: 2
 ##   Zero half: 206
 ## 
-## Explored 3021 nodes (1421545 simplex iterations) in 124.72 seconds
+## Explored 3021 nodes (1421545 simplex iterations) in 128.52 seconds
 ## Thread count was 22 (of 24 available processors)
 ## 
 ## Optimal solution found (tolerance 1.00e-01)
@@ -1295,18 +1298,15 @@ Here we can see that the prioritisation generated using a `BLM` parameter of 100
 
 # Case-study examples
 ## Introduction
-Here we will investigate how space-based targets can affect prioritisations using a more realistic dataset. We will generate prioritisations for the four bird species-- [blue-winged kookaburra](http://www.birdlife.org/datazone/speciesfactsheet.php?id=1092&gclid=CjwKEAiApYGyBRC-g_jIstuduV8SJABCEzhZoONUy8VlwRZqeFB1Z5M03CjyneIvX8KdVKIPZvckrRoCgJDw_wcB), [brown-backed honeyeater](http://www.birdlife.org/datazone/species/factsheet/22704394?gclid=CjwKEAiApYGyBRC-g_jIstuduV8SJABCEzhZHxCTcR38YnFlhePYt19gD31lqxxwrMmtIuWFhUwLmRoCGJjw_wcB), [brown falcon](http://www.birdlife.org/datazone/speciesfactsheet.php?id=3588), [pale-headed rosella](http://www.birdlife.org/datazone/speciesfactsheet.php?id=1466)--in Queensland, Australia. This region contains a broad range of different habitats--such as rainforests, woodlands, and deserts--making it ideal for this tutorial. First, we will generate a typical amount-based prioritisation that aims to capture 20% of the species' distributions. Then we will generate a prioritisation that also aims to secure populations in representative parts of the species' distributions in terms of their geographic location and their environmental heterogeneity. To do this we will generate a prioritisation using 20% amount-based targets and 85% space-based targets. Finally, we will compare these prioritisations to Australia's existing protected network.
+Here we will investigate how space-based targets can affect prioritisations using a more realistic dataset. We will generate prioritisations for the four bird species--[blue-winged kookaburra](http://www.birdlife.org/datazone/speciesfactsheet.php?id=1092&gclid=CjwKEAiApYGyBRC-g_jIstuduV8SJABCEzhZoONUy8VlwRZqeFB1Z5M03CjyneIvX8KdVKIPZvckrRoCgJDw_wcB), [brown-backed honeyeater](http://www.birdlife.org/datazone/species/factsheet/22704394?gclid=CjwKEAiApYGyBRC-g_jIstuduV8SJABCEzhZHxCTcR38YnFlhePYt19gD31lqxxwrMmtIuWFhUwLmRoCGJjw_wcB), [brown falcon](http://www.birdlife.org/datazone/speciesfactsheet.php?id=3588), [pale-headed rosella](http://www.birdlife.org/datazone/speciesfactsheet.php?id=1466)--in Queensland, Australia. This region contains a broad range of different habitats--such as rainforests, woodlands, and deserts--making it ideal for this tutorial. First, we will generate a typical amount-based prioritisation that aims to capture 20% of the species' distributions. Then we will generate a prioritisation that also aims to secure populations in representative parts of the species' distributions in terms of their geographic location and their environmental heterogeneity. To do this we will generate a prioritisation using 20% amount-based targets and 85% space-based targets. Finally, we will compare these prioritisations to Australia's existing protected network.
 
 ## Data
-Survey data for the species were obtained from [BirdLife Australia](http://birdlife.org.au/projects/atlas-and-birdata). The survey data was rarefied using a 100 km$^2$ grid, wherein the survey with the greatest number of repeat visits in each grid cell was chosen. To model the distribution of each species, environmental data were obtained at survey location (site). Specifically, [climatic data](http://www.worldclim.org/bioclim) (bio1, bio4, bio15, bio16, bio17) and [classifications of the vegetation at the site](http://www.environment.gov.au/fed/catalog/search/resource/details.page?uuid=%7BEBBCC6FA-8C13-422A-BCD7-24A9F8B52A9A%7D) were used. Occupancy-detection models were fit using Stan using manually tuned parameters (adapt deta=0.9, maximum treedepth=20, chains=4 , warmup iterations=1000, total iterations=1500) with five-fold cross-validation. In each replicate, data were partitioned into training and test sites. A full model was fit using quadratic terms for environmental variables in the site-component, and an intercept in the detection-component of the model. The full model was then subject to a step-wise backwards term deletion routine. Terms were retained when their inclusion resulted in a model with a greater area under the curve (AUC) value as calculated using the test data. Maps were generated for each species as an average of the predictions from the best model in each best replicate. To further improve the accuracy of these maps, areas well outside of the species' known distributions were set to 0. For each species, this was achieved by masking out [biogeographic regions](https://www.environment.gov.au/land/nrs/science/ibra) where the species was not observed, and regions that did not have a neighbouring planning unit where the species was observed. The maps were then resampled (10 km$^2$ resolution) and cropped to the study area. The resulting maps are stored in the `cs_spp` object. 
+To map the coarse-scale distributions of the four bird species, we obtained observation data from the Atlas of Living Australia across the whole of Australia [using the \texttt{ALA4R R} package], spatially thinned the data to omit points within 10,000 km$^2$ of each other to ameliorate the effects of sampling bias [using the developmental version of the \texttt{spThin R} package; \url{www.github.com/mlammens/spThin}], and fit 85 % minimum convex polygons [using the \texttt{adehabitatHR R} package]. We used this method because it is entirely reproducible using freely available data. The code used to generate this maps is available in the [GitHub repository for the scientific article accompanying this R package](https://github.com/jeffreyhanson/raptr-manuscript).
 
 
 ```r
 # load data
 data(cs_spp)
-
-# remove areas with low occupancy (prob < 0.6)
-cs_spp[cs_spp<0.6] <- NA
 
 # plot species' distributions
 plot(cs_spp, main=c(
@@ -1315,7 +1315,7 @@ plot(cs_spp, main=c(
 ))
 ```
 
-<img src="figure/unnamed-chunk-49-1.png" title="_Distribution map for four Australian bird species. Pixel colours denote probability of occupancy._" alt="_Distribution map for four Australian bird species. Pixel colours denote probability of occupancy._" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-49-1.png" title="_Distribution map for four Australian bird species. ._" alt="_Distribution map for four Australian bird species. ._" style="display: block; margin: auto;" />
 
 Planning units (50km$^2$ resolution) were generated across Australia, and then clipped to the [Queensland state borders and coastline](http://www.abs.gov.au/ausstats/abs@.nsf/mf/1259.0.30.001?OpenDocument). **Note that we are using excessively coarse planning units so that our examples will complete relatively quickly. In a real-world planning exercise, we would use much finer planning units.** To compare our prioritisations to [Queensland's existing protected area network](http://www.protectedplanet.net/country/AU), this network was intersected with the planning units. Planning units with more than 50% of their area inside a protected area had their status set to 2 ([following conventions in _Marxan_](http://marxan.net/downloads/uq_marxan_web_2/module4.html)). Since we do not have cost data, the prioritisations will aim to select the minimum number of planning units required to meet the targets. The planning units are stored in the `cs_pu` object.
 
@@ -1391,52 +1391,31 @@ cs_rs_amount <- rap(
 ```
 ## Evaluating probability density...
 ## Building tree... done.
-## Querying tree... 1.0101e-06  0.010102  0.020203  0.030304  0.0404051  0.0505061  0.0606071  0.0707081  0.0808091  0.0909101  0.101011  0.111112  0.121213  0.131314  0.141415  0.151516  0.161617  0.171718  0.181819  0.19192  0.202021  0.212122  0.222223  0.232324  0.242425  0.252526  0.262627  0.272728  0.282829  0.29293  0.303031  0.313132  0.323233  0.333334  0.343435  0.353536  0.363637  0.373738  0.383839  0.39394  0.404041  0.414142  0.424243  0.434344  0.444445  0.454546  0.464647  0.474748  0.484849  0.494951  0.505052  0.515153  0.525254  0.535355  0.545456  0.555557  0.565658  0.575759  0.58586  0.595961  0.606062  0.616163  0.626264  0.636365  0.646466  0.656567  0.666668  0.676769  0.68687  0.696971  0.707072  0.717173  0.727274  0.737375  0.747476  0.757577  0.767678  0.777779  0.78788  0.797981  0.808082  0.818183  0.828284  0.838385  0.848486  0.858587  0.868688  0.878789  0.88889  0.898991  0.909092  0.919193  0.929294  0.939395  0.949496  0.959597  0.969698  0.979799  0.9899  done.
+## Querying tree... 6.97837e-07  0.00697906  0.0139574  0.0209358  0.0279142  0.0348925  0.0418709  0.0488493  0.0558276  0.062806  0.0697844  0.0767627  0.0837411  0.0907195  0.0976978  0.104676  0.111655  0.118633  0.125611  0.13259  0.139568  0.146546  0.153525  0.160503  0.167482  0.17446  0.181438  0.188417  0.195395  0.202373  0.209352  0.21633  0.223308  0.230287  0.237265  0.244244  0.251222  0.2582  0.265179  0.272157  0.279135  0.286114  0.293092  0.30007  0.307049  0.314027  0.321006  0.327984  0.334962  0.341941  0.348919  0.355897  0.362876  0.369854  0.376833  0.383811  0.390789  0.397768  0.404746  0.411724  0.418703  0.425681  0.432659  0.439638  0.446616  0.453595  0.460573  0.467551  0.47453  0.481508  0.488486  0.495465  0.502443  0.509421  0.5164  0.523378  0.530357  0.537335  0.544313  0.551292  0.55827  0.565248  0.572227  0.579205  0.586184  0.593162  0.60014  0.607119  0.614097  0.621075  0.628054  0.635032  0.64201  0.648989  0.655967  0.662946  0.669924  0.676902  0.683881  0.690859  0.697837  0.704816  0.711794  0.718773  0.725751  0.732729  0.739708  0.746686  0.753664  0.760643  0.767621  0.774599  0.781578  0.788556  0.795535  0.802513  0.809491  0.81647  0.823448  0.830426  0.837405  0.844383  0.851361  0.85834  0.865318  0.872297  0.879275  0.886253  0.893232  0.90021  0.907188  0.914167  0.921145  0.928124  0.935102  0.94208  0.949059  0.956037  0.963015  0.969994  0.976972  0.98395  0.990929  0.997907  done.
 ## Finished evaluating probability density.
 ## Beginning volume calculation... done. 
 ## Quantile requested: 0.70   obtained: 0.70
 ## Evaluating probability density...
 ## Building tree... done.
-## Querying tree... 9.90099e-06  0.0990198  0.19803  0.29704  0.39605  0.495059  0.594069  0.693079  0.792089  0.891099  0.990109  done.
-## Finished evaluating probability density.
-## Beginning volume calculation... done. 
-## Quantile requested: 0.70   obtained: 0.68
-## Evaluating probability density...
-## Building tree... done.
-## Querying tree... 2.60213e-07  0.00260239  0.00520453  0.00780666  0.0104088  0.0130109  0.0156131  0.0182152  0.0208173  0.0234195  0.0260216  0.0286237  0.0312259  0.033828  0.0364301  0.0390323  0.0416344  0.0442365  0.0468387  0.0494408  0.0520429  0.0546451  0.0572472  0.0598493  0.0624515  0.0650536  0.0676557  0.0702579  0.07286  0.0754621  0.0780643  0.0806664  0.0832685  0.0858707  0.0884728  0.0910749  0.0936771  0.0962792  0.0988813  0.101483  0.104086  0.106688  0.10929  0.111892  0.114494  0.117096  0.119698  0.122301  0.124903  0.127505  0.130107  0.132709  0.135311  0.137913  0.140515  0.143118  0.14572  0.148322  0.150924  0.153526  0.156128  0.15873  0.161333  0.163935  0.166537  0.169139  0.171741  0.174343  0.176945  0.179547  0.18215  0.184752  0.187354  0.189956  0.192558  0.19516  0.197762  0.200365  0.202967  0.205569  0.208171  0.210773  0.213375  0.215977  0.218579  0.221182  0.223784  0.226386  0.228988  0.23159  0.234192  0.236794  0.239397  0.241999  0.244601  0.247203  0.249805  0.252407  0.255009  0.257612  0.260214  0.262816  0.265418  0.26802  0.270622  0.273224  0.275826  0.278429  0.281031  0.283633  0.286235  0.288837  0.291439  0.294041  0.296644  0.299246  0.301848  0.30445  0.307052  0.309654  0.312256  0.314858  0.317461  0.320063  0.322665  0.325267  0.327869  0.330471  0.333073  0.335676  0.338278  0.34088  0.343482  0.346084  0.348686  0.351288  0.35389  0.356493  0.359095  0.361697  0.364299  0.366901  0.369503  0.372105  0.374708  0.37731  0.379912  0.382514  0.385116  0.387718  0.39032  0.392922  0.395525  0.398127  0.400729  0.403331  0.405933  0.408535  0.411137  0.41374  0.416342  0.418944  0.421546  0.424148  0.42675  0.429352  0.431954  0.434557  0.437159  0.439761  0.442363  0.444965  0.447567  0.450169  0.452772  0.455374  0.457976  0.460578  0.46318  0.465782  0.468384  0.470986  0.473589  0.476191  0.478793  0.481395  0.483997  0.486599  0.489201  0.491804  0.494406  0.497008  0.49961  0.502212  0.504814  0.507416  0.510018  0.512621  0.515223  0.517825  0.520427  0.523029  0.525631  0.528233  0.530836  0.533438  0.53604  0.538642  0.541244  0.543846  0.546448  0.54905  0.551653  0.554255  0.556857  0.559459  0.562061  0.564663  0.567265  0.569868  0.57247  0.575072  0.577674  0.580276  0.582878  0.58548  0.588082  0.590685  0.593287  0.595889  0.598491  0.601093  0.603695  0.606297  0.6089  0.611502  0.614104  0.616706  0.619308  0.62191  0.624512  0.627114  0.629717  0.632319  0.634921  0.637523  0.640125  0.642727  0.645329  0.647932  0.650534  0.653136  0.655738  0.65834  0.660942  0.663544  0.666147  0.668749  0.671351  0.673953  0.676555  0.679157  0.681759  0.684361  0.686964  0.689566  0.692168  0.69477  0.697372  0.699974  0.702576  0.705179  0.707781  0.710383  0.712985  0.715587  0.718189  0.720791  0.723393  0.725996  0.728598  0.7312  0.733802  0.736404  0.739006  0.741608  0.744211  0.746813  0.749415  0.752017  0.754619  0.757221  0.759823  0.762425  0.765028  0.76763  0.770232  0.772834  0.775436  0.778038  0.78064  0.783243  0.785845  0.788447  0.791049  0.793651  0.796253  0.798855  0.801457  0.80406  0.806662  0.809264  0.811866  0.814468  0.81707  0.819672  0.822275  0.824877  0.827479  0.830081  0.832683  0.835285  0.837887  0.840489  0.843092  0.845694  0.848296  0.850898  0.8535  0.856102  0.858704  0.861307  0.863909  0.866511  0.869113  0.871715  0.874317  0.876919  0.879521  0.882124  0.884726  0.887328  0.88993  0.892532  0.895134  0.897736  0.900339  0.902941  0.905543  0.908145  0.910747  0.913349  0.915951  0.918553  0.921156  0.923758  0.92636  0.928962  0.931564  0.934166  0.936768  0.939371  0.941973  0.944575  0.947177  0.949779  0.952381  0.954983  0.957585  0.960188  0.96279  0.965392  0.967994  0.970596  0.973198  0.9758  0.978403  0.981005  0.983607  0.986209  0.988811  0.991413  0.994015  0.996617  0.99922  done.
-## Finished evaluating probability density.
-## Beginning volume calculation... done. 
-## Quantile requested: 0.70   obtained: 0.70
-## Evaluating probability density...
-## Building tree... done.
-## Querying tree... 1.64204e-06  0.016422  0.0328424  0.0492627  0.0656831  0.0821034  0.0985238  0.114944  0.131365  0.147785  0.164205  0.180626  0.197046  0.213466  0.229887  0.246307  0.262727  0.279148  0.295568  0.311989  0.328409  0.344829  0.36125  0.37767  0.39409  0.410511  0.426931  0.443351  0.459772  0.476192  0.492612  0.509033  0.525453  0.541874  0.558294  0.574714  0.591135  0.607555  0.623975  0.640396  0.656816  0.673236  0.689657  0.706077  0.722498  0.738918  0.755338  0.771759  0.788179  0.804599  0.82102  0.83744  0.85386  0.870281  0.886701  0.903122  0.919542  0.935962  0.952383  0.968803  0.985223  done.
-## Finished evaluating probability density.
-## Beginning volume calculation... done. 
-## Quantile requested: 0.70   obtained: 0.70
-## Evaluating probability density...
-## Building tree... done.
-## Querying tree... 1.0101e-06  0.010102  0.020203  0.030304  0.0404051  0.0505061  0.0606071  0.0707081  0.0808091  0.0909101  0.101011  0.111112  0.121213  0.131314  0.141415  0.151516  0.161617  0.171718  0.181819  0.19192  0.202021  0.212122  0.222223  0.232324  0.242425  0.252526  0.262627  0.272728  0.282829  0.29293  0.303031  0.313132  0.323233  0.333334  0.343435  0.353536  0.363637  0.373738  0.383839  0.39394  0.404041  0.414142  0.424243  0.434344  0.444445  0.454546  0.464647  0.474748  0.484849  0.494951  0.505052  0.515153  0.525254  0.535355  0.545456  0.555557  0.565658  0.575759  0.58586  0.595961  0.606062  0.616163  0.626264  0.636365  0.646466  0.656567  0.666668  0.676769  0.68687  0.696971  0.707072  0.717173  0.727274  0.737375  0.747476  0.757577  0.767678  0.777779  0.78788  0.797981  0.808082  0.818183  0.828284  0.838385  0.848486  0.858587  0.868688  0.878789  0.88889  0.898991  0.909092  0.919193  0.929294  0.939395  0.949496  0.959597  0.969698  0.979799  0.9899  done.
-## Finished evaluating probability density.
-## Beginning volume calculation... done. 
-## Quantile requested: 0.70   obtained: 0.70
-```
-
-```
-## Warning in (function (data, repsperpoint = NULL, bandwidth, quantile = 0, : 
-## 	Dimensions x and y are highly correlated (r=-0.91)
-## Consider removing some axes.
-```
-
-```
-## Evaluating probability density...
-## Building tree... done.
-## Querying tree... 9.90099e-06  0.0990198  0.19803  0.29704  0.39605  0.495059  0.594069  0.693079  0.792089  0.891099  0.990109  done.
+## Querying tree... 5.20833e-06  0.0520885  0.104172  0.156255  0.208339  0.260422  0.312505  0.364589  0.416672  0.468755  0.520839  0.572922  0.625005  0.677089  0.729172  0.781255  0.833339  0.885422  0.937505  0.989589  done.
 ## Finished evaluating probability density.
 ## Beginning volume calculation... done. 
 ## Quantile requested: 0.70   obtained: 0.69
 ## Evaluating probability density...
 ## Building tree... done.
-## Querying tree... 2.60213e-07  0.00260239  0.00520453  0.00780666  0.0104088  0.0130109  0.0156131  0.0182152  0.0208173  0.0234195  0.0260216  0.0286237  0.0312259  0.033828  0.0364301  0.0390323  0.0416344  0.0442365  0.0468387  0.0494408  0.0520429  0.0546451  0.0572472  0.0598493  0.0624515  0.0650536  0.0676557  0.0702579  0.07286  0.0754621  0.0780643  0.0806664  0.0832685  0.0858707  0.0884728  0.0910749  0.0936771  0.0962792  0.0988813  0.101483  0.104086  0.106688  0.10929  0.111892  0.114494  0.117096  0.119698  0.122301  0.124903  0.127505  0.130107  0.132709  0.135311  0.137913  0.140515  0.143118  0.14572  0.148322  0.150924  0.153526  0.156128  0.15873  0.161333  0.163935  0.166537  0.169139  0.171741  0.174343  0.176945  0.179547  0.18215  0.184752  0.187354  0.189956  0.192558  0.19516  0.197762  0.200365  0.202967  0.205569  0.208171  0.210773  0.213375  0.215977  0.218579  0.221182  0.223784  0.226386  0.228988  0.23159  0.234192  0.236794  0.239397  0.241999  0.244601  0.247203  0.249805  0.252407  0.255009  0.257612  0.260214  0.262816  0.265418  0.26802  0.270622  0.273224  0.275826  0.278429  0.281031  0.283633  0.286235  0.288837  0.291439  0.294041  0.296644  0.299246  0.301848  0.30445  0.307052  0.309654  0.312256  0.314858  0.317461  0.320063  0.322665  0.325267  0.327869  0.330471  0.333073  0.335676  0.338278  0.34088  0.343482  0.346084  0.348686  0.351288  0.35389  0.356493  0.359095  0.361697  0.364299  0.366901  0.369503  0.372105  0.374708  0.37731  0.379912  0.382514  0.385116  0.387718  0.39032  0.392922  0.395525  0.398127  0.400729  0.403331  0.405933  0.408535  0.411137  0.41374  0.416342  0.418944  0.421546  0.424148  0.42675  0.429352  0.431954  0.434557  0.437159  0.439761  0.442363  0.444965  0.447567  0.450169  0.452772  0.455374  0.457976  0.460578  0.46318  0.465782  0.468384  0.470986  0.473589  0.476191  0.478793  0.481395  0.483997  0.486599  0.489201  0.491804  0.494406  0.497008  0.49961  0.502212  0.504814  0.507416  0.510018  0.512621  0.515223  0.517825  0.520427  0.523029  0.525631  0.528233  0.530836  0.533438  0.53604  0.538642  0.541244  0.543846  0.546448  0.54905  0.551653  0.554255  0.556857  0.559459  0.562061  0.564663  0.567265  0.569868  0.57247  0.575072  0.577674  0.580276  0.582878  0.58548  0.588082  0.590685  0.593287  0.595889  0.598491  0.601093  0.603695  0.606297  0.6089  0.611502  0.614104  0.616706  0.619308  0.62191  0.624512  0.627114  0.629717  0.632319  0.634921  0.637523  0.640125  0.642727  0.645329  0.647932  0.650534  0.653136  0.655738  0.65834  0.660942  0.663544  0.666147  0.668749  0.671351  0.673953  0.676555  0.679157  0.681759  0.684361  0.686964  0.689566  0.692168  0.69477  0.697372  0.699974  0.702576  0.705179  0.707781  0.710383  0.712985  0.715587  0.718189  0.720791  0.723393  0.725996  0.728598  0.7312  0.733802  0.736404  0.739006  0.741608  0.744211  0.746813  0.749415  0.752017  0.754619  0.757221  0.759823  0.762425  0.765028  0.76763  0.770232  0.772834  0.775436  0.778038  0.78064  0.783243  0.785845  0.788447  0.791049  0.793651  0.796253  0.798855  0.801457  0.80406  0.806662  0.809264  0.811866  0.814468  0.81707  0.819672  0.822275  0.824877  0.827479  0.830081  0.832683  0.835285  0.837887  0.840489  0.843092  0.845694  0.848296  0.850898  0.8535  0.856102  0.858704  0.861307  0.863909  0.866511  0.869113  0.871715  0.874317  0.876919  0.879521  0.882124  0.884726  0.887328  0.88993  0.892532  0.895134  0.897736  0.900339  0.902941  0.905543  0.908145  0.910747  0.913349  0.915951  0.918553  0.921156  0.923758  0.92636  0.928962  0.931564  0.934166  0.936768  0.939371  0.941973  0.944575  0.947177  0.949779  0.952381  0.954983  0.957585  0.960188  0.96279  0.965392  0.967994  0.970596  0.973198  0.9758  0.978403  0.981005  0.983607  0.986209  0.988811  0.991413  0.994015  0.996617  0.99922  done.
+## Querying tree... 2.59808e-07  0.00259834  0.00519641  0.00779449  0.0103926  0.0129906  0.0155887  0.0181868  0.0207849  0.023383  0.025981  0.0285791  0.0311772  0.0337753  0.0363733  0.0389714  0.0415695  0.0441676  0.0467657  0.0493637  0.0519618  0.0545599  0.057158  0.059756  0.0623541  0.0649522  0.0675503  0.0701484  0.0727464  0.0753445  0.0779426  0.0805407  0.0831387  0.0857368  0.0883349  0.090933  0.093531  0.0961291  0.0987272  0.101325  0.103923  0.106521  0.10912  0.111718  0.114316  0.116914  0.119512  0.12211  0.124708  0.127306  0.129904  0.132502  0.1351  0.137698  0.140296  0.142895  0.145493  0.148091  0.150689  0.153287  0.155885  0.158483  0.161081  0.163679  0.166277  0.168875  0.171473  0.174071  0.17667  0.179268  0.181866  0.184464  0.187062  0.18966  0.192258  0.194856  0.197454  0.200052  0.20265  0.205248  0.207846  0.210445  0.213043  0.215641  0.218239  0.220837  0.223435  0.226033  0.228631  0.231229  0.233827  0.236425  0.239023  0.241621  0.24422  0.246818  0.249416  0.252014  0.254612  0.25721  0.259808  0.262406  0.265004  0.267602  0.2702  0.272798  0.275396  0.277995  0.280593  0.283191  0.285789  0.288387  0.290985  0.293583  0.296181  0.298779  0.301377  0.303975  0.306573  0.309171  0.31177  0.314368  0.316966  0.319564  0.322162  0.32476  0.327358  0.329956  0.332554  0.335152  0.33775  0.340348  0.342946  0.345545  0.348143  0.350741  0.353339  0.355937  0.358535  0.361133  0.363731  0.366329  0.368927  0.371525  0.374123  0.376721  0.37932  0.381918  0.384516  0.387114  0.389712  0.39231  0.394908  0.397506  0.400104  0.402702  0.4053  0.407898  0.410496  0.413095  0.415693  0.418291  0.420889  0.423487  0.426085  0.428683  0.431281  0.433879  0.436477  0.439075  0.441673  0.444271  0.44687  0.449468  0.452066  0.454664  0.457262  0.45986  0.462458  0.465056  0.467654  0.470252  0.47285  0.475448  0.478047  0.480645  0.483243  0.485841  0.488439  0.491037  0.493635  0.496233  0.498831  0.501429  0.504027  0.506625  0.509223  0.511822  0.51442  0.517018  0.519616  0.522214  0.524812  0.52741  0.530008  0.532606  0.535204  0.537802  0.5404  0.542998  0.545597  0.548195  0.550793  0.553391  0.555989  0.558587  0.561185  0.563783  0.566381  0.568979  0.571577  0.574175  0.576773  0.579372  0.58197  0.584568  0.587166  0.589764  0.592362  0.59496  0.597558  0.600156  0.602754  0.605352  0.60795  0.610548  0.613147  0.615745  0.618343  0.620941  0.623539  0.626137  0.628735  0.631333  0.633931  0.636529  0.639127  0.641725  0.644323  0.646922  0.64952  0.652118  0.654716  0.657314  0.659912  0.66251  0.665108  0.667706  0.670304  0.672902  0.6755  0.678098  0.680697  0.683295  0.685893  0.688491  0.691089  0.693687  0.696285  0.698883  0.701481  0.704079  0.706677  0.709275  0.711873  0.714472  0.71707  0.719668  0.722266  0.724864  0.727462  0.73006  0.732658  0.735256  0.737854  0.740452  0.74305  0.745648  0.748247  0.750845  0.753443  0.756041  0.758639  0.761237  0.763835  0.766433  0.769031  0.771629  0.774227  0.776825  0.779423  0.782022  0.78462  0.787218  0.789816  0.792414  0.795012  0.79761  0.800208  0.802806  0.805404  0.808002  0.8106  0.813198  0.815797  0.818395  0.820993  0.823591  0.826189  0.828787  0.831385  0.833983  0.836581  0.839179  0.841777  0.844375  0.846973  0.849572  0.85217  0.854768  0.857366  0.859964  0.862562  0.86516  0.867758  0.870356  0.872954  0.875552  0.87815  0.880749  0.883347  0.885945  0.888543  0.891141  0.893739  0.896337  0.898935  0.901533  0.904131  0.906729  0.909327  0.911925  0.914524  0.917122  0.91972  0.922318  0.924916  0.927514  0.930112  0.93271  0.935308  0.937906  0.940504  0.943102  0.9457  0.948299  0.950897  0.953495  0.956093  0.958691  0.961289  0.963887  0.966485  0.969083  0.971681  0.974279  0.976877  0.979475  0.982074  0.984672  0.98727  0.989868  0.992466  0.995064  0.997662  done.
+## Finished evaluating probability density.
+## Beginning volume calculation... done. 
+## Quantile requested: 0.70   obtained: 0.70
+## Evaluating probability density...
+## Building tree... done.
+## Querying tree... 7.3692e-07  0.00736993  0.0147391  0.0221083  0.0294775  0.0368467  0.0442159  0.0515851  0.0589543  0.0663235  0.0736927  0.0810619  0.0884311  0.0958003  0.103169  0.110539  0.117908  0.125277  0.132646  0.140015  0.147385  0.154754  0.162123  0.169492  0.176861  0.184231  0.1916  0.198969  0.206338  0.213707  0.221077  0.228446  0.235815  0.243184  0.250553  0.257923  0.265292  0.272661  0.28003  0.287399  0.294769  0.302138  0.309507  0.316876  0.324245  0.331615  0.338984  0.346353  0.353722  0.361091  0.368461  0.37583  0.383199  0.390568  0.397937  0.405307  0.412676  0.420045  0.427414  0.434783  0.442153  0.449522  0.456891  0.46426  0.471629  0.478999  0.486368  0.493737  0.501106  0.508475  0.515845  0.523214  0.530583  0.537952  0.545321  0.55269  0.56006  0.567429  0.574798  0.582167  0.589536  0.596906  0.604275  0.611644  0.619013  0.626382  0.633752  0.641121  0.64849  0.655859  0.663228  0.670598  0.677967  0.685336  0.692705  0.700074  0.707444  0.714813  0.722182  0.729551  0.73692  0.74429  0.751659  0.759028  0.766397  0.773766  0.781136  0.788505  0.795874  0.803243  0.810612  0.817982  0.825351  0.83272  0.840089  0.847458  0.854828  0.862197  0.869566  0.876935  0.884304  0.891674  0.899043  0.906412  0.913781  0.92115  0.92852  0.935889  0.943258  0.950627  0.957996  0.965366  0.972735  0.980104  0.987473  0.994842  done.
+## Finished evaluating probability density.
+## Beginning volume calculation... done. 
+## Quantile requested: 0.70   obtained: 0.70
+## Evaluating probability density...
+## Building tree... done.
+## Querying tree... 6.97837e-07  0.00697906  0.0139574  0.0209358  0.0279142  0.0348925  0.0418709  0.0488493  0.0558276  0.062806  0.0697844  0.0767627  0.0837411  0.0907195  0.0976978  0.104676  0.111655  0.118633  0.125611  0.13259  0.139568  0.146546  0.153525  0.160503  0.167482  0.17446  0.181438  0.188417  0.195395  0.202373  0.209352  0.21633  0.223308  0.230287  0.237265  0.244244  0.251222  0.2582  0.265179  0.272157  0.279135  0.286114  0.293092  0.30007  0.307049  0.314027  0.321006  0.327984  0.334962  0.341941  0.348919  0.355897  0.362876  0.369854  0.376833  0.383811  0.390789  0.397768  0.404746  0.411724  0.418703  0.425681  0.432659  0.439638  0.446616  0.453595  0.460573  0.467551  0.47453  0.481508  0.488486  0.495465  0.502443  0.509421  0.5164  0.523378  0.530357  0.537335  0.544313  0.551292  0.55827  0.565248  0.572227  0.579205  0.586184  0.593162  0.60014  0.607119  0.614097  0.621075  0.628054  0.635032  0.64201  0.648989  0.655967  0.662946  0.669924  0.676902  0.683881  0.690859  0.697837  0.704816  0.711794  0.718773  0.725751  0.732729  0.739708  0.746686  0.753664  0.760643  0.767621  0.774599  0.781578  0.788556  0.795535  0.802513  0.809491  0.81647  0.823448  0.830426  0.837405  0.844383  0.851361  0.85834  0.865318  0.872297  0.879275  0.886253  0.893232  0.90021  0.907188  0.914167  0.921145  0.928124  0.935102  0.94208  0.949059  0.956037  0.963015  0.969994  0.976972  0.98395  0.990929  0.997907  done.
 ## Finished evaluating probability density.
 ## Beginning volume calculation... done. 
 ## Quantile requested: 0.70   obtained: 0.70
@@ -1444,17 +1423,29 @@ cs_rs_amount <- rap(
 
 ```
 ## Warning in (function (data, repsperpoint = NULL, bandwidth, quantile = 0, : 
-## 	Dimensions x and y are highly correlated (r=-0.86)
+## 	Dimensions x and y are highly correlated (r=-0.85)
 ## Consider removing some axes.
 ```
 
 ```
 ## Evaluating probability density...
 ## Building tree... done.
-## Querying tree... 1.64204e-06  0.016422  0.0328424  0.0492627  0.0656831  0.0821034  0.0985238  0.114944  0.131365  0.147785  0.164205  0.180626  0.197046  0.213466  0.229887  0.246307  0.262727  0.279148  0.295568  0.311989  0.328409  0.344829  0.36125  0.37767  0.39409  0.410511  0.426931  0.443351  0.459772  0.476192  0.492612  0.509033  0.525453  0.541874  0.558294  0.574714  0.591135  0.607555  0.623975  0.640396  0.656816  0.673236  0.689657  0.706077  0.722498  0.738918  0.755338  0.771759  0.788179  0.804599  0.82102  0.83744  0.85386  0.870281  0.886701  0.903122  0.919542  0.935962  0.952383  0.968803  0.985223  done.
+## Querying tree... 5.20833e-06  0.0520885  0.104172  0.156255  0.208339  0.260422  0.312505  0.364589  0.416672  0.468755  0.520839  0.572922  0.625005  0.677089  0.729172  0.781255  0.833339  0.885422  0.937505  0.989589  done.
 ## Finished evaluating probability density.
 ## Beginning volume calculation... done. 
 ## Quantile requested: 0.70   obtained: 0.70
+## Evaluating probability density...
+## Building tree... done.
+## Querying tree... 2.59808e-07  0.00259834  0.00519641  0.00779449  0.0103926  0.0129906  0.0155887  0.0181868  0.0207849  0.023383  0.025981  0.0285791  0.0311772  0.0337753  0.0363733  0.0389714  0.0415695  0.0441676  0.0467657  0.0493637  0.0519618  0.0545599  0.057158  0.059756  0.0623541  0.0649522  0.0675503  0.0701484  0.0727464  0.0753445  0.0779426  0.0805407  0.0831387  0.0857368  0.0883349  0.090933  0.093531  0.0961291  0.0987272  0.101325  0.103923  0.106521  0.10912  0.111718  0.114316  0.116914  0.119512  0.12211  0.124708  0.127306  0.129904  0.132502  0.1351  0.137698  0.140296  0.142895  0.145493  0.148091  0.150689  0.153287  0.155885  0.158483  0.161081  0.163679  0.166277  0.168875  0.171473  0.174071  0.17667  0.179268  0.181866  0.184464  0.187062  0.18966  0.192258  0.194856  0.197454  0.200052  0.20265  0.205248  0.207846  0.210445  0.213043  0.215641  0.218239  0.220837  0.223435  0.226033  0.228631  0.231229  0.233827  0.236425  0.239023  0.241621  0.24422  0.246818  0.249416  0.252014  0.254612  0.25721  0.259808  0.262406  0.265004  0.267602  0.2702  0.272798  0.275396  0.277995  0.280593  0.283191  0.285789  0.288387  0.290985  0.293583  0.296181  0.298779  0.301377  0.303975  0.306573  0.309171  0.31177  0.314368  0.316966  0.319564  0.322162  0.32476  0.327358  0.329956  0.332554  0.335152  0.33775  0.340348  0.342946  0.345545  0.348143  0.350741  0.353339  0.355937  0.358535  0.361133  0.363731  0.366329  0.368927  0.371525  0.374123  0.376721  0.37932  0.381918  0.384516  0.387114  0.389712  0.39231  0.394908  0.397506  0.400104  0.402702  0.4053  0.407898  0.410496  0.413095  0.415693  0.418291  0.420889  0.423487  0.426085  0.428683  0.431281  0.433879  0.436477  0.439075  0.441673  0.444271  0.44687  0.449468  0.452066  0.454664  0.457262  0.45986  0.462458  0.465056  0.467654  0.470252  0.47285  0.475448  0.478047  0.480645  0.483243  0.485841  0.488439  0.491037  0.493635  0.496233  0.498831  0.501429  0.504027  0.506625  0.509223  0.511822  0.51442  0.517018  0.519616  0.522214  0.524812  0.52741  0.530008  0.532606  0.535204  0.537802  0.5404  0.542998  0.545597  0.548195  0.550793  0.553391  0.555989  0.558587  0.561185  0.563783  0.566381  0.568979  0.571577  0.574175  0.576773  0.579372  0.58197  0.584568  0.587166  0.589764  0.592362  0.59496  0.597558  0.600156  0.602754  0.605352  0.60795  0.610548  0.613147  0.615745  0.618343  0.620941  0.623539  0.626137  0.628735  0.631333  0.633931  0.636529  0.639127  0.641725  0.644323  0.646922  0.64952  0.652118  0.654716  0.657314  0.659912  0.66251  0.665108  0.667706  0.670304  0.672902  0.6755  0.678098  0.680697  0.683295  0.685893  0.688491  0.691089  0.693687  0.696285  0.698883  0.701481  0.704079  0.706677  0.709275  0.711873  0.714472  0.71707  0.719668  0.722266  0.724864  0.727462  0.73006  0.732658  0.735256  0.737854  0.740452  0.74305  0.745648  0.748247  0.750845  0.753443  0.756041  0.758639  0.761237  0.763835  0.766433  0.769031  0.771629  0.774227  0.776825  0.779423  0.782022  0.78462  0.787218  0.789816  0.792414  0.795012  0.79761  0.800208  0.802806  0.805404  0.808002  0.8106  0.813198  0.815797  0.818395  0.820993  0.823591  0.826189  0.828787  0.831385  0.833983  0.836581  0.839179  0.841777  0.844375  0.846973  0.849572  0.85217  0.854768  0.857366  0.859964  0.862562  0.86516  0.867758  0.870356  0.872954  0.875552  0.87815  0.880749  0.883347  0.885945  0.888543  0.891141  0.893739  0.896337  0.898935  0.901533  0.904131  0.906729  0.909327  0.911925  0.914524  0.917122  0.91972  0.922318  0.924916  0.927514  0.930112  0.93271  0.935308  0.937906  0.940504  0.943102  0.9457  0.948299  0.950897  0.953495  0.956093  0.958691  0.961289  0.963887  0.966485  0.969083  0.971681  0.974279  0.976877  0.979475  0.982074  0.984672  0.98727  0.989868  0.992466  0.995064  0.997662  done.
+## Finished evaluating probability density.
+## Beginning volume calculation... done. 
+## Quantile requested: 0.70   obtained: 0.69
+## Evaluating probability density...
+## Building tree... done.
+## Querying tree... 7.3692e-07  0.00736993  0.0147391  0.0221083  0.0294775  0.0368467  0.0442159  0.0515851  0.0589543  0.0663235  0.0736927  0.0810619  0.0884311  0.0958003  0.103169  0.110539  0.117908  0.125277  0.132646  0.140015  0.147385  0.154754  0.162123  0.169492  0.176861  0.184231  0.1916  0.198969  0.206338  0.213707  0.221077  0.228446  0.235815  0.243184  0.250553  0.257923  0.265292  0.272661  0.28003  0.287399  0.294769  0.302138  0.309507  0.316876  0.324245  0.331615  0.338984  0.346353  0.353722  0.361091  0.368461  0.37583  0.383199  0.390568  0.397937  0.405307  0.412676  0.420045  0.427414  0.434783  0.442153  0.449522  0.456891  0.46426  0.471629  0.478999  0.486368  0.493737  0.501106  0.508475  0.515845  0.523214  0.530583  0.537952  0.545321  0.55269  0.56006  0.567429  0.574798  0.582167  0.589536  0.596906  0.604275  0.611644  0.619013  0.626382  0.633752  0.641121  0.64849  0.655859  0.663228  0.670598  0.677967  0.685336  0.692705  0.700074  0.707444  0.714813  0.722182  0.729551  0.73692  0.74429  0.751659  0.759028  0.766397  0.773766  0.781136  0.788505  0.795874  0.803243  0.810612  0.817982  0.825351  0.83272  0.840089  0.847458  0.854828  0.862197  0.869566  0.876935  0.884304  0.891674  0.899043  0.906412  0.913781  0.92115  0.92852  0.935889  0.943258  0.950627  0.957996  0.965366  0.972735  0.980104  0.987473  0.994842  done.
+## Finished evaluating probability density.
+## Beginning volume calculation... done. 
+## Quantile requested: 0.70   obtained: 0.69
 ```
 
 
@@ -1464,32 +1455,37 @@ cs_rs_amount <- solve(cs_rs_amount, MIPGap=0.1, Threads=threads)
 ```
 
 ```
-## Optimize a model with 4 rows, 762 columns and 1336 nonzeros
+## Optimize a model with 4 rows, 762 columns and 2267 nonzeros
 ## Coefficient statistics:
-##   Matrix range    [4e+02, 2e+04]
+##   Matrix range    [2e+02, 2e+04]
 ##   Objective range [1e+00, 1e+00]
 ##   Bounds range    [1e+00, 1e+00]
-##   RHS range       [1e+05, 3e+06]
-## Found heuristic solution: objective 159
-## Presolve time: 0.00s
-## Presolved: 4 rows, 762 columns, 1336 nonzeros
+##   RHS range       [2e+05, 3e+06]
+## Found heuristic solution: objective 158
+## Presolve time: 0.01s
+## Presolved: 4 rows, 762 columns, 2267 nonzeros
 ## Variable types: 0 continuous, 762 integer (762 binary)
-## Presolved: 4 rows, 762 columns, 1336 nonzeros
+## Presolved: 4 rows, 762 columns, 2267 nonzeros
 ## 
 ## 
-## Root relaxation: objective 1.354267e+02, 597 iterations, 0.00 seconds
+## Root relaxation: objective 1.359395e+02, 865 iterations, 0.00 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0  135.42669    0    4  159.00000  135.42669  14.8%     -    0s
-## H    0     0                     136.0000000  135.42669  0.42%     -    0s
+##      0     0  135.93952    0    4  158.00000  135.93952  14.0%     -    0s
+## H    0     0                     136.0000000  135.93952  0.04%     -    0s
 ## 
-## Explored 0 nodes (597 simplex iterations) in 0.01 seconds
+## Explored 0 nodes (865 simplex iterations) in 0.02 seconds
 ## Thread count was 22 (of 24 available processors)
 ## 
 ## Optimal solution found (tolerance 1.00e-01)
 ## Best objective 1.360000000000e+02, best bound 1.360000000000e+02, gap 0.0%
+```
+
+```
+## Warning in validityMethod(object): object@space.held contains values less
+## than 0, some species are really poorly represented
 ```
 
 
@@ -1502,9 +1498,9 @@ summary(cs_rs_amount)
 ##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
 ## 1          1 OPTIMAL   136  136            136           98882414
 ##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1         9786021          81270163          7826230
+## 1         9686021          81170163          8026230
 ##   Connectivity_In_Fraction
-## 1               0.09896624
+## 1               0.09795494
 ```
 
 ```r
@@ -1549,60 +1545,79 @@ cs_rs_space <- update(cs_rs_amount, space.target=0.7, Threads=threads)
 ```
 
 ```
-## Optimize a model with 134012 rows, 134362 columns and 535736 nonzeros
+## Optimize a model with 227112 rows, 227462 columns and 909067 nonzeros
 ## Coefficient statistics:
-##   Matrix range    [9e-04, 2e+04]
+##   Matrix range    [3e-04, 2e+04]
 ##   Objective range [1e+00, 1e+00]
 ##   Bounds range    [1e+00, 1e+00]
 ##   RHS range       [1e+00, 3e+06]
-## Presolve removed 2336 rows and 1570 columns (presolve time = 5s) ...
-## Presolve removed 2856 rows and 1570 columns (presolve time = 10s) ...
-## Presolve removed 3146 rows and 1570 columns (presolve time = 15s) ...
-## Presolve removed 3240 rows and 1570 columns (presolve time = 20s) ...
-## Presolve removed 3430 rows and 1570 columns (presolve time = 25s) ...
-## Presolve removed 5522 rows and 1570 columns (presolve time = 30s) ...
-## Presolve removed 6005 rows and 1570 columns (presolve time = 35s) ...
-## Presolve removed 6102 rows and 1570 columns (presolve time = 40s) ...
-## Presolve removed 6122 rows and 1570 columns (presolve time = 45s) ...
-## Presolve removed 6134 rows and 1570 columns (presolve time = 50s) ...
-## Presolve removed 6190 rows and 1570 columns (presolve time = 55s) ...
-## Presolve removed 7056 rows and 1570 columns (presolve time = 60s) ...
-## Presolve removed 7087 rows and 1570 columns (presolve time = 65s) ...
-## Presolve removed 7219 rows and 1570 columns (presolve time = 70s) ...
-## Presolve removed 7219 rows and 1570 columns (presolve time = 82s) ...
-## Presolve removed 7219 rows and 1570 columns
-## Presolve time: 82.07s
-## Presolved: 126793 rows, 132792 columns, 579797 nonzeros
-## Variable types: 0 continuous, 132792 integer (132792 binary)
-## Found heuristic solution: objective 246.0000000
-## Presolve removed 357 rows and 0 columns
-## Presolved: 126436 rows, 132792 columns, 578655 nonzeros
+## Presolve removed 2750 rows and 2692 columns (presolve time = 5s) ...
+## Presolve removed 3265 rows and 2692 columns (presolve time = 10s) ...
+## Presolve removed 3884 rows and 2692 columns (presolve time = 15s) ...
+## Presolve removed 4640 rows and 2692 columns (presolve time = 20s) ...
+## Presolve removed 4982 rows and 2692 columns (presolve time = 25s) ...
+## Presolve removed 4994 rows and 2692 columns (presolve time = 30s) ...
+## Presolve removed 5006 rows and 2692 columns (presolve time = 35s) ...
+## Presolve removed 5028 rows and 2692 columns (presolve time = 40s) ...
+## Presolve removed 5034 rows and 2692 columns (presolve time = 45s) ...
+## Presolve removed 5406 rows and 2692 columns (presolve time = 50s) ...
+## Presolve removed 6644 rows and 2692 columns (presolve time = 55s) ...
+## Presolve removed 6917 rows and 2692 columns (presolve time = 60s) ...
+## Presolve removed 6917 rows and 2692 columns (presolve time = 65s) ...
+## Presolve removed 6994 rows and 2692 columns (presolve time = 70s) ...
+## Presolve removed 7210 rows and 2692 columns (presolve time = 75s) ...
+## Presolve removed 7474 rows and 2692 columns (presolve time = 80s) ...
+## Presolve removed 7475 rows and 2692 columns (presolve time = 85s) ...
+## Presolve removed 7496 rows and 2692 columns (presolve time = 90s) ...
+## Presolve removed 7496 rows and 2692 columns (presolve time = 95s) ...
+## Presolve removed 7678 rows and 2692 columns (presolve time = 100s) ...
+## Presolve removed 7678 rows and 2692 columns (presolve time = 134s) ...
+## Presolve removed 7678 rows and 2692 columns
+## Presolve time: 133.90s
+## Presolved: 219434 rows, 224770 columns, 967033 nonzeros
+## Variable types: 0 continuous, 224770 integer (224770 binary)
+## Found heuristic solution: objective 272.0000000
+## Presolve removed 1556 rows and 0 columns (presolve time = 5s) ...
+## Presolve removed 1556 rows and 0 columns (presolve time = 10s) ...
+## Presolve removed 1556 rows and 0 columns
+## Presolved: 217878 rows, 224770 columns, 962255 nonzeros
 ## 
-## Presolve removed 126436 rows and 132792 columns
+## Presolve removed 217878 rows and 224770 columns
 ## 
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    7.6200000e+02   0.000000e+00   7.620000e+02     87s
-##     9509    1.3864871e+02   0.000000e+00   3.044818e+04     90s
-##    19607    1.3586580e+02   0.000000e+00   2.683021e+02     95s
-##    31685    1.3556273e+02   0.000000e+00   1.113093e+01    100s
-##    37130    1.3552491e+02   0.000000e+00   0.000000e+00    104s
-##    37130    1.3552491e+02   0.000000e+00   0.000000e+00    104s
+##        0    7.6200000e+02   0.000000e+00   7.620000e+02    147s
+##     7999    1.3835432e+02   0.000000e+00   7.408546e+03    150s
+##    16095    1.3649366e+02   0.000000e+00   2.921838e+03    155s
+##    22420    1.3624141e+02   0.000000e+00   9.459410e+02    160s
+##    28492    1.3616854e+02   0.000000e+00   5.588955e+02    165s
+##    32793    1.3610801e+02   0.000000e+00   7.126031e+02    170s
+##    36588    1.3608115e+02   0.000000e+00   1.065871e+03    175s
+##    39624    1.3604632e+02   0.000000e+00   3.909588e+02    180s
+##    45190    1.3601633e+02   0.000000e+00   1.341413e+02    185s
+##    48985    1.3601066e+02   0.000000e+00   5.022738e+01    190s
+##    53033    1.3599177e+02   0.000000e+00   8.299664e+01    195s
+##    57587    1.3597076e+02   0.000000e+00   3.371841e+01    200s
+##    62647    1.3596338e+02   0.000000e+00   4.236870e+01    205s
+##    66695    1.3595770e+02   0.000000e+00   2.309907e-01    211s
+##    67018    1.3595610e+02   0.000000e+00   0.000000e+00    212s
+##    67018    1.3595610e+02   0.000000e+00   0.000000e+00    213s
 ## 
-## Root relaxation: objective 1.355249e+02, 37130 iterations, 20.74 seconds
+## Root relaxation: objective 1.359561e+02, 67018 iterations, 76.26 seconds
+## Total elapsed time = 215.99s
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0  135.52491    0  198  246.00000  135.52491  44.9%     -  105s
-## H    0     0                     136.0000000  135.52491  0.35%     -  105s
+##      0     0  135.95610    0  164  272.00000  135.95610  50.0%     -  216s
+## H    0     0                     137.0000000  135.95610  0.76%     -  217s
 ## 
-## Explored 0 nodes (49684 simplex iterations) in 105.67 seconds
+## Explored 0 nodes (79886 simplex iterations) in 217.95 seconds
 ## Thread count was 22 (of 24 available processors)
 ## 
 ## Optimal solution found (tolerance 1.00e-01)
-## Best objective 1.360000000000e+02, best bound 1.360000000000e+02, gap 0.0%
+## Best objective 1.370000000000e+02, best bound 1.360000000000e+02, gap 0.7299%
 ```
 
 
@@ -1613,11 +1628,11 @@ summary(cs_rs_space)
 
 ```
 ##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
-## 1          1 OPTIMAL   136  136            136           98882414
+## 1          1 OPTIMAL   137  137            137           98882414
 ##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1         9738090          81118598          8025726
+## 1         9336021          80620163          8926230
 ##   Connectivity_In_Fraction
-## 1               0.09848151
+## 1               0.09441538
 ```
 
 ```r
@@ -1703,6 +1718,6 @@ ggplot(aes(x=variable, y=mean, fill=name), data=cs_results) +
 ```
 
 <img src="figure/unnamed-chunk-62-1.png" title="_Prioritisations were generated using amount-based targets (20\%), and with additional space-based targets (85\%). These are compared to the Queensland reserve network. Data represent means and standard errors for the four species in each prioritisation._" alt="_Prioritisations were generated using amount-based targets (20\%), and with additional space-based targets (85\%). These are compared to the Queensland reserve network. Data represent means and standard errors for the four species in each prioritisation._" style="display: block; margin: auto;" />
-We can see that a greater number of planning units is needed to satisfy the space-based targets. The prioritisation generated using just amount-based targets has 136 planning units, and the prioritisations using amount-based and space-based targets has 136 planning units.  These results suggest only a few additional planning units can result in significant improvements in the effectivenss of a prioritisation.
+We can see that a greater number of planning units is needed to satisfy the space-based targets. The prioritisation generated using just amount-based targets has 136 planning units, and the prioritisations using amount-based and space-based targets has 137 planning units.  These results suggest only a few additional planning units can result in significant improvements in the effectivenss of a prioritisation.
 
 
