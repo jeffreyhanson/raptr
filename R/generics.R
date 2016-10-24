@@ -688,4 +688,3 @@ space.plot<-function(
 maximum.targets <- function(x, verbose) {
 	UseMethod('maximum.targets')
 }
-

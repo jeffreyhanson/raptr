@@ -15,8 +15,8 @@ test_that('Gurobi solver (unreliable)', {
 	result<-gurobi::gurobi(model, append(as.list(GurobiOpts(MIPGap=0.99, Presolve=1L)), list('LogFile'=tempfile(fileext='.log'))))
 	if (file.exists('gurobi.log')) unlink('gurobi.log')
 	# check solution variables
-	expect_true(all(result$x[grep('pu_',model$cache$variables,fixed=TRUE)] %in% c(0,1)))
-	expect_true(all(result$x[grep('Y_',model$cache$variables,fixed=TRUE)] %in% c(0,1)))
+	expect_true(all(result$x[grep('pu_',dump_object(model$cache$variables, 'character'),fixed=TRUE)] %in% c(0,1)))
+	expect_true(all(result$x[grep('Y_',dump_object(model$cache$variables, 'character'),fixed=TRUE)] %in% c(0,1)))
 })
 
 test_that('Gurobi solver (reliable)', {
@@ -34,13 +34,13 @@ test_that('Gurobi solver (reliable)', {
 	result<-gurobi::gurobi(model, append(as.list(GurobiOpts(MIPGap=0.99, Presolve=1L)), list('LogFile'=tempfile(fileext='.log'))))
 	if (file.exists('gurobi.log')) unlink('gurobi.log')
 	# checks
-	expect_true(all(result$x[grep('pu_',model$cache$variables,fixed=TRUE)] %in% c(0,1)))
-	expect_true(all(result$x[grep('Y_',model$cache$variables,fixed=TRUE)] %in% c(0,1)))
-	expect_true(all(round(result$x[grep('P_',model$cache$variables,fixed=TRUE)],5) >= 0))
-	expect_true(all(round(result$x[grep('P_',model$cache$variables,fixed=TRUE)],5) <= 1))
+	expect_true(all(result$x[grep('pu_',dump_object(model$cache$variables, 'character'),fixed=TRUE)] %in% c(0,1)))
+	expect_true(all(result$x[grep('Y_',dump_object(model$cache$variables, 'character'),fixed=TRUE)] %in% c(0,1)))
+	expect_true(all(round(result$x[grep('P_',dump_object(model$cache$variables, 'character'),fixed=TRUE)],5) >= 0))
+	expect_true(all(round(result$x[grep('P_',dump_object(model$cache$variables, 'character'),fixed=TRUE)],5) <= 1))
 	expect_true(all(
-		round(result$x[grep('W_',model$cache$variables,fixed=TRUE)],5) ==  round(
-			result$x[grep('Y_',model$cache$variables,fixed=TRUE)] * result$x[grep('P_',model$cache$variables,fixed=TRUE)],
+		round(result$x[grep('W_',dump_object(model$cache$variables, 'character'),fixed=TRUE)],5) ==  round(
+			result$x[grep('Y_',dump_object(model$cache$variables, 'character'),fixed=TRUE)] * result$x[grep('P_',dump_object(model$cache$variables, 'character'),fixed=TRUE)],
 			5
 		)
 	))

@@ -113,32 +113,21 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
  if (verbose) Rcout << "\tcached data" << std::endl;
 
  // create distance variables
-	if (verbose) Rcpp::Rcout << "\tdistance vars" << std::endl;
-	Rcpp::List tmp_LST=Rcpp::as<Rcpp::List>(cache_LST["wdist"]);
-	std::size_t n_species_attributespace_INT=tmp_LST.size();
-	std::vector<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>> species_space_weightdist_MTX(n_species_attributespace_INT);
-	{
-		Rcpp::NumericMatrix tmp_MTX;
-		for (std::size_t a=0; a<n_species_attributespace_INT; ++a) {
-			tmp_MTX=Rcpp::as<Rcpp::NumericMatrix>(tmp_LST[a]);
-			double *pcv = &tmp_MTX(0,0);
-			Eigen::Map<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor>> tmpmat(pcv, tmp_MTX.nrow(), tmp_MTX.ncol());
-			species_space_weightdist_MTX[a] = tmpmat;
-		}
-	}
+	std::vector<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>> species_space_weightdist_MTX = *Rcpp::as<Rcpp::XPtr<std::vector<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>>>>(cache_LST["wdist"]);
+	std::size_t n_species_attributespace_INT = species_space_weightdist_MTX.size();
 	
 
-	// store ids for attribute spaces and species	
-	std::vector<std::size_t> species_attributespace_species_INT=cache_LST["species_attributespace_species_INT"];
-	std::vector<std::size_t> species_attributespace_space_INT=cache_LST["species_attributespace_space_INT"];
+	// store ids for attribute spaces and species
+	std::vector<std::size_t> species_attributespace_species_INT=*Rcpp::as<Rcpp::XPtr<std::vector<std::size_t>>>(cache_LST["species_attributespace_species_INT"]);
+	std::vector<std::size_t> species_attributespace_space_INT=*Rcpp::as<Rcpp::XPtr<std::vector<std::size_t>>>(cache_LST["species_attributespace_space_INT"]);
 	
 	// load best values
-	std::vector<double> species_totalarea_DBL = cache_LST["species_totalarea_DBL"];
-	std::vector<double> species_areatargets_DBL = cache_LST["species_areatargets_DBL"];
-	std::vector<double> species_space_tss_DBL = cache_LST["species_space_tss_DBL"];
-	std::vector<double> species_space_rawtargets_DBL = cache_LST["species_space_rawtargets_DBL"];
-	std::vector<double> species_space_proptargets_DBL = cache_LST["species_space_proptargets_DBL"];
-	std::vector<double> species_space_best_DBL = cache_LST["species_space_best_DBL"];
+	std::vector<double> species_totalarea_DBL = *Rcpp::as<Rcpp::XPtr<std::vector<double>>>(cache_LST["species_totalarea_DBL"]);
+	std::vector<double> species_areatargets_DBL = *Rcpp::as<Rcpp::XPtr<std::vector<double>>>(cache_LST["species_areatargets_DBL"]);
+	std::vector<double> species_space_tss_DBL = *Rcpp::as<Rcpp::XPtr<std::vector<double>>>(cache_LST["species_space_tss_DBL"]);
+	std::vector<double> species_space_rawtargets_DBL = *Rcpp::as<Rcpp::XPtr<std::vector<double>>>(cache_LST["species_space_rawtargets_DBL"]);
+	std::vector<double> species_space_proptargets_DBL = *Rcpp::as<Rcpp::XPtr<std::vector<double>>>(cache_LST["species_space_proptargets_DBL"]);
+	std::vector<double> species_space_best_DBL = *Rcpp::as<Rcpp::XPtr<std::vector<double>>>(cache_LST["species_space_best_DBL"]);
 
  //// Main processing
  if (verbose) Rcout << "Main processing" << std::endl;
@@ -166,10 +155,10 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
  if (verbose) Rcout << "\tspace held" << std::endl;
  if (verbose) Rcout << "\t\trestoring variables from cache" << std::endl;
  // restore variables from cache
-  std::vector<std::size_t> species_space_rlevel_INT = cache_LST["species_space_rlevel_INT"];
-	std::vector<Rcpp::NumericVector> species_space_pu_probs_RDV = cache_LST["species_space_pu_probs_RDV"];
-	std::vector<Rcpp::IntegerVector> species_space_puids_RIV = cache_LST["species_space_puids_RIV"];
-	std::vector<Rcpp::IntegerVector> species_space_pupos_RIV = cache_LST["species_space_pupos_RIV"];
+  std::vector<std::size_t> species_space_rlevel_INT = *Rcpp::as<Rcpp::XPtr<std::vector<std::size_t>>>(cache_LST["species_space_rlevel_INT"]);
+	std::vector<Rcpp::NumericVector> species_space_pu_probs_RDV = *Rcpp::as<Rcpp::XPtr<std::vector<Rcpp::NumericVector>>>(cache_LST["species_space_pu_probs_RDV"]);
+	std::vector<Rcpp::IntegerVector> species_space_puids_RIV = *Rcpp::as<Rcpp::XPtr<std::vector<Rcpp::IntegerVector>>>(cache_LST["species_space_puids_RIV"]);
+	std::vector<Rcpp::IntegerVector> species_space_pupos_RIV = *Rcpp::as<Rcpp::XPtr<std::vector<Rcpp::IntegerVector>>>(cache_LST["species_space_pupos_RIV"]);
 	std::size_t n_selected_INT=std::accumulate(selections_MTX.begin(), selections_MTX.end(), 0);
  
 	// subset variables to those included in the solution

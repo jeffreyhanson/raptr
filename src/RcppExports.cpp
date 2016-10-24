@@ -6,6 +6,39 @@
 
 using namespace Rcpp;
 
+// rcpp_dump_numeric_object
+SEXP rcpp_dump_numeric_object(SEXP x);
+RcppExport SEXP raptr_rcpp_dump_numeric_object(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_dump_numeric_object(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_dump_integer_object
+SEXP rcpp_dump_integer_object(SEXP x);
+RcppExport SEXP raptr_rcpp_dump_integer_object(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_dump_integer_object(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_dump_character_object
+SEXP rcpp_dump_character_object(SEXP x);
+RcppExport SEXP raptr_rcpp_dump_character_object(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_dump_character_object(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_Polygons2PolySet
 Rcpp::DataFrame rcpp_Polygons2PolySet(Rcpp::List polys, std::size_t n_preallocate);
 RcppExport SEXP raptr_rcpp_Polygons2PolySet(SEXP polysSEXP, SEXP n_preallocateSEXP) {

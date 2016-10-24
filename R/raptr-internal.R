@@ -2,7 +2,8 @@
 NULL
 
 ## define built-in functions
-# affine transformation
+#' Affine transformation
+#' @noRd
 affineTrans <- function(OldValue, OldMax, OldMin, NewMax, NewMin) {
     OldRange <- (OldMax - OldMin)
     NewRange <- (NewMax - NewMin)
@@ -10,15 +11,20 @@ affineTrans <- function(OldValue, OldMax, OldMin, NewMax, NewMin) {
     return(NewValue)
 }
 
-# niche simulation functions
+#' Normal niche simulation function
+#' @noRd
 normal_niche <- function(x, y) {
 	return(dmvnorm(x=matrix(c(x,y), ncol=2), mean=c(0,0), sigma=matrix(c(8.5,0,0,8.5), ncol=2))*40)
 }
 
+#' Uniform niche simulation function
+#' @noRd
 uniform_niche <- function(x, y) {
 	return(rep(0.5, length(x)))
 }
 
+#' Bimodal niche simulation function
+#' @noRd
 bimodal_niche <- function(x, y) {
 	return(
 		apply(
@@ -35,7 +41,8 @@ bimodal_niche <- function(x, y) {
 	)
 }
 
-# function to hash function call
+#' Function to hash function call
+#' @noRd
 hashCall<-function(expr, skipargs=c(), env=parent.frame()) {
 	expr<-expr[c((skipargs*-1L)-1L)]
 	expr<-expr[which(names(expr)!="force.reset")]
@@ -45,7 +52,8 @@ hashCall<-function(expr, skipargs=c(), env=parent.frame()) {
 	return(paste(deparse(expr), collapse=";"))
 }
 
-# plotting functions
+#' Make pretty geoplot
+#' @noRd
 prettyGeoplot<-function(polygons, col, basemap, main, fun, beside=TRUE, border=NULL, lwd=1) {
 	# make layout
 	defpar<-par(no.readonly = TRUE)
@@ -87,7 +95,8 @@ prettyGeoplot<-function(polygons, col, basemap, main, fun, beside=TRUE, border=N
 	return(invisible())
 }
 
-# color functions
+#' Extract colors from RcolorBrewer palette functions
+#' @noRd
 brewerCols<-function(values, pal, alpha=1, n=NULL) {
 	if (is.null(n) & length(pal)==1) {
 		n<-brewer.pal.info$maxcolors[which(rownames(brewer.pal.info)==pal)]
@@ -102,7 +111,8 @@ brewerCols<-function(values, pal, alpha=1, n=NULL) {
 	return(rgb(r, maxColorValue=255, alpha=rescale(alpha, from=c(0,1), to=c(0,255))))
 }
 
-# automated legend functions
+#' Add continuous legend to plot
+#' @noRd
 continuousLegend<-function(values, pal, posx, posy, center=FALSE, endlabs=NULL) {
 	return(
 		function() {
@@ -130,6 +140,8 @@ continuousLegend<-function(values, pal, posx, posy, center=FALSE, endlabs=NULL) 
 	)
 }
 
+#' Add categorical legend to plot
+#' @noRd
 categoricalLegend<-function(col,labels, ncol=1) {
 	return(
 		function() {
@@ -142,7 +154,8 @@ categoricalLegend<-function(col,labels, ncol=1) {
 	)
 }
 
-# functions to generate demand points
+#' Create 1-dimensional demand points
+#' @noRd
 demand.points.density1d<-function(pts, n, quantile=0, ...) {
 	# transform pts
 	curr.mean<-mean(pts[,1])
@@ -164,6 +177,8 @@ demand.points.density1d<-function(pts, n, quantile=0, ...) {
 	)
 }
 
+#' Create 2-dimensional demand points
+#' @noRd
 demand.points.density2d<-function(pts, n, quantile=0, ...) {
 	# transform pts
 	curr.mean<-apply(pts,2,mean)
@@ -190,6 +205,8 @@ demand.points.density2d<-function(pts, n, quantile=0, ...) {
 	)
 }
 
+#' Create n-dimensional demand points
+#' @noRd
 demand.points.hypervolume<-function(pts, n, quantile=0, ...) {
 	# transform pts
 	curr.mean<-apply(pts,2,mean)
@@ -225,7 +242,8 @@ demand.points.hypervolume<-function(pts, n, quantile=0, ...) {
 }
 
 
-# zonal mean
+#' Calculate zonal-means
+#' @noRd
 zonalMean <- function(x, y, ids=names(y), ncores=1) {
 	if (canProcessInMemory(x,2)) {
 		x<-rbind.fill(llply(seq_len(nlayers(y)), function(l) {
@@ -249,12 +267,16 @@ zonalMean <- function(x, y, ids=names(y), ncores=1) {
 	return(x)
 }
 
+#' Calculate zonal-means for rasters where all data can be stored in RAM
+#' @noRd
 zonalMean.RasterLayerInMemory <- function(polys, rast, speciesName) {
 	tmp<-rcpp_groupmean(getValues(polys),getValues(rast))
 	tmp<-data.frame(species=speciesName, pu=attr(tmp, "ids"), value=c(tmp))
 	return(tmp[which(tmp$value>0),,drop=FALSE])
 }
 
+#' Calculate zonal-means by processing data in chunks
+#' @noRd
 zonalMean.RasterLayerNotInMemory <- function(bs, polys, rast, speciesName, ncores, registered, clust) {
 	if (registered & .Platform$OS.type=="windows")
 		clusterExport(clust, c("bs","polys", "rast", "rcpp_groupmean"))
@@ -265,9 +287,9 @@ zonalMean.RasterLayerNotInMemory <- function(bs, polys, rast, speciesName, ncore
 	return(tmp[which(tmp$value>0),,drop=FALSE])
 }
 
-# find gdal installation
-# this function is basically the same as gdalUtils:::set_gdalInstallation,
-# it has addiitonal functionality to be compatible with Ubuntu 14.04 Trusty
+#' Find gdal installation location
+#' @details This function is basically the same as gdalUtils:::set_gdalInstallation, it has addiitonal functionality to be compatible with Ubuntu 14.04 Trusty
+#' @noRd
 findGdalInstallationPaths<-function (search_path = NULL, rescan = FALSE, ignore.full_scan = TRUE, verbose = FALSE) {
 	gdal_python_utilities <- function(path) {
 		if (missing(path))
@@ -575,7 +597,6 @@ mergeRapResults<-function(x) {
 	return(x)
 }
 
-
 #' Read RAP results
 #'
 #' This function reads files output from Gurobi and returns a \code{RapResults} object.
@@ -645,7 +666,9 @@ setGeneric("is.cached", function(x,name) standardGeneric("is.cached"))
 #' @keywords internal
 setGeneric("cache", function(x, name, y) standardGeneric("cache"))
 
-## space plotting functions
+
+#' Plot a 1-dimensional attribute space
+#' @noRd
 spacePlot.1d<-function(pu, dp, pu.color.palette, main) {
   # create X2 vars
   pu$X2<-0
@@ -703,6 +726,8 @@ spacePlot.1d<-function(pu, dp, pu.color.palette, main) {
   ylab('')
 }
 
+#' Plot a 2-d attribute space
+#' @noRd
 spacePlot.2d<-function(pu, dp, pu.color.palette, main) {
   # create colors
   if (length(pu.color.palette)==1)
@@ -753,6 +778,8 @@ spacePlot.2d<-function(pu, dp, pu.color.palette, main) {
   ylab('Dimension 2')
 }
 
+#' Plot a 3-d attribute space
+#' @noRd
 spacePlot.3d<-function(pu, dp, pu.color.palette, main) {
 	# check if rgl is installed
   if (!'rgl' %in% unlist(lapply(.libPaths(), dir), recursive=FALSE, use.names=FALSE))
@@ -775,8 +802,8 @@ spacePlot.3d<-function(pu, dp, pu.color.palette, main) {
   rgl::title3d(main)
 }
 
-
-# parse arguments function
+#' General argument parsing function
+#' @noRd
 parseArgs<-function(fn, object=NULL, skip=-1, ...) {
   if (!is.null(object))
     fn<-paste0(fn, '.', class(object))
@@ -792,6 +819,8 @@ parseArgs<-function(fn, object=NULL, skip=-1, ...) {
   )
 }
 
+#' Alternative argument parsing function
+#' @noRd
 parseArgs2<-function(args, ...) {
   ellipses.args<-list(...)
   return(
@@ -802,7 +831,8 @@ parseArgs2<-function(args, ...) {
   )
 }
 
-# create empty PolySet data
+#' Create an empty PolySet object
+#' @noRd
 emptyPolySet<-function() {
   return(
     structure(
@@ -815,8 +845,8 @@ emptyPolySet<-function() {
   )
 }
 
-
-# calculate squared distances between points
+#' Calculate distances between points using URAP
+#' @noRd
 urap.squared.distance <- function(x, y, y.weights=rep(1, nrow(y))) {
 	expect_is(x, 'matrix')
 	expect_is(y, 'matrix')
@@ -829,7 +859,8 @@ urap.squared.distance <- function(x, y, y.weights=rep(1, nrow(y))) {
 	rcpp_squared_distance(x, y, y.weights)
 }
 
-# calculate distances between points using RRAP
+#' Calculate distances between points using RRAP
+#' @noRd
 rrap.squared.distance <- function(pu.coordinates, pu.probabilities, dp.coordinates, dp.weights, failure.distance, maximum.r.level=as.integer(length(pu.probabilities))) {
 	# data integreity checks
 	expect_is(pu.coordinates, 'matrix')
@@ -854,8 +885,22 @@ rrap.squared.distance <- function(pu.coordinates, pu.probabilities, dp.coordinat
 	expect_true(failure.distance >=  0)
 	expect_true(nrow(pu.coordinates)>=1)
 	expect_true(nrow(dp.coordinates)>=1)
-
 	# main processing
 	rcpp_rrap_squared_distance(pu.coordinates, pu.probabilities, dp.coordinates, dp.weights, failure.distance, maximum.r.level)
 }
- 
+
+#' Dump object from model cache 
+#' @noRd
+dump_object <- function(x, mode = c('numeric', 'integer', 'character')) {
+	expect_is(x, 'externalptr')
+	mode <- match.arg(mode)
+	if (mode == 'numeric') {
+		return(rcpp_dump_numeric_object(x))
+	}
+	if (mode == 'integer') {
+		return(rcpp_dump_integer_object(x))
+	}
+	if (mode == 'character') {
+		return(rcpp_dump_character_object(x))
+	}
+}

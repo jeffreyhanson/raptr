@@ -913,7 +913,7 @@ maximum.targets.RapUnsolOrSol <- function(x, verbose=FALSE) {
 	retDF <- data.frame(
 		species=rep(seq_along(x@data@species$name), each=length(x@data@attribute.spaces)),
 		target=rep(seq_along(x@data@attribute.spaces), length(x@data@species$name)),
-		proportion=c(model$cache$species_space_best_DBL)
+		proportion=c(dump_object(model$cache$species_space_best_DBL, 'numeric'))
 	)
 	# merge with targets to get target names
 	if ('name' %in% names(x@data@targets))

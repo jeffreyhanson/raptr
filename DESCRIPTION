@@ -47,7 +47,7 @@ Depends:
     sp,
     rgdal,
     raster
-LinkingTo: Rcpp, RcppEigen
+LinkingTo: Rcpp, RcppEigen, BH
 LazyData: true
 License: GPL-3
 URL: https://github.com/jeffreyhanson/raptr

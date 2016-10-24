@@ -475,7 +475,6 @@ make.RapData<-function(pus, species, spaces=NULL,
 }
 
 #' @rdname basemap
-#' @export
 basemap.RapData<-function(x, basemap="hybrid", grayscale=FALSE, force.reset=FALSE) {
 	callchar<-hashCall(match.call(), 1)
 	match.arg(basemap, c("roadmap", "mobile", "satellite", "terrain", "hybrid", "mapmaker-roadmap", "mapmaker-hybrid"))
