@@ -86,8 +86,12 @@ DemandPoints<-function(coords, weights) {
 #'	kernel.method='hypervolume'
 #' )
 make.DemandPoints<-function(points, n=100L, quantile=0.5, kernel.method=c('ks', 'hypervolume')[1], ...) {
-	# check inputs for validityhod
-	match.arg(kernel.method, c('ks', 'hypervolume'))
+	# check inputs for validity
+	o <- points
+	
+	if (sum(!is.finite(points))>0)
+		stop('argument to points contains non-finite values')
+	kernel.method <- match.arg(kernel.method, c('ks', 'hypervolume'))
 	# convert to matrix
 	if (!inherits(points, 'matrix') & inherits(points, 'numeric'))
 			points<-matrix(points, ncol=1)

@@ -400,6 +400,11 @@ make.RapData<-function(pus, species, spaces=NULL,
 				space.points <- curr.species.points
 			} else {
 				space.points <- extract(spaces[[i]], species.points[[j]])
+				if (inherits(space.points, 'matrix')) {
+					space.points <- space.points[is.finite(rowSums(space.points, na.rm=FALSE)),,drop=FALSE]
+				} else {
+					space.points <- space.points[which(!is.finite(space.points))]
+				}
 			}
 			# generate demand points
 			dpLST[[j]] <- make.DemandPoints(
