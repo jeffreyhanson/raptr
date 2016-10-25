@@ -128,18 +128,11 @@ By using &#39;ks&#39; as an argument in <code>kernel.method</code>, the volume i
 <span class='no'>dps1</span> <span class='kw'>&lt;-</span> <span class='fu'>make.DemandPoints</span>(
 <span class='kw'>points</span><span class='kw'>=</span><span class='no'>env.points</span>[,<span class='fl'>1</span>],
 <span class='kw'>kernel.method</span><span class='kw'>=</span><span class='st'>'ks'</span>
-)
-<span class='co'># generate demand points for a 2d space using hypervolume</span>
+)</div><strong class='error'>Error in make.DemandPoints(points = env.points[, 1], kernel.method = &quot;ks&quot;): argument to points contains non-finite values</strong><div class='input'><span class='co'># generate demand points for a 2d space using hypervolume</span>
 <span class='no'>dps2</span> <span class='kw'>&lt;-</span> <span class='fu'>make.DemandPoints</span>(
 <span class='kw'>points</span><span class='kw'>=</span><span class='no'>env.points</span>,
 <span class='kw'>kernel.method</span><span class='kw'>=</span><span class='st'>'hypervolume'</span>
-)</div><div class='output co'>#&gt; Evaluating probability density...
-#&gt; Building tree... done.
-#&gt; Querying tree... 1e-05  0.10001  0.20001  0.30001  0.40001  0.50001  0.60001  0.70001  0.80001  0.90001  done.
-#&gt; Finished evaluating probability density.
-#&gt; Beginning volume calculation... done. 
-#&gt; Quantile requested: 0.50   obtained: 0.48
-#&gt; </div></pre>
+)</div><strong class='error'>Error in make.DemandPoints(points = env.points, kernel.method = &quot;hypervolume&quot;): argument to points contains non-finite values</strong></pre>
   </div>
   <div class="col-md-3">
   </div>
