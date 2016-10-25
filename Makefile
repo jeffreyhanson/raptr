@@ -6,7 +6,8 @@ clean:
 
 compile:
 	cd inst/vign;\
-	Rscript -e "knitr::knit('raptr.Rmd')"
+	Rscript -e "knitr::knit('raptr.Rmd')" \
+	rm -rf cache
 
 move: compile
 	mv inst/vign/raptr.md vignettes;\
@@ -18,8 +19,9 @@ rmd: move
 	mv raptr.md raptr.Rmd
 
 build: rmd
+	R -e "devtols::install_local('../raptr')"
 	R -e "devtools::load_all()"
 	R -e "devtools::document()"
 	R -e "devtools::build_vignettes()"
-	R -e "staticdocs::build_site()"
+	R -e "pkgdown::build_site()"
 
