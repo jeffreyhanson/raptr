@@ -11,7 +11,7 @@ Comments for submission to CRAN
 # R CMD check results from Win-Builder
 There were no ERRORs or WARNINGs.
 
-There were 4 NOTEs
+There were 3 NOTEs
 
 * checking CRAN incoming feasibility ... NOTE
   Maintainer: 'Jeffrey O Hanson <jeffrey.hanson@uqconnect.edu.au>'
@@ -46,12 +46,6 @@ There were 4 NOTEs
   + _libs: To improve performance, many functions in the package are written in C++. This has resulted in a large ./libs folder. The ./libs folder could be reduced
   in size by rewriting the functions in R, however, this would severely reduce the usability of the package. I would prefer to keep the C++ functions and the
   large ./libs folder._
-
-* checking files in 'vignettes' ... NOTE
-  The following directory looks like a leftover from 'knitr':
-  'figure'
-  
-  _The vignette uses packages listed under 'Suggests' that are not available on CRAN. Since CRAN attempts to build package vignettes during the checking process, this would normally result in an ERROR. To avoid this, I have adopted the method used by Scott Chamberlain (eg. in the [elastic R package](https://github.com/ropensci/elastic) to pre-compile Rmarkdown vignettes as regular markdown documents on my computer._
 
 # Downstream dependencies
 This package is not present on CRAN and therefore has no packages depending on it. As a consequence, there were no issues detected when running devtools::revdep_check().

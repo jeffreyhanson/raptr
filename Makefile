@@ -1,8 +1,9 @@
 all: build
 
 clean:
-	rm -rf vignettes/raptr.Rmd
-	rm -rf vignettes/figures
+	rm -rf inst/doc/raptr.Rmd
+	rm -rf inst/doc/raptr.R
+	rm -rf inst/doc/raptr.html
 
 compile:
 	R -e "devtools::install_local('../raptr')"
@@ -25,3 +26,7 @@ build: rmd
 	R -e "devtools::build_vignettes()"
 	R -e "staticdocs::build_site()"
 
+post: build
+	rm -rf vignettes/figure
+	rm -f vignettes/raptr.Rmd
+	cp inst/vign/placeholder.Rmd vignettes/raptr.Rmd
