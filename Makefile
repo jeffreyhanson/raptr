@@ -5,10 +5,10 @@ clean:
 	rm -rf vignettes/figures
 
 compile:
-	cd inst/vign;\
-	R -e "devtpols::install_local('../raptr')"
+	R -e "devtools::install_local('../raptr')"
 	R -e "devtools::load_all()"
 	R -e "devtools::document()"
+	cd inst/vign;\
 	Rscript -e "knitr::knit('raptr.Rmd')" \
 	rm -rf cache
 

@@ -377,7 +377,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<species_space_npu_INT[a]; ++l) {
 						// Y_var
-						curr_uARRAY = {i, j, k, l};
+						curr_uARRAY = {{i, j, k, l}};
 						uY_MAP[curr_uARRAY] = counter;
 						++counter;
 					}
@@ -391,7 +391,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 					for (std::size_t l=0; l<(species_space_npu_INT[a]+1); ++l) {
 						for (std::size_t r=0; r<(species_space_rlevel_INT[a]+1); ++r) {
 							// create array
-							curr_rARRAY = {i , j, k, l, r};
+							curr_rARRAY = {{i , j, k, l, r}};
 							
 							// Y_var
 							rY_MAP[curr_rARRAY] = counter;
@@ -484,7 +484,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 			if (!std::isnan(species_space_proptargets_DBL[a])) {
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<species_space_npu_INT[a]; ++l) {
-						curr_uARRAY={i, j, k, l};
+						curr_uARRAY={{i, j, k, l}};
 						model_rows_INT.push_back(counter);
 						model_cols_INT.push_back(uY_MAP[curr_uARRAY]);
 						model_vals_DBL.push_back(species_space_weightdist_MTX[a](k,l));
@@ -501,7 +501,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<(species_space_npu_INT[a]+1); ++l) {
 						for (std::size_t r=0; r<(species_space_rlevel_INT[a]+1); ++r) {
-							curr_rARRAY = {i, j, k, l, r};
+							curr_rARRAY = {{i, j, k, l, r}};
 							model_rows_INT.push_back(counter);
 							model_cols_INT.push_back(rW_MAP[curr_rARRAY]);
 							model_vals_DBL.push_back(species_space_weightdist_MTX[a](k,l));
@@ -593,7 +593,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 			if (!std::isnan(species_space_proptargets_DBL[a])) {
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<species_space_npu_INT[a]; ++l) {
-						curr_uARRAY = {i, j, k, l};
+						curr_uARRAY = {{i, j, k, l}};
 						model_rows_INT.push_back(counter);
 						model_cols_INT.push_back(uY_MAP[curr_uARRAY]);
 						model_vals_DBL.push_back(1.0);
@@ -612,7 +612,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 			if (!std::isnan(species_space_proptargets_DBL[a])) {
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<species_space_npu_INT[a]; ++l) {
-						curr_uARRAY = {i, j, k, l};
+						curr_uARRAY = {{i, j, k, l}};
 						model_rows_INT.push_back(counter);
 						model_cols_INT.push_back(uY_MAP[curr_uARRAY]);
 						model_vals_DBL.push_back(1.0);
@@ -655,7 +655,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 
 						// force each R-level to be assigned to a pu
 						for (std::size_t l=0; l<(species_space_npu_INT[a]+1); ++l) {
-							curr_rARRAY = {i, j, k, l, r};
+							curr_rARRAY = {{i, j, k, l, r}};
 							model_rows_INT.push_back(counter);
 							model_cols_INT.push_back(rY_MAP[curr_rARRAY]);
 							model_vals_DBL.push_back(1.0);
@@ -676,7 +676,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<(species_space_npu_INT[a]+1); ++l) {
 						for (std::size_t r=0; r<(species_space_rlevel_INT[a]+1); ++r) {
-							curr_rARRAY = {i, j, k, l, r};
+							curr_rARRAY = {{i, j, k, l, r}};
 							model_rows_INT.push_back(counter);
 							model_cols_INT.push_back(rY_MAP[curr_rARRAY]);
 							model_vals_DBL.push_back(1.0);
@@ -698,7 +698,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<species_space_npu_INT[a]; ++l) {
 						for (std::size_t r=0; r<(species_space_rlevel_INT[a]+1); ++r) {
-							curr_rARRAY = {i, j, k, l, r};
+							curr_rARRAY = {{i, j, k, l, r}};
 							model_rows_INT.push_back(counter);
 							model_cols_INT.push_back(rY_MAP[curr_rARRAY]);
 							model_vals_DBL.push_back(1.0);
@@ -734,7 +734,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	// 						++counter;
 						
 					// ensure that failure planning unit is assigned to last r-level
-					curr_rARRAY = {i, j, k, species_space_npu_INT[a], species_space_rlevel_INT[a]};
+					curr_rARRAY = {{i, j, k, species_space_npu_INT[a], species_space_rlevel_INT[a]}};
 					model_rows_INT.push_back(counter);
 					model_cols_INT.push_back(rY_MAP[curr_rARRAY]);
 					model_vals_DBL.push_back(1.0);
@@ -754,7 +754,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<species_space_npu_INT[a]; ++l) {
 						// real pu
-						curr_rARRAY = {i, j, k, l, 0};
+						curr_rARRAY = {{i, j, k, l, 0}};
 						model_rows_INT.push_back(counter);
 						model_cols_INT.push_back(rP_MAP[curr_rARRAY]);
 						model_vals_DBL.push_back(1.0);
@@ -765,7 +765,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 					}
 
 					// failure pu
-					curr_rARRAY= {i, j, k, species_space_npu_INT[a], 0};
+					curr_rARRAY= {{i, j, k, species_space_npu_INT[a], 0}};
 					model_rows_INT.push_back(counter);
 					model_cols_INT.push_back(rP_MAP[curr_rARRAY]);
 					model_vals_DBL.push_back(1.0);
@@ -786,13 +786,13 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<(species_space_npu_INT[a]+1); ++l) {
 						for (std::size_t r=1, r2=0; r<(species_space_rlevel_INT[a]+1); ++r, ++r2) {
-							curr_rARRAY = {i, j, k, l, r};
+							curr_rARRAY = {{i, j, k, l, r}};
 							model_rows_INT.push_back(counter);
 							model_cols_INT.push_back(rP_MAP[curr_rARRAY]);
 							model_vals_DBL.push_back(1.0);
 
 							for (std::size_t l2=0; l2<species_space_npu_INT[a]; ++l2) {
-								curr_rARRAY= {i, j, k, l2, r2};
+								curr_rARRAY= {{i, j, k, l2, r2}};
 								model_rows_INT.push_back(counter);
 								model_cols_INT.push_back(rW_MAP[curr_rARRAY]);
 								model_vals_DBL.push_back(-(species_space_pu_probs_RDV[a][l] * species_space_pu_tprobs_RDV[a][l2]));
@@ -817,7 +817,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 					for (std::size_t l=0; l<(species_space_npu_INT[a]+1); ++l) {
 						for (std::size_t r=0; r<(species_space_rlevel_INT[a]+1); ++r) {
 							// init
-							curr_rARRAY = {i, j, k, l, r};
+							curr_rARRAY = {{i, j, k, l, r}};
 							// 2a
 							//model+=currW + " - " + currP + " <= 0\n";
 							model_rows_INT.push_back(counter);
@@ -902,7 +902,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 			if (!std::isnan(species_space_proptargets_DBL[a])) {
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<species_space_npu_INT[a]; ++l) {
-						curr_uARRAY = {i, j, k, l};
+						curr_uARRAY = {{i, j, k, l}};
 						vtype_STR[uY_MAP[curr_uARRAY]]="B";
 					}
 				}
@@ -916,7 +916,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<(species_space_npu_INT[a]+1); ++l) {
 						for (std::size_t r=0; r<(species_space_rlevel_INT[a]+1); ++r) {
-							curr_rARRAY={i, j, k, l, r};
+							curr_rARRAY={{i, j, k, l, r}};
 							vtype_STR[rY_MAP[curr_rARRAY]]="B";
 						}
 					}
@@ -932,7 +932,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<(species_space_npu_INT[a]+1); ++l) {
 						for (std::size_t r=0; r<(species_space_rlevel_INT[a]+1); ++r) {
-							curr_rARRAY = {i, j, k, l, r};
+							curr_rARRAY = {{i, j, k, l, r}};
 							// w variables
 							vtype_STR[rW_MAP[curr_rARRAY]]="S";
 							// p variables
