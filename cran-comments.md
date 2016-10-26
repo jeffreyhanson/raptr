@@ -8,7 +8,7 @@ Comments for submission to CRAN
 * Windows Server 2008 (x64), R 3.3.1 (win-builder)
 * Windows Server 2008 (x64), R 3.4.0 (win-builder)
 
-# R CMD check results
+# R CMD check results from Win-Builder
 There were no ERRORs or WARNINGs.
 
 There were 4 NOTEs
@@ -20,7 +20,7 @@ There were 4 NOTEs
   Possibly mis-spelled words in DESCRIPTION:
     prioritizations (14:67, 16:29)
     
-  _The appearance of this note can be attributed to two reasons. First, this is my first submission to CRAN. Second, the spell-checker used does not recognize the "prioritizations" as a word. This is a commonly used word in conservation science, [for instance it is present in the title of this paper](http://onlinelibrary.wiley.com/doi/10.1111/acv.12222/full), and not a mis-spelling on my part._
+  _The appearance of this note can be attributed to two reasons. First, this is my first submission to CRAN. Second, the spell-checker used does not recognize the "prioritizations" as a word. This is a commonly used word in conservation science, [for instance it is present in the title of this paper](http://onlinelibrary.wiley.com/doi/10.1111/acv.12222/full), and not a mis-spelled word._
   
 * checking package dependencies ... NOTE
   package suggested but not available for checking: 'gurobi', 'rgurobi'
@@ -34,9 +34,9 @@ There were 4 NOTEs
 * checking installed package size ... NOTE
   installed size is  9.1Mb
   sub-directories of 1Mb or more:
-    data   4.4Mb
-    doc    4.1Mb
-    libs   13.0Mb
+    data   3.6Mb
+    doc    1.7Mb
+    libs   2.1Mb
 
   + _data: The ./data directory contains case-study data for a vignette. Although a separate package could be created to store the case-study data, this
   seems unnecessary because the data sets are used in both package testing in the vignette. I would prefer to keep the data sets in this package for simplicity._
