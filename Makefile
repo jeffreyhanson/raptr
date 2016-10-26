@@ -23,5 +23,5 @@ rmd: move
 
 build: rmd
 	R -e "devtools::build_vignettes()"
-	R -e "pkgdown::build_site()"
+	R -e "staticdocs::build_site()"
 
