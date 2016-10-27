@@ -1,4 +1,4 @@
-all: site vignette
+all: site vignette check build
 
 clean:
 	rm -rf docs/*
@@ -26,3 +26,10 @@ vignette:
 	touch inst/doc/raptr.R
 	touch inst/doc/raptr.Rmd
 	touch inst/doc/raptr.html
+
+check:
+	R -e "devtools::check()"
+	R -e "devtools::build_win()"
+
+build:
+	R -e "devtools::build()"
