@@ -4,7 +4,6 @@ date: "`r format(Sys.time(), '%d %B %Y')`"
 tags: ["conservation", "biodiversity", "MILP", "reserve-selection"]
 output:
   rmarkdown::html_document:
-    keep_md: true
     toc: true
     fig_caption: true
 fontsize: 11pt
@@ -16,8 +15,6 @@ vignette: >
 ---
 
 ```{r global, include=FALSE}
-# set cache globally
-knitr::opts_chunk$set(cache=TRUE)
 # load package
 library(raptr)
 ```
