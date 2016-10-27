@@ -1,6 +1,7 @@
 all: site vignette
 
 clean:
+	rm -rf docs/*
 	rm -rf inst/doc/*
 	rm -rf vignettes/*
 
@@ -8,7 +9,7 @@ site:
 	R -e "devtools::install_local('../raptr')"
 	R -e "devtools::load_all()"
 	R -e "devtools::document()"
-	mv inst/vign/raptr.Rmd vignettes/raptr.Rmd
+	cp -f inst/vign/raptr.Rmd vignettes/raptr.Rmd
 	R -e "staticdocs::build_site()"
 	rm -rf vignettes/*
 	rm -rf inst/doc/*
