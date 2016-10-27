@@ -1,0 +1,18 @@
+---
+title: "raptr: Representative and Adequate Prioritisation Toolkit in R"
+date: "26 October 2016"
+tags: ["conservation", "biodiversity", "MILP", "reserve-selection"]
+output:
+  rmarkdown::html_document:
+    toc: true
+    fig_caption: yes
+fontsize: 11pt
+documentclass: article
+vignette: >
+  %\VignetteIndexEntry{raptr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+This is a place-holder for the real vignette. The purpose of this document is so that the vignette can use functions in packages not available on CRAN.
+ 
