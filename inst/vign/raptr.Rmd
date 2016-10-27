@@ -4,8 +4,9 @@ date: "`r format(Sys.time(), '%d %B %Y')`"
 tags: ["conservation", "biodiversity", "MILP", "reserve-selection"]
 output:
   rmarkdown::html_document:
+    keep_md: true
     toc: true
-    fig_caption: yes
+    fig_caption: true
 fontsize: 11pt
 documentclass: article
 vignette: >

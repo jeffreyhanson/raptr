@@ -1,4 +1,4 @@
-all: build
+all: move
 
 clean:
 	rm -rf inst/doc/raptr.Rmd
@@ -9,24 +9,14 @@ compile:
 	R -e "devtools::install_local('../raptr')"
 	R -e "devtools::load_all()"
 	R -e "devtools::document()"
-	cd inst/vign;\
-	Rscript -e "knitr::knit('raptr.Rmd')" \
-	rm -rf cache
-
-move: compile
-	mv inst/vign/raptr.md vignettes;\
-	rm -rf vignettes/figure
-	mv inst/vign/figure vignettes
-
-rmd: move
-	cd vignettes;\
-	mv raptr.md raptr.Rmd
-
-build: rmd
+	cp inst/vign/raptr.Rmd vignette/raptr.Rmd
 	R -e "devtools::build_vignettes()"
 	R -e "staticdocs::build_site()"
-
-post: build
-	rm -rf vignettes/figure
-	rm -f vignettes/raptr.Rmd
-	cp inst/vign/placeholder.Rmd vignettes/raptr.Rmd
+	
+move: compile
+	cp -f inst/vign/placeholder.Rmd vignettes/raptr.Rmd
+	cp -f vignettes/raptr.md inst/doc/raptr.Rmd
+	rm inst/doc/raptr.R
+	touch inst/doc/raptr.R
+	touch inst/doc/raptr.Rmd
+	touch inst/doc/raptr.html
