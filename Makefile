@@ -1,4 +1,4 @@
-all: site vignette check build
+all: clean site vignette check build
 
 clean:
 	rm -rf docs/*
