@@ -43,7 +43,7 @@ There were 3 NOTEs
   
   + _doc: The documentation for this package is comprehensive. It contains a html vignette with several detailed examples._
   
-  + _libs: To improve performance, many functions in the package are written in C++. This has resulted in a large ./libs folder. The ./libs folder could be reduced
+  + _libs: To improve performance, many functions in this package are written in C++. This has resulted in a large ./libs folder. The ./libs folder could be reduced
   in size by rewriting the functions in R, however, this would severely reduce the usability of the package. I would prefer to keep the C++ functions and the
   large ./libs folder._
 
