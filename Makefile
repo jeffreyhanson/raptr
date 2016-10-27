@@ -12,15 +12,15 @@ compile:
 	R -e "knitr::knit('raptr.Rmd')";\
 	rm -rf cache
 
-move:
+move: compile
 	mv inst/vign/raptr.md vignettes/raptr.Rmd
 	mv inst/vign/figure vignettes
 
-build: compile
+build: move
 	R -e "devtools::build_vignettes()"
 	R -e "staticdocs::build_site()"
-
-post: compile
+	
+post: build
 	rm -rf vignettes/figure
 	cp -f inst/vign/placeholder.Rmd vignettes/raptr.Rmd
 	touch inst/doc/raptr.R
