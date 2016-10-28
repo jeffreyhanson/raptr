@@ -75,7 +75,7 @@
     <div class="page-header toc-ignore">
       <h1>raptr: Representative and Adequate Prioritisation Toolkit in R</h1>
             
-            <h4 class="date"><em>27 October 2016</em></h4>
+            <h4 class="date"><em>28 October 2016</em></h4>
           </div>
 
     
@@ -306,11 +306,12 @@ sim_ru_s1 &lt;-<span class="st"> </span><span class="kw">update</span>(sim_ru_s1
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># solve problem to identify prioritisation</span>
 sim_rs_s1_amount &lt;-<span class="st"> </span><span class="kw">solve</span>(sim_ru_s1, <span class="dt">Threads=</span>threads)</code></pre></div>
 <pre><code>## Optimize a model with 1 rows, 100 columns and 100 nonzeros
+## Variable types: 0 continuous, 100 integer (100 binary)
 ## Coefficient statistics:
-##   Matrix range    [5e-01, 5e-01]
-##   Objective range [1e+00, 1e+00]
-##   Bounds range    [1e+00, 1e+00]
-##   RHS range       [1e+01, 1e+01]
+##   Matrix range     [5e-01, 5e-01]
+##   Objective range  [1e+00, 1e+00]
+##   Bounds range     [1e+00, 1e+00]
+##   RHS range        [1e+01, 1e+01]
 ## Found heuristic solution: objective 20
 ## Presolve removed 1 rows and 100 columns
 ## Presolve time: 0.00s
@@ -319,8 +320,11 @@ sim_rs_s1_amount &lt;-<span class="st"> </span><span class="kw">solve</span>(sim
 ## Explored 0 nodes (0 simplex iterations) in 0.00 seconds
 ## Thread count was 1 (of 24 available processors)
 ## 
+## Solution count 1: 20 
+## Pool objective bound 20
+## 
 ## Optimal solution found (tolerance 1.00e-01)
-## Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0%</code></pre>
+## Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%</code></pre>
 <pre><code>## Warning in validityMethod(object): object@space.held contains values less
 ## than 0, some species are really poorly represented</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## show summary
@@ -357,11 +361,12 @@ sim_ru_s2 &lt;-<span class="st"> </span><span class="kw">spp.subset</span>(sim_r
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># update amount targets to 20% and space targets to 0% and solve it</span>
 sim_rs_s2_amount &lt;-<span class="st"> </span><span class="kw">update</span>(sim_ru_s2, <span class="dt">amount.target=</span><span class="fl">0.2</span>, <span class="dt">space.target=</span><span class="ot">NA</span>, <span class="dt">solve=</span><span class="ot">TRUE</span>, <span class="dt">Threads=</span>threads)</code></pre></div>
 <pre><code>## Optimize a model with 1 rows, 100 columns and 100 nonzeros
+## Variable types: 0 continuous, 100 integer (100 binary)
 ## Coefficient statistics:
-##   Matrix range    [7e-02, 7e-01]
-##   Objective range [1e+00, 1e+00]
-##   Bounds range    [1e+00, 1e+00]
-##   RHS range       [7e+00, 7e+00]
+##   Matrix range     [7e-02, 7e-01]
+##   Objective range  [1e+00, 1e+00]
+##   Bounds range     [1e+00, 1e+00]
+##   RHS range        [7e+00, 7e+00]
 ## Found heuristic solution: objective 27
 ## Presolve removed 0 rows and 86 columns
 ## Presolve time: 0.00s
@@ -381,8 +386,11 @@ sim_rs_s2_amount &lt;-<span class="st"> </span><span class="kw">update</span>(si
 ## Explored 0 nodes (6 simplex iterations) in 0.00 seconds
 ## Thread count was 22 (of 24 available processors)
 ## 
+## Solution count 2: 10 27 
+## Pool objective bound 10
+## 
 ## Optimal solution found (tolerance 1.00e-01)
-## Best objective 1.000000000000e+01, best bound 1.000000000000e+01, gap 0.0%</code></pre>
+## Best objective 1.000000000000e+01, best bound 1.000000000000e+01, gap 0.0000%</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show summary</span>
 <span class="kw">summary</span>(sim_rs_s2_amount)</code></pre></div>
 <pre><code>##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
@@ -415,11 +423,12 @@ sim_ru_s3 &lt;-<span class="st"> </span><span class="kw">spp.subset</span>(sim_r
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># update amount targets to 20% and space targets to 0% and solve it</span>
 sim_rs_s3_amount &lt;-<span class="st"> </span><span class="kw">update</span>(sim_ru_s3, <span class="dt">amount.target=</span><span class="fl">0.2</span>, <span class="dt">space.target=</span><span class="ot">NA</span>, <span class="dt">Threads=</span>threads)</code></pre></div>
 <pre><code>## Optimize a model with 1 rows, 100 columns and 100 nonzeros
+## Variable types: 0 continuous, 100 integer (100 binary)
 ## Coefficient statistics:
-##   Matrix range    [7e-03, 9e-01]
-##   Objective range [1e+00, 1e+00]
-##   Bounds range    [1e+00, 1e+00]
-##   RHS range       [7e+00, 7e+00]
+##   Matrix range     [7e-03, 9e-01]
+##   Objective range  [1e+00, 1e+00]
+##   Bounds range     [1e+00, 1e+00]
+##   RHS range        [7e+00, 7e+00]
 ## Found heuristic solution: objective 21
 ## Presolve removed 0 rows and 75 columns
 ## Presolve time: 0.00s
@@ -428,7 +437,7 @@ sim_rs_s3_amount &lt;-<span class="st"> </span><span class="kw">update</span>(si
 ## Presolved: 1 rows, 25 columns, 25 nonzeros
 ## 
 ## 
-## Root relaxation: objective 7.919039e+00, 18 iterations, 0.00 seconds
+## Root relaxation: objective 7.919039e+00, 17 iterations, 0.00 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
@@ -436,11 +445,14 @@ sim_rs_s3_amount &lt;-<span class="st"> </span><span class="kw">update</span>(si
 ##      0     0    7.91904    0    1   21.00000    7.91904  62.3%     -    0s
 ## H    0     0                       8.0000000    7.91904  1.01%     -    0s
 ## 
-## Explored 0 nodes (18 simplex iterations) in 0.00 seconds
+## Explored 0 nodes (17 simplex iterations) in 0.00 seconds
 ## Thread count was 22 (of 24 available processors)
 ## 
+## Solution count 2: 8 21 
+## Pool objective bound 8
+## 
 ## Optimal solution found (tolerance 1.00e-01)
-## Best objective 8.000000000000e+00, best bound 8.000000000000e+00, gap 0.0%</code></pre>
+## Best objective 8.000000000000e+00, best bound 8.000000000000e+00, gap 0.0000%</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the prioritisation and the bimodal species&#39; distribution</span>
 <span class="kw">spp.plot</span>(sim_rs_s3_amount, <span class="dv">1</span>, <span class="dt">main=</span><span class="st">&#39;Bimodal species&#39;</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
@@ -475,40 +487,44 @@ sim_rs_s3_amount &lt;-<span class="st"> </span><span class="kw">update</span>(si
 sim_rs_s1_space &lt;-<span class="st"> </span><span class="kw">update</span>(sim_rs_s1_amount, <span class="dt">amount.target=</span><span class="fl">0.2</span>, <span class="dt">space.target=</span><span class="fl">0.85</span>, <span class="dt">Threads=</span>threads)</code></pre></div>
 <pre><code>## Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored
 ## Optimize a model with 10102 rows, 10100 columns and 40000 nonzeros
+## Variable types: 0 continuous, 10100 integer (10100 binary)
 ## Coefficient statistics:
-##   Matrix range    [5e-01, 8e+01]
-##   Objective range [1e+00, 1e+00]
-##   Bounds range    [1e+00, 1e+00]
-##   RHS range       [1e+00, 1e+02]
-## Found heuristic solution: objective 88
+##   Matrix range     [5e-01, 8e+01]
+##   Objective range  [1e+00, 1e+00]
+##   Bounds range     [1e+00, 1e+00]
+##   RHS range        [1e+00, 1e+02]
+## Found heuristic solution: objective 90
 ## Presolve removed 36 rows and 0 columns
-## Presolve time: 2.58s
+## Presolve time: 2.30s
 ## Presolved: 10066 rows, 10100 columns, 40104 nonzeros
 ## Variable types: 0 continuous, 10100 integer (10100 binary)
 ## Presolved: 10066 rows, 10100 columns, 40104 nonzeros
 ## 
 ## Presolve removed 10066 rows and 10100 columns
 ## 
-## Root relaxation: objective 2.000000e+01, 621 iterations, 0.09 seconds
+## Root relaxation: objective 2.000000e+01, 572 iterations, 0.10 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
 ## *    0     0               0      20.0000000   20.00000  0.00%     -    2s
 ## 
-## Explored 0 nodes (1086 simplex iterations) in 2.75 seconds
+## Explored 0 nodes (893 simplex iterations) in 2.49 seconds
 ## Thread count was 22 (of 24 available processors)
 ## 
+## Solution count 2: 20 90 
+## Pool objective bound 20
+## 
 ## Optimal solution found (tolerance 1.00e-01)
-## Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0%</code></pre>
+## Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show summary</span>
 <span class="kw">summary</span>(sim_rs_s1_space)</code></pre></div>
 <pre><code>##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
 ## 1          1 OPTIMAL    20   20             20                220
 ##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1               8               143               69
+## 1              11               145               64
 ##   Connectivity_In_Fraction
-## 1               0.03636364</code></pre>
+## 1                     0.05</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show amount held</span>
 <span class="kw">amount.held</span>(sim_rs_s1_space)</code></pre></div>
 <pre><code>##   uniform
@@ -516,7 +532,7 @@ sim_rs_s1_space &lt;-<span class="st"> </span><span class="kw">update</span>(sim
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show space held</span>
 <span class="kw">space.held</span>(sim_rs_s1_space)</code></pre></div>
 <pre><code>##   uniform (Space 1)
-## 1         0.9309091</code></pre>
+## 1         0.9242424</code></pre>
 <p>Let’s take a look at the prioritisation for the uniform species with amount-based and space-based targets. Then, let’s compare the solutions for the amount-based prioritisation with the new prioritisation using both amount and space targets.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the prioritisation and the uniform species&#39; distribution</span>
 <span class="kw">spp.plot</span>(sim_rs_s1_space, <span class="st">&#39;uniform&#39;</span>, <span class="dt">main=</span><span class="st">&#39;Uniform species&#39;</span>)</code></pre></div>
@@ -540,49 +556,53 @@ sim_rs_s1_space &lt;-<span class="st"> </span><span class="kw">update</span>(sim
 sim_rs_s2_space &lt;-<span class="st"> </span><span class="kw">update</span>(sim_rs_s2_amount, <span class="dt">amount.target=</span><span class="fl">0.2</span>, <span class="dt">space.target=</span><span class="fl">0.85</span>, <span class="dt">Threads=</span>threads)</code></pre></div>
 <pre><code>## Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored
 ## Optimize a model with 10102 rows, 10100 columns and 40000 nonzeros
+## Variable types: 0 continuous, 10100 integer (10100 binary)
 ## Coefficient statistics:
-##   Matrix range    [7e-02, 4e+01]
-##   Objective range [1e+00, 1e+00]
-##   Bounds range    [1e+00, 1e+00]
-##   RHS range       [1e+00, 6e+01]
-## Found heuristic solution: objective 91
+##   Matrix range     [7e-02, 4e+01]
+##   Objective range  [1e+00, 1e+00]
+##   Bounds range     [1e+00, 1e+00]
+##   RHS range        [1e+00, 6e+01]
+## Found heuristic solution: objective 90
 ## Presolve removed 220 rows and 0 columns
-## Presolve time: 1.72s
+## Presolve time: 1.90s
 ## Presolved: 9882 rows, 10100 columns, 41664 nonzeros
 ## Variable types: 0 continuous, 10100 integer (10100 binary)
 ## Presolved: 9882 rows, 10100 columns, 41664 nonzeros
 ## 
 ## Presolve removed 9882 rows and 10100 columns
 ## 
-## Root relaxation: objective 1.232570e+01, 4135 iterations, 0.28 seconds
+## Root relaxation: objective 1.232570e+01, 4953 iterations, 0.36 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0   12.32570    0  290   91.00000   12.32570  86.5%     -    2s
+##      0     0   12.32570    0  292   90.00000   12.32570  86.3%     -    2s
 ## H    0     0                      13.0000000   12.32570  5.19%     -    2s
 ## 
-## Explored 0 nodes (4369 simplex iterations) in 2.18 seconds
+## Explored 0 nodes (5189 simplex iterations) in 2.45 seconds
 ## Thread count was 22 (of 24 available processors)
 ## 
+## Solution count 2: 13 90 
+## Pool objective bound 13
+## 
 ## Optimal solution found (tolerance 1.00e-01)
-## Best objective 1.300000000000e+01, best bound 1.300000000000e+01, gap 0.0%</code></pre>
+## Best objective 1.300000000000e+01, best bound 1.300000000000e+01, gap 0.0000%</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show summary</span>
 <span class="kw">summary</span>(sim_rs_s2_space)</code></pre></div>
 <pre><code>##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
 ## 1          1 OPTIMAL    13   13             13                220
 ##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1               5               173               42
+## 1               6               174               40
 ##   Connectivity_In_Fraction
-## 1               0.02272727</code></pre>
+## 1               0.02727273</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show amount held</span>
 <span class="kw">amount.held</span>(sim_rs_s2_space)</code></pre></div>
 <pre><code>##      normal
-## 1 0.2014166</code></pre>
+## 1 0.2042594</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show space held</span>
 <span class="kw">space.held</span>(sim_rs_s2_space)</code></pre></div>
 <pre><code>##   normal (Space 1)
-## 1          0.85809</code></pre>
+## 1         0.854256</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the prioritisation and the normal species&#39; distribution</span>
 <span class="kw">spp.plot</span>(sim_rs_s2_space, <span class="st">&#39;normal&#39;</span>, <span class="dt">main=</span><span class="st">&#39;Normal species&#39;</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
@@ -605,54 +625,53 @@ sim_rs_s2_space &lt;-<span class="st"> </span><span class="kw">update</span>(sim
 sim_rs_s3_space &lt;-<span class="st"> </span><span class="kw">update</span>(sim_rs_s3_amount, <span class="dt">amount.target=</span><span class="fl">0.2</span>, <span class="dt">space.target=</span><span class="fl">0.85</span>, <span class="dt">Threads=</span>threads)</code></pre></div>
 <pre><code>## Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored
 ## Optimize a model with 10102 rows, 10100 columns and 40000 nonzeros
+## Variable types: 0 continuous, 10100 integer (10100 binary)
 ## Coefficient statistics:
-##   Matrix range    [7e-03, 9e+01]
-##   Objective range [1e+00, 1e+00]
-##   Bounds range    [1e+00, 1e+00]
-##   RHS range       [1e+00, 7e+01]
-## Found heuristic solution: objective 86
+##   Matrix range     [7e-03, 9e+01]
+##   Objective range  [1e+00, 1e+00]
+##   Bounds range     [1e+00, 1e+00]
+##   RHS range        [1e+00, 7e+01]
+## Found heuristic solution: objective 85
 ## Presolve removed 589 rows and 15 columns
-## Presolve time: 3.74s
+## Presolve time: 3.70s
 ## Presolved: 9513 rows, 10085 columns, 51461 nonzeros
 ## Variable types: 0 continuous, 10085 integer (10085 binary)
 ## Presolved: 9513 rows, 10085 columns, 51461 nonzeros
 ## 
 ## Presolve removed 9513 rows and 10085 columns
 ## 
-## Root relaxation: objective 8.980792e+00, 6437 iterations, 0.44 seconds
+## Root relaxation: objective 8.980792e+00, 5356 iterations, 0.40 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0    8.98079    0   75   86.00000    8.98079  89.6%     -    4s
+##      0     0    8.98079    0   75   85.00000    8.98079  89.4%     -    4s
 ## H    0     0                      10.0000000    8.98079  10.2%     -    4s
-##      0     0    8.99662    0  125   10.00000    8.99662  10.0%     -    4s
 ## 
-## Cutting planes:
-##   Gomory: 1
-##   Zero half: 1
-## 
-## Explored 0 nodes (6761 simplex iterations) in 4.64 seconds
+## Explored 0 nodes (5644 simplex iterations) in 4.76 seconds
 ## Thread count was 22 (of 24 available processors)
 ## 
+## Solution count 2: 10 85 
+## Pool objective bound 10
+## 
 ## Optimal solution found (tolerance 1.00e-01)
-## Best objective 1.000000000000e+01, best bound 1.000000000000e+01, gap 0.0%</code></pre>
+## Best objective 1.000000000000e+01, best bound 1.000000000000e+01, gap 0.0000%</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show summary</span>
 <span class="kw">summary</span>(sim_rs_s3_space)</code></pre></div>
 <pre><code>##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
 ## 1          1 OPTIMAL    10   10             10                220
 ##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1               6               186               28
+## 1               7               187               26
 ##   Connectivity_In_Fraction
-## 1               0.02727273</code></pre>
+## 1               0.03181818</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show amount held</span>
 <span class="kw">amount.held</span>(sim_rs_s3_space)</code></pre></div>
 <pre><code>##     bimodal
-## 1 0.2127869</code></pre>
+## 1 0.2226414</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show space held</span>
 <span class="kw">space.held</span>(sim_rs_s3_space)</code></pre></div>
 <pre><code>##   bimodal (Space 1)
-## 1         0.8650189</code></pre>
+## 1         0.8562891</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the prioritisation and the bimodal species&#39; distribution</span>
 <span class="kw">spp.plot</span>(sim_rs_s3_space, <span class="st">&#39;bimodal&#39;</span>, <span class="dt">main=</span><span class="st">&#39;Bimodal species&#39;</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
@@ -687,31 +706,35 @@ sim_mrs_amount &lt;-<span class="st"> </span><span class="kw">update</span>(
 )</code></pre></div>
 <pre><code>## Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored
 ## Optimize a model with 30306 rows, 30100 columns and 120000 nonzeros
+## Variable types: 0 continuous, 30100 integer (30100 binary)
 ## Coefficient statistics:
-##   Matrix range    [7e-03, 9e+01]
-##   Objective range [1e+00, 1e+00]
-##   Bounds range    [1e+00, 1e+00]
-##   RHS range       [1e+00, 8e+02]
-## Found heuristic solution: objective 98
-## Presolve time: 1.31s
+##   Matrix range     [7e-03, 9e+01]
+##   Objective range  [1e+00, 1e+00]
+##   Bounds range     [1e+00, 1e+00]
+##   RHS range        [1e+00, 8e+02]
+## Found heuristic solution: objective 96
+## Presolve time: 1.28s
 ## Presolved: 30306 rows, 30100 columns, 120000 nonzeros
 ## Variable types: 0 continuous, 30100 integer (30100 binary)
 ## Presolved: 30306 rows, 30100 columns, 120000 nonzeros
 ## 
 ## Presolve removed 30306 rows and 30100 columns
 ## 
-## Root relaxation: objective 2.000000e+01, 2021 iterations, 1.40 seconds
+## Root relaxation: objective 2.000000e+01, 2719 iterations, 1.55 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
 ## *    0     0               0      20.0000000   20.00000  0.00%     -    3s
 ## 
-## Explored 0 nodes (4785 simplex iterations) in 3.42 seconds
+## Explored 0 nodes (5125 simplex iterations) in 3.26 seconds
 ## Thread count was 22 (of 24 available processors)
 ## 
+## Solution count 2: 20 96 
+## Pool objective bound 20
+## 
 ## Optimal solution found (tolerance 1.00e-01)
-## Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0%</code></pre>
+## Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_mrs_space &lt;-<span class="st"> </span><span class="kw">update</span>(
     sim_ru,
     <span class="dt">amount.target=</span><span class="kw">c</span>(<span class="fl">0.2</span>,<span class="fl">0.2</span>,<span class="fl">0.2</span>),
@@ -720,15 +743,16 @@ sim_mrs_amount &lt;-<span class="st"> </span><span class="kw">update</span>(
 )</code></pre></div>
 <pre><code>## Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored
 ## Optimize a model with 30306 rows, 30100 columns and 120000 nonzeros
+## Variable types: 0 continuous, 30100 integer (30100 binary)
 ## Coefficient statistics:
-##   Matrix range    [7e-03, 9e+01]
-##   Objective range [1e+00, 1e+00]
-##   Bounds range    [1e+00, 1e+00]
-##   RHS range       [1e+00, 1e+02]
+##   Matrix range     [7e-03, 9e+01]
+##   Objective range  [1e+00, 1e+00]
+##   Bounds range     [1e+00, 1e+00]
+##   RHS range        [1e+00, 1e+02]
 ## Found heuristic solution: objective 100
-## Presolve removed 268 rows and 15 columns (presolve time = 5s) ...
+## Presolve removed 271 rows and 15 columns (presolve time = 5s) ...
 ## Presolve removed 360 rows and 15 columns
-## Presolve time: 8.13s
+## Presolve time: 7.17s
 ## Presolved: 29946 rows, 30085 columns, 131504 nonzeros
 ## Variable types: 0 continuous, 30085 integer (30085 binary)
 ## Presolve removed 53 rows and 1 columns
@@ -739,52 +763,56 @@ sim_mrs_amount &lt;-<span class="st"> </span><span class="kw">update</span>(
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    1.0000000e+02   0.000000e+00   1.000000e+02      9s
-##     4206    2.0710715e+01   0.000000e+00   3.817444e+03     10s
-##     4358    2.0000000e+01   0.000000e+00   0.000000e+00     10s
-##     4358    2.0000000e+01   0.000000e+00   0.000000e+00     10s
+##        0    1.0000000e+02   0.000000e+00   1.000000e+02      8s
+##     4377    2.0000000e+01   0.000000e+00   0.000000e+00      9s
+##     4377    2.0000000e+01   0.000000e+00   0.000000e+00      9s
 ## 
-## Root relaxation: objective 2.000000e+01, 4358 iterations, 1.94 seconds
+## Root relaxation: objective 2.000000e+01, 4377 iterations, 1.70 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-## *    0     0               0      20.0000000   20.00000  0.00%     -   10s
+##      0     0   20.00000    0  349  100.00000   20.00000  80.0%     -    9s
+## H    0     0                      24.0000000   20.00000  16.7%     -    9s
+## H    0     0                      20.0000000   20.00000  0.00%     -   10s
 ## 
-## Explored 0 nodes (6369 simplex iterations) in 10.53 seconds
+## Explored 0 nodes (8538 simplex iterations) in 10.08 seconds
 ## Thread count was 22 (of 24 available processors)
 ## 
+## Solution count 3: 20 24 100 
+## Pool objective bound 20
+## 
 ## Optimal solution found (tolerance 1.00e-01)
-## Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0%</code></pre>
+## Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show summaries</span>
 <span class="kw">summary</span>(sim_mrs_amount)</code></pre></div>
 <pre><code>##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
 ## 1          1 OPTIMAL    20   20             20                220
 ##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1              10               145               65
+## 1               9               143               68
 ##   Connectivity_In_Fraction
-## 1               0.04545455</code></pre>
+## 1               0.04090909</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(sim_mrs_space)</code></pre></div>
 <pre><code>##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
 ## 1          1 OPTIMAL    20   20             20                220
 ##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1               7               140               73
+## 1               8               144               68
 ##   Connectivity_In_Fraction
-## 1               0.03181818</code></pre>
+## 1               0.03636364</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show amount held for each prioritisation</span>
 <span class="kw">amount.held</span>(sim_mrs_amount)</code></pre></div>
 <pre><code>##   uniform    normal   bimodal
-## 1     0.2 0.2214677 0.2502513</code></pre>
+## 1     0.2 0.2069044 0.2178603</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">amount.held</span>(sim_mrs_space)</code></pre></div>
-<pre><code>##   uniform    normal   bimodal
-## 1     0.2 0.2111175 0.2175549</code></pre>
+<pre><code>##   uniform    normal  bimodal
+## 1     0.2 0.2255469 0.242757</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show space held for each prioritisation</span>
 <span class="kw">space.held</span>(sim_mrs_amount)</code></pre></div>
 <pre><code>##   uniform (Space 1) normal (Space 1) bimodal (Space 1)
-## 1         0.9145455        0.8898895         0.9234012</code></pre>
+## 1         0.9090909        0.8634637         0.8923004</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">space.held</span>(sim_mrs_space)</code></pre></div>
 <pre><code>##   uniform (Space 1) normal (Space 1) bimodal (Space 1)
-## 1         0.9333333        0.9111715          0.931071</code></pre>
+## 1         0.9290909        0.9108412         0.9326686</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot multi-species prioritisation with amount-based targets</span>
 <span class="kw">plot</span>(sim_mrs_amount, <span class="dv">1</span>, <span class="dt">main=</span><span class="st">&#39;Amount-based targets&#39;</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
@@ -826,15 +854,16 @@ sim_mrs_space2 &lt;-<span class="st"> </span><span class="kw">solve</span>(
 )</code></pre></div>
 <pre><code>## Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored
 ## Optimize a model with 30306 rows, 30100 columns and 119974 nonzeros
+## Variable types: 0 continuous, 30100 integer (30100 binary)
 ## Coefficient statistics:
-##   Matrix range    [7e-03, 9e+01]
-##   Objective range [1e+00, 1e+00]
-##   Bounds range    [1e+00, 1e+00]
-##   RHS range       [1e+00, 1e+02]
+##   Matrix range     [7e-03, 9e+01]
+##   Objective range  [1e+00, 1e+00]
+##   Bounds range     [1e+00, 1e+00]
+##   RHS range        [1e+00, 1e+02]
 ## Found heuristic solution: objective 100
-## Presolve removed 269 rows and 15 columns (presolve time = 5s) ...
+## Presolve removed 271 rows and 15 columns (presolve time = 5s) ...
 ## Presolve removed 360 rows and 15 columns
-## Presolve time: 7.96s
+## Presolve time: 7.16s
 ## Presolved: 29946 rows, 30085 columns, 131478 nonzeros
 ## Variable types: 0 continuous, 30085 integer (30085 binary)
 ## Presolve removed 53 rows and 1 columns
@@ -845,31 +874,35 @@ sim_mrs_space2 &lt;-<span class="st"> </span><span class="kw">solve</span>(
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    1.0000000e+02   0.000000e+00   1.000000e+02      9s
-##     3717    2.0000000e+01   0.000000e+00   0.000000e+00      9s
-##     3717    2.0000000e+01   0.000000e+00   0.000000e+00      9s
+##        0    1.0000000e+02   0.000000e+00   1.000000e+02      8s
+##     4415    2.0000000e+01   0.000000e+00   0.000000e+00      9s
+##     4415    2.0000000e+01   0.000000e+00   0.000000e+00      9s
 ## 
-## Root relaxation: objective 2.000000e+01, 3717 iterations, 1.46 seconds
+## Root relaxation: objective 2.000000e+01, 4415 iterations, 2.21 seconds
+## Total elapsed time = 10.10s
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0   20.00000    0  216  100.00000   20.00000  80.0%     -   10s
-## H    0     0                      22.0000000   20.00000  9.09%     -   10s
+##      0     0   20.00000    0    2  100.00000   20.00000  80.0%     -   10s
+## H    0     0                      20.0000000   20.00000  0.00%     -   10s
 ## 
-## Explored 0 nodes (7281 simplex iterations) in 10.19 seconds
+## Explored 0 nodes (9263 simplex iterations) in 10.30 seconds
 ## Thread count was 22 (of 24 available processors)
 ## 
+## Solution count 2: 20 100 
+## Pool objective bound 20
+## 
 ## Optimal solution found (tolerance 1.00e-01)
-## Best objective 2.200000000000e+01, best bound 2.000000000000e+01, gap 9.0909%</code></pre>
+## Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show summary</span>
 <span class="kw">summary</span>(sim_mrs_space2)</code></pre></div>
 <pre><code>##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
-## 1          1 OPTIMAL    22   22             22                220
+## 1          1 OPTIMAL    20   20             20                220
 ##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1               8               134               78
+## 1               6               140               74
 ##   Connectivity_In_Fraction
-## 1               0.03636364</code></pre>
+## 1               0.02727273</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot prioritisation</span>
 <span class="kw">plot</span>(sim_mrs_space2, <span class="dv">1</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
@@ -891,16 +924,22 @@ sim_mrs_space2 &lt;-<span class="st"> </span><span class="kw">solve</span>(
 sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw">update</span>(sim_mrs_space, <span class="dt">formulation=</span><span class="st">&#39;reliable&#39;</span>, <span class="dt">max.r.level=</span>1L, <span class="dt">Threads=</span>threads))</code></pre></div>
 <pre><code>## Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored
 ## Optimize a model with 364206 rows, 181900 columns and 3847200 nonzeros
+## Variable types: 0 continuous, 60700 integer (60700 binary)
+## Semi-Variable types: 121200 continuous, 0 integer
 ## Coefficient statistics:
-##   Matrix range    [8e-04, 1e+02]
-##   Objective range [1e+00, 1e+00]
-##   Bounds range    [1e+00, 1e+00]
-##   RHS range       [7e-03, 1e+02]
-## Presolve removed 338706 rows and 90806 columns
-## Presolve time: 4.01s
+##   Matrix range     [8e-04, 1e+02]
+##   Objective range  [1e+00, 1e+00]
+##   Bounds range     [1e+00, 1e+00]
+##   RHS range        [7e-03, 1e+02]
+## Presolve removed 338603 rows and 156700 columns (presolve time = 5s) ...
+## Presolve removed 338606 rows and 156703 columns
+## Presolve time: 5.39s
 ## 
-## Explored 0 nodes (0 simplex iterations) in 5.28 seconds
+## Explored 0 nodes (0 simplex iterations) in 7.01 seconds
 ## Thread count was 1 (of 24 available processors)
+## 
+## Solution count 0
+## Pool objective bound 1e+100
 ## 
 ## Model is infeasible
 ## Best objective -, best bound -, gap -</code></pre>
@@ -915,14 +954,16 @@ sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw">update</span>(
 )</code></pre></div>
 <pre><code>## Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored
 ## Optimize a model with 364206 rows, 181900 columns and 3847200 nonzeros
+## Variable types: 0 continuous, 60700 integer (60700 binary)
+## Semi-Variable types: 121200 continuous, 0 integer
 ## Coefficient statistics:
-##   Matrix range    [8e-04, 1e+02]
-##   Objective range [1e+00, 1e+00]
-##   Bounds range    [1e+00, 1e+00]
-##   RHS range       [7e-03, 8e+05]
-## Presolve removed 333703 rows and 151600 columns (presolve time = 5s) ...
+##   Matrix range     [8e-04, 1e+02]
+##   Objective range  [1e+00, 1e+00]
+##   Bounds range     [1e+00, 1e+00]
+##   RHS range        [7e-03, 8e+05]
+## Presolve removed 333403 rows and 151500 columns (presolve time = 5s) ...
 ## Presolve removed 333903 rows and 151800 columns
-## Presolve time: 7.51s
+## Presolve time: 9.52s
 ## Presolved: 30303 rows, 30100 columns, 90300 nonzeros
 ## Variable types: 0 continuous, 30100 integer (30100 binary)
 ## Found heuristic solution: objective 27.0000000
@@ -933,22 +974,25 @@ sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw">update</span>(
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    1.0000000e+02   0.000000e+00   1.000000e+02      9s
-##      129    2.0000000e+01   0.000000e+00   0.000000e+00      9s
-##      129    2.0000000e+01   0.000000e+00   0.000000e+00      9s
+##        0    1.0000000e+02   0.000000e+00   1.000000e+02     12s
+##      129    2.0000000e+01   0.000000e+00   0.000000e+00     12s
+##      129    2.0000000e+01   0.000000e+00   0.000000e+00     12s
 ## 
-## Root relaxation: objective 2.000000e+01, 129 iterations, 0.44 seconds
+## Root relaxation: objective 2.000000e+01, 129 iterations, 0.48 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-## *    0     0               0      20.0000000   20.00000  0.00%     -    9s
+## *    0     0               0      20.0000000   20.00000  0.00%     -   11s
 ## 
-## Explored 0 nodes (176 simplex iterations) in 9.43 seconds
+## Explored 0 nodes (182 simplex iterations) in 12.06 seconds
 ## Thread count was 22 (of 24 available processors)
 ## 
+## Solution count 2: 20 27 
+## Pool objective bound 20
+## 
 ## Optimal solution found (tolerance 1.00e-01)
-## Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0%</code></pre>
+## Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%</code></pre>
 <pre><code>## Warning in validityMethod(object): object@space.held contains values less
 ## than 0, some species are really poorly represented</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show summary</span>
@@ -956,9 +1000,9 @@ sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw">update</span>(
 <pre><code>##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
 ## 1          1 OPTIMAL    20   20             20                220
 ##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1              21               157               42
+## 1              20               156               44
 ##   Connectivity_In_Fraction
-## 1               0.09545455</code></pre>
+## 1               0.09090909</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot prioritisation</span>
 <span class="kw">plot</span>(sim_mrs_space3, <span class="dv">1</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
@@ -985,85 +1029,80 @@ sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw">update</span>(
 sim_mrs_amount_blm &lt;-<span class="st"> </span><span class="kw">update</span>(sim_mrs_amount, <span class="dt">BLM=</span><span class="dv">100</span>, <span class="dt">Threads=</span>threads)</code></pre></div>
 <pre><code>## Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored
 ## Optimize a model with 30666 rows, 30280 columns and 120720 nonzeros
+## Variable types: 0 continuous, 30280 integer (30280 binary)
 ## Coefficient statistics:
-##   Matrix range    [7e-03, 9e+01]
-##   Objective range [1e+02, 4e+02]
-##   Bounds range    [1e+00, 1e+00]
-##   RHS range       [1e+00, 8e+02]
-## Found heuristic solution: objective 4498
-## Presolve time: 1.36s
+##   Matrix range     [7e-03, 9e+01]
+##   Objective range  [1e+02, 4e+02]
+##   Bounds range     [1e+00, 1e+00]
+##   RHS range        [1e+00, 8e+02]
+## Found heuristic solution: objective 4596
+## Presolve time: 1.25s
 ## Presolved: 30666 rows, 30280 columns, 120720 nonzeros
 ## Variable types: 0 continuous, 30280 integer (30280 binary)
 ## Presolved: 30666 rows, 30280 columns, 120720 nonzeros
 ## 
 ## Presolve removed 30666 rows and 30280 columns
 ## 
-## Root simplex log...
-## 
-## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##     6188    5.5154048e+02   0.000000e+00   6.006546e+05      5s
-##     7593    4.6444444e+02   0.000000e+00   0.000000e+00      6s
-##     7593    4.6444444e+02   0.000000e+00   0.000000e+00      6s
-## 
-## Root relaxation: objective 4.644444e+02, 7593 iterations, 4.48 seconds
+## Root relaxation: objective 4.644444e+02, 4592 iterations, 2.86 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0  464.44444    0 1725 4498.00000  464.44444  89.7%     -    6s
-## H    0     0                    1531.0000000  464.44444  69.7%     -   19s
-## H    0     0                    1122.0000000  464.44444  58.6%     -   20s
-##      0     0  519.36948    0 1447 1122.00000  519.36948  53.7%     -   20s
-##      0     0  519.36948    0 1451 1122.00000  519.36948  53.7%     -   22s
-##      0     0  556.17021    0 1520 1122.00000  556.17021  50.4%     -   23s
-##      0     0  556.17021    0 1527 1122.00000  556.17021  50.4%     -   23s
-##      0     0  556.17021    0 1540 1122.00000  556.17021  50.4%     -   24s
-##      0     0  556.17021    0 1542 1122.00000  556.17021  50.4%     -   24s
-##      0     0  556.17021    0 1499 1122.00000  556.17021  50.4%     -   25s
-##      0     0  556.17021    0 1500 1122.00000  556.17021  50.4%     -   27s
-##      0     0  556.17021    0 1477 1122.00000  556.17021  50.4%     -   30s
-##      0     0  556.17021    0 1480 1122.00000  556.17021  50.4%     -   32s
-## H    0     0                    1120.0000000  556.17021  50.3%     -   32s
-##      0     0  556.17021    0 1483 1120.00000  556.17021  50.3%     -   33s
-##      0     0  556.17021    0 1481 1120.00000  556.17021  50.3%     -   33s
-##      0     2  556.17021    0 1456 1120.00000  556.17021  50.3%     -   38s
-##      6     9  599.75315    5 1390 1120.00000  580.38198  48.2%  1193   40s
-##     33    47  632.55911   10 1090 1120.00000  612.02586  45.4%  1071   45s
-##    180   175  720.00000   16 1009 1120.00000  625.08266  44.2%   818   52s
-##    303   264  834.28571   19  615 1120.00000  625.08266  44.2%   631   56s
-##    458   391  960.00000   23  339 1120.00000  625.08266  44.2%   618   60s
-## H  649   436                    1020.0000000  637.61095  37.5%   559   64s
-## H  821   350                     920.0000000  653.33333  29.0%   567   78s
-##    906   309  833.88199   13 1026  920.00000  654.69388  28.8%   560   86s
-##   1311   332  870.00000   20  985  920.00000  736.32265  20.0%   528   94s
-##   1755   272     cutoff   20       920.00000  778.17223  15.4%   522  106s
-##   2375    48     cutoff   25       920.00000  816.00000  11.3%   495  113s
+##      0     0  464.44444    0 1725 4596.00000  464.44444  89.9%     -    4s
+## H    0     0                    1621.0000000  464.44444  71.3%     -   14s
+## H    0     0                    1336.0000000  464.44444  65.2%     -   15s
+## H    0     0                    1335.0000000  464.44444  65.2%     -   15s
+## H    0     0                    1232.0000000  464.44444  62.3%     -   15s
+## H    0     0                    1122.0000000  464.44444  58.6%     -   15s
+## H    0     0                    1120.0000000  464.44444  58.5%     -   15s
+## H    0     0                    1022.0000000  464.44444  54.6%     -   16s
+## H    0     0                    1021.0000000  464.44444  54.5%     -   16s
+##      0     0  539.75309    0 1722 1021.00000  539.75309  47.1%     -   16s
+## H    0     0                    1020.0000000  539.75309  47.1%     -   16s
+##      0     0  539.75309    0 1722 1020.00000  539.75309  47.1%     -   16s
+##      0     0  590.00000    0 1403 1020.00000  590.00000  42.2%     -   17s
+##      0     0  590.00000    0 1409 1020.00000  590.00000  42.2%     -   18s
+##      0     0  590.00000    0 1665 1020.00000  590.00000  42.2%     -   23s
+##      0     0  590.00000    0 1665 1020.00000  590.00000  42.2%     -   23s
+##      0     2  590.00000    0 1323 1020.00000  590.00000  42.2%     -   33s
+##     15    32  648.41678    4 1400 1020.00000  648.41678  36.4%  1617   35s
+##    154   142  683.26531   10 1378 1020.00000  657.64706  35.5%   687   40s
+##    298   242  774.09836   15 1362 1020.00000  667.59450  34.5%   574   46s
+## H  435   242                     920.0000000  680.60606  26.0%   559   49s
+##    473   227  810.69767   20 1013  920.00000  686.99095  25.3%   574   50s
+##    524   248  820.71174   21 1010  920.00000  693.26733  24.6%   574   58s
+##    603   262     cutoff   23       920.00000  735.87302  20.0%   566   60s
+##    864   262  883.49206   16 1259  920.00000  776.10561  15.6%   537   65s
+##   1124   225  905.02018    6 1366  920.00000  822.43902  10.6%   511   70s
 ## 
 ## Cutting planes:
 ##   Gomory: 2
-##   Zero half: 206
+##   Zero half: 361
 ## 
-## Explored 3021 nodes (1421545 simplex iterations) in 113.73 seconds
+## Explored 1285 nodes (680185 simplex iterations) in 72.38 seconds
 ## Thread count was 22 (of 24 available processors)
 ## 
+## Solution count 10: 920 1020 1021 ... 1621
+## Pool objective bound 840
+## 
 ## Optimal solution found (tolerance 1.00e-01)
-## Best objective 9.200000000000e+02, best bound 8.520000000000e+02, gap 7.3913%</code></pre>
+## Best objective 9.200000000000e+02, best bound 8.400000000000e+02, gap 8.6957%</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show summary of prioritisation</span>
 <span class="kw">summary</span>(sim_mrs_amount_blm)</code></pre></div>
 <pre><code>##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
 ## 1          1 OPTIMAL   920   20             20                220
 ##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1              31               171               18
+## 1              36               171               13
 ##   Connectivity_In_Fraction
-## 1                0.1409091</code></pre>
+## 1                0.1636364</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show amount held for each prioritisation</span>
 <span class="kw">amount.held</span>(sim_mrs_amount_blm)</code></pre></div>
 <pre><code>##   uniform    normal   bimodal
-## 1     0.2 0.3185057 0.3911267</code></pre>
+## 1     0.2 0.2328119 0.3427728</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show space held for each prioritisation</span>
 <span class="kw">space.held</span>(sim_mrs_amount_blm)</code></pre></div>
 <pre><code>##   uniform (Space 1) normal (Space 1) bimodal (Space 1)
-## 1               0.6        0.6277996         0.6899822</code></pre>
+## 1         0.3333333        0.2755485         0.4585042</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot prioritisation</span>
 <span class="kw">plot</span>(sim_mrs_amount_blm, <span class="dv">1</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
@@ -1227,11 +1266,12 @@ cs_rs_amount &lt;-<span class="st"> </span><span class="kw">rap</span>(
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># generate prioritisation</span>
 cs_rs_amount &lt;-<span class="st"> </span><span class="kw">solve</span>(cs_rs_amount, <span class="dt">MIPGap=</span><span class="fl">0.1</span>, <span class="dt">Threads=</span>threads)</code></pre></div>
 <pre><code>## Optimize a model with 4 rows, 762 columns and 1336 nonzeros
+## Variable types: 0 continuous, 762 integer (762 binary)
 ## Coefficient statistics:
-##   Matrix range    [4e+02, 2e+04]
-##   Objective range [1e+00, 1e+00]
-##   Bounds range    [1e+00, 1e+00]
-##   RHS range       [1e+05, 3e+06]
+##   Matrix range     [4e+02, 2e+04]
+##   Objective range  [1e+00, 1e+00]
+##   Bounds range     [1e+00, 1e+00]
+##   RHS range        [1e+05, 3e+06]
 ## Found heuristic solution: objective 159
 ## Presolve time: 0.00s
 ## Presolved: 4 rows, 762 columns, 1336 nonzeros
@@ -1250,8 +1290,11 @@ cs_rs_amount &lt;-<span class="st"> </span><span class="kw">solve</span>(cs_rs_a
 ## Explored 0 nodes (597 simplex iterations) in 0.01 seconds
 ## Thread count was 22 (of 24 available processors)
 ## 
+## Solution count 2: 136 159 
+## Pool objective bound 136
+## 
 ## Optimal solution found (tolerance 1.00e-01)
-## Best objective 1.360000000000e+02, best bound 1.360000000000e+02, gap 0.0%</code></pre>
+## Best objective 1.360000000000e+02, best bound 1.360000000000e+02, gap 0.0000%</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show summary</span>
 <span class="kw">summary</span>(cs_rs_amount)</code></pre></div>
 <pre><code>##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
@@ -1297,27 +1340,28 @@ gridExtra::<span class="kw">grid.arrange</span>(p1, p2, p3, p4, <span class="dt"
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make amount- and space-based prioritisation</span>
 cs_rs_space &lt;-<span class="st"> </span><span class="kw">update</span>(cs_rs_amount, <span class="dt">space.target=</span><span class="fl">0.7</span>, <span class="dt">Threads=</span>threads)</code></pre></div>
 <pre><code>## Optimize a model with 134012 rows, 134362 columns and 535736 nonzeros
+## Variable types: 0 continuous, 134362 integer (134362 binary)
 ## Coefficient statistics:
-##   Matrix range    [1e-03, 2e+04]
-##   Objective range [1e+00, 1e+00]
-##   Bounds range    [1e+00, 1e+00]
-##   RHS range       [1e+00, 3e+06]
-## Presolve removed 2620 rows and 1698 columns (presolve time = 5s) ...
-## Presolve removed 3144 rows and 1698 columns (presolve time = 10s) ...
-## Presolve removed 3420 rows and 1698 columns (presolve time = 15s) ...
-## Presolve removed 3550 rows and 1698 columns (presolve time = 20s) ...
-## Presolve removed 3773 rows and 1698 columns (presolve time = 25s) ...
-## Presolve removed 5450 rows and 1698 columns (presolve time = 30s) ...
-## Presolve removed 5912 rows and 1698 columns (presolve time = 35s) ...
-## Presolve removed 6040 rows and 1698 columns (presolve time = 40s) ...
-## Presolve removed 6042 rows and 1698 columns (presolve time = 45s) ...
-## Presolve removed 6093 rows and 1698 columns (presolve time = 50s) ...
-## Presolve removed 7101 rows and 1698 columns (presolve time = 55s) ...
-## Presolve removed 7836 rows and 1698 columns (presolve time = 60s) ...
-## Presolve removed 7988 rows and 1698 columns (presolve time = 65s) ...
-## Presolve removed 8085 rows and 1698 columns (presolve time = 77s) ...
+##   Matrix range     [1e-03, 2e+04]
+##   Objective range  [1e+00, 1e+00]
+##   Bounds range     [1e+00, 1e+00]
+##   RHS range        [1e+00, 3e+06]
+## Presolve removed 2737 rows and 1698 columns (presolve time = 5s) ...
+## Presolve removed 3205 rows and 1698 columns (presolve time = 10s) ...
+## Presolve removed 3436 rows and 1698 columns (presolve time = 15s) ...
+## Presolve removed 3594 rows and 1698 columns (presolve time = 20s) ...
+## Presolve removed 4625 rows and 1698 columns (presolve time = 25s) ...
+## Presolve removed 5655 rows and 1698 columns (presolve time = 30s) ...
+## Presolve removed 5989 rows and 1698 columns (presolve time = 35s) ...
+## Presolve removed 6042 rows and 1698 columns (presolve time = 40s) ...
+## Presolve removed 6081 rows and 1698 columns (presolve time = 45s) ...
+## Presolve removed 6400 rows and 1698 columns (presolve time = 50s) ...
+## Presolve removed 7830 rows and 1698 columns (presolve time = 55s) ...
+## Presolve removed 7882 rows and 1698 columns (presolve time = 60s) ...
+## Presolve removed 8085 rows and 1698 columns (presolve time = 65s) ...
+## Presolve removed 8085 rows and 1698 columns (presolve time = 73s) ...
 ## Presolve removed 8085 rows and 1698 columns
-## Presolve time: 77.35s
+## Presolve time: 72.83s
 ## Presolved: 125927 rows, 132664 columns, 583968 nonzeros
 ## Variable types: 0 continuous, 132664 integer (132664 binary)
 ## Found heuristic solution: objective 247.0000000
@@ -1329,34 +1373,37 @@ cs_rs_space &lt;-<span class="st"> </span><span class="kw">update</span>(cs_rs_a
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    7.6200000e+02   0.000000e+00   7.620000e+02     81s
-##    12251    1.3660359e+02   0.000000e+00   5.748964e+02     85s
-##    25121    1.3569243e+02   0.000000e+00   1.601336e+02     90s
-##    36175    1.3552449e+02   0.000000e+00   0.000000e+00     94s
-##    36175    1.3552449e+02   0.000000e+00   0.000000e+00     94s
+##        0    7.6200000e+02   0.000000e+00   7.620000e+02     76s
+##    14803    1.3635570e+02   0.000000e+00   1.430120e+03     80s
+##    28267    1.3566509e+02   0.000000e+00   6.100647e+01     85s
+##    38513    1.3552449e+02   0.000000e+00   0.000000e+00     89s
+##    38513    1.3552449e+02   0.000000e+00   0.000000e+00     89s
 ## 
-## Root relaxation: objective 1.355245e+02, 36175 iterations, 15.65 seconds
-## Total elapsed time = 95.06s
+## Root relaxation: objective 1.355245e+02, 38513 iterations, 15.80 seconds
+## Total elapsed time = 90.16s
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0  135.52449    0  195  247.00000  135.52449  45.1%     -   95s
-## H    0     0                     136.0000000  135.52449  0.35%     -   95s
+##      0     0  135.52449    0  190  247.00000  135.52449  45.1%     -   90s
+## H    0     0                     136.0000000  135.52449  0.35%     -   90s
 ## 
-## Explored 0 nodes (49488 simplex iterations) in 95.66 seconds
+## Explored 0 nodes (52705 simplex iterations) in 90.89 seconds
 ## Thread count was 22 (of 24 available processors)
 ## 
+## Solution count 2: 136 247 
+## Pool objective bound 136
+## 
 ## Optimal solution found (tolerance 1.00e-01)
-## Best objective 1.360000000000e+02, best bound 1.360000000000e+02, gap 0.0%</code></pre>
+## Best objective 1.360000000000e+02, best bound 1.360000000000e+02, gap 0.0000%</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show summary</span>
 <span class="kw">summary</span>(cs_rs_space)</code></pre></div>
 <pre><code>##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
 ## 1          1 OPTIMAL   136  136            136           98882414
 ##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1         9738090          81118598          8025726
+## 1         9638090          81018598          8225726
 ##   Connectivity_In_Fraction
-## 1               0.09848151</code></pre>
+## 1               0.09747021</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot prioritisation</span>
 <span class="kw">plot</span>(cs_rs_space,<span class="dv">1</span>)</code></pre></div>
 <p><img src="raptr_files/figure-html/unnamed-chunk-58-1.png" width="432" style="display: block; margin: auto;" /></p>
