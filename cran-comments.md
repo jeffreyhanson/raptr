@@ -32,7 +32,7 @@ There were 3 NOTEs
   _The 'rgurobi' provides additional functionality not contained in the gurobi package. This is a package I have written and placed on github. This package offers additional functionality. Note that users cannot install rgurobi package without the gurobi program already having been installed on their system because it contains compiled code that uses header files distributed with the program. Thus the rgurobi package cannot be submitted to CRAN._
   
 * checking installed package size ... NOTE
-  installed size is  9.1Mb
+  installed size is  7.9Mb
   sub-directories of 1Mb or more:
     data   3.6Mb
     doc    1.7Mb

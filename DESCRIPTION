@@ -3,9 +3,9 @@ Type: Package
 Title: Representative and Adequate Prioritization Toolkit in R
 Version: 0.0.1
 Authors@R: c(person(c("Jeffrey", "O"), "Hanson", email='jeffrey.hanson@uqconnect.edu.au', role = c("aut", "cre")),
-	person(c("Jonathon", "R"), "Rhodes", role = c("aut")),
-	person(c("Hugh", "P"), "Possingham", role = c("aut")),
-	person(c("Richard", "A"), "Fuller", role = c("aut")))
+    person(c("Jonathon", "R"), "Rhodes", role = c("aut")),
+    person(c("Hugh", "P"), "Possingham", role = c("aut")),
+    person(c("Richard", "A"), "Fuller", role = c("aut")))
 Description: Biodiversity is in crisis. The overarching aim of conservation 
     is to preserve biodiversity patterns and processes. To this end, protected 
     areas are established to buffer species and preserve biodiversity processes. 
