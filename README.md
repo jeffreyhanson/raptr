@@ -25,7 +25,13 @@ brew install gdal
 Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos'))"
 ```
 
-To install the development version, use the following R code:
+To install the latest official version from CRAN, use the following R code:
+
+```
+install.packages('raptr')
+```
+
+To install the development version, use this R code:
 
 ```
 if (!require('devtools'))
