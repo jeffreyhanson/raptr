@@ -9,7 +9,31 @@ Comments for submission to CRAN
 
 ## R CMD check results
 
-0 errors | 0 warnings | 4 notes
+3 errors | 0 warnings | 4 notes
+
+### Errors
+
+This package fails to install on several environments (r-patched-solaris-sparc, r-patched-solaris-x86, r-release-osx-x86_64-mavericks) because it has dependencies that cannot be installed on these environments (RandomFields, gdalUtils). These errors are documented [here](https://cran.r-project.org/web/checks/check_results_raptr.html).
+
+* Result: ERROR 
+    Package required but not available: 'RandomFields'
+    
+    Packages suggested but not available for checking: 'gurobi' 'rgurobi'
+    
+    See section 'The DESCRIPTION file' in the 'Writing R Extensions'
+    manual. 
+Flavors: r-patched-solaris-sparc, r-patched-solaris-x86
+
+* Result: ERROR 
+    Package required but not available: 'gdalUtils'
+    
+    Packages suggested but not available for checking: 'gurobi' 'rgurobi'
+    
+    See section 'The DESCRIPTION file' in the 'Writing R Extensions'
+    manual. 
+Flavor: r-release-osx-x86_64-mavericks
+
+### Notes
 
 * checking DESCRIPION meta-information ... NOTE
   Author field differs from that derived from Authors@R
@@ -18,7 +42,7 @@ Comments for submission to CRAN
   
   _I accidentally misspelled "Jonathan" as "Jonathon" in the initial CRAN submission. I have corrected it in the new version._
 
-The remaining three notes were present in the initial CRAN submission. I have included these notes and my comments from the initial submission below.
+The remaining notes were present in the initial CRAN submission. I have included these notes and my comments from the initial submission below.
 
 * Possibly mis-spelled words in DESCRIPTION:
     prioritizations (14:67, 16:29)
