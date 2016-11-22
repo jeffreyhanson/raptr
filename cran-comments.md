@@ -57,7 +57,7 @@ This package does not have any "Reverse depends", "Reverse imports", "Reverse su
 
 ------------
 
-This version has a reduced installation time and fixes typos in the documentation. Additionally, this version corrects a typo in one of the author's names.
+This version has a reduced installation time and fixes several typos in the documentation. Additionally, this version corrects a typo in one of the author's names.
 
 Thanks!
 
