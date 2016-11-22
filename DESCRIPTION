@@ -94,8 +94,4 @@ Collate:
 RoxygenNote: 5.0.1
 NeedsCompilation: yes
 Packaged: 2016-10-12 05:54:05 UTC; jeff
-Author: Jeffrey O Hanson [aut, cre],
-    Jonathon R Rhodes [aut],
-    Hugh P Possingham [aut],
-    Richard A Fuller [aut]
 Maintainer: Jeffrey O Hanson <jeffrey.hanson@uqconnect.edu.au>
