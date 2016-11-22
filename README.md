@@ -8,7 +8,7 @@ raptr
 
 #### Biodiversity is in crisis. The overarching aim of conservation is to preserve biodiversity patterns and processes. To this end, protected areas are established to buffer species and preserve biodiversity processes. But resources are limited and so protected areas must be cost-effective. This package contains tools to generate plans for protected areas (prioritizations), using spatially explicit targets for biodiversity patterns and processes. To obtain solutions in a feasible amount  of time, this package uses the commercial 'Gurobi' software package (obtained from <http://www.gurobi.com/>). Additionally, the 'rgurobi' package can also be installed to provide extra functionality (obtained from <http://github.com/jeffreyhanson/rgurobi>).
 
-This package depends on several packages which can be dificult to install under Linux and Mac operating systems.
+This package depends on several packages which can be difficult to install under Linux and Mac operating systems.
 
 Linux users can install them typing the following code into the terminal:
 ```
@@ -31,7 +31,7 @@ To install the latest official version from CRAN, use the following R code:
 install.packages('raptr')
 ```
 
-To install the development version, use this R code:
+To install the [development version from GitHub](https://github.com/jeffreyhanson/raptr), use this R code:
 
 ```
 if (!require('devtools'))
@@ -50,4 +50,4 @@ vignette('raptr', package='raptr')
 
 **If this R package helped you, please cite it.**
 
-Hanson J.O., Rhodes J. R., Fuller R. A. (2015). raptr: Representative and Adequate Prioritisation Toolkit in R. Version 0.0.1.
+Hanson J. O., Rhodes J. R., Possingham H. P, and Fuller R. A. (2016). raptr: Representative and Adequate Prioritization Toolkit in R. R package. R package version 0.0.2. https://github.com/jeffreyhanson/raptr.

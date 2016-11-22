@@ -74,7 +74,7 @@
     <h1 id="raptr">raptr</h1>
 <p><a href="https://travis-ci.org/jeffreyhanson/raptr"><img src="https://img.shields.io/travis/jeffreyhanson/raptr/master.svg?label=Mac%20OSX%20%26%20Linux" alt="Travis Build Status" /></a> <a href="https://ci.appveyor.com/project/jeffreyhanson/raptr"><img src="https://img.shields.io/appveyor/ci/jeffreyhanson/raptr/master.svg?label=Windows" alt="AppVeyor Build Status" /></a> <a href="https://codecov.io/github/jeffreyhanson/raptr?branch=master"><img src="https://codecov.io/github/jeffreyhanson/raptr/coverage.svg?branch=master" alt="Coverage Status" /></a> <a href="https://CRAN.R-project.org/package=raptr"><img src="http://www.r-pkg.org/badges/version/raptr" alt="CRAN_Status_Badge" /></a></p>
 <h4 id="biodiversity-is-in-crisis.-the-overarching-aim-of-conservation-is-to-preserve-biodiversity-patterns-and-processes.-to-this-end-protected-areas-are-established-to-buffer-species-and-preserve-biodiversity-processes.-but-resources-are-limited-and-so-protected-areas-must-be-cost-effective.-this-package-contains-tools-to-generate-plans-for-protected-areas-prioritizations-using-spatially-explicit-targets-for-biodiversity-patterns-and-processes.-to-obtain-solutions-in-a-feasible-amount-of-time-this-package-uses-the-commercial-gurobi-software-package-obtained-from-httpwww.gurobi.com.-additionally-the-rgurobi-package-can-also-be-installed-to-provide-extra-functionality-obtained-from-httpgithub.comjeffreyhansonrgurobi.">Biodiversity is in crisis. The overarching aim of conservation is to preserve biodiversity patterns and processes. To this end, protected areas are established to buffer species and preserve biodiversity processes. But resources are limited and so protected areas must be cost-effective. This package contains tools to generate plans for protected areas (prioritizations), using spatially explicit targets for biodiversity patterns and processes. To obtain solutions in a feasible amount of time, this package uses the commercial ‘Gurobi’ software package (obtained from <a href="http://www.gurobi.com/" class="uri">http://www.gurobi.com/</a>). Additionally, the ‘rgurobi’ package can also be installed to provide extra functionality (obtained from <a href="http://github.com/jeffreyhanson/rgurobi" class="uri">http://github.com/jeffreyhanson/rgurobi</a>).</h4>
-<p>This package depends on several packages which can be dificult to install under Linux and Mac operating systems.</p>
+<p>This package depends on several packages which can be difficult to install under Linux and Mac operating systems.</p>
 <p>Linux users can install them typing the following code into the terminal:</p>
 <pre><code>sudo apt-get update
 sudo apt-get install libgdal-dev
@@ -84,7 +84,9 @@ sudo apt-get build-dep r-cran-rgl</code></pre>
 <pre><code>brew install Caskroom/cask/xquartz
 brew install gdal
 Rscript -e &quot;setRepositories(ind=1:2);install.packages(c(&#39;rgdal&#39;,&#39;rgeos&#39;))&quot;</code></pre>
-<p>To install the development version, use the following R code:</p>
+<p>To install the latest official version from CRAN, use the following R code:</p>
+<pre><code>install.packages(&#39;raptr&#39;)</code></pre>
+<p>To install the <a href="https://github.com/jeffreyhanson/raptr">development version from GitHub</a>, use this R code:</p>
 <pre><code>if (!require(&#39;devtools&#39;))
     install.packages(&#39;devtools&#39;, repo=&#39;http://cran.rstudio.com&#39;, dep=TRUE)
 devtools:::install_github(&#39;jeffreyhanson/raptr&#39;)</code></pre>
@@ -93,7 +95,7 @@ devtools:::install_github(&#39;jeffreyhanson/raptr&#39;)</code></pre>
 <pre><code># open vignette in web browser
 vignette(&#39;raptr&#39;, package=&#39;raptr&#39;)</code></pre>
 <p><strong>If this R package helped you, please cite it.</strong></p>
-<p>Hanson J.O., Rhodes J. R., Fuller R. A. (2015). raptr: Representative and Adequate Prioritisation Toolkit in R. Version 0.0.1.</p>
+<p>Hanson J. O., Rhodes J. R., Possingham H. P, and Fuller R. A. (2016). raptr: Representative and Adequate Prioritization Toolkit in R. R package. R package version 0.0.2. <a href="https://github.com/jeffreyhanson/raptr" class="uri">https://github.com/jeffreyhanson/raptr</a>.</p>
   </div>
 </div>
 

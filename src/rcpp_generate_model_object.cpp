@@ -15,7 +15,6 @@ using namespace Rcpp;
 #include <iostream>
 #include <RcppEigen.h>
 #include "functions.h"
-#include "distance_functions.h"
 #include <boost/functional/hash.hpp>
 
 // [[Rcpp::export]]
