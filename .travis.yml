@@ -1,7 +1,7 @@
 language: r
-sudo: required
-warnings_are_errors: true
 dist: trusty
+cache:
+  packages: yes
 
 r:
 #  - oldrel
@@ -17,6 +17,8 @@ env:
     - _R_CHECK_FORCE_SUGGESTS_=FALSE
     - RGL_USE_NULL=TRUE
   
+warnings_are_errors: true
+
 r_check_args: --as-cran --use-valgrind
 
 apt_packages:
