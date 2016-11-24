@@ -43,9 +43,6 @@ calcSpeciesAverageInPus.SpatialPolygonsDataFrame<-function(x,y,ids=seq_len(nlaye
 			warning('GDAL is not installed on this computer, using raster::rasterize for processing')
 		x<-rasterize(x, y[[1]], method="ngb")
 	}
-	
-	o <<- x
-	
 	# main processing
 	return(zonalMean(x, y, ids, ncores))
 }
