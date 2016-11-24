@@ -4,19 +4,20 @@ warnings_are_errors: true
 dist: trusty
 
 r:
-  - oldrel
+#  - oldrel
   - release
-  - devel
+#  - devel
 
 os:
   - linux
-  - osx
+#  - osx
 
 env:
   global:
     - _R_CHECK_FORCE_SUGGESTS_=FALSE
+    - RGL_USE_NULL=TRUE
   
-r_check_args: --as-cran --use-gct --use-valgrind --timings
+r_check_args: --as-cran --use-valgrind
 
 apt_packages:
   - libgeos-dev
@@ -27,15 +28,16 @@ apt_packages:
   - r-cran-rgdal
   - r-cran-rgl
   - r-cran-rgeos
+  - valgrind
 
 brew_packages:
   - Caskroom/cask/xquartz
   - ghostscript
+  - valgrind
   
 before_install: 
   - echo "TRAVIS_OS_NAME = $TRAVIS_OS_NAME"
   - echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then export RGL_USE_NULL=TRUE; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos','RandomFieldsUtils','RandomFields','mvtnorm', 'gdalUtils'))"; fi;
 
 r_packages:
