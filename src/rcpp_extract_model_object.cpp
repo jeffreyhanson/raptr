@@ -25,7 +25,6 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
  std::size_t n_pu_INT;
  std::size_t n_edges_INT;
  std::size_t n_species_INT;
- double zero_adjust=1.e-05;
  Rcpp::List cache_LST=model["cache"];
 
  // return variables
@@ -40,12 +39,6 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
  /// extract parameters from Rcpp::S4 opts
  if (verbose) Rcout << "\tRapOpts" << std::endl;
  double blmDBL=Rcpp::as<double>(opts.slot("BLM"));
- double failure_multiplier_DBL=0.0;
- std::size_t maxrlevel_INT=0;
- if (!unreliable_formulation) {
-   failure_multiplier_DBL=Rcpp::as<double>(opts.slot("failure.multiplier"));
-   maxrlevel_INT=Rcpp::as<double>(opts.slot("max.r.level")); 
- }
  
  /// extract data from Rcpp::S4 data
  // species data
@@ -159,7 +152,6 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
 	std::vector<Rcpp::NumericVector> species_space_pu_probs_RDV = *Rcpp::as<Rcpp::XPtr<std::vector<Rcpp::NumericVector>>>(cache_LST["species_space_pu_probs_RDV"]);
 	std::vector<Rcpp::IntegerVector> species_space_puids_RIV = *Rcpp::as<Rcpp::XPtr<std::vector<Rcpp::IntegerVector>>>(cache_LST["species_space_puids_RIV"]);
 	std::vector<Rcpp::IntegerVector> species_space_pupos_RIV = *Rcpp::as<Rcpp::XPtr<std::vector<Rcpp::IntegerVector>>>(cache_LST["species_space_pupos_RIV"]);
-	std::size_t n_selected_INT=std::accumulate(selections_MTX.begin(), selections_MTX.end(), 0);
  
 	// subset variables to those included in the solution
 	std::vector<std::vector<std::size_t>> selected_species_space_puids_INT(n_species_attributespace_INT);

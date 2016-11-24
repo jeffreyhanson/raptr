@@ -2,10 +2,18 @@ Comments for submission to CRAN
 ===============================
 
 ## Test environments
-* [ubuntu 12.04, R 3.3.2 (travis-ci)](https://travis-ci.org/jeffreyhanson/raptr/builds)
-* [Mac OSX 10.9.5, R 3.3.2 (travis-ci](https://travis-ci.org/jeffreyhanson/raptr/builds)
-* [Windows Server 2012 R2 (x64), R 3.3.2 (appveyor)](https://ci.appveyor.com/project/jeffreyhanson/raptr)
-* Windows Server 2008 (x64), R 3.4.0 (win-builder)
+* [Ubuntu 14.04 (travis-ci)](https://travis-ci.org/jeffreyhanson/raptr/builds)
+  + R 3.2.4
+  + R 3.3.2
+  + R 3.4.0
+* [Mac OSX 10.9.5 (travis-ci](https://travis-ci.org/jeffreyhanson/raptr/builds)
+  + R 3.2.4
+  + R 3.3.2
+  + R 3.4.0
+* [Windows Server 2012 R2 (x64) (appveyor)](https://ci.appveyor.com/project/jeffreyhanson/raptr)
+  + R 3.3.2 
+* [Windows Server 2008 (x64) (win-builder)](https://win-builder.r-project.org/)
+  + R 3.4.0
 
 ## R CMD check results
 
@@ -81,7 +89,9 @@ This package does not have any "Reverse depends", "Reverse imports", "Reverse su
 
 ------------
 
-This version has a reduced installation time and fixes several typos in the documentation. Additionally, this version corrects a typo in one of the author's names.
+This version reduces memory usage through the use of external pointers. Additionally, it has a reduced installation time, fixes several typos in the documentation, and corrects a typo in one of the author's names. 
+
+This submission has addressed the memory leaks and unit test failures encountered in the previous submission.
 
 Thanks!
 

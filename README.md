@@ -50,4 +50,4 @@ vignette('raptr', package='raptr')
 
 **If this R package helped you, please cite it.**
 
-Hanson J. O., Rhodes J. R., Possingham H. P, and Fuller R. A. (2016). raptr: Representative and Adequate Prioritization Toolkit in R. R package. R package version 0.0.2. https://github.com/jeffreyhanson/raptr.
+Hanson J. O., Rhodes J. R., Possingham H. P, and Fuller R. A. (2016). raptr: Representative and Adequate Prioritization Toolkit in R. R package. R package version 0.0.3. https://github.com/jeffreyhanson/raptr.

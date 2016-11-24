@@ -23,7 +23,6 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	if (verbose) Rcpp::Rcout << "Initialization" << std::endl;
 	// create variables
 	std::size_t counter=0;
-	std::size_t n_attribute_spaces_INT;
 	std::size_t n_pu_INT;
 	std::size_t n_edges_INT;
 	std::size_t n_edges2_INT=0;
@@ -102,7 +101,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	/// attribute.space
 	if (verbose) Rcpp::Rcout << "\tattribute space data" << std::endl;
 	Rcpp::List attributespaces_LST=Rcpp::as<Rcpp::List>(data.slot("attribute.spaces"));
-	n_attribute_spaces_INT=attributespaces_LST.size();
+	std::size_t n_attribute_spaces_INT=attributespaces_LST.size();
 	
 	/// extract objects from S4 AttributeSpaces objects
 	if (verbose) Rcpp::Rcout << "\tAttributeSpaces data" << std::endl;
@@ -125,7 +124,6 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	species_space_npu_INT.reserve(preallocate_INT);
 	species_attributespace_species_INT.reserve(preallocate_INT);
 	species_attributespace_space_INT.reserve(preallocate_INT);
-	
 	{
 		// temporary variables
 		std::size_t curr_spp;
@@ -138,6 +136,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 		Rcpp::IntegerVector currIds_INT;
 		Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> tmp1_MTX;
 		Rcpp::NumericMatrix tmp2_MTX;
+		double *pcv;
 		
 		for (std::size_t i=0; i<n_attribute_spaces_INT; ++i) {
 			if (verbose) Rcpp::Rcout << "\t\tstarting AttributeSpaces " << i << std::endl;
@@ -156,7 +155,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 				// planning unit points
 				if (verbose) Rcpp::Rcout << "\t\t\tpu points coordinates" << std::endl;
 				tmp2_MTX=Rcpp::as<Rcpp::NumericMatrix>(tmp_pu_S4.slot("coords"));
-				double *pcv = &tmp2_MTX(0,0);
+				pcv = &tmp2_MTX(0,0);
 				Eigen::Map<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor>> tmp1_MTX(pcv, tmp2_MTX.nrow(), tmp2_MTX.ncol());
 				species_space_pucoords_MTX.push_back(tmp1_MTX);
 
@@ -170,8 +169,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 				// demand points
 				if (verbose) Rcpp::Rcout << "\t\t\tdemand point coordinates" << std::endl;
 				tmp2_MTX=Rcpp::as<Rcpp::NumericMatrix>(tmp_dp_S4.slot("coords"));
-				double *pcv2 = &tmp2_MTX(0,0);
-				Eigen::Map<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor>> tmp3_MTX(pcv2, tmp2_MTX.nrow(), tmp2_MTX.ncol());
+				pcv = &tmp2_MTX(0,0);
+				Eigen::Map<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor>> tmp3_MTX(pcv, tmp2_MTX.nrow(), tmp2_MTX.ncol());
 				species_space_dpcoords_MTX.push_back(tmp3_MTX);
 				
 				if (verbose) Rcpp::Rcout << "\t\t\tdemand point weights" << std::endl;
@@ -180,10 +179,11 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 				
 				if (verbose) Rcpp::Rcout << "\t\t\tnumber of demand points" << std::endl;
 				species_space_ndp_INT.push_back(tmpvec2.size());
+				
 			}
 		}
 	}
-
+	
 	species_space_dpcoords_MTX.shrink_to_fit();
 	species_space_pucoords_MTX.shrink_to_fit();
 	species_space_dpweights_VXD.shrink_to_fit();
@@ -193,7 +193,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	species_attributespace_species_INT.shrink_to_fit();
 	species_attributespace_space_INT.shrink_to_fit();
 	std::size_t n_species_attributespace_INT=species_attributespace_species_INT.size();
-		
+	
 	// target data
 	if (verbose) Rcpp::Rcout << "\ttarget data" << std::endl;
 	Rcpp::DataFrame target_DF=Rcpp::as<Rcpp::DataFrame>(data.slot("targets"));
@@ -208,7 +208,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 		} else {
 			if (!std::isnan(target_DF_value[i])) {
 				for (std::size_t a=0, ii=species_attributespace_species_INT[a], jj=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, ii=species_attributespace_species_INT[a], jj=species_attributespace_space_INT[a]) {
-					if (ii==(target_DF_species[i]-1) & jj==(target_DF_target[i]-1)) {
+					if ((ii==(target_DF_species[i]-1)) & (jj==(target_DF_target[i]-1))) {
 						species_space_proptargets_DBL[a]=target_DF_value[i];
 						break;
 					}
@@ -330,20 +330,6 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	for (std::size_t a=0; a<n_species_attributespace_INT; ++a)
 		species_space_rawtargets_DBL[a] = (species_space_proptargets_DBL[a] - 1.0) * species_space_tss_DBL[a] * -1.0;
 	
-	// cache integer string conversions
-	if (verbose) Rcout << "\tcaching integer/string conversions" << std::endl;
-	std::size_t maxINT;
-	maxINT=std::max(
-		n_pu_INT,
-		std::max(
-			n_species_INT,
-			std::max(
-				n_species_attributespace_INT,
-				static_cast<std::size_t>(std::accumulate(species_space_ndp_INT.begin(), species_space_ndp_INT.end(), 0))
-			)
-		)
-	) + 2;
-
 	/// create unordered map with variable names
 	if (verbose) Rcout << "\tcreating undordered_maps with variable names" << std::endl;
 	std::unordered_map<std::size_t, std::size_t> pu_MAP;
@@ -371,7 +357,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	
 	// space vars
 	if (unreliable_formulation) {
-		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a) {
+			i=species_attributespace_species_INT[a]; j=species_attributespace_space_INT[a];
 			if (!std::isnan(species_space_proptargets_DBL[a])) {
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<species_space_npu_INT[a]; ++l) {
@@ -384,7 +371,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 			}
 		}
 	} else {
-		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a) {
+			i=species_attributespace_species_INT[a]; j=species_attributespace_space_INT[a];
 			if (!std::isnan(species_space_proptargets_DBL[a])) {
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<(species_space_npu_INT[a]+1); ++l) {
@@ -479,7 +467,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	Rcpp::checkUserInterrupt();
 	if (verbose) Rcpp::Rcout << "\t\tspace constraints" << std::endl;
 	if (unreliable_formulation) {
-		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a) {
+			i=species_attributespace_species_INT[a]; j=species_attributespace_space_INT[a];
 			if (!std::isnan(species_space_proptargets_DBL[a])) {
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<species_space_npu_INT[a]; ++l) {
@@ -495,7 +484,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 			}
 		}
 	} else {
-		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a) {
+			i=species_attributespace_species_INT[a]; j=species_attributespace_space_INT[a];
 			if (!std::isnan(species_space_proptargets_DBL[a])) {
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<(species_space_npu_INT[a]+1); ++l) {
@@ -588,7 +578,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 		// 1b
 		Rcpp::checkUserInterrupt();
 		if (verbose) Rcpp::Rcout << "\t\teqn. 1b constraints" << std::endl;
-		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a) {
+			i=species_attributespace_species_INT[a]; j=species_attributespace_space_INT[a];
 			if (!std::isnan(species_space_proptargets_DBL[a])) {
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<species_space_npu_INT[a]; ++l) {
@@ -607,7 +598,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 		// 1c
 		Rcpp::checkUserInterrupt();
 		if (verbose) Rcpp::Rcout << "\t\teqn. 1c constraints" << std::endl;
-		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a) {
+			i=species_attributespace_species_INT[a]; j=species_attributespace_space_INT[a];
 			if (!std::isnan(species_space_proptargets_DBL[a])) {
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<species_space_npu_INT[a]; ++l) {
@@ -629,7 +621,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 		}
 	} else {
 		if (verbose) Rcpp::Rcout << "\t\teqn. 1b constraints (rows " << counter << ", ";
-		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a) {
+			i=species_attributespace_species_INT[a]; j=species_attributespace_space_INT[a];
 			if (!std::isnan(species_space_proptargets_DBL[a])) {
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t r=0; r<(species_space_rlevel_INT[a]+1); ++r) {
@@ -670,7 +663,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 		
 		// 1b extra - force each pu to be assigned to only 1 r-level
 		if (verbose) Rcpp::Rcout << "\t\teqn. 1b (extra) constraints (rows " << counter << ", ";
-		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a) {
+			i=species_attributespace_species_INT[a]; j=species_attributespace_space_INT[a];
 			if (!std::isnan(species_space_proptargets_DBL[a])) {
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<(species_space_npu_INT[a]+1); ++l) {
@@ -692,7 +686,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 		// 1c
 		Rcpp::checkUserInterrupt();
 		if (verbose) Rcpp::Rcout << "\t\teqn. 1c constraints (rows " << counter << ", ";
-		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a) {
+			i=species_attributespace_species_INT[a]; j=species_attributespace_space_INT[a];
 			if (!std::isnan(species_space_proptargets_DBL[a])) {
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<species_space_npu_INT[a]; ++l) {
@@ -717,7 +712,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 		// 1d
 		Rcpp::checkUserInterrupt();
 		if (verbose) Rcpp::Rcout << "\t\teqn. 1d constraints (rows " << counter << ", ";
-		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a) {
+			i=species_attributespace_species_INT[a]; j=species_attributespace_space_INT[a];
 			if (!std::isnan(species_space_proptargets_DBL[a])) {
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 						
@@ -748,7 +744,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 		// 1e
 		Rcpp::checkUserInterrupt();
 		if (verbose) Rcpp::Rcout << "\t\teqn. 1e constraints (rows " << counter << ", ";
-		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a) {
+			i=species_attributespace_species_INT[a]; j=species_attributespace_space_INT[a];
 			if (!std::isnan(species_space_proptargets_DBL[a])) {
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<species_space_npu_INT[a]; ++l) {
@@ -780,7 +777,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 		// 1f
 		Rcpp::checkUserInterrupt();
 		if (verbose) Rcpp::Rcout << "\t\teqn. 1f constraints (rows " << counter << ", ";
-		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a) {
+			i=species_attributespace_species_INT[a]; j=species_attributespace_space_INT[a];
 			if (!std::isnan(species_space_proptargets_DBL[a])) {
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<(species_space_npu_INT[a]+1); ++l) {
@@ -810,7 +808,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 		/// W variables
 		Rcpp::checkUserInterrupt();
 		if (verbose) Rcpp::Rcout << "\t\teqn 2. constraints (rows " << counter << ", ";
-		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a) {
+			i=species_attributespace_species_INT[a]; j=species_attributespace_space_INT[a];
 			if (!std::isnan(species_space_proptargets_DBL[a])) {
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<(species_space_npu_INT[a]+1); ++l) {
@@ -897,7 +896,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   Rcpp::checkUserInterrupt();
 	if (unreliable_formulation) {
 		// 1g
-		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a) {
+			i=species_attributespace_species_INT[a]; j=species_attributespace_space_INT[a];
 			if (!std::isnan(species_space_proptargets_DBL[a])) {
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<species_space_npu_INT[a]; ++l) {
@@ -910,7 +910,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 	} else {
 		// 1g
 		Rcpp::checkUserInterrupt();
-		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a) {
+			i=species_attributespace_species_INT[a]; j=species_attributespace_space_INT[a];
 			if (!std::isnan(species_space_proptargets_DBL[a])) {
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<(species_space_npu_INT[a]+1); ++l) {
@@ -926,7 +927,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 		///// semi-continuous
 		Rcpp::checkUserInterrupt();
 		if (verbose) Rcpp::Rcout << "\t\tsemi-continuous vars" << std::endl;
-		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]) {
+		for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a) {
+			i=species_attributespace_species_INT[a]; j=species_attributespace_space_INT[a];
 			if (!std::isnan(species_space_proptargets_DBL[a])) {
 				for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
 					for (std::size_t l=0; l<(species_space_npu_INT[a]+1); ++l) {
