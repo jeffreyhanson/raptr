@@ -28,7 +28,7 @@ vignette:
 	touch inst/doc/raptr.html
 
 check:
-	R -e "devtools::check(args='--use-valgrind')"
+	R -d "valgrind --tool=memcheck" -e "devtools::check()"
 	R -e "devtools::build_win()"
 
 build:
