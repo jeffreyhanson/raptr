@@ -3,13 +3,13 @@ dist: trusty
 sudo: true
   
 r:
-#  - oldrel
+  - oldrel
   - release
-#  - devel
+  - devel
 
 os:
   - linux
-#  - osx
+  - osx
 
 env:
   global:
@@ -32,12 +32,10 @@ apt_packages:
   - r-cran-rgdal
   - r-cran-rgl
   - r-cran-rgeos
-  - valgrind
 
 brew_packages:
   - Caskroom/cask/xquartz
   - ghostscript
-  - valgrind
 
 r_packages:
   - covr
@@ -47,11 +45,6 @@ r_packages:
 before_install: 
   - echo "TRAVIS_OS_NAME = $TRAVIS_OS_NAME"
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos','RandomFieldsUtils','RandomFields','mvtnorm', 'gdalUtils'))"; fi;
-
-script:
-  - |
-    R CMD build .
-    travis_wait 40 R CMD check raptr*.tar.gz --as-cran --use-valgrind
   
 after_success:
   - Rscript -e 'covr::codecov()'
