@@ -43,7 +43,8 @@ r_packages:
 
 before_install: 
   - echo "TRAVIS_OS_NAME = $TRAVIS_OS_NAME"
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos','RandomFieldsUtils','RandomFields','mvtnorm', 'gdalUtils', 'adehabitatHR', 'BH', 'doParallel', 'ggplot2', 'hypervolume', 'ks', 'PBSmapping', 'plyr', 'RColorBrewer', 'RcppEigen', 'RgoogleMaps', 'scales', 'shape'))"; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "install.packages(c('adehabitatHR', 'BH', 'doParallel', 'ggplot2', 'hypervolume', 'ks', 'PBSmapping', 'plyr', 'RColorBrewer', 'RcppEigen', 'RgoogleMaps', 'scales', 'shape', 'shiny' 'curl', 'httr'))"; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos','RandomFieldsUtils','RandomFields','mvtnorm', 'gdalUtils'))"; fi;
   
 after_success:
   - Rscript -e 'covr::codecov()'
