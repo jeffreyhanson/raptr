@@ -189,23 +189,26 @@ test_that('spacePlot.3d', {
 })
 
 test_that("ZonalMean functions", {
-	purast<-disaggregate(raster(matrix(1:9, ncol=3)),fact=100)
+	purast<-disaggregate(raster(matrix(2:10, ncol=3)),fact=100)
 	species<-purast*abs(rnorm(ncell(purast)))
 	z1<-zonal(species, purast, fun='mean')
-	z2<-raptr:::zonalMean(purast, species[[1]], ncores=2)
-	z3<-raptr:::zonalMean(purast, species[[1]])
-	expect_equal(round(z1[,2],5), round(z2[[3]],5), round(z3[[3]],5))
+	z2<-raptr:::zonalMean(purast, species[[1]])
+	z3<-raptr:::zonalMean(purast, species[[1]], ncores=2)
+	expect_equal(round(z1[,2],10), round(z2[[3]],10))
+	expect_equal(round(z1[,2],10), round(z3[[3]],10))
 })
 
 test_that("calcSpeciesAverageInPus functions", {
-	template_raw<-raster(matrix(1:9, ncol=3), xmn=0, xmx=1, ymn=0, ymx=1, crs=CRS('+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs '))
+	template_raw<-raster(matrix(2:10, ncol=3), xmn=0, xmx=1, ymn=0, ymx=1, crs=CRS('+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs '))
 	template<-disaggregate(template_raw,fact=5)
 	polys<-rasterToPolygons(template_raw, n=4)
+	polys <- polys[order(polys@data$layer),]
 	species<-setValues(template, round(runif(ncell(template))))
 	p1<-zonal(species, template, "mean")
-	p2<-calcSpeciesAverageInPus(polys, species)
-	p3<-calcSpeciesAverageInPus(polys, species, ncores=2)
-	expect_equal(round(p1[,2],5),round(p2[[3]],5),round(p3[[3]],5))
+	p2<-calcSpeciesAverageInPus(polys, species, field='layer')
+	p3<-calcSpeciesAverageInPus(polys, species, ncores=2, field='layer')
+  expect_equal(round(p1[,2],10),round(p2[[3]],10))
+	expect_equal(round(p1[,2],10),round(p3[[3]],10))
 })
 
 test_that("PolySet conversion function", {

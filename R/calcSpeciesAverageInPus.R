@@ -6,6 +6,7 @@ NULL
 #' @export
 calcSpeciesAverageInPus.SpatialPolygons<-function(x,y,ids=seq_len(nlayers(y)), ncores=1, gdal=FALSE, ...) {
 	# check for invalid inputs
+  stopifnot(inherits(x, "SpatialPolygons"))
 	stopifnot(inherits(y, "Raster"))
 	stopifnot(nlayers(y)!=length(ids))
 	return(
@@ -25,6 +26,7 @@ calcSpeciesAverageInPus.SpatialPolygons<-function(x,y,ids=seq_len(nlayers(y)), n
 #' @export
 calcSpeciesAverageInPus.SpatialPolygonsDataFrame<-function(x,y,ids=seq_len(nlayers(y)), ncores=1, gdal=FALSE, field=NULL, ...) {
 	# check for invalid inputs
+	stopifnot(inherits(x, "SpatialPolygonsDataFrame"))
 	stopifnot(inherits(y, "Raster"))
 	stopifnot(nlayers(y)==length(ids))
 	# prepare attribute table
@@ -41,6 +43,9 @@ calcSpeciesAverageInPus.SpatialPolygonsDataFrame<-function(x,y,ids=seq_len(nlaye
 			warning('GDAL is not installed on this computer, using raster::rasterize for processing')
 		x<-rasterize(x, y[[1]], method="ngb")
 	}
+	
+	o <<- x
+	
 	# main processing
 	return(zonalMean(x, y, ids, ncores))
 }
