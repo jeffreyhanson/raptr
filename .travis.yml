@@ -13,14 +13,19 @@ os:
 
 env:
   global:
+    - R_LIBS="http://cran.rstudio.com"
     - _R_CHECK_FORCE_SUGGESTS_=FALSE
     - RGL_USE_NULL=TRUE
   
 warnings_are_errors: true
 
-r_check_args: --as-cran --use-valgrind --debugger-args=="--leak-check=full"
+r_check_args: --as-cran --use-valgrind
 
 apt_packages:
+  - gdal-bin
+  - libgdal-dev
+  - libgdal1-dev
+  - libproj-dev
   - libgeos-dev
   - libgeos-c1
   - curl
@@ -43,15 +48,16 @@ r_packages:
 
 before_install: 
   - echo "TRAVIS_OS_NAME = $TRAVIS_OS_NAME"
-  - echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos','RandomFieldsUtils','RandomFields','mvtnorm', 'gdalUtils'))"; fi;
 
-script: travis_wait ./travis-tool.sh run_tests
-
+script:
+  - |
+    R CMD build .
+    travis_wait 40 R CMD check raptr*.tar.gz
+  
 after_success:
   - Rscript -e 'covr::codecov()'
  
-
 notifications:
   email:
     on_success: change
