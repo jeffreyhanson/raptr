@@ -1,8 +1,6 @@
 language: r
 dist: trusty
 sudo: true
-cache:
-  packages: yes
   
 r:
 #  - oldrel
@@ -20,7 +18,7 @@ env:
   
 warnings_are_errors: true
 
-r_check_args: --as-cran --use-valgrind
+r_check_args: --as-cran --use-valgrind --debugger-args=="--leak-check=full"
 
 apt_packages:
   - libgeos-dev
@@ -48,7 +46,7 @@ before_install:
   - echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos','RandomFieldsUtils','RandomFields','mvtnorm', 'gdalUtils'))"; fi;
 
-script: travis_wait ./run.sh run_tests
+script: travis_wait ./travis-tool.sh run_tests
 
 after_success:
   - Rscript -e 'covr::codecov()'
