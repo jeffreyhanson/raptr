@@ -19,8 +19,6 @@ env:
   
 warnings_are_errors: true
 
-r_check_args: --as-cran --use-valgrind
-
 apt_packages:
   - gdal-bin
   - libgdal-dev
@@ -53,7 +51,7 @@ before_install:
 script:
   - |
     R CMD build .
-    travis_wait 40 R CMD check raptr*.tar.gz
+    travis_wait 40 R CMD check raptr*.tar.gz --as-cran --use-valgrind
   
 after_success:
   - Rscript -e 'covr::codecov()'
