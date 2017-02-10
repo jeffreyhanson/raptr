@@ -10,17 +10,16 @@ using namespace Rcpp;
 #include <array>
 #include <string>
 #include <algorithm>
+#include <unordered_map>
 #include <iomanip>
 #include <iostream>
 #include <RcppEigen.h>
-#include <boost/functional/hash.hpp>
-#include <boost/unordered_map.hpp>
 #include "functions.h"
+#include <boost/functional/hash.hpp>
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation, Rcpp::S4 data, bool verbose) {
   //// Initialization
-  verbose = true;
   if (verbose) Rcpp::Rcout << "Initialization" << std::endl;
   // create variables
   std::size_t counter=0;
@@ -30,7 +29,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   std::size_t n_species_INT;
   bool boundary;
   double boundary_threshold=1.0e-10;
-  double zero_adjust=1e-10;
+  double zero_adjust=0.0;
 
   //// Preliminary processing
   if (verbose) Rcpp::Rcout << "Preliminary processing" << std::endl;
@@ -333,16 +332,14 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   
   /// create unordered map with variable names
   if (verbose) Rcout << "\tcreating undordered_maps with variable names" << std::endl;
-  boost::unordered_map<std::size_t, std::size_t> pu_MAP;
-  pu_MAP.reserve(n_pu_INT);
-  boost::unordered_map<std::pair<std::size_t,std::size_t>, std::size_t, boost::hash<std::pair<std::size_t,std::size_t>>> edge_MAP;
-  edge_MAP.reserve(n_edges2_INT);
+  std::unordered_map<std::size_t, std::size_t> pu_MAP;
+  std::unordered_map<std::pair<std::size_t,std::size_t>, std::size_t, boost::hash<std::pair<std::size_t,std::size_t>>> edge_MAP;
   std::array<std::size_t,4> curr_uARRAY;
   std::array<std::size_t,5> curr_rARRAY;
-  boost::unordered_map<std::array<std::size_t, 4>, std::size_t, boost::hash<std::array<std::size_t,4>>> uY_MAP;
-  boost::unordered_map<std::array<std::size_t, 5>, std::size_t, boost::hash<std::array<std::size_t,5>>> rY_MAP;
-  boost::unordered_map<std::array<std::size_t, 5>, std::size_t, boost::hash<std::array<std::size_t,5>>> rP_MAP;
-  boost::unordered_map<std::array<std::size_t, 5>, std::size_t, boost::hash<std::array<std::size_t,5>>> rW_MAP;
+  std::unordered_map<std::array<std::size_t, 4>, std::size_t, boost::hash<std::array<std::size_t,4>>> uY_MAP;
+  std::unordered_map<std::array<std::size_t, 5>, std::size_t, boost::hash<std::array<std::size_t,5>>> rY_MAP;
+  std::unordered_map<std::array<std::size_t, 5>, std::size_t, boost::hash<std::array<std::size_t,5>>> rP_MAP;
+  std::unordered_map<std::array<std::size_t, 5>, std::size_t, boost::hash<std::array<std::size_t,5>>> rW_MAP;
   
   // pu vars
   for (std::size_t i=0; i<n_pu_INT; ++i) {
@@ -358,21 +355,8 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
     }
   }
   
-  // calculate number of buckets to preallocate in map
-  std::size_t n_map_preallocate = 0;
-  if (!unreliable_formulation) {
-    for (std::size_t a=0; a<n_species_attributespace_INT; ++a) {
-      n_map_preallocate+=(species_space_ndp_INT[a] * species_space_npu_INT[a]);
-    }
-  } else {
-    for (std::size_t a=0; a<n_species_attributespace_INT; ++a) {
-      n_map_preallocate+=(species_space_ndp_INT[a] * (species_space_npu_INT[a]+1) * (species_space_rlevel_INT[a]+1));
-    }
-  }
-  
   // space vars
   if (unreliable_formulation) {
-    uY_MAP.reserve(n_map_preallocate);
     for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a) {
       i=species_attributespace_species_INT[a]; j=species_attributespace_space_INT[a];
       if (!std::isnan(species_space_proptargets_DBL[a])) {
@@ -387,9 +371,6 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
       }
     }
   } else {
-    rY_MAP.reserve(n_map_preallocate);
-    rP_MAP.reserve(n_map_preallocate);
-    rW_MAP.reserve(n_map_preallocate);
     for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a) {
       i=species_attributespace_species_INT[a]; j=species_attributespace_space_INT[a];
       if (!std::isnan(species_space_proptargets_DBL[a])) {
@@ -457,12 +438,10 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   counter=0;
 
   // preallocate variables storing model matrix
-  preallocate_INT=n_pu_INT * 
+  preallocate_INT=n_pu_INT * n_species_INT * n_attribute_spaces_INT * 
     static_cast<std::size_t>(std::accumulate(species_space_ndp_INT.cbegin(), species_space_ndp_INT.cend(), 0));
   if (!unreliable_formulation) {
     preallocate_INT*=maxrlevel_INT;
-  } else {
-    preallocate_INT*=3;
   }
   model_rows_INT.reserve(preallocate_INT);
   model_cols_INT.reserve(preallocate_INT);
