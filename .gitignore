@@ -14,3 +14,7 @@ gurobi.log
 .directory
 
 # vignette cache
+
+# logs
+check.log
+test.log

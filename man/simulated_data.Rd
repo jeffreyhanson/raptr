@@ -2,11 +2,13 @@
 % Please edit documentation in R/data.R
 \docType{data}
 \name{simulated_data}
+\alias{simulated_data}
+\alias{sim_ru}
 \alias{sim_rs}
 \alias{sim_ru}
-\alias{simulated_data}
+\alias{sim_rs}
 \title{Simulated dataset for a conservation planning exercise}
-\format{\code{SpatialPolyognsDataFrame}, \code{RasterStack}, \code{list} of \code{DemandPoint} objects.}
+\format{\code{\link[sp]{SpatialPolygonsDataFrame}}, \code{\link[raster]{RasterStack-class}}, \code{list} of \code{\link{DemandPoints}} objects.}
 \usage{
 sim_ru
 
@@ -26,8 +28,8 @@ The species were simulated to represent different simplified versions of species
 \details{
 The objects contained in this dataset are:
 \itemize{
-\item sim_ru: A \code{RapUnsolved} object with all the simulated data.
-\item sim_rs: A \code{RapSolved} object with 5 near-optimal solutions.
+\item sim_ru: A \code{\link{RapUnsolved}} object with all the simulated data.
+\item sim_rs: A \code{\link{RapSolved}} object with 5 near-optimal solutions.
 }
 }
 \examples{
@@ -43,4 +45,3 @@ plot(sim_rs)
 plot(sim_rs, 0)
 }
 \keyword{datasets}
-

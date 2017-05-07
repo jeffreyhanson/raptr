@@ -10,15 +10,15 @@ This class is used to store RAP input and output data in addition to input param
 \section{Slots}{
 
 \describe{
-\item{\code{opts}}{\code{RapReliableOpts} or \code{RapUnreliableOpts} object used to store input parameters.}
+\item{\code{opts}}{\code{\link{RapReliableOpts}} or \code{\link{RapUnreliableOpts}} object used to store input parameters.}
 
-\item{\code{solver}}{\code{GurobiOpts} or \code{ManualOpts} object used to store solver information/parameters.}
+\item{\code{solver}}{\code{\link{GurobiOpts}} or \code{\link{ManualOpts}} object used to store solver information/parameters.}
 
-\item{\code{data}}{\code{RapData} object used to store input data.}
+\item{\code{data}}{\code{\link{RapData}} object used to store input data.}
 
-\item{\code{results}}{\code{RapResults} object used to store results.}
+\item{\code{results}}{\code{\link{RapResults}} object used to store results.}
 }}
+
 \seealso{
 \code{\link{RapReliableOpts-class}}, \code{\link{RapUnreliableOpts-class}}, \code{\link{RapData-class}}, \code{\link{RapResults-class}}.
 }
-

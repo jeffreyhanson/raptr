@@ -26,4 +26,3 @@ options()$GurobiInstalled
 \seealso{
 \code{\link[base]{options}}.
 }
-

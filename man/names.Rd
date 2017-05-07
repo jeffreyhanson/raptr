@@ -2,10 +2,10 @@
 % Please edit documentation in R/generics.R, R/RapData.R, R/RapSolved.R
 \name{names}
 \alias{names}
-\alias{names.RapData}
-\alias{names.RapUnsolOrSol}
 \alias{names<-.RapData}
+\alias{names.RapData}
 \alias{names<-.RapUnsolOrSol}
+\alias{names.RapUnsolOrSol}
 \title{Names}
 \usage{
 \method{names}{RapData}(x) <- value
@@ -17,7 +17,7 @@
 \method{names}{RapUnsolOrSol}(x)
 }
 \arguments{
-\item{x}{\code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.}
+\item{x}{\code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.}
 
 \item{value}{new species names.}
 }
@@ -37,4 +37,3 @@ names(sim_rs)
 \seealso{
 \code{\link{RapData}}, \code{\link{RapUnsolved}}, \code{\link{RapSolved}}.
 }
-

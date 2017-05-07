@@ -3,52 +3,24 @@ Comments for submission to CRAN
 
 ## Test environments
 * [Ubuntu 14.04 (travis-ci)](https://travis-ci.org/jeffreyhanson/raptr/builds)
-  + R 3.3.2
+  + R 3.4.0
   + R devel
 * [Mac OSX 10.9.5 (travis-ci](https://travis-ci.org/jeffreyhanson/raptr/builds)
-  + R 3.3.2
+  + R 3.4.0
   + R devel
 * [Windows Server 2012 R2 (x64) (appveyor)](https://ci.appveyor.com/project/jeffreyhanson/raptr)
   + R 3.3.2 
 * [Windows Server 2008 (x64) (win-builder)](https://win-builder.r-project.org/)
-  + R 3.4.0
+  + R devel
 
 ## R CMD check results
 
-3 errors | 0 warnings | 4 notes
-
-### Errors
-
-This package fails to install on several environments (r-patched-solaris-sparc, r-patched-solaris-x86, r-release-osx-x86_64-mavericks) because it has dependencies that cannot be installed on these environments (RandomFields, gdalUtils). These errors are documented [here](https://cran.r-project.org/web/checks/check_results_raptr.html).
-
-* Result: ERROR 
-    Package required but not available: 'RandomFields'
-    
-    Packages suggested but not available for checking: 'gurobi' 'rgurobi'
-    
-    See section 'The DESCRIPTION file' in the 'Writing R Extensions'
-    manual. 
-Flavors: r-patched-solaris-sparc, r-patched-solaris-x86
-
-* Result: ERROR 
-    Package required but not available: 'gdalUtils'
-    
-    Packages suggested but not available for checking: 'gurobi' 'rgurobi'
-    
-    See section 'The DESCRIPTION file' in the 'Writing R Extensions'
-    manual. 
-Flavor: r-release-osx-x86_64-mavericks
+0 errors | 0 warnings | 3 notes
 
 ### Notes
 
-* checking DESCRIPION meta-information ... NOTE
-  Author field differs from that derived from Authors@R
-    Author:    'Jeffrey O Hanson [aut, cre], Jonathon R Rhodes [aut], Hugh P Possingham [aut], Richard A Fuller [aut]'
-    Authors@R: 'Jeffrey O Hanson [aut, cre], Jonathan R Rhodes [aut], Hugh P Possingham [aut], Richard A Fuller [aut]'
-  
-  _I accidentally misspelled "Jonathan" as "Jonathon" in the initial CRAN submission. I have corrected it in the new version._
+This version of the package does not encounter any new notes. All of these notes were encountered in the package's initial submission to CRAN. To help with reviewing this submission, I have included the notes and a copy of my original comments regarding them.
 
-The remaining notes were present in the initial CRAN submission. I have included these notes and my comments from the initial submission below.
 
 * Possibly mis-spelled words in DESCRIPTION:
     prioritizations (14:67, 16:29)
@@ -85,13 +57,15 @@ The remaining notes were present in the initial CRAN submission. I have included
 ## Reverse dependencies
 This package does not have any "Reverse depends", "Reverse imports", "Reverse suggests", or "Reverse linking to". 
 
-------------
+## Package updates
 
-This version reduces memory usage through the use of external pointers. Additionally, it has a reduced installation time, fixes several typos in the documentation, and corrects a typo in one of the author's names. 
+This version has the following updates:
 
-This submission has addressed the memory leaks and unit test failures encountered in the previous submission.
+* added more links to the package documentation
+* use `requireNamespace` to  check which packages are installed on a user's system
+* registers native routines and disables symbol search to avoid generating an additional note
+* [fixes error encountered on Solaris environment](https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/raptr-00check.html)
 
 Thanks!
 
 Jeffrey Hanson
-

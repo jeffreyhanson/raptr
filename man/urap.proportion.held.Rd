@@ -7,9 +7,9 @@
 urap.proportion.held(x, y, y.weights = rep(1, nrow(y)))
 }
 \arguments{
-\item{x}{\code{matrix} of points}
+\item{x}{\code{\link[base]{matrix}} of points}
 
-\item{y}{\code{matrix} of points}
+\item{y}{\code{\link[base]{matrix}} of points}
 
 \item{y.weights}{\code{numeric} vector of weights for each point in \code{y}. Defaults to equal weights for all points in \code{y}.}
 }
@@ -23,4 +23,3 @@ in a another set of points using the unreliable formulation.
 \examples{
 urap.proportion.held(as.matrix(iris[1:2,-5]), as.matrix(iris[1:5,-5]))
 }
-

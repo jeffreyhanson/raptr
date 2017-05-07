@@ -10,11 +10,11 @@ This class is used to planning units in an attribute space.
 \section{Slots}{
 
 \describe{
-\item{\code{coords}}{\code{matrix} coordinates for each point.}
+\item{\code{coords}}{\code{\link[base]{matrix}} coordinates for each point.}
 
 \item{\code{ids}}{\code{integer} planning unit ids.}
 }}
+
 \seealso{
 \code{\link{AttributeSpace}}.
 }
-

@@ -3,9 +3,9 @@
 \docType{methods}
 \name{plot}
 \alias{plot}
-\alias{plot,RapSolved,RapSolved-method}
-\alias{plot,RapSolved,missing-method}
 \alias{plot,RapSolved,numeric-method}
+\alias{plot,RapSolved,missing-method}
+\alias{plot,RapSolved,RapSolved-method}
 \title{Plot object}
 \usage{
 \S4method{plot}{RapSolved,numeric}(x, y, basemap = "none",
@@ -23,11 +23,11 @@
   grayscale = FALSE, main = NULL, force.reset = FALSE)
 }
 \arguments{
-\item{x}{\code{RapSolved} object.}
+\item{x}{\code{\link{RapSolved}} object.}
 
-\item{y}{\code{NULL} to plot selection frequencies. \code{numeric} to plot the i'th solution, or 0 to plot the best solution. \code{RapSolved} object to plot differences in solutions between objects. Defaults to \code{ULL}.}
+\item{y}{\code{NULL} to plot selection frequencies. \code{numeric} to plot the i'th solution, or 0 to plot the best solution. \code{\link{RapSolved}} object to plot differences in solutions between objects. Defaults to \code{ULL}.}
 
-\item{basemap}{\code{character} object indicating the type of basemap to use (see \code{link{basemap}}). Use either 'none', 'roadmap', 'mobile', 'satellite', 'terrain', 'hybrid', 'mapmaker-roadmap', 'mapmaker-hybrid'. Defaults to 'none'.}
+\item{basemap}{\code{character} object indicating the type of basemap to use (see \code{\link{basemap}}). Use either 'none', 'roadmap', 'mobile', 'satellite', 'terrain', 'hybrid', 'mapmaker-roadmap', 'mapmaker-hybrid'. Defaults to 'none'.}
 
 \item{pu.color.palette}{\code{character} name of colors or color palette (\code{\link[RColorBrewer]{brewer.pal}}) to indicate planning unit statuses. Defaults to \code{c('grey30', 'green', 'yellow', 'black', 'gray80', 'red', 'orange')}.}
 
@@ -39,13 +39,13 @@
 
 \item{force.reset}{\code{logical} if basemap data has been cached, should it be re-downloaded?}
 
-\item{i}{\code{NULL} to plot selection frequencies. \code{numeric} to plot the i'th solution, or 0 to plot the best solution. Only used when \code{y} is a \code{RapSolved} object. Defaults to \code{NULL}.}
+\item{i}{\code{NULL} to plot selection frequencies. \code{numeric} to plot the i'th solution, or 0 to plot the best solution. Only used when \code{y} is a \code{\link{RapSolved}} object. Defaults to \code{NULL}.}
 
-\item{j}{\code{NULL} to plot selection frequencies. \code{numeric} to plot the i'th solution, or 0 to plot the best solution. Only used when \code{y} is a \code{RapSolved} object. Defaults to \code{j}.}
+\item{j}{\code{NULL} to plot selection frequencies. \code{numeric} to plot the i'th solution, or 0 to plot the best solution. Only used when \code{y} is a \code{\link{RapSolved}} object. Defaults to \code{j}.}
 }
 \description{
-This function plots the solutions contained in \code{RapSolved} objects. It can be used to show a single solution, or the the selection frequencies of planning
-units contained in a single \code{RapSolved} object. Additionally, two \code{RapSolved} objects can be supplied to plot the differences between them.
+This function plots the solutions contained in \code{\link{RapSolved}} objects. It can be used to show a single solution, or the the selection frequencies of planning
+units contained in a single \code{\link{RapSolved}} object. Additionally, two \code{\link{RapSolved}} objects can be supplied to plot the differences between them.
 }
 \examples{
 # load data
@@ -63,4 +63,3 @@ plot(sim_rs, sim_rs, 0 ,2)
 \seealso{
 \code{\link{RapSolved}}.
 }
-

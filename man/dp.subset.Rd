@@ -13,7 +13,7 @@ dp.subset(x, space, species, points)
 \method{dp.subset}{RapUnsolOrSol}(x, space, species, points)
 }
 \arguments{
-\item{x}{\code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.}
+\item{x}{\code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.}
 
 \item{space}{\code{integer} vector to specify the index of the space to subset demand points from.}
 
@@ -22,10 +22,10 @@ dp.subset(x, space, species, points)
 \item{points}{\code{integer} vector to specify the index of demand points to subset.}
 }
 \value{
-\code{RapData} or \code{RapUnsolved} object depending on input object.
+\code{\link{RapData}} or \code{\link{RapUnsolved}} object depending on input object.
 }
 \description{
-Subset demand points from a \code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.
+Subset demand points from a \code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.
 }
 \examples{
 # load data
@@ -34,6 +34,5 @@ data(sim_ru)
 sim_ru2 <- dp.subset(sim_ru, 1, 1, 1:10)
 }
 \seealso{
-\code{RapData}, \code{RapUnsolved}, \code{RapSolved}.
+\code{\link{RapData}}, \code{\link{RapUnsolved}}, \code{\link{RapSolved}}.
 }
-

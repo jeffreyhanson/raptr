@@ -13,15 +13,15 @@ sim.space(x, ...)
 \method{sim.space}{SpatialPolygons}(x, res, d = 2, model = RMgauss(), ...)
 }
 \arguments{
-\item{x}{\code{RasterLayer} or \code{SpatialPolygons} object delineate the spatial extent to delineate study area.}
+\item{x}{\code{RasterLayer} or \code{\link[sp]{SpatialPolygons}} object delineate the spatial extent to delineate study area.}
 
 \item{...}{parameters passed to \code{\link[RandomFields]{RandomFields}}.}
 
 \item{d}{\code{integer} number of dimensions. Defaults to 2.}
 
-\item{model}{\code{RMmodel} model to simulate species distributions with. Defaults \code{\link[RandomFields]{RPgauss}}.}
+\item{model}{\code{\link[RandomFields]{RMmodel}} model to simulate species distributions with. Defaults \code{\link[RandomFields]{RPgauss}}.}
 
-\item{res}{\code{numeric} resolution to simulate distributions. Only needed when \code{SpatialPolygons} supplied.}
+\item{res}{\code{numeric} resolution to simulate distributions. Only needed when \code{\link[sp]{SpatialPolygons}} supplied.}
 }
 \value{
 \code{RasterStack} with layers for each dimension of the space.
@@ -55,4 +55,3 @@ plot(s3[[2]], main='s3: second dimension')
 \seealso{
 \code{\link[RandomFields]{RFsimulate}}.
 }
-

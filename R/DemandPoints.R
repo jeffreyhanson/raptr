@@ -5,7 +5,7 @@ NULL
 #'
 #' This class is used to store demand point information.
 #'
-#' @slot coords \code{matrix} of coordinates for each demand point.
+#' @slot coords \code{\link[base]{matrix}} of coordinates for each demand point.
 #' @slot weights \code{numeric} weights for each demand point.
 #' @seealso \code{\link{DemandPoints}}
 #' @export
@@ -37,7 +37,7 @@ setClass("DemandPoints",
 #'
 #' This function creates a new DemandPoints object
 #'
-#' @param coords \code{matrix} of coordinates for each demand point.
+#' @param coords \code{\link[base]{matrix}} of coordinates for each demand point.
 #' @param weights \code{numeric} weights for each demand point.
 #' @seealso \code{\link{DemandPoints-class}}
 #' @export
@@ -56,12 +56,12 @@ DemandPoints<-function(coords, weights) {
 #'
 #' This function generates demand points for RAP using kernels.
 #'
-#' @param points \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records.
-#' @param n \code{integer} number of demand points to use for each attribute space for each species. Defaults to 100L.
-#' @param quantile \code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{points} intersect. Defaults to 0.5. 
-#' @param kernel.method \code{character} name of kernel method to use to generate demand points. Defaults to 'ks'.
+#' @param points \code{\link[sp]{SpatialPointsDataFrame}} or \code{\link[sp]{SpatialPoints}} with species presence records.
+#' @param n \code{integer} number of demand points to use for each attribute space for each species. Defaults to \code{100L}.
+#' @param quantile \code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{points} intersect. Defaults to \code{0.5}. 
+#' @param kernel.method \code{character} name of kernel method to use to generate demand points. Defaults to \code{'ks'}.
 #' @param ... arguments passed to kernel density estimating functions
-#' @return \code{DemandPoints} object.
+#' @return \code{\link{DemandPoints}} object.
 #' @details The values of the species records in the rasters is extracted. A kernel is fit to the points in the attribute space. 
 #' Volumes are then fit to the points in the attribute space(s). Points are randomly generated inside the volume. Demand points are generated
 #' as random points inside the volume. A kernel is fit to the species records and used to predict the density at each of the demand points.

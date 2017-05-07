@@ -30,4 +30,3 @@ This function reads files output from Gurobi and returns a \code{RapResults} obj
 \code{\link{RapReliableOpts}}, \code{\link{RapUnreliableOpts}}, \code{\link{RapData}}, \code{\link{RapResults}}.
 }
 \keyword{internal}
-

@@ -29,7 +29,7 @@ setClass("ManualOpts",
 #' This function creates a new ManualOpts object.
 #'
 #' @param NumberSolutions \code{integer} number of solutions to generate. Defaults to 1L.
-#' @return \code{ManualOpts} object
+#' @return \code{\link{ManualOpts}} object
 #' @seealso \code{\link{ManualOpts-class}}.
 #' @export
 #' @examples

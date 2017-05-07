@@ -10,25 +10,25 @@ This class is used to store RAP input data.
 \section{Slots}{
 
 \describe{
-\item{\code{polygons}}{\code{PolySet} planning unit spatial data or \code{NULL} if data not available.}
+\item{\code{polygons}}{\code{\link[PBSmapping]{PolySet}} planning unit spatial data or \code{NULL} if data not available.}
 
-\item{\code{pu}}{\code{data.frame} planning unit data. Columns are 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).}
+\item{\code{pu}}{\code{\link[base]{data.frame}} planning unit data. Columns are 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).}
 
-\item{\code{species}}{\code{data.frame} with species data. Columns are 'name' (\code{character}.}
+\item{\code{species}}{\code{\link[base]{data.frame}} with species data. Columns are 'name' (\code{character}.}
 
-\item{\code{targets}}{\code{data.frame} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), 'proportion' (\code{numeric}).}
+\item{\code{targets}}{\code{\link[base]{data.frame}} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), 'proportion' (\code{numeric}).}
 
-\item{\code{pu.species.probabilities}}{\code{data.frame} with data on the probability of species in each planning unit. Columns are 'species' (\code{integer}), 'pu' (\code{integer}), and 'value' (\code{numeric}) columns.}
+\item{\code{pu.species.probabilities}}{\code{\link[base]{data.frame}} with data on the probability of species in each planning unit. Columns are 'species' (\code{integer}), 'pu' (\code{integer}), and 'value' (\code{numeric}) columns.}
 
 \item{\code{attribute.spaces}}{\code{list} of \code{AttributeSpaces} objects with the demand points and planning unit coordinates.}
 
-\item{\code{boundary}}{\code{data.frame} with data on the shared boundary length of planning units. Columns are with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'boundary' (\code{numeric}).}
+\item{\code{boundary}}{\code{\link[base]{data.frame}} with data on the shared boundary length of planning units. Columns are with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'boundary' (\code{numeric}).}
 
 \item{\code{skipchecks}}{\code{logical} Skip data integrity checks? May improve speed for big data sets.}
 
-\item{\code{.cache}}{\code{environment} used to cache calculations.}
+\item{\code{.cache}}{\code{\link[base]{environment}} used to cache calculations.}
 }}
+
 \seealso{
 \code{\link[PBSmapping]{PolySet}}.
 }
-

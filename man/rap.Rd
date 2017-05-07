@@ -8,11 +8,11 @@ rap(pus, species, spaces = NULL, formulation = "unreliable", solve = TRUE,
   ...)
 }
 \arguments{
-\item{pus}{\code{SpatialPolygons} object representing planning units.}
+\item{pus}{\code{\link[sp]{SpatialPolygons}} object representing planning units.}
 
-\item{species}{\code{RasterLayer} object with species distribution data.}
+\item{species}{\code{\link[raster]{raster}} object with species distribution data.}
 
-\item{spaces}{\code{list} of \code{RasterLayer} or \code{RasterStack} objects. Each elements denotes the spatial distribution for each space. Defaults to \code{NULL}.}
+\item{spaces}{\code{list} of \code{\link[raster]{raster}} objects. Each elements denotes the spatial distribution for each space. Defaults to \code{NULL}.}
 
 \item{formulation}{\code{character}  to indicate if 'unreliable' or 'reliable' formulation should be used to generate prioritisations. Defaults to 'unreliable'.}
 
@@ -32,4 +32,3 @@ Type \code{vignette('raptr')} to see the package vignette for help.
 \seealso{
 \code{\link{GurobiOpts}}, \code{\link{RapReliableOpts}}, \code{\link{RapUnreliableOpts}} \code{\link{RapData}}, \code{\link{RapResults}}, \code{\link{RapUnsolved}}, \code{\link{RapSolved}}.
 }
-

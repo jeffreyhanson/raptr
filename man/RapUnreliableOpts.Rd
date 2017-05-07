@@ -10,7 +10,7 @@ RapUnreliableOpts(BLM = 0)
 \item{BLM}{\code{numeric} boundary length modifier. Defaults to 0.}
 }
 \value{
-\code{RapUnreliableOpts} object
+\code{\link{RapUnreliableOpts}} object
 }
 \description{
 This function creates a new RapUnreliableOpts object.
@@ -22,4 +22,3 @@ RapUnreliableOpts(BLM=0)
 \seealso{
 \code{\link{RapUnreliableOpts-class}}.
 }
-

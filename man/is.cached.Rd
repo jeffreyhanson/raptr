@@ -28,4 +28,3 @@ Tests if hash is cached in Rap object.
 caches are implemented using environments, the hash is used as the name of the object in the environment.
 }
 \keyword{internal}
-

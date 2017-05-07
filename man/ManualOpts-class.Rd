@@ -12,7 +12,7 @@ This class is used to store parameters.
 \describe{
 \item{\code{NumberSolutions}}{\code{integer} number of solutions.}
 }}
+
 \seealso{
 \code{\link{ManualOpts}}.
 }
-

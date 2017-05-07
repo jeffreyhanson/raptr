@@ -4,10 +4,13 @@
 \name{casestudy_data}
 \alias{casestudy_data}
 \alias{cs_pus}
+\alias{cs_spp}
+\alias{cs_space}
+\alias{cs_pus}
 \alias{cs_space}
 \alias{cs_spp}
 \title{Case-study dataset for a conservation planning exercise}
-\format{cs_pus: \code{SpatialPolyognsDataFrame}, cs_spp: \code{RasterLayer}, cs_space: \code{RasterStack}.}
+\format{cs_pus: \code{\link[sp]{SpatialPolygonsDataFrame}}, cs_spp: \code{\link[raster]{RasterLayer-class}}, cs_space: \code{\link[raster]{RasterStack-class}}.}
 \usage{
 cs_pus
 
@@ -18,8 +21,8 @@ cs_spp
 \description{
 This dataset contains data to generate example prioritisations for the pale-headed Rosella (\emph{Platycercus adscitus}) in Queensland, Australia. Specific objects in the dataset include:
 \itemize{
-\item cs_pus: \code{SpatialPolygonsDataFrame} planning units. The units were generated as \eqn{30km^2} squares across the species' range, and then clipped to the Queensland, Australia (using data obtained from the \href{Australia Bureau of Statistics}{http://www.abs.gov.au/ausstats/abs@.nsf/mf/1259.0.30.001?OpenDocument}). They were then overliad with Australia's protected area network (obtained from the World Database on Protected Areas (WDPA) at \url{http://www.protectedplanet.net/}). This attribute table has 3 fields. The 'area' field contains the units' area, the 'cost' field is set to 1 for all units, and the 'status' filed indicates if 50\% or more of the units' extent is covered by protected areas.
-\item cs_spp: \code{RasterLayer} probability distribution map for the \emph{P. adscitus} clipped to Queensland, Australia. This map was derived from records obtained from The Atlas of Living Australia (\url{http://ala.org.au/}).
+\item cs_pus: \code{\link[sp]{SpatialPolygonsDataFrame}} planning units. The units were generated as \eqn{30km^2} squares across the species' range, and then clipped to the Queensland, Australia (using data obtained from the \href{Australia Bureau of Statistics}{http://www.abs.gov.au/ausstats/abs@.nsf/mf/1259.0.30.001?OpenDocument}). They were then overliad with Australia's protected area network (obtained from the World Database on Protected Areas (WDPA) at \url{http://www.protectedplanet.net/}). This attribute table has 3 fields. The 'area' field contains the units' area, the 'cost' field is set to 1 for all units, and the 'status' filed indicates if 50\% or more of the units' extent is covered by protected areas.
+\item cs_spp: \code{\link[raster]{RasterLayer-class}} probability distribution map for the \emph{P. adscitus} clipped to Queensland, Australia. This map was derived from records obtained from The Atlas of Living Australia (\url{http://ala.org.au/}).
 \item cs_space: \code{RasterStack} describing broad-scale variation across Queensland. containing the projections of the first two axes from a annual precipitation data across the species range (obtained from \url{http://www.worldclim.org/} as BIO12, and resampled to \eqn{10km^2} resolution).
 }
 }
@@ -34,4 +37,3 @@ plot(cs_space)
 }
 }
 \keyword{datasets}
-

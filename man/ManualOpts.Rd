@@ -10,7 +10,7 @@ ManualOpts(NumberSolutions = 1L)
 \item{NumberSolutions}{\code{integer} number of solutions to generate. Defaults to 1L.}
 }
 \value{
-\code{ManualOpts} object
+\code{\link{ManualOpts}} object
 }
 \description{
 This function creates a new ManualOpts object.
@@ -22,4 +22,3 @@ ManualOpts(NumberSolutions=1L)
 \seealso{
 \code{\link{ManualOpts-class}}.
 }
-

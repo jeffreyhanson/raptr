@@ -23,7 +23,7 @@ setClass("RapUnreliableOpts",
 #' This function creates a new RapUnreliableOpts object.
 #'
 #' @param BLM \code{numeric} boundary length modifier. Defaults to 0.
-#' @return \code{RapUnreliableOpts} object
+#' @return \code{\link{RapUnreliableOpts}} object
 #' @seealso \code{\link{RapUnreliableOpts-class}}.
 #' @export
 #' @examples

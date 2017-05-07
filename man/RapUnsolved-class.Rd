@@ -10,11 +10,11 @@ This class is used to store RAP input data and input parameters.
 \section{Slots}{
 
 \describe{
-\item{\code{opts}}{\code{RapReliableOpts} or \code{RapUnreliableOpts} object used to store input parameters.}
+\item{\code{opts}}{\code{\link{RapReliableOpts}} or \code{\link{RapUnreliableOpts}} object used to store input parameters.}
 
-\item{\code{data}}{\code{RapData} object used to store input data.}
+\item{\code{data}}{\code{\link{RapData}} object used to store input data.}
 }}
+
 \seealso{
 \code{\link{RapReliableOpts-class}}, \code{\link{RapUnreliableOpts-class}}, \code{\link{RapData-class}}.
 }
-

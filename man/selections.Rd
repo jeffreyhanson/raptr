@@ -13,17 +13,17 @@ selections(x, y)
 \method{selections}{RapSolved}(x, y = 0)
 }
 \arguments{
-\item{x}{\code{RapResults} or \code{RapSolved} object.}
+\item{x}{\code{\link{RapResults}} or \code{\link{RapSolved}} object.}
 
 \item{y}{\code{NULL} to return all values, \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.}
 
 \item{...}{not used.}
 }
 \value{
-\code{matrix} or \code{numeric} vector depending on arguments.
+\code{\link[base]{matrix}} or \code{numeric} vector depending on arguments.
 }
 \description{
-Extract selections for a given solution from a \code{RapResults} or \code{RapSolved} object.
+Extract selections for a given solution from a \code{\link{RapResults}} or \code{\link{RapSolved}} object.
 }
 \examples{
 data(sim_rs)
@@ -35,6 +35,5 @@ selections(sim_rs, 2)
 selections(sim_rs)
 }
 \seealso{
-\code{RapResults}, \code{RapSolved}.
+\code{\link{RapResults}}, \code{\link{RapSolved}}.
 }
-

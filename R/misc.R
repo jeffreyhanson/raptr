@@ -44,8 +44,8 @@ is.GurobiInstalled<-function(verbose=TRUE) {
 	}
 	# check if R packages installed
 	pkgs.installed <- list(
-		gurobi='gurobi' %in% unlist(sapply(.libPaths(), dir), recursive=FALSE, use.names=TRUE), 
-		rgurobi='rgurobi' %in% unlist(sapply(.libPaths(), dir), recursive=FALSE, use.names=TRUE)
+		gurobi=requireNamespace('gurobi', quietly=TRUE),
+		rgurobi=requireNamespace('rgurobi', quietly=TRUE)
 	)
 	if (!pkgs.installed[[1]]) {
 		if (verbose) {
@@ -115,9 +115,9 @@ is.gdalInstalled<-function() {
 #' This function converts a \code{SpatialPolygonsDataFrame} to a \code{RasterLayer} using GDAL.
 #' It is expected to be faster than \code{\link[raster]{rasterize}} for large datasets.
 #' However, it will be significantly slower for small datasets because the data will need to be written and read from disk.
-#' @param x \code{SpatialPolygonsDataFrame} object.
-#' @param y \code{RasterLayer} with dimensions, extent, and resolution to be used as a template for new raster.
-#' @param field \code{character} column name with values to burn into the output raster. If not supplied, default behaviour is to burn polygon indices into the \code{	RasterLayer}.
+#' @param x \code{\link[sp]{SpatialPolygonsDataFrame}} object.
+#' @param y \code{\link[raster]{raster}} with dimensions, extent, and resolution to be used as a template for new raster.
+#' @param field \code{character} column name with values to burn into the output raster. If not supplied, default behaviour is to burn polygon indices into the \code{\link[raster]{raster}}.
 #' @export
 #' @return \code{RasterLayer} object.
 #' @seealso \code{\link[raster]{rasterize}}, \code{\link{is.gdalInstalled}}.
@@ -141,7 +141,7 @@ rasterizeGDAL<-function(x,y, field=NULL) {
 #' Blank raster
 #'
 #' This functions creates a blank raster based on the spatial extent of a Spatial object.
-#' @param x \code{Spatial*} object.
+#' @param x \code{\link[sp]{Spatial-class}} object.
 #' @param res \code{numeric vector} specifying resolution of the output raster in the x and y dimensions. If \code{vector} is of length one, then the pixels are assumed to be square.
 #' @export
 #' @rdname blank.raster
@@ -182,7 +182,7 @@ setClass("PolySet")
 
 #' RapOpts class
 #'
-#' Object is either \code{RapReliableOpts} or \code{RapUnreliableOpts}.
+#' Object is either \code{\link{RapReliableOpts}} or \code{\link{RapUnreliableOpts}}.
 #'
 #' @name RapOpts-class
 #' @aliases RapOpts
@@ -208,12 +208,12 @@ setClass("SolverOpts")
 
 #' Sample random points from a RasterLayer
 #'
-#' This function generates random points in a \code{RasterLayer} object.
+#' This function generates random points in a \code{\link[raster]{raster}} object.
 #'
-#' @param mask \code{RasterLayer} object
+#' @param mask \code{\link[raster]{raster}} object
 #' @param n \code{integer} number of points to sample
 #' @param prob \code{logical} should the raster values be used as weights? Defaults to \code{FALSE}.
-#' @return code{matrix} with x-coordinates, y-coordinates, and cell values.
+#' @return \code{\link[base]{matrix}} with x-coordinates, y-coordinates, and cell values.
 #' @seealso This function is similar to \code{dismo::randomPoints}.
 #' @export
 #' @examples

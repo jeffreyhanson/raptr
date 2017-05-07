@@ -7,14 +7,14 @@ NULL
 #' Be aware that using polygons with overlaps will result in inaccuracies.
 #' By default all polygons will be treated as having separate ids.
 #'
-#' @param x "SpatialPolygons" or "SpatialPolygonsDataFrame" object.
-#' @param y "RasterLayer", "RasterStack", or "RasterBrick" object.
-#' @param ids "integer" vector of ids. Defaults to indices of layers in the \code{y}.
-#' @param ncores "integer" Number of cores to use for processing. Defaults to 1.
-#' @param gdal "logical" Should raster processing be performed using GDAL libraries? Defaults to \code{FALSE}.
-#' @param field "character" "integer" index or "character" name of column with planning unit ids. Valid only for "SpatialPolygonsDataFrame" objects. Default behaviour is to treat each polygon as a different planning unit.
+#' @param x \code{\link[sp]{SpatialPolygons}} or \code{\link[sp]{SpatialPolygonsDataFrame}} object.
+#' @param y \code{\link[raster]{RasterLayer-class}}, \code{\link[raster]{RasterStack-class}}, or \code{\link[raster]{RasterBrick-class}} object.
+#' @param ids \code{integer} vector of ids. Defaults to indices of layers in the \code{y}.
+#' @param ncores \code{integer} number of cores to use for processing. Defaults to 1.
+#' @param gdal \code{logical} Should raster processing be performed using GDAL libraries? Defaults to \code{FALSE}.
+#' @param field \code{integer} index or \code{character} name of column with planning unit ids. Valid only when \code{x} is a \code{\link[sp]{SpatialPolygonsDataFrame}} object. Default behaviour is to treat each polygon as a different planning unit.
 #' @param ... not used.
-#' @return data.frame with sum of raster values in each polygon.
+#' @return \code{\link[base]{data.frame}} with sum of raster values in each polygon.
 #' @seealso \code{\link{is.gdalInstalled}}, \url{http://www.gdal.org/}, \url{http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries}.
 #' @export
 #' @examples
@@ -31,10 +31,10 @@ calcSpeciesAverageInPus<-function(x, ...) UseMethod("calcSpeciesAverageInPus")
 #'
 #' This function simulates species distributions for RAP.
 #'
-#' @param x \code{RasterLayer} or \code{SpatialPolygons} object delineate the spatial extent to delineate study area.
+#' @param x \code{\link[raster]{RasterLayer-class}} or \code{\link[sp]{SpatialPolygons}} object delineate the spatial extent to delineate study area.
 #' @param n \code{integer} number of species. Defaults to 1.
-#' @param res \code{numeric} resolution to simulate distributions. Only needed when \code{SpatialPolygons} supplied.
-#' @param model \code{RMmodel} model to simulate species distributions with. Defaults \code{\link[RandomFields]{RPgauss}}.
+#' @param res \code{numeric} resolution to simulate distributions. Only needed when \code{\link[sp]{SpatialPolygons}} supplied.
+#' @param model \code{\link[RandomFields]{RMmodel}} model to simulate species distributions with. Defaults \code{\link[RandomFields]{RPgauss}}.
 #' @param ... parameters passed to \code{\link[RandomFields]{RandomFields}}.
 #' @details Distributions are simulated by passing \code{model} to \code{\link[RandomFields]{RFsimulate}} and converting to logistic values using \code{\link[boot]{inv.logit}}.
 #' @return \code{RasterStack} with layers for each species.
@@ -73,10 +73,10 @@ sim.species<-function(x, ...) UseMethod('sim.species')
 #'
 #' This function simulates attribute space data for RAP.
 #'
-#' @param x \code{RasterLayer} or \code{SpatialPolygons} object delineate the spatial extent to delineate study area.
+#' @param x \code{RasterLayer} or \code{\link[sp]{SpatialPolygons}} object delineate the spatial extent to delineate study area.
 #' @param d \code{integer} number of dimensions. Defaults to 2.
-#' @param res \code{numeric} resolution to simulate distributions. Only needed when \code{SpatialPolygons} supplied.
-#' @param model \code{RMmodel} model to simulate species distributions with. Defaults \code{\link[RandomFields]{RPgauss}}.
+#' @param res \code{numeric} resolution to simulate distributions. Only needed when \code{\link[sp]{SpatialPolygons}} supplied.
+#' @param model \code{\link[RandomFields]{RMmodel}} model to simulate species distributions with. Defaults \code{\link[RandomFields]{RPgauss}}.
 #' @param ... parameters passed to \code{\link[RandomFields]{RandomFields}}.
 #' @details Distributions are simulated by passing \code{model} to \code{\link[RandomFields]{RFsimulate}}.
 #' @return \code{RasterStack} with layers for each dimension of the space.
@@ -106,15 +106,15 @@ sim.space<-function(x, ...) UseMethod('sim.space')
 
 #' Solve RAP object
 #'
-#' This function uses Gurobi to find prioritisations using the input parameter and data stored in a \code{RapUsolved} object,
-#' and returns a \code{RapSolved} object with outputs in it.
+#' This function uses Gurobi to find prioritisations using the input parameter and data stored in a \code{\link{RapUnsolved}} object,
+#' and returns a \code{\link{RapSolved}} object with outputs in it.
 #'
-#' @param a \code{RapUnsolved} or \code{RapSolved} object.
-#' @param b \code{missing} to generate solutions using Gurobi. Prioritisations can be specified using  \code{logical}, \code{numeric}, or \code{matrix} objects. This may be useful for evaluating the performance of solutions obtained using other software.
+#' @param a \code{\link{RapUnsolved}} or \code{\link{RapSolved}} object.
+#' @param b \code{missing} to generate solutions using Gurobi. Prioritisations can be specified using  \code{logical}, \code{numeric}, or \code{\link[base]{matrix}} objects. This may be useful for evaluating the performance of solutions obtained using other software.
 #' @param verbose \code{logical} should messages be printed during creation of the initial model matrix?.
 #' @param ... not used.
-#' @return \code{RapSolved} object
-#' @note This function is used to solve a \code{RapUnsolved} object that has all of its inputs generated. The rap function (without lower case 'r') provides a more general interface for generating inputs and outputs.
+#' @return \code{\link{RapSolved}} object
+#' @note This function is used to solve a \code{\link{RapUnsolved}} object that has all of its inputs generated. The rap function (without lower case 'r') provides a more general interface for generating inputs and outputs.
 #' @seealso \code{\link{RapUnsolved}}, \code{\link{RapSolved}}.
 #' @examples
 #' # load RapUnsolved object
@@ -122,25 +122,25 @@ sim.space<-function(x, ...) UseMethod('sim.space')
 #' \dontrun{
 #' # solve it using Gurobi
 #' sim_rs <- solve(sim_ru)
-#' }
 #' # evaluate manually specified solution using planning unit indices
 #' sim_rs2 <- solve(sim_ru, 1:10)
 #' # evaluate manually specifed solution using binary selections
 #' sim_rs3 <- solve(sim_ru, c(rep(TRUE,10), rep(FALSE, 90)))
 #' #  evaluate multiple manually specified solutions
 #' sim_rs4 <- solve(sim_ru, matrix(sample(c(0,1), size=500, replace=TRUE), ncol=100, nrow=5))
+#' }
 setGeneric('solve', function(a, b, ...) standardGeneric('solve'))
 
 #' Plot object
 #'
-#' This function plots the solutions contained in \code{RapSolved} objects. It can be used to show a single solution, or the the selection frequencies of planning
-#' units contained in a single \code{RapSolved} object. Additionally, two \code{RapSolved} objects can be supplied to plot the differences between them.
+#' This function plots the solutions contained in \code{\link{RapSolved}} objects. It can be used to show a single solution, or the the selection frequencies of planning
+#' units contained in a single \code{\link{RapSolved}} object. Additionally, two \code{\link{RapSolved}} objects can be supplied to plot the differences between them.
 #'
-#' @param x \code{RapSolved} object.
-#' @param y \code{NULL} to plot selection frequencies. \code{numeric} to plot the i'th solution, or 0 to plot the best solution. \code{RapSolved} object to plot differences in solutions between objects. Defaults to \code{ULL}.
-#' @param i \code{NULL} to plot selection frequencies. \code{numeric} to plot the i'th solution, or 0 to plot the best solution. Only used when \code{y} is a \code{RapSolved} object. Defaults to \code{NULL}.
-#' @param j \code{NULL} to plot selection frequencies. \code{numeric} to plot the i'th solution, or 0 to plot the best solution. Only used when \code{y} is a \code{RapSolved} object. Defaults to \code{j}.
-#' @param basemap \code{character} object indicating the type of basemap to use (see \code{link{basemap}}). Use either 'none', 'roadmap', 'mobile', 'satellite', 'terrain', 'hybrid', 'mapmaker-roadmap', 'mapmaker-hybrid'. Defaults to 'none'.
+#' @param x \code{\link{RapSolved}} object.
+#' @param y \code{NULL} to plot selection frequencies. \code{numeric} to plot the i'th solution, or 0 to plot the best solution. \code{\link{RapSolved}} object to plot differences in solutions between objects. Defaults to \code{ULL}.
+#' @param i \code{NULL} to plot selection frequencies. \code{numeric} to plot the i'th solution, or 0 to plot the best solution. Only used when \code{y} is a \code{\link{RapSolved}} object. Defaults to \code{NULL}.
+#' @param j \code{NULL} to plot selection frequencies. \code{numeric} to plot the i'th solution, or 0 to plot the best solution. Only used when \code{y} is a \code{\link{RapSolved}} object. Defaults to \code{j}.
+#' @param basemap \code{character} object indicating the type of basemap to use (see \code{\link{basemap}}). Use either 'none', 'roadmap', 'mobile', 'satellite', 'terrain', 'hybrid', 'mapmaker-roadmap', 'mapmaker-hybrid'. Defaults to 'none'.
 #' @param pu.color.palette \code{character} name of colors or color palette (\code{\link[RColorBrewer]{brewer.pal}}) to indicate planning unit statuses. Defaults to \code{c('grey30', 'green', 'yellow', 'black', 'gray80', 'red', 'orange')}.
 #' @param alpha \code{numeric} value to indicate how transparent the planning unit colors should be.
 #' @param grayscale \code{logical} should the basemap be gray-scaled?
@@ -166,7 +166,7 @@ NULL
 #'
 #' This function sets or returns the species names in an object.
 #'
-#' @param x \code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.
+#' @param x \code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.
 #' @param value new species names.
 #' @name names
 #' @seealso \code{\link{RapData}}, \code{\link{RapUnsolved}}, \code{\link{RapSolved}}.
@@ -185,7 +185,7 @@ NULL
 #'
 #' Prints objects.
 #'
-#' @param x \code{GurobiOpts}, \code{RapUnreliableOpts}, \code{RapReliableOpts}, \code{RapData}, \code{RapUnsolved}, \code{RapResults}, or \code{RapSolved} object.
+#' @param x \code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}}, \code{\link{RapReliableOpts}}, \code{\link{RapData}}, \code{\link{RapUnsolved}}, \code{\link{RapResults}}, or \code{\link{RapSolved}} object.
 #' @param header \code{logical} should object header be included?
 #' @param ... not used.
 #' @name print
@@ -214,7 +214,7 @@ NULL
 #'
 #' Shows objects.
 #'
-#' @param object \code{GurobiOpts}, \code{RapUnreliableOpts}, \code{RapReliableOpts}, \code{RapData}, \code{RapUnsolved}, \code{RapResults}, or \code{RapSolved} object.
+#' @param object \code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}}, \code{\link{RapReliableOpts}}, \code{\link{RapData}}, \code{\link{RapUnsolved}}, \code{\link{RapResults}}, or \code{\link{RapSolved}} object.
 #' @name show
 #' @seealso \code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}}, \code{\link{RapReliableOpts}}, \code{\link{RapData}}, \code{\link{RapUnsolved}}, \code{\link{RapResults}}, \code{\link{RapSolved}}.
 #' @examples
@@ -239,9 +239,9 @@ NULL
 
 #' Convert object to list.
 #'
-#' Convert \code{GurobiOpts} object to list.
+#' Convert \code{\link{GurobiOpts}} object to list.
 #'
-#' @param x \code{GurobiOpts} object.
+#' @param x \code{\link{GurobiOpts}} object.
 #' @param ... not used.
 #' @name as.list
 #' @return \code{list}
@@ -256,9 +256,9 @@ NULL
 
 #' Summary of solutions
 #'
-#' Extracts summary of solutions in a \code{RapResults} or \code{RapSolved} object.
+#' Extracts summary of solutions in a \code{\link{RapResults}} or \code{\link{RapSolved}} object.
 #'
-#' @param object \code{RapResults}, or \code{RapSolved} object.
+#' @param object \code{\link{RapResults}}, or \code{\link{RapSolved}} object.
 #' @param ... not used.
 #' @details This table follows Marxan conventions (summary.dat in \url{http://marxan.net/downloads/uq_marxan_web_2/module5.html}). The columns are:
 #' \tabular{cl}{
@@ -295,9 +295,9 @@ NULL
 
 #' Update object
 #'
-#' This function updates parameters or data stored in an existing \code{GurobiOpts}, \code{RapUnreliableOpts}, \code{RapReliableOpts}, \code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.
+#' This function updates parameters or data stored in an existing \code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}}, \code{\link{RapReliableOpts}}, \code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.
 #'
-#' @param object \code{GurobiOpts}, \code{RapUnreliableOpts}, \code{RapReliableOpts}, \code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.
+#' @param object \code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}}, \code{\link{RapReliableOpts}}, \code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.
 #' @param Threads \code{integer} number of cores to use for processing.
 #' @param MIPGap \code{numeric} MIP gap specifying minimum solution quality.
 #' @param Method \code{integer} Algorithm to use for solving model.
@@ -317,8 +317,8 @@ NULL
 #' @param pu \code{integer} planning unit indices that need to be updated.
 #' @param status \code{integer} new statuses for specified planning units.
 #' @param cost \code{numeric} new costs for specified planning units.
-#' @param ... parameters passed to \code{update.RapReliableOpts}, \code{update.RapUnreliableOpts}, or \code{update.RapData}.
-#' @param solve \code{logical} should the problem be solved? This argument is only valid for \code{RapUnsolved} and \code{RapSolved} objects. Defaults to \code{TRUE}.
+#' @param ... parameters passed to \code{\link{update.RapReliableOpts}}, \code{\link{update.RapUnreliableOpts}}, or \code{\link{update.RapData}}.
+#' @param solve \code{logical} should the problem be solved? This argument is only valid for \code{\link{RapUnsolved}} and \code{\link{RapSolved}} objects. Defaults to \code{TRUE}.
 #' @name update
 #' @return \code{\link{GurobiOpts-class}}, \code{\link{RapUnreliableOpts-class}}, \code{\link{RapReliableOpts-class}}, \code{\link{RapData-class}}, \code{\link{RapUnsolved-class}}, or \code{\link{RapSolved-class}} object depending on \code{x}.
 #' @seealso \code{\link{GurobiOpts-class}}, \code{\link{RapUnreliableOpts-class}}, \code{\link{RapReliableOpts-class}}, \code{\link{RapData-class}}, \code{\link{RapUnsolved-class}}, \code{\link{RapSolved-class}}.
@@ -370,12 +370,12 @@ NULL
 
 #' Subset species
 #'
-#' Subset species from a \code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.
+#' Subset species from a \code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.
 #'
-#' @param x \code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.
+#' @param x \code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.
 #' @param species \code{integer}, or \code{character} vectors to specify the index or species names to subset.
-#' @return \code{RapData} or \code{RapUnsolved} object depending on input object.
-#' @seealso \code{RapData}, \code{RapUnsolved}, \code{RapSolved}.
+#' @return \code{\link{RapData}} or \code{\link{RapUnsolved}} object depending on input object.
+#' @seealso \code{\link{RapData}}, \code{\link{RapUnsolved}}, \code{\link{RapSolved}}.
 #' @rdname spp.subset
 #' @export
 #' @examples
@@ -387,12 +387,12 @@ spp.subset<-function(x, species) UseMethod('spp.subset')
 
 #' Subset planning units
 #'
-#' Subset planning units from a \code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.
+#' Subset planning units from a \code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.
 #'
-#' @param x \code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.
+#' @param x \code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.
 #' @param pu \code{integer} vector to specify the index of planning units to subset.
-#' @return \code{RapData} or \code{RapUnsolved} object depending on input object.
-#' @seealso \code{RapData}, \code{RapUnsolved}, \code{RapSolved}.
+#' @return \code{\link{RapData}} or \code{\link{RapUnsolved}} object depending on input object.
+#' @seealso \code{\link{RapData}}, \code{\link{RapUnsolved}}, \code{\link{RapSolved}}.
 #' @rdname pu.subset
 #' @export
 #' @examples
@@ -404,14 +404,14 @@ pu.subset<-function(x, pu) UseMethod('pu.subset')
 
 #' Subset demand points
 #'
-#' Subset demand points from a \code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.
+#' Subset demand points from a \code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.
 #'
-#' @param x \code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.
+#' @param x \code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.
 #' @param space \code{integer} vector to specify the index of the space to subset demand points from.
 #' @param species \code{integer} vector to specify the index of the species to subset demand points from.
 #' @param points \code{integer} vector to specify the index of demand points to subset.
-#' @return \code{RapData} or \code{RapUnsolved} object depending on input object.
-#' @seealso \code{RapData}, \code{RapUnsolved}, \code{RapSolved}.
+#' @return \code{\link{RapData}} or \code{\link{RapUnsolved}} object depending on input object.
+#' @seealso \code{\link{RapData}}, \code{\link{RapUnsolved}}, \code{\link{RapSolved}}.
 #' @rdname dp.subset
 #' @export
 #' @examples
@@ -426,11 +426,11 @@ dp.subset<-function(x, space, species, points) UseMethod('dp.subset')
 #' This function subsets out probabilities assigned to planning units above a threshold. It effectively sets the probability
 #' that species inhabit planning units to zero if they are below the threshold. 
 #'
-#' @param x \code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.
+#' @param x \code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.
 #' @param species \code{integer} vector to specify the index of the species to apply threshold to
 #' @param threshold \code{numeric} probability to use a threshold.
-#' @return \code{RapData} or \code{RapUnsolved} object depending on input object.
-#' @seealso \code{RapData}, \code{RapUnsolved}, \code{RapSolved}.
+#' @return \code{\link{RapData}} or \code{\link{RapUnsolved}} object depending on input object.
+#' @seealso \code{\link{RapData}}, \code{\link{RapUnsolved}}, \code{\link{RapSolved}}.
 #' @rdname prob.subset
 #' @export
 #' @examples
@@ -442,12 +442,12 @@ prob.subset<-function(x, species, threshold) UseMethod('prob.subset')
 
 #' Solution score
 #'
-#' Extract solution score from \code{RapResults} or \code{RapSolved} object.
+#' Extract solution score from \code{\link{RapResults}} or \code{\link{RapSolved}} object.
 #'
-#' @param x \code{RapResults} or \code{RapSolved} object.
+#' @param x \code{\link{RapResults}} or \code{\link{RapSolved}} object.
 #' @param y "NULL" to return all scores, "integer" 0 to return score for best solution, "integer" value greater than 0 for \code{y}'th solution score.
 #' @return "matrix" or "numeric" vector with solution score(s) depending on arguments.
-#' @seealso \code{RapResults}, \code{RapSolved}.
+#' @seealso \code{\link{RapResults}}, \code{\link{RapSolved}}.
 #' @export
 #' @examples
 #' # load data
@@ -464,10 +464,10 @@ score<-function(x, y) UseMethod('score')
 #'
 #' This function returns the Gurobi log file (*.log) associated with solving RAP.
 #'
-#' @param x \code{RapResults} or \code{RapSolved} object.
+#' @param x \code{\link{RapResults}} or \code{\link{RapSolved}} object.
 #' @param y \code{NULL} to return all values, \code{integer} 0 to return the log file for best solution, \code{integer} value greater than 0 for log file for the \code{y}'th solution.
 #' @note The term logging file was used due to collisions with the \code{log} function in base R.
-#' @seealso \code{RapResults}, \code{RapSolved}.
+#' @seealso \code{\link{RapResults}}, \code{\link{RapSolved}}.
 #' @export
 #' @examples
 #' data(sim_rs)
@@ -483,11 +483,11 @@ logging.file<-function(x,y) UseMethod('logging.file')
 #'
 #' This function returns the amount held for each species in a solution.
 #'
-#' @param x \code{RapResults} or \code{RapSolved} object.
+#' @param x \code{\link{RapResults}} or \code{\link{RapSolved}} object.
 #' @param y \code{NULL} to return all values, \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.
 #' @param species \code{NULL} for all species or \code{integer} indicating species.
-#' @return \code{matrix} or \code{numeric} vector depending on arguments.
-#' @seealso \code{RapResults}, \code{RapSolved}.
+#' @return \code{\link[base]{matrix}} or \code{numeric} vector depending on arguments.
+#' @seealso \code{\link{RapResults}}, \code{\link{RapSolved}}.
 #' @export
 #' @examples
 #' data(sim_rs)
@@ -505,11 +505,11 @@ amount.held<-function(x,y,species) {UseMethod('amount.held')}
 #'
 #' This function sets or returns the target amounts for each species.
 #'
-#' @param x \code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.
+#' @param x \code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.
 #' @param species \code{NULL} for all species or \code{integer} indicating species.
 #' @param value \code{numeric} new target.
 #' @return code{numeric} vector.
-#' @seealso \code{RapData}, \code{RapResults}, \code{RapSolved}.
+#' @seealso \code{\link{RapData}}, \code{\link{RapResults}}, \code{\link{RapSolved}}.
 #' @export
 #' @name amount.target
 #' @examples
@@ -533,12 +533,12 @@ amount.target<-function(x, species) {UseMethod('amount.target')}
 #'
 #' This function returns the attribute space held for each species in a solution.
 #'
-#' @param x \code{RapResults} or \code{RapSolved} object.
+#' @param x \code{\link{RapResults}} or \code{\link{RapSolved}} object.
 #' @param y \code{NULL} to return all values, \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.
 #' @param species \code{NULL} for all species or \code{integer} indicating species.
 #' @param space \code{NULL} for all spaces or \code{integer} indicating a specific space.
 #' @return code{matrix} object.
-#' @seealso \code{RapResults}, \code{RapSolved}.
+#' @seealso \code{\link{RapResults}}, \code{\link{RapSolved}}.
 #' @export
 #' @examples
 #' data(sim_rs)
@@ -554,12 +554,12 @@ space.held<-function(x,y,species,space) {UseMethod('space.held')}
 #'
 #' This function sets or returns the attribute space targets for each species.
 #'
-#' @param x \code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.
+#' @param x \code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.
 #' @param species \code{NULL} for all species or \code{integer} indicating species.
 #' @param space \code{NULL} for all spaces or \code{integer} indicating a specific space.
 #' @param value \code{numeric} new target..
 #' @return \code{numeric matrix}.
-#' @seealso \code{RapData}, \code{RapResults}, \code{RapSolved}.
+#' @seealso \code{\link{RapData}}, \code{\link{RapResults}}, \code{\link{RapSolved}}.
 #' @export
 #' @name space.target
 #' @examples
@@ -581,13 +581,13 @@ space.target<-function(x, species, space) {UseMethod('space.target')}
 
 #' Extract solution selections
 #'
-#' Extract selections for a given solution from a \code{RapResults} or \code{RapSolved} object.
+#' Extract selections for a given solution from a \code{\link{RapResults}} or \code{\link{RapSolved}} object.
 #'
-#' @param x \code{RapResults} or \code{RapSolved} object.
+#' @param x \code{\link{RapResults}} or \code{\link{RapSolved}} object.
 #' @param y \code{NULL} to return all values, \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.
 #' @param ... not used.
-#' @return \code{matrix} or \code{numeric} vector depending on arguments.
-#' @seealso \code{RapResults}, \code{RapSolved}.
+#' @return \code{\link[base]{matrix}} or \code{numeric} vector depending on arguments.
+#' @seealso \code{\link{RapResults}}, \code{\link{RapSolved}}.
 #' @export
 #' @examples
 #' data(sim_rs)
@@ -601,11 +601,11 @@ selections<-function(x, y) {UseMethod('selections')}
 
 #' Convert SpatialPolygons to PolySet data
 #'
-#' This function converts spatial \code{SpatialPolygons} and \code{SpatialPolygonsDataFrame} objects to \code{PolySet} objects.
+#' This function converts spatial \code{\link[sp]{SpatialPolygons}} and \code{\link[sp]{SpatialPolygonsDataFrame}} objects to \code{\link[PBSmapping]{PolySet}} objects.
 #'
-#' @param x \code{SpatialPolygons} or \code{SpatialPolygonsDataFrame} object.
-#' @param n_preallocate \code{integer} How much memory should be preallocated for processing? Ideally, this number should equal the number of vertices in the \code{SpatialPolygons} object. If data processing is taking too long consider increasing this value.
-#' @return \code{PolySet} object.
+#' @param x \code{\link[sp]{SpatialPolygons}} or \code{\link[sp]{SpatialPolygonsDataFrame}} object.
+#' @param n_preallocate \code{integer} How much memory should be preallocated for processing? Ideally, this number should equal the number of vertices in the \code{\link[sp]{SpatialPolygons}} object. If data processing is taking too long consider increasing this value.
+#' @return \code{\link[PBSmapping]{PolySet}} object.
 #' @note Be aware that this function is designed to be as fast as possible, but as a result it depends on C++ code and if used inappropriately this function will crash R.
 #' @seealso For a slower, more stable equivalent see \code{maptools::SpatialPolygons2PolySet}.
 #' @export
@@ -620,12 +620,12 @@ SpatialPolygons2PolySet<-function(x, n_preallocate) UseMethod("SpatialPolygons2P
 #'
 #' This function plots the distribution of species across the study area.
 #'
-#' @param x \code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.
+#' @param x \code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.
 #' @param species \code{character} name of species, or \code{integer} index for species.
 #' @param y \code{NULL} \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.
 #' @param prob.color.palette \code{character} name of color palette to denote probability of occupancy of the species in planning units (see \code{\link[RColorBrewer]{brewer.pal}}). Defaults to 'YlGnBu'.
 #' @param pu.color.palette \code{character} name of colors or color palette (\code{\link[RColorBrewer]{brewer.pal}}) to indicate planning unit statuses. Defaults to \code{c('grey30', 'green', 'black', 'red')} which indicate non selected, selected, locked in, and locked out (respectively).
-#' @param basemap \code{character} object indicating the type of basemap to use (see \code{link{basemap}}). Use either 'none', 'roadmap', 'mobile', 'satellite', 'terrain', 'hybrid', 'mapmaker-roadmap', 'mapmaker-hybrid'. Defaults to 'none'.
+#' @param basemap \code{character} object indicating the type of basemap to use (see \code{\link{basemap}}). Use either 'none', 'roadmap', 'mobile', 'satellite', 'terrain', 'hybrid', 'mapmaker-roadmap', 'mapmaker-hybrid'. Defaults to 'none'.
 #' @param alpha \code{numeric} value to indicate how transparent the planning unit colors should be.
 #' @param grayscale \code{logical} should the basemap be gray-scaled?
 #' @param main \code{character} title for the plot. Defaults to \code{NULL} and a default title is used.
@@ -646,7 +646,7 @@ spp.plot<-function(x, species, ...) UseMethod('spp.plot')
 #' This function plots the distribution of planning units and the distribution of demand points for a particular species in an attribute space.
 #' Note that this function only works for attribute spaces with one, two, or three dimensions.
 #'
-#' @param x \code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.
+#' @param x \code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.
 #' @param species \code{character} name of species, or \code{integer} index for species.
 #' @param space \code{integer} index of attribute space.
 #' @param y \code{NULL} \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.
@@ -672,11 +672,11 @@ space.plot<-function(
 
 #' Maximum targets
 #'
-#' This function accepts a \code{RapUnsolved} object and returns a \code{data.frame} containing the
+#' This function accepts a \code{\link{RapUnsolved}} object and returns a \code{data.frame} containing the
 #' amount-based and space-based targets for each species and attribute space. These are calculated using a
 #' prioritisation that contains all the available planning units. Note that the maximum amount-based targets are always 1.
 #' 
-#' @param x \code{RapUnsolved} or \code{RapSolved} object.
+#' @param x \code{\link{RapUnsolved}} or \code{\link{RapSolved}} object.
 #' @param verbose \code{logical} should messages be printed during calculations? Defaults to \code{FALSE}.
 #' @return \code{data.frame} object.
 #' @export

@@ -3,11 +3,11 @@
 \docType{methods}
 \name{solve}
 \alias{solve}
-\alias{solve,RapUnsolOrSol,GurobiOpts-method}
-\alias{solve,RapUnsolOrSol,logical-method}
-\alias{solve,RapUnsolOrSol,matrix-method}
 \alias{solve,RapUnsolOrSol,missing-method}
+\alias{solve,RapUnsolOrSol,GurobiOpts-method}
+\alias{solve,RapUnsolOrSol,matrix-method}
 \alias{solve,RapUnsolOrSol,numeric-method}
+\alias{solve,RapUnsolOrSol,logical-method}
 \title{Solve RAP object}
 \usage{
 solve(a, b, ...)
@@ -23,23 +23,23 @@ solve(a, b, ...)
 \S4method{solve}{RapUnsolOrSol,logical}(a, b, verbose = FALSE)
 }
 \arguments{
-\item{a}{\code{RapUnsolved} or \code{RapSolved} object.}
+\item{a}{\code{\link{RapUnsolved}} or \code{\link{RapSolved}} object.}
 
-\item{b}{\code{missing} to generate solutions using Gurobi. Prioritisations can be specified using  \code{logical}, \code{numeric}, or \code{matrix} objects. This may be useful for evaluating the performance of solutions obtained using other software.}
+\item{b}{\code{missing} to generate solutions using Gurobi. Prioritisations can be specified using  \code{logical}, \code{numeric}, or \code{\link[base]{matrix}} objects. This may be useful for evaluating the performance of solutions obtained using other software.}
 
 \item{...}{not used.}
 
 \item{verbose}{\code{logical} should messages be printed during creation of the initial model matrix?.}
 }
 \value{
-\code{RapSolved} object
+\code{\link{RapSolved}} object
 }
 \description{
-This function uses Gurobi to find prioritisations using the input parameter and data stored in a \code{RapUsolved} object,
-and returns a \code{RapSolved} object with outputs in it.
+This function uses Gurobi to find prioritisations using the input parameter and data stored in a \code{\link{RapUnsolved}} object,
+and returns a \code{\link{RapSolved}} object with outputs in it.
 }
 \note{
-This function is used to solve a \code{RapUnsolved} object that has all of its inputs generated. The rap function (without lower case 'r') provides a more general interface for generating inputs and outputs.
+This function is used to solve a \code{\link{RapUnsolved}} object that has all of its inputs generated. The rap function (without lower case 'r') provides a more general interface for generating inputs and outputs.
 }
 \examples{
 # load RapUnsolved object
@@ -47,7 +47,6 @@ data(sim_ru)
 \dontrun{
 # solve it using Gurobi
 sim_rs <- solve(sim_ru)
-}
 # evaluate manually specified solution using planning unit indices
 sim_rs2 <- solve(sim_ru, 1:10)
 # evaluate manually specifed solution using binary selections
@@ -55,7 +54,7 @@ sim_rs3 <- solve(sim_ru, c(rep(TRUE,10), rep(FALSE, 90)))
 #  evaluate multiple manually specified solutions
 sim_rs4 <- solve(sim_ru, matrix(sample(c(0,1), size=500, replace=TRUE), ncol=100, nrow=5))
 }
+}
 \seealso{
 \code{\link{RapUnsolved}}, \code{\link{RapSolved}}.
 }
-

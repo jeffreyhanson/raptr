@@ -3,12 +3,12 @@ NULL
 
 #' Calculate boundary data for planning units
 #'
-#' This function calculates boundary length data for \code{PolySet}, \code{SpatialPolygons}, and \code{SpatialPolygonsDataFrame} objects.
+#' This function calculates boundary length data for \code{\link[PBSmapping]{PolySet}}, \code{\link[sp]{SpatialPolygons}}, and \code{\link[sp]{SpatialPolygonsDataFrame}} objects.
 #' Be aware that this function is designed to be as fast as possible, and as a consequence, if this
 #' function is used improperly then it may crash R. Furthermore, multipart polygons with touching edges will likely result in inaccuracies.
-#' If argument set to \code{SpatialPolygons} or \code{SpatialPolygonsDataFrame}, this will be converted to PolySet before processing.
+#' If argument set to \code{\link[sp]{SpatialPolygons}} or \code{\link[sp]{SpatialPolygonsDataFrame}}, this will be converted to PolySet before processing.
 #'
-#' @param x \code{PolySet}, \code{SpatialPolygons} or \code{SpatialPolyognsDataFrame} object.
+#' @param x \code{\link[PBSmapping]{PolySet}}, \code{\link[sp]{SpatialPolygons}} or \code{\link[sp]{SpatialPolygonsDataFrame}} object.
 #' @param tol \code{numeric} to specify precision of calculations (that is, how far apart do vertices have to be to be considered different).
 #' @param length.factor \code{numeric} to scale boundary lengths.
 #' @param edge.factor \code{numeric} to scale boundary lengths for edges that do not have any neighbors, such as those that occur along the margins.

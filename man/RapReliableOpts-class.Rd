@@ -16,7 +16,7 @@ This class is used to store input parameters for the reliable formulation of RAP
 
 \item{\code{max.r.level}}{\code{numeric} maximum R failure level for approximation. Defaults to 5L.}
 }}
+
 \seealso{
 \code{\link{RapReliableOpts}}
 }
-

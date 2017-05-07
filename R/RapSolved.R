@@ -5,10 +5,10 @@ NULL
 #'
 #' This class is used to store RAP input and output data in addition to input parameters.
 #'
-#' @slot opts \code{RapReliableOpts} or \code{RapUnreliableOpts} object used to store input parameters.
-#' @slot solver \code{GurobiOpts} or \code{ManualOpts} object used to store solver information/parameters.
-#' @slot data \code{RapData} object used to store input data.
-#' @slot results \code{RapResults} object used to store results.
+#' @slot opts \code{\link{RapReliableOpts}} or \code{\link{RapUnreliableOpts}} object used to store input parameters.
+#' @slot solver \code{\link{GurobiOpts}} or \code{\link{ManualOpts}} object used to store solver information/parameters.
+#' @slot data \code{\link{RapData}} object used to store input data.
+#' @slot results \code{\link{RapResults}} object used to store results.
 #' @export
 #' @seealso \code{\link{RapReliableOpts-class}}, \code{\link{RapUnreliableOpts-class}}, \code{\link{RapData-class}}, \code{\link{RapResults-class}}.
 setClass("RapSolved",
@@ -24,14 +24,14 @@ setClassUnion("RapUnsolOrSol", c("RapSolved", "RapUnsolved"))
 
 #' Create new RapSolved object
 #'
-#' This function creates a \code{RapSolved} object.
+#' This function creates a \code{\link{RapSolved}} object.
 #'
-#' @param unsolved \code{RapUnsolved} object.
-#' @param solver \code{GurobiOpts} or \code{ManualOpts} object.
-#' @param results \code{RapResults} object.
-#' @return \code{RapSolved} object.
+#' @param unsolved \code{\link{RapUnsolved}} object.
+#' @param solver \code{\link{GurobiOpts}} or \code{\link{ManualOpts}} object.
+#' @param results \code{\link{RapResults}} object.
+#' @return \code{\link{RapSolved}} object.
 #' @export
-#' @seealso \code{\link{RapSolved-class}}, \code{\link{RapResults-class}}, \code{link{solve}}.
+#' @seealso \code{\link{RapSolved-class}}, \code{\link{RapResults-class}}, \code{\link{solve}}.
 RapSolved<-function(unsolved, solver, results) {
 	return(new("RapSolved", opts=unsolved@opts, solver=solver, data=unsolved@data, results=results))
 }

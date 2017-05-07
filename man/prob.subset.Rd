@@ -13,14 +13,14 @@ prob.subset(x, species, threshold)
 \method{prob.subset}{RapUnsolOrSol}(x, species, threshold)
 }
 \arguments{
-\item{x}{\code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.}
+\item{x}{\code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.}
 
 \item{species}{\code{integer} vector to specify the index of the species to apply threshold to}
 
 \item{threshold}{\code{numeric} probability to use a threshold.}
 }
 \value{
-\code{RapData} or \code{RapUnsolved} object depending on input object.
+\code{\link{RapData}} or \code{\link{RapUnsolved}} object depending on input object.
 }
 \description{
 This function subsets out probabilities assigned to planning units above a threshold. It effectively sets the probability
@@ -33,6 +33,5 @@ data(sim_ru)
 sim_ru2 <- prob.subset(sim_ru, 1:3, c(0.1,0.2,0.3))
 }
 \seealso{
-\code{RapData}, \code{RapUnsolved}, \code{RapSolved}.
+\code{\link{RapData}}, \code{\link{RapUnsolved}}, \code{\link{RapSolved}}.
 }
-

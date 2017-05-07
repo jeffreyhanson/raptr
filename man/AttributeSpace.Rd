@@ -7,9 +7,9 @@
 AttributeSpace(planning.unit.points, demand.points, species)
 }
 \arguments{
-\item{planning.unit.points}{\code{PlanningUnitPoints} for planning unit in the space.}
+\item{planning.unit.points}{\code{\link{PlanningUnitPoints}} for planning unit in the space.}
 
-\item{demand.points}{\code{DemandPoints} object for the space.}
+\item{demand.points}{\code{\link{DemandPoints}} object for the space.}
 
 \item{species}{\code{integer} species id to indicate which species the space is associated with.}
 }
@@ -32,4 +32,3 @@ species=1L
 \seealso{
 \code{\link{DemandPoints-class}}, \code{\link{PlanningUnitPoints-class}}.
 }
-

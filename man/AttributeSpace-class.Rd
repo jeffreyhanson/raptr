@@ -10,13 +10,13 @@ This class is used to store planning unit points and demand points for a single 
 \section{Slots}{
 
 \describe{
-\item{\code{planning.unit.points}}{\code{PlanningUnitPoints} for planning unit in the space.}
+\item{\code{planning.unit.points}}{\code{\link{PlanningUnitPoints}} for planning unit in the space.}
 
-\item{\code{demand.points}}{\code{DemandPoints} object for the space.}
+\item{\code{demand.points}}{\code{\link{DemandPoints}} object for the space.}
 
 \item{\code{species}}{\code{integer} species id to indicate which species the space is associated with.}
 }}
+
 \seealso{
 \code{\link{DemandPoints-class}}, \code{\link{PlanningUnitPoints-class}}.
 }
-

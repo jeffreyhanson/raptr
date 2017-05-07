@@ -7,11 +7,11 @@
 rasterizeGDAL(x, y, field = NULL)
 }
 \arguments{
-\item{x}{\code{SpatialPolygonsDataFrame} object.}
+\item{x}{\code{\link[sp]{SpatialPolygonsDataFrame}} object.}
 
-\item{y}{\code{RasterLayer} with dimensions, extent, and resolution to be used as a template for new raster.}
+\item{y}{\code{\link[raster]{raster}} with dimensions, extent, and resolution to be used as a template for new raster.}
 
-\item{field}{\code{character} column name with values to burn into the output raster. If not supplied, default behaviour is to burn polygon indices into the \code{    RasterLayer}.}
+\item{field}{\code{character} column name with values to burn into the output raster. If not supplied, default behaviour is to burn polygon indices into the \code{\link[raster]{raster}}.}
 }
 \value{
 \code{RasterLayer} object.
@@ -30,4 +30,3 @@ x <- rasterizeGDAL(sim_pu[1:5,],sim_spp[[1]])
 \seealso{
 \code{\link[raster]{rasterize}}, \code{\link{is.gdalInstalled}}.
 }
-

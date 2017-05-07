@@ -10,11 +10,11 @@ This class is used to store a collection of attribute spaces for different speci
 \section{Slots}{
 
 \describe{
-\item{\code{spaces}}{\code{list} of \code{AttributeSpace} objects for different species.}
+\item{\code{spaces}}{\code{list} of \code{\link{AttributeSpace}} objects for different species.}
 
 \item{\code{name}}{\code{character} name to identify the attribute space.}
 }}
+
 \seealso{
 \code{\link{AttributeSpace-class}}.
 }
-

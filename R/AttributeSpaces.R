@@ -5,7 +5,7 @@ NULL
 #'
 #' This class is used to store a collection of attribute spaces for different species.
 #'
-#' @slot spaces \code{list} of \code{AttributeSpace} objects for different species.
+#' @slot spaces \code{list} of \code{\link{AttributeSpace}} objects for different species.
 #' @slot name \code{character} name to identify the attribute space.
 #' @seealso \code{\link{AttributeSpace-class}}.
 #' @export
@@ -29,7 +29,7 @@ setClass("AttributeSpaces",
 #'
 #' This function creates a new \code{AttributeSpaces} object.
 #'
-#' @param spaces \code{list} of \code{AttributeSpace} objects for different species.
+#' @param spaces \code{list} of \code{\link{AttributeSpace}} objects for different species.
 #' @param name \code{character} name to identify the attribute space.
 #' @seealso \code{\link{AttributeSpace-class}}.
 #' @export

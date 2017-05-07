@@ -7,7 +7,7 @@
 DemandPoints(coords, weights)
 }
 \arguments{
-\item{coords}{\code{matrix} of coordinates for each demand point.}
+\item{coords}{\code{\link[base]{matrix}} of coordinates for each demand point.}
 
 \item{weights}{\code{numeric} weights for each demand point.}
 }
@@ -23,4 +23,3 @@ runif(50)
 \seealso{
 \code{\link{DemandPoints-class}}
 }
-

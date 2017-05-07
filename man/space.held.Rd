@@ -10,7 +10,7 @@ space.held(x, y, species, space)
 \method{space.held}{RapSolved}(x, y = 0, species = NULL, space = NULL)
 }
 \arguments{
-\item{x}{\code{RapResults} or \code{RapSolved} object.}
+\item{x}{\code{\link{RapResults}} or \code{\link{RapSolved}} object.}
 
 \item{y}{\code{NULL} to return all values, \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.}
 
@@ -34,6 +34,5 @@ space.held(sim_rs, 2)
 space.held(sim_rs)
 }
 \seealso{
-\code{RapResults}, \code{RapSolved}.
+\code{\link{RapResults}}, \code{\link{RapSolved}}.
 }
-

@@ -22,4 +22,3 @@ The main classes used in this package are used to store input data and prioritis
 
 Type \code{vignette('raptr')} for a tutorial on how to use this package.
 }
-

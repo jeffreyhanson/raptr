@@ -36,4 +36,3 @@ Getter and setter methods for caches in RapData and RapResults object.
 caches are implemented using environments, the hash is used as the name of the object in the environment.
 }
 \keyword{internal}
-

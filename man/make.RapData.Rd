@@ -11,11 +11,11 @@ make.RapData(pus, species, spaces = NULL, amount.target = 0.2,
   include.geographic.space = TRUE, scale = TRUE, verbose = FALSE, ...)
 }
 \arguments{
-\item{pus}{\code{SpatialPolygons} with planning unit data.}
+\item{pus}{\code{\link[sp]{SpatialPolygons}} with planning unit data.}
 
-\item{species}{\code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} with species probability distribution data.}
+\item{species}{\code{\link[raster]{raster}} with species probability distribution data.}
 
-\item{spaces}{\code{list} of/or \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} representing projects of attribute space over geographic space. Use a \code{list} to denote separate attribute spaces.}
+\item{spaces}{\code{list} of/or \code{\link[raster]{raster}} representing projects of attribute space over geographic space. Use a \code{list} to denote separate attribute spaces.}
 
 \item{amount.target}{\code{numeric} vector for area targets (\%) for each species. Defaults to 0.2 for each attribute space for each species.}
 
@@ -27,7 +27,7 @@ make.RapData(pus, species, spaces = NULL, amount.target = 0.2,
 
 \item{quantile}{\code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.5.}
 
-\item{species.points}{\code{list} of/or \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records. Use a \code{list} of objects to represent different species. Must have the same number of elements as \code{species}. If not supplied then use \code{n.species.points} to sample points from the species distributions.}
+\item{species.points}{\code{list} of/or \code{\link[sp]{SpatialPointsDataFrame}} or \code{\link[sp]{SpatialPoints}} with species presence records. Use a \code{list} of objects to represent different species. Must have the same number of elements as \code{species}. If not supplied then use \code{n.species.points} to sample points from the species distributions.}
 
 \item{n.species.points}{\code{numeric} vector specifiying the number points to sample the species distributions to use to generate demand points. Defaults to 20\% of the distribution.}
 
@@ -37,7 +37,7 @@ make.RapData(pus, species, spaces = NULL, amount.target = 0.2,
 
 \item{verbose}{\code{logical} print statements during processing?}
 
-\item{...}{additional arguments to \code{calcBoundaryData} and \code{calcPuVsSpeciesData}.}
+\item{...}{additional arguments to \code{\link{calcBoundaryData}} and \code{\link{calcSpeciesAverageInPus}}.}
 }
 \description{
 This function prepares spatially explicit planning unit, species data, and landscape data layers for RAP processing.
@@ -54,4 +54,3 @@ print(x)
 \seealso{
 \code{\link{RapData-class}}, \code{\link{RapData}}.
 }
-

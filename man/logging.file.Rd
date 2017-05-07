@@ -13,7 +13,7 @@ logging.file(x, y)
 \method{logging.file}{RapSolved}(x, y = 0)
 }
 \arguments{
-\item{x}{\code{RapResults} or \code{RapSolved} object.}
+\item{x}{\code{\link{RapResults}} or \code{\link{RapSolved}} object.}
 
 \item{y}{\code{NULL} to return all values, \code{integer} 0 to return the log file for best solution, \code{integer} value greater than 0 for log file for the \code{y}'th solution.}
 }
@@ -33,6 +33,5 @@ cat(logging.file(sim_rs, 2))
 cat(logging.file(sim_rs, NULL))
 }
 \seealso{
-\code{RapResults}, \code{RapSolved}.
+\code{\link{RapResults}}, \code{\link{RapSolved}}.
 }
-

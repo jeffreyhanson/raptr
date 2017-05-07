@@ -35,21 +35,21 @@ The \code{summary} table follows Marxan conventions (summary.dat in \url{http://
 \section{Slots}{
 
 \describe{
-\item{\code{summary}}{\code{data.frame} with summary information on solutions.}
+\item{\code{summary}}{\code{\link[base]{data.frame}} with summary information on solutions.}
 
-\item{\code{selections}}{\code{matrix} with binary selections. The cell \eqn{x_{ij}} denotes if planning unit \eqn{j} is selected in the \eqn{i}'th solution}
+\item{\code{selections}}{\code{\link[base]{matrix}} with binary selections. The cell \eqn{x_{ij}} denotes if planning unit \eqn{j} is selected in the \eqn{i}'th solution}
 
-\item{\code{amount.held}}{\code{matrix} with the amount held for each species in each solution.}
+\item{\code{amount.held}}{\code{\link[base]{matrix}} with the amount held for each species in each solution.}
 
-\item{\code{space.held}}{\code{matrix} with the proportion of attribute space sampled for each species in each solution.}
+\item{\code{space.held}}{\code{\link[base]{matrix}} with the proportion of attribute space sampled for each species in each solution.}
 
 \item{\code{best}}{\code{integer} with index of best solution.}
 
 \item{\code{logging.file}}{\code{character} Gurobi log files.}
 
-\item{\code{.cache}}{\code{environment} used to store extra data.}
+\item{\code{.cache}}{\code{\link[base]{environment}} used to store extra data.}
 }}
+
 \seealso{
 \code{\link{RapResults}}, \code{\link{read.RapResults}}.
 }
-

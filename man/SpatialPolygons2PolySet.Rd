@@ -2,8 +2,8 @@
 % Please edit documentation in R/generics.R, R/SpatialPolygons2PolySet.R
 \name{SpatialPolygons2PolySet}
 \alias{SpatialPolygons2PolySet}
-\alias{SpatialPolygons2PolySet.SpatialPolygons}
 \alias{SpatialPolygons2PolySet.SpatialPolygonsDataFrame}
+\alias{SpatialPolygons2PolySet.SpatialPolygons}
 \title{Convert SpatialPolygons to PolySet data}
 \usage{
 SpatialPolygons2PolySet(x, n_preallocate)
@@ -14,15 +14,15 @@ SpatialPolygons2PolySet(x, n_preallocate)
 \method{SpatialPolygons2PolySet}{SpatialPolygons}(x, n_preallocate = 10000L)
 }
 \arguments{
-\item{x}{\code{SpatialPolygons} or \code{SpatialPolygonsDataFrame} object.}
+\item{x}{\code{\link[sp]{SpatialPolygons}} or \code{\link[sp]{SpatialPolygonsDataFrame}} object.}
 
-\item{n_preallocate}{\code{integer} How much memory should be preallocated for processing? Ideally, this number should equal the number of vertices in the \code{SpatialPolygons} object. If data processing is taking too long consider increasing this value.}
+\item{n_preallocate}{\code{integer} How much memory should be preallocated for processing? Ideally, this number should equal the number of vertices in the \code{\link[sp]{SpatialPolygons}} object. If data processing is taking too long consider increasing this value.}
 }
 \value{
-\code{PolySet} object.
+\code{\link[PBSmapping]{PolySet}} object.
 }
 \description{
-This function converts spatial \code{SpatialPolygons} and \code{SpatialPolygonsDataFrame} objects to \code{PolySet} objects.
+This function converts spatial \code{\link[sp]{SpatialPolygons}} and \code{\link[sp]{SpatialPolygonsDataFrame}} objects to \code{\link[PBSmapping]{PolySet}} objects.
 }
 \note{
 Be aware that this function is designed to be as fast as possible, but as a result it depends on C++ code and if used inappropriately this function will crash R.
@@ -36,4 +36,3 @@ x <- SpatialPolygons2PolySet(sim_pus)
 \seealso{
 For a slower, more stable equivalent see \code{maptools::SpatialPolygons2PolySet}.
 }
-

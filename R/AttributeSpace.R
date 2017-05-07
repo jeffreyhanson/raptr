@@ -5,8 +5,8 @@ NULL
 #'
 #' This class is used to store planning unit points and demand points for a single species in an attribute space.
 #'
-#' @slot planning.unit.points \code{PlanningUnitPoints} for planning unit in the space.
-#' @slot demand.points \code{DemandPoints} object for the space.
+#' @slot planning.unit.points \code{\link{PlanningUnitPoints}} for planning unit in the space.
+#' @slot demand.points \code{\link{DemandPoints}} object for the space.
 #' @slot species \code{integer} species id to indicate which species the space is associated with.
 #' @seealso \code{\link{DemandPoints-class}}, \code{\link{PlanningUnitPoints-class}}.
 #' @export
@@ -31,8 +31,8 @@ setClass("AttributeSpace",
 #'
 #' This function creates a new \code{AttributeSpace} object.
 #'
-#' @param planning.unit.points \code{PlanningUnitPoints} for planning unit in the space.
-#' @param demand.points \code{DemandPoints} object for the space.
+#' @param planning.unit.points \code{\link{PlanningUnitPoints}} for planning unit in the space.
+#' @param demand.points \code{\link{DemandPoints}} object for the space.
 #' @param species \code{integer} species id to indicate which species the space is associated with.
 #' @seealso \code{\link{DemandPoints-class}}, \code{\link{PlanningUnitPoints-class}}.
 #' @export

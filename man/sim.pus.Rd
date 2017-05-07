@@ -19,7 +19,7 @@ sim.pus(n, xmn = -sqrt(n)/2, xmx = sqrt(n)/2, ymn = -sqrt(n)/2,
 \item{ymx}{\code{numeric} value for maximum y-coordinate.}
 }
 \value{
-\code{SpatialPolygons} with planning units.
+\code{\link[sp]{SpatialPolygons}} with planning units.
 }
 \description{
 This function simulates planning units for RAP.
@@ -40,4 +40,3 @@ plot(y, main='y')
 par(mfrow=c(1,1))
 }
 }
-

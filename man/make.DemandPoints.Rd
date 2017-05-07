@@ -8,18 +8,18 @@ make.DemandPoints(points, n = 100L, quantile = 0.5,
   kernel.method = c("ks", "hypervolume")[1], ...)
 }
 \arguments{
-\item{points}{\code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records.}
+\item{points}{\code{\link[sp]{SpatialPointsDataFrame}} or \code{\link[sp]{SpatialPoints}} with species presence records.}
 
-\item{n}{\code{integer} number of demand points to use for each attribute space for each species. Defaults to 100L.}
+\item{n}{\code{integer} number of demand points to use for each attribute space for each species. Defaults to \code{100L}.}
 
-\item{quantile}{\code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{points} intersect. Defaults to 0.5.}
+\item{quantile}{\code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{points} intersect. Defaults to \code{0.5}.}
 
-\item{kernel.method}{\code{character} name of kernel method to use to generate demand points. Defaults to 'ks'.}
+\item{kernel.method}{\code{character} name of kernel method to use to generate demand points. Defaults to \code{'ks'}.}
 
 \item{...}{arguments passed to kernel density estimating functions}
 }
 \value{
-\code{DemandPoints} object.
+\code{\link{DemandPoints}} object.
 }
 \description{
 This function generates demand points for RAP using kernels.
@@ -51,4 +51,3 @@ kernel.method='hypervolume'
 \seealso{
 \code{\link[hypervolume]{hypervolume}}, \code{\link[ks]{kde}}, \code{\link[adehabitatHR]{mcp}}.
 }
-

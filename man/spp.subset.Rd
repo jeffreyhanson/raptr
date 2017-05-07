@@ -13,15 +13,15 @@ spp.subset(x, species)
 \method{spp.subset}{RapUnsolOrSol}(x, species)
 }
 \arguments{
-\item{x}{\code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.}
+\item{x}{\code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.}
 
 \item{species}{\code{integer}, or \code{character} vectors to specify the index or species names to subset.}
 }
 \value{
-\code{RapData} or \code{RapUnsolved} object depending on input object.
+\code{\link{RapData}} or \code{\link{RapUnsolved}} object depending on input object.
 }
 \description{
-Subset species from a \code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.
+Subset species from a \code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.
 }
 \examples{
 # load data
@@ -30,6 +30,5 @@ data(sim_ru)
 sim_ru2 <- spp.subset(sim_ru, 1)
 }
 \seealso{
-\code{RapData}, \code{RapUnsolved}, \code{RapSolved}.
+\code{\link{RapData}}, \code{\link{RapUnsolved}}, \code{\link{RapSolved}}.
 }
-

@@ -10,14 +10,14 @@ amount.held(x, y, species)
 \method{amount.held}{RapSolved}(x, y = 0, species = NULL)
 }
 \arguments{
-\item{x}{\code{RapResults} or \code{RapSolved} object.}
+\item{x}{\code{\link{RapResults}} or \code{\link{RapSolved}} object.}
 
 \item{y}{\code{NULL} to return all values, \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.}
 
 \item{species}{\code{NULL} for all species or \code{integer} indicating species.}
 }
 \value{
-\code{matrix} or \code{numeric} vector depending on arguments.
+\code{\link[base]{matrix}} or \code{numeric} vector depending on arguments.
 }
 \description{
 This function returns the amount held for each species in a solution.
@@ -34,6 +34,5 @@ amount.held(sim_rs, 2)
 amount.held(sim_rs, NULL)
 }
 \seealso{
-\code{RapResults}, \code{RapSolved}.
+\code{\link{RapResults}}, \code{\link{RapSolved}}.
 }
-

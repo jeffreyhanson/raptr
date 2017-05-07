@@ -4,7 +4,7 @@
 \alias{summary}
 \title{Summary of solutions}
 \arguments{
-\item{object}{\code{RapResults}, or \code{RapSolved} object.}
+\item{object}{\code{\link{RapResults}}, or \code{\link{RapSolved}} object.}
 
 \item{...}{not used.}
 }
@@ -12,7 +12,7 @@
 \code{data.frame}
 }
 \description{
-Extracts summary of solutions in a \code{RapResults} or \code{RapSolved} object.
+Extracts summary of solutions in a \code{\link{RapResults}} or \code{\link{RapSolved}} object.
 }
 \details{
 This table follows Marxan conventions (summary.dat in \url{http://marxan.net/downloads/uq_marxan_web_2/module5.html}). The columns are:
@@ -48,4 +48,3 @@ summary(sim_rs)
 \seealso{
 \code{\link{RapResults}}, \code{\link{RapSolved}}.
 }
-

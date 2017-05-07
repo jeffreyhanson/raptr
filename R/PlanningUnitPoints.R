@@ -5,7 +5,7 @@ NULL
 #'
 #' This class is used to planning units in an attribute space.
 #'
-#' @slot coords \code{matrix} coordinates for each point.
+#' @slot coords \code{\link[base]{matrix}} coordinates for each point.
 #' @slot ids \code{integer} planning unit ids.
 #' @seealso \code{\link{AttributeSpace}}.
 #' @export
@@ -31,7 +31,7 @@ setClass("PlanningUnitPoints",
 #'
 #' This function creates a new \code{PlanningUnitPoints} object.
 #'
-#' @param coords \code{matrix} coordinates for each point.
+#' @param coords \code{\link[base]{matrix}} coordinates for each point.
 #' @param ids \code{integer} planning unit ids.
 #' @seealso \code{\link{AttributeSpace-class}}.
 #' @export

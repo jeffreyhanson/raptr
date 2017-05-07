@@ -37,4 +37,3 @@ GurobiOpts(Threads=1L, MIPGap=0.1, Method=0L,
 \seealso{
 \code{\link{GurobiOpts-class}}.
 }
-

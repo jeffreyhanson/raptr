@@ -33,4 +33,3 @@ This function retrieves google map data for planning units. The google map data 
 \code{\link[RgoogleMaps]{GetMap.bbox}}, \code{\link{plot}}.
 }
 \keyword{internal}
-

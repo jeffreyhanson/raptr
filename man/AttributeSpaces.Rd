@@ -7,7 +7,7 @@
 AttributeSpaces(spaces, name)
 }
 \arguments{
-\item{spaces}{\code{list} of \code{AttributeSpace} objects for different species.}
+\item{spaces}{\code{list} of \code{\link{AttributeSpace}} objects for different species.}
 
 \item{name}{\code{character} name to identify the attribute space.}
 }
@@ -43,4 +43,3 @@ spaces1 <- AttributeSpaces(list(space1, space2), 'test')
 \seealso{
 \code{\link{AttributeSpace-class}}.
 }
-

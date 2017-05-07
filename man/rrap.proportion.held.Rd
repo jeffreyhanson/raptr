@@ -9,11 +9,11 @@ rrap.proportion.held(pu.coordinates, pu.probabilities, dp.coordinates,
   maximum.r.level = as.integer(length(pu.probabilities)))
 }
 \arguments{
-\item{pu.coordinates}{\code{matrix} of planning unit coordinates.}
+\item{pu.coordinates}{\code{\link[base]{matrix}} of planning unit coordinates.}
 
 \item{pu.probabilities}{\code{numeric} vector of planning unit probabilities.}
 
-\item{dp.coordinates}{\code{matrix} of demand point coordinates.}
+\item{dp.coordinates}{\code{\link[base]{matrix}} of demand point coordinates.}
 
 \item{dp.weights}{\code{numeric} vector of demand point weights.}
 
@@ -31,4 +31,3 @@ in a another set of points using the reliable formulation.
 \examples{
 rrap.proportion.held(as.matrix(iris[1:2,-5]), runif(1:2), as.matrix(iris[1:5,-5]), runif(1:5), 10)
 }
-

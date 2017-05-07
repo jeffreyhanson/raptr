@@ -1,9 +1,12 @@
-all: clean site vignette check build
+all: clean mean site vignette check build
 
 clean:
 	rm -rf docs/*
 	rm -rf inst/doc/*
 	rm -rf vignettes/*
+
+man:
+	R --slave -e "devtools::document()"
 
 site:
 	R -e "devtools::install_local('../raptr')"
@@ -27,9 +30,23 @@ vignette:
 	touch inst/doc/raptr.Rmd
 	touch inst/doc/raptr.html
 
+test:
+	echo "\n===== UNIT TESTS =====\n" > test.log 2>&1
+	R --slave -e "devtools::test()" > test.log 2>&1
+	rm -f tests/testthat/Rplots.pdf
+	rm -f gurobi.log
+
 check:
-	R -d "valgrind --tool=memcheck" -e "devtools::check()"
-	R -e "devtools::build_win()"
+	echo "\n===== R CMD CHECK =====\n" > check.log 2>&1
+	R --slave -d "valgrind --tool=memcheck" -e "devtools::check()" >> check.log 2>&1
+
+checkwb:
+	R --slave -e "devtools::build_win()"
 
 build:
-	R -e "devtools::build()"
+	R --slave -e "devtools::build()"
+
+install:
+	R --slave -e "devtools::install_local('../prioritizr')"
+
+.PHONY: clean mean site man test check checkwb build install

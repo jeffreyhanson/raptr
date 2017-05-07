@@ -1,4 +1,11 @@
+# raptr 0.0.4
+
+* find out which suggested packages are installed using `requireNamespace`
+* add more links to package documentation
+* register Rcpp functions
+
 # raptr 0.0.3
+
 * reduce memory consumption using external pointers
 * fix memory leaks
 * fix bug in tests for calcSpeciesAverageInPus

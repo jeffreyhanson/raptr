@@ -2,9 +2,9 @@
 #'
 #' This is a convenience function to quickly calculate the proportion of variation that one set of points captures
 #' in a another set of points using the reliable formulation.
-#' @param pu.coordinates \code{matrix} of planning unit coordinates.
+#' @param pu.coordinates \code{\link[base]{matrix}} of planning unit coordinates.
 #' @param pu.probabilities \code{numeric} vector of planning unit probabilities.
-#' @param dp.coordinates \code{matrix} of demand point coordinates.
+#' @param dp.coordinates \code{\link[base]{matrix}} of demand point coordinates.
 #' @param dp.weights \code{numeric} vector of demand point weights.
 #' @param failure.distance \code{numeric} indicating the cost of the failure planning unit.
 #' @param maximum.r.level \code{integer} maximum failure (R) level to use for calculations.

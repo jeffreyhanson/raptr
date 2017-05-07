@@ -2,8 +2,8 @@
 % Please edit documentation in R/misc.R
 \docType{class}
 \name{PolySet-class}
-\alias{PolySet}
 \alias{PolySet-class}
+\alias{PolySet}
 \title{PolySet}
 \description{
 Object contains PolySet data.
@@ -11,4 +11,3 @@ Object contains PolySet data.
 \seealso{
 \code{\link[PBSmapping]{PolySet}}.
 }
-

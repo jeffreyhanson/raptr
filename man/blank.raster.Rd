@@ -7,7 +7,7 @@
 blank.raster(x, res)
 }
 \arguments{
-\item{x}{\code{Spatial*} object.}
+\item{x}{\code{\link[sp]{Spatial-class}} object.}
 
 \item{res}{\code{numeric vector} specifying resolution of the output raster in the x and y dimensions. If \code{vector} is of length one, then the pixels are assumed to be square.}
 }
@@ -20,4 +20,3 @@ polys <- sim.pus(225L)
 # make RasterLayer from SpatialPolygons
 blank.raster(polys, 1)
 }
-

@@ -5,15 +5,15 @@ NULL
 #'
 #' This class is used to store RAP input data.
 #'
-#' @slot polygons \code{PolySet} planning unit spatial data or \code{NULL} if data not available.
-#' @slot pu \code{data.frame} planning unit data. Columns are 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).
-#' @slot species \code{data.frame} with species data. Columns are 'name' (\code{character}.
-#' @slot targets \code{data.frame} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), 'proportion' (\code{numeric}).
-#' @slot pu.species.probabilities \code{data.frame} with data on the probability of species in each planning unit. Columns are 'species' (\code{integer}), 'pu' (\code{integer}), and 'value' (\code{numeric}) columns.
+#' @slot polygons \code{\link[PBSmapping]{PolySet}} planning unit spatial data or \code{NULL} if data not available.
+#' @slot pu \code{\link[base]{data.frame}} planning unit data. Columns are 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).
+#' @slot species \code{\link[base]{data.frame}} with species data. Columns are 'name' (\code{character}.
+#' @slot targets \code{\link[base]{data.frame}} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), 'proportion' (\code{numeric}).
+#' @slot pu.species.probabilities \code{\link[base]{data.frame}} with data on the probability of species in each planning unit. Columns are 'species' (\code{integer}), 'pu' (\code{integer}), and 'value' (\code{numeric}) columns.
 #' @slot attribute.spaces \code{list} of \code{AttributeSpaces} objects with the demand points and planning unit coordinates.
-#' @slot boundary \code{data.frame} with data on the shared boundary length of planning units. Columns are with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'boundary' (\code{numeric}).
+#' @slot boundary \code{\link[base]{data.frame}} with data on the shared boundary length of planning units. Columns are with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'boundary' (\code{numeric}).
 #' @slot skipchecks \code{logical} Skip data integrity checks? May improve speed for big data sets.
-#' @slot .cache \code{environment} used to cache calculations.
+#' @slot .cache \code{\link[base]{environment}} used to cache calculations.
 #' @seealso \code{\link[PBSmapping]{PolySet}}.
 #' @export
 setClass("RapData",
@@ -114,15 +114,15 @@ setClass("RapData",
 #'
 #' This function creates a "RapData" object using pre-processed data.
 #'
-#' @param polygons \code{PolySet} planning unit spatial data or \code{NULL} if data not available.
-#' @param pu \code{data.frame} planning unit data. Columns are 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).
-#' @param species \code{data.frame} with species data. Columns are 'name' (\code{character}).
-#' @param targets \code{data.frame} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), 'proportion' (\code{numeric}).
-#' @param pu.species.probabilities \code{data.frame} with data on the probability of species in each planning unit. Columns are 'species' (\code{integer}), 'pu' (\code{integer}), and 'value' (\code{numeric}) columns.
+#' @param polygons \code{\link[PBSmapping]{PolySet}} planning unit spatial data or \code{NULL} if data not available.
+#' @param pu \code{\link[base]{data.frame}} planning unit data. Columns are 'cost' (\code{numeric}), 'area' (\code{numeric}), and 'status' (\code{integer}).
+#' @param species \code{\link[base]{data.frame}} with species data. Columns are 'name' (\code{character}).
+#' @param targets \code{\link[base]{data.frame}} with species data. Columns are 'species' (\code{integer}), 'target' (\code{integer}), 'proportion' (\code{numeric}).
+#' @param pu.species.probabilities \code{\link[base]{data.frame}} with data on the probability of species in each planning unit. Columns are 'species' (\code{integer}), 'pu' (\code{integer}), and 'value' (\code{numeric}) columns.
 #' @param attribute.spaces \code{list} of \code{AttributeSpaces} objects with the demand points and planning unit coordinates.
-#' @param boundary \code{data.frame} with data on the shared boundary length of planning units. Columns are with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'boundary' (\code{integer}).
+#' @param boundary \code{\link[base]{data.frame}} with data on the shared boundary length of planning units. Columns are with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'boundary' (\code{integer}).
 #' @param skipchecks \code{logical} Skip data integrity checks? May improve speed for big data sets.
-#' @param .cache \code{environment} used to cache calculations.
+#' @param .cache \code{\link[base]{environment}} used to cache calculations.
 #' @note Generally, users are not encouraged to change arguments to \code{.cache}.
 #' @return RapData object
 #' @seealso \code{\link[PBSmapping]{PolySet}}, \code{\link[sp]{SpatialPoints}}, \code{\link[sp]{SpatialPointsDataFrame}}, \code{\link{make.RapData}}, \code{\link{RapData-class}}.
@@ -209,20 +209,20 @@ RapData<-function(pu, species, targets, pu.species.probabilities, attribute.spac
 #'
 #' This function prepares spatially explicit planning unit, species data, and landscape data layers for RAP processing.
 #'
-#' @param pus \code{SpatialPolygons} with planning unit data.
-#' @param species \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} with species probability distribution data.
-#' @param spaces \code{list} of/or \code{RasterLayer}, \code{RasterStack}, \code{RasterBrick} representing projects of attribute space over geographic space. Use a \code{list} to denote separate attribute spaces.
+#' @param pus \code{\link[sp]{SpatialPolygons}} with planning unit data.
+#' @param species \code{\link[raster]{raster}} with species probability distribution data.
+#' @param spaces \code{list} of/or \code{\link[raster]{raster}} representing projects of attribute space over geographic space. Use a \code{list} to denote separate attribute spaces.
 #' @param amount.target \code{numeric} vector for area targets (\%) for each species. Defaults to 0.2 for each attribute space for each species.
 #' @param space.target \code{numeric} vector for attribute space targets (\%) for each species. Defaults to 0.2 for each attribute space for each species and each space.
 #' @param n.demand.points \code{integer} number of demand points to use for each attribute space for each species. Defaults to 100L.
 #' @param kernel.method \code{character} name of kernel method to use to generate demand points. Use either \code{ks} or \code{hypervolume}.
 #' @param quantile \code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.5.
 #' @param include.geographic.space \code{logical} should the geographic space be considered an attribute space?
-#' @param species.points \code{list} of/or \code{SpatialPointsDataFrame} or \code{SpatialPoints} with species presence records. Use a \code{list} of objects to represent different species. Must have the same number of elements as \code{species}. If not supplied then use \code{n.species.points} to sample points from the species distributions.
+#' @param species.points \code{list} of/or \code{\link[sp]{SpatialPointsDataFrame}} or \code{\link[sp]{SpatialPoints}} with species presence records. Use a \code{list} of objects to represent different species. Must have the same number of elements as \code{species}. If not supplied then use \code{n.species.points} to sample points from the species distributions.
 #' @param n.species.points \code{numeric} vector specifiying the number points to sample the species distributions to use to generate demand points. Defaults to 20\% of the distribution.
 #' @param verbose \code{logical} print statements during processing?
 #' @param scale \code{logical} scale the attribute spaces to unit mean and standard deviation? This prevents overflow. Defaults to \code{TRUE}.
-#' @param ... additional arguments to \code{calcBoundaryData} and \code{calcPuVsSpeciesData}.
+#' @param ... additional arguments to \code{\link{calcBoundaryData}} and \code{\link{calcSpeciesAverageInPus}}.
 #' @seealso \code{\link{RapData-class}}, \code{\link{RapData}}.
 #' @export make.RapData
 #' @examples

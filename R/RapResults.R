@@ -5,13 +5,13 @@ NULL
 #'
 #' This class is used to store RAP results.
 #'
-#' @slot summary \code{data.frame} with summary information on solutions.
-#' @slot selections \code{matrix} with binary selections. The cell \eqn{x_{ij}} denotes if planning unit \eqn{j} is selected in the \eqn{i}'th solution
-#' @slot amount.held \code{matrix} with the amount held for each species in each solution.
-#' @slot space.held \code{matrix} with the proportion of attribute space sampled for each species in each solution.
+#' @slot summary \code{\link[base]{data.frame}} with summary information on solutions.
+#' @slot selections \code{\link[base]{matrix}} with binary selections. The cell \eqn{x_{ij}} denotes if planning unit \eqn{j} is selected in the \eqn{i}'th solution
+#' @slot amount.held \code{\link[base]{matrix}} with the amount held for each species in each solution.
+#' @slot space.held \code{\link[base]{matrix}} with the proportion of attribute space sampled for each species in each solution.
 #' @slot best \code{integer} with index of best solution.
 #' @slot logging.file \code{character} Gurobi log files.
-#' @slot .cache \code{environment} used to store extra data.
+#' @slot .cache \code{\link[base]{environment}} used to store extra data.
 #' @details The \code{summary} table follows Marxan conventions (summary.dat in \url{http://marxan.net/downloads/uq_marxan_web_2/module5.html}). The columns are:
 #' \tabular{cl}{
 #' \code{Run_Number}
@@ -97,14 +97,14 @@ setClass("RapResults",
 
 #' Create RapResults object
 #'
-#' This function creates a new \code{RapResults} object.
+#' This function creates a new \code{\link{RapResults}} object.
 #'
-#' @param summary \code{data.frame} with summary information on solutions. See details below for more information.
-#' @param selections \code{matrix} with binary selections. The cell \eqn{x_{ij}} denotes if planning unit \eqn{j} is selected in the \eqn{i}'th solution.
-#' @param amount.held \code{matrix} with the amount held for each species in each solution.
-#' @param space.held \code{matrix} with the proportion of attribute space sampled for each species in each solution. 
+#' @param summary \code{\link[base]{data.frame}} with summary information on solutions. See details below for more information.
+#' @param selections \code{\link[base]{matrix}} with binary selections. The cell \eqn{x_{ij}} denotes if planning unit \eqn{j} is selected in the \eqn{i}'th solution.
+#' @param amount.held \code{\link[base]{matrix}} with the amount held for each species in each solution.
+#' @param space.held \code{\link[base]{matrix}} with the proportion of attribute space sampled for each species in each solution. 
 #' @param logging.file \code{character} Gurobi log files.
-#' @param .cache \code{environmental} used to cache calculations.
+#' @param .cache \code{\link[base]{environment}} used to cache calculations.
 #' @details The \code{summary} table follows Marxan conventions (summary.dat in \url{http://marxan.net/downloads/uq_marxan_web_2/module5.html}). The columns are:
 #' \tabular{cl}{
 #' \code{Run_Number}

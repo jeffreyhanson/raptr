@@ -2,10 +2,9 @@
 % Please edit documentation in R/misc.R
 \docType{class}
 \name{RapOpts-class}
-\alias{RapOpts}
 \alias{RapOpts-class}
+\alias{RapOpts}
 \title{RapOpts class}
 \description{
-Object is either \code{RapReliableOpts} or \code{RapUnreliableOpts}.
+Object is either \code{\link{RapReliableOpts}} or \code{\link{RapUnreliableOpts}}.
 }
-

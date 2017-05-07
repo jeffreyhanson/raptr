@@ -7,17 +7,17 @@
 randomPoints(mask, n, prob = FALSE)
 }
 \arguments{
-\item{mask}{\code{RasterLayer} object}
+\item{mask}{\code{\link[raster]{raster}} object}
 
 \item{n}{\code{integer} number of points to sample}
 
 \item{prob}{\code{logical} should the raster values be used as weights? Defaults to \code{FALSE}.}
 }
 \value{
-code{matrix} with x-coordinates, y-coordinates, and cell values.
+\code{\link[base]{matrix}} with x-coordinates, y-coordinates, and cell values.
 }
 \description{
-This function generates random points in a \code{RasterLayer} object.
+This function generates random points in a \code{\link[raster]{raster}} object.
 }
 \examples{
 # simulate data
@@ -34,4 +34,3 @@ points(pts2, col='black')
 \seealso{
 This function is similar to \code{dismo::randomPoints}.
 }
-

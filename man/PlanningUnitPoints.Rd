@@ -7,7 +7,7 @@
 PlanningUnitPoints(coords, ids)
 }
 \arguments{
-\item{coords}{\code{matrix} coordinates for each point.}
+\item{coords}{\code{\link[base]{matrix}} coordinates for each point.}
 
 \item{ids}{\code{integer} planning unit ids.}
 }
@@ -24,4 +24,3 @@ seq_len(150)
 \seealso{
 \code{\link{AttributeSpace-class}}.
 }
-

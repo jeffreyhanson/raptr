@@ -782,7 +782,7 @@ spacePlot.2d<-function(pu, dp, pu.color.palette, main) {
 #' @noRd
 spacePlot.3d<-function(pu, dp, pu.color.palette, main) {
 	# check if rgl is installed
-  if (!'rgl' %in% unlist(lapply(.libPaths(), dir), recursive=FALSE, use.names=FALSE))
+  if (!requireNamespace('rgl', quietly=TRUE))
 		stop('The rgl R package must be installed to visualise 3d attribute spaces')
   # create frame
   rgl::open3d()
