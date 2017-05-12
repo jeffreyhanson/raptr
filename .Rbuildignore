@@ -1,7 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.travis\.yml$
-NEWS.md
 ^gurobi\.log$
 ^check\.log$
 ^test\.log$
