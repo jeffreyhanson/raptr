@@ -1,4 +1,4 @@
-all: clean mean site vignette check build
+all: clean man site vignette check
 
 clean:
 	rm -rf docs/*
@@ -9,11 +9,13 @@ man:
 	R --slave -e "devtools::document()"
 
 site:
-	R -e "devtools::install_local('../raptr')"
 	R -e "devtools::load_all()"
 	R -e "devtools::document()"
 	cp -f inst/vign/raptr.Rmd vignettes/raptr.Rmd
-	R -e "staticdocs::build_site()"
+	R -e "devtools::build_vignettes()"
+	R -e "pkgdown::build_home()"
+	R -e "pkgdown::build_reference()"
+	R -e "pkgdown::build_news()"
 	rm -rf vignettes/*
 	rm -rf inst/doc/*
 
