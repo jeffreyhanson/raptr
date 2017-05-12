@@ -9,7 +9,7 @@ Comments for submission to CRAN
   + R 3.4.0
   + R devel
 * [Windows Server 2012 R2 (x64) (appveyor)](https://ci.appveyor.com/project/jeffreyhanson/raptr)
-  + R 3.3.2 
+  + R 3.4.0 
 * [Windows Server 2008 (x64) (win-builder)](https://win-builder.r-project.org/)
   + R devel
 
@@ -64,7 +64,7 @@ This version has the following updates:
 * added more links to the package documentation
 * use `requireNamespace` to  check which packages are installed on a user's system
 * registers native routines and disables symbol search to avoid generating an additional note
-* [fixes error encountered on Solaris environment](https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/raptr-00check.html)
+* [fixes an error encountered on the Solaris environment](https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/raptr-00check.html)
 
 Thanks!
 
