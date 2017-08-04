@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a new RapUnsolved object â€” RapUnsolved ü¾Œ¦”¼ü¾Œƒ ¼ü¾Œ¦„¼ raptr</title>
+<title>Create a new RapUnsolved object <U+2014> RapUnsolved <e2><80><a2> raptr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -112,15 +112,22 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load data</span>
-<span class='fu'>not_run</span>({
-  <span class='fu'>data</span>(<span class='no'>cs_pus</span>, <span class='no'>cs_spp</span>)
-  <span class='co'># create inputs for RapUnsolved</span>
-  <span class='no'>ro</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RapUnreliableOpts.html'>RapUnreliableOpts</a></span>()
-  <span class='no'>rd</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='make.RapData.html'>make.RapData</a></span>(<span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,], <span class='no'>cs_spp</span>, <span class='kw'>NULL</span>, <span class='kw'>include.geographic.space</span><span class='kw'>=</span><span class='fl'>TRUE</span>,<span class='kw'>n.demand.points</span><span class='kw'>=</span><span class='fl'>5L</span>)
-  <span class='co'># create RapUnsolved object</span>
-  <span class='no'>ru</span> <span class='kw'>&lt;-</span> <span class='fu'>RapUnsolved</span>(<span class='no'>ro</span>, <span class='no'>rd</span>)
-  <span class='fu'><a href='print.html'>print</a></span>(<span class='no'>ru</span>)
-})</div></pre>
+
+<span class='fu'>data</span>(<span class='no'>cs_pus</span>, <span class='no'>cs_spp</span>)
+<span class='co'># create inputs for RapUnsolved</span>
+<span class='no'>ro</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RapUnreliableOpts.html'>RapUnreliableOpts</a></span>()
+<span class='no'>rd</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='make.RapData.html'>make.RapData</a></span>(<span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,], <span class='no'>cs_spp</span>, <span class='kw'>NULL</span>, <span class='kw'>include.geographic.space</span><span class='kw'>=</span><span class='fl'>TRUE</span>,<span class='kw'>n.demand.points</span><span class='kw'>=</span><span class='fl'>5L</span>)
+<span class='co'># create RapUnsolved object</span>
+<span class='no'>ru</span> <span class='kw'>&lt;-</span> <span class='fu'>RapUnsolved</span>(<span class='no'>ro</span>, <span class='no'>rd</span>)
+<span class='fu'><a href='print.html'>print</a></span>(<span class='no'>ru</span>)</div><div class='output co'>#&gt; RapUnsolved object
+#&gt; 
+#&gt; Parameters
+#&gt;   BLM: 0 
+#&gt; Data
+#&gt;   Number of planning units: 10 
+#&gt;   Number of species: 4 
+#&gt;   Number of attribute spaces: 1 </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -44,7 +44,7 @@ This function is used to solve a \code{\link{RapUnsolved}} object that has all o
 \examples{
 # load RapUnsolved object
 data(sim_ru)
-\dontrun{
+\donttest{
 # solve it using Gurobi
 sim_rs <- solve(sim_ru)
 # evaluate manually specified solution using planning unit indices

@@ -1,4 +1,4 @@
-all: clean man site vignette check
+all: clean man site vignette test check
 
 clean:
 	rm -rf docs/*
@@ -13,9 +13,7 @@ site:
 	R -e "devtools::document()"
 	cp -f inst/vign/raptr.Rmd vignettes/raptr.Rmd
 	R -e "devtools::build_vignettes()"
-	R -e "pkgdown::build_home()"
-	R -e "pkgdown::build_reference()"
-	R -e "pkgdown::build_news()"
+	R -e "pkgdown::build_site()"
 	rm -rf vignettes/*
 	rm -rf inst/doc/*
 
@@ -49,6 +47,6 @@ build:
 	R --slave -e "devtools::build()"
 
 install:
-	R --slave -e "devtools::install_local('../prioritizr')"
+	R --slave -e "devtools::install_local('../raptr')"
 
 .PHONY: clean mean site man test check checkwb build install

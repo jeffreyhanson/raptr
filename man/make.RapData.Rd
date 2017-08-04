@@ -43,7 +43,7 @@ make.RapData(pus, species, spaces = NULL, amount.target = 0.2,
 This function prepares spatially explicit planning unit, species data, and landscape data layers for RAP processing.
 }
 \examples{
-\dontrun{
+\donttest{
 # load data
 data(cs_pus, cs_spp, cs_space)
 # make RapData object using the 1st 10 planning units

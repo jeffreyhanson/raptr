@@ -640,7 +640,7 @@ cs_rs_amount <- rap(
 	cs_pus[,-2], cs_spp, cs_space,
 	amount.target=0.2, space.target=NA, n.demand.points=50L,
 	include.geographic.space=TRUE, formulation='unreliable',
-	kernel.method='hypervolume', quantile=0.7, solve=FALSE
+	kernel.method='ks', quantile=0.7, solve=FALSE
 )
 ```
 

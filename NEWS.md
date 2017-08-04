@@ -1,4 +1,10 @@
-# raptr 0.0.4
+# raptr 0.0.5
+
+* fix documentation in `make.DemandPoints`
+* \donttest instead of \dontrun for examples
+* fix broken example code
+
+# raptr 0.0.4  (unreleased)
 
 * find out which suggested packages are installed using `requireNamespace`
 * add more links to package documentation

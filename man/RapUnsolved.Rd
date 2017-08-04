@@ -19,7 +19,7 @@ This function creates a \code{\link{RapUnsolved}} object using a \code{\link{Gur
 }
 \examples{
 # load data
-\dontrun{
+\donttest{
 data(cs_pus, cs_spp)
 # create inputs for RapUnsolved
 ro <- RapUnreliableOpts()

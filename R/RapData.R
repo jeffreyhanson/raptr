@@ -128,51 +128,48 @@ setClass("RapData",
 #' @seealso \code{\link[PBSmapping]{PolySet}}, \code{\link[sp]{SpatialPoints}}, \code{\link[sp]{SpatialPointsDataFrame}}, \code{\link{make.RapData}}, \code{\link{RapData-class}}.
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # load data
 #' data(cs_pus, cs_spp, cs_space)
 #' # create data for RapData object
 #' attribute.spaces <- list(
 #' 	AttributeSpaces(
-#'		list(
-#' 			AttributeSpace(
-#'				planning.unit.points=PlanningUnitPoints(
-#'					rgeos::gCentroid(cs_pus[1:10,], byid=TRUE)@@coords,
-#'					seq_len(10)
-#'				)
-#' 				demand.points=make.DemandPoints(
-#'					SpatialPoints(
-#'						coords=randomPoints(
-#'							cs_spp,
-#'							n=10,
-#'							prob=TRUE
-#'						)
-#'					),
-#						NULL
-#'				),
-#'				species=1L
-#'			),
+#' 		name="geographic",
+#' 		list(
 #' 			AttributeSpace(
 #' 				planning.unit.points=PlanningUnitPoints(
-#'					extract(cs_space[[1]],cs_pus[1:10,],fun=mean),
-#'					seq_len(10)
-#'				),
+#' 					rgeos::gCentroid(cs_pus[1:10,], byid=TRUE)@@coords,
+#' 					seq_len(10)
+#' 				),
 #' 				demand.points=make.DemandPoints(
-#'					SpatialPoints(
-#'						coords=randomPoints(
-#'							cs_spp,
-#'							n=10,
-#'							prob=TRUE
-#'						)
-#'					),
-#'					cs_space[[1]]
-#'				),
-#'				species=1L
-#'			)
+#' 					randomPoints(
+#' 						cs_spp[[1]],
+#' 						n=10,
+#' 						prob=TRUE
+#' 					)
+#' 				),
+#' 				species=1L
+#' 			)
+#' 		)
+#' 	),
+#' 	AttributeSpaces(
+#' 		name="environmental",
+#' 		list(
+#' 			# create environmental attribute space
+#' 			AttributeSpace(
+#' 				planning.unit.points=PlanningUnitPoints(
+#' 					extract(cs_space[[1]], cs_pus[1:10,], fun=mean),
+#' 					seq_len(10)
+#' 				),
+#' 				demand.points=make.DemandPoints(
+#' 					cs_space[[1]][Which(!is.na(cs_space[[1]]))]
+#' 				),
+#' 				species=1L
+#' 			)
 #' 		)
 #' 	)
 #' )
-#' pu.species.probabilities <- calcSpeciesAverageInPus(cs_pus[1:10,], cs_spp)
+#' pu.species.probabilities <- calcSpeciesAverageInPus(cs_pus[1:10,], cs_spp[[1]])
 #' polygons <- SpatialPolygons2PolySet(cs_pus[1:10,])
 #' boundary <- calcBoundaryData(cs_pus[1:10,])
 #'
@@ -180,7 +177,7 @@ setClass("RapData",
 #' x<-RapData(
 #' 	pu=cs_pus@@data[1:10,],
 #' 	species=data.frame(name='test'),
-#'  target=data.frame(species=1, target=0:2, proportion=0.2),
+#' 	target=data.frame(species=1L, target=0:2, proportion=0.2),
 #' 	pu.species.probabilities=pu.species.probabilities,
 #' 	attribute.spaces=attribute.spaces,
 #' 	polygons=polygons,
@@ -226,7 +223,7 @@ RapData<-function(pu, species, targets, pu.species.probabilities, attribute.spac
 #' @seealso \code{\link{RapData-class}}, \code{\link{RapData}}.
 #' @export make.RapData
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # load data
 #' data(cs_pus, cs_spp, cs_space)
 #' # make RapData object using the 1st 10 planning units

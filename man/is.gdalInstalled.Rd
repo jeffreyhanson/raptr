@@ -15,7 +15,7 @@ If not, download it here: \url{http://download.osgeo.org/gdal}.
 }
 \examples{
 # check if gdal is installed on system
-\dontrun{
+\donttest{
 is.gdalInstalled()
 }
 }

@@ -1,6 +1,6 @@
 ---
 title: "raptr: Representative and Adequate Prioritisation Toolkit in R"
-date: "12 May 2017"
+date: "04 August 2017"
 output:
   rmarkdown::html_document:
     toc: true
@@ -541,21 +541,21 @@ sim_rs_s1_space <- update(sim_rs_s1_amount, amount.target=0.2, space.target=0.85
 ##   RHS range        [1e+00, 1e+02]
 ## Found heuristic solution: objective 90
 ## Presolve removed 36 rows and 0 columns
-## Presolve time: 1.72s
+## Presolve time: 2.07s
 ## Presolved: 10066 rows, 10100 columns, 40104 nonzeros
 ## Variable types: 0 continuous, 10100 integer (10100 binary)
 ## Presolved: 10066 rows, 10100 columns, 40104 nonzeros
 ## 
 ## Presolve removed 10066 rows and 10100 columns
 ## 
-## Root relaxation: objective 2.000000e+01, 572 iterations, 0.06 seconds
+## Root relaxation: objective 2.000000e+01, 572 iterations, 0.07 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-## *    0     0               0      20.0000000   20.00000  0.00%     -    1s
+## *    0     0               0      20.0000000   20.00000  0.00%     -    2s
 ## 
-## Explored 0 nodes (893 simplex iterations) in 1.82 seconds
+## Explored 0 nodes (893 simplex iterations) in 2.18 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 20 90 
@@ -645,14 +645,14 @@ sim_rs_s2_space <- update(sim_rs_s2_amount, amount.target=0.2, space.target=0.85
 ##   RHS range        [1e+00, 6e+01]
 ## Found heuristic solution: objective 90
 ## Presolve removed 220 rows and 0 columns
-## Presolve time: 1.23s
+## Presolve time: 1.32s
 ## Presolved: 9882 rows, 10100 columns, 41664 nonzeros
 ## Variable types: 0 continuous, 10100 integer (10100 binary)
 ## Presolved: 9882 rows, 10100 columns, 41664 nonzeros
 ## 
 ## Presolve removed 9882 rows and 10100 columns
 ## 
-## Root relaxation: objective 1.232570e+01, 4953 iterations, 0.22 seconds
+## Root relaxation: objective 1.232570e+01, 4953 iterations, 0.27 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
@@ -660,7 +660,7 @@ sim_rs_s2_space <- update(sim_rs_s2_amount, amount.target=0.2, space.target=0.85
 ##      0     0   12.32570    0  292   90.00000   12.32570  86.3%     -    1s
 ## H    0     0                      13.0000000   12.32570  5.19%     -    1s
 ## 
-## Explored 0 nodes (5189 simplex iterations) in 1.55 seconds
+## Explored 0 nodes (5189 simplex iterations) in 1.71 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 13 90 
@@ -748,27 +748,27 @@ sim_rs_s3_space <- update(sim_rs_s3_amount, amount.target=0.2, space.target=0.85
 ##   RHS range        [1e+00, 7e+01]
 ## Found heuristic solution: objective 85
 ## Presolve removed 589 rows and 15 columns
-## Presolve time: 2.24s
+## Presolve time: 2.65s
 ## Presolved: 9513 rows, 10085 columns, 51461 nonzeros
 ## Variable types: 0 continuous, 10085 integer (10085 binary)
 ## Presolved: 9513 rows, 10085 columns, 51461 nonzeros
 ## 
 ## Presolve removed 9513 rows and 10085 columns
 ## 
-## Root relaxation: objective 8.980792e+00, 5356 iterations, 0.24 seconds
+## Root relaxation: objective 8.980792e+00, 5356 iterations, 0.39 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0    8.98079    0   75   85.00000    8.98079  89.4%     -    2s
-## H    0     0                      10.0000000    8.98079  10.2%     -    2s
-##      0     0    8.99662    0  125   10.00000    8.99662  10.0%     -    2s
+##      0     0    8.98079    0   75   85.00000    8.98079  89.4%     -    3s
+## H    0     0                      10.0000000    8.98079  10.2%     -    3s
+##      0     0    8.99662    0  125   10.00000    8.99662  10.0%     -    3s
 ## 
 ## Cutting planes:
 ##   Gomory: 1
 ##   Zero half: 1
 ## 
-## Explored 0 nodes (5695 simplex iterations) in 2.75 seconds
+## Explored 0 nodes (5695 simplex iterations) in 3.41 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 10 85 
@@ -866,21 +866,21 @@ sim_mrs_amount <- update(
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+00, 8e+02]
 ## Found heuristic solution: objective 96
-## Presolve time: 1.13s
+## Presolve time: 1.58s
 ## Presolved: 30306 rows, 30100 columns, 120000 nonzeros
 ## Variable types: 0 continuous, 30100 integer (30100 binary)
 ## Presolved: 30306 rows, 30100 columns, 120000 nonzeros
 ## 
 ## Presolve removed 30306 rows and 30100 columns
 ## 
-## Root relaxation: objective 2.000000e+01, 2719 iterations, 0.90 seconds
+## Root relaxation: objective 2.000000e+01, 2719 iterations, 1.08 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
 ## *    0     0               0      20.0000000   20.00000  0.00%     -    2s
 ## 
-## Explored 0 nodes (5125 simplex iterations) in 2.27 seconds
+## Explored 0 nodes (5125 simplex iterations) in 2.94 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 20 96 
@@ -915,9 +915,9 @@ sim_mrs_space <- update(
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+00, 1e+02]
 ## Found heuristic solution: objective 100
-## Presolve removed 360 rows and 15 columns (presolve time = 5s) ...
+## Presolve removed 329 rows and 15 columns (presolve time = 5s) ...
 ## Presolve removed 360 rows and 15 columns
-## Presolve time: 5.70s
+## Presolve time: 6.85s
 ## Presolved: 29946 rows, 30085 columns, 131504 nonzeros
 ## Variable types: 0 continuous, 30085 integer (30085 binary)
 ## Presolve removed 67 rows and 1 columns
@@ -928,18 +928,18 @@ sim_mrs_space <- update(
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    1.0000000e+02   0.000000e+00   1.000000e+02      6s
-##     4726    2.0000000e+01   0.000000e+00   0.000000e+00      7s
-##     4726    2.0000000e+01   0.000000e+00   0.000000e+00      7s
+##        0    1.0000000e+02   0.000000e+00   1.000000e+02      8s
+##     4726    2.0000000e+01   0.000000e+00   0.000000e+00      9s
+##     4726    2.0000000e+01   0.000000e+00   0.000000e+00      9s
 ## 
-## Root relaxation: objective 2.000000e+01, 4726 iterations, 1.39 seconds
+## Root relaxation: objective 2.000000e+01, 4726 iterations, 1.76 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-## *    0     0               0      20.0000000   20.00000  0.00%     -    7s
+## *    0     0               0      20.0000000   20.00000  0.00%     -    9s
 ## 
-## Explored 0 nodes (9650 simplex iterations) in 7.47 seconds
+## Explored 0 nodes (9650 simplex iterations) in 9.10 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 20 100 
@@ -1076,9 +1076,9 @@ sim_mrs_space2 <- solve(
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+00, 1e+02]
 ## Found heuristic solution: objective 100
-## Presolve removed 360 rows and 15 columns (presolve time = 5s) ...
+## Presolve removed 329 rows and 15 columns (presolve time = 5s) ...
 ## Presolve removed 360 rows and 15 columns
-## Presolve time: 5.74s
+## Presolve time: 7.08s
 ## Presolved: 29946 rows, 30085 columns, 131478 nonzeros
 ## Variable types: 0 continuous, 30085 integer (30085 binary)
 ## Presolve removed 67 rows and 1 columns
@@ -1089,19 +1089,19 @@ sim_mrs_space2 <- solve(
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    1.0000000e+02   0.000000e+00   1.000000e+02      6s
-##     5018    2.0000000e+01   0.000000e+00   0.000000e+00      7s
-##     5018    2.0000000e+01   0.000000e+00   0.000000e+00      7s
+##        0    1.0000000e+02   0.000000e+00   1.000000e+02      8s
+##     5018    2.0000000e+01   0.000000e+00   0.000000e+00      9s
+##     5018    2.0000000e+01   0.000000e+00   0.000000e+00      9s
 ## 
-## Root relaxation: objective 2.000000e+01, 5018 iterations, 1.37 seconds
+## Root relaxation: objective 2.000000e+01, 5018 iterations, 1.65 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0   20.00000    0  150  100.00000   20.00000  80.0%     -    7s
-## H    0     0                      21.0000000   20.00000  4.76%     -    7s
+##      0     0   20.00000    0  150  100.00000   20.00000  80.0%     -    9s
+## H    0     0                      21.0000000   20.00000  4.76%     -    9s
 ## 
-## Explored 0 nodes (11324 simplex iterations) in 7.89 seconds
+## Explored 0 nodes (11324 simplex iterations) in 9.69 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 21 100 
@@ -1167,9 +1167,9 @@ sim_mrs_space3 <- try(update(sim_mrs_space, formulation='reliable', max.r.level=
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [7e-03, 1e+02]
 ## Presolve removed 338606 rows and 156703 columns
-## Presolve time: 2.77s
+## Presolve time: 2.53s
 ## 
-## Explored 0 nodes (0 simplex iterations) in 4.17 seconds
+## Explored 0 nodes (0 simplex iterations) in 3.99 seconds
 ## Thread count was 1 (of 4 available processors)
 ## 
 ## Solution count 0
@@ -1211,7 +1211,7 @@ sim_mrs_space3 <- update(
 ##   RHS range        [7e-03, 8e+05]
 ## Presolve removed 333903 rows and 151800 columns (presolve time = 5s) ...
 ## Presolve removed 333903 rows and 151800 columns
-## Presolve time: 5.82s
+## Presolve time: 6.57s
 ## Presolved: 30303 rows, 30100 columns, 90300 nonzeros
 ## Variable types: 0 continuous, 30100 integer (30100 binary)
 ## Found heuristic solution: objective 27.0000000
@@ -1226,14 +1226,14 @@ sim_mrs_space3 <- update(
 ##      129    2.0000000e+01   0.000000e+00   0.000000e+00      8s
 ##      129    2.0000000e+01   0.000000e+00   0.000000e+00      8s
 ## 
-## Root relaxation: objective 2.000000e+01, 129 iterations, 0.28 seconds
+## Root relaxation: objective 2.000000e+01, 129 iterations, 0.32 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-## *    0     0               0      20.0000000   20.00000  0.00%     -    7s
+## *    0     0               0      20.0000000   20.00000  0.00%     -    8s
 ## 
-## Explored 0 nodes (182 simplex iterations) in 7.60 seconds
+## Explored 0 nodes (182 simplex iterations) in 8.46 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 20 27 
@@ -1309,52 +1309,57 @@ sim_mrs_amount_blm <- update(sim_mrs_amount, BLM=100, Threads=threads)
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+00, 8e+02]
 ## Found heuristic solution: objective 4596
-## Presolve time: 1.11s
+## Presolve time: 1.56s
 ## Presolved: 30666 rows, 30280 columns, 120720 nonzeros
 ## Variable types: 0 continuous, 30280 integer (30280 binary)
 ## Presolved: 30666 rows, 30280 columns, 120720 nonzeros
 ## 
 ## Presolve removed 30666 rows and 30280 columns
 ## 
-## Root relaxation: objective 4.644444e+02, 4592 iterations, 1.61 seconds
+## Root relaxation: objective 4.644444e+02, 4592 iterations, 1.92 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0  464.44444    0 1725 4596.00000  464.44444  89.9%     -    2s
-## H    0     0                    1621.0000000  464.44444  71.3%     -   10s
-##      0     0  539.75309    0 1722 1621.00000  539.75309  66.7%     -   10s
-##      0     0  539.75309    0 1722 1621.00000  539.75309  66.7%     -   10s
-##      0     0  590.00000    0 1403 1621.00000  590.00000  63.6%     -   11s
-##      0     0  590.00000    0 1409 1621.00000  590.00000  63.6%     -   13s
-##      0     0  590.00000    0 1665 1621.00000  590.00000  63.6%     -   17s
-##      0     0  590.00000    0 1665 1621.00000  590.00000  63.6%     -   17s
-##      0     2  590.00000    0 1665 1621.00000  590.00000  63.6%     -   19s
-##      3     6  612.36842    2 1413 1621.00000  606.47215  62.6%  1909   20s
+##      0     0  464.44444    0 1725 4596.00000  464.44444  89.9%     -    3s
+## H    0     0                    1621.0000000  464.44444  71.3%     -   12s
+##      0     0  539.75309    0 1722 1621.00000  539.75309  66.7%     -   13s
+##      0     0  539.75309    0 1722 1621.00000  539.75309  66.7%     -   13s
+##      0     0  590.00000    0 1403 1621.00000  590.00000  63.6%     -   14s
+##      0     0  590.00000    0 1409 1621.00000  590.00000  63.6%     -   16s
+##      0     0  590.00000    0 1665 1621.00000  590.00000  63.6%     -   19s
+##      0     0  590.00000    0 1665 1621.00000  590.00000  63.6%     -   20s
+##      0     2  590.00000    0 1665 1621.00000  590.00000  63.6%     -   21s
+##     14    15  700.47673    8 1188 1621.00000  606.47215  62.6%  1186   25s
 ## H   19    20                    1439.0000000  606.47215  57.9%  1122   26s
-## H   23    24                    1336.0000000  606.47215  54.6%  1217   26s
-## H   27    28                    1333.0000000  606.47215  54.5%  1218   27s
-## H   30    29                    1232.0000000  606.47215  50.8%  1184   27s
-## H   42    32                     920.0000000  606.47215  34.1%  1115   28s
-##     54    34  680.00000    6 1606  920.00000  619.92308  32.6%   995   30s
-##    104    60  758.96667    3 1263  920.00000  635.13973  31.0%   871   35s
-##    183    86  845.00000    9 1249  920.00000  664.69697  27.8%   743   41s
-##    225    92  870.00000    6 1203  920.00000  680.00000  26.1%   711   45s
-##    341   135  851.14754   11 1230  920.00000  720.00000  21.7%   613   50s
-##    484   159  808.83636    8 1390  920.00000  737.76465  19.8%   569   55s
-##    552   171  832.90323   12  661  920.00000  745.00000  19.0%   558   60s
-##    666   194  908.79493   10 1282  920.00000  760.01857  17.4%   548   66s
-##    762   203     cutoff   11       920.00000  777.14286  15.5%   535   70s
-##    841   215     cutoff   10       920.00000  785.74173  14.6%   519   75s
-##    930   214     cutoff   10       920.00000  801.25000  12.9%   508   80s
-##   1068   208     cutoff   13       920.00000  818.34752  11.0%   500   85s
-##   1195   196     cutoff   13       920.00000  825.88235  10.2%   493   92s
+## H   23    24                    1336.0000000  606.47215  54.6%  1217   27s
+## H   27    28                    1333.0000000  606.47215  54.5%  1218   28s
+## H   30    29                    1232.0000000  606.47215  50.8%  1184   28s
+## H   42    32                     920.0000000  606.47215  34.1%  1115   29s
+##     45    32     cutoff   18       920.00000  619.00000  32.7%  1042   30s
+##     89    53  880.00000   20  940  920.00000  619.92308  32.6%   900   35s
+##    156    78  910.38462   13 1263  920.00000  659.11777  28.4%   754   40s
+##    183    86  845.00000    9 1249  920.00000  664.69697  27.8%   743   45s
+##    225    92  870.00000    6 1203  920.00000  680.00000  26.1%   711   50s
+##    301   114  793.64909    6 1535  920.00000  704.61538  23.4%   648   55s
+##    393   153  822.43902   10  974  920.00000  720.00000  21.7%   583   60s
+##    484   159  808.83636    8 1390  920.00000  737.76465  19.8%   569   65s
+##    527   164     cutoff   13       920.00000  739.00000  19.7%   558   71s
+##    617   185  900.00000   11 1224  920.00000  753.33333  18.1%   540   76s
+##    666   194  908.79493   10 1282  920.00000  760.01857  17.4%   548   80s
+##    762   203     cutoff   11       920.00000  777.14286  15.5%   535   86s
+##    841   215     cutoff   10       920.00000  785.74173  14.6%   519   93s
+##    861   213  860.57971    8 1502  920.00000  790.00000  14.1%   514   95s
+##    973   207     cutoff   15       920.00000  805.71429  12.4%   504  102s
+##   1021   204  914.11765   14  999  920.00000  810.90909  11.9%   502  105s
+##   1106   213     cutoff   17       920.00000  820.00000  10.9%   500  110s
+##   1195   196     cutoff   13       920.00000  825.88235  10.2%   493  117s
 ## 
 ## Cutting planes:
 ##   Gomory: 2
 ##   Zero half: 414
 ## 
-## Explored 1237 nodes (626040 simplex iterations) in 92.05 seconds
+## Explored 1237 nodes (626040 simplex iterations) in 117.29 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 7: 920 1232 1333 ... 4596
@@ -1506,7 +1511,7 @@ cs_rs_amount <- rap(
 	cs_pus[,-2], cs_spp, cs_space,
 	amount.target=0.2, space.target=NA, n.demand.points=50L,
 	include.geographic.space=TRUE, formulation='unreliable',
-	kernel.method='hypervolume', quantile=0.7, solve=FALSE
+	kernel.method='ks', quantile=0.7, solve=FALSE
 )
 ```
 
@@ -1514,75 +1519,6 @@ cs_rs_amount <- rap(
 ## Warning in (function (pus, species, spaces = NULL, amount.target = 0.2, :
 ## argument to pus does not have a 'status' column, creating default with all
 ## status=0L
-```
-
-```
-## Evaluating probability density...
-## Building tree... done.
-## Querying tree... 1.0101e-06  0.010102  0.020203  0.030304  0.0404051  0.0505061  0.0606071  0.0707081  0.0808091  0.0909101  0.101011  0.111112  0.121213  0.131314  0.141415  0.151516  0.161617  0.171718  0.181819  0.19192  0.202021  0.212122  0.222223  0.232324  0.242425  0.252526  0.262627  0.272728  0.282829  0.29293  0.303031  0.313132  0.323233  0.333334  0.343435  0.353536  0.363637  0.373738  0.383839  0.39394  0.404041  0.414142  0.424243  0.434344  0.444445  0.454546  0.464647  0.474748  0.484849  0.494951  0.505052  0.515153  0.525254  0.535355  0.545456  0.555557  0.565658  0.575759  0.58586  0.595961  0.606062  0.616163  0.626264  0.636365  0.646466  0.656567  0.666668  0.676769  0.68687  0.696971  0.707072  0.717173  0.727274  0.737375  0.747476  0.757577  0.767678  0.777779  0.78788  0.797981  0.808082  0.818183  0.828284  0.838385  0.848486  0.858587  0.868688  0.878789  0.88889  0.898991  0.909092  0.919193  0.929294  0.939395  0.949496  0.959597  0.969698  0.979799  0.9899  done.
-## Finished evaluating probability density.
-## Beginning volume calculation... done. 
-## Quantile requested: 0.70   obtained: 0.70
-## Evaluating probability density...
-## Building tree... done.
-## Querying tree... 9.90099e-06  0.0990198  0.19803  0.29704  0.39605  0.495059  0.594069  0.693079  0.792089  0.891099  0.990109  done.
-## Finished evaluating probability density.
-## Beginning volume calculation... done. 
-## Quantile requested: 0.70   obtained: 0.68
-## Evaluating probability density...
-## Building tree... done.
-## Querying tree... 2.60213e-07  0.00260239  0.00520453  0.00780666  0.0104088  0.0130109  0.0156131  0.0182152  0.0208173  0.0234195  0.0260216  0.0286237  0.0312259  0.033828  0.0364301  0.0390323  0.0416344  0.0442365  0.0468387  0.0494408  0.0520429  0.0546451  0.0572472  0.0598493  0.0624515  0.0650536  0.0676557  0.0702579  0.07286  0.0754621  0.0780643  0.0806664  0.0832685  0.0858707  0.0884728  0.0910749  0.0936771  0.0962792  0.0988813  0.101483  0.104086  0.106688  0.10929  0.111892  0.114494  0.117096  0.119698  0.122301  0.124903  0.127505  0.130107  0.132709  0.135311  0.137913  0.140515  0.143118  0.14572  0.148322  0.150924  0.153526  0.156128  0.15873  0.161333  0.163935  0.166537  0.169139  0.171741  0.174343  0.176945  0.179547  0.18215  0.184752  0.187354  0.189956  0.192558  0.19516  0.197762  0.200365  0.202967  0.205569  0.208171  0.210773  0.213375  0.215977  0.218579  0.221182  0.223784  0.226386  0.228988  0.23159  0.234192  0.236794  0.239397  0.241999  0.244601  0.247203  0.249805  0.252407  0.255009  0.257612  0.260214  0.262816  0.265418  0.26802  0.270622  0.273224  0.275826  0.278429  0.281031  0.283633  0.286235  0.288837  0.291439  0.294041  0.296644  0.299246  0.301848  0.30445  0.307052  0.309654  0.312256  0.314858  0.317461  0.320063  0.322665  0.325267  0.327869  0.330471  0.333073  0.335676  0.338278  0.34088  0.343482  0.346084  0.348686  0.351288  0.35389  0.356493  0.359095  0.361697  0.364299  0.366901  0.369503  0.372105  0.374708  0.37731  0.379912  0.382514  0.385116  0.387718  0.39032  0.392922  0.395525  0.398127  0.400729  0.403331  0.405933  0.408535  0.411137  0.41374  0.416342  0.418944  0.421546  0.424148  0.42675  0.429352  0.431954  0.434557  0.437159  0.439761  0.442363  0.444965  0.447567  0.450169  0.452772  0.455374  0.457976  0.460578  0.46318  0.465782  0.468384  0.470986  0.473589  0.476191  0.478793  0.481395  0.483997  0.486599  0.489201  0.491804  0.494406  0.497008  0.49961  0.502212  0.504814  0.507416  0.510018  0.512621  0.515223  0.517825  0.520427  0.523029  0.525631  0.528233  0.530836  0.533438  0.53604  0.538642  0.541244  0.543846  0.546448  0.54905  0.551653  0.554255  0.556857  0.559459  0.562061  0.564663  0.567265  0.569868  0.57247  0.575072  0.577674  0.580276  0.582878  0.58548  0.588082  0.590685  0.593287  0.595889  0.598491  0.601093  0.603695  0.606297  0.6089  0.611502  0.614104  0.616706  0.619308  0.62191  0.624512  0.627114  0.629717  0.632319  0.634921  0.637523  0.640125  0.642727  0.645329  0.647932  0.650534  0.653136  0.655738  0.65834  0.660942  0.663544  0.666147  0.668749  0.671351  0.673953  0.676555  0.679157  0.681759  0.684361  0.686964  0.689566  0.692168  0.69477  0.697372  0.699974  0.702576  0.705179  0.707781  0.710383  0.712985  0.715587  0.718189  0.720791  0.723393  0.725996  0.728598  0.7312  0.733802  0.736404  0.739006  0.741608  0.744211  0.746813  0.749415  0.752017  0.754619  0.757221  0.759823  0.762425  0.765028  0.76763  0.770232  0.772834  0.775436  0.778038  0.78064  0.783243  0.785845  0.788447  0.791049  0.793651  0.796253  0.798855  0.801457  0.80406  0.806662  0.809264  0.811866  0.814468  0.81707  0.819672  0.822275  0.824877  0.827479  0.830081  0.832683  0.835285  0.837887  0.840489  0.843092  0.845694  0.848296  0.850898  0.8535  0.856102  0.858704  0.861307  0.863909  0.866511  0.869113  0.871715  0.874317  0.876919  0.879521  0.882124  0.884726  0.887328  0.88993  0.892532  0.895134  0.897736  0.900339  0.902941  0.905543  0.908145  0.910747  0.913349  0.915951  0.918553  0.921156  0.923758  0.92636  0.928962  0.931564  0.934166  0.936768  0.939371  0.941973  0.944575  0.947177  0.949779  0.952381  0.954983  0.957585  0.960188  0.96279  0.965392  0.967994  0.970596  0.973198  0.9758  0.978403  0.981005  0.983607  0.986209  0.988811  0.991413  0.994015  0.996617  0.99922  done.
-## Finished evaluating probability density.
-## Beginning volume calculation... done. 
-## Quantile requested: 0.70   obtained: 0.70
-## Evaluating probability density...
-## Building tree... done.
-## Querying tree... 1.64204e-06  0.016422  0.0328424  0.0492627  0.0656831  0.0821034  0.0985238  0.114944  0.131365  0.147785  0.164205  0.180626  0.197046  0.213466  0.229887  0.246307  0.262727  0.279148  0.295568  0.311989  0.328409  0.344829  0.36125  0.37767  0.39409  0.410511  0.426931  0.443351  0.459772  0.476192  0.492612  0.509033  0.525453  0.541874  0.558294  0.574714  0.591135  0.607555  0.623975  0.640396  0.656816  0.673236  0.689657  0.706077  0.722498  0.738918  0.755338  0.771759  0.788179  0.804599  0.82102  0.83744  0.85386  0.870281  0.886701  0.903122  0.919542  0.935962  0.952383  0.968803  0.985223  done.
-## Finished evaluating probability density.
-## Beginning volume calculation... done. 
-## Quantile requested: 0.70   obtained: 0.70
-## Evaluating probability density...
-## Building tree... done.
-## Querying tree... 1.0101e-06  0.010102  0.020203  0.030304  0.0404051  0.0505061  0.0606071  0.0707081  0.0808091  0.0909101  0.101011  0.111112  0.121213  0.131314  0.141415  0.151516  0.161617  0.171718  0.181819  0.19192  0.202021  0.212122  0.222223  0.232324  0.242425  0.252526  0.262627  0.272728  0.282829  0.29293  0.303031  0.313132  0.323233  0.333334  0.343435  0.353536  0.363637  0.373738  0.383839  0.39394  0.404041  0.414142  0.424243  0.434344  0.444445  0.454546  0.464647  0.474748  0.484849  0.494951  0.505052  0.515153  0.525254  0.535355  0.545456  0.555557  0.565658  0.575759  0.58586  0.595961  0.606062  0.616163  0.626264  0.636365  0.646466  0.656567  0.666668  0.676769  0.68687  0.696971  0.707072  0.717173  0.727274  0.737375  0.747476  0.757577  0.767678  0.777779  0.78788  0.797981  0.808082  0.818183  0.828284  0.838385  0.848486  0.858587  0.868688  0.878789  0.88889  0.898991  0.909092  0.919193  0.929294  0.939395  0.949496  0.959597  0.969698  0.979799  0.9899  done.
-## Finished evaluating probability density.
-## Beginning volume calculation... done. 
-## Quantile requested: 0.70   obtained: 0.70
-```
-
-```
-## Warning in (function (data, repsperpoint = NULL, bandwidth, quantile = 0, : 
-## 	Dimensions x and y are highly correlated (r=-0.91)
-## Consider removing some axes.
-```
-
-```
-## Evaluating probability density...
-## Building tree... done.
-## Querying tree... 9.90099e-06  0.0990198  0.19803  0.29704  0.39605  0.495059  0.594069  0.693079  0.792089  0.891099  0.990109  done.
-## Finished evaluating probability density.
-## Beginning volume calculation... done. 
-## Quantile requested: 0.70   obtained: 0.69
-## Evaluating probability density...
-## Building tree... done.
-## Querying tree... 2.60213e-07  0.00260239  0.00520453  0.00780666  0.0104088  0.0130109  0.0156131  0.0182152  0.0208173  0.0234195  0.0260216  0.0286237  0.0312259  0.033828  0.0364301  0.0390323  0.0416344  0.0442365  0.0468387  0.0494408  0.0520429  0.0546451  0.0572472  0.0598493  0.0624515  0.0650536  0.0676557  0.0702579  0.07286  0.0754621  0.0780643  0.0806664  0.0832685  0.0858707  0.0884728  0.0910749  0.0936771  0.0962792  0.0988813  0.101483  0.104086  0.106688  0.10929  0.111892  0.114494  0.117096  0.119698  0.122301  0.124903  0.127505  0.130107  0.132709  0.135311  0.137913  0.140515  0.143118  0.14572  0.148322  0.150924  0.153526  0.156128  0.15873  0.161333  0.163935  0.166537  0.169139  0.171741  0.174343  0.176945  0.179547  0.18215  0.184752  0.187354  0.189956  0.192558  0.19516  0.197762  0.200365  0.202967  0.205569  0.208171  0.210773  0.213375  0.215977  0.218579  0.221182  0.223784  0.226386  0.228988  0.23159  0.234192  0.236794  0.239397  0.241999  0.244601  0.247203  0.249805  0.252407  0.255009  0.257612  0.260214  0.262816  0.265418  0.26802  0.270622  0.273224  0.275826  0.278429  0.281031  0.283633  0.286235  0.288837  0.291439  0.294041  0.296644  0.299246  0.301848  0.30445  0.307052  0.309654  0.312256  0.314858  0.317461  0.320063  0.322665  0.325267  0.327869  0.330471  0.333073  0.335676  0.338278  0.34088  0.343482  0.346084  0.348686  0.351288  0.35389  0.356493  0.359095  0.361697  0.364299  0.366901  0.369503  0.372105  0.374708  0.37731  0.379912  0.382514  0.385116  0.387718  0.39032  0.392922  0.395525  0.398127  0.400729  0.403331  0.405933  0.408535  0.411137  0.41374  0.416342  0.418944  0.421546  0.424148  0.42675  0.429352  0.431954  0.434557  0.437159  0.439761  0.442363  0.444965  0.447567  0.450169  0.452772  0.455374  0.457976  0.460578  0.46318  0.465782  0.468384  0.470986  0.473589  0.476191  0.478793  0.481395  0.483997  0.486599  0.489201  0.491804  0.494406  0.497008  0.49961  0.502212  0.504814  0.507416  0.510018  0.512621  0.515223  0.517825  0.520427  0.523029  0.525631  0.528233  0.530836  0.533438  0.53604  0.538642  0.541244  0.543846  0.546448  0.54905  0.551653  0.554255  0.556857  0.559459  0.562061  0.564663  0.567265  0.569868  0.57247  0.575072  0.577674  0.580276  0.582878  0.58548  0.588082  0.590685  0.593287  0.595889  0.598491  0.601093  0.603695  0.606297  0.6089  0.611502  0.614104  0.616706  0.619308  0.62191  0.624512  0.627114  0.629717  0.632319  0.634921  0.637523  0.640125  0.642727  0.645329  0.647932  0.650534  0.653136  0.655738  0.65834  0.660942  0.663544  0.666147  0.668749  0.671351  0.673953  0.676555  0.679157  0.681759  0.684361  0.686964  0.689566  0.692168  0.69477  0.697372  0.699974  0.702576  0.705179  0.707781  0.710383  0.712985  0.715587  0.718189  0.720791  0.723393  0.725996  0.728598  0.7312  0.733802  0.736404  0.739006  0.741608  0.744211  0.746813  0.749415  0.752017  0.754619  0.757221  0.759823  0.762425  0.765028  0.76763  0.770232  0.772834  0.775436  0.778038  0.78064  0.783243  0.785845  0.788447  0.791049  0.793651  0.796253  0.798855  0.801457  0.80406  0.806662  0.809264  0.811866  0.814468  0.81707  0.819672  0.822275  0.824877  0.827479  0.830081  0.832683  0.835285  0.837887  0.840489  0.843092  0.845694  0.848296  0.850898  0.8535  0.856102  0.858704  0.861307  0.863909  0.866511  0.869113  0.871715  0.874317  0.876919  0.879521  0.882124  0.884726  0.887328  0.88993  0.892532  0.895134  0.897736  0.900339  0.902941  0.905543  0.908145  0.910747  0.913349  0.915951  0.918553  0.921156  0.923758  0.92636  0.928962  0.931564  0.934166  0.936768  0.939371  0.941973  0.944575  0.947177  0.949779  0.952381  0.954983  0.957585  0.960188  0.96279  0.965392  0.967994  0.970596  0.973198  0.9758  0.978403  0.981005  0.983607  0.986209  0.988811  0.991413  0.994015  0.996617  0.99922  done.
-## Finished evaluating probability density.
-## Beginning volume calculation... done. 
-## Quantile requested: 0.70   obtained: 0.70
-```
-
-```
-## Warning in (function (data, repsperpoint = NULL, bandwidth, quantile = 0, : 
-## 	Dimensions x and y are highly correlated (r=-0.86)
-## Consider removing some axes.
-```
-
-```
-## Evaluating probability density...
-## Building tree... done.
-## Querying tree... 1.64204e-06  0.016422  0.0328424  0.0492627  0.0656831  0.0821034  0.0985238  0.114944  0.131365  0.147785  0.164205  0.180626  0.197046  0.213466  0.229887  0.246307  0.262727  0.279148  0.295568  0.311989  0.328409  0.344829  0.36125  0.37767  0.39409  0.410511  0.426931  0.443351  0.459772  0.476192  0.492612  0.509033  0.525453  0.541874  0.558294  0.574714  0.591135  0.607555  0.623975  0.640396  0.656816  0.673236  0.689657  0.706077  0.722498  0.738918  0.755338  0.771759  0.788179  0.804599  0.82102  0.83744  0.85386  0.870281  0.886701  0.903122  0.919542  0.935962  0.952383  0.968803  0.985223  done.
-## Finished evaluating probability density.
-## Beginning volume calculation... done. 
-## Quantile requested: 0.70   obtained: 0.70
 ```
 
 
@@ -1696,51 +1632,55 @@ cs_rs_space <- update(cs_rs_amount, space.target=0.7, Threads=threads)
 ## Optimize a model with 134012 rows, 134362 columns and 535736 nonzeros
 ## Variable types: 0 continuous, 134362 integer (134362 binary)
 ## Coefficient statistics:
-##   Matrix range     [1e-03, 2e+04]
+##   Matrix range     [1e-07, 2e+04]
 ##   Objective range  [1e+00, 1e+00]
 ##   Bounds range     [1e+00, 1e+00]
-##   RHS range        [1e+00, 3e+06]
-## Presolve removed 2893 rows and 1698 columns (presolve time = 5s) ...
-## Presolve removed 3417 rows and 1698 columns (presolve time = 10s) ...
-## Presolve removed 3599 rows and 1698 columns (presolve time = 15s) ...
-## Presolve removed 5343 rows and 1698 columns (presolve time = 20s) ...
-## Presolve removed 5971 rows and 1698 columns (presolve time = 25s) ...
-## Presolve removed 6042 rows and 1698 columns (presolve time = 30s) ...
-## Presolve removed 6093 rows and 1698 columns (presolve time = 35s) ...
-## Presolve removed 7830 rows and 1698 columns (presolve time = 40s) ...
-## Presolve removed 8053 rows and 1698 columns (presolve time = 45s) ...
-## Presolve removed 8085 rows and 1698 columns (presolve time = 53s) ...
-## Presolve removed 8085 rows and 1698 columns (presolve time = 55s) ...
-## Presolve removed 8085 rows and 1698 columns
-## Presolve time: 55.39s
-## Presolved: 125927 rows, 132664 columns, 578627 nonzeros
-## Variable types: 0 continuous, 132664 integer (132664 binary)
-## Found heuristic solution: objective 247.0000000
-## Presolve removed 185 rows and 0 columns
-## Presolved: 125742 rows, 132664 columns, 578080 nonzeros
+##   RHS range        [7e-01, 3e+06]
+## Presolve removed 5603 rows and 4198 columns (presolve time = 5s) ...
+## Presolve removed 5890 rows and 4202 columns (presolve time = 10s) ...
+## Presolve removed 6063 rows and 4202 columns (presolve time = 15s) ...
+## Presolve removed 8185 rows and 4202 columns (presolve time = 20s) ...
+## Presolve removed 8490 rows and 4202 columns (presolve time = 25s) ...
+## Presolve removed 8499 rows and 4202 columns (presolve time = 30s) ...
+## Presolve removed 9261 rows and 4202 columns (presolve time = 35s) ...
+## Presolve removed 9878 rows and 4202 columns (presolve time = 40s) ...
+## Presolve removed 10303 rows and 4202 columns (presolve time = 45s) ...
+## Presolve removed 10315 rows and 4202 columns (presolve time = 50s) ...
+## Presolve removed 10315 rows and 4260 columns (presolve time = 63s) ...
+## Presolve removed 10330 rows and 4260 columns (presolve time = 69s) ...
+## Presolve removed 10330 rows and 4260 columns
+## Presolve time: 68.65s
+## Presolved: 123682 rows, 130102 columns, 569395 nonzeros
+## Variable types: 0 continuous, 130102 integer (130102 binary)
+## Found heuristic solution: objective 234.0000000
+## Presolve removed 464 rows and 0 columns
+## Presolved: 123218 rows, 130102 columns, 567623 nonzeros
 ## 
-## Presolve removed 125742 rows and 132664 columns
+## Presolve removed 104092 rows and 17312 columns
 ## 
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    7.6200000e+02   0.000000e+00   7.620000e+02     58s
-##    17150    1.3589914e+02   0.000000e+00   1.960880e+02     60s
-##    36666    1.3552449e+02   0.000000e+00   0.000000e+00     64s
-##    36666    1.3552449e+02   0.000000e+00   0.000000e+00     64s
+##        0    0.0000000e+00   1.230612e+02   1.557797e+10     71s
+##    18496    1.3642320e+02   0.000000e+00   1.231080e+04     75s
+##    33588    1.3572344e+02   0.000000e+00   2.467501e+02     80s
+##    47504    1.3559988e+02   0.000000e+00   4.777653e+01     85s
+##    61224    1.3555944e+02   0.000000e+00   8.200535e+00     90s
+##    67879    1.3555580e+02   0.000000e+00   0.000000e+00     93s
+##    67879    1.3555580e+02   0.000000e+00   0.000000e+00     93s
 ## 
-## Root relaxation: objective 1.355245e+02, 36666 iterations, 8.45 seconds
+## Root relaxation: objective 1.355558e+02, 67879 iterations, 23.60 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0  135.52449    0  195  247.00000  135.52449  45.1%     -   64s
-## H    0     0                     136.0000000  135.52449  0.35%     -   65s
+##      0     0  135.55580    0  552  234.00000  135.55580  42.1%     -   94s
+## H    0     0                     136.0000000  135.55580  0.33%     -   94s
 ## 
-## Explored 0 nodes (48139 simplex iterations) in 65.21 seconds
+## Explored 0 nodes (81506 simplex iterations) in 94.91 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
-## Solution count 2: 136 247 
+## Solution count 2: 136 234 
 ## Pool objective bound 136
 ## 
 ## Optimal solution found (tolerance 1.00e-01)
@@ -1757,9 +1697,9 @@ summary(cs_rs_space)
 ##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
 ## 1          1 OPTIMAL   136  136            136           98882414
 ##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1         9588090          80968598          8325726
+## 1         9387227          80650180          8845006
 ##   Connectivity_In_Fraction
-## 1               0.09696456
+## 1               0.09493323
 ```
 
 ```r

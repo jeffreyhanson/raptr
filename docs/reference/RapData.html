@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create new RapData object â€” RapData ü¾Œ¦”¼ü¾Œƒ ¼ü¾Œ¦„¼ raptr</title>
+<title>Create new RapData object <U+2014> RapData <e2><80><a2> raptr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -144,68 +144,65 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>not_run({
-  # load data
-  data(cs_pus, cs_spp, cs_space)
-  # create data for RapData object
-  attribute.spaces <- list(
-  	AttributeSpaces(
-  	list(
-  			AttributeSpace(
-  			planning.unit.points=PlanningUnitPoints(
-  				rgeos::gCentroid(cs_pus[1:10,], byid=TRUE)@coords,
-  				seq_len(10)
-  			)
-  				demand.points=make.DemandPoints(
-  				SpatialPoints(
-  					coords=randomPoints(
-  						cs_spp,
-  						n=10,
-  						prob=TRUE
-  					)
-  				),
-  			),
-  			species=1L
-  		),
-  			AttributeSpace(
-  				planning.unit.points=PlanningUnitPoints(
-  				extract(cs_space[[1]],cs_pus[1:10,],fun=mean),
-  				seq_len(10)
-  			),
-  				demand.points=make.DemandPoints(
-  				SpatialPoints(
-  					coords=randomPoints(
-  						cs_spp,
-  						n=10,
-  						prob=TRUE
-  					)
-  				),
-  				cs_space[[1]]
-  			),
-  			species=1L
-  		)
-  		)
-  	)
-  )
-  pu.species.probabilities <- calcSpeciesAverageInPus(cs_pus[1:10,], cs_spp)
-  polygons <- SpatialPolygons2PolySet(cs_pus[1:10,])
-  boundary <- calcBoundaryData(cs_pus[1:10,])
-  
-  x<-RapData(
-  	pu=cs_pus@data[1:10,],
-  	species=data.frame(name='test'),
-   target=data.frame(species=1, target=0:2, proportion=0.2),
-  	pu.species.probabilities=pu.species.probabilities,
-  	attribute.spaces=attribute.spaces,
-  	polygons=polygons,
-  	boundary=boundary
-  )
-  print(x)
-})
-</div><div class='output co'>#&gt; <span class='error'>Error: &lt;text&gt;:13:33: unexpected symbol</span>
-#&gt; <span class='error'>12:                         )</span>
-#&gt; <span class='error'>13:                                 demand.points</span>
-#&gt; <span class='error'>                                    ^</span></div></pre>
+    <pre class="examples"><div class='input'>
+<span class='co'># load data</span>
+<span class='fu'>data</span>(<span class='no'>cs_pus</span>, <span class='no'>cs_spp</span>, <span class='no'>cs_space</span>)
+<span class='co'># create data for RapData object</span>
+<span class='no'>attribute.spaces</span> <span class='kw'>&lt;-</span> <span class='fu'>list</span>(
+        <span class='fu'><a href='AttributeSpaces.html'>AttributeSpaces</a></span>(
+                <span class='kw'>name</span><span class='kw'>=</span><span class='st'>"geographic"</span>,
+                <span class='fu'>list</span>(
+                        <span class='fu'><a href='AttributeSpace.html'>AttributeSpace</a></span>(
+                                <span class='kw'>planning.unit.points</span><span class='kw'>=</span><span class='fu'><a href='PlanningUnitPoints.html'>PlanningUnitPoints</a></span>(
+                                        <span class='kw'>rgeos</span><span class='kw'>::</span><span class='fu'>gCentroid</span>(<span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,], <span class='kw'>byid</span><span class='kw'>=</span><span class='fl'>TRUE</span>)@<span class='kw'>coords</span>,
+                                        <span class='fu'>seq_len</span>(<span class='fl'>10</span>)
+                                ),
+                                <span class='kw'>demand.points</span><span class='kw'>=</span><span class='fu'><a href='make.DemandPoints.html'>make.DemandPoints</a></span>(
+                                        <span class='fu'><a href='randomPoints.html'>randomPoints</a></span>(
+                                                <span class='no'>cs_spp</span><span class='kw'>[[</span><span class='fl'>1</span>]],
+                                                <span class='kw'>n</span><span class='kw'>=</span><span class='fl'>10</span>,
+                                                <span class='kw'>prob</span><span class='kw'>=</span><span class='fl'>TRUE</span>
+                                        )
+                                ),
+                                <span class='kw'>species</span><span class='kw'>=</span><span class='fl'>1L</span>
+                        )
+                )
+        ),
+        <span class='fu'><a href='AttributeSpaces.html'>AttributeSpaces</a></span>(
+                <span class='kw'>name</span><span class='kw'>=</span><span class='st'>"environmental"</span>,
+                <span class='fu'>list</span>(
+                        <span class='co'># create environmental attribute space</span>
+                        <span class='fu'><a href='AttributeSpace.html'>AttributeSpace</a></span>(
+                                <span class='kw'>planning.unit.points</span><span class='kw'>=</span><span class='fu'><a href='PlanningUnitPoints.html'>PlanningUnitPoints</a></span>(
+                                        <span class='fu'>extract</span>(<span class='no'>cs_space</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,], <span class='kw'>fun</span><span class='kw'>=</span><span class='no'>mean</span>),
+                                        <span class='fu'>seq_len</span>(<span class='fl'>10</span>)
+                                ),
+                                <span class='kw'>demand.points</span><span class='kw'>=</span><span class='fu'><a href='make.DemandPoints.html'>make.DemandPoints</a></span>(
+                                        <span class='no'>cs_space</span><span class='kw'>[[</span><span class='fl'>1</span>]][<span class='fu'>Which</span>(!<span class='fu'>is.na</span>(<span class='no'>cs_space</span><span class='kw'>[[</span><span class='fl'>1</span>]]))]
+                                ),
+                                <span class='kw'>species</span><span class='kw'>=</span><span class='fl'>1L</span>
+                        )
+                )
+        )
+)
+<span class='no'>pu.species.probabilities</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='calcSpeciesAverageInPus.html'>calcSpeciesAverageInPus</a></span>(<span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,], <span class='no'>cs_spp</span><span class='kw'>[[</span><span class='fl'>1</span>]])
+<span class='no'>polygons</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='SpatialPolygons2PolySet.html'>SpatialPolygons2PolySet</a></span>(<span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,])
+<span class='no'>boundary</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='calcBoundaryData.html'>calcBoundaryData</a></span>(<span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,])
+
+<span class='no'>x</span><span class='kw'>&lt;-</span><span class='fu'>RapData</span>(
+        <span class='kw'>pu</span><span class='kw'>=</span><span class='no'>cs_pus</span>@<span class='kw'>data</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,],
+        <span class='kw'>species</span><span class='kw'>=</span><span class='fu'>data.frame</span>(<span class='kw'>name</span><span class='kw'>=</span><span class='st'>'test'</span>),
+        <span class='kw'>target</span><span class='kw'>=</span><span class='fu'>data.frame</span>(<span class='kw'>species</span><span class='kw'>=</span><span class='fl'>1L</span>, <span class='kw'>target</span><span class='kw'>=</span><span class='fl'>0</span>:<span class='fl'>2</span>, <span class='kw'>proportion</span><span class='kw'>=</span><span class='fl'>0.2</span>),
+        <span class='kw'>pu.species.probabilities</span><span class='kw'>=</span><span class='no'>pu.species.probabilities</span>,
+        <span class='kw'>attribute.spaces</span><span class='kw'>=</span><span class='no'>attribute.spaces</span>,
+        <span class='kw'>polygons</span><span class='kw'>=</span><span class='no'>polygons</span>,
+        <span class='kw'>boundary</span><span class='kw'>=</span><span class='no'>boundary</span>
+)
+<span class='fu'><a href='print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; RapData object.
+#&gt;   Number of planning units: 10 
+#&gt;   Number of species: 1 
+#&gt;   Number of attribute spaces: 2 </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

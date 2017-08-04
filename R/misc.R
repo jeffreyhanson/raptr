@@ -10,7 +10,7 @@ NULL
 #' @seealso \code{\link[base]{options}}.
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # check if Gurobi is installed
 #' is.GurobiInstalled()
 #' # print cached status of installation
@@ -102,7 +102,7 @@ is.GurobiInstalled<-function(verbose=TRUE) {
 #' @export
 #' @examples
 #' # check if gdal is installed on system
-#' \dontrun{
+#' \donttest{
 #' is.gdalInstalled()
 #' }
 is.gdalInstalled<-function() {
@@ -122,9 +122,9 @@ is.gdalInstalled<-function() {
 #' @return \code{RasterLayer} object.
 #' @seealso \code{\link[raster]{rasterize}}, \code{\link{is.gdalInstalled}}.
 #' @examples
-#' \dontrun{
-#' data(sim_pu,sim_spp)
-#' x <- rasterizeGDAL(sim_pu[1:5,],sim_spp[[1]])
+#' \donttest{
+#' data(cs_pus,cs_spp)
+#' x <- rasterizeGDAL(cs_pus[1:5,], cs_spp[[1]])
 #' }
 rasterizeGDAL<-function(x,y, field=NULL) {
 	if (is.null(field)) {

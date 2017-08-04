@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Solve RAP object â€” solve ü¾Œ¦”¼ü¾Œƒ ¼ü¾Œ¦„¼ raptr</title>
+<title>Solve RAP object <U+2014> solve <e2><80><a2> raptr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -141,16 +141,58 @@ and returns a <code><a href='RapSolved.html'>RapSolved</a></code> object with ou
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load RapUnsolved object</span>
 <span class='fu'>data</span>(<span class='no'>sim_ru</span>)
-<span class='fu'>not_run</span>({
-  <span class='co'># solve it using Gurobi</span>
-  <span class='no'>sim_rs</span> <span class='kw'>&lt;-</span> <span class='fu'>solve</span>(<span class='no'>sim_ru</span>)
-  <span class='co'># evaluate manually specified solution using planning unit indices</span>
-  <span class='no'>sim_rs2</span> <span class='kw'>&lt;-</span> <span class='fu'>solve</span>(<span class='no'>sim_ru</span>, <span class='fl'>1</span>:<span class='fl'>10</span>)
-  <span class='co'># evaluate manually specifed solution using binary selections</span>
-  <span class='no'>sim_rs3</span> <span class='kw'>&lt;-</span> <span class='fu'>solve</span>(<span class='no'>sim_ru</span>, <span class='fu'>c</span>(<span class='fu'>rep</span>(<span class='fl'>TRUE</span>,<span class='fl'>10</span>), <span class='fu'>rep</span>(<span class='fl'>FALSE</span>, <span class='fl'>90</span>)))
-  <span class='co'>#  evaluate multiple manually specified solutions</span>
-  <span class='no'>sim_rs4</span> <span class='kw'>&lt;-</span> <span class='fu'>solve</span>(<span class='no'>sim_ru</span>, <span class='fu'>matrix</span>(<span class='fu'>sample</span>(<span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>1</span>), <span class='kw'>size</span><span class='kw'>=</span><span class='fl'>500</span>, <span class='kw'>replace</span><span class='kw'>=</span><span class='fl'>TRUE</span>), <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>100</span>, <span class='kw'>nrow</span><span class='kw'>=</span><span class='fl'>5</span>))
-})</div></pre>
+
+<span class='co'># solve it using Gurobi</span>
+<span class='no'>sim_rs</span> <span class='kw'>&lt;-</span> <span class='fu'>solve</span>(<span class='no'>sim_ru</span>)</div><div class='output co'>#&gt; The rgorubi R package is not installed
+#&gt; 
+#&gt;  To access multiple solutions from the solution pool,
+#&gt; 	follow these instructions to install the "rgurobi" R package from GitHub: 
+#&gt; 	http://bit.ly/1RF19XO 
+#&gt; 
+#&gt; Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored
+#&gt; Optimize a model with 30306 rows, 30100 columns and 120000 nonzeros
+#&gt; Variable types: 0 continuous, 30100 integer (30100 binary)
+#&gt; Coefficient statistics:
+#&gt;   Matrix range     [7e-03, 9e+01]
+#&gt;   Objective range  [1e+00, 1e+00]
+#&gt;   Bounds range     [1e+00, 1e+00]
+#&gt;   RHS range        [1e+00, 1e+02]
+#&gt; Found heuristic solution: objective 100
+#&gt; Presolve removed 329 rows and 15 columns (presolve time = 5s) ...
+#&gt; Presolve removed 360 rows and 15 columns
+#&gt; Presolve time: 6.63s
+#&gt; Presolved: 29946 rows, 30085 columns, 131504 nonzeros
+#&gt; Variable types: 0 continuous, 30085 integer (30085 binary)
+#&gt; Presolve removed 67 rows and 1 columns
+#&gt; Presolved: 29879 rows, 30084 columns, 127194 nonzeros
+#&gt; 
+#&gt; Presolve removed 29879 rows and 30084 columns
+#&gt; 
+#&gt; Root simplex log...
+#&gt; 
+#&gt; Iteration    Objective       Primal Inf.    Dual Inf.      Time
+#&gt;        0    1.0000000e+02   0.000000e+00   1.000000e+02      7s
+#&gt;     4726    2.0000000e+01   0.000000e+00   0.000000e+00      8s
+#&gt;     4726    2.0000000e+01   0.000000e+00   0.000000e+00      8s
+#&gt; 
+#&gt; Root relaxation: objective 2.000000e+01, 4726 iterations, 1.71 seconds
+#&gt; 
+#&gt;     Nodes    |    Current Node    |     Objective Bounds      |     Work
+#&gt;  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+#&gt; 
+#&gt; *    0     0               0      20.0000000   20.00000  0.00%     -    8s
+#&gt; 
+#&gt; Explored 0 nodes (9650 simplex iterations) in 8.84 seconds
+#&gt; Thread count was 1 (of 4 available processors)
+#&gt; 
+#&gt; Solution count 2: 20 100 
+#&gt; Pool objective bound 20
+#&gt; 
+#&gt; Optimal solution found (tolerance 1.00e-01)
+#&gt; Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%</div><div class='input'><span class='co'># evaluate manually specified solution using planning unit indices</span>
+<span class='no'>sim_rs2</span> <span class='kw'>&lt;-</span> <span class='fu'>solve</span>(<span class='no'>sim_ru</span>, <span class='fl'>1</span>:<span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: object@space.held contains values less than 0, some species are really poorly represented</span></div><div class='input'><span class='co'># evaluate manually specifed solution using binary selections</span>
+<span class='no'>sim_rs3</span> <span class='kw'>&lt;-</span> <span class='fu'>solve</span>(<span class='no'>sim_ru</span>, <span class='fu'>c</span>(<span class='fu'>rep</span>(<span class='fl'>TRUE</span>,<span class='fl'>10</span>), <span class='fu'>rep</span>(<span class='fl'>FALSE</span>, <span class='fl'>90</span>)))</div><div class='output co'>#&gt; <span class='warning'>Warning: object@space.held contains values less than 0, some species are really poorly represented</span></div><div class='input'><span class='co'>#  evaluate multiple manually specified solutions</span>
+<span class='no'>sim_rs4</span> <span class='kw'>&lt;-</span> <span class='fu'>solve</span>(<span class='no'>sim_ru</span>, <span class='fu'>matrix</span>(<span class='fu'>sample</span>(<span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>1</span>), <span class='kw'>size</span><span class='kw'>=</span><span class='fl'>500</span>, <span class='kw'>replace</span><span class='kw'>=</span><span class='fl'>TRUE</span>), <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>100</span>, <span class='kw'>nrow</span><span class='kw'>=</span><span class='fl'>5</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

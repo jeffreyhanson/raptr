@@ -105,13 +105,12 @@ test_that('demand.points.hypervolume', {
 	# make points
 	pts<-matrix(rnorm(999), ncol=3)
 	# make demand points
-	dp<-raptr:::demand.points.hypervolume(pts, 1000)
+	dp<-raptr:::demand.points.hypervolume(pts, 10, quantile=0.95, samples.per.point=10)
 	# check properties of demand points
 	expect_true(ncol(dp$coords)==3)
-	expect_true(nrow(dp$coords)==1000)
+	expect_true(nrow(dp$coords)==10)
 	expect_is(dp$coords, 'matrix')
 	expect_is(dp$weights, 'numeric')
-
 })
 
 test_that('spacePlot.1d', {

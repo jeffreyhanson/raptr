@@ -22,9 +22,9 @@ It is expected to be faster than \code{\link[raster]{rasterize}} for large datas
 However, it will be significantly slower for small datasets because the data will need to be written and read from disk.
 }
 \examples{
-\dontrun{
-data(sim_pu,sim_spp)
-x <- rasterizeGDAL(sim_pu[1:5,],sim_spp[[1]])
+\donttest{
+data(cs_pus,cs_spp)
+x <- rasterizeGDAL(cs_pus[1:5,], cs_spp[[1]])
 }
 }
 \seealso{

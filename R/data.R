@@ -61,7 +61,7 @@ NULL
 #' # load data
 #' data(cs_pus, cs_spp, cs_space)
 #' # plot data
-#' \dontrun{
+#' \donttest{
 #' plot(cs_pus)
 #' plot(cs_spp)
 #' plot(cs_space)

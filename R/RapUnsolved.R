@@ -27,7 +27,7 @@ setClass("RapUnsolved",
 #' @seealso \code{\link{RapReliableOpts-class}}, \code{\link{RapUnreliableOpts-class}}, \code{\link{RapData-class}}.
 #' @examples
 #' # load data
-#' \dontrun{
+#' \donttest{
 #' data(cs_pus, cs_spp)
 #' # create inputs for RapUnsolved
 #' ro <- RapUnreliableOpts()

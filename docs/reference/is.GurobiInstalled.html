@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Test if Gurobi is installed on computer â€” is.GurobiInstalled ü¾Œ¦”¼ü¾Œƒ ¼ü¾Œ¦„¼ raptr</title>
+<title>Test if Gurobi is installed on computer <U+2014> is.GurobiInstalled <e2><80><a2> raptr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -107,12 +107,21 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
-  <span class='co'># check if Gurobi is installed</span>
-  <span class='fu'>is.GurobiInstalled</span>()
-  <span class='co'># print cached status of installation</span>
-  <span class='fu'>options</span>()$<span class='no'>GurobiInstalled</span>
-})</div></pre>
+    <pre class="examples"><div class='input'>
+<span class='co'># check if Gurobi is installed</span>
+<span class='fu'>is.GurobiInstalled</span>()</div><div class='output co'>#&gt; The rgorubi R package is not installed
+#&gt; 
+#&gt;  To access multiple solutions from the solution pool,
+#&gt; 	follow these instructions to install the "rgurobi" R package from GitHub: 
+#&gt; 	http://bit.ly/1RF19XO 
+#&gt; </div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='co'># print cached status of installation</span>
+<span class='fu'>options</span>()$<span class='no'>GurobiInstalled</span></div><div class='output co'>#&gt; $gurobi
+#&gt; [1] TRUE
+#&gt; 
+#&gt; $rgurobi
+#&gt; [1] FALSE
+#&gt; </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

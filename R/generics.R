@@ -119,7 +119,7 @@ sim.space<-function(x, ...) UseMethod('sim.space')
 #' @examples
 #' # load RapUnsolved object
 #' data(sim_ru)
-#' \dontrun{
+#' \donttest{
 #' # solve it using Gurobi
 #' sim_rs <- solve(sim_ru)
 #' # evaluate manually specified solution using planning unit indices

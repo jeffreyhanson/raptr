@@ -156,13 +156,13 @@ categoricalLegend<-function(col,labels, ncol=1) {
 
 #' Create 1-dimensional demand points
 #' @noRd
-demand.points.density1d<-function(pts, n, quantile=0, ...) {
+demand.points.density1d<-function(pts, n, quantile=0.95, ...) {
 	# transform pts
 	curr.mean<-mean(pts[,1])
 	curr.sd<-sd(pts[,1])
 	pts[,1] <- (pts[,1] - curr.mean) / curr.sd
 	# generate points
-	quants<-quantile(pts[,1], c((quantile/2), 1-(quantile/2)))
+	quants<-quantile(pts[,1], c((1-quantile)/2, quantile + (1-quantile)/2))
 	dp<-runif(n, quants[[1]], quants[[2]])
 	# density kernel
 	est<-kde(pts[,1], eval.points=dp, ...)
@@ -179,7 +179,7 @@ demand.points.density1d<-function(pts, n, quantile=0, ...) {
 
 #' Create 2-dimensional demand points
 #' @noRd
-demand.points.density2d<-function(pts, n, quantile=0, ...) {
+demand.points.density2d<-function(pts, n, quantile=0.95, ...) {
 	# transform pts
 	curr.mean<-apply(pts,2,mean)
 	curr.sd<-apply(pts,2,sd)
@@ -187,7 +187,7 @@ demand.points.density2d<-function(pts, n, quantile=0, ...) {
 	pts<-sweep(pts,MARGIN=2,FUN='/',curr.sd)
 	# generate points
 	dp<-spsample(
-		mcp(SpatialPoints(coords=pts), percent=(100-quantile), unin = c("m"), unout = c("m2")),
+		mcp(SpatialPoints(coords=pts), percent=quantile*100, unin = c("m"), unout = c("m2")),
 		n*1.1,
 		type='random'
 	)@coords[seq_len(n),]
@@ -207,7 +207,7 @@ demand.points.density2d<-function(pts, n, quantile=0, ...) {
 
 #' Create n-dimensional demand points
 #' @noRd
-demand.points.hypervolume<-function(pts, n, quantile=0, ...) {
+demand.points.hypervolume<-function(pts, n, quantile=0.95, ...) {
 	# transform pts
 	curr.mean<-apply(pts,2,mean)
 	curr.sd<-apply(pts,2,sd)
@@ -215,28 +215,28 @@ demand.points.hypervolume<-function(pts, n, quantile=0, ...) {
 	pts<-sweep(pts,MARGIN=2,FUN='/',curr.sd) 
 	# fit density kernel
 	args<-list(...)
-	if (!'repsperpoint' %in% names(args))
-		args$repsperpoint<-500*ncol(pts)
-	if (args$repsperpoint*nrow(pts) < n) {
-		stop('argument to n.demand.points is too high. Set a higher value in the argument to repsperpoint (defaults to 500*dimensions in attribute space).')
+	if (!'samples.per.point' %in% names(args))
+		args$samples.per.point<-500*ncol(pts)
+	if (args$samples.per.point*nrow(pts) < n) {
+		stop('argument to n.demand.points is too high. Set a higher value in the argument to samples.per.point (defaults to 500*dimensions in attribute space).')
 	}
 	# estimate bandwidth for kernel
-	if (!'bandwidth' %in% names(args)) {
-		args$bandwidth<-estimate_bandwidth(pts)
+	if (!'kde.bandwidth' %in% names(args)) {
+		args$kde.bandwidth<-estimate_bandwidth(pts)
 	}
 	# fit kernel
-	hv<-do.call(hypervolume, append(list(data=pts, quantile=quantile), args))
+	hv<-do.call(hypervolume, append(list(data=pts, quantile.requested=quantile), args))
 	# extract random points
-	rndpos<-sample.int(nrow(hv@RandomUniformPointsThresholded), n)
+	rndpos<-sample.int(nrow(hv@RandomPoints), n)
 	# extract coordinates and back-transform
-	dp<-hv@RandomUniformPointsThresholded[rndpos,,drop=FALSE]
+	dp<-hv@RandomPoints[rndpos,,drop=FALSE]
 	dp<-sweep(dp,MARGIN=2,FUN='*',curr.sd)
 	dp<-sweep(dp,MARGIN=2,FUN='+',curr.mean)
 	# return object
 	return(
 		list(
 			coords=dp,
-			weights=hv@ProbabilityDensityAtRandomUniformPoints[rndpos]
+			weights=hv@ValueAtRandomPoints[rndpos]
 		)
 	)
 }
