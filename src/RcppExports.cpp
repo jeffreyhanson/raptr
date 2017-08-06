@@ -8,7 +8,7 @@ using namespace Rcpp;
 
 // rcpp_dump_numeric_object
 SEXP rcpp_dump_numeric_object(SEXP x);
-RcppExport SEXP raptr_rcpp_dump_numeric_object(SEXP xSEXP) {
+RcppExport SEXP _raptr_rcpp_dump_numeric_object(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -19,7 +19,7 @@ END_RCPP
 }
 // rcpp_dump_integer_object
 SEXP rcpp_dump_integer_object(SEXP x);
-RcppExport SEXP raptr_rcpp_dump_integer_object(SEXP xSEXP) {
+RcppExport SEXP _raptr_rcpp_dump_integer_object(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -30,7 +30,7 @@ END_RCPP
 }
 // rcpp_dump_character_object
 SEXP rcpp_dump_character_object(SEXP x);
-RcppExport SEXP raptr_rcpp_dump_character_object(SEXP xSEXP) {
+RcppExport SEXP _raptr_rcpp_dump_character_object(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -39,9 +39,21 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_Polygons2PolySet
+Rcpp::DataFrame rcpp_Polygons2PolySet(Rcpp::List polys, std::size_t n_preallocate);
+RcppExport SEXP _raptr_rcpp_Polygons2PolySet(SEXP polysSEXP, SEXP n_preallocateSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type polys(polysSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type n_preallocate(n_preallocateSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_Polygons2PolySet(polys, n_preallocate));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_append_model_object
 Rcpp::List rcpp_append_model_object(Rcpp::List model, Rcpp::List existing_sols);
-RcppExport SEXP raptr_rcpp_append_model_object(SEXP modelSEXP, SEXP existing_solsSEXP) {
+RcppExport SEXP _raptr_rcpp_append_model_object(SEXP modelSEXP, SEXP existing_solsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -53,7 +65,7 @@ END_RCPP
 }
 // rcpp_calcBoundaryDF
 Rcpp::List rcpp_calcBoundaryDF(Rcpp::DataFrame df, double tolerance, double lengthFactor, double edgeFactor);
-RcppExport SEXP raptr_rcpp_calcBoundaryDF(SEXP dfSEXP, SEXP toleranceSEXP, SEXP lengthFactorSEXP, SEXP edgeFactorSEXP) {
+RcppExport SEXP _raptr_rcpp_calcBoundaryDF(SEXP dfSEXP, SEXP toleranceSEXP, SEXP lengthFactorSEXP, SEXP edgeFactorSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -67,7 +79,7 @@ END_RCPP
 }
 // rcpp_extract_model_object
 Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, Rcpp::S4 data, Rcpp::List model, std::vector<std::string> logging_file, Rcpp::List solution, bool verbose);
-RcppExport SEXP raptr_rcpp_extract_model_object(SEXP optsSEXP, SEXP unreliable_formulationSEXP, SEXP dataSEXP, SEXP modelSEXP, SEXP logging_fileSEXP, SEXP solutionSEXP, SEXP verboseSEXP) {
+RcppExport SEXP _raptr_rcpp_extract_model_object(SEXP optsSEXP, SEXP unreliable_formulationSEXP, SEXP dataSEXP, SEXP modelSEXP, SEXP logging_fileSEXP, SEXP solutionSEXP, SEXP verboseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -84,7 +96,7 @@ END_RCPP
 }
 // rcpp_generate_model_object
 Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation, Rcpp::S4 data, bool verbose);
-RcppExport SEXP raptr_rcpp_generate_model_object(SEXP optsSEXP, SEXP unreliable_formulationSEXP, SEXP dataSEXP, SEXP verboseSEXP) {
+RcppExport SEXP _raptr_rcpp_generate_model_object(SEXP optsSEXP, SEXP unreliable_formulationSEXP, SEXP dataSEXP, SEXP verboseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -98,7 +110,7 @@ END_RCPP
 }
 // rcpp_groupcombine
 NumericVector rcpp_groupcombine(std::vector<NumericVector> group_means);
-RcppExport SEXP raptr_rcpp_groupcombine(SEXP group_meansSEXP) {
+RcppExport SEXP _raptr_rcpp_groupcombine(SEXP group_meansSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -109,7 +121,7 @@ END_RCPP
 }
 // rcpp_groupmean
 NumericVector rcpp_groupmean(IntegerVector cat_vec, NumericVector val_vec);
-RcppExport SEXP raptr_rcpp_groupmean(SEXP cat_vecSEXP, SEXP val_vecSEXP) {
+RcppExport SEXP _raptr_rcpp_groupmean(SEXP cat_vecSEXP, SEXP val_vecSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -119,21 +131,9 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_Polygons2PolySet
-Rcpp::DataFrame rcpp_Polygons2PolySet(Rcpp::List polys, std::size_t n_preallocate);
-RcppExport SEXP raptr_rcpp_Polygons2PolySet(SEXP polysSEXP, SEXP n_preallocateSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::List >::type polys(polysSEXP);
-    Rcpp::traits::input_parameter< std::size_t >::type n_preallocate(n_preallocateSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_Polygons2PolySet(polys, n_preallocate));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rcpp_proportion_held
 double rcpp_proportion_held(Rcpp::NumericMatrix x, Rcpp::NumericMatrix y, Rcpp::NumericVector y_weights);
-RcppExport SEXP raptr_rcpp_proportion_held(SEXP xSEXP, SEXP ySEXP, SEXP y_weightsSEXP) {
+RcppExport SEXP _raptr_rcpp_proportion_held(SEXP xSEXP, SEXP ySEXP, SEXP y_weightsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -146,7 +146,7 @@ END_RCPP
 }
 // rcpp_rrap_proportion_held
 double rcpp_rrap_proportion_held(Rcpp::NumericMatrix pu_coordinates, Rcpp::NumericVector pu_probabilities, Rcpp::NumericMatrix dp_coordinates, Rcpp::NumericVector dp_weights, double failure_distance, std::size_t maximum_r_level);
-RcppExport SEXP raptr_rcpp_rrap_proportion_held(SEXP pu_coordinatesSEXP, SEXP pu_probabilitiesSEXP, SEXP dp_coordinatesSEXP, SEXP dp_weightsSEXP, SEXP failure_distanceSEXP, SEXP maximum_r_levelSEXP) {
+RcppExport SEXP _raptr_rcpp_rrap_proportion_held(SEXP pu_coordinatesSEXP, SEXP pu_probabilitiesSEXP, SEXP dp_coordinatesSEXP, SEXP dp_weightsSEXP, SEXP failure_distanceSEXP, SEXP maximum_r_levelSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -162,7 +162,7 @@ END_RCPP
 }
 // rcpp_rrap_squared_distance
 std::vector<double> rcpp_rrap_squared_distance(Rcpp::NumericMatrix pu_coordinates, Rcpp::NumericVector pu_probabilities, Rcpp::NumericMatrix dp_coordinates, Rcpp::NumericVector dp_weights, double failure_distance, std::size_t maximum_r_level);
-RcppExport SEXP raptr_rcpp_rrap_squared_distance(SEXP pu_coordinatesSEXP, SEXP pu_probabilitiesSEXP, SEXP dp_coordinatesSEXP, SEXP dp_weightsSEXP, SEXP failure_distanceSEXP, SEXP maximum_r_levelSEXP) {
+RcppExport SEXP _raptr_rcpp_rrap_squared_distance(SEXP pu_coordinatesSEXP, SEXP pu_probabilitiesSEXP, SEXP dp_coordinatesSEXP, SEXP dp_weightsSEXP, SEXP failure_distanceSEXP, SEXP maximum_r_levelSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -178,7 +178,7 @@ END_RCPP
 }
 // rcpp_squared_distance
 std::vector<double> rcpp_squared_distance(Rcpp::NumericMatrix x, Rcpp::NumericMatrix y, Rcpp::NumericVector y_weights);
-RcppExport SEXP raptr_rcpp_squared_distance(SEXP xSEXP, SEXP ySEXP, SEXP y_weightsSEXP) {
+RcppExport SEXP _raptr_rcpp_squared_distance(SEXP xSEXP, SEXP ySEXP, SEXP y_weightsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -191,7 +191,7 @@ END_RCPP
 }
 // rcpp_sum_duplicates
 Rcpp::DataFrame rcpp_sum_duplicates(std::vector<std::size_t> ids1, std::vector<std::size_t> ids2, std::vector<double> boundary);
-RcppExport SEXP raptr_rcpp_sum_duplicates(SEXP ids1SEXP, SEXP ids2SEXP, SEXP boundarySEXP) {
+RcppExport SEXP _raptr_rcpp_sum_duplicates(SEXP ids1SEXP, SEXP ids2SEXP, SEXP boundarySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;

@@ -46,7 +46,8 @@ kernel.method='ks'
 # generate demand points for a 2d space using hypervolume
 dps2 <- make.DemandPoints(
 points=env.points,
-kernel.method='hypervolume'
+kernel.method='hypervolume',
+samples.per.point=10
 )
 }
 \seealso{

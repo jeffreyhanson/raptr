@@ -49,4 +49,4 @@ build:
 install:
 	R --slave -e "devtools::install_local('../raptr')"
 
-.PHONY: clean mean site man test check checkwb build install
+.PHONY: clean man site man test check checkwb build install

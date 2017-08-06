@@ -84,7 +84,8 @@ DemandPoints<-function(coords, weights) {
 #' # generate demand points for a 2d space using hypervolume
 #' dps2 <- make.DemandPoints(
 #'	points=env.points,
-#'	kernel.method='hypervolume'
+#'	kernel.method='hypervolume',
+#'	samples.per.point=10
 #' )
 make.DemandPoints<-function(points, n=100L, quantile=0.5, kernel.method=c('ks', 'hypervolume')[1], ...) {
 	# check inputs for validity

@@ -1,7 +1,6 @@
 #include <Rcpp.h>
 // [[Rcpp::plugins(cpp11)]]
 
-
 #include <vector>
 #include <string>
 #include <sstream>
@@ -12,12 +11,11 @@
 
 using namespace Rcpp;
 
-
 // [[Rcpp::export]]
 Rcpp::List rcpp_append_model_object(Rcpp::List model, Rcpp::List existing_sols) {
 	//// Initialization
 	// extract matrix
-	Rcpp::List Ar= model["Ar"];
+	Rcpp::List Ar=model["Ar"];
 	std::vector<std::size_t> A_i=Ar["row"];
 	std::vector<std::size_t> A_j=Ar["col"];
 	std::vector<double> A_x=Ar["value"];
