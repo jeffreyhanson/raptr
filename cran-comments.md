@@ -1,17 +1,24 @@
 Comments for submission to CRAN 
 ===============================
 
+## Package updates
+
+This version has the following updates:
+
+* compatibility updates with new version of the hypervolume R package
+* added more links to the package documentation
+* use `requireNamespace` to  check which packages are installed on a user's system
+* registers native routines and disables symbol search to avoid generating an additional note
+
 ## Test environments
 * [Ubuntu 14.04 (travis-ci)](https://travis-ci.org/jeffreyhanson/raptr/builds)
-  + R 3.4.0
+  + R release
   + R devel
 * [Mac OSX 10.9.5 (travis-ci](https://travis-ci.org/jeffreyhanson/raptr/builds)
-  + R 3.4.0
+  + R release
   + R devel
 * [Windows Server 2012 R2 (x64) (appveyor)](https://ci.appveyor.com/project/jeffreyhanson/raptr)
-  + R 3.4.0 
-* [Windows Server 2008 (x64) (win-builder)](https://win-builder.r-project.org/)
-  + R devel
+  + R release
 
 ## R CMD check results
 
@@ -56,15 +63,6 @@ This version of the package does not encounter any new notes. All of these notes
 
 ## Reverse dependencies
 This package does not have any "Reverse depends", "Reverse imports", "Reverse suggests", or "Reverse linking to". 
-
-## Package updates
-
-This version has the following updates:
-
-* added more links to the package documentation
-* use `requireNamespace` to  check which packages are installed on a user's system
-* registers native routines and disables symbol search to avoid generating an additional note
-* [fixes an error encountered on the Solaris environment](https://www.r-project.org/nosvn/R.check/r-patched-solaris-sparc/raptr-00check.html)
 
 Thanks!
 
