@@ -34,7 +34,7 @@ Imports:
     parallel,
     doParallel,
     rgeos,
-    hypervolume,
+    hypervolume(>= 2.0.7),
     ks,
     gdalUtils,
     mvtnorm,
