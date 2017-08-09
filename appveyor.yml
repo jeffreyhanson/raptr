@@ -21,7 +21,7 @@ install:
 # Adapt as necessary starting from here
 build_script:
   - travis-tool.sh install_deps
-  - R -e "install.packages('rcdd')"
+  - R -e "install.packages(c('rcdd', 'hitandrun'))"
   - R -e "install.packages('hypervolume', type = 'source')"
 
 test_script:
