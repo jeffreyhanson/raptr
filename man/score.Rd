@@ -15,23 +15,31 @@ score(x, y)
 \arguments{
 \item{x}{\code{\link{RapResults}} or \code{\link{RapSolved}} object.}
 
-\item{y}{"NULL" to return all scores, "integer" 0 to return score for best solution, "integer" value greater than 0 for \code{y}'th solution score.}
+\item{y}{Available inputs include: \code{NULL} to return all scores,
+\code{integer} number specifying the solution for which the score should
+be returned, and \code{0} to return score for the best solution.}
 }
 \value{
-"matrix" or "numeric" vector with solution score(s) depending on arguments.
+\code{matrix} or \code{numeric} vector with solution score(s)
+ depending on arguments.
 }
 \description{
-Extract solution score from \code{\link{RapResults}} or \code{\link{RapSolved}} object.
+Extract solution score from \code{\link{RapResults}} or
+\code{\link{RapSolved}} object.
 }
 \examples{
 # load data
 data(sim_rs)
-# score for best solution
+
+# score for the best solution
 score(sim_rs, 0)
-# score for second solution
+
+# score for the second solution
 score(sim_rs, 2)
+
 # score for all solutions
 score(sim_rs, NULL)
+
 }
 \seealso{
 \code{\link{RapResults}}, \code{\link{RapSolved}}.

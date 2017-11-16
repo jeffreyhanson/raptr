@@ -86,28 +86,7 @@
     <p>Shows objects.</p>
     
 
-    <pre class="usage"><span class='co'># S4 method for GurobiOpts</span>
-<span class='fu'>show</span>(<span class='no'>object</span>)
-
-<span class='co'># S4 method for ManualOpts</span>
-<span class='fu'>show</span>(<span class='no'>object</span>)
-
-<span class='co'># S4 method for RapData</span>
-<span class='fu'>show</span>(<span class='no'>object</span>)
-
-<span class='co'># S4 method for RapReliableOpts</span>
-<span class='fu'>show</span>(<span class='no'>object</span>)
-
-<span class='co'># S4 method for RapResults</span>
-<span class='fu'>show</span>(<span class='no'>object</span>)
-
-<span class='co'># S4 method for RapUnreliableOpts</span>
-<span class='fu'>show</span>(<span class='no'>object</span>)
-
-<span class='co'># S4 method for RapUnsolved</span>
-<span class='fu'>show</span>(<span class='no'>object</span>)
-
-<span class='co'># S4 method for RapSolved</span>
+    <pre class="usage"><span class='co'># S4 method for ManualOpts</span>
 <span class='fu'>show</span>(<span class='no'>object</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -115,69 +94,39 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p><code><a href='GurobiOpts.html'>GurobiOpts</a></code>, <code><a href='RapUnreliableOpts.html'>RapUnreliableOpts</a></code>, <code><a href='RapReliableOpts.html'>RapReliableOpts</a></code>, <code><a href='RapData.html'>RapData</a></code>, <code><a href='RapUnsolved.html'>RapUnsolved</a></code>, <code><a href='RapResults.html'>RapResults</a></code>, or <code><a href='RapSolved.html'>RapSolved</a></code> object.</p></td>
+      <td><p><code><a href='GurobiOpts.html'>GurobiOpts</a></code>, <code><a href='RapUnreliableOpts.html'>RapUnreliableOpts</a></code>,
+<code><a href='RapReliableOpts.html'>RapReliableOpts</a></code>, <code><a href='RapData.html'>RapData</a></code>,
+<code><a href='RapUnsolved.html'>RapUnsolved</a></code>, <code><a href='RapResults.html'>RapResults</a></code>, or
+<code><a href='RapSolved.html'>RapSolved</a></code> object.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='GurobiOpts.html'>GurobiOpts</a></code>, <code><a href='RapUnreliableOpts.html'>RapUnreliableOpts</a></code>, <code><a href='RapReliableOpts.html'>RapReliableOpts</a></code>, <code><a href='RapData.html'>RapData</a></code>, <code><a href='RapUnsolved.html'>RapUnsolved</a></code>, <code><a href='RapResults.html'>RapResults</a></code>, <code><a href='RapSolved.html'>RapSolved</a></code>.</p>
+    <p><code><a href='GurobiOpts.html'>GurobiOpts</a></code>, <code><a href='RapUnreliableOpts.html'>RapUnreliableOpts</a></code>,
+  <code><a href='RapReliableOpts.html'>RapReliableOpts</a></code>, <code><a href='RapData.html'>RapData</a></code>,
+  <code><a href='RapUnsolved.html'>RapUnsolved</a></code>, <code><a href='RapResults.html'>RapResults</a></code>,
+  <code><a href='RapSolved.html'>RapSolved</a></code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load data</span>
 <span class='fu'>data</span>(<span class='no'>sim_ru</span>, <span class='no'>sim_rs</span>)
-<span class='co'>## show methods for classes in package</span>
-<span class='co'># GurobiOpts</span>
-<span class='fu'><a href='GurobiOpts.html'>GurobiOpts</a></span>()</div><div class='output co'>#&gt; GurobiOpts object.
-#&gt;   Threads: 1 
-#&gt;   MIPGap: 0.1 
-#&gt;   Method: 0 
-#&gt;   Presolve: 2 
-#&gt;   TimeLimit: NA 
-#&gt;   NumberSolutions: 1 
-#&gt;   MultipleSolutionsMethod: benders.cuts </div><div class='input'><span class='co'># RapReliableOpts</span>
-<span class='fu'><a href='RapReliableOpts.html'>RapReliableOpts</a></span>()</div><div class='output co'>#&gt; RapReliableOpts object.
-#&gt;   BLM: 0 
-#&gt;   failure.multiplier: 1.1 
-#&gt;   max.r.level: 5 </div><div class='input'><span class='co'># RapUnreliableOpts</span>
-<span class='fu'><a href='RapUnreliableOpts.html'>RapUnreliableOpts</a></span>()</div><div class='output co'>#&gt; RapUnreliableOpts object.
-#&gt;   BLM: 0 </div><div class='input'><span class='co'># RapData</span>
-<span class='no'>sim_ru</span>@<span class='kw'>data</span></div><div class='output co'>#&gt; RapData object.
-#&gt;   Number of planning units: 100 
-#&gt;   Number of species: 3 
-#&gt;   Number of attribute spaces: 1 </div><div class='input'><span class='co'># RapUnsolved</span>
-<span class='no'>sim_ru</span></div><div class='output co'>#&gt; RapUnsolved object
-#&gt; 
-#&gt; Parameters
-#&gt;   BLM: 0 
-#&gt; Data
-#&gt;   Number of planning units: 100 
-#&gt;   Number of species: 3 
-#&gt;   Number of attribute spaces: 1 </div><div class='input'><span class='co'># RapResults</span>
-<span class='no'>sim_rs</span>@<span class='kw'>results</span></div><div class='output co'>#&gt; RapResults object.
-#&gt;   Number of solutions: 3 
-#&gt;   Best solution score: 20 (20 planning units)</div><div class='input'><span class='co'># RapSolved</span>
-<span class='no'>sim_rs</span></div><div class='output co'>#&gt; RapSolved object
-#&gt; 
-#&gt; Parameters
-#&gt;   BLM: 0 
-#&gt; Solver settings
-#&gt;   Method: Gurobi
-#&gt;   Threads: 1 
-#&gt;   MIPGap: 0.1 
-#&gt;   Method: 0 
-#&gt;   Presolve: 2 
-#&gt;   TimeLimit: NA 
-#&gt;   NumberSolutions: 3 
-#&gt;   MultipleSolutionsMethod: benders.cuts 
-#&gt; Data
-#&gt;   Number of planning units: 100 
-#&gt;   Number of species: 3 
-#&gt;   Number of attribute spaces: 1 
-#&gt; Results
-#&gt;   Number of solutions: 3 
-#&gt;   Best solution score: 20 (20 planning units)</div></pre>
+
+<span class='co'># show GurobiOpts object</span>
+<span class='fu'><a href='GurobiOpts.html'>GurobiOpts</a></span>()</div><div class='output co'>#&gt; <span class='message'>GurobiOpts object.</span></div><div class='output co'>#&gt; <span class='message'>  Threads: 1</span></div><div class='output co'>#&gt; <span class='message'>  MIPGap: 0.1</span></div><div class='output co'>#&gt; <span class='message'>  Method: 0</span></div><div class='output co'>#&gt; <span class='message'>  Presolve: 2</span></div><div class='output co'>#&gt; <span class='message'>  TimeLimit: NA</span></div><div class='output co'>#&gt; <span class='message'>  NumberSolutions: 1</span></div><div class='output co'>#&gt; <span class='message'>  MultipleSolutionsMethod: benders.cuts</span></div><div class='input'>
+<span class='co'># show RapReliableOpts object</span>
+<span class='fu'><a href='RapReliableOpts.html'>RapReliableOpts</a></span>()</div><div class='output co'>#&gt; <span class='message'>RapReliableOpts object.</span></div><div class='output co'>#&gt; <span class='message'>  BLM: 0</span></div><div class='output co'>#&gt; <span class='message'>  failure.multiplier: 1.1</span></div><div class='output co'>#&gt; <span class='message'>  max.r.level: 5</span></div><div class='input'>
+<span class='co'># show RapUnreliableOpts object</span>
+<span class='fu'><a href='RapUnreliableOpts.html'>RapUnreliableOpts</a></span>()</div><div class='output co'>#&gt; <span class='message'>RapUnreliableOpts object.</span></div><div class='output co'>#&gt; <span class='message'>  BLM: 0</span></div><div class='input'>
+<span class='co'># show RapData object</span>
+<span class='no'>sim_ru</span>@<span class='kw'>data</span></div><div class='output co'>#&gt; <span class='message'>RapData object.</span></div><div class='output co'>#&gt; <span class='message'>  Number of planning units: 100</span></div><div class='output co'>#&gt; <span class='message'>  Number of species: 3</span></div><div class='output co'>#&gt; <span class='message'>  Number of attribute spaces: 1</span></div><div class='input'>
+<span class='co'># show RapUnsolved object</span>
+<span class='no'>sim_ru</span></div><div class='output co'>#&gt; <span class='message'>RapUnsolved object</span></div><div class='output co'>#&gt; <span class='message'>Parameters</span></div><div class='output co'>#&gt; <span class='message'>  BLM: 0</span></div><div class='output co'>#&gt; <span class='message'>Data</span></div><div class='output co'>#&gt; <span class='message'>  Number of planning units: 100</span></div><div class='output co'>#&gt; <span class='message'>  Number of species: 3</span></div><div class='output co'>#&gt; <span class='message'>  Number of attribute spaces: 1</span></div><div class='input'>
+<span class='co'># show RapResults object</span>
+<span class='no'>sim_rs</span>@<span class='kw'>results</span></div><div class='output co'>#&gt; <span class='message'>RapResults object.</span></div><div class='output co'>#&gt; <span class='message'>  Number of solutions:3</span></div><div class='output co'>#&gt; <span class='message'>  Best solution score: 20 (20 planning units)</span></div><div class='input'>
+<span class='co'># show RapSolved object</span>
+<span class='no'>sim_rs</span></div><div class='output co'>#&gt; <span class='message'>RapSolved object</span></div><div class='output co'>#&gt; <span class='message'>Parameters</span></div><div class='output co'>#&gt; <span class='message'>  BLM: 0</span></div><div class='output co'>#&gt; <span class='message'>Solver settings</span></div><div class='output co'>#&gt; <span class='message'>  Method: Gurobi</span></div><div class='output co'>#&gt; <span class='message'>  Threads: 1</span></div><div class='output co'>#&gt; <span class='message'>  MIPGap: 0.1</span></div><div class='output co'>#&gt; <span class='message'>  Method: 0</span></div><div class='output co'>#&gt; <span class='message'>  Presolve: 2</span></div><div class='output co'>#&gt; <span class='message'>  TimeLimit: NA</span></div><div class='output co'>#&gt; <span class='message'>  NumberSolutions: 3</span></div><div class='output co'>#&gt; <span class='message'>  MultipleSolutionsMethod: benders.cuts</span></div><div class='output co'>#&gt; <span class='message'>Data</span></div><div class='output co'>#&gt; <span class='message'>  Number of planning units: 100</span></div><div class='output co'>#&gt; <span class='message'>  Number of species: 3</span></div><div class='output co'>#&gt; <span class='message'>  Number of attribute spaces: 1</span></div><div class='output co'>#&gt; Results</div><div class='output co'>#&gt; <span class='message'>  Number of solutions:3</span></div><div class='output co'>#&gt; <span class='message'>  Best solution score: 20 (20 planning units)</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -194,7 +143,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">

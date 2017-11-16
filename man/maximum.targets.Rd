@@ -12,19 +12,24 @@ maximum.targets(x, verbose)
 \arguments{
 \item{x}{\code{\link{RapUnsolved}} or \code{\link{RapSolved}} object.}
 
-\item{verbose}{\code{logical} should messages be printed during calculations? Defaults to \code{FALSE}.}
+\item{verbose}{\code{logical} should messages be printed during
+calculations? Defaults to \code{FALSE}.}
 }
 \value{
 \code{data.frame} object.
 }
 \description{
-This function accepts a \code{\link{RapUnsolved}} object and returns a \code{data.frame} containing the
-amount-based and space-based targets for each species and attribute space. These are calculated using a
-prioritisation that contains all the available planning units. Note that the maximum amount-based targets are always 1.
+This function accepts a \code{\link{RapUnsolved}} object and returns a
+\code{data.frame} containing the amount-based and space-based targets for
+each species and attribute space. These are calculated using a
+prioritisation that contains all the available planning units. Note that the
+maximum amount-based targets are always 1.
 }
 \examples{
 # load RapSolved objects
 data(sim_ru)
+
 # calculate maximum metrics
 maximum.targets(sim_ru)
+
 }

@@ -94,7 +94,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>n</th>
-      <td><p><code>integer</code> number of planning units. <code>sqrt(n)</code> must yield a valid number.</p></td>
+      <td><p><code>integer</code> number of planning units. <code>sqrt(n)</code> must yield
+a valid number.</p></td>
     </tr>
     <tr>
       <th>xmn</th>
@@ -120,19 +121,24 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Square planning units are generated in the shape of a square. Default coordinate arguments are such that the planning units will be centered at origin.
-The data slot contains an 'id' (<code>integer</code>), cost (<code>numeric</code>), 'status' (<code>integer</code>), and area (<code>numeric</code>).</p>
+    <p>Square planning units are generated in the shape of a square.
+  Default coordinate arguments are such that the planning units will be
+  centered at origin. The data slot contains an "id" (<code>integer</code>),
+  "cost" (<code>numeric</code>), "status" (<code>integer</code>), and "area"
+  (<code>numeric</code>).</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># generate 225 sqauare planning units arranged in a square with 1 unit height/width</span>
+    <pre class="examples"><div class='input'><span class='co'># generate 225 sqauare planning units arranged in a square</span>
+<span class='co'># with 1 unit height / width</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>sim.pus</span>(<span class='fl'>225</span>)
-<span class='co'># generate 225 rectangular pus arranged in a square</span>
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'>sim.pus</span>(<span class='fl'>225</span>, <span class='kw'>xmn</span><span class='kw'>=</span>-<span class='fl'>5</span>, <span class='kw'>xmx</span><span class='kw'>=</span><span class='fl'>10</span>, <span class='kw'>ymn</span><span class='kw'>=</span>-<span class='fl'>5</span>, <span class='kw'>ymx</span><span class='kw'>=</span><span class='fl'>5</span>)
 
-<span class='fu'>par</span>(<span class='kw'>mfrow</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>2</span>))
-<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>main</span><span class='kw'>=</span><span class='st'>'x'</span>)
-<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>y</span>, <span class='kw'>main</span><span class='kw'>=</span><span class='st'>'y'</span>)</div><img src='sim.pus-2.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>par</span>(<span class='kw'>mfrow</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>1</span>))</div></pre>
+<span class='co'># generate 225 rectangular pus arranged in a square</span>
+<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'>sim.pus</span>(<span class='fl'>225</span>, <span class='kw'>xmn</span> <span class='kw'>=</span> -<span class='fl'>5</span>, <span class='kw'>xmx</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>ymn</span> <span class='kw'>=</span> -<span class='fl'>5</span>, <span class='kw'>ymx</span> <span class='kw'>=</span> <span class='fl'>5</span>)
+
+<span class='fu'>par</span>(<span class='kw'>mfrow</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>2</span>))
+<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"x"</span>)
+<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>y</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"y"</span>)</div><img src='sim.pus-2.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>par</span>(<span class='kw'>mfrow</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>1</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -151,7 +157,7 @@ The data slot contains an 'id' (<code>integer</code>), cost (<code>numeric</code
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">

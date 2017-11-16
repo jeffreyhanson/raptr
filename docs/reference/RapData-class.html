@@ -91,14 +91,26 @@
 
     
     <dl class='dl-horizontal'>
-<dt><code>polygons</code></dt><dd><p><code><a href='http://www.rdocumentation.org/packages/PBSmapping/topics/PolySet'>PolySet</a></code> planning unit spatial data or <code>NULL</code> if data not available.</p></dd>
-    <dt><code>pu</code></dt><dd><p><code><a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> planning unit data. Columns are 'cost' (<code>numeric</code>), 'area' (<code>numeric</code>), and 'status' (<code>integer</code>).</p></dd>
-    <dt><code>species</code></dt><dd><p><code><a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with species data. Columns are 'name' (<code>character</code>.</p></dd>
-    <dt><code>targets</code></dt><dd><p><code><a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with species data. Columns are 'species' (<code>integer</code>), 'target' (<code>integer</code>), 'proportion' (<code>numeric</code>).</p></dd>
-    <dt><code>pu.species.probabilities</code></dt><dd><p><code><a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with data on the probability of species in each planning unit. Columns are 'species' (<code>integer</code>), 'pu' (<code>integer</code>), and 'value' (<code>numeric</code>) columns.</p></dd>
-    <dt><code>attribute.spaces</code></dt><dd><p><code>list</code> of <code>AttributeSpaces</code> objects with the demand points and planning unit coordinates.</p></dd>
-    <dt><code>boundary</code></dt><dd><p><code><a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with data on the shared boundary length of planning units. Columns are with 'id1' (<code>integer</code>), 'id2' (<code>integer</code>), and 'boundary' (<code>numeric</code>).</p></dd>
-    <dt><code>skipchecks</code></dt><dd><p><code>logical</code> Skip data integrity checks? May improve speed for big data sets.</p></dd>
+<dt><code>polygons</code></dt><dd><p><code><a href='http://www.rdocumentation.org/packages/PBSmapping/topics/PolySet'>PolySet</a></code> planning unit spatial data
+or <code>NULL</code> if data not available.</p></dd>
+    <dt><code>pu</code></dt><dd><p><code><a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> planning unit data. Columns must be
+"cost" (<code>numeric</code>), "area" (<code>numeric</code>), and "status"
+(<code>integer</code>).</p></dd>
+    <dt><code>species</code></dt><dd><p><code><a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with species data. Columns must
+be "name" (<code>character</code>.</p></dd>
+    <dt><code>targets</code></dt><dd><p><code><a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with species data. Columns must
+be "species" (<code>integer</code>), "target" (<code>integer</code>), "proportion"
+(<code>numeric</code>).</p></dd>
+    <dt><code>pu.species.probabilities</code></dt><dd><p><code><a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with data on
+the probability of species in each planning unit. Columns must be "species"
+(<code>integer</code>), "pu" (<code>integer</code>), and "value" (<code>numeric</code>).</p></dd>
+    <dt><code>attribute.spaces</code></dt><dd><p><code>list</code> of <code>AttributeSpaces</code> objects with
+the demand points and planning unit coordinates.</p></dd>
+    <dt><code>boundary</code></dt><dd><p><code><a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with data on the shared
+boundary length of planning units. Columns must be "id1" (<code>integer</code>),
+"id2" (<code>integer</code>), and "boundary" (<code>numeric</code>).</p></dd>
+    <dt><code>skipchecks</code></dt><dd><p><code>logical</code> Skip data integrity checks? May improve
+speed for big data sets.</p></dd>
     <dt><code>.cache</code></dt><dd><p><code><a href='http://www.rdocumentation.org/packages/base/topics/environment'>environment</a></code> used to cache calculations.</p></dd>
 </dl>
     
@@ -122,7 +134,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">

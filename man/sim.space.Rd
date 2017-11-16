@@ -8,20 +8,25 @@
 \usage{
 sim.space(x, ...)
 
-\method{sim.space}{RasterLayer}(x, d = 2, model = RMgauss(), ...)
+\method{sim.space}{RasterLayer}(x, d = 2, model = RandomFields::RMgauss(),
+  ...)
 
-\method{sim.space}{SpatialPolygons}(x, res, d = 2, model = RMgauss(), ...)
+\method{sim.space}{SpatialPolygons}(x, res, d = 2,
+  model = RandomFields::RMgauss(), ...)
 }
 \arguments{
-\item{x}{\code{RasterLayer} or \code{\link[sp]{SpatialPolygons}} object delineate the spatial extent to delineate study area.}
+\item{x}{\code{RasterLayer} or \code{\link[sp]{SpatialPolygons}} object
+delineate the spatial extent to delineate study area.}
 
 \item{...}{parameters passed to \code{\link[RandomFields]{RandomFields}}.}
 
 \item{d}{\code{integer} number of dimensions. Defaults to 2.}
 
-\item{model}{\code{\link[RandomFields]{RMmodel}} model to simulate species distributions with. Defaults \code{\link[RandomFields]{RPgauss}}.}
+\item{model}{\code{\link[RandomFields]{RMmodel}} model to simulate species
+distributions with. Defaults \code{\link[RandomFields]{RPgauss}}.}
 
-\item{res}{\code{numeric} resolution to simulate distributions. Only needed when \code{\link[sp]{SpatialPolygons}} supplied.}
+\item{res}{\code{numeric} resolution to simulate distributions. Only needed
+when \code{\link[sp]{SpatialPolygons}} supplied.}
 }
 \value{
 \code{RasterStack} with layers for each dimension of the space.
@@ -30,27 +35,29 @@ sim.space(x, ...)
 This function simulates attribute space data for RAP.
 }
 \details{
-Distributions are simulated by passing \code{model} to \code{\link[RandomFields]{RFsimulate}}.
+Distributions are simulated by passing \code{model} to
+  \code{\link[RandomFields]{RFsimulate}}.
 }
 \examples{
 # simulate plannign units
 sim_pus <- sim.pus(225L)
 
 # simulate 1d space using RasterLayer
-s1 <- sim.space(blank.raster(sim_pus, 1), d=1)
+s1 <- sim.space(blank.raster(sim_pus, 1), d = 1)
 
 # simulate 1d space using SpatialPolygons
-s2 <- sim.space(sim_pus, res=1, d=1)
+s2 <- sim.space(sim_pus, res = 1, d = 1)
 
 # simulate 2d space using SpatialPolygons
-s3 <- sim.space(sim_pus, res=1, d=2)
+s3 <- sim.space(sim_pus, res = 1, d = 2)
 
 # plot simulated spaces
-par(mfrow=c(2,2))
-plot(s1, main='s1')
-plot(s2, main='s2')
-plot(s3[[1]], main='s3: first dimension')
-plot(s3[[2]], main='s3: second dimension')
+par(mfrow = c(2,2))
+plot(s1, main = "s1")
+plot(s2, main = "s2")
+plot(s3[[1]], main = "s3: first dimension")
+plot(s3[[2]], main = "s3: second dimension")
+
 }
 \seealso{
 \code{\link[RandomFields]{RFsimulate}}.

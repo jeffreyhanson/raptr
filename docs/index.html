@@ -15,7 +15,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-home">
+    <div class="container template-vignette">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -55,41 +55,69 @@
 
       
       </header><div class="row">
-  <div class="contents col-md-9">
-    <div id="raptr" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#raptr" class="anchor"></a>raptr</h1></div>
+  <div class="col-md-9">
+    
 
-<div id="biodiversity-is-in-crisis--the-overarching-aim-of-conservation-is-to-preserve-biodiversity-patterns-and-processes--to-this-end-protected-areas-are-established-to-buffer-species-and-preserve-biodiversity-processes--but-resources-are-limited-and-so-protected-areas-must-be-cost-effective--this-package-contains-tools-to-generate-plans-for-protected-areas-prioritizations-using-spatially-explicit-targets-for-biodiversity-patterns-and-processes--to-obtain-solutions-in-a-feasible-amount-of-time-this-package-uses-the-commercial-gurobi-software-package-obtained-from-httpwww-gurobi-com--additionally-the-rgurobi-package-can-also-be-installed-to-provide-extra-functionality-obtained-from-httpgithub-comjeffreyhansonrgurobi-" class="section level4">
-<h4 class="hasAnchor">
-<a href="#biodiversity-is-in-crisis--the-overarching-aim-of-conservation-is-to-preserve-biodiversity-patterns-and-processes--to-this-end-protected-areas-are-established-to-buffer-species-and-preserve-biodiversity-processes--but-resources-are-limited-and-so-protected-areas-must-be-cost-effective--this-package-contains-tools-to-generate-plans-for-protected-areas-prioritizations-using-spatially-explicit-targets-for-biodiversity-patterns-and-processes--to-obtain-solutions-in-a-feasible-amount-of-time-this-package-uses-the-commercial-gurobi-software-package-obtained-from-httpwww-gurobi-com--additionally-the-rgurobi-package-can-also-be-installed-to-provide-extra-functionality-obtained-from-httpgithub-comjeffreyhansonrgurobi-" class="anchor"></a>Biodiversity is in crisis. The overarching aim of conservation is to preserve biodiversity patterns and processes. To this end, protected areas are established to buffer species and preserve biodiversity processes. But resources are limited and so protected areas must be cost-effective. This package contains tools to generate plans for protected areas (prioritizations), using spatially explicit targets for biodiversity patterns and processes. To obtain solutions in a feasible amount of time, this package uses the commercial ‘Gurobi’ software package (obtained from <a href="http://www.gurobi.com/" class="uri">http://www.gurobi.com/</a>). Additionally, the ‘rgurobi’ package can also be installed to provide extra functionality (obtained from <a href="http://github.com/jeffreyhanson/rgurobi" class="uri">http://github.com/jeffreyhanson/rgurobi</a>).</h4>
+    
+    
+<div class="contents">
+<!--- README.md is generated from README.Rmd. Please edit that file -->
+<div id="raptr-representative-and-adequate-prioritization-toolkit-in-r" class="section level1">
+<div class="page-header"><h1 class="hasAnchor">
+<a href="#raptr-representative-and-adequate-prioritization-toolkit-in-r" class="anchor"></a>raptr: Representative and Adequate Prioritization Toolkit in R</h1></div>
+
+<p>Biodiversity is in crisis. The overarching aim of conservation is to preserve biodiversity patterns and processes. To this end, protected areas are established to buffer species and preserve biodiversity processes. But resources are limited and so protected areas must be cost-effective. This package contains tools to generate plans for protected areas (prioritizations), using spatially explicit targets for biodiversity patterns and processes. To obtain solutions in a feasible amount of time, this package uses the commercial ‘Gurobi’ software package (obtained from <a href="http://www.gurobi.com/" class="uri">http://www.gurobi.com/</a>). Additionally, the ‘rgurobi’ package can also be installed to provide extra functionality (obtained from <a href="http://github.com/jeffreyhanson/rgurobi" class="uri">http://github.com/jeffreyhanson/rgurobi</a>). For more information on using this package, see our paper published in Methods in Ecology and Evolution (<a href="https://dx.doi.org/10.1111/2041-210X.12862" class="uri">https://dx.doi.org/10.1111/2041-210X.12862</a>)</p>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
 <p>This package depends on several packages which can be difficult to install under Linux and Mac operating systems.</p>
-<p>Linux users can install them typing the following code into the terminal:</p>
+<p>Linux (Ubuntu) users can install them typing the following code into the terminal:</p>
 <pre><code>sudo apt-get update
 sudo apt-get install libgdal-dev
 sudo apt-get install libproj-dev
 sudo apt-get build-dep r-cran-rgl</code></pre>
-<p>Mac users can install them using this code in the terminal:</p>
+<p>Mac OSX users can install them using the code below.</p>
 <pre><code>brew install Caskroom/cask/xquartz
 brew install gdal
-Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos'))"</code></pre>
-<p>To install the latest official version from CRAN, use the following R code:</p>
-<pre><code>install.packages('raptr')</code></pre>
-<p>To install the <a href="https://github.com/jeffreyhanson/raptr">development version from GitHub</a>, use this R code:</p>
-<pre><code>if (!require('devtools'))
-    install.packages('devtools', repo='http://cran.rstudio.com', dep=TRUE)
-devtools:::install_github('jeffreyhanson/raptr')</code></pre>
+Rscript -e "setRepositories(ind = 1:2); install.packages(c('rgdal', 'rgeos'))"</code></pre>
+<p>To install the <a href="https://cran.r-project.org/web/packages/raptr/index.html">latest official version on CRAN</a>, use the following R code:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"raptr"</span>)</code></pre></div>
+<p>To install the <a href="https://github.com/jeffreyhanson/raptr">development version on GitHub</a>, use this R code:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">"devtools"</span>))
+  <span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
+devtools<span class="op">:::</span><span class="kw">install_github</span>(<span class="st">"jeffreyhanson/raptr"</span>)</code></pre></div>
 <p>Once this package has been installed, you can read through the vignette for a tutorial on how to use it.</p>
 <p><a href="https://rawgit.com/jeffreyhanson/raptr/master/inst/doc/raptr.html">View it here</a>, or by running this R code:</p>
-<pre><code># open vignette in web browser
-vignette('raptr', package='raptr')</code></pre>
-<p><strong>If this R package helped you, please cite it.</strong></p>
-<p>Hanson J. O., Rhodes J. R., Possingham H. P, and Fuller R. A. (2016). raptr: Representative and Adequate Prioritization Toolkit in R. R package. R package version 0.0.3. <a href="https://github.com/jeffreyhanson/raptr" class="uri">https://github.com/jeffreyhanson/raptr</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># open vignette in web browser</span>
+<span class="kw">vignette</span>(<span class="st">"raptr"</span>, <span class="dt">package =</span> <span class="st">"raptr"</span>)</code></pre></div>
+</div>
+<div id="citation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#citation" class="anchor"></a>Citation</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">citation</span>(<span class="st">"raptr"</span>)</code></pre></div>
+<pre><code>## 
+## To cite package 'raptr' in publications use:
+## 
+##   Jeffrey O Hanson, Jonathan R Rhodes, Hugh P Possingham and
+##   Richard A Fuller (2017). raptr: Representative and Adequate
+##   Prioritization Toolkit in R. R package version 0.0.5.
+##   https://CRAN.R-project.org/package=raptr
+## 
+## A BibTeX entry for LaTeX users is
+## 
+##   @Manual{,
+##     title = {raptr: Representative and Adequate Prioritization Toolkit in R},
+##     author = {Jeffrey O Hanson and Jonathan R Rhodes and Hugh P Possingham and Richard A Fuller},
+##     year = {2017},
+##     note = {R package version 0.0.5},
+##     url = {https://CRAN.R-project.org/package=raptr},
+##   }</code></pre>
+</div>
 </div>
 </div>
   </div>
 
-  <div class="col-md-3" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cran.r-project.org/package=raptr">https://​cran.r-project.org/​package=raptr</a>
@@ -105,23 +133,28 @@ vignette('raptr', package='raptr')</code></pre>
 <ul class="list-unstyled">
 <li>
 <a href="http://jeffrey-hanson.com">Jeffrey O Hanson</a> <br><small class="roles"> Author, maintainer </small> </li>
-<li>Jonathan R Rhodes <br><small class="roles"> Author </small> </li>
-<li>Hugh P Possingham <br><small class="roles"> Author </small> </li>
-<li>Richard A Fuller <br><small class="roles"> Author </small> </li>
+<li>
+<a href="https://rhodesconservation.com/people/jonathan-rhodes/">Jonathan R Rhodes</a> <br><small class="roles"> Author </small> </li>
+<li>
+<a href="http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html">Hugh P Possingham</a> <br><small class="roles"> Author </small> </li>
+<li>
+<a href="https://www.fullerlab.org/drrichardfuller/">Richard A Fuller</a> <br><small class="roles"> Author </small> </li>
 </ul>
 <h2>Dev status</h2>
 <ul class="list-unstyled">
+<li><a href="http://www.repostatus.org/#active"><img src="http://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active - The project has reached a stable, usable state and is being actively developed."></a></li>
 <li><a href="https://travis-ci.org/jeffreyhanson/raptr"><img src="https://img.shields.io/travis/jeffreyhanson/raptr/master.svg?label=Mac%20OSX%20%26%20Linux" alt="Travis Build Status"></a></li>
 <li><a href="https://ci.appveyor.com/project/jeffreyhanson/raptr"><img src="https://img.shields.io/appveyor/ci/jeffreyhanson/raptr/master.svg?label=Windows" alt="AppVeyor Build Status"></a></li>
 <li><a href="https://codecov.io/github/jeffreyhanson/raptr?branch=master"><img src="https://codecov.io/github/jeffreyhanson/raptr/coverage.svg?branch=master" alt="Coverage Status"></a></li>
 <li><a href="https://CRAN.R-project.org/package=raptr"><img src="http://www.r-pkg.org/badges/version/raptr" alt="CRAN_Status_Badge"></a></li>
 </ul>
 </div>
+
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="http://jeffrey-hanson.com">Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href="http://jeffrey-hanson.com">Jeffrey O Hanson</a>, <a href="https://rhodesconservation.com/people/jonathan-rhodes/">Jonathan R Rhodes</a>, <a href="http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html">Hugh P Possingham</a>, <a href="https://www.fullerlab.org/drrichardfuller/">Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">

@@ -7,7 +7,8 @@
 AttributeSpaces(spaces, name)
 }
 \arguments{
-\item{spaces}{\code{list} of \code{\link{AttributeSpace}} objects for different species.}
+\item{spaces}{\code{list} of \code{\link{AttributeSpace}} objects for
+different species.}
 
 \item{name}{\code{character} name to identify the attribute space.}
 }
@@ -16,29 +17,25 @@ This function creates a new \code{AttributeSpaces} object.
 }
 \examples{
 space1 <- AttributeSpace(
-PlanningUnitPoints(
-	matrix(rnorm(100), ncol=2),
-	seq_len(50)
-),
-DemandPoints(
-	matrix(rnorm(100), ncol=2),
-	runif(50)
-),
-species=1L
-)
+  PlanningUnitPoints(
+    matrix(rnorm(100), ncol = 2),
+    seq_len(50)),
+  DemandPoints(
+    matrix(rnorm(100), ncol = 2),
+    runif(50)),
+  species = 1L)
 
 space2 <- AttributeSpace(
-PlanningUnitPoints(
-	matrix(rnorm(100), ncol=2),
-	seq_len(50)
-),
-DemandPoints(
-	matrix(rnorm(100), ncol=2),
-	runif(50)
-),
-species=2L
-)
-spaces1 <- AttributeSpaces(list(space1, space2), 'test')
+  PlanningUnitPoints(
+    matrix(rnorm(100), ncol = 2),
+    seq_len(50)),
+  DemandPoints(
+    matrix(rnorm(100), ncol = 2),
+    runif(50)),
+  species = 2L)
+
+spaces <- AttributeSpaces(list(space1, space2), "spaces")
+
 }
 \seealso{
 \code{\link{AttributeSpace-class}}.

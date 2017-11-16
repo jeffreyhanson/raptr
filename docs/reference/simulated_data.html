@@ -83,14 +83,13 @@
     </div>
 
     
-    <p>This dataset contains all the data needed to generate prioritisations for three simulated species. This dataset contains planning units, species distribution
-maps, and demand points for each species. For the purposes of exploring the behaviour of the problem, demand points were generated using the centroids of planning units
-and the probability that they are occupied by the species. Note that methodology is not encouraged for real-world conservation planning.
-The species were simulated to represent different simplified versions of species distributions encountered:</p><ul>
-<li><p>uniform: This species has an equal probability (0.5) of occurring in all planning units.</p></li>
-<li><p>normal: This species has a single range-core where it is most likely to be found. It is less likely to be found in areas further away from the centre of its range.</p></li>
-<li><p>bimodal: This species has two distinct ecotypes. Each ecotype has its own range cores and range marginal areas.</p></li>
-</ul>
+    <p>This dataset contains all the data needed to generate prioritisations for
+three simulated species. This dataset contains planning units, species
+distribution maps, and demand points for each species. For the purposes of
+exploring the behaviour of the problem, demand points were generated using
+the centroids of planning units and the probability that they are occupied
+by the species. Note that methodology is not encouraged for real-world
+conservation planning.</p>
     
 
     <pre class="usage"><span class='no'>sim_ru</span>
@@ -99,22 +98,39 @@ The species were simulated to represent different simplified versions of species
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygonsDataFrame</a></code>, <code><a href='http://www.rdocumentation.org/packages/raster/topics/Raster-classes'>RasterStack-class</a></code>, <code>list</code> of <code><a href='DemandPoints.html'>DemandPoints</a></code> objects.</p>
+    <p><code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygonsDataFrame</a></code>,
+  <code><a href='http://www.rdocumentation.org/packages/raster/topics/Raster-classes'>RasterStack-class</a></code>, <code>list</code> of
+  <code><a href='DemandPoints.html'>DemandPoints</a></code> objects.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The objects contained in this dataset are:</p><ul>
-<li><p>sim_ru: A <code><a href='RapUnsolved.html'>RapUnsolved</a></code> object with all the simulated data.</p></li>
-<li><p>sim_rs: A <code><a href='RapSolved.html'>RapSolved</a></code> object with 5 near-optimal solutions.</p></li>
-</ul>
+    <p>The species were simulated to represent various simplified species
+distributions.</p><dl class='dl-horizontal'>
+  <dt>uniform</dt><dd><p>This species has an equal probability (0.5) of occurring in
+                 all planning units.</p></dd>
+ <dt>normal</dt><dd><p>This species has a single range-core where it is most likely
+               to be found. It is less likely to be found in areas further
+               away from the centre of its range.</p></dd>
+ <dt>bimodal</dt><dd><p>This species has two distinct ecotypes. Each ecotype has its
+                own core and marginal area.</p></dd>
+</dl>
+    <p>The objects contained in this dataset are listed below.</p><dl class='dl-horizontal'>
+ <dt>sim_ru</dt><dd><p>A <code><a href='RapUnsolved.html'>RapUnsolved</a></code> object with all the simulated
+               data.</p></dd>
+ <dt>sim_rs</dt><dd><p>A <code><a href='RapSolved.html'>RapSolved</a></code> object with 5 near-optimal
+               solutions.</p></dd>
+</dl>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load data</span>
 <span class='fu'>data</span>(<span class='no'>sim_ru</span>, <span class='no'>sim_rs</span>)
+
 <span class='co'># plot species distributions</span>
-<span class='fu'><a href='spp.plot.html'>spp.plot</a></span>(<span class='no'>sim_ru</span>, <span class='fl'>1</span>)</div><img src='simulated_data-2.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='spp.plot.html'>spp.plot</a></span>(<span class='no'>sim_ru</span>, <span class='fl'>2</span>)</div><img src='simulated_data-4.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='spp.plot.html'>spp.plot</a></span>(<span class='no'>sim_ru</span>, <span class='fl'>3</span>)</div><img src='simulated_data-6.png' alt='' width='540' height='400' /><div class='input'><span class='co'># plot selection frequencies</span>
-<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>sim_rs</span>)</div><img src='simulated_data-8.png' alt='' width='540' height='400' /><div class='input'><span class='co'># plot best solution</span>
+<span class='fu'><a href='spp.plot.html'>spp.plot</a></span>(<span class='no'>sim_ru</span>, <span class='fl'>1</span>)</div><img src='simulated_data-2.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='spp.plot.html'>spp.plot</a></span>(<span class='no'>sim_ru</span>, <span class='fl'>2</span>)</div><img src='simulated_data-4.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='spp.plot.html'>spp.plot</a></span>(<span class='no'>sim_ru</span>, <span class='fl'>3</span>)</div><img src='simulated_data-6.png' alt='' width='540' height='400' /><div class='input'>
+<span class='co'># plot selection frequencies</span>
+<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>sim_rs</span>)</div><img src='simulated_data-8.png' alt='' width='540' height='400' /><div class='input'>
+<span class='co'># plot best solution</span>
 <span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>sim_rs</span>, <span class='fl'>0</span>)</div><img src='simulated_data-10.png' alt='' width='540' height='400' /></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -133,7 +149,7 @@ The species were simulated to represent different simplified versions of species
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">

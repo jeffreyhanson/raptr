@@ -107,11 +107,13 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p><code><a href='RapData.html'>RapData</a></code>, <code><a href='RapUnsolved.html'>RapUnsolved</a></code>, or <code><a href='RapSolved.html'>RapSolved</a></code> object.</p></td>
+      <td><p><code><a href='RapData.html'>RapData</a></code>, <code><a href='RapUnsolved.html'>RapUnsolved</a></code>, or
+<code><a href='RapSolved.html'>RapSolved</a></code> object.</p></td>
     </tr>
     <tr>
       <th>species</th>
-      <td><p><code>NULL</code> for all species or <code>integer</code> indicating species.</p></td>
+      <td><p><code>NULL</code> for all species or <code>integer</code> indicating
+species.</p></td>
     </tr>
     <tr>
       <th>value</th>
@@ -125,19 +127,24 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='RapData.html'>RapData</a></code>, <code><a href='RapResults.html'>RapResults</a></code>, <code><a href='RapSolved.html'>RapSolved</a></code>.</p>
+    <p><code><a href='RapData.html'>RapData</a></code>, <code><a href='RapResults.html'>RapResults</a></code>,
+  <code><a href='RapSolved.html'>RapSolved</a></code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load data</span>
 <span class='fu'>data</span>(<span class='no'>sim_rs</span>)
+
 <span class='co'># extract amount targets for all species</span>
 <span class='fu'>amount.target</span>(<span class='no'>sim_rs</span>)</div><div class='output co'>#&gt; uniform  normal bimodal 
-#&gt;     0.2     0.2     0.2 </div><div class='input'><span class='co'># set amount targets for all species</span>
+#&gt;     0.2     0.2     0.2 </div><div class='input'>
+<span class='co'># set amount targets for all species</span>
 <span class='fu'>amount.target</span>(<span class='no'>sim_rs</span>) <span class='kw'>&lt;-</span> <span class='fl'>0.1</span>
+
 <span class='co'># extract amount targets for first species</span>
 <span class='fu'>amount.target</span>(<span class='no'>sim_rs</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; uniform 
-#&gt;     0.1 </div><div class='input'><span class='co'># set amount targets for for first species</span>
+#&gt;     0.1 </div><div class='input'>
+<span class='co'># set amount targets for for first species</span>
 <span class='fu'>amount.target</span>(<span class='no'>sim_rs</span>, <span class='fl'>1</span>) <span class='kw'>&lt;-</span> <span class='fl'>0.5</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -157,7 +164,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">

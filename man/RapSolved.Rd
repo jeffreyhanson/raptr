@@ -20,5 +20,6 @@ RapSolved(unsolved, solver, results)
 This function creates a \code{\link{RapSolved}} object.
 }
 \seealso{
-\code{\link{RapSolved-class}}, \code{\link{RapResults-class}}, \code{\link{solve}}.
+\code{\link{RapSolved-class}}, \code{\link{RapResults-class}},
+  \code{link{solve}}.
 }

@@ -16,10 +16,11 @@ This function creates a new \code{PlanningUnitPoints} object.
 }
 \examples{
 # create PlanningUnitPoints object
-x <- PlanningUnitPoints(
-matrix(rnorm(150), ncol=1),
-seq_len(150)
-)
+x <- PlanningUnitPoints(matrix(rnorm(150), ncol = 1), seq_len(150))
+
+# print object
+print(x)
+
 }
 \seealso{
 \code{\link{AttributeSpace-class}}.

@@ -15,22 +15,31 @@ logging.file(x, y)
 \arguments{
 \item{x}{\code{\link{RapResults}} or \code{\link{RapSolved}} object.}
 
-\item{y}{\code{NULL} to return all values, \code{integer} 0 to return the log file for best solution, \code{integer} value greater than 0 for log file for the \code{y}'th solution.}
+\item{y}{Available inputs include: \code{NULL} to return all values,
+\code{integer} number specifying the solution for which the log file should
+be returned, and \code{0} to return log file for the best solution.}
 }
 \description{
-This function returns the Gurobi log file (*.log) associated with solving RAP.
+This function returns the Gurobi log file (*.log) associated with solving
+an optimization problem.
 }
 \note{
-The term logging file was used due to collisions with the \code{log} function in base R.
+The term logging file was used due to collisions with the \code{log}
+  function.
 }
 \examples{
+# load data
 data(sim_rs)
-# log file for best solution
+
+# log file for the best solution
 cat(logging.file(sim_rs, 0))
-# log file for second solution
+
+# log file for the second solution
 cat(logging.file(sim_rs, 2))
+
 # log files for all solutions
 cat(logging.file(sim_rs, NULL))
+
 }
 \seealso{
 \code{\link{RapResults}}, \code{\link{RapSolved}}.

@@ -88,38 +88,48 @@
 
     <pre class="usage"><span class='fu'>GurobiOpts</span>(<span class='kw'>Threads</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>MIPGap</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>Method</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>Presolve</span> <span class='kw'>=</span> <span class='fl'>2L</span>,
   <span class='kw'>TimeLimit</span> <span class='kw'>=</span> <span class='fl'>NA_integer_</span>, <span class='kw'>NumberSolutions</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
-  <span class='kw'>MultipleSolutionsMethod</span> <span class='kw'>=</span> <span class='st'>"benders.cuts"</span>)</pre>
+  <span class='kw'>MultipleSolutionsMethod</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"benders.cuts"</span>, <span class='st'>"solution.pool"</span>)[<span class='fl'>1</span>])</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>Threads</th>
-      <td><p><code>integer</code> number of cores to use for processing. Defaults to 1L.</p></td>
+      <td><p><code>integer</code> number of cores to use for processing.
+Defaults to 1L.</p></td>
     </tr>
     <tr>
       <th>MIPGap</th>
-      <td><p><code>numeric</code> MIP gap specifying minimum solution quality. Defaults to 0.1.</p></td>
+      <td><p><code>numeric</code> MIP gap specifying minimum solution quality.
+Defaults to 0.1.</p></td>
     </tr>
     <tr>
       <th>Method</th>
-      <td><p><code>integer</code> Algorithm to use for solving model. Defaults to 0L.</p></td>
+      <td><p><code>integer</code> Algorithm to use for solving model. Defaults to
+0L.</p></td>
     </tr>
     <tr>
       <th>Presolve</th>
-      <td><p><code>integer</code> code for level of computation in presolve (lp_solve parameter). Defaults to 2.</p></td>
+      <td><p><code>integer</code> code for level of computation in presolve
+(lp_solve parameter). Defaults to 2.</p></td>
     </tr>
     <tr>
       <th>TimeLimit</th>
-      <td><p><code>integer</code> number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.</p></td>
+      <td><p><code>integer</code> number of seconds to allow for solving.
+sDefaults to <code>NA_integer_</code>, and so a time limit is not imposed.</p></td>
     </tr>
     <tr>
       <th>NumberSolutions</th>
-      <td><p><code>integer</code> number of solutions to generate. Defaults to 1L.</p></td>
+      <td><p><code>integer</code> number of solutions to generate.
+Defaults to 1L.</p></td>
     </tr>
     <tr>
       <th>MultipleSolutionsMethod</th>
-      <td><p><code>character</code> name of method to obtain multiple solutions <code>NumberSolutions</code> &gt; 1. Available options are 'benders.cuts' and 'solution.pool'. Defaults to 'benders.cuts'. Note that the <code>rgurobi</code> package must be to use the 'solution.pool' method.</p></td>
+      <td><p><code>character</code> name of method to obtain
+multiple solutions (when <code>NumberSolutions</code> is greater than one).
+Available options are <code>"benders.cuts"</code> and <code>"solution.pool"</code>.
+Defaults to <code>"benders.cuts"</code>. Note that the <code>rgurobi</code> package
+must be to use the <code>"solution.pool"</code> method.</p></td>
     </tr>
     </table>
     
@@ -134,15 +144,9 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># create GurobiOpts object using default parameters</span>
-<span class='fu'>GurobiOpts</span>(<span class='kw'>Threads</span><span class='kw'>=</span><span class='fl'>1L</span>, <span class='kw'>MIPGap</span><span class='kw'>=</span><span class='fl'>0.1</span>, <span class='kw'>Method</span><span class='kw'>=</span><span class='fl'>0L</span>,
-        <span class='kw'>Presolve</span><span class='kw'>=</span><span class='fl'>2L</span>, <span class='kw'>TimeLimit</span><span class='kw'>=</span><span class='fl'>NA_integer_</span>, <span class='kw'>NumberSolutions</span><span class='kw'>=</span><span class='fl'>1L</span>)</div><div class='output co'>#&gt; GurobiOpts object.
-#&gt;   Threads: 1 
-#&gt;   MIPGap: 0.1 
-#&gt;   Method: 0 
-#&gt;   Presolve: 2 
-#&gt;   TimeLimit: NA 
-#&gt;   NumberSolutions: 1 
-#&gt;   MultipleSolutionsMethod: benders.cuts </div></pre>
+<span class='fu'>GurobiOpts</span>(<span class='kw'>Threads</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>MIPGap</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>Method</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>Presolve</span><span class='kw'>=</span><span class='fl'>2L</span>,
+           <span class='kw'>TimeLimit</span> <span class='kw'>=</span> <span class='fl'>NA_integer_</span>, <span class='kw'>NumberSolutions</span> <span class='kw'>=</span> <span class='fl'>1L</span>)</div><div class='output co'>#&gt; <span class='message'>GurobiOpts object.</span></div><div class='output co'>#&gt; <span class='message'>  Threads: 1</span></div><div class='output co'>#&gt; <span class='message'>  MIPGap: 0.1</span></div><div class='output co'>#&gt; <span class='message'>  Method: 0</span></div><div class='output co'>#&gt; <span class='message'>  Presolve: 2</span></div><div class='output co'>#&gt; <span class='message'>  TimeLimit: NA</span></div><div class='output co'>#&gt; <span class='message'>  NumberSolutions: 1</span></div><div class='output co'>#&gt; <span class='message'>  MultipleSolutionsMethod: benders.cuts</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -161,7 +165,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">

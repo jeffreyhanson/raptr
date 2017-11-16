@@ -9,14 +9,19 @@ blank.raster(x, res)
 \arguments{
 \item{x}{\code{\link[sp]{Spatial-class}} object.}
 
-\item{res}{\code{numeric vector} specifying resolution of the output raster in the x and y dimensions. If \code{vector} is of length one, then the pixels are assumed to be square.}
+\item{res}{\code{numeric vector} specifying resolution of the output raster
+in the x and y dimensions. If \code{vector} is of length one, then the
+pixels are assumed to be square.}
 }
 \description{
-This functions creates a blank raster based on the spatial extent of a Spatial object.
+This functions creates a blank raster based on the spatial extent of a
+Spatial object.
 }
 \examples{
 # make SpatialPolygons
 polys <- sim.pus(225L)
+
 # make RasterLayer from SpatialPolygons
 blank.raster(polys, 1)
+
 }

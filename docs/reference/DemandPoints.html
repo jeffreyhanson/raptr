@@ -93,7 +93,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>coords</th>
-      <td><p><code><a href='http://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></code> of coordinates for each demand point.</p></td>
+      <td><p><code><a href='http://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></code> of coordinates for each demand
+point.</p></td>
     </tr>
     <tr>
       <th>weights</th>
@@ -103,14 +104,82 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='DemandPoints-class.html'>DemandPoints-class</a></code></p>
+    <p><code><a href='DemandPoints-class.html'>DemandPoints-class</a></code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>dps</span> <span class='kw'>&lt;-</span> <span class='fu'>DemandPoints</span>(
-<span class='fu'>matrix</span>(<span class='fu'>rnorm</span>(<span class='fl'>100</span>), <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>2</span>),
-<span class='fu'>runif</span>(<span class='fl'>50</span>)
-)</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># make demand points</span>
+<span class='no'>dps</span> <span class='kw'>&lt;-</span> <span class='fu'>DemandPoints</span>(
+ <span class='fu'>matrix</span>(<span class='fu'>rnorm</span>(<span class='fl'>100</span>), <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>2</span>),
+ <span class='fu'>runif</span>(<span class='fl'>50</span>))
+
+<span class='co'># print object</span>
+<span class='fu'><a href='print.html'>print</a></span>(<span class='no'>dps</span>)</div><div class='output co'>#&gt; An object of class "DemandPoints"
+#&gt; Slot "coords":
+#&gt;               [,1]        [,2]
+#&gt;  [1,]  0.416942847 -0.10921759
+#&gt;  [2,] -0.632587542  0.26466174
+#&gt;  [3,]  1.150146673  0.30384826
+#&gt;  [4,] -0.235475907 -0.18338848
+#&gt;  [5,] -1.643107386  0.55964967
+#&gt;  [6,] -1.503382146 -0.18655384
+#&gt;  [7,] -2.050584847 -0.81227537
+#&gt;  [8,] -0.753198229 -1.64058167
+#&gt;  [9,] -0.134141958  0.50792248
+#&gt; [10,]  1.005782847  1.75433696
+#&gt; [11,]  2.167186798  0.59240020
+#&gt; [12,]  2.322556540  1.01671329
+#&gt; [13,] -1.020423391  0.12162059
+#&gt; [14,]  0.048814436 -1.07806726
+#&gt; [15,] -0.771888628 -1.14356572
+#&gt; [16,] -0.785235068 -0.52964368
+#&gt; [17,] -0.726603031 -0.68127316
+#&gt; [18,]  0.681878032 -0.20244756
+#&gt; [19,] -0.229843287  1.68449572
+#&gt; [20,] -1.510601724 -1.03377324
+#&gt; [21,] -0.583727687 -0.15597667
+#&gt; [22,] -2.022918454 -0.04640064
+#&gt; [23,]  0.403504676 -0.95362873
+#&gt; [24,]  0.550015549  0.41626080
+#&gt; [25,]  0.028357122  0.11402961
+#&gt; [26,]  0.893165020  0.06391875
+#&gt; [27,] -0.376555496 -0.91933224
+#&gt; [28,]  0.605884808  0.90133529
+#&gt; [29,] -0.004874726 -0.79772830
+#&gt; [30,] -0.520796373  0.66822120
+#&gt; [31,] -0.639018598  0.15521430
+#&gt; [32,] -0.635894137  0.12868809
+#&gt; [33,]  0.106586975 -1.53306545
+#&gt; [34,]  1.176914248  0.20236067
+#&gt; [35,]  0.447391153 -0.71753865
+#&gt; [36,]  2.272954766  0.36169476
+#&gt; [37,]  0.136058206  1.39900429
+#&gt; [38,] -1.999039133  0.37269896
+#&gt; [39,] -0.420500870 -1.56564429
+#&gt; [40,] -0.378407395 -0.05169454
+#&gt; [41,]  1.220774789  0.51408210
+#&gt; [42,] -1.541030292  0.54989952
+#&gt; [43,] -0.310310122  0.86781691
+#&gt; [44,] -0.020108184  0.68436008
+#&gt; [45,] -2.390200336 -0.16267998
+#&gt; [46,]  0.889865359 -1.78436472
+#&gt; [47,] -1.482813325 -1.03714557
+#&gt; [48,]  0.445750348  0.83014772
+#&gt; [49,]  1.369775856  0.60734694
+#&gt; [50,] -0.020110027 -0.12218636
+#&gt; 
+#&gt; Slot "weights":
+#&gt;  [1] 0.82462233 0.20905156 0.16820653 0.98027422 0.60067001 0.15167630
+#&gt;  [7] 0.29273868 0.44806062 0.82390783 0.96940433 0.29540916 0.23268974
+#&gt; [13] 0.32548104 0.10037212 0.33022536 0.19259870 0.26887364 0.88352934
+#&gt; [19] 0.67062316 0.07432107 0.68530920 0.60081559 0.70614048 0.46816601
+#&gt; [25] 0.01098793 0.78329569 0.62185330 0.86605874 0.91985234 0.32539892
+#&gt; [31] 0.91576207 0.08054491 0.85551768 0.30502898 0.73636304 0.94096257
+#&gt; [37] 0.86102324 0.36417012 0.91252348 0.75292220 0.64148241 0.79545033
+#&gt; [43] 0.98497173 0.62236924 0.55532649 0.96106650 0.91563972 0.60327560
+#&gt; [49] 0.31155411 0.55515212
+#&gt; </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -127,7 +196,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">

@@ -83,7 +83,10 @@
     </div>
 
     
-    <p>This function updates parameters or data stored in an existing <code><a href='GurobiOpts.html'>GurobiOpts</a></code>, <code><a href='RapUnreliableOpts.html'>RapUnreliableOpts</a></code>, <code><a href='RapReliableOpts.html'>RapReliableOpts</a></code>, <code><a href='RapData.html'>RapData</a></code>, <code><a href='RapUnsolved.html'>RapUnsolved</a></code>, or <code><a href='RapSolved.html'>RapSolved</a></code> object.</p>
+    <p>This function updates parameters or data stored in an existing
+<code><a href='GurobiOpts.html'>GurobiOpts</a></code>, <code><a href='RapUnreliableOpts.html'>RapUnreliableOpts</a></code>,
+<code><a href='RapReliableOpts.html'>RapReliableOpts</a></code>, <code><a href='RapData.html'>RapData</a></code>,
+<code><a href='RapUnsolved.html'>RapUnsolved</a></code>, or <code><a href='RapSolved.html'>RapSolved</a></code> object.</p>
     
 
     <pre class="usage"><span class='co'># S3 method for GurobiOpts</span>
@@ -115,7 +118,9 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p><code><a href='GurobiOpts.html'>GurobiOpts</a></code>, <code><a href='RapUnreliableOpts.html'>RapUnreliableOpts</a></code>, <code><a href='RapReliableOpts.html'>RapReliableOpts</a></code>, <code><a href='RapData.html'>RapData</a></code>, <code><a href='RapUnsolved.html'>RapUnsolved</a></code>, or <code><a href='RapSolved.html'>RapSolved</a></code> object.</p></td>
+      <td><p><code><a href='GurobiOpts.html'>GurobiOpts</a></code>, <code><a href='RapUnreliableOpts.html'>RapUnreliableOpts</a></code>,
+<code><a href='RapReliableOpts.html'>RapReliableOpts</a></code>, <code><a href='RapData.html'>RapData</a></code>,
+<code><a href='RapUnsolved.html'>RapUnsolved</a></code>, or <code><a href='RapSolved.html'>RapSolved</a></code> object.</p></td>
     </tr>
     <tr>
       <th>Threads</th>
@@ -143,19 +148,27 @@
     </tr>
     <tr>
       <th>MultipleSolutionsMethod</th>
-      <td><p><code>character</code> name of method to obtain multiple solutions <code>NumberSolutions</code> &gt; 1. Available options are 'benders.cuts' and 'solution.pool'. Defaults to 'benders.cuts'. Note that the <code>rgurobi</code> package must be to use the 'solution.pool' method.</p></td>
+      <td><p><code>character</code> name of method to obtain
+multiple solutions (used when argument to <code>NumberSolutions</code> greater
+than one). Available options are <code>"benders.cuts"</code> and
+<code>"solution.pool"</code>s. Defaults to 'benders.cuts'. Note that
+the <code>rgurobi</code> package must be to use the <code>"solution.pool"</code>
+method.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>parameters passed to <code>update.RapReliableOpts</code>, <code>update.RapUnreliableOpts</code>, or <code>update.RapData</code>.</p></td>
+      <td><p>parameters passed to <code>update.RapReliableOpts</code>,
+<code>update.RapUnreliableOpts</code>, or <code>update.RapData</code>.</p></td>
     </tr>
     <tr>
       <th>species</th>
-      <td><p><code>integer</code> or <code>character</code> denoting species for which targets or name should be updated.</p></td>
+      <td><p><code>integer</code> or <code>character</code> denoting species for which
+targets or name should be updated.</p></td>
     </tr>
     <tr>
       <th>space</th>
-      <td><p><code>integer</code> denoting space for which targets should be updated.</p></td>
+      <td><p><code>integer</code> denoting space for which targets should be
+updated.</p></td>
     </tr>
     <tr>
       <th>name</th>
@@ -163,11 +176,13 @@
     </tr>
     <tr>
       <th>amount.target</th>
-      <td><p><code>numeric</code> vector for new area targets (%) for the specified species.</p></td>
+      <td><p><code>numeric</code> vector for new area targets (%) for the
+specified species.</p></td>
     </tr>
     <tr>
       <th>space.target</th>
-      <td><p><code>numeric</code> vector for new attribute space targets (%) for the specified species and attribute spaces.</p></td>
+      <td><p><code>numeric</code> vector for new attribute space targets
+(%) for the specified species and attribute spaces.</p></td>
     </tr>
     <tr>
       <th>pu</th>
@@ -187,7 +202,8 @@
     </tr>
     <tr>
       <th>failure.multiplier</th>
-      <td><p><code>numeric</code> multiplier for failure planning unit.</p></td>
+      <td><p><code>numeric</code> multiplier for failure planning
+unit.</p></td>
     </tr>
     <tr>
       <th>max.r.level</th>
@@ -195,21 +211,32 @@
     </tr>
     <tr>
       <th>formulation</th>
-      <td><p><code>character</code> indicating new problem formulation to use. This can be either 'unreliable' or 'reliable'. The default is <code>NULL</code> so that formulation in <code>object</code> is used.</p></td>
+      <td><p><code>character</code> indicating new problem formulation to
+use. This can be either 'unreliable' or 'reliable'. The default is
+<code>NULL</code> so that formulation in <code>object</code> is used.</p></td>
     </tr>
     <tr>
       <th>solve</th>
-      <td><p><code>logical</code> should the problem be solved? This argument is only valid for <code><a href='RapUnsolved.html'>RapUnsolved</a></code> and <code><a href='RapSolved.html'>RapSolved</a></code> objects. Defaults to <code>TRUE</code>.</p></td>
+      <td><p><code>logical</code> should the problem be solved? This argument is
+only valid for <code><a href='RapUnsolved.html'>RapUnsolved</a></code> and <code><a href='RapSolved.html'>RapSolved</a></code>
+objects. Defaults to <code>TRUE</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code><a href='GurobiOpts-class.html'>GurobiOpts-class</a></code>, <code><a href='RapUnreliableOpts-class.html'>RapUnreliableOpts-class</a></code>, <code><a href='RapReliableOpts-class.html'>RapReliableOpts-class</a></code>, <code><a href='RapData-class.html'>RapData-class</a></code>, <code><a href='RapUnsolved-class.html'>RapUnsolved-class</a></code>, or <code><a href='RapSolved-class.html'>RapSolved-class</a></code> object depending on <code>x</code>.</p>
+    <p><code><a href='GurobiOpts-class.html'>GurobiOpts-class</a></code>,
+  <code><a href='RapUnreliableOpts-class.html'>RapUnreliableOpts-class</a></code>,
+  <code><a href='RapReliableOpts-class.html'>RapReliableOpts-class</a></code>, <code><a href='RapData-class.html'>RapData-class</a></code>,
+  <code><a href='RapUnsolved-class.html'>RapUnsolved-class</a></code>, or <code><a href='RapSolved-class.html'>RapSolved-class</a></code> object
+  depending on argument to <code>x</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='GurobiOpts-class.html'>GurobiOpts-class</a></code>, <code><a href='RapUnreliableOpts-class.html'>RapUnreliableOpts-class</a></code>, <code><a href='RapReliableOpts-class.html'>RapReliableOpts-class</a></code>, <code><a href='RapData-class.html'>RapData-class</a></code>, <code><a href='RapUnsolved-class.html'>RapUnsolved-class</a></code>, <code><a href='RapSolved-class.html'>RapSolved-class</a></code>.</p>
+    <p><code><a href='GurobiOpts-class.html'>GurobiOpts-class</a></code>,
+  <code><a href='RapUnreliableOpts-class.html'>RapUnreliableOpts-class</a></code>,
+  <code><a href='RapReliableOpts-class.html'>RapReliableOpts-class</a></code>, <code><a href='RapData-class.html'>RapData-class</a></code>,
+  <code><a href='RapUnsolved-class.html'>RapUnsolved-class</a></code>, <code><a href='RapSolved-class.html'>RapSolved-class</a></code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -217,42 +244,20 @@
 <span class='fu'>data</span>(<span class='no'>sim_ru</span>, <span class='no'>sim_rs</span>)
 
 <span class='co'># GurobiOpts</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='GurobiOpts.html'>GurobiOpts</a></span>(<span class='kw'>MIPGap</span><span class='kw'>=</span><span class='fl'>0.7</span>)
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'>update</span>(<span class='no'>x</span>, <span class='kw'>MIPGap</span><span class='kw'>=</span><span class='fl'>0.1</span>)
-<span class='fu'><a href='print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; GurobiOpts object.
-#&gt;   Threads: 1 
-#&gt;   MIPGap: 0.7 
-#&gt;   Method: 0 
-#&gt;   Presolve: 2 
-#&gt;   TimeLimit: NA 
-#&gt;   NumberSolutions: 1 
-#&gt;   MultipleSolutionsMethod: benders.cuts </div><div class='input'><span class='fu'><a href='print.html'>print</a></span>(<span class='no'>y</span>)</div><div class='output co'>#&gt; GurobiOpts object.
-#&gt;   Threads: 1 
-#&gt;   MIPGap: 0.1 
-#&gt;   Method: 0 
-#&gt;   Presolve: 2 
-#&gt;   TimeLimit: NA 
-#&gt;   NumberSolutions: 1 
-#&gt;   MultipleSolutionsMethod: benders.cuts </div><div class='input'>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='GurobiOpts.html'>GurobiOpts</a></span>(<span class='kw'>MIPGap</span> <span class='kw'>=</span> <span class='fl'>0.7</span>)
+<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'>update</span>(<span class='no'>x</span>, <span class='kw'>MIPGap</span> <span class='kw'>=</span> <span class='fl'>0.1</span>)
+<span class='fu'><a href='print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='message'>GurobiOpts object.</span></div><div class='output co'>#&gt; <span class='message'>  Threads: 1</span></div><div class='output co'>#&gt; <span class='message'>  MIPGap: 0.7</span></div><div class='output co'>#&gt; <span class='message'>  Method: 0</span></div><div class='output co'>#&gt; <span class='message'>  Presolve: 2</span></div><div class='output co'>#&gt; <span class='message'>  TimeLimit: NA</span></div><div class='output co'>#&gt; <span class='message'>  NumberSolutions: 1</span></div><div class='output co'>#&gt; <span class='message'>  MultipleSolutionsMethod: benders.cuts</span></div><div class='input'><span class='fu'><a href='print.html'>print</a></span>(<span class='no'>y</span>)</div><div class='output co'>#&gt; <span class='message'>GurobiOpts object.</span></div><div class='output co'>#&gt; <span class='message'>  Threads: 1</span></div><div class='output co'>#&gt; <span class='message'>  MIPGap: 0.1</span></div><div class='output co'>#&gt; <span class='message'>  Method: 0</span></div><div class='output co'>#&gt; <span class='message'>  Presolve: 2</span></div><div class='output co'>#&gt; <span class='message'>  TimeLimit: NA</span></div><div class='output co'>#&gt; <span class='message'>  NumberSolutions: 1</span></div><div class='output co'>#&gt; <span class='message'>  MultipleSolutionsMethod: benders.cuts</span></div><div class='input'>
 <span class='co'># RapUnreliableOpts</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RapUnreliableOpts.html'>RapUnreliableOpts</a></span>(<span class='kw'>BLM</span><span class='kw'>=</span><span class='fl'>10</span>)
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'>update</span>(<span class='no'>x</span>, <span class='kw'>BLM</span><span class='kw'>=</span><span class='fl'>2</span>)
-<span class='fu'><a href='print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; RapUnreliableOpts object.
-#&gt;   BLM: 10 </div><div class='input'><span class='fu'><a href='print.html'>print</a></span>(<span class='no'>y</span>)</div><div class='output co'>#&gt; RapUnreliableOpts object.
-#&gt;   BLM: 2 </div><div class='input'>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RapUnreliableOpts.html'>RapUnreliableOpts</a></span>(<span class='kw'>BLM</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'>update</span>(<span class='no'>x</span>, <span class='kw'>BLM</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+<span class='fu'><a href='print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='message'>RapUnreliableOpts object.</span></div><div class='output co'>#&gt; <span class='message'>  BLM: 10</span></div><div class='input'><span class='fu'><a href='print.html'>print</a></span>(<span class='no'>y</span>)</div><div class='output co'>#&gt; <span class='message'>RapUnreliableOpts object.</span></div><div class='output co'>#&gt; <span class='message'>  BLM: 2</span></div><div class='input'>
 <span class='co'># RapReliableOpts</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RapReliableOpts.html'>RapReliableOpts</a></span>(<span class='kw'>failure.multiplier</span><span class='kw'>=</span><span class='fl'>2</span>)
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'>update</span>(<span class='no'>x</span>, <span class='kw'>failure.multiplier</span><span class='kw'>=</span><span class='fl'>4</span>)
-<span class='fu'><a href='print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; RapReliableOpts object.
-#&gt;   BLM: 0 
-#&gt;   failure.multiplier: 2 
-#&gt;   max.r.level: 5 </div><div class='input'><span class='fu'><a href='print.html'>print</a></span>(<span class='no'>y</span>)</div><div class='output co'>#&gt; RapReliableOpts object.
-#&gt;   BLM: 0 
-#&gt;   failure.multiplier: 4 
-#&gt;   max.r.level: 5 </div><div class='input'>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RapReliableOpts.html'>RapReliableOpts</a></span>(<span class='kw'>failure.multiplier</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'>update</span>(<span class='no'>x</span>, <span class='kw'>failure.multiplier</span> <span class='kw'>=</span> <span class='fl'>4</span>)
+<span class='fu'><a href='print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='message'>RapReliableOpts object.</span></div><div class='output co'>#&gt; <span class='message'>  BLM: 0</span></div><div class='output co'>#&gt; <span class='message'>  failure.multiplier: 2</span></div><div class='output co'>#&gt; <span class='message'>  max.r.level: 5</span></div><div class='input'><span class='fu'><a href='print.html'>print</a></span>(<span class='no'>y</span>)</div><div class='output co'>#&gt; <span class='message'>RapReliableOpts object.</span></div><div class='output co'>#&gt; <span class='message'>  BLM: 0</span></div><div class='output co'>#&gt; <span class='message'>  failure.multiplier: 4</span></div><div class='output co'>#&gt; <span class='message'>  max.r.level: 5</span></div><div class='input'>
 <span class='co'># RapData</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>sim_ru</span>@<span class='kw'>data</span>
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'>update</span>(<span class='no'>x</span>, <span class='kw'>space.target</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>0.4</span>, <span class='fl'>0.7</span>, <span class='fl'>0.1</span>))
+<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'>update</span>(<span class='no'>x</span>, <span class='kw'>space.target</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.4</span>, <span class='fl'>0.7</span>, <span class='fl'>0.1</span>))
 <span class='fu'><a href='print.html'>print</a></span>(<span class='fu'><a href='space.target.html'>space.target</a></span>(<span class='no'>x</span>))</div><div class='output co'>#&gt;            1
 #&gt; uniform 0.85
 #&gt; normal  0.85
@@ -262,21 +267,18 @@
 #&gt; bimodal 0.1</div><div class='input'>
 <span class='co'>## RapUnsolved</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>sim_ru</span>
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'>update</span>(<span class='no'>x</span>, <span class='kw'>amount.target</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>0.1</span>, <span class='fl'>0.2</span>, <span class='fl'>0.3</span>), <span class='kw'>BLM</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>solve</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
-<span class='co'># print x parameters</span>
+<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'>update</span>(<span class='no'>x</span>, <span class='kw'>amount.target</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.1</span>, <span class='fl'>0.2</span>, <span class='fl'>0.3</span>), <span class='kw'>BLM</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>solve</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='fu'><a href='print.html'>print</a></span>(<span class='no'>x</span>@<span class='kw'>opts</span>@<span class='kw'>BLM</span>); <span class='fu'><a href='print.html'>print</a></span>(<span class='fu'><a href='amount.target.html'>amount.target</a></span>(<span class='no'>x</span>))</div><div class='output co'>#&gt; [1] 0</div><div class='output co'>#&gt; uniform  normal bimodal 
-#&gt;     0.2     0.2     0.2 </div><div class='input'><span class='co'># print y parameters</span>
-<span class='fu'><a href='print.html'>print</a></span>(<span class='no'>y</span>@<span class='kw'>opts</span>@<span class='kw'>BLM</span>); <span class='fu'><a href='print.html'>print</a></span>(<span class='fu'><a href='space.target.html'>space.target</a></span>(<span class='no'>y</span>))</div><div class='output co'>#&gt; [1] 3</div><div class='output co'>#&gt;            1
+#&gt;     0.2     0.2     0.2 </div><div class='input'><span class='fu'><a href='print.html'>print</a></span>(<span class='no'>y</span>@<span class='kw'>opts</span>@<span class='kw'>BLM</span>); <span class='fu'><a href='print.html'>print</a></span>(<span class='fu'><a href='space.target.html'>space.target</a></span>(<span class='no'>y</span>))</div><div class='output co'>#&gt; [1] 3</div><div class='output co'>#&gt;            1
 #&gt; uniform 0.85
 #&gt; normal  0.85
 #&gt; bimodal 0.85</div><div class='input'>
 <span class='co'>## RapSolved</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>sim_rs</span>
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'>update</span>(<span class='no'>x</span>, <span class='kw'>space.target</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>0.4</span>, <span class='fl'>0.6</span>, <span class='fl'>0.9</span>), <span class='kw'>BLM</span><span class='kw'>=</span><span class='fl'>100</span>, <span class='kw'>Presolve</span><span class='kw'>=</span><span class='fl'>1L</span>, <span class='kw'>solve</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
-<span class='co'># print x parameters</span>
+<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'>update</span>(<span class='no'>x</span>, <span class='kw'>space.target</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.4</span>, <span class='fl'>0.6</span>, <span class='fl'>0.9</span>), <span class='kw'>BLM</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>Presolve</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
+            <span class='kw'>solve</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='fu'><a href='print.html'>print</a></span>(<span class='no'>x</span>@<span class='kw'>opts</span>@<span class='kw'>BLM</span>); <span class='fu'><a href='print.html'>print</a></span>(<span class='fu'><a href='amount.target.html'>amount.target</a></span>(<span class='no'>x</span>))</div><div class='output co'>#&gt; [1] 0</div><div class='output co'>#&gt; uniform  normal bimodal 
-#&gt;     0.2     0.2     0.2 </div><div class='input'><span class='co'># print y parameters</span>
-<span class='fu'><a href='print.html'>print</a></span>(<span class='no'>y</span>@<span class='kw'>opts</span>@<span class='kw'>BLM</span>); <span class='fu'><a href='print.html'>print</a></span>(<span class='fu'><a href='space.target.html'>space.target</a></span>(<span class='no'>y</span>))</div><div class='output co'>#&gt; [1] 100</div><div class='output co'>#&gt;           1
+#&gt;     0.2     0.2     0.2 </div><div class='input'><span class='fu'><a href='print.html'>print</a></span>(<span class='no'>y</span>@<span class='kw'>opts</span>@<span class='kw'>BLM</span>); <span class='fu'><a href='print.html'>print</a></span>(<span class='fu'><a href='space.target.html'>space.target</a></span>(<span class='no'>y</span>))</div><div class='output co'>#&gt; [1] 100</div><div class='output co'>#&gt;           1
 #&gt; uniform 0.4
 #&gt; normal  0.6
 #&gt; bimodal 0.9</div></pre>
@@ -298,7 +300,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">

@@ -15,24 +15,33 @@ selections(x, y)
 \arguments{
 \item{x}{\code{\link{RapResults}} or \code{\link{RapSolved}} object.}
 
-\item{y}{\code{NULL} to return all values, \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.}
+\item{y}{\code{NULL} to return all values, \code{integer} 0 to return values
+for the best solution, \code{integer} value greater than 0 for \code{y}'th
+solution value.}
 
 \item{...}{not used.}
 }
 \value{
-\code{\link[base]{matrix}} or \code{numeric} vector depending on arguments.
+\code{\link[base]{matrix}} or \code{numeric} vector depending on
+  arguments.
 }
 \description{
-Extract selections for a given solution from a \code{\link{RapResults}} or \code{\link{RapSolved}} object.
+Extract selections for a given solution from a \code{\link{RapResults}} or
+\code{\link{RapSolved}} object.
 }
 \examples{
+# load data
 data(sim_rs)
-# selections for best solution
+
+# selections for the best solution
 selections(sim_rs, 0)
-# selections for second solution
+
+# selections for the second solution
 selections(sim_rs, 2)
+
 # selections for each solution
 selections(sim_rs)
+
 }
 \seealso{
 \code{\link{RapResults}}, \code{\link{RapSolved}}.

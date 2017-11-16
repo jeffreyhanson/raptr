@@ -18,6 +18,7 @@ If not, download it here: \url{http://download.osgeo.org/gdal}.
 \donttest{
 is.gdalInstalled()
 }
+
 }
 \seealso{
 \code{\link[gdalUtils]{gdal_setInstallation}}.

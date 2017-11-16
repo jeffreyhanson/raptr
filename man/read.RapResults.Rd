@@ -18,15 +18,18 @@ read.RapResults(opts, data, model.list, logging.file, solution.list,
 
 \item{solution.list}{\code{list} object containing Gurobi solution data.}
 
-\item{verbose}{\code{logical} print progress messages? Defaults to \code{FALSE}.}
+\item{verbose}{\code{logical} print progress messages? Defaults to
+\code{FALSE}.}
 }
 \value{
 \code{RapResults} object
 }
 \description{
-This function reads files output from Gurobi and returns a \code{RapResults} object.
+This function reads files output from Gurobi and returns a \code{RapResults}
+object.
 }
 \seealso{
-\code{\link{RapReliableOpts}}, \code{\link{RapUnreliableOpts}}, \code{\link{RapData}}, \code{\link{RapResults}}.
+\code{\link{RapReliableOpts}}, \code{\link{RapUnreliableOpts}},
+  \code{\link{RapData}}, \code{\link{RapResults}}.
 }
 \keyword{internal}

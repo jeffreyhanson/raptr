@@ -11,15 +11,19 @@ urap.proportion.held(x, y, y.weights = rep(1, nrow(y)))
 
 \item{y}{\code{\link[base]{matrix}} of points}
 
-\item{y.weights}{\code{numeric} vector of weights for each point in \code{y}. Defaults to equal weights for all points in \code{y}.}
+\item{y.weights}{\code{numeric} vector of weights for each point in
+\code{y}. Defaults to equal weights for all points in \code{y}.}
 }
 \value{
-\code{numeric} value indicating the proportion of variation that \code{x} explains in \code{y}
+\code{numeric} value indicating the proportion of variation that
+  \code{x} explains in \code{y}
 }
 \description{
-This is a convenience function to quickly calculate the proportion of variation that one set of points captures
-in a another set of points using the unreliable formulation.
+This is a convenience function to quickly calculate the proportion of
+variation that one set of points captures in a another set of points using
+the unreliable formulation.
 }
 \examples{
 urap.proportion.held(as.matrix(iris[1:2,-5]), as.matrix(iris[1:5,-5]))
+
 }

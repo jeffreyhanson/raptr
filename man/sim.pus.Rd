@@ -8,7 +8,8 @@ sim.pus(n, xmn = -sqrt(n)/2, xmx = sqrt(n)/2, ymn = -sqrt(n)/2,
   ymx = sqrt(n)/2)
 }
 \arguments{
-\item{n}{\code{integer} number of planning units. \code{sqrt(n)} must yield a valid number.}
+\item{n}{\code{integer} number of planning units. \code{sqrt(n)} must yield
+a valid number.}
 
 \item{xmn}{\code{numeric} value for minimum x-coordinate.}
 
@@ -25,18 +26,24 @@ sim.pus(n, xmn = -sqrt(n)/2, xmx = sqrt(n)/2, ymn = -sqrt(n)/2,
 This function simulates planning units for RAP.
 }
 \details{
-Square planning units are generated in the shape of a square. Default coordinate arguments are such that the planning units will be centered at origin.
-The data slot contains an 'id' (\code{integer}), cost (\code{numeric}), 'status' (\code{integer}), and area (\code{numeric}).
+Square planning units are generated in the shape of a square.
+  Default coordinate arguments are such that the planning units will be
+  centered at origin. The data slot contains an "id" (\code{integer}),
+  "cost" (\code{numeric}), "status" (\code{integer}), and "area"
+  (\code{numeric}).
 }
 \examples{
-# generate 225 sqauare planning units arranged in a square with 1 unit height/width
+# generate 225 sqauare planning units arranged in a square
+# with 1 unit height / width
 x <- sim.pus(225)
+
 # generate 225 rectangular pus arranged in a square
-y <- sim.pus(225, xmn=-5, xmx=10, ymn=-5, ymx=5)
+y <- sim.pus(225, xmn = -5, xmx = 10, ymn = -5, ymx = 5)
 \donttest{
-par(mfrow=c(1,2))
-plot(x, main='x')
-plot(y, main='y')
-par(mfrow=c(1,1))
+par(mfrow = c(1, 2))
+plot(x, main = "x")
+plot(y, main = "y")
+par(mfrow = c(1, 1))
 }
+
 }

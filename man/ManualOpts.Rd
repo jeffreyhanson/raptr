@@ -7,7 +7,8 @@
 ManualOpts(NumberSolutions = 1L)
 }
 \arguments{
-\item{NumberSolutions}{\code{integer} number of solutions to generate. Defaults to 1L.}
+\item{NumberSolutions}{\code{integer} number of solutions to generate.
+Defaults to 1L.}
 }
 \value{
 \code{\link{ManualOpts}} object
@@ -17,7 +18,8 @@ This function creates a new ManualOpts object.
 }
 \examples{
 # create ManualOpts object
-ManualOpts(NumberSolutions=1L)
+ManualOpts(NumberSolutions = 1L)
+
 }
 \seealso{
 \code{\link{ManualOpts-class}}.

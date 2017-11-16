@@ -89,17 +89,20 @@
     <pre class="usage"><span class='fu'>sim.space</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for RasterLayer</span>
-<span class='fu'>sim.space</span>(<span class='no'>x</span>, <span class='kw'>d</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='fu'>RMgauss</span>(), <span class='no'>...</span>)
+<span class='fu'>sim.space</span>(<span class='no'>x</span>, <span class='kw'>d</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>RandomFields</span><span class='kw'>::</span><span class='fu'>RMgauss</span>(),
+  <span class='no'>...</span>)
 
 <span class='co'># S3 method for SpatialPolygons</span>
-<span class='fu'>sim.space</span>(<span class='no'>x</span>, <span class='no'>res</span>, <span class='kw'>d</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='fu'>RMgauss</span>(), <span class='no'>...</span>)</pre>
+<span class='fu'>sim.space</span>(<span class='no'>x</span>, <span class='no'>res</span>, <span class='kw'>d</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>RandomFields</span><span class='kw'>::</span><span class='fu'>RMgauss</span>(), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p><code>RasterLayer</code> or <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygons</a></code> object delineate the spatial extent to delineate study area.</p></td>
+      <td><p><code>RasterLayer</code> or <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygons</a></code> object
+delineate the spatial extent to delineate study area.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -111,11 +114,13 @@
     </tr>
     <tr>
       <th>model</th>
-      <td><p><code><a href='http://www.rdocumentation.org/packages/RandomFields/topics/RMmodel'>RMmodel</a></code> model to simulate species distributions with. Defaults <code><a href='http://www.rdocumentation.org/packages/RandomFields/topics/RPgauss'>RPgauss</a></code>.</p></td>
+      <td><p><code><a href='http://www.rdocumentation.org/packages/RandomFields/topics/RMmodel'>RMmodel</a></code> model to simulate species
+distributions with. Defaults <code><a href='http://www.rdocumentation.org/packages/RandomFields/topics/RPgauss'>RPgauss</a></code>.</p></td>
     </tr>
     <tr>
       <th>res</th>
-      <td><p><code>numeric</code> resolution to simulate distributions. Only needed when <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygons</a></code> supplied.</p></td>
+      <td><p><code>numeric</code> resolution to simulate distributions. Only needed
+when <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygons</a></code> supplied.</p></td>
     </tr>
     </table>
     
@@ -125,7 +130,8 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Distributions are simulated by passing <code>model</code> to <code><a href='http://www.rdocumentation.org/packages/RandomFields/topics/RFsimulate'>RFsimulate</a></code>.</p>
+    <p>Distributions are simulated by passing <code>model</code> to
+  <code><a href='http://www.rdocumentation.org/packages/RandomFields/topics/RFsimulate'>RFsimulate</a></code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -137,19 +143,20 @@
 <span class='no'>sim_pus</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sim.pus.html'>sim.pus</a></span>(<span class='fl'>225L</span>)
 
 <span class='co'># simulate 1d space using RasterLayer</span>
-<span class='no'>s1</span> <span class='kw'>&lt;-</span> <span class='fu'>sim.space</span>(<span class='fu'><a href='blank.raster.html'>blank.raster</a></span>(<span class='no'>sim_pus</span>, <span class='fl'>1</span>), <span class='kw'>d</span><span class='kw'>=</span><span class='fl'>1</span>)
+<span class='no'>s1</span> <span class='kw'>&lt;-</span> <span class='fu'>sim.space</span>(<span class='fu'><a href='blank.raster.html'>blank.raster</a></span>(<span class='no'>sim_pus</span>, <span class='fl'>1</span>), <span class='kw'>d</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='co'># simulate 1d space using SpatialPolygons</span>
-<span class='no'>s2</span> <span class='kw'>&lt;-</span> <span class='fu'>sim.space</span>(<span class='no'>sim_pus</span>, <span class='kw'>res</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>d</span><span class='kw'>=</span><span class='fl'>1</span>)
+<span class='no'>s2</span> <span class='kw'>&lt;-</span> <span class='fu'>sim.space</span>(<span class='no'>sim_pus</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>d</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='co'># simulate 2d space using SpatialPolygons</span>
-<span class='no'>s3</span> <span class='kw'>&lt;-</span> <span class='fu'>sim.space</span>(<span class='no'>sim_pus</span>, <span class='kw'>res</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>d</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt; ..</div><div class='input'>
+<span class='no'>s3</span> <span class='kw'>&lt;-</span> <span class='fu'>sim.space</span>(<span class='no'>sim_pus</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>d</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; ..</div><div class='input'>
 <span class='co'># plot simulated spaces</span>
-<span class='fu'>par</span>(<span class='kw'>mfrow</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>2</span>,<span class='fl'>2</span>))
-<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>s1</span>, <span class='kw'>main</span><span class='kw'>=</span><span class='st'>'s1'</span>)
-<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>s2</span>, <span class='kw'>main</span><span class='kw'>=</span><span class='st'>'s2'</span>)
-<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>s3</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>main</span><span class='kw'>=</span><span class='st'>'s3: first dimension'</span>)
-<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>s3</span><span class='kw'>[[</span><span class='fl'>2</span>]], <span class='kw'>main</span><span class='kw'>=</span><span class='st'>'s3: second dimension'</span>)</div><img src='sim.space-4.png' alt='' width='540' height='400' /></pre>
+<span class='fu'>par</span>(<span class='kw'>mfrow</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>2</span>,<span class='fl'>2</span>))
+<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>s1</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"s1"</span>)
+<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>s2</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"s2"</span>)
+<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>s3</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"s3: first dimension"</span>)
+<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>s3</span><span class='kw'>[[</span><span class='fl'>2</span>]], <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"s3: second dimension"</span>)</div><img src='sim.space-4.png' alt='' width='540' height='400' /><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -170,7 +177,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">

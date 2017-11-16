@@ -83,10 +83,15 @@
     </div>
 
     
-    <p>This function calculates boundary length data for <code><a href='http://www.rdocumentation.org/packages/PBSmapping/topics/PolySet'>PolySet</a></code>, <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygons</a></code>, and <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygonsDataFrame</a></code> objects.
-Be aware that this function is designed to be as fast as possible, and as a consequence, if this
-function is used improperly then it may crash R. Furthermore, multipart polygons with touching edges will likely result in inaccuracies.
-If argument set to <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygons</a></code> or <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygonsDataFrame</a></code>, this will be converted to PolySet before processing.</p>
+    <p>This function calculates boundary length data for
+<code><a href='http://www.rdocumentation.org/packages/PBSmapping/topics/PolySet'>PolySet</a></code>, <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygons</a></code>, and
+<code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygonsDataFrame</a></code> objects. Be aware that this
+function is designed with performance in mind, and as a consequence, if this
+function is used improperly then it may crash R. Furthermore, multipart
+polygons with touching edges will likely result in inaccuracies.
+If argument set to <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygons</a></code> or
+<code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygonsDataFrame</a></code>, this will be converted to
+PolySet before processing.</p>
     
 
     <pre class="usage"><span class='fu'>calcBoundaryData</span>(<span class='no'>x</span>, <span class='no'>tol</span>, <span class='no'>length.factor</span>, <span class='no'>edge.factor</span>)
@@ -104,11 +109,14 @@ If argument set to <code><a href='http://www.rdocumentation.org/packages/sp/topi
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p><code><a href='http://www.rdocumentation.org/packages/PBSmapping/topics/PolySet'>PolySet</a></code>, <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygons</a></code> or <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygonsDataFrame</a></code> object.</p></td>
+      <td><p><code><a href='http://www.rdocumentation.org/packages/PBSmapping/topics/PolySet'>PolySet</a></code>,
+<code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygons</a></code> or
+<code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygonsDataFrame</a></code> object.</p></td>
     </tr>
     <tr>
       <th>tol</th>
-      <td><p><code>numeric</code> to specify precision of calculations (that is, how far apart do vertices have to be to be considered different).</p></td>
+      <td><p><code>numeric</code> to specify precision of calculations. In other
+words, how far apart vertices have to be to be considered different?</p></td>
     </tr>
     <tr>
       <th>length.factor</th>
@@ -116,7 +124,8 @@ If argument set to <code><a href='http://www.rdocumentation.org/packages/sp/topi
     </tr>
     <tr>
       <th>edge.factor</th>
-      <td><p><code>numeric</code> to scale boundary lengths for edges that do not have any neighbors, such as those that occur along the margins.</p></td>
+      <td><p><code>numeric</code> to scale boundary lengths for edges that
+do not have any neighbors, such as those that occur along the margins.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -126,25 +135,32 @@ If argument set to <code><a href='http://www.rdocumentation.org/packages/sp/topi
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>data.frame</code> with 'id1' (<code>integer</code>), 'id2' (<code>integer</code>), and 'amount' (<code>numeric</code>) columns.</p>
+    <p><code>data.frame</code> with 'id1' (<code>integer</code>), 'id2'
+  (<code>integer</code>), and 'amount' (<code>numeric</code>) columns.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>This function is based on the algorithm in QMARXAN <a href = 'https://github.com/tsw-apropos/qmarxan'>https://github.com/tsw-apropos/qmarxan</a> for calculating boundary length.</p>
+    <p>This function is based on the algorithm in QMARXAN
+  <a href = 'https://github.com/tsw-apropos/qmarxan'>https://github.com/tsw-apropos/qmarxan</a> for calculating boundary
+  length.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># simulate planning units</span>
 <span class='no'>sim_pus</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sim.pus.html'>sim.pus</a></span>(<span class='fl'>225L</span>)
+
 <span class='co'># calculate boundary data</span>
 <span class='no'>bound.dat</span> <span class='kw'>&lt;-</span> <span class='fu'>calcBoundaryData</span>(<span class='no'>sim_pus</span>)
+
+<span class='co'># print summary of boundary data</span>
 <span class='fu'><a href='summary.html'>summary</a></span>(<span class='no'>bound.dat</span>)</div><div class='output co'>#&gt;       id1              id2            boundary    
 #&gt;  Min.   :  1.00   Min.   :  1.00   Min.   :1.000  
 #&gt;  1st Qu.: 59.75   1st Qu.: 51.75   1st Qu.:1.000  
 #&gt;  Median :117.00   Median :109.00   Median :1.000  
 #&gt;  Mean   :116.53   Mean   :109.47   Mean   :1.008  
 #&gt;  3rd Qu.:174.25   3rd Qu.:166.25   3rd Qu.:1.000  
-#&gt;  Max.   :225.00   Max.   :225.00   Max.   :2.000  </div></pre>
+#&gt;  Max.   :225.00   Max.   :225.00   Max.   :2.000  </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -163,7 +179,7 @@ If argument set to <code><a href='http://www.rdocumentation.org/packages/sp/topi
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">

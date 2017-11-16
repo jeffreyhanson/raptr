@@ -13,26 +13,35 @@ dp.subset(x, space, species, points)
 \method{dp.subset}{RapUnsolOrSol}(x, space, species, points)
 }
 \arguments{
-\item{x}{\code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.}
+\item{x}{\code{\link{RapData}}, \code{\link{RapUnsolved}}, or
+\code{\link{RapSolved}} object.}
 
-\item{space}{\code{integer} vector to specify the index of the space to subset demand points from.}
+\item{space}{\code{integer} vector to specify the index of the space to
+subset demand points from.}
 
-\item{species}{\code{integer} vector to specify the index of the species to subset demand points from.}
+\item{species}{\code{integer} vector to specify the index of the species to
+subset demand points from.}
 
-\item{points}{\code{integer} vector to specify the index of demand points to subset.}
+\item{points}{\code{integer} vector to specify the index of demand points to
+subset.}
 }
 \value{
-\code{\link{RapData}} or \code{\link{RapUnsolved}} object depending on input object.
+\code{\link{RapData}} or \code{\link{RapUnsolved}} object depending
+  on input object.
 }
 \description{
-Subset demand points from a \code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.
+Subset demand points from a \code{\link{RapData}},
+\code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.
 }
 \examples{
 # load data
 data(sim_ru)
+
 # generate new object with first 10 planning units
-sim_ru2 <- dp.subset(sim_ru, 1, 1, 1:10)
+sim_ru2 <- dp.subset(sim_ru, 1, 1, seq_len(10))
+
 }
 \seealso{
-\code{\link{RapData}}, \code{\link{RapUnsolved}}, \code{\link{RapSolved}}.
+\code{\link{RapData}}, \code{\link{RapUnsolved}},
+  \code{\link{RapSolved}}.
 }

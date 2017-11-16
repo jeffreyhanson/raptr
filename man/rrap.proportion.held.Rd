@@ -9,7 +9,8 @@ rrap.proportion.held(pu.coordinates, pu.probabilities, dp.coordinates,
   maximum.r.level = as.integer(length(pu.probabilities)))
 }
 \arguments{
-\item{pu.coordinates}{\code{\link[base]{matrix}} of planning unit coordinates.}
+\item{pu.coordinates}{\code{\link[base]{matrix}} of planning unit
+coordinates.}
 
 \item{pu.probabilities}{\code{numeric} vector of planning unit probabilities.}
 
@@ -17,17 +18,23 @@ rrap.proportion.held(pu.coordinates, pu.probabilities, dp.coordinates,
 
 \item{dp.weights}{\code{numeric} vector of demand point weights.}
 
-\item{failure.distance}{\code{numeric} indicating the cost of the failure planning unit.}
+\item{failure.distance}{\code{numeric} indicating the cost of the failure
+planning unit.}
 
-\item{maximum.r.level}{\code{integer} maximum failure (R) level to use for calculations.}
+\item{maximum.r.level}{\code{integer} maximum failure (R) level to use for
+calculations.}
 }
 \value{
-\code{numeric} value indicating the proportion of variation that the demand points explain in the planning units
+\code{numeric} value indicating the proportion of variation that the
+  demand points explain in the planning units
 }
 \description{
-This is a convenience function to quickly calculate the proportion of variation that one set of points captures
-in a another set of points using the reliable formulation.
+This is a convenience function to quickly calculate the proportion of
+variation that one set of points captures in a another set of points using
+the reliable formulation.
 }
 \examples{
-rrap.proportion.held(as.matrix(iris[1:2,-5]), runif(1:2), as.matrix(iris[1:5,-5]), runif(1:5), 10)
+rrap.proportion.held(as.matrix(iris[1:2,-5]), runif(1:2),
+                     as.matrix(iris[1:5,-5]), runif(1:5), 10)
+
 }

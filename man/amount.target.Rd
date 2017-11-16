@@ -22,9 +22,11 @@ amount.target(x, species) <- value
 \method{amount.target}{RapUnsolOrSol}(x, species = NULL) <- value
 }
 \arguments{
-\item{x}{\code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.}
+\item{x}{\code{\link{RapData}}, \code{\link{RapUnsolved}}, or
+\code{\link{RapSolved}} object.}
 
-\item{species}{\code{NULL} for all species or \code{integer} indicating species.}
+\item{species}{\code{NULL} for all species or \code{integer} indicating
+species.}
 
 \item{value}{\code{numeric} new target.}
 }
@@ -37,15 +39,21 @@ This function sets or returns the target amounts for each species.
 \examples{
 # load data
 data(sim_rs)
+
 # extract amount targets for all species
 amount.target(sim_rs)
+
 # set amount targets for all species
 amount.target(sim_rs) <- 0.1
+
 # extract amount targets for first species
 amount.target(sim_rs, 1)
+
 # set amount targets for for first species
 amount.target(sim_rs, 1) <- 0.5
+
 }
 \seealso{
-\code{\link{RapData}}, \code{\link{RapResults}}, \code{\link{RapSolved}}.
+\code{\link{RapData}}, \code{\link{RapResults}},
+  \code{\link{RapSolved}}.
 }

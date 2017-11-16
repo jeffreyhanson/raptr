@@ -1,23 +1,29 @@
 Package: raptr
 Type: Package
 Title: Representative and Adequate Prioritization Toolkit in R
-Version: 0.0.5
-Authors@R: c(person(c("Jeffrey", "O"), "Hanson", email='jeffrey.hanson@uqconnect.edu.au', role = c("aut", "cre")),
+Version: 0.1.0
+Authors@R: c(person(c("Jeffrey", "O"), "Hanson",
+    email="jeffrey.hanson@uqconnect.edu.au", role = c("aut", "cre")),
     person(c("Jonathan", "R"), "Rhodes", role = c("aut")),
     person(c("Hugh", "P"), "Possingham", role = c("aut")),
     person(c("Richard", "A"), "Fuller", role = c("aut")))
-Description: Biodiversity is in crisis. The overarching aim of conservation 
-    is to preserve biodiversity patterns and processes. To this end, protected 
-    areas are established to buffer species and preserve biodiversity processes. 
-    But resources are limited and so protected areas must be cost-effective. This 
-    package contains tools to generate plans for protected areas (prioritizations),
-    using spatially explicit targets for biodiversity patterns and processes. 
-    To obtain solutions in a feasible amount  of time, this package uses the 
-    commercial 'Gurobi' software package (obtained from <http://www.gurobi.com/>). 
-    Additionally, the 'rgurobi' package can also be installed to provide extra 
-    functionality (obtained from <http://github.com/jeffreyhanson/rgurobi>).
+Description: Biodiversity is in crisis. The overarching aim of conservation
+    is to preserve biodiversity patterns and processes. To this end, protected
+    areas are established to buffer species and preserve biodiversity processes.
+    But resources are limited and so protected areas must be cost-effective.
+    This package contains tools to generate plans for protected areas
+    (prioritizations), using spatially explicit targets for biodiversity
+    patterns and processes. To obtain solutions in a feasible amount  of time,
+    this package uses the commercial 'Gurobi' software package (obtained from
+    <http://www.gurobi.com/>). Additionally, the 'rgurobi' package can also be
+    installed to provide extra functionality (obtained from
+    <http://github.com/jeffreyhanson/rgurobi>) For more information on using
+    this package, see our paper published in Methods in Ecology and Evolution
+    (<https://dx.doi.org/10.1111/2041-210X.12862>).
 Imports:
     utils,
+    methods,
+    assertthat,
     boot,
     grDevices,
     PBSmapping,
@@ -34,17 +40,15 @@ Imports:
     parallel,
     doParallel,
     rgeos,
+    rgdal,
     hypervolume(>= 2.0.7),
     ks,
     gdalUtils,
     mvtnorm,
-    ggplot2,
-    testthat
+    ggplot2
 Depends:
     R(>= 3.1.0),
-    methods,
     sp,
-    rgdal,
     raster
 LinkingTo: Rcpp, RcppEigen, BH
 LazyData: true
@@ -59,7 +63,8 @@ Suggests:
     gurobi,
     rgurobi,
     gridExtra,
-    rgl
+    rgl,
+    testthat
 SystemRequirements: C++11
 Collate:
     'dependencies.R'

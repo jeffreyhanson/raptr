@@ -23,29 +23,41 @@ space.plot(x, species, space, ...)
   main = NULL, ...)
 }
 \arguments{
-\item{x}{\code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.}
+\item{x}{\code{\link{RapData}}, \code{\link{RapUnsolved}}, or
+\code{\link{RapSolved}} object.}
 
-\item{species}{\code{character} name of species, or \code{integer} index for species.}
+\item{species}{\code{character} name of species, or \code{integer} index for
+species.}
 
 \item{space}{\code{integer} index of attribute space.}
 
 \item{...}{not used.}
 
-\item{pu.color.palette}{\code{character} name of colors or color palette (\code{\link[RColorBrewer]{brewer.pal}}) to indicate planning unit statuses. Defaults to \code{c('grey30', 'green', 'black', 'red')} which indicate non selected, selected, locked in, and locked out (respectively).}
+\item{pu.color.palette}{\code{character} name of colors or color palette
+(\code{\link[RColorBrewer]{brewer.pal}}) to indicate planning unit
+statuses. Defaults to \code{c("grey30", "green", "black", "red")} which
+indicate non selected, selected, locked in, and locked out (respectively).}
 
-\item{main}{\code{character} title for the plot. Defaults to \code{NULL} and a default title is used.}
+\item{main}{\code{character} title for the plot. Defaults to \code{NULL} and
+a default title is used.}
 
-\item{y}{\code{NULL} \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.}
+\item{y}{\code{integer} number specifying the solution to be plotted. The
+value \code{0} can be used to plot the best solution.}
 }
 \description{
-This function plots the distribution of planning units and the distribution of demand points for a particular species in an attribute space.
-Note that this function only works for attribute spaces with one, two, or three dimensions.
+This function plots the distribution of planning units and the distribution
+of demand points for a particular species in an attribute space.
+Note that this function only works for attribute spaces with one, two, or
+three dimensions.
 }
 \examples{
 # load RapSolved objects
 data(sim_ru, sim_rs)
+
 # plot first species in first attribute space
 space.plot(sim_ru, 1, 1)
+
 # plot distribution of solutions for first species in first attribute space
 space.plot(sim_rs, 1, 1)
+
 }

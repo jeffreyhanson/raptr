@@ -17,7 +17,8 @@ This function creates a new RapUnreliableOpts object.
 }
 \examples{
 # create RapUnreliableOpts using defaults
-RapUnreliableOpts(BLM=0)
+RapUnreliableOpts(BLM = 0)
+
 }
 \seealso{
 \code{\link{RapUnreliableOpts-class}}.

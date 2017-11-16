@@ -6,22 +6,32 @@
 \usage{
 GurobiOpts(Threads = 1L, MIPGap = 0.1, Method = 0L, Presolve = 2L,
   TimeLimit = NA_integer_, NumberSolutions = 1L,
-  MultipleSolutionsMethod = "benders.cuts")
+  MultipleSolutionsMethod = c("benders.cuts", "solution.pool")[1])
 }
 \arguments{
-\item{Threads}{\code{integer} number of cores to use for processing. Defaults to 1L.}
+\item{Threads}{\code{integer} number of cores to use for processing.
+Defaults to 1L.}
 
-\item{MIPGap}{\code{numeric} MIP gap specifying minimum solution quality. Defaults to 0.1.}
+\item{MIPGap}{\code{numeric} MIP gap specifying minimum solution quality.
+Defaults to 0.1.}
 
-\item{Method}{\code{integer} Algorithm to use for solving model. Defaults to 0L.}
+\item{Method}{\code{integer} Algorithm to use for solving model. Defaults to
+0L.}
 
-\item{Presolve}{\code{integer} code for level of computation in presolve (lp_solve parameter). Defaults to 2.}
+\item{Presolve}{\code{integer} code for level of computation in presolve
+(lp_solve parameter). Defaults to 2.}
 
-\item{TimeLimit}{\code{integer} number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.}
+\item{TimeLimit}{\code{integer} number of seconds to allow for solving.
+sDefaults to \code{NA_integer_}, and so a time limit is not imposed.}
 
-\item{NumberSolutions}{\code{integer} number of solutions to generate. Defaults to 1L.}
+\item{NumberSolutions}{\code{integer} number of solutions to generate.
+Defaults to 1L.}
 
-\item{MultipleSolutionsMethod}{\code{character} name of method to obtain multiple solutions \code{NumberSolutions} > 1. Available options are 'benders.cuts' and 'solution.pool'. Defaults to 'benders.cuts'. Note that the \code{rgurobi} package must be to use the 'solution.pool' method.}
+\item{MultipleSolutionsMethod}{\code{character} name of method to obtain
+multiple solutions (when \code{NumberSolutions} is greater than one).
+Available options are \code{"benders.cuts"} and \code{"solution.pool"}.
+Defaults to \code{"benders.cuts"}. Note that the \code{rgurobi} package
+must be to use the \code{"solution.pool"} method.}
 }
 \value{
 \code{GurobiOpts} object
@@ -31,8 +41,9 @@ This function creates a new GurobiOpts object.
 }
 \examples{
 # create GurobiOpts object using default parameters
-GurobiOpts(Threads=1L, MIPGap=0.1, Method=0L, 
-	Presolve=2L, TimeLimit=NA_integer_, NumberSolutions=1L)
+GurobiOpts(Threads = 1L, MIPGap = 0.1, Method = 0L, Presolve=2L,
+           TimeLimit = NA_integer_, NumberSolutions = 1L)
+
 }
 \seealso{
 \code{\link{GurobiOpts-class}}.

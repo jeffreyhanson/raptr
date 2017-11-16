@@ -38,7 +38,10 @@
 \method{print}{RapSolved}(x, ...)
 }
 \arguments{
-\item{x}{\code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}}, \code{\link{RapReliableOpts}}, \code{\link{RapData}}, \code{\link{RapUnsolved}}, \code{\link{RapResults}}, or \code{\link{RapSolved}} object.}
+\item{x}{\code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}},
+\code{\link{RapReliableOpts}}, \code{\link{RapData}},
+\code{\link{RapUnsolved}}, \code{\link{RapResults}}, or
+\code{\link{RapSolved}} object.}
 
 \item{...}{not used.}
 
@@ -50,22 +53,31 @@ Prints objects.
 \examples{
 # load data
 data(sim_ru, sim_rs)
-## print classes in package
-# GurobiOpts
+
+# print GurobiOpts object
 print(GurobiOpts())
-# RapReliableOpts
+
+# print RapReliableOpts object
 print(RapReliableOpts())
-# RapUnreliableOpts
+
+# print RapUnreliableOpts object
 print(RapUnreliableOpts())
-# RapData
+
+# print RapData object
 print(sim_ru@data)
-# RapUnsolved
+
+# print RapUnsolved object
 print(sim_ru)
-# RapResults
+
+# print RapResults object
 print(sim_rs@results)
-# RapSolved
+
+# print RapSolved object
 print(sim_rs)
 }
 \seealso{
-\code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}}, \code{\link{RapReliableOpts}}, \code{\link{RapData}}, \code{\link{RapUnsolved}}, \code{\link{RapResults}}, \code{\link{RapSolved}}.
+\code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}},
+  \code{\link{RapReliableOpts}}, \code{\link{RapData}},
+  \code{\link{RapUnsolved}}, \code{\link{RapResults}},
+  \code{\link{RapSolved}}.
 }

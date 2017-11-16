@@ -94,35 +94,48 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>pu</th>
-      <td><p><code><a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> planning unit data. Columns are 'cost' (<code>numeric</code>), 'area' (<code>numeric</code>), and 'status' (<code>integer</code>).</p></td>
+      <td><p><code><a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> planning unit data. Columns must be
+"cost" (<code>numeric</code>), "area" (<code>numeric</code>), and "status"
+(<code>integer</code>).</p></td>
     </tr>
     <tr>
       <th>species</th>
-      <td><p><code><a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with species data. Columns are 'name' (<code>character</code>).</p></td>
+      <td><p><code><a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with species data. Columns
+must be "name" (<code>character</code>).</p></td>
     </tr>
     <tr>
       <th>targets</th>
-      <td><p><code><a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with species data. Columns are 'species' (<code>integer</code>), 'target' (<code>integer</code>), 'proportion' (<code>numeric</code>).</p></td>
+      <td><p><code><a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with species data.
+Columns must be "species" (<code>integer</code>), "target" (<code>integer</code>),
+"proportion" (<code>numeric</code>).</p></td>
     </tr>
     <tr>
       <th>pu.species.probabilities</th>
-      <td><p><code><a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with data on the probability of species in each planning unit. Columns are 'species' (<code>integer</code>), 'pu' (<code>integer</code>), and 'value' (<code>numeric</code>) columns.</p></td>
+      <td><p><code><a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with data on
+the probability of species in each planning unit. Columns must be
+"species", (<code>integer</code>), "pu" (<code>integer</code>), and "value"
+(<code>numeric</code>).</p></td>
     </tr>
     <tr>
       <th>attribute.spaces</th>
-      <td><p><code>list</code> of <code>AttributeSpaces</code> objects with the demand points and planning unit coordinates.</p></td>
+      <td><p><code>list</code> of <code><a href='AttributeSpaces.html'>AttributeSpaces</a></code> objects
+with the demand points and planning unit coordinates.</p></td>
     </tr>
     <tr>
       <th>boundary</th>
-      <td><p><code><a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with data on the shared boundary length of planning units. Columns are with 'id1' (<code>integer</code>), 'id2' (<code>integer</code>), and 'boundary' (<code>integer</code>).</p></td>
+      <td><p><code><a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with data on the shared
+boundary length of planning units. Columns must be "id1"
+(<code>integer</code>), "id2" (<code>integer</code>), and "boundary" (<code>integer</code>).</p></td>
     </tr>
     <tr>
       <th>polygons</th>
-      <td><p><code><a href='http://www.rdocumentation.org/packages/PBSmapping/topics/PolySet'>PolySet</a></code> planning unit spatial data or <code>NULL</code> if data not available.</p></td>
+      <td><p><code><a href='http://www.rdocumentation.org/packages/PBSmapping/topics/PolySet'>PolySet</a></code> planning unit spatial data
+or <code>NULL</code> if data not available.</p></td>
     </tr>
     <tr>
       <th>skipchecks</th>
-      <td><p><code>logical</code> Skip data integrity checks? May improve speed for big data sets.</p></td>
+      <td><p><code>logical</code> Skip data integrity checks? May improve
+speed for big data sets.</p></td>
     </tr>
     <tr>
       <th>.cache</th>
@@ -136,72 +149,52 @@
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Generally, users are not encouraged to change arguments to <code>.cache</code>.</p>
+    <p>Generally, users are not encouraged to change arguments to
+  <code>.cache</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/PBSmapping/topics/PolySet'>PolySet</a></code>, <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPoints'>SpatialPoints</a></code>, <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPoints'>SpatialPointsDataFrame</a></code>, <code><a href='make.RapData.html'>make.RapData</a></code>, <code><a href='RapData-class.html'>RapData-class</a></code>.</p>
+    <p><code><a href='http://www.rdocumentation.org/packages/PBSmapping/topics/PolySet'>PolySet</a></code>, <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPoints'>SpatialPoints</a></code>,
+  <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPoints'>SpatialPointsDataFrame</a></code>, <code><a href='make.RapData.html'>make.RapData</a></code>,
+  <code><a href='RapData-class.html'>RapData-class</a></code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'># load data</span>
+    <pre class="examples"><div class='input'><span class='co'># load data</span>
 <span class='fu'>data</span>(<span class='no'>cs_pus</span>, <span class='no'>cs_spp</span>, <span class='no'>cs_space</span>)
+
 <span class='co'># create data for RapData object</span>
 <span class='no'>attribute.spaces</span> <span class='kw'>&lt;-</span> <span class='fu'>list</span>(
-        <span class='fu'><a href='AttributeSpaces.html'>AttributeSpaces</a></span>(
-                <span class='kw'>name</span><span class='kw'>=</span><span class='st'>"geographic"</span>,
-                <span class='fu'>list</span>(
-                        <span class='fu'><a href='AttributeSpace.html'>AttributeSpace</a></span>(
-                                <span class='kw'>planning.unit.points</span><span class='kw'>=</span><span class='fu'><a href='PlanningUnitPoints.html'>PlanningUnitPoints</a></span>(
-                                        <span class='kw'>rgeos</span><span class='kw'>::</span><span class='fu'>gCentroid</span>(<span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,], <span class='kw'>byid</span><span class='kw'>=</span><span class='fl'>TRUE</span>)@<span class='kw'>coords</span>,
-                                        <span class='fu'>seq_len</span>(<span class='fl'>10</span>)
-                                ),
-                                <span class='kw'>demand.points</span><span class='kw'>=</span><span class='fu'><a href='make.DemandPoints.html'>make.DemandPoints</a></span>(
-                                        <span class='fu'><a href='randomPoints.html'>randomPoints</a></span>(
-                                                <span class='no'>cs_spp</span><span class='kw'>[[</span><span class='fl'>1</span>]],
-                                                <span class='kw'>n</span><span class='kw'>=</span><span class='fl'>10</span>,
-                                                <span class='kw'>prob</span><span class='kw'>=</span><span class='fl'>TRUE</span>
-                                        )
-                                ),
-                                <span class='kw'>species</span><span class='kw'>=</span><span class='fl'>1L</span>
-                        )
-                )
-        ),
-        <span class='fu'><a href='AttributeSpaces.html'>AttributeSpaces</a></span>(
-                <span class='kw'>name</span><span class='kw'>=</span><span class='st'>"environmental"</span>,
-                <span class='fu'>list</span>(
-                        <span class='co'># create environmental attribute space</span>
-                        <span class='fu'><a href='AttributeSpace.html'>AttributeSpace</a></span>(
-                                <span class='kw'>planning.unit.points</span><span class='kw'>=</span><span class='fu'><a href='PlanningUnitPoints.html'>PlanningUnitPoints</a></span>(
-                                        <span class='fu'>extract</span>(<span class='no'>cs_space</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,], <span class='kw'>fun</span><span class='kw'>=</span><span class='no'>mean</span>),
-                                        <span class='fu'>seq_len</span>(<span class='fl'>10</span>)
-                                ),
-                                <span class='kw'>demand.points</span><span class='kw'>=</span><span class='fu'><a href='make.DemandPoints.html'>make.DemandPoints</a></span>(
-                                        <span class='no'>cs_space</span><span class='kw'>[[</span><span class='fl'>1</span>]][<span class='fu'>Which</span>(!<span class='fu'>is.na</span>(<span class='no'>cs_space</span><span class='kw'>[[</span><span class='fl'>1</span>]]))]
-                                ),
-                                <span class='kw'>species</span><span class='kw'>=</span><span class='fl'>1L</span>
-                        )
-                )
-        )
-)
-<span class='no'>pu.species.probabilities</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='calcSpeciesAverageInPus.html'>calcSpeciesAverageInPus</a></span>(<span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,], <span class='no'>cs_spp</span><span class='kw'>[[</span><span class='fl'>1</span>]])
+  <span class='fu'><a href='AttributeSpaces.html'>AttributeSpaces</a></span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"geographic"</span>, <span class='fu'>list</span>(
+    <span class='fu'><a href='AttributeSpace.html'>AttributeSpace</a></span>(
+      <span class='kw'>planning.unit.points</span> <span class='kw'>=</span> <span class='fu'><a href='PlanningUnitPoints.html'>PlanningUnitPoints</a></span>(
+        <span class='kw'>rgeos</span><span class='kw'>::</span><span class='fu'>gCentroid</span>(<span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,], <span class='kw'>byid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)@<span class='kw'>coords</span>, <span class='fu'>seq_len</span>(<span class='fl'>10</span>)),
+      <span class='kw'>demand.points</span> <span class='kw'>=</span> <span class='fu'><a href='make.DemandPoints.html'>make.DemandPoints</a></span>(
+        <span class='fu'><a href='randomPoints.html'>randomPoints</a></span>(<span class='no'>cs_spp</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)),
+      <span class='kw'>species</span> <span class='kw'>=</span> <span class='fl'>1L</span>))),
+  <span class='fu'><a href='AttributeSpaces.html'>AttributeSpaces</a></span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"environmental"</span>, <span class='fu'>list</span>(
+    <span class='fu'><a href='AttributeSpace.html'>AttributeSpace</a></span>(
+      <span class='kw'>planning.unit.points</span> <span class='kw'>=</span> <span class='fu'><a href='PlanningUnitPoints.html'>PlanningUnitPoints</a></span>(
+        <span class='kw'>raster</span><span class='kw'>::</span><span class='fu'>extract</span>(<span class='no'>cs_space</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,], <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>mean</span>),
+        <span class='fu'>seq_len</span>(<span class='fl'>10</span>)),
+      <span class='kw'>demand.points</span> <span class='kw'>=</span> <span class='fu'><a href='make.DemandPoints.html'>make.DemandPoints</a></span>(
+        <span class='no'>cs_space</span><span class='kw'>[[</span><span class='fl'>1</span>]][<span class='kw'>raster</span><span class='kw'>::</span><span class='fu'>Which</span>(!<span class='fu'>is.na</span>(<span class='no'>cs_space</span><span class='kw'>[[</span><span class='fl'>1</span>]]))]),
+        <span class='kw'>species</span> <span class='kw'>=</span> <span class='fl'>1L</span>))))
+<span class='no'>pu.species.probabilities</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='calcSpeciesAverageInPus.html'>calcSpeciesAverageInPus</a></span>(<span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,],
+                                                    <span class='no'>cs_spp</span><span class='kw'>[[</span><span class='fl'>1</span>]])
 <span class='no'>polygons</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='SpatialPolygons2PolySet.html'>SpatialPolygons2PolySet</a></span>(<span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,])
 <span class='no'>boundary</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='calcBoundaryData.html'>calcBoundaryData</a></span>(<span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,])
 
-<span class='no'>x</span><span class='kw'>&lt;-</span><span class='fu'>RapData</span>(
-        <span class='kw'>pu</span><span class='kw'>=</span><span class='no'>cs_pus</span>@<span class='kw'>data</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,],
-        <span class='kw'>species</span><span class='kw'>=</span><span class='fu'>data.frame</span>(<span class='kw'>name</span><span class='kw'>=</span><span class='st'>'test'</span>),
-        <span class='kw'>target</span><span class='kw'>=</span><span class='fu'>data.frame</span>(<span class='kw'>species</span><span class='kw'>=</span><span class='fl'>1L</span>, <span class='kw'>target</span><span class='kw'>=</span><span class='fl'>0</span>:<span class='fl'>2</span>, <span class='kw'>proportion</span><span class='kw'>=</span><span class='fl'>0.2</span>),
-        <span class='kw'>pu.species.probabilities</span><span class='kw'>=</span><span class='no'>pu.species.probabilities</span>,
-        <span class='kw'>attribute.spaces</span><span class='kw'>=</span><span class='no'>attribute.spaces</span>,
-        <span class='kw'>polygons</span><span class='kw'>=</span><span class='no'>polygons</span>,
-        <span class='kw'>boundary</span><span class='kw'>=</span><span class='no'>boundary</span>
-)
-<span class='fu'><a href='print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; RapData object.
-#&gt;   Number of planning units: 10 
-#&gt;   Number of species: 1 
-#&gt;   Number of attribute spaces: 2 </div><div class='input'>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>RapData</span>(<span class='kw'>pu</span> <span class='kw'>=</span> <span class='no'>cs_pus</span>@<span class='kw'>data</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,], <span class='kw'>species</span> <span class='kw'>=</span> <span class='fu'>data.frame</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"test"</span>),
+             <span class='kw'>target</span> <span class='kw'>=</span> <span class='fu'>data.frame</span>(<span class='kw'>species</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fl'>0</span>:<span class='fl'>2</span>,
+                                 <span class='kw'>proportion</span> <span class='kw'>=</span> <span class='fl'>0.2</span>),
+             <span class='kw'>pu.species.probabilities</span> <span class='kw'>=</span> <span class='no'>pu.species.probabilities</span>,
+             <span class='kw'>attribute.spaces</span> <span class='kw'>=</span> <span class='no'>attribute.spaces</span>,
+             <span class='kw'>polygons</span> <span class='kw'>=</span> <span class='no'>polygons</span>,
+             <span class='kw'>boundary</span> <span class='kw'>=</span> <span class='no'>boundary</span>)
+
+<span class='co'># print object</span>
+<span class='fu'><a href='print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='message'>RapData object.</span></div><div class='output co'>#&gt; <span class='message'>  Number of planning units: 10</span></div><div class='output co'>#&gt; <span class='message'>  Number of species: 1</span></div><div class='output co'>#&gt; <span class='message'>  Number of attribute spaces: 2</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -223,7 +216,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">

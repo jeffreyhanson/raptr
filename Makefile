@@ -1,34 +1,30 @@
-all: clean man site vignette test check
+all: clean initc man site vignette test check
 
 clean:
 	rm -rf docs/*
 	rm -rf inst/doc/*
-	rm -rf vignettes/*
+
+
+initc:
+	R --slave -e "Rcpp::compileAttributes()"
+	R --slave -e "tools::package_native_routine_registration_skeleton('.', 'src/init.c', character_only = FALSE)"
 
 man:
 	R --slave -e "devtools::document()"
 
+readme:
+	R --slave -e "devtools::load_all();rmarkdown::render('README.Rmd')"
+
 site:
-	R -e "devtools::load_all()"
-	R -e "devtools::document()"
-	cp -f inst/vign/raptr.Rmd vignettes/raptr.Rmd
-	R -e "devtools::build_vignettes()"
-	R -e "pkgdown::build_site()"
-	rm -rf vignettes/*
-	rm -rf inst/doc/*
+	R -e "devtools::load_all();pkgdown::build_site()"
 
 vignette:
-	cd inst/vign;\
-	R -e "knitr::knit('raptr.Rmd')";\
-	rm -rf cache
-	mv inst/vign/raptr.md vignettes/raptr.Rmd
-	mv inst/vign/figure vignettes
-	R -e "devtools::build_vignettes()"
-	rm -rf vignettes/figure
-	cp -f inst/vign/placeholder.Rmd vignettes/raptr.Rmd
-	touch inst/doc/raptr.R
-	touch inst/doc/raptr.Rmd
-	touch inst/doc/raptr.html
+	R -e "devtools::load_all();devtools::build_vignettes()"
+
+
+codoc:
+	echo "\n===== CODOC =====\n" > check.log 2>&1
+	R --slave -e "devtools::load_all();tools::codoc(dir = ".")" >> check.log 2>&1
 
 test:
 	echo "\n===== UNIT TESTS =====\n" > test.log 2>&1
@@ -37,10 +33,14 @@ test:
 	rm -f gurobi.log
 
 check:
-	echo "\n===== R CMD CHECK =====\n" > check.log 2>&1
+	echo "\n===== R CMD CHECK (valgrind) =====\n" > check.log 2>&1
 	R --slave -d "valgrind --tool=memcheck" -e "devtools::check()" >> check.log 2>&1
 
-checkwb:
+qcheck:
+	echo "\n===== R CMD CHECK =====\n" > check.log 2>&1
+	R --slave -e "devtools::check()" >> check.log 2>&1
+
+wbcheck:
 	R --slave -e "devtools::build_win()"
 
 build:
@@ -49,4 +49,4 @@ build:
 install:
 	R --slave -e "devtools::install_local('../raptr')"
 
-.PHONY: clean man site man test check checkwb build install
+.PHONY: clean initc readme man site man test check codoc wbcheck qcheck build install

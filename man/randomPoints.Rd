@@ -11,25 +11,31 @@ randomPoints(mask, n, prob = FALSE)
 
 \item{n}{\code{integer} number of points to sample}
 
-\item{prob}{\code{logical} should the raster values be used as weights? Defaults to \code{FALSE}.}
+\item{prob}{\code{logical} should the raster values be used as weights?
+Defaults to \code{FALSE}.}
 }
 \value{
-\code{\link[base]{matrix}} with x-coordinates, y-coordinates, and cell values.
+\code{\link[base]{matrix}} with x-coordinates, y-coordinates, and
+  cell values.
 }
 \description{
-This function generates random points in a \code{\link[raster]{raster}} object.
+This function generates random points in a \code{\link[raster]{raster}}
+object.
 }
 \examples{
 # simulate data
 sim_pus <- sim.pus(225L)
-sim_spp <- sim.species(sim_pus, model='normal', n=1, res=0.25)
+sim_spp <- sim.species(sim_pus, model = "normal", n = 1, res = 0.25)
+
 # generate points
-pts1 <- randomPoints(sim_spp, n=5)
-pts2 <- randomPoints(sim_spp, n=5, prob=TRUE)
+pts1 <- randomPoints(sim_spp, n = 5)
+pts2 <- randomPoints(sim_spp, n = 5, prob = TRUE)
+
 # plot points
 plot(sim_spp)
-points(pts1, col='red')
-points(pts2, col='black')
+points(pts1, col = "red")
+points(pts2, col = "black")
+
 }
 \seealso{
 This function is similar to \code{dismo::randomPoints}.

@@ -1,17 +1,22 @@
 ---
 title: "raptr: Representative and Adequate Prioritisation Toolkit in R"
-date: "06 August 2017"
+date: "`r format(Sys.time(), '%d %B %Y')`"
 output:
   rmarkdown::html_document:
     toc: true
     fig_caption: true
 vignette: >
   %\VignetteIndexEntry{raptr}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{knitr::rmarkdown_notangle}
   \usepackage[utf8]{inputenc}
 ---
 
-
+```{r, include=FALSE}
+is_check <- ("CheckExEnv" %in% search()) || any(c("_R_CHECK_TIMINGS_",
+             "_R_CHECK_LICENSE_") %in% names(Sys.getenv()))
+knitr::opts_chunk$set(fig.align = "center", eval = !is_check,
+                      root.dir = normalizePath("../.."))
+```
 
 # Overview
 
@@ -19,8 +24,7 @@ This vignette illustrates the basic usage of the _raptr R_ package.
 
 To load the _raptr R_ package and learn more about the package, type the following code into R.
 
-
-```r
+```{r, eval=FALSE}
 # load raptr R package
 library(raptr)
 
@@ -50,8 +54,7 @@ Table 1: Main classes in the _raptr R_ package
 
 This tutorial is designed to provide users with an understanding of how to use the _raptr R_ package to generate and compare solutions. This tutorial uses several additional packages, so first we will run the following code to load them.
 
-
-```r
+```{r, message=FALSE, result='hide'}
 # load packages for tutorial
 library(parallel)
 library(plyr)
@@ -73,8 +76,7 @@ threads <- as.integer(max(1, detectCores()-2))
 
 To investigate the behaviour of the problem, we will generate prioritisations for three simulated species. We will use the unreliable formulation of the problem to understand the basics, and later move onto the reliable formulation. The first species (termed 'uniform') will represent a hyper-generalist. This species will inhabit all areas with equal probability. The second species (termed 'normal') will represent a species with a single range core. The third species (termed 'bimodal') will represent a species with two distinct ecotypes, each with their own range core. To reduce computational time for this example, we will use a 10 $\times$ 10 grid of square planning units.
 
-
-```r
+```{r}
 # make planning units
 sim_pus <- sim.pus(100L)
 
@@ -90,8 +92,7 @@ sim_spp <- lapply(
 
 Let's see what these species' distributions look like.
 
-
-```r
+```{r, fig.width=7, fig.height=2.5, fig.cap="_Distribution of three simulated species. Each square represents a planning unit. The colour of each square denotes the probability that individuals from each species occupy it._"}
 # plot species
 plot(
 	stack(sim_spp),
@@ -101,12 +102,9 @@ plot(
 )
 ```
 
-![_Distribution of three simulated species. Each square represents a planning unit. The colour of each square denotes the probability that individuals from each species occupy it._](figure/unnamed-chunk-5-1.png)
-
 Next, we will generate a set of demand points. To understand the effects of probabilities and weights on the demand points, we will generate the demand points in geographic space. These demand points will be the centroids of the planning units. Additionally, we will use the same set of demand points for each species and only vary the weights of the demand points between species. **Note that we are only using the same distribution of demand points for different species for teaching purposes. It is strongly recommended to use different demand points for different species in real-world conservation planning exercises.** See the case-study section of this tutorial for examples on how to generate suitable demand points.
 
-
-```r
+```{r}
 # generate coordinates for pus/demand points
 pu_coords <- gCentroid(sim_pus, byid=TRUE)
 
@@ -134,8 +132,7 @@ sim_dps <- lapply(
 
 Now, we will construct a `RapUnsolved` object to store our input data and parameters. This contains all the information to generate prioritisations.
 
-
-```r
+```{r}
 ## create RapUnreliableOpts object
 # this stores parameters for the unreliable formulation problem (ie. BLM)
 sim_ro <- RapUnreliableOpts()
@@ -214,8 +211,7 @@ sim_ru <- RapUnsolved(sim_ro, sim_rd)
 
 To investigate the effects of space-based targets, we will generate a prioritisation for each species using only amount-based targets and compare them to prioritisations generated using amount- and space-based targets. To start off, we will generate a prioritisation for the uniform species using amount-based targets. To do this, we will generate a new `sim_ru` object by subsetting out the data for the uniform species from the `sim_ru` object. Then, we will update the targets in the new object. Finally, we will solve the object to generate a prioritisation that fulfills the targets for minimal cost.
 
-
-```r
+```{r}
 # create new object with just the uniform species
 sim_ru_s1 <- spp.subset(sim_ru, 'uniform')
 
@@ -223,291 +219,91 @@ sim_ru_s1 <- spp.subset(sim_ru, 'uniform')
 sim_ru_s1 <- update(sim_ru_s1, amount.target=0.2, space.target=NA, solve=FALSE)
 ```
 
-
-```r
+```{r}
 # solve problem to identify prioritisation
 sim_rs_s1_amount <- solve(sim_ru_s1, Threads=threads)
 ```
 
-```
-## The rgorubi R package is not installed
-## 
-##  To access multiple solutions from the solution pool,
-## 	follow these instructions to install the "rgurobi" R package from GitHub: 
-## 	http://bit.ly/1RF19XO 
-## 
-## Optimize a model with 1 rows, 100 columns and 100 nonzeros
-## Variable types: 0 continuous, 100 integer (100 binary)
-## Coefficient statistics:
-##   Matrix range     [5e-01, 5e-01]
-##   Objective range  [1e+00, 1e+00]
-##   Bounds range     [1e+00, 1e+00]
-##   RHS range        [1e+01, 1e+01]
-## Found heuristic solution: objective 20
-## Presolve removed 1 rows and 100 columns
-## Presolve time: 0.00s
-## Presolve: All rows and columns removed
-## 
-## Explored 0 nodes (0 simplex iterations) in 0.00 seconds
-## Thread count was 1 (of 4 available processors)
-## 
-## Solution count 1: 20 
-## Pool objective bound 20
-## 
-## Optimal solution found (tolerance 1.00e-01)
-## Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%
-```
-
-```
-## Warning in validityMethod(object): object@space.held contains values less
-## than 0, some species are really poorly represented
-```
-
-
-```r
+```{r}
 ## show summary
 # note the format for this is similar to that used by Marxan
 # see ?raptr::summary for details on this table
 summary(sim_rs_s1_amount)
-```
 
-```
-##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
-## 1          1 OPTIMAL    20   20             20                220
-##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1              42               168               10
-##   Connectivity_In_Fraction
-## 1                0.1909091
-```
-
-```r
 # show amount held
 amount.held(sim_rs_s1_amount)
-```
 
-```
-##   uniform
-## 1     0.2
-```
-
-```r
 # show space held
 space.held(sim_rs_s1_amount)
 ```
 
-```
-##   uniform (Space 1)
-## 1        -0.2363636
-```
-
 Now that we have generated a prioritisation, let's see what it looks like. We can use the `spp.plot` method to see how the prioritisation overlaps with the uniform species' distribution. Note that since all planning units have equal probabilities for this species, all planning units have the same fill colour. 
 
-
-```r
+```{r, fig.height=3.5, fig.width=4.5, fig.align='center', fig.cap="_A prioritisation for the uniformly distributed species generated using amount-based targets (20\\%). Sqaures represent planning units. Planning units with a green border are selected for prioritisation, and their colour denotes the probability they are inhabited by the species._"}
 # plot the prioritisation and the uniform species' distribution
 spp.plot(sim_rs_s1_amount, 1, main='Uniform species')
 ```
-
-<img src="figure/unnamed-chunk-11-1.png" title="_A prioritisation for the uniformly distributed species generated using amount-based targets (20\%). Sqaures represent planning units. Planning units with a green border are selected for prioritisation, and their colour denotes the probability they are inhabited by the species._" alt="_A prioritisation for the uniformly distributed species generated using amount-based targets (20\%). Sqaures represent planning units. Planning units with a green border are selected for prioritisation, and their colour denotes the probability they are inhabited by the species._" style="display: block; margin: auto;" />
 
 The prioritisation for the uniform species appears to be just a random selection of planning units. This behavior is due to the fact that any prioritisation with 20 planning units is optimal. By relying on just amount targets, this solution may preserve a section of the species' range core, or just focus on the range margin, or some random part of its range--no emphasis is directed towards preserving different parts of the species' range. This behavior highlights a fundamental limitation of just using amount-based targets. In the absence of additional criteria, conventional reserve selection problems do not contain any additional information to identify the most effective prioritisation.
 
 Now, we will generate a prioritisation for the normally distributed species using amount-based targets. We will use a similar process to what we used for the uniformly distributed species, but for brevity, we will use code to generate solutions immediately after updating the object.
 
-
-```r
+```{r}
 # create new object with just the normal species
 sim_ru_s2 <- spp.subset(sim_ru, 'normal')
 ```
 
-
-```r
+```{r}
 # update amount targets to 20% and space targets to 0% and solve it
 sim_rs_s2_amount <- update(sim_ru_s2, amount.target=0.2, space.target=NA, solve=TRUE, Threads=threads)
 ```
 
-```
-## The rgorubi R package is not installed
-## 
-##  To access multiple solutions from the solution pool,
-## 	follow these instructions to install the "rgurobi" R package from GitHub: 
-## 	http://bit.ly/1RF19XO 
-## 
-## Optimize a model with 1 rows, 100 columns and 100 nonzeros
-## Variable types: 0 continuous, 100 integer (100 binary)
-## Coefficient statistics:
-##   Matrix range     [7e-02, 7e-01]
-##   Objective range  [1e+00, 1e+00]
-##   Bounds range     [1e+00, 1e+00]
-##   RHS range        [7e+00, 7e+00]
-## Found heuristic solution: objective 27
-## Presolve removed 0 rows and 86 columns
-## Presolve time: 0.00s
-## Presolved: 1 rows, 14 columns, 14 nonzeros
-## Variable types: 0 continuous, 14 integer (0 binary)
-## Presolved: 1 rows, 14 columns, 14 nonzeros
-## 
-## 
-## Root relaxation: objective 9.864476e+00, 6 iterations, 0.00 seconds
-## 
-##     Nodes    |    Current Node    |     Objective Bounds      |     Work
-##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-## 
-##      0     0    9.86448    0    1   27.00000    9.86448  63.5%     -    0s
-## H    0     0                      10.0000000    9.86448  1.36%     -    0s
-## 
-## Explored 0 nodes (6 simplex iterations) in 0.00 seconds
-## Thread count was 2 (of 4 available processors)
-## 
-## Solution count 2: 10 27 
-## Pool objective bound 10
-## 
-## Optimal solution found (tolerance 1.00e-01)
-## Best objective 1.000000000000e+01, best bound 1.000000000000e+01, gap 0.0000%
-```
-
-
-```r
+```{r}
 # show summary
 summary(sim_rs_s2_amount)
-```
 
-```
-##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
-## 1          1 OPTIMAL    10   10             10                220
-##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1              12               192               16
-##   Connectivity_In_Fraction
-## 1               0.05454545
-```
-
-```r
 # show amount held
 amount.held(sim_rs_s2_amount)
-```
 
-```
-##      normal
-## 1 0.2026153
-```
-
-```r
 # show space held
 space.held(sim_rs_s2_amount)
 ```
 
-```
-##   normal (Space 1)
-## 1        0.5909494
-```
-
 Now let's visualise the prioritisation we made for the normal species.
 
-
-```r
+```{r, fig.height=3.5, fig.width=4.5,fig.align='center', fig.cap="_A prioritisation for the normally distributed species generated using amount-based targets (20\\%). See Figure 3 caption for conventions._"}
 # plot the prioritisation and the normal species' distribution
 spp.plot(sim_rs_s2_amount, 1, main='Normal species')
 ```
-
-<img src="figure/unnamed-chunk-15-1.png" title="_A prioritisation for the normally distributed species generated using amount-based targets (20\%). See Figure 3 caption for conventions._" alt="_A prioritisation for the normally distributed species generated using amount-based targets (20\%). See Figure 3 caption for conventions._" style="display: block; margin: auto;" />
 
 The amount-based prioritisation for the normal species focuses only on the species' range core. This prioritisation fails to secure any peripheral parts of the species' distribution. As a consequence, it may miss out on populations with novel adaptations to environmental conditions along the species' range margin.
 
 Now, let's generate an amount-based target for the bimodally distributed species view it.
 
-
-```r
+```{r}
 # create new object with just the bimodal species
 sim_ru_s3 <- spp.subset(sim_ru, 'bimodal')
 ```
 
-
-```r
+```{r}
 # update amount targets to 20% and space targets to 0% and solve it
 sim_rs_s3_amount <- update(sim_ru_s3, amount.target=0.2, space.target=NA, Threads=threads)
 ```
 
-```
-## The rgorubi R package is not installed
-## 
-##  To access multiple solutions from the solution pool,
-## 	follow these instructions to install the "rgurobi" R package from GitHub: 
-## 	http://bit.ly/1RF19XO 
-## 
-## Optimize a model with 1 rows, 100 columns and 100 nonzeros
-## Variable types: 0 continuous, 100 integer (100 binary)
-## Coefficient statistics:
-##   Matrix range     [7e-03, 9e-01]
-##   Objective range  [1e+00, 1e+00]
-##   Bounds range     [1e+00, 1e+00]
-##   RHS range        [7e+00, 7e+00]
-## Found heuristic solution: objective 21
-## Presolve removed 0 rows and 75 columns
-## Presolve time: 0.00s
-## Presolved: 1 rows, 25 columns, 25 nonzeros
-## Variable types: 0 continuous, 25 integer (0 binary)
-## Presolved: 1 rows, 25 columns, 25 nonzeros
-## 
-## 
-## Root relaxation: objective 7.919039e+00, 17 iterations, 0.00 seconds
-## 
-##     Nodes    |    Current Node    |     Objective Bounds      |     Work
-##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-## 
-##      0     0    7.91904    0    1   21.00000    7.91904  62.3%     -    0s
-## H    0     0                       8.0000000    7.91904  1.01%     -    0s
-## 
-## Explored 0 nodes (17 simplex iterations) in 0.00 seconds
-## Thread count was 2 (of 4 available processors)
-## 
-## Solution count 2: 8 21 
-## Pool objective bound 8
-## 
-## Optimal solution found (tolerance 1.00e-01)
-## Best objective 8.000000000000e+00, best bound 8.000000000000e+00, gap 0.0000%
-```
-
-
-```r
+```{r, fig.height=3.5, fig.width=4.5,fig.align='center', fig.cap="_A prioritisation for the bimodally distributed species generated using amount-based targets (20\\%). See Figure 3 caption for conventions._"}
 # plot the prioritisation and the bimodal species' distribution
 spp.plot(sim_rs_s3_amount, 1, main='Bimodal species')
 ```
 
-<img src="figure/unnamed-chunk-18-1.png" title="_A prioritisation for the bimodally distributed species generated using amount-based targets (20\%). See Figure 3 caption for conventions._" alt="_A prioritisation for the bimodally distributed species generated using amount-based targets (20\%). See Figure 3 caption for conventions._" style="display: block; margin: auto;" />
-
-
-```r
+```{r}
 # show summary
 summary(sim_rs_s3_amount)
-```
 
-```
-##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
-## 1          1 OPTIMAL     8    8              8                220
-##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1               9               197               14
-##   Connectivity_In_Fraction
-## 1               0.04090909
-```
-
-```r
 # show amount held
 amount.held(sim_rs_s3_amount)
-```
 
-```
-##     bimodal
-## 1 0.2018391
-```
-
-```r
 # show space held
 space.held(sim_rs_s3_amount)
-```
-
-```
-##   bimodal (Space 1)
-## 1         0.1200278
 ```
 
 The amount-based prioritisation for the bimodally distributed species only selects planning units in the bottom left corner of the study area. This prioritisation only preserves individuals belonging to one of the two ecotypes. As a consequence, this prioritisation may fail to preserve a representative sample of the genetic variation found inside this species.
@@ -518,316 +314,94 @@ Now that we have generated a prioritisation for each species using only amount-b
 
 First, let's do this for the uniform species.
 
-
-```r
+```{r}
 # make new prioritisation
 sim_rs_s1_space <- update(sim_rs_s1_amount, amount.target=0.2, space.target=0.85, Threads=threads)
 ```
 
-```
-## The rgorubi R package is not installed
-## 
-##  To access multiple solutions from the solution pool,
-## 	follow these instructions to install the "rgurobi" R package from GitHub: 
-## 	http://bit.ly/1RF19XO 
-## 
-## Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
-## Optimize a model with 10102 rows, 10100 columns and 40000 nonzeros
-## Variable types: 0 continuous, 10100 integer (10100 binary)
-## Coefficient statistics:
-##   Matrix range     [5e-01, 8e+01]
-##   Objective range  [1e+00, 1e+00]
-##   Bounds range     [1e+00, 1e+00]
-##   RHS range        [1e+00, 1e+02]
-## Found heuristic solution: objective 90
-## Presolve removed 36 rows and 0 columns
-## Presolve time: 1.68s
-## Presolved: 10066 rows, 10100 columns, 40104 nonzeros
-## Variable types: 0 continuous, 10100 integer (10100 binary)
-## Presolved: 10066 rows, 10100 columns, 40104 nonzeros
-## 
-## Presolve removed 10066 rows and 10100 columns
-## 
-## Root relaxation: objective 2.000000e+01, 572 iterations, 0.06 seconds
-## 
-##     Nodes    |    Current Node    |     Objective Bounds      |     Work
-##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-## 
-## *    0     0               0      20.0000000   20.00000  0.00%     -    1s
-## 
-## Explored 0 nodes (893 simplex iterations) in 1.78 seconds
-## Thread count was 2 (of 4 available processors)
-## 
-## Solution count 2: 20 90 
-## Pool objective bound 20
-## 
-## Optimal solution found (tolerance 1.00e-01)
-## Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%
-```
-
-
-```r
+```{r}
 # show summary
 summary(sim_rs_s1_space)
-```
 
-```
-##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
-## 1          1 OPTIMAL    20   20             20                220
-##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1              11               145               64
-##   Connectivity_In_Fraction
-## 1                     0.05
-```
-
-```r
 # show amount held
 amount.held(sim_rs_s1_space)
-```
 
-```
-##   uniform
-## 1     0.2
-```
-
-```r
 # show space held
 space.held(sim_rs_s1_space)
 ```
 
-```
-##   uniform (Space 1)
-## 1         0.9242424
-```
-
 Let's take a look at the prioritisation for the uniform species with amount-based and space-based targets. Then, let's compare the solutions for the amount-based prioritisation with the new prioritisation using both amount and space targets.
 
-
-```r
+```{r, fig.height=3.5, fig.width=4.5,fig.align='center', fig.cap="_A prioritisation for the uniformly distributed species generated using amount-based targets (20\\%) and space-based targets (85\\%). See Figure 3 caption for conventions._"}
 # plot the prioritisation and the uniform species' distribution
 spp.plot(sim_rs_s1_space, 'uniform', main='Uniform species')
 ```
 
-<img src="figure/unnamed-chunk-22-1.png" title="_A prioritisation for the uniformly distributed species generated using amount-based targets (20\%) and space-based targets (85\%). See Figure 3 caption for conventions._" alt="_A prioritisation for the uniformly distributed species generated using amount-based targets (20\%) and space-based targets (85\%). See Figure 3 caption for conventions._" style="display: block; margin: auto;" />
-
-
-```r
+```{r, fig.height=3.5, fig.width=4.5,fig.align='center', fig.cap="_Difference between two prioritisations for the uniformly distributed species. Prioritisation $X$ was generated using just amount-based targets (20\\%), and prioritisation $Y$ was generated using an additional space-based target (85\\%)._"}
 # plot the difference between old and new prioritisations
 plot(sim_rs_s1_amount, sim_rs_s1_space, 1, 1, main='Difference between solutions')
 ```
-
-<img src="figure/unnamed-chunk-23-1.png" title="_Difference between two prioritisations for the uniformly distributed species. Prioritisation $X$ was generated using just amount-based targets (20\%), and prioritisation $Y$ was generated using an additional space-based target (85\%)._" alt="_Difference between two prioritisations for the uniformly distributed species. Prioritisation $X$ was generated using just amount-based targets (20\%), and prioritisation $Y$ was generated using an additional space-based target (85\%)._" style="display: block; margin: auto;" />
 
 Here we can see that by including a space-target, the prioritisation is spread out evenly across the species' distribution. Unlike the amount-based prioritisation, this prioritisation samples all the different parts of the species' distribution.
 
 Now, let's generate a prioritisation for the normally distributed species that considers amount-based and space-based targets. Then, let's visualise the new prioritisation and compare it to the old amount-based prioritisation.
 
-
-```r
+```{r}
 # make new prioritisation
 sim_rs_s2_space <- update(sim_rs_s2_amount, amount.target=0.2, space.target=0.85, Threads=threads)
 ```
 
-```
-## The rgorubi R package is not installed
-## 
-##  To access multiple solutions from the solution pool,
-## 	follow these instructions to install the "rgurobi" R package from GitHub: 
-## 	http://bit.ly/1RF19XO 
-## 
-## Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
-## Optimize a model with 10102 rows, 10100 columns and 40000 nonzeros
-## Variable types: 0 continuous, 10100 integer (10100 binary)
-## Coefficient statistics:
-##   Matrix range     [7e-02, 4e+01]
-##   Objective range  [1e+00, 1e+00]
-##   Bounds range     [1e+00, 1e+00]
-##   RHS range        [1e+00, 6e+01]
-## Found heuristic solution: objective 90
-## Presolve removed 220 rows and 0 columns
-## Presolve time: 1.15s
-## Presolved: 9882 rows, 10100 columns, 41664 nonzeros
-## Variable types: 0 continuous, 10100 integer (10100 binary)
-## Presolved: 9882 rows, 10100 columns, 41664 nonzeros
-## 
-## Presolve removed 9882 rows and 10100 columns
-## 
-## Root relaxation: objective 1.232570e+01, 4953 iterations, 0.22 seconds
-## 
-##     Nodes    |    Current Node    |     Objective Bounds      |     Work
-##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-## 
-##      0     0   12.32570    0  292   90.00000   12.32570  86.3%     -    1s
-## H    0     0                      13.0000000   12.32570  5.19%     -    1s
-## 
-## Explored 0 nodes (5189 simplex iterations) in 1.46 seconds
-## Thread count was 2 (of 4 available processors)
-## 
-## Solution count 2: 13 90 
-## Pool objective bound 13
-## 
-## Optimal solution found (tolerance 1.00e-01)
-## Best objective 1.300000000000e+01, best bound 1.300000000000e+01, gap 0.0000%
-```
-
-
-```r
+```{r}
 # show summary
 summary(sim_rs_s2_space)
-```
 
-```
-##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
-## 1          1 OPTIMAL    13   13             13                220
-##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1               6               174               40
-##   Connectivity_In_Fraction
-## 1               0.02727273
-```
-
-```r
 # show amount held
 amount.held(sim_rs_s2_space)
-```
 
-```
-##      normal
-## 1 0.2042594
-```
-
-```r
 # show space held
 space.held(sim_rs_s2_space)
 ```
 
-```
-##   normal (Space 1)
-## 1         0.854256
-```
+```{r, fig.height=3.5, fig.width=4.5,fig.align='center', fig.cap="_A prioritisation for the normally distributed species generated using amount-based targets (20\\%) and space-based targets (85\\%). See Figure 3 caption for conventions._"}
 
-
-```r
 # plot the prioritisation and the normal species' distribution
 spp.plot(sim_rs_s2_space, 'normal', main='Normal species')
 ```
 
-<img src="figure/unnamed-chunk-26-1.png" title="_A prioritisation for the normally distributed species generated using amount-based targets (20\%) and space-based targets (85\%). See Figure 3 caption for conventions._" alt="_A prioritisation for the normally distributed species generated using amount-based targets (20\%) and space-based targets (85\%). See Figure 3 caption for conventions._" style="display: block; margin: auto;" />
-
-
-```r
+```{r, fig.height=3.5, fig.width=4.5,fig.align='center', fig.cap="_Difference between two prioritisations for the normally distributed species. See Figure 7 caption for conventions._"}
 # plot the difference between old and new prioritisations
 plot(sim_rs_s2_amount, sim_rs_s2_space, 1, 1, main='Difference between solutions')
 ```
-
-<img src="figure/unnamed-chunk-27-1.png" title="_Difference between two prioritisations for the normally distributed species. See Figure 7 caption for conventions._" alt="_Difference between two prioritisations for the normally distributed species. See Figure 7 caption for conventions._" style="display: block; margin: auto;" />
 
 We can see by using both amount-based and space-based targets we can obtain a prioritisation that secures both the species' range core and parts of its range margin. As a consequence, it may capture any novel adaptations found along the species' range margin--unlike the amount-based prioritisation.
 
 Finally, let's generate a prioritisation for the bimodal species using amount-based and space-based targets.
 
-
-```r
+```{r}
 # make new prioritisation
 sim_rs_s3_space <- update(sim_rs_s3_amount, amount.target=0.2, space.target=0.85, Threads=threads)
 ```
 
-```
-## The rgorubi R package is not installed
-## 
-##  To access multiple solutions from the solution pool,
-## 	follow these instructions to install the "rgurobi" R package from GitHub: 
-## 	http://bit.ly/1RF19XO 
-## 
-## Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
-## Optimize a model with 10102 rows, 10100 columns and 40000 nonzeros
-## Variable types: 0 continuous, 10100 integer (10100 binary)
-## Coefficient statistics:
-##   Matrix range     [7e-03, 9e+01]
-##   Objective range  [1e+00, 1e+00]
-##   Bounds range     [1e+00, 1e+00]
-##   RHS range        [1e+00, 7e+01]
-## Found heuristic solution: objective 85
-## Presolve removed 589 rows and 15 columns
-## Presolve time: 2.25s
-## Presolved: 9513 rows, 10085 columns, 51461 nonzeros
-## Variable types: 0 continuous, 10085 integer (10085 binary)
-## Presolved: 9513 rows, 10085 columns, 51461 nonzeros
-## 
-## Presolve removed 9513 rows and 10085 columns
-## 
-## Root relaxation: objective 8.980792e+00, 5356 iterations, 0.24 seconds
-## 
-##     Nodes    |    Current Node    |     Objective Bounds      |     Work
-##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-## 
-##      0     0    8.98079    0   75   85.00000    8.98079  89.4%     -    2s
-## H    0     0                      10.0000000    8.98079  10.2%     -    2s
-##      0     0    8.99662    0  125   10.00000    8.99662  10.0%     -    2s
-## 
-## Cutting planes:
-##   Gomory: 1
-##   Zero half: 1
-## 
-## Explored 0 nodes (5695 simplex iterations) in 2.76 seconds
-## Thread count was 2 (of 4 available processors)
-## 
-## Solution count 2: 10 85 
-## Pool objective bound 10
-## 
-## Optimal solution found (tolerance 1.00e-01)
-## Best objective 1.000000000000e+01, best bound 1.000000000000e+01, gap 0.0000%
-```
-
-
-```r
+```{r}
 # show summary
 summary(sim_rs_s3_space)
-```
 
-```
-##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
-## 1          1 OPTIMAL    10   10             10                220
-##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1               7               187               26
-##   Connectivity_In_Fraction
-## 1               0.03181818
-```
-
-```r
 # show amount held
 amount.held(sim_rs_s3_space)
-```
 
-```
-##     bimodal
-## 1 0.2226414
-```
-
-```r
 # show space held
 space.held(sim_rs_s3_space)
 ```
 
-```
-##   bimodal (Space 1)
-## 1         0.8562891
-```
-
-
-```r
+```{r, fig.height=3.5, fig.width=4.5,fig.align='center', fig.cap="_A prioritisation for the normally distributed species generated using amount-based targets (20\\%) and space-based targets (85\\%). See Figure 3 caption for conventions._"}
 # plot the prioritisation and the bimodal species' distribution
 spp.plot(sim_rs_s3_space, 'bimodal', main='Bimodal species')
 ```
 
-<img src="figure/unnamed-chunk-30-1.png" title="_A prioritisation for the normally distributed species generated using amount-based targets (20\%) and space-based targets (85\%). See Figure 3 caption for conventions._" alt="_A prioritisation for the normally distributed species generated using amount-based targets (20\%) and space-based targets (85\%). See Figure 3 caption for conventions._" style="display: block; margin: auto;" />
-
-
-```r
+```{r, fig.height=3.5, fig.width=4.5,fig.align='center', fig.cap="_Difference between two prioritisations for the bimodally distributed species. See Figure 7 caption for conventions._"}
 # plot the difference between old and new prioritisations
 plot(sim_rs_s3_amount, sim_rs_s3_space, 1, 1, main='Difference between solutions')
 ```
-
-<img src="figure/unnamed-chunk-31-1.png" title="_Difference between two prioritisations for the bimodally distributed species. See Figure 7 caption for conventions._" alt="_Difference between two prioritisations for the bimodally distributed species. See Figure 7 caption for conventions._" style="display: block; margin: auto;" />
 
 Earlier we found that the amount-based prioritisation only preserved individuals from a single ecotype, and would have failed to adequately preserve the intra-specific variation for this species. However, here we can see that by including space-based targets, we can develop prioritisations that secure individuals belonging to both ecotypes. This new prioritisation is much more effective at sampling the intra-specific variation for this species.
 
@@ -839,8 +413,7 @@ Overall, these results demonstrate that under the simplest of conditions, the us
 
 So far we have generated prioritisations using only a single species at a time. However, real world prioritisations are often generated using multiple species to ensure that they preserve a comprehensive set of biodiversity. Here, we will generate multi-species prioritisations that preserve all three of the simulated species. First, we will generate a prioritisation using amount-based targets that only aims to preserve 20% of the area they occupy. Then, we will generate a prioritisation that also incoperate space-based targets to also preserve 85% of their geographic distribution. We will then compare the two prioritisations.
 
-
-```r
+```{r}
 # make prioritisations
 sim_mrs_amount <- update(
 	sim_ru,
@@ -848,49 +421,7 @@ sim_mrs_amount <- update(
 	space.target=c(0,0,0),
 	Threads=threads
 )
-```
 
-```
-## The rgorubi R package is not installed
-## 
-##  To access multiple solutions from the solution pool,
-## 	follow these instructions to install the "rgurobi" R package from GitHub: 
-## 	http://bit.ly/1RF19XO 
-## 
-## Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
-## Optimize a model with 30306 rows, 30100 columns and 120000 nonzeros
-## Variable types: 0 continuous, 30100 integer (30100 binary)
-## Coefficient statistics:
-##   Matrix range     [7e-03, 9e+01]
-##   Objective range  [1e+00, 1e+00]
-##   Bounds range     [1e+00, 1e+00]
-##   RHS range        [1e+00, 8e+02]
-## Found heuristic solution: objective 96
-## Presolve time: 1.13s
-## Presolved: 30306 rows, 30100 columns, 120000 nonzeros
-## Variable types: 0 continuous, 30100 integer (30100 binary)
-## Presolved: 30306 rows, 30100 columns, 120000 nonzeros
-## 
-## Presolve removed 30306 rows and 30100 columns
-## 
-## Root relaxation: objective 2.000000e+01, 2719 iterations, 0.93 seconds
-## 
-##     Nodes    |    Current Node    |     Objective Bounds      |     Work
-##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-## 
-## *    0     0               0      20.0000000   20.00000  0.00%     -    2s
-## 
-## Explored 0 nodes (5125 simplex iterations) in 2.30 seconds
-## Thread count was 2 (of 4 available processors)
-## 
-## Solution count 2: 20 96 
-## Pool objective bound 20
-## 
-## Optimal solution found (tolerance 1.00e-01)
-## Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%
-```
-
-```r
 sim_mrs_space <- update(
 	sim_ru,
 	amount.target=c(0.2,0.2,0.2),
@@ -899,147 +430,36 @@ sim_mrs_space <- update(
 )
 ```
 
-```
-## The rgorubi R package is not installed
-## 
-##  To access multiple solutions from the solution pool,
-## 	follow these instructions to install the "rgurobi" R package from GitHub: 
-## 	http://bit.ly/1RF19XO 
-## 
-## Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
-## Optimize a model with 30306 rows, 30100 columns and 120000 nonzeros
-## Variable types: 0 continuous, 30100 integer (30100 binary)
-## Coefficient statistics:
-##   Matrix range     [7e-03, 9e+01]
-##   Objective range  [1e+00, 1e+00]
-##   Bounds range     [1e+00, 1e+00]
-##   RHS range        [1e+00, 1e+02]
-## Found heuristic solution: objective 100
-## Presolve removed 360 rows and 15 columns (presolve time = 5s) ...
-## Presolve removed 360 rows and 15 columns
-## Presolve time: 5.64s
-## Presolved: 29946 rows, 30085 columns, 131504 nonzeros
-## Variable types: 0 continuous, 30085 integer (30085 binary)
-## Presolve removed 67 rows and 1 columns
-## Presolved: 29879 rows, 30084 columns, 127194 nonzeros
-## 
-## Presolve removed 29879 rows and 30084 columns
-## 
-## Root simplex log...
-## 
-## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    1.0000000e+02   0.000000e+00   1.000000e+02      6s
-##     4726    2.0000000e+01   0.000000e+00   0.000000e+00      7s
-##     4726    2.0000000e+01   0.000000e+00   0.000000e+00      7s
-## 
-## Root relaxation: objective 2.000000e+01, 4726 iterations, 1.39 seconds
-## 
-##     Nodes    |    Current Node    |     Objective Bounds      |     Work
-##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-## 
-## *    0     0               0      20.0000000   20.00000  0.00%     -    7s
-## 
-## Explored 0 nodes (9650 simplex iterations) in 7.41 seconds
-## Thread count was 2 (of 4 available processors)
-## 
-## Solution count 2: 20 100 
-## Pool objective bound 20
-## 
-## Optimal solution found (tolerance 1.00e-01)
-## Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%
-```
-
-
-```r
+```{r}
 # show summaries
 summary(sim_mrs_amount)
-```
-
-```
-##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
-## 1          1 OPTIMAL    20   20             20                220
-##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1               9               143               68
-##   Connectivity_In_Fraction
-## 1               0.04090909
-```
-
-```r
 summary(sim_mrs_space)
-```
 
-```
-##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
-## 1          1 OPTIMAL    20   20             20                220
-##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1              11               142               67
-##   Connectivity_In_Fraction
-## 1                     0.05
-```
-
-```r
 # show amount held for each prioritisation
 amount.held(sim_mrs_amount)
-```
-
-```
-##   uniform    normal   bimodal
-## 1     0.2 0.2069044 0.2178603
-```
-
-```r
 amount.held(sim_mrs_space)
-```
 
-```
-##   uniform    normal   bimodal
-## 1     0.2 0.2015029 0.2320761
-```
-
-```r
 # show space held for each prioritisation
 space.held(sim_mrs_amount)
-```
-
-```
-##   uniform (Space 1) normal (Space 1) bimodal (Space 1)
-## 1         0.9090909        0.8634637         0.8923004
-```
-
-```r
 space.held(sim_mrs_space)
 ```
 
-```
-##   uniform (Space 1) normal (Space 1) bimodal (Space 1)
-## 1         0.9254545        0.8992425         0.9318096
-```
-
-
-```r
+```{r, fig.height=3.5, fig.width=4.5,fig.align='center', fig.cap="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using just amount-based targets (20\\%). Squares represent planning units. Dark green planning units are selected for preservation._"}
 # plot multi-species prioritisation with amount-based targets
 plot(sim_mrs_amount, 1, main='Amount-based targets')
 ```
 
-<img src="figure/unnamed-chunk-34-1.png" title="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using just amount-based targets (20\%). Squares represent planning units. Dark green planning units are selected for preservation._" alt="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using just amount-based targets (20\%). Squares represent planning units. Dark green planning units are selected for preservation._" style="display: block; margin: auto;" />
-
-
-```r
+```{r, fig.height=3.5, fig.width=4.5,fig.align='center', fig.cap="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\\%) and space-based targets (85\\%). See Figure 12 caption for conventions._"}
 # plot multi-species prioritisation with amount- and space-based targets
 plot(sim_mrs_space, 1, main='Amount and space-based targets')
 ```
 
-<img src="figure/unnamed-chunk-35-1.png" title="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\%) and space-based targets (85\%). See Figure 12 caption for conventions._" alt="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\%) and space-based targets (85\%). See Figure 12 caption for conventions._" style="display: block; margin: auto;" />
-
-
-```r
+```{r, fig.height=3.5, fig.width=4.5,fig.align='center', fig.cap="_Difference between two multi-species prioritisations. See Figure 7 caption for conventions.)"}
 # difference between the two prioritisations
 plot(sim_mrs_amount, sim_mrs_space, 1, 1, main='Difference between solutions')
 ```
 
-<img src="figure/unnamed-chunk-36-1.png" title="_Difference between two multi-species prioritisations. See Figure 7 caption for conventions.)" alt="_Difference between two multi-species prioritisations. See Figure 7 caption for conventions.)" style="display: block; margin: auto;" />
-
-Here we can see that the inclusion of space-based targets changes which planning units are selected for prioritisation, but also the number of planning units that are selected. The amount-based prioritisation is comprised of 20 units, and the space-based prioritisation is comprised of 20 units. This result suggests that an adequate and representative prioritisation can be achieved for only a minor increase in cost.
+Here we can see that the inclusion of space-based targets changes which planning units are selected for prioritisation, but also the number of planning units that are selected. The amount-based prioritisation is comprised of `r sum(selections(sim_mrs_amount)==1)` units, and the space-based prioritisation is comprised of `r sum(selections(sim_mrs_space)==1)` units. This result suggests that an adequate and representative prioritisation can be achieved for only a minor increase in cost.
 
 ### Uncertainty in species' distributions
 
@@ -1047,8 +467,7 @@ The unreliable formulation does not consider the probability that the planning u
 
 A simple solution to this issue would be to ensure that planning units cannot be assigned to demand points if they have a low probability of occupancy. This can be achieved by setting a probability threshold for planning units, such that planning units with a probability of occupancy below the threshold are effectively set to zero.
 
-
-```r
+```{r}
 # make new prioritisation with probability threshold of 0.1 for each species
 sim_mrs_space2 <- solve(
 	prob.subset(
@@ -1060,129 +479,31 @@ sim_mrs_space2 <- solve(
 )
 ```
 
-```
-## The rgorubi R package is not installed
-## 
-##  To access multiple solutions from the solution pool,
-## 	follow these instructions to install the "rgurobi" R package from GitHub: 
-## 	http://bit.ly/1RF19XO 
-## 
-## Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
-## Optimize a model with 30306 rows, 30100 columns and 119974 nonzeros
-## Variable types: 0 continuous, 30100 integer (30100 binary)
-## Coefficient statistics:
-##   Matrix range     [7e-03, 9e+01]
-##   Objective range  [1e+00, 1e+00]
-##   Bounds range     [1e+00, 1e+00]
-##   RHS range        [1e+00, 1e+02]
-## Found heuristic solution: objective 100
-## Presolve removed 360 rows and 15 columns (presolve time = 5s) ...
-## Presolve removed 360 rows and 15 columns
-## Presolve time: 5.27s
-## Presolved: 29946 rows, 30085 columns, 131478 nonzeros
-## Variable types: 0 continuous, 30085 integer (30085 binary)
-## Presolve removed 67 rows and 1 columns
-## Presolved: 29879 rows, 30084 columns, 127168 nonzeros
-## 
-## Presolve removed 29879 rows and 30084 columns
-## 
-## Root simplex log...
-## 
-## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    1.0000000e+02   0.000000e+00   1.000000e+02      6s
-##     5018    2.0000000e+01   0.000000e+00   0.000000e+00      7s
-##     5018    2.0000000e+01   0.000000e+00   0.000000e+00      7s
-## 
-## Root relaxation: objective 2.000000e+01, 5018 iterations, 1.34 seconds
-## 
-##     Nodes    |    Current Node    |     Objective Bounds      |     Work
-##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-## 
-##      0     0   20.00000    0  150  100.00000   20.00000  80.0%     -    7s
-## H    0     0                      21.0000000   20.00000  4.76%     -    7s
-## 
-## Explored 0 nodes (11324 simplex iterations) in 7.40 seconds
-## Thread count was 2 (of 4 available processors)
-## 
-## Solution count 2: 21 100 
-## Pool objective bound 20
-## 
-## Optimal solution found (tolerance 1.00e-01)
-## Best objective 2.100000000000e+01, best bound 2.000000000000e+01, gap 4.7619%
-```
-
-
-```r
+```{r}
 # show summary
 summary(sim_mrs_space2)
 ```
 
-```
-##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
-## 1          1 OPTIMAL    21   21             21                220
-##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1               9               141               70
-##   Connectivity_In_Fraction
-## 1               0.04090909
-```
-
-
-```r
+```{r, fig.height=3.5, fig.width=4.5,fig.align='center', fig.cap="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\\%) and space-based targets (85\\%). This priorititisation was generated to be robust against low occupancy probabilities, by preventing planning units with low probabilities from being used to represent demand points. See Figure 12 caption for conventions._"}
 # plot prioritisation
 plot(sim_mrs_space2, 1)
 ```
 
-<img src="figure/unnamed-chunk-39-1.png" title="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\%) and space-based targets (85\%). This priorititisation was generated to be robust against low occupancy probabilities, by preventing planning units with low probabilities from being used to represent demand points. See Figure 12 caption for conventions._" alt="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\%) and space-based targets (85\%). This priorititisation was generated to be robust against low occupancy probabilities, by preventing planning units with low probabilities from being used to represent demand points. See Figure 12 caption for conventions._" style="display: block; margin: auto;" />
-
-
-```r
+```{r, fig.height=3.5, fig.width=4.5,fig.align='center', fig.cap="_Difference between two multi-species prioritisations. See Figure 7 caption for conventions._"}
 # difference between prioritisations that use and do not use thresholds
 plot(sim_mrs_space2, sim_mrs_space, 1, 1, main='Difference between solutions')
 ```
 
-<img src="figure/unnamed-chunk-40-1.png" title="_Difference between two multi-species prioritisations. See Figure 7 caption for conventions._" alt="_Difference between two multi-species prioritisations. See Figure 7 caption for conventions._" style="display: block; margin: auto;" />
-
 But this method requires setting somewhat arbitrary thresholds. A more robust solution to this issue is to actually use the probability that species occupy planning units to generate the prioritisations. This is what the reliable formulation does. First we will try and generate a solution using existing targets and the reliable formulation. To reduce computational time, we will set the maximum backup $R$-level to 1.
 
-
-```r
+```{r}
 # make new prioritisation using reliable formulation
 sim_mrs_space3 <- try(update(sim_mrs_space, formulation='reliable', max.r.level=1L, Threads=threads))
 ```
 
-```
-## The rgorubi R package is not installed
-## 
-##  To access multiple solutions from the solution pool,
-## 	follow these instructions to install the "rgurobi" R package from GitHub: 
-## 	http://bit.ly/1RF19XO 
-## 
-## Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
-## Optimize a model with 364206 rows, 181900 columns and 3847200 nonzeros
-## Variable types: 0 continuous, 60700 integer (60700 binary)
-## Semi-Variable types: 121200 continuous, 0 integer
-## Coefficient statistics:
-##   Matrix range     [8e-04, 1e+02]
-##   Objective range  [1e+00, 1e+00]
-##   Bounds range     [1e+00, 1e+00]
-##   RHS range        [7e-03, 1e+02]
-## Presolve removed 338606 rows and 156703 columns
-## Presolve time: 2.95s
-## 
-## Explored 0 nodes (0 simplex iterations) in 4.35 seconds
-## Thread count was 1 (of 4 available processors)
-## 
-## Solution count 0
-## Pool objective bound 1e+100
-## 
-## Model is infeasible
-## Best objective -, best bound -, gap -
-```
-
 However, this fails. The reason why we cannot generate a prioritisation that fulfills these targets is because even the solution that contains all the planning units is still insufficient when we consider probabilities. The negative maximum targets printed in the error message indicate that planning units have low probabilities of occupancy. To fulfill the targets, we must obtain more planning units with higher probabilities of occupancy. We also could attempt resolving the problem using a higher $R$-level. Instead, we will set lower targets and generate solution.
 
-
-```r
+```{r}
 # make new prioritisation using reliable formulation and reduced targets
 sim_mrs_space3 <- update(
 	sim_mrs_space,
@@ -1193,93 +514,22 @@ sim_mrs_space3 <- update(
 )
 ```
 
-```
-## The rgorubi R package is not installed
-## 
-##  To access multiple solutions from the solution pool,
-## 	follow these instructions to install the "rgurobi" R package from GitHub: 
-## 	http://bit.ly/1RF19XO 
-## 
-## Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
-## Optimize a model with 364206 rows, 181900 columns and 3847200 nonzeros
-## Variable types: 0 continuous, 60700 integer (60700 binary)
-## Semi-Variable types: 121200 continuous, 0 integer
-## Coefficient statistics:
-##   Matrix range     [8e-04, 1e+02]
-##   Objective range  [1e+00, 1e+00]
-##   Bounds range     [1e+00, 1e+00]
-##   RHS range        [7e-03, 8e+05]
-## Presolve removed 333903 rows and 151800 columns (presolve time = 5s) ...
-## Presolve removed 333903 rows and 151800 columns
-## Presolve time: 5.91s
-## Presolved: 30303 rows, 30100 columns, 90300 nonzeros
-## Variable types: 0 continuous, 30100 integer (30100 binary)
-## Found heuristic solution: objective 27.0000000
-## Presolved: 30303 rows, 30100 columns, 90300 nonzeros
-## 
-## Presolve removed 30303 rows and 30100 columns
-## 
-## Root simplex log...
-## 
-## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    1.0000000e+02   0.000000e+00   1.000000e+02      8s
-##      129    2.0000000e+01   0.000000e+00   0.000000e+00      8s
-##      129    2.0000000e+01   0.000000e+00   0.000000e+00      8s
-## 
-## Root relaxation: objective 2.000000e+01, 129 iterations, 0.29 seconds
-## 
-##     Nodes    |    Current Node    |     Objective Bounds      |     Work
-##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-## 
-## *    0     0               0      20.0000000   20.00000  0.00%     -    7s
-## 
-## Explored 0 nodes (182 simplex iterations) in 7.72 seconds
-## Thread count was 2 (of 4 available processors)
-## 
-## Solution count 2: 20 27 
-## Pool objective bound 20
-## 
-## Optimal solution found (tolerance 1.00e-01)
-## Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%
-```
-
-```
-## Warning in validityMethod(object): object@space.held contains values less
-## than 0, some species are really poorly represented
-```
-
-
-```r
+```{r}
 # show summary
 summary(sim_mrs_space3)
 ```
 
-```
-##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
-## 1          1 OPTIMAL    20   20             20                220
-##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1              20               156               44
-##   Connectivity_In_Fraction
-## 1               0.09090909
-```
-
-
-```r
+```{r, fig.height=3.5, fig.width=4.5,fig.align='center', fig.cap="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\\%) and space-based targets (85\\%). This priorititisation was generated to be robust against low occupancy probabilities, by explicitly using the probability of occupancy data when deriving a solution. See Figure 12 caption for conventions._"}
 # plot prioritisation
 plot(sim_mrs_space3, 1)
 ```
 
-<img src="figure/unnamed-chunk-44-1.png" title="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\%) and space-based targets (85\%). This priorititisation was generated to be robust against low occupancy probabilities, by explicitly using the probability of occupancy data when deriving a solution. See Figure 12 caption for conventions._" alt="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\%) and space-based targets (85\%). This priorititisation was generated to be robust against low occupancy probabilities, by explicitly using the probability of occupancy data when deriving a solution. See Figure 12 caption for conventions._" style="display: block; margin: auto;" />
-
-
-```r
+```{r, fig.height=3.5, fig.width=4.5,fig.align='center', fig.cap="_Difference between two multi-species prioritisations. See Figure 7 caption for conventions._"}
 # difference between prioritisations based on unreliable and reliable formulation
 plot(sim_mrs_space3, sim_mrs_space, 1, 1, main='Difference between solutions')
 ```
 
-<img src="figure/unnamed-chunk-45-1.png" title="_Difference between two multi-species prioritisations. See Figure 7 caption for conventions._" alt="_Difference between two multi-species prioritisations. See Figure 7 caption for conventions._" style="display: block; margin: auto;" />
-
-An additional planning unit was selected using the reliable formulation. The prioritisation based on the unreliable formulation had 20 planning units, but the prioritisation based on the reliable formlation has 20 planning units. This difference occurs because the reliable formulation needs to ensure that all selected planning units with a low chance of being occupied have a suitable backup planning unit. While the reliable formulation can deliver more robust prioritisations, it takes much longer to solve conservation planning problems expressed using this formulation than the unreliable formulation. As a consequence, the reliable formulation is only feasible for particularly small problems, such as those involving few features and less than several hundred planning units. 
+An additional planning unit was selected using the reliable formulation. The prioritisation based on the unreliable formulation had `r sum(selections(sim_mrs_space)==1)` planning units, but the prioritisation based on the reliable formlation has `r sum(selections(sim_mrs_space3)==1)` planning units. This difference occurs because the reliable formulation needs to ensure that all selected planning units with a low chance of being occupied have a suitable backup planning unit. While the reliable formulation can deliver more robust prioritisations, it takes much longer to solve conservation planning problems expressed using this formulation than the unreliable formulation. As a consequence, the reliable formulation is only feasible for particularly small problems, such as those involving few features and less than several hundred planning units. 
 
 ### Fragmentation
 
@@ -1287,132 +537,32 @@ Fragmentation is an important consideration in real-world planning situations. U
 
 Let's generate a new prioritisation that heavily penalises fragmentation. Here, we will update the `sim_mrs_amount` object with `BLM` of 100.
 
-
-```r
+```{r}
 # update prioritisation
 sim_mrs_amount_blm <- update(sim_mrs_amount, BLM=100, Threads=threads)
 ```
 
-```
-## The rgorubi R package is not installed
-## 
-##  To access multiple solutions from the solution pool,
-## 	follow these instructions to install the "rgurobi" R package from GitHub: 
-## 	http://bit.ly/1RF19XO 
-## 
-## Warning for adding variables: zero or small (< 1e-13) coefficients, ignored
-## Optimize a model with 30666 rows, 30280 columns and 120720 nonzeros
-## Variable types: 0 continuous, 30280 integer (30280 binary)
-## Coefficient statistics:
-##   Matrix range     [7e-03, 9e+01]
-##   Objective range  [1e+02, 4e+02]
-##   Bounds range     [1e+00, 1e+00]
-##   RHS range        [1e+00, 8e+02]
-## Found heuristic solution: objective 4596
-## Presolve time: 1.20s
-## Presolved: 30666 rows, 30280 columns, 120720 nonzeros
-## Variable types: 0 continuous, 30280 integer (30280 binary)
-## Presolved: 30666 rows, 30280 columns, 120720 nonzeros
-## 
-## Presolve removed 30666 rows and 30280 columns
-## 
-## Root relaxation: objective 4.644444e+02, 4592 iterations, 1.61 seconds
-## 
-##     Nodes    |    Current Node    |     Objective Bounds      |     Work
-##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-## 
-##      0     0  464.44444    0 1725 4596.00000  464.44444  89.9%     -    2s
-## H    0     0                    1621.0000000  464.44444  71.3%     -   10s
-##      0     0  539.75309    0 1722 1621.00000  539.75309  66.7%     -   10s
-##      0     0  539.75309    0 1722 1621.00000  539.75309  66.7%     -   11s
-##      0     0  590.00000    0 1403 1621.00000  590.00000  63.6%     -   11s
-##      0     0  590.00000    0 1409 1621.00000  590.00000  63.6%     -   13s
-##      0     0  590.00000    0 1665 1621.00000  590.00000  63.6%     -   16s
-##      0     0  590.00000    0 1665 1621.00000  590.00000  63.6%     -   16s
-##      0     2  590.00000    0 1665 1621.00000  590.00000  63.6%     -   18s
-##     14    15  700.47673    8 1188 1621.00000  606.47215  62.6%  1186   20s
-## H   19    20                    1439.0000000  606.47215  57.9%  1122   21s
-## H   23    24                    1336.0000000  606.47215  54.6%  1217   21s
-## H   27    28                    1333.0000000  606.47215  54.5%  1218   22s
-## H   30    29                    1232.0000000  606.47215  50.8%  1184   22s
-## H   42    32                     920.0000000  606.47215  34.1%  1115   23s
-##     69    46  750.43478   13  959  920.00000  619.92308  32.6%   923   25s
-##    164    80  822.63158    5 1373  920.00000  659.11777  28.4%   739   30s
-##    225    92  870.00000    6 1203  920.00000  680.00000  26.1%   711   36s
-##    301   114  793.64909    6 1535  920.00000  704.61538  23.4%   648   40s
-##    427   152  840.96536    7 1409  920.00000  727.92079  20.9%   588   45s
-##    525   167  908.85714   13  840  920.00000  738.53035  19.7%   560   50s
-##    617   185  900.00000   11 1224  920.00000  753.33333  18.1%   540   55s
-##    725   204  908.13559   11 1315  920.00000  770.17361  16.3%   542   60s
-##    841   215     cutoff   10       920.00000  785.74173  14.6%   519   67s
-##    892   220  889.56522    5 1252  920.00000  799.30556  13.1%   516   70s
-##   1021   204  914.11765   14  999  920.00000  810.90909  11.9%   502   76s
-##   1106   213     cutoff   17       920.00000  820.00000  10.9%   500   80s
-## 
-## Cutting planes:
-##   Gomory: 2
-##   Zero half: 414
-## 
-## Explored 1237 nodes (626040 simplex iterations) in 84.49 seconds
-## Thread count was 2 (of 4 available processors)
-## 
-## Solution count 7: 920 1232 1333 ... 4596
-## Pool objective bound 834
-## 
-## Optimal solution found (tolerance 1.00e-01)
-## Best objective 9.200000000000e+02, best bound 8.340000000000e+02, gap 9.3478%
-```
-
-
-```r
+```{r}
 # show summary of prioritisation
 summary(sim_mrs_amount_blm)
-```
 
-```
-##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
-## 1          1 OPTIMAL   920   20             20                220
-##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1              36               171               13
-##   Connectivity_In_Fraction
-## 1                0.1636364
-```
-
-```r
 # show amount held for each prioritisation
 amount.held(sim_mrs_amount_blm)
-```
 
-```
-##   uniform    normal   bimodal
-## 1     0.2 0.2122704 0.3911267
-```
-
-```r
 # show space held for each prioritisation
 space.held(sim_mrs_amount_blm)
 ```
 
-```
-##   uniform (Space 1) normal (Space 1) bimodal (Space 1)
-## 1         0.2606061        0.1936169         0.4077173
-```
+```{r, fig.height=3.5, fig.width=4.5,fig.align='center', fig.cap="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using only amount-based targets (20\\%). Additionally, this priorititisation was specified to have high connectivity, by using a high $BLM$ parameter. See Figure 12 caption for conventions._"}
 
-
-```r
 # plot prioritisation
 plot(sim_mrs_amount_blm, 1)
 ```
 
-<img src="figure/unnamed-chunk-48-1.png" title="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using only amount-based targets (20\%). Additionally, this priorititisation was specified to have high connectivity, by using a high $BLM$ parameter. See Figure 12 caption for conventions._" alt="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using only amount-based targets (20\%). Additionally, this priorititisation was specified to have high connectivity, by using a high $BLM$ parameter. See Figure 12 caption for conventions._" style="display: block; margin: auto;" />
-
-
-```r
+```{r, fig.height=3.5, fig.width=4.5,fig.align='center', fig.cap="_Difference between two multi-species prioritisations. See Figure 7 caption for conventions._"}
 # difference between the two prioritisations
 plot(sim_mrs_amount_blm, sim_mrs_amount, 1, 1, main='Difference between solutions')
 ```
-
-<img src="figure/unnamed-chunk-49-1.png" title="_Difference between two multi-species prioritisations. See Figure 7 caption for conventions._" alt="_Difference between two multi-species prioritisations. See Figure 7 caption for conventions._" style="display: block; margin: auto;" />
 
 Here we can see that the prioritisation generated using a `BLM` parameter of 100 is much more clustered than the prioritisation generated using a `BLM` of 0. In practice, conservation planners will need to try a variety of `BLM` parameters to find a suitable prioritisation.
 
@@ -1426,8 +576,7 @@ Here we will investigate how space-based targets can affect prioritisations usin
 
 Survey data for the species were obtained from [BirdLife Australia](http://birdlife.org.au/projects/atlas-and-birdata). The survey data was rarefied using a 100 km$^2$ grid, wherein the survey with the greatest number of repeat visits in each grid cell was chosen. To model the distribution of each species, environmental data were obtained at survey location (site). Specifically, [climatic data](http://www.worldclim.org/bioclim) (bio1, bio4, bio15, bio16, bio17) and [classifications of the vegetation at the site](http://www.environment.gov.au/fed/catalog/search/resource/details.page?uuid=%7BEBBCC6FA-8C13-422A-BCD7-24A9F8B52A9A%7D) were used. Occupancy-detection models were fit using Stan using manually tuned parameters (adapt deta=0.9, maximum treedepth=20, chains=4 , warmup iterations=1000, total iterations=1500) with five-fold cross-validation. In each replicate, data were partitioned into training and test sites. A full model was fit using quadratic terms for environmental variables in the site-component, and an intercept in the detection-component of the model. The full model was then subject to a step-wise backwards term deletion routine. Terms were retained when their inclusion resulted in a model with a greater area under the curve (AUC) value as calculated using the test data. Maps were generated for each species as an average of the predictions from the best model in each best replicate. To further improve the accuracy of these maps, areas well outside of the species' known distributions were set to 0. For each species, this was achieved by masking out [biogeographic regions](https://www.environment.gov.au/land/nrs/science/ibra) where the species was not observed, and regions that did not have a neighbouring planning unit where the species was observed. The maps were then resampled (10 km$^2$ resolution) and cropped to the study area. The resulting maps are stored in the `cs_spp` object. 
 
-
-```r
+```{r, fig.height=4, fig.width=5,fig.align='center', fig.cap="_Distribution map for four Australian bird species. Pixel colours denote probability of occupancy._"}
 # load data
 data(cs_spp)
 
@@ -1441,12 +590,9 @@ plot(cs_spp, main=c(
 ))
 ```
 
-<img src="figure/unnamed-chunk-50-1.png" title="_Distribution map for four Australian bird species. Pixel colours denote probability of occupancy._" alt="_Distribution map for four Australian bird species. Pixel colours denote probability of occupancy._" style="display: block; margin: auto;" />
-
 Planning units (50km$^2$ resolution) were generated across Australia, and then clipped to the [Queensland state borders and coastline](http://www.abs.gov.au/ausstats/abs@.nsf/mf/1259.0.30.001?OpenDocument). **Note that we are using excessively coarse planning units so that our examples will complete relatively quickly. In a real-world planning exercise, we would use much finer planning units.** To compare our prioritisations to [Queensland's existing protected area network](http://www.protectedplanet.net/country/AU), this network was intersected with the planning units. Planning units with more than 50% of their area inside a protected area had their status set to 2 ([following conventions in _Marxan_](http://marxan.net/downloads/uq_marxan_web_2/module4.html)). Since we do not have cost data, the prioritisations will aim to select the minimum number of planning units required to meet the targets. The planning units are stored in the `cs_pu` object.
 
-
-```r
+```{r, fig.height=3.5, fig.width=4.5, fig.align='center', fig.cap="_Planning units for the case-study examples. Polygons denote planning units. Yellow units have more than 50\\% of their area already in a reserve.)"}
 # load data
 data(cs_pus)
 
@@ -1470,19 +616,14 @@ PBSmapping::plotPolys(
 	main='Case-study planning units',
 	cex=1.8
 )
-```
 
-<img src="figure/unnamed-chunk-51-1.png" title="_Planning units for the case-study examples. Polygons denote planning units. Yellow units have more than 50\% of their area already in a reserve.)" alt="_Planning units for the case-study examples. Polygons denote planning units. Yellow units have more than 50\% of their area already in a reserve.)" style="display: block; margin: auto;" />
-
-```r
 # reset plotting window
 par(mar=c(5.1, 4.1, 4.1, 2.1))
 ```
 
 To map the distribution of environmental conditions across the species' range, 21 [bioclimatic layers](http://www.worldclim.org/bioclim) were obtained. These layers were cropped to Australia and subject to [detrended correspondence analysis](http://cc.oulu.fi/~jarioksa/softhelp/vegan/html/decorana.html) to produce two new variables. These layers are stored in the `cs_space` object.
 
-
-```r
+```{r, fig.height=2.5, fig.width=7, fig.align='center', fig.cap="_Broad-scale environmental variation across Australia. The variable DC1 describes the transition from wet and cool to dry and hot conditions. The variable DC2 describes the transition from wet and hot to dry and cool conditions._"}
 # load data
 data(cs_space)
 
@@ -1490,14 +631,11 @@ data(cs_space)
 plot(cs_space, main=c('DC1', 'DC2'), legend=FALSE, axes=FALSE)
 ```
 
-<img src="figure/unnamed-chunk-52-1.png" title="_Broad-scale environmental variation across Australia. The variable DC1 describes the transition from wet and cool to dry and hot conditions. The variable DC2 describes the transition from wet and hot to dry and cool conditions._" alt="_Broad-scale environmental variation across Australia. The variable DC1 describes the transition from wet and cool to dry and hot conditions. The variable DC2 describes the transition from wet and hot to dry and cool conditions._" style="display: block; margin: auto;" />
-
 ## Analysis
 
 To simplify the process of formatting data and generating prioritisations, we can use the `rap` function. First, we will generate an amount-based prioritisation that aims to capture 10% of the rosella's range. We will use 50 demand points to map the geographic and environmental spaces. **Be warned, the examples hereafter can take 5-10 minutes to run.**
 
-
-```r
+```{r, message=FALSE}
 # make amount-based prioritisation
 # and ignore existing protected areas by discarding values in the 
 # status (third) column of the attribute table
@@ -1509,83 +647,22 @@ cs_rs_amount <- rap(
 )
 ```
 
-```
-## Warning in (function (pus, species, spaces = NULL, amount.target = 0.2, :
-## argument to pus does not have a 'status' column, creating default with all
-## status=0L
-```
-
-
-```r
+```{r}
 # generate prioritisation
 cs_rs_amount <- solve(cs_rs_amount, MIPGap=0.1, Threads=threads)
 ```
 
-```
-## The rgorubi R package is not installed
-## 
-##  To access multiple solutions from the solution pool,
-## 	follow these instructions to install the "rgurobi" R package from GitHub: 
-## 	http://bit.ly/1RF19XO 
-## 
-## Optimize a model with 4 rows, 762 columns and 1336 nonzeros
-## Variable types: 0 continuous, 762 integer (762 binary)
-## Coefficient statistics:
-##   Matrix range     [4e+02, 2e+04]
-##   Objective range  [1e+00, 1e+00]
-##   Bounds range     [1e+00, 1e+00]
-##   RHS range        [1e+05, 3e+06]
-## Found heuristic solution: objective 159
-## Presolve time: 0.00s
-## Presolved: 4 rows, 762 columns, 1336 nonzeros
-## Variable types: 0 continuous, 762 integer (762 binary)
-## Presolved: 4 rows, 762 columns, 1336 nonzeros
-## 
-## 
-## Root relaxation: objective 1.354267e+02, 597 iterations, 0.00 seconds
-## 
-##     Nodes    |    Current Node    |     Objective Bounds      |     Work
-##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-## 
-##      0     0  135.42669    0    4  159.00000  135.42669  14.8%     -    0s
-## H    0     0                     136.0000000  135.42669  0.42%     -    0s
-## 
-## Explored 0 nodes (597 simplex iterations) in 0.01 seconds
-## Thread count was 2 (of 4 available processors)
-## 
-## Solution count 2: 136 159 
-## Pool objective bound 136
-## 
-## Optimal solution found (tolerance 1.00e-01)
-## Best objective 1.360000000000e+02, best bound 1.360000000000e+02, gap 0.0000%
-```
-
-
-```r
+```{r, fig.height=3.5, fig.width=4.5,fig.align='center', fig.cap="_Multi-species prioritisation generated for four bird species using amount-based targets (20\\%). See Figure 12 captions for conventions._"}
 # show summary
 summary(cs_rs_amount)
-```
 
-```
-##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
-## 1          1 OPTIMAL   136  136            136           98882414
-##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1         9786021          81270163          7826230
-##   Connectivity_In_Fraction
-## 1               0.09896624
-```
-
-```r
 # plot prioritisation
 plot(cs_rs_amount, 1)
 ```
 
-<img src="figure/unnamed-chunk-55-1.png" title="_Multi-species prioritisation generated for four bird species using amount-based targets (20\%). See Figure 12 captions for conventions._" alt="_Multi-species prioritisation generated for four bird species using amount-based targets (20\%). See Figure 12 captions for conventions._" style="display: block; margin: auto;" />
-
 We can also see how well the prioritisation secures the species' distributions in the geographic and environmental attribute spaces.
 
-
-```r
+```{r, fig.height=4.5, fig.width=10, fig.align='center', fig.cap="_Distribution of amount-based prioritisation in the geographic attribute space. Points denote combinations of environmental conditions. Green and grey points represent planning unit selected for and not selected for prioritisation (respectively). Blue points denote demand points, and their size indicates their weighting._"}
 # plot prioritisation in geographic attribute space
 p1 <- space.plot(cs_rs_amount, 1, 2, main='Blue-winged\nkookaburra')
 p2 <- space.plot(cs_rs_amount, 2, 2, main='Brown-backed\nhoneyeater')
@@ -1594,10 +671,7 @@ p4 <- space.plot(cs_rs_amount, 4, 2, main='Pale-headed\nrosella')
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol=2)
 ```
 
-<img src="figure/unnamed-chunk-56-1.png" title="_Distribution of amount-based prioritisation in the geographic attribute space. Points denote combinations of environmental conditions. Green and grey points represent planning unit selected for and not selected for prioritisation (respectively). Blue points denote demand points, and their size indicates their weighting._" alt="_Distribution of amount-based prioritisation in the geographic attribute space. Points denote combinations of environmental conditions. Green and grey points represent planning unit selected for and not selected for prioritisation (respectively). Blue points denote demand points, and their size indicates their weighting._" style="display: block; margin: auto;" />
-
-
-```r
+```{r, fig.height=4.5, fig.width=10,  fig.align='center', fig.cap="_Distribution of amount-based prioritisation in the environmental attribute space. See Figure 28 caption for conventions._"}
 # plot prioritisation in environmental attribute space
 p1 <- space.plot(cs_rs_amount, 1, 1, main='Blue-winged\nkookaburra')
 p2 <- space.plot(cs_rs_amount, 2, 1, main='Brown-backed\nhoneyeater')
@@ -1606,103 +680,22 @@ p4 <- space.plot(cs_rs_amount, 4, 1, main='Pale-headed\nrosella')
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol=2)
 ```
 
-<img src="figure/unnamed-chunk-57-1.png" title="_Distribution of amount-based prioritisation in the environmental attribute space. See Figure 28 caption for conventions._" alt="_Distribution of amount-based prioritisation in the environmental attribute space. See Figure 28 caption for conventions._" style="display: block; margin: auto;" />
-
 Next, let's generate a prioritisation using amount- and space-based targets. This prioritisation will secure 70% of the species distribution in geographic and environmental space.
 
-
-```r
+```{r}
 # make amount- and space-based prioritisation
 cs_rs_space <- update(cs_rs_amount, space.target=0.7, Threads=threads)
 ```
 
-```
-## The rgorubi R package is not installed
-## 
-##  To access multiple solutions from the solution pool,
-## 	follow these instructions to install the "rgurobi" R package from GitHub: 
-## 	http://bit.ly/1RF19XO 
-## 
-## Optimize a model with 134012 rows, 134362 columns and 535736 nonzeros
-## Variable types: 0 continuous, 134362 integer (134362 binary)
-## Coefficient statistics:
-##   Matrix range     [1e-07, 2e+04]
-##   Objective range  [1e+00, 1e+00]
-##   Bounds range     [1e+00, 1e+00]
-##   RHS range        [7e-01, 3e+06]
-## Presolve removed 5604 rows and 4198 columns (presolve time = 5s) ...
-## Presolve removed 5910 rows and 4202 columns (presolve time = 10s) ...
-## Presolve removed 6667 rows and 4202 columns (presolve time = 15s) ...
-## Presolve removed 8337 rows and 4202 columns (presolve time = 20s) ...
-## Presolve removed 8496 rows and 4202 columns (presolve time = 25s) ...
-## Presolve removed 8555 rows and 4202 columns (presolve time = 30s) ...
-## Presolve removed 9853 rows and 4202 columns (presolve time = 35s) ...
-## Presolve removed 9914 rows and 4202 columns (presolve time = 40s) ...
-## Presolve removed 10314 rows and 4202 columns (presolve time = 45s) ...
-## Presolve removed 10315 rows and 4202 columns (presolve time = 50s) ...
-## Presolve removed 10315 rows and 4260 columns (presolve time = 55s) ...
-## Presolve removed 10330 rows and 4260 columns
-## Presolve time: 58.17s
-## Presolved: 123682 rows, 130102 columns, 569395 nonzeros
-## Variable types: 0 continuous, 130102 integer (130102 binary)
-## Found heuristic solution: objective 234.0000000
-## Presolve removed 464 rows and 0 columns
-## Presolved: 123218 rows, 130102 columns, 567623 nonzeros
-## 
-## Presolve removed 104092 rows and 17312 columns
-## 
-## Root simplex log...
-## 
-## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    0.0000000e+00   1.230612e+02   1.557797e+10     60s
-##    24964    1.3594035e+02   0.000000e+00   7.698655e+02     65s
-##    43192    1.3562957e+02   0.000000e+00   9.297084e+01     70s
-##    60832    1.3555978e+02   0.000000e+00   3.798634e+00     75s
-##    67879    1.3555580e+02   0.000000e+00   0.000000e+00     77s
-##    67879    1.3555580e+02   0.000000e+00   0.000000e+00     78s
-## 
-## Root relaxation: objective 1.355558e+02, 67879 iterations, 18.81 seconds
-## 
-##     Nodes    |    Current Node    |     Objective Bounds      |     Work
-##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-## 
-##      0     0  135.55580    0  552  234.00000  135.55580  42.1%     -   78s
-## H    0     0                     136.0000000  135.55580  0.33%     -   79s
-## 
-## Explored 0 nodes (81506 simplex iterations) in 79.13 seconds
-## Thread count was 2 (of 4 available processors)
-## 
-## Solution count 2: 136 234 
-## Pool objective bound 136
-## 
-## Optimal solution found (tolerance 1.00e-01)
-## Best objective 1.360000000000e+02, best bound 1.360000000000e+02, gap 0.0000%
-```
-
-
-```r
+```{r, fig.height=3.5, fig.width=4.5, fig.align='center', fig.caption='_Prioritisation generated using amount, environmental, and geographic targets._'}
 # show summary
 summary(cs_rs_space)
-```
 
-```
-##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
-## 1          1 OPTIMAL   136  136            136           98882414
-##   Connectivity_In Connectivity_Edge Connectivity_Out
-## 1         9387227          80650180          8845006
-##   Connectivity_In_Fraction
-## 1               0.09493323
-```
-
-```r
 # plot prioritisation
 plot(cs_rs_space,1)
 ```
 
-<img src="figure/unnamed-chunk-59-1.png" title="plot of chunk unnamed-chunk-59" alt="plot of chunk unnamed-chunk-59" style="display: block; margin: auto;" />
-
-
-```r
+```{r, fig.height=4.5, fig.width=10, fig.cap="_Distribution of the amount- and space-based prioritisation in the geographic attribute space. See Figure 28 caption for conventions._"}
 # plot prioritisation in geographic attribute space
 p1 <- space.plot(cs_rs_space, 1, 2, main='Blue-winged\nkookaburra')
 p2 <- space.plot(cs_rs_space, 2, 2, main='Brown-backed\nhoneyeater')
@@ -1711,10 +704,7 @@ p4 <- space.plot(cs_rs_space, 4, 2, main='Pale-headed\nrosella')
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol=2)
 ```
 
-![_Distribution of the amount- and space-based prioritisation in the geographic attribute space. See Figure 28 caption for conventions._](figure/unnamed-chunk-60-1.png)
-
-
-```r
+```{r, fig.height=4.5, fig.width=10, fig.align='center', fig.cap="_Distribution of the amount- and space-based prioritisation in the environmental attribute space. See Figure 28 caption for conventions._"}
 # plot prioritisation in environmental attribute space
 p1 <- space.plot(cs_rs_space, 1, 1, main='Blue-winged\nkookaburra')
 p2 <- space.plot(cs_rs_space, 2, 1, main='Brown-backed\nhoneyeater')
@@ -1723,12 +713,9 @@ p4 <- space.plot(cs_rs_space, 4, 1, main='Pale-headed\nrosella')
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol=2)
 ```
 
-<img src="figure/unnamed-chunk-61-1.png" title="_Distribution of the amount- and space-based prioritisation in the environmental attribute space. See Figure 28 caption for conventions._" alt="_Distribution of the amount- and space-based prioritisation in the environmental attribute space. See Figure 28 caption for conventions._" style="display: block; margin: auto;" />
-
 Let's compare these prioritisations with Queensland's existing protected areas system. To do this, we can create update the `cs_rs_space` with manually specified solutions to create a `RapSolved` object to represent the Queensland's reserve network.
 
-
-```r
+```{r}
 # generate vector with Australia's selections
 aus_selections <- which(cs_pus$status>0)
 
@@ -1738,8 +725,7 @@ cs_rs_aus <- update(cs_rs_amount, b=aus_selections)
 
 Now, let's plot the performance metrics for these prioritisations.
 
-
-```r
+```{r, fig.height=3.5, fig.width=8, fig.align='center', fig.cap="_Prioritisations were generated using amount-based targets (20\\%), and with additional space-based targets (85\\%). These are compared to the Queensland reserve network. Data represent means and standard errors for the four species in each prioritisation._"}
 # define standard error function
 se=function(x){sd(x,na.rm=TRUE)/sqrt(sum(!is.na(x)))}
 
@@ -1776,7 +762,5 @@ ggplot(aes(x=variable, y=mean, fill=name), data=cs_results) +
 		axis.line.x=element_line(),axis.line.y=element_line())
 ```
 
-<img src="figure/unnamed-chunk-63-1.png" title="_Prioritisations were generated using amount-based targets (20\%), and with additional space-based targets (85\%). These are compared to the Queensland reserve network. Data represent means and standard errors for the four species in each prioritisation._" alt="_Prioritisations were generated using amount-based targets (20\%), and with additional space-based targets (85\%). These are compared to the Queensland reserve network. Data represent means and standard errors for the four species in each prioritisation._" style="display: block; margin: auto;" />
-
-We can see that a greater number of planning units is needed to satisfy the space-based targets. The prioritisation generated using just amount-based targets has 136 planning units, and the prioritisations using amount-based and space-based targets has 136 planning units. These results suggest only a few additional planning units can result in significant improvements in the effectivenss of a prioritisation.
-
+We can see that a greater number of planning units is needed to satisfy the space-based targets. The prioritisation generated using just amount-based targets has `r sum(selections(cs_rs_amount)==1)` planning units, and the prioritisations using amount-based and space-based targets has `r sum(selections(cs_rs_space)==1)` planning units. These results suggest only a few additional planning units can result in significant improvements in the effectivenss of a prioritisation.
+ 

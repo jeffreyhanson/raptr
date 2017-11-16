@@ -17,17 +17,21 @@ basemap(x, basemap = "hybrid", grayscale = FALSE, force.reset = FALSE)
 \arguments{
 \item{x}{\code{RapData}, \code{RapUnsolved}, \code{RapSolved} object.}
 
-\item{basemap}{\code{character} type of base map to display. Valid names are "roadmap", "mobile", "satellite", "terrain", "hybrid", "mapmaker-roadmap", "mapmaker-hybrid".}
+\item{basemap}{\code{character} type of base map to display. Valid names are
+\code{"roadmap"}, \code{"mobile"}, \code{"satellite"}, \code{"terrain"},
+\code{"hybrid"}, \code{"mapmaker-roadmap"}, \code{"mapmaker-hybrid"}.}
 
 \item{grayscale}{\code{logical} should base map be gray scale?}
 
-\item{force.reset}{\code{logical} ignore data in cache? Setting this as ignore will make function slower but may avoid bugs in cache system.}
+\item{force.reset}{\code{logical} ignore data in cache? Setting this as
+ignore will make function slower but may avoid bugs in cache system.}
 }
 \value{
 \code{list} with google map data.
 }
 \description{
-This function retrieves google map data for planning units. The google map data is cached to provide fast plotting capabilities.
+This function retrieves google map data for planning units. The google map
+data is cached to provide fast plotting capabilities.
 }
 \seealso{
 \code{\link[RgoogleMaps]{GetMap.bbox}}, \code{\link{plot}}.

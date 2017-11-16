@@ -30,7 +30,9 @@
   solve = TRUE)
 }
 \arguments{
-\item{object}{\code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}}, \code{\link{RapReliableOpts}}, \code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.}
+\item{object}{\code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}},
+\code{\link{RapReliableOpts}}, \code{\link{RapData}},
+\code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.}
 
 \item{Threads}{\code{integer} number of cores to use for processing.}
 
@@ -44,19 +46,29 @@
 
 \item{NumberSolutions}{\code{integer} number of solutions to generate.}
 
-\item{MultipleSolutionsMethod}{\code{character} name of method to obtain multiple solutions \code{NumberSolutions} > 1. Available options are 'benders.cuts' and 'solution.pool'. Defaults to 'benders.cuts'. Note that the \code{rgurobi} package must be to use the 'solution.pool' method.}
+\item{MultipleSolutionsMethod}{\code{character} name of method to obtain
+multiple solutions (used when argument to \code{NumberSolutions} greater
+than one). Available options are \code{"benders.cuts"} and
+\code{"solution.pool"}s. Defaults to 'benders.cuts'. Note that
+the \code{rgurobi} package must be to use the \code{"solution.pool"}
+method.}
 
-\item{...}{parameters passed to \code{\link{update.RapReliableOpts}}, \code{\link{update.RapUnreliableOpts}}, or \code{\link{update.RapData}}.}
+\item{...}{parameters passed to \code{\link{update.RapReliableOpts}},
+\code{\link{update.RapUnreliableOpts}}, or \code{\link{update.RapData}}.}
 
-\item{species}{\code{integer} or \code{character} denoting species for which targets or name should be updated.}
+\item{species}{\code{integer} or \code{character} denoting species for which
+targets or name should be updated.}
 
-\item{space}{\code{integer} denoting space for which targets should be updated.}
+\item{space}{\code{integer} denoting space for which targets should be
+updated.}
 
 \item{name}{\code{character} to rename species.}
 
-\item{amount.target}{\code{numeric} vector for new area targets (\%) for the specified species.}
+\item{amount.target}{\code{numeric} vector for new area targets (\%) for the
+specified species.}
 
-\item{space.target}{\code{numeric} vector for new attribute space targets (\%) for the specified species and attribute spaces.}
+\item{space.target}{\code{numeric} vector for new attribute space targets
+(\%) for the specified species and attribute spaces.}
 
 \item{pu}{\code{integer} planning unit indices that need to be updated.}
 
@@ -66,64 +78,76 @@
 
 \item{BLM}{\code{numeric} boundary length modifier.}
 
-\item{failure.multiplier}{\code{numeric} multiplier for failure planning unit.}
+\item{failure.multiplier}{\code{numeric} multiplier for failure planning
+unit.}
 
 \item{max.r.level}{\code{numeric} maximum R failure level for approximation.}
 
-\item{formulation}{\code{character} indicating new problem formulation to use. This can be either 'unreliable' or 'reliable'. The default is \code{NULL} so that formulation in \code{object} is used.}
+\item{formulation}{\code{character} indicating new problem formulation to
+use. This can be either 'unreliable' or 'reliable'. The default is
+\code{NULL} so that formulation in \code{object} is used.}
 
-\item{solve}{\code{logical} should the problem be solved? This argument is only valid for \code{\link{RapUnsolved}} and \code{\link{RapSolved}} objects. Defaults to \code{TRUE}.}
+\item{solve}{\code{logical} should the problem be solved? This argument is
+only valid for \code{\link{RapUnsolved}} and \code{\link{RapSolved}}
+objects. Defaults to \code{TRUE}.}
 }
 \value{
-\code{\link{GurobiOpts-class}}, \code{\link{RapUnreliableOpts-class}}, \code{\link{RapReliableOpts-class}}, \code{\link{RapData-class}}, \code{\link{RapUnsolved-class}}, or \code{\link{RapSolved-class}} object depending on \code{x}.
+\code{\link{GurobiOpts-class}},
+  \code{\link{RapUnreliableOpts-class}},
+  \code{\link{RapReliableOpts-class}}, \code{\link{RapData-class}},
+  \code{\link{RapUnsolved-class}}, or \code{\link{RapSolved-class}} object
+  depending on argument to \code{x}.
 }
 \description{
-This function updates parameters or data stored in an existing \code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}}, \code{\link{RapReliableOpts}}, \code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.
+This function updates parameters or data stored in an existing
+\code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}},
+\code{\link{RapReliableOpts}}, \code{\link{RapData}},
+\code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.
 }
 \examples{
 # load data
 data(sim_ru, sim_rs)
 
 # GurobiOpts
-x <- GurobiOpts(MIPGap=0.7)
-y <- update(x, MIPGap=0.1)
+x <- GurobiOpts(MIPGap = 0.7)
+y <- update(x, MIPGap = 0.1)
 print(x)
 print(y)
 
 # RapUnreliableOpts
-x <- RapUnreliableOpts(BLM=10)
-y <- update(x, BLM=2)
+x <- RapUnreliableOpts(BLM = 10)
+y <- update(x, BLM = 2)
 print(x)
 print(y)
 
 # RapReliableOpts
-x <- RapReliableOpts(failure.multiplier=2)
-y <- update(x, failure.multiplier=4)
+x <- RapReliableOpts(failure.multiplier = 2)
+y <- update(x, failure.multiplier = 4)
 print(x)
 print(y)
 
 # RapData
 x <- sim_ru@data
-y <- update(x, space.target=c(0.4, 0.7, 0.1))
+y <- update(x, space.target = c(0.4, 0.7, 0.1))
 print(space.target(x))
 print(space.target(y))
 
 ## RapUnsolved
 x <- sim_ru
-y <- update(x, amount.target=c(0.1, 0.2, 0.3), BLM=3, solve=FALSE)
-# print x parameters
+y <- update(x, amount.target = c(0.1, 0.2, 0.3), BLM = 3, solve = FALSE)
 print(x@opts@BLM); print(amount.target(x))
-# print y parameters
 print(y@opts@BLM); print(space.target(y))
 
 ## RapSolved
 x <- sim_rs
-y <- update(x, space.target=c(0.4, 0.6, 0.9), BLM=100, Presolve=1L, solve=FALSE)
-# print x parameters
+y <- update(x, space.target = c(0.4, 0.6, 0.9), BLM = 100, Presolve = 1L,
+            solve = FALSE)
 print(x@opts@BLM); print(amount.target(x))
-# print y parameters
 print(y@opts@BLM); print(space.target(y))
 }
 \seealso{
-\code{\link{GurobiOpts-class}}, \code{\link{RapUnreliableOpts-class}}, \code{\link{RapReliableOpts-class}}, \code{\link{RapData-class}}, \code{\link{RapUnsolved-class}}, \code{\link{RapSolved-class}}.
+\code{\link{GurobiOpts-class}},
+  \code{\link{RapUnreliableOpts-class}},
+  \code{\link{RapReliableOpts-class}}, \code{\link{RapData-class}},
+  \code{\link{RapUnsolved-class}}, \code{\link{RapSolved-class}}.
 }

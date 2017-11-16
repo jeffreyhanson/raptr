@@ -7,7 +7,8 @@
 RapUnsolved(opts, data)
 }
 \arguments{
-\item{opts}{\code{\link{RapReliableOpts}} or \code{\link{RapUnreliableOpts}} object.}
+\item{opts}{\code{\link{RapReliableOpts}} or \code{\link{RapUnreliableOpts}}
+object.}
 
 \item{data}{\code{\link{RapData}} object.}
 }
@@ -15,20 +16,27 @@ RapUnsolved(opts, data)
 \code{\link{RapUnsolved}} object.
 }
 \description{
-This function creates a \code{\link{RapUnsolved}} object using a \code{\link{GurobiOpts}}, a \code{\link{RapReliableOpts}} or \code{\link{RapUnreliableOpts}} object, and a \code{\link{RapData}} object.
+This function creates a \code{\link{RapUnsolved}} object using a
+\code{\link{GurobiOpts}}, a \code{\link{RapReliableOpts}} or
+\code{\link{RapUnreliableOpts}} object, and a \code{\link{RapData}} object.
 }
 \examples{
 # load data
 \donttest{
 data(cs_pus, cs_spp)
+
 # create inputs for RapUnsolved
 ro <- RapUnreliableOpts()
-rd <- make.RapData(cs_pus[1:10,], cs_spp, NULL, include.geographic.space=TRUE,n.demand.points=5L)
+rd <- make.RapData(cs_pus[seq_len(10), ], cs_spp, NULL,
+                   include.geographic.space = TRUE,n.demand.points = 5L)
+
 # create RapUnsolved object
 ru <- RapUnsolved(ro, rd)
 print(ru)
 }
+
 }
 \seealso{
-\code{\link{RapReliableOpts-class}}, \code{\link{RapUnreliableOpts-class}}, \code{\link{RapData-class}}.
+\code{\link{RapReliableOpts-class}},
+  \code{\link{RapUnreliableOpts-class}}, \code{\link{RapData-class}}.
 }

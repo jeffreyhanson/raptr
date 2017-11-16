@@ -2,7 +2,13 @@
 authors:
   Jeffrey O Hanson:
     href: http://jeffrey-hanson.com
-
+  Jonathan R Rhodes:
+    href: https://rhodesconservation.com/people/jonathan-rhodes/
+  Hugh P Possingham:
+    href: http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html
+  Richard A Fuller:
+    href: https://www.fullerlab.org/drrichardfuller/
+  
 template:
   params:
     bootswatch: cerulean

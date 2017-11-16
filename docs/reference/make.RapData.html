@@ -83,13 +83,14 @@
     </div>
 
     
-    <p>This function prepares spatially explicit planning unit, species data, and landscape data layers for RAP processing.</p>
+    <p>This function prepares spatially explicit planning unit, species data, and
+landscape data layers for RAP processing.</p>
     
 
     <pre class="usage"><span class='fu'>make.RapData</span>(<span class='no'>pus</span>, <span class='no'>species</span>, <span class='kw'>spaces</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>amount.target</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
   <span class='kw'>space.target</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>n.demand.points</span> <span class='kw'>=</span> <span class='fl'>100L</span>, <span class='kw'>kernel.method</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ks"</span>,
   <span class='st'>"hypervolume"</span>)[<span class='fl'>1</span>], <span class='kw'>quantile</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>species.points</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>n.species.points</span> <span class='kw'>=</span> <span class='fu'>ceiling</span>(<span class='fl'>0.2</span> * <span class='fu'>cellStats</span>(<span class='no'>species</span>, <span class='st'>"sum"</span>)),
+  <span class='kw'>n.species.points</span> <span class='kw'>=</span> <span class='fu'>ceiling</span>(<span class='fl'>0.2</span> * <span class='kw'>raster</span><span class='kw'>::</span><span class='fu'>cellStats</span>(<span class='no'>species</span>, <span class='st'>"sum"</span>)),
   <span class='kw'>include.geographic.space</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -101,47 +102,65 @@
     </tr>
     <tr>
       <th>species</th>
-      <td><p><code><a href='http://www.rdocumentation.org/packages/raster/topics/raster'>raster</a></code> with species probability distribution data.</p></td>
+      <td><p><code><a href='http://www.rdocumentation.org/packages/raster/topics/raster'>raster</a></code> with species probability
+distribution data.</p></td>
     </tr>
     <tr>
       <th>spaces</th>
-      <td><p><code>list</code> of/or <code><a href='http://www.rdocumentation.org/packages/raster/topics/raster'>raster</a></code> representing projects of attribute space over geographic space. Use a <code>list</code> to denote separate attribute spaces.</p></td>
+      <td><p><code>list</code> of/or <code><a href='http://www.rdocumentation.org/packages/raster/topics/raster'>raster</a></code> representing
+projects of attribute space over geographic space. Use a <code>list</code> to
+denote separate attribute spaces.</p></td>
     </tr>
     <tr>
       <th>amount.target</th>
-      <td><p><code>numeric</code> vector for area targets (%) for each species. Defaults to 0.2 for each attribute space for each species.</p></td>
+      <td><p><code>numeric</code> vector for area targets (%) for each
+species. Defaults to 0.2 for each attribute space for each species.</p></td>
     </tr>
     <tr>
       <th>space.target</th>
-      <td><p><code>numeric</code> vector for attribute space targets (%) for each species. Defaults to 0.2 for each attribute space for each species and each space.</p></td>
+      <td><p><code>numeric</code> vector for attribute space targets (%)
+for each species. Defaults to 0.2 for each attribute space for each
+species and each space.</p></td>
     </tr>
     <tr>
       <th>n.demand.points</th>
-      <td><p><code>integer</code> number of demand points to use for each attribute space for each species. Defaults to 100L.</p></td>
+      <td><p><code>integer</code> number of demand points to use for
+each attribute space for each species. Defaults to 100L.</p></td>
     </tr>
     <tr>
       <th>kernel.method</th>
-      <td><p><code>character</code> name of kernel method to use to generate demand points. Use either <code>ks</code> or <code>hypervolume</code>.</p></td>
+      <td><p><code>character</code> name of kernel method to use to
+generate demand points. Use either <code>"ks"</code> or <code>"hypervolume"</code>.</p></td>
     </tr>
     <tr>
       <th>quantile</th>
-      <td><p><code>numeric</code> quantile to generate demand points within. If 0 then demand points are generated across the full range of values the <code>species.points</code> intersect. Defaults to 0.5.</p></td>
+      <td><p><code>numeric</code> quantile to generate demand points within. If
+<code>species.points</code> intersect. Defaults to 0.5.</p></td>
     </tr>
     <tr>
       <th>species.points</th>
-      <td><p><code>list</code> of/or <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPoints'>SpatialPointsDataFrame</a></code> or <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPoints'>SpatialPoints</a></code> with species presence records. Use a <code>list</code> of objects to represent different species. Must have the same number of elements as <code>species</code>. If not supplied then use <code>n.species.points</code> to sample points from the species distributions.</p></td>
+      <td><p><code>list</code> of/or
+<code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPoints'>SpatialPointsDataFrame</a></code> or
+<code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPoints'>SpatialPoints</a></code> with species presence records. Use a
+<code>list</code> of objects to represent different species. Must have the same
+number of elements as <code>species</code>. If not supplied then use
+<code>n.species.points</code> to sample points from the species distributions.</p></td>
     </tr>
     <tr>
       <th>n.species.points</th>
-      <td><p><code>numeric</code> vector specifiying the number points to sample the species distributions to use to generate demand points. Defaults to 20% of the distribution.</p></td>
+      <td><p><code>numeric</code> vector specifiying the number points
+to sample the species distributions to use to generate demand points.
+Defaults to 20% of the distribution.</p></td>
     </tr>
     <tr>
       <th>include.geographic.space</th>
-      <td><p><code>logical</code> should the geographic space be considered an attribute space?</p></td>
+      <td><p><code>logical</code> should the geographic space
+be considered an attribute space?</p></td>
     </tr>
     <tr>
       <th>scale</th>
-      <td><p><code>logical</code> scale the attribute spaces to unit mean and standard deviation? This prevents overflow. Defaults to <code>TRUE</code>.</p></td>
+      <td><p><code>logical</code> scale the attribute spaces to unit mean and
+standard deviation? This prevents overflow. Defaults to <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -149,7 +168,8 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional arguments to <code><a href='calcBoundaryData.html'>calcBoundaryData</a></code> and <code><a href='calcSpeciesAverageInPus.html'>calcSpeciesAverageInPus</a></code>.</p></td>
+      <td><p>additional arguments to <code><a href='calcBoundaryData.html'>calcBoundaryData</a></code> and
+<code><a href='calcSpeciesAverageInPus.html'>calcSpeciesAverageInPus</a></code>.</p></td>
     </tr>
     </table>
     
@@ -159,15 +179,15 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'># load data</span>
+    <pre class="examples"><div class='input'><span class='co'># load data</span>
 <span class='fu'>data</span>(<span class='no'>cs_pus</span>, <span class='no'>cs_spp</span>, <span class='no'>cs_space</span>)
-<span class='co'># make RapData object using the 1st 10 planning units</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>make.RapData</span>(<span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,], <span class='no'>cs_spp</span>, <span class='no'>cs_space</span>, <span class='kw'>include.geographic.space</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='fu'><a href='print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; RapData object.
-#&gt;   Number of planning units: 10 
-#&gt;   Number of species: 4 
-#&gt;   Number of attribute spaces: 2 </div><div class='input'>
+
+<span class='co'># make RapData object using the first 10 planning units in the dat</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>make.RapData</span>(<span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,], <span class='no'>cs_spp</span>, <span class='no'>cs_space</span>,
+                  <span class='kw'>include.geographic.space</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='co'># print object</span>
+<span class='fu'><a href='print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='message'>RapData object.</span></div><div class='output co'>#&gt; <span class='message'>  Number of planning units: 10</span></div><div class='output co'>#&gt; <span class='message'>  Number of species: 4</span></div><div class='output co'>#&gt; <span class='message'>  Number of attribute spaces: 2</span></div><div class='input'>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -185,7 +205,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">

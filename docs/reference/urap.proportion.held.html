@@ -83,8 +83,9 @@
     </div>
 
     
-    <p>This is a convenience function to quickly calculate the proportion of variation that one set of points captures
-in a another set of points using the unreliable formulation.</p>
+    <p>This is a convenience function to quickly calculate the proportion of
+variation that one set of points captures in a another set of points using
+the unreliable formulation.</p>
     
 
     <pre class="usage"><span class='fu'>urap.proportion.held</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>y.weights</span> <span class='kw'>=</span> <span class='fu'>rep</span>(<span class='fl'>1</span>, <span class='fu'>nrow</span>(<span class='no'>y</span>)))</pre>
@@ -102,17 +103,20 @@ in a another set of points using the unreliable formulation.</p>
     </tr>
     <tr>
       <th>y.weights</th>
-      <td><p><code>numeric</code> vector of weights for each point in <code>y</code>. Defaults to equal weights for all points in <code>y</code>.</p></td>
+      <td><p><code>numeric</code> vector of weights for each point in
+<code>y</code>. Defaults to equal weights for all points in <code>y</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>numeric</code> value indicating the proportion of variation that <code>x</code> explains in <code>y</code></p>
+    <p><code>numeric</code> value indicating the proportion of variation that
+  <code>x</code> explains in <code>y</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>urap.proportion.held</span>(<span class='fu'>as.matrix</span>(<span class='no'>iris</span>[<span class='fl'>1</span>:<span class='fl'>2</span>,-<span class='fl'>5</span>]), <span class='fu'>as.matrix</span>(<span class='no'>iris</span>[<span class='fl'>1</span>:<span class='fl'>5</span>,-<span class='fl'>5</span>]))</div><div class='output co'>#&gt; [1] 0.5217391</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>urap.proportion.held</span>(<span class='fu'>as.matrix</span>(<span class='no'>iris</span>[<span class='fl'>1</span>:<span class='fl'>2</span>,-<span class='fl'>5</span>]), <span class='fu'>as.matrix</span>(<span class='no'>iris</span>[<span class='fl'>1</span>:<span class='fl'>5</span>,-<span class='fl'>5</span>]))</div><div class='output co'>#&gt; [1] 0.5217391</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -129,7 +133,7 @@ in a another set of points using the unreliable formulation.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">

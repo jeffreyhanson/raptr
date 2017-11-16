@@ -83,7 +83,9 @@
     </div>
 
     
-    <p>This function creates a <code>RapUnsolved</code> object using a <code><a href='GurobiOpts.html'>GurobiOpts</a></code>, a <code><a href='RapReliableOpts.html'>RapReliableOpts</a></code> or <code><a href='RapUnreliableOpts.html'>RapUnreliableOpts</a></code> object, and a <code><a href='RapData.html'>RapData</a></code> object.</p>
+    <p>This function creates a <code>RapUnsolved</code> object using a
+<code><a href='GurobiOpts.html'>GurobiOpts</a></code>, a <code><a href='RapReliableOpts.html'>RapReliableOpts</a></code> or
+<code><a href='RapUnreliableOpts.html'>RapUnreliableOpts</a></code> object, and a <code><a href='RapData.html'>RapData</a></code> object.</p>
     
 
     <pre class="usage"><span class='fu'>RapUnsolved</span>(<span class='no'>opts</span>, <span class='no'>data</span>)</pre>
@@ -93,7 +95,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>opts</th>
-      <td><p><code><a href='RapReliableOpts.html'>RapReliableOpts</a></code> or <code><a href='RapUnreliableOpts.html'>RapUnreliableOpts</a></code> object.</p></td>
+      <td><p><code><a href='RapReliableOpts.html'>RapReliableOpts</a></code> or <code><a href='RapUnreliableOpts.html'>RapUnreliableOpts</a></code>
+object.</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -107,26 +110,22 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='RapReliableOpts-class.html'>RapReliableOpts-class</a></code>, <code><a href='RapUnreliableOpts-class.html'>RapUnreliableOpts-class</a></code>, <code><a href='RapData-class.html'>RapData-class</a></code>.</p>
+    <p><code><a href='RapReliableOpts-class.html'>RapReliableOpts-class</a></code>,
+  <code><a href='RapUnreliableOpts-class.html'>RapUnreliableOpts-class</a></code>, <code><a href='RapData-class.html'>RapData-class</a></code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load data</span>
 
 <span class='fu'>data</span>(<span class='no'>cs_pus</span>, <span class='no'>cs_spp</span>)
+
 <span class='co'># create inputs for RapUnsolved</span>
 <span class='no'>ro</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RapUnreliableOpts.html'>RapUnreliableOpts</a></span>()
-<span class='no'>rd</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='make.RapData.html'>make.RapData</a></span>(<span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,], <span class='no'>cs_spp</span>, <span class='kw'>NULL</span>, <span class='kw'>include.geographic.space</span><span class='kw'>=</span><span class='fl'>TRUE</span>,<span class='kw'>n.demand.points</span><span class='kw'>=</span><span class='fl'>5L</span>)
+<span class='no'>rd</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='make.RapData.html'>make.RapData</a></span>(<span class='no'>cs_pus</span>[<span class='fu'>seq_len</span>(<span class='fl'>10</span>), ], <span class='no'>cs_spp</span>, <span class='kw'>NULL</span>,
+                   <span class='kw'>include.geographic.space</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,<span class='kw'>n.demand.points</span> <span class='kw'>=</span> <span class='fl'>5L</span>)</div><div class='output co'>#&gt; <span class='error'>Error in .local(x, n, type, ...): iteration did not converge; try enlarging argument iter</span></div><div class='input'>
 <span class='co'># create RapUnsolved object</span>
-<span class='no'>ru</span> <span class='kw'>&lt;-</span> <span class='fu'>RapUnsolved</span>(<span class='no'>ro</span>, <span class='no'>rd</span>)
-<span class='fu'><a href='print.html'>print</a></span>(<span class='no'>ru</span>)</div><div class='output co'>#&gt; RapUnsolved object
-#&gt; 
-#&gt; Parameters
-#&gt;   BLM: 0 
-#&gt; Data
-#&gt;   Number of planning units: 10 
-#&gt;   Number of species: 4 
-#&gt;   Number of attribute spaces: 1 </div><div class='input'>
+<span class='no'>ru</span> <span class='kw'>&lt;-</span> <span class='fu'>RapUnsolved</span>(<span class='no'>ro</span>, <span class='no'>rd</span>)</div><div class='output co'>#&gt; <span class='error'>Error in initialize(value, ...): object 'rd' not found</span></div><div class='input'><span class='fu'><a href='print.html'>print</a></span>(<span class='no'>ru</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(ru): object 'ru' not found</span></div><div class='input'>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -146,7 +145,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">

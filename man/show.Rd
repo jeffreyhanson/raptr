@@ -5,34 +5,27 @@
 \docType{methods}
 \name{show}
 \alias{show}
+\alias{show}
 \alias{show,GurobiOpts-method}
+\alias{show}
 \alias{show,ManualOpts-method}
-\alias{show,RapData-method}
-\alias{show,RapReliableOpts-method}
-\alias{show,RapResults-method}
-\alias{show,RapUnreliableOpts-method}
-\alias{show,RapUnsolved-method}
-\alias{show,RapSolved-method}
+\alias{show}
+\alias{show}
+\alias{show}
+\alias{show}
+\alias{show}
+\alias{show}
 \title{Show objects}
 \usage{
 \S4method{show}{GurobiOpts}(object)
 
 \S4method{show}{ManualOpts}(object)
-
-\S4method{show}{RapData}(object)
-
-\S4method{show}{RapReliableOpts}(object)
-
-\S4method{show}{RapResults}(object)
-
-\S4method{show}{RapUnreliableOpts}(object)
-
-\S4method{show}{RapUnsolved}(object)
-
-\S4method{show}{RapSolved}(object)
 }
 \arguments{
-\item{object}{\code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}}, \code{\link{RapReliableOpts}}, \code{\link{RapData}}, \code{\link{RapUnsolved}}, \code{\link{RapResults}}, or \code{\link{RapSolved}} object.}
+\item{object}{\code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}},
+\code{\link{RapReliableOpts}}, \code{\link{RapData}},
+\code{\link{RapUnsolved}}, \code{\link{RapResults}}, or
+\code{\link{RapSolved}} object.}
 }
 \description{
 Shows objects.
@@ -40,22 +33,31 @@ Shows objects.
 \examples{
 # load data
 data(sim_ru, sim_rs)
-## show methods for classes in package
-# GurobiOpts
+
+# show GurobiOpts object
 GurobiOpts()
-# RapReliableOpts
+
+# show RapReliableOpts object
 RapReliableOpts()
-# RapUnreliableOpts
+
+# show RapUnreliableOpts object
 RapUnreliableOpts()
-# RapData
+
+# show RapData object
 sim_ru@data
-# RapUnsolved
+
+# show RapUnsolved object
 sim_ru
-# RapResults
+
+# show RapResults object
 sim_rs@results
-# RapSolved
+
+# show RapSolved object
 sim_rs
 }
 \seealso{
-\code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}}, \code{\link{RapReliableOpts}}, \code{\link{RapData}}, \code{\link{RapUnsolved}}, \code{\link{RapResults}}, \code{\link{RapSolved}}.
+\code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}},
+  \code{\link{RapReliableOpts}}, \code{\link{RapData}},
+  \code{\link{RapUnsolved}}, \code{\link{RapResults}},
+  \code{\link{RapSolved}}.
 }

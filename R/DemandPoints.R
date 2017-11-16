@@ -6,116 +6,156 @@ NULL
 #' This class is used to store demand point information.
 #'
 #' @slot coords \code{\link[base]{matrix}} of coordinates for each demand point.
+#'
 #' @slot weights \code{numeric} weights for each demand point.
-#' @seealso \code{\link{DemandPoints}}
-#' @export
-setClass("DemandPoints",
-	representation(
-		coords='matrix',
-		weights='numeric'
-	),
-	validity=function(object) {
-		# check coords have variance
-		expect_false(max(apply(object@coords, 2, function(x) {length(unique(x))}))==1, info='demand points must not all be identical')
-
-		# check coords are not NA
-		expect_true(all(is.finite(c(object@coords))), info='argument to coords contains NA or non-finite values')
-		expect_true(nrow(object@coords)>0, info='argument to coords must have at least one row')
-		
-		# weights
-		expect_true(all(is.finite(object@weights)), info='argument to weights contains NA or non-finite values')
-		expect_true(length(object@weights)>0, info='argument to weights must have at least one element')
-		expect_true(all(object@weights>0), info='argument to weights must have positive numbers')
-
-		# cross-slot dependencies
-		expect_equal(nrow(object@coords), length(object@weights), info='argument to points must have have the same number of rows as the length of weights')
-		return(TRUE)
-	}
+#'
+#' @seealso \code{\link{DemandPoints}}.
+#'
+#' @name DemandPoints-class
+#'
+#' @rdname DemandPoints-class
+#'
+#' @exportClass DemandPoints
+methods::setClass("DemandPoints",
+  methods::representation(coords = "matrix", weights = "numeric"),
+  validity = function(object) {
+    # check coords have variance
+    assertthat::assert_that(max(apply(object@coords, 2,
+                                      function(x) length(unique(x)))) > 1,
+                            msg = "demand points must not all be identical")
+    # check coords are not NA
+    assertthat::assert_that(all(is.finite(c(object@coords))),
+                            msg = paste0("argument to coords contains NA or ",
+                                         "non-finite values"))
+    assertthat::assert_that(nrow(object@coords) > 0,
+                            msg = paste0("argument to coords must have at ",
+                                         "least one row"))
+    # weights
+    assertthat::assert_that(all(is.finite(object@weights)),
+                            msg = paste0("argument to weights contains NA or ",
+                                         "non-finite values"))
+    assertthat::assert_that(length(object@weights) > 0,
+                            msg = paste0("argument to weights must have at ",
+                                         "least one element"))
+    assertthat::assert_that(all(object@weights > 0),
+                            msg = paste0("argument to weights must have ",
+                                         "positive numbers"))
+    # cross-slot dependencies
+    assertthat::assert_that(isTRUE(nrow(object@coords) ==
+                                   length(object@weights)),
+                            msg = paste0("argument to points must have have ",
+                                         "the same number of rows as the ",
+                                         "length of weights"))
+    return(TRUE)
+  }
 )
 
 #' Create new DemandPoints object
 #'
 #' This function creates a new DemandPoints object
 #'
-#' @param coords \code{\link[base]{matrix}} of coordinates for each demand point.
+#' @param coords \code{\link[base]{matrix}} of coordinates for each demand
+#'   point.
 #' @param weights \code{numeric} weights for each demand point.
-#' @seealso \code{\link{DemandPoints-class}}
-#' @export
+#'
+#' @seealso \code{\link{DemandPoints-class}}.
+#'
 #' @examples
+#' # make demand points
 #' dps <- DemandPoints(
-#'	matrix(rnorm(100), ncol=2),
-#'	runif(50)
-#' )
-DemandPoints<-function(coords, weights) {
-	dp<-new("DemandPoints", coords=coords, weights=weights)
-	validObject(dp, test=FALSE)
-	return(dp)
+#'  matrix(rnorm(100), ncol=2),
+#'  runif(50))
+#'
+#' # print object
+#' print(dps)
+#'
+#' @export
+DemandPoints <- function(coords, weights) {
+  dp <- methods::new("DemandPoints", coords = coords, weights = weights)
+  methods::validObject(dp, test = FALSE)
+  return(dp)
 }
 
 #' Generate demand points for RAP
 #'
-#' This function generates demand points to characterize a distribution of points.
+#' This function generates demand points to characterize a distribution of
+#' points.
 #'
 #' @param points \code{\link[base]{matrix}} object containing points.
-#' @param n \code{integer} number of demand points to use for each attribute space for each species. Defaults to \code{100L}.
-#' @param quantile \code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{points} intersect. Defaults to \code{0.5}. 
-#' @param kernel.method \code{character} name of kernel method to use to generate demand points. Defaults to \code{'ks'}.
+#'
+#' @param n \code{integer} number of demand points to use for each attribute
+#'   space for each species. Defaults to \code{100L}.
+#'
+#' @param quantile \code{numeric} quantile to generate demand points within. If
+#'   0 then demand points are generated across the full range of values the
+#'   \code{points} intersect. Defaults to \code{0.5}.
+#'
+#' @param kernel.method \code{character} name of kernel method to use to
+#'   generate demand points. Defaults to \code{'ks'}.
+#'
 #' @param ... arguments passed to kernel density estimating functions
+#'
 #' @return \code{\link{DemandPoints}} object.
-#' @details Broadly speaking, demand points are generated by fitting a kernal to the input \code{points}. A shape is then fit to the extent of 
-#' the kernal, and then points are randomly generated inside the shape. The demand points are generated as random points inside the shape. The weights 
-#' for each demand point are calculated the estimated density of input points at the demand point. By supplying 'ks' as an argument to \code{method} in 
-#' \code{kernel.method}, the shape is defined using a minimum convex polygon \code{\link[adehabitatHR]{mcp}} and 
-#' \code{\link[ks]{kde}} is used to fit the kernel. Note this can only be used when the data is low-dimensional (d < 3). By supplying
-#' 'hypervolume' as an argument to \code{method}, the \code{\link[hypervolume]{hypervolume}} function is used to create the demand points.
-#' This method can be used for hyper-dimensional data (d << 3).
-#' @seealso \code{\link[hypervolume]{hypervolume}}, \code{\link[ks]{kde}}, \code{\link[adehabitatHR]{mcp}}.
-#' @export
+#'
+#' @details Broadly speaking, demand points are generated by fitting a kernal
+#'   to the input \code{points}. A shape is then fit to the extent of
+#'   the kernal, and then points are randomly generated inside the shape. The
+#'   demand points are generated as random points inside the shape. The weights
+#'   for each demand point are calculated the estimated density of input points
+#'   at the demand point. By supplying 'ks' as an argument to \code{method} in
+#'   \code{kernel.method}, the shape is defined using a minimum convex polygon
+#'   \code{\link[adehabitatHR]{mcp}} and \code{\link[ks]{kde}} is used to fit
+#'   the kernel. Note this can only be used when the data is low-dimensional (d
+#'   < 3). By supplying \code{"hypervolume"} as an argument to \code{method},
+#'   the \code{\link[hypervolume]{hypervolume}} function is used to create the
+#'   demand points. This method can be used for hyper-dimensional data
+#'   (\eqn{d << 3}).
+#'
+#' @seealso \code{\link[hypervolume]{hypervolume}}, \code{\link[ks]{kde}},
+#'   \code{\link[adehabitatHR]{mcp}}.
+#'
 #' @examples
+#' # load data
 #' data(cs_spp, cs_space)
+#'
 #' # generate species points
-#' species.points <- randomPoints(cs_spp[[1]], n=100, prob=TRUE)
-#' env.points <- extract(cs_space, species.points)
+#' species.points <- randomPoints(cs_spp[[1]], n = 100, prob = TRUE)
+#' env.points <- raster::extract(cs_space, species.points)
+#'
 #' # generate demand points for a 1d space using ks
-#' dps1 <- make.DemandPoints(
-#'	points=env.points[,1],
-#'	kernel.method='ks'
-#' )
+#' dps1 <- make.DemandPoints(points = env.points[,1], kernel.method = "ks")
+#'
 #' # generate demand points for a 2d space using hypervolume
-#' dps2 <- make.DemandPoints(
-#'	points=env.points,
-#'	kernel.method='hypervolume',
-#'	samples.per.point=10
-#' )
-make.DemandPoints<-function(points, n=100L, quantile=0.5, kernel.method=c('ks', 'hypervolume')[1], ...) {
-	# check inputs for validity
-	o <- points
-	
-	if (sum(!is.finite(points))>0)
-		stop('argument to points contains non-finite values')
-	kernel.method <- match.arg(kernel.method, c('ks', 'hypervolume'))
-	# convert to matrix
-	if (!inherits(points, 'matrix') & inherits(points, 'numeric'))
-			points<-matrix(points, ncol=1)
-	if (ncol(points)>2 & kernel.method!='hypervolume')
-			stop(paste0('argument to kernel.method must be "hypervolume" when ncol(points)>2'))
-	# generate demand points
-	if (kernel.method=='ks') {
-		if (ncol(points)==1) {
-			dp<-demand.points.density1d(points, n=n, quantile=quantile, ...)
-		}
-		if (ncol(points)==2) {
-			dp<-demand.points.density2d(points, n=n, quantile=quantile, ...)
-		}
-	} else {
-		dp<-demand.points.hypervolume(points, n=n, quantile=quantile, ...)
-	}
-	# return demand points
-	return(
-		DemandPoints(
-			coords=dp$coords,
-			weights=dp$weights
-		)
-	)
+#' dps2 <- make.DemandPoints(points = env.points,
+#'                           kernel.method = "hypervolume",
+#'                           samples.per.point = 10)
+#'
+#' @export
+make.DemandPoints <- function(points, n = 100L, quantile = 0.5,
+                              kernel.method = c("ks", "hypervolume")[1], ...) {
+  # check inputs for validity
+  assertthat::assert_that(sum(!is.finite(c(points))) == 0,
+                          msg = paste0("argument to points contains ",
+                                       "non-finite values"))
+  kernel.method <- match.arg(kernel.method, c("ks", "hypervolume"))
+  # convert to matrix
+  if (!inherits(points, "matrix") && inherits(points, "numeric"))
+      points <- matrix(points, ncol = 1)
+  assertthat::assert_that(!(ncol(points) > 2 && kernel.method != "hypervolume"),
+                          msg = paste0("argument to kernel.method must be ",
+                                       "\"hypervolume\" when points has more ",
+                                       "two columns"))
+  # generate demand points
+  if (kernel.method == "ks") {
+    if (ncol(points) == 1) {
+      dp <- demand.points.density1d(points, n = n, quantile = quantile, ...)
+    }
+    if (ncol(points) == 2) {
+      dp <- demand.points.density2d(points, n = n, quantile = quantile, ...)
+    }
+  } else {
+    dp <- demand.points.hypervolume(points, n = n, quantile = quantile, ...)
+  }
+  # return demand points
+  return(DemandPoints(coords = dp$coords, weights = dp$weights))
 }
-

@@ -83,9 +83,11 @@
     </div>
 
     
-    <p>This function converts a <code>SpatialPolygonsDataFrame</code> to a <code>RasterLayer</code> using GDAL.
-It is expected to be faster than <code><a href='http://www.rdocumentation.org/packages/raster/topics/rasterize'>rasterize</a></code> for large datasets.
-However, it will be significantly slower for small datasets because the data will need to be written and read from disk.</p>
+    <p>This function converts a <code>SpatialPolygonsDataFrame</code> to a
+<code>RasterLayer</code> using GDAL. It is expected to be faster than
+<code><a href='http://www.rdocumentation.org/packages/raster/topics/rasterize'>rasterize</a></code> for large datasets. However, it will be
+significantly slower for small datasets because the data will need to be
+written and read from disk.</p>
     
 
     <pre class="usage"><span class='fu'>rasterizeGDAL</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
@@ -99,11 +101,14 @@ However, it will be significantly slower for small datasets because the data wil
     </tr>
     <tr>
       <th>y</th>
-      <td><p><code><a href='http://www.rdocumentation.org/packages/raster/topics/raster'>raster</a></code> with dimensions, extent, and resolution to be used as a template for new raster.</p></td>
+      <td><p><code><a href='http://www.rdocumentation.org/packages/raster/topics/raster'>raster</a></code> with dimensions, extent, and
+resolution to be used as a template for new raster.</p></td>
     </tr>
     <tr>
       <th>field</th>
-      <td><p><code>character</code> column name with values to burn into the output raster. If not supplied, default behaviour is to burn polygon indices into the <code><a href='http://www.rdocumentation.org/packages/raster/topics/raster'>raster</a></code>.</p></td>
+      <td><p><code>character</code> column name with values to burn into the
+output raster. If not supplied, default behaviour is to burn polygon
+indices into the <code><a href='http://www.rdocumentation.org/packages/raster/topics/raster'>raster</a></code>.</p></td>
     </tr>
     </table>
     
@@ -118,8 +123,18 @@ However, it will be significantly slower for small datasets because the data wil
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
+<span class='co'># load dat</span>
 <span class='fu'>data</span>(<span class='no'>cs_pus</span>,<span class='no'>cs_spp</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>rasterizeGDAL</span>(<span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>5</span>,], <span class='no'>cs_spp</span><span class='kw'>[[</span><span class='fl'>1</span>]])</div></pre>
+
+<span class='co'># rasterize spatial polygon data</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>rasterizeGDAL</span>(<span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>5</span>,], <span class='no'>cs_spp</span><span class='kw'>[[</span><span class='fl'>1</span>]])
+
+<span class='co'># plot data</span>
+<span class='fu'>par</span>(<span class='kw'>mfrow</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>2</span>))
+<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>5</span>,], <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"original data"</span>)
+<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"rasterized data"</span>)</div><img src='rasterizeGDAL-2.png' alt='' width='540' height='400' /><div class='input'>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -138,7 +153,7 @@ However, it will be significantly slower for small datasets because the data wil
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">

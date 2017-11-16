@@ -84,56 +84,69 @@
     </div>
 
     <div class="contents">
-    <div id="raptr-0-0-5" class="section level1">
+    <div id="raptr-0-1-0-released" class="section level1">
 <h1 class="hasAnchor">
-<a href="#raptr-0-0-5" class="anchor"></a>raptr 0.0.5</h1>
+<a href="#raptr-0-1-0-released" class="anchor"></a>raptr 0.1.0 (released)</h1>
 <ul>
-<li>fix documentation in <code>make.DemandPoints</code>
-</li>
-<li>\donttest instead of \dontrun for examples</li>
-<li>fix broken example code</li>
+<li>unit tests now compatible with <em>testthat R</em> package (version 1.0.2.9000).</li>
+<li>
+<em>assertthat R</em> package is now used for checking argument inputs.</li>
+<li>vignette now uses notangle engine and the placeholder file removed.</li>
+<li>code has been linted.</li>
+<li>functions from other packages are now called explicitly using <code>pkg::function</code>.</li>
+<li>messages are now displayed using <code>message</code> following best practices.</li>
+<li>updated readme.</li>
+<li>added citation for <em>Methods in Ecology and Evolution</em> paper. (TODO)</li>
+</ul>
+</div>
+    <div id="raptr-0-0-5-released" class="section level1">
+<h1 class="hasAnchor">
+<a href="#raptr-0-0-5-released" class="anchor"></a>raptr 0.0.5 (released)</h1>
+<ul>
+<li>fix documentation in <code>make.DemandPoints</code>.</li>
+<li>\donttest instead of \dontrun for examples.</li>
+<li>fix broken example code.</li>
 </ul>
 </div>
     <div id="raptr-0-0-4-unreleased" class="section level1">
 <h1 class="hasAnchor">
 <a href="#raptr-0-0-4-unreleased" class="anchor"></a>raptr 0.0.4 (unreleased)</h1>
 <ul>
-<li>find out which suggested packages are installed using <code>requireNamespace</code>
-</li>
-<li>add more links to package documentation</li>
-<li>register Rcpp functions</li>
+<li>find out which suggested packages are installed using <code>requireNamespace</code>.</li>
+<li>add more links to package documentation.</li>
+<li>register Rcpp functions.</li>
 </ul>
 </div>
-    <div id="raptr-0-0-3" class="section level1">
+    <div id="raptr-0-0-3-released" class="section level1">
 <h1 class="hasAnchor">
-<a href="#raptr-0-0-3" class="anchor"></a>raptr 0.0.3</h1>
+<a href="#raptr-0-0-3-released" class="anchor"></a>raptr 0.0.3 (released)</h1>
 <ul>
-<li>reduce memory consumption using external pointers</li>
-<li>fix memory leaks</li>
-<li>fix bug in tests for calcSpeciesAverageInPus</li>
+<li>reduce memory consumption using external pointers.</li>
+<li>fix memory leaks.</li>
+<li>fix bug in tests for calcSpeciesAverageInPus.</li>
 </ul>
 </div>
     <div id="raptr-0-0-2-unreleased" class="section level1">
 <h1 class="hasAnchor">
 <a href="#raptr-0-0-2-unreleased" class="anchor"></a>raptr 0.0.2 (unreleased)</h1>
 <ul>
-<li>reduce installation size</li>
-<li>fix typo in README</li>
+<li>reduce installation size.</li>
+<li>fix typo in README.</li>
 </ul>
 </div>
     <div id="raptr-0-0-1-1-unreleased" class="section level1">
 <h1 class="hasAnchor">
 <a href="#raptr-0-0-1-1-unreleased" class="anchor"></a>raptr 0.0.1.1 (unreleased)</h1>
 <ul>
-<li>fixed authorship typo</li>
-<li>updated README.md with instructions for installing from CRAN</li>
+<li>fixed authorship typo.</li>
+<li>updated README.md with instructions for installing from CRAN.</li>
 </ul>
 </div>
-    <div id="raptr-0-0-1" class="section level1">
+    <div id="raptr-0-0-1-unreleased" class="section level1">
 <h1 class="hasAnchor">
-<a href="#raptr-0-0-1" class="anchor"></a>raptr 0.0.1</h1>
+<a href="#raptr-0-0-1-unreleased" class="anchor"></a>raptr 0.0.1 (unreleased)</h1>
 <ul>
-<li>Initial package version</li>
+<li>Initial package version.</li>
 </ul>
 </div>
     </div>
@@ -143,12 +156,13 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#raptr-0-0-5">0.0.5</a></li>
+        <li><a href="#raptr-0-1-0-released">0.1.0</a></li>
+        <li><a href="#raptr-0-0-5-released">0.0.5</a></li>
         <li><a href="#raptr-0-0-4-unreleased">0.0.4</a></li>
-        <li><a href="#raptr-0-0-3">0.0.3</a></li>
+        <li><a href="#raptr-0-0-3-released">0.0.3</a></li>
         <li><a href="#raptr-0-0-2-unreleased">0.0.2</a></li>
         <li><a href="#raptr-0-0-1-1-unreleased">0.0.1.1</a></li>
-        <li><a href="#raptr-0-0-1">0.0.1</a></li>
+        <li><a href="#raptr-0-0-1-unreleased">0.0.1</a></li>
       </ul>
     </div>
   </div>
@@ -157,7 +171,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">

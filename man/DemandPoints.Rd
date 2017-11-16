@@ -7,7 +7,8 @@
 DemandPoints(coords, weights)
 }
 \arguments{
-\item{coords}{\code{\link[base]{matrix}} of coordinates for each demand point.}
+\item{coords}{\code{\link[base]{matrix}} of coordinates for each demand
+point.}
 
 \item{weights}{\code{numeric} weights for each demand point.}
 }
@@ -15,11 +16,15 @@ DemandPoints(coords, weights)
 This function creates a new DemandPoints object
 }
 \examples{
+# make demand points
 dps <- DemandPoints(
-matrix(rnorm(100), ncol=2),
-runif(50)
-)
+ matrix(rnorm(100), ncol=2),
+ runif(50))
+
+# print object
+print(dps)
+
 }
 \seealso{
-\code{\link{DemandPoints-class}}
+\code{\link{DemandPoints-class}}.
 }

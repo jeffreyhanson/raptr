@@ -89,14 +89,16 @@
         
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code>summary</code> table follows Marxan conventions (summary.dat in <a href = 'http://marxan.net/downloads/uq_marxan_web_2/module5.html'>http://marxan.net/downloads/uq_marxan_web_2/module5.html</a>). The columns are:</p><table><tr><td>
+    <p>The <code>summary</code> table follows Marxan conventions (summary.dat in <a href = 'http://marxan.net/downloads/uq_marxan_web_2/module5.html'>http://marxan.net/downloads/uq_marxan_web_2/module5.html</a>). The columns
+are:</p><table><tr><td>
 <code>Run_Number</code>
 </td>
 </tr><tr><td> The index of each solution in the object. </td>
 </tr><tr><td>
 <code>Status</code>
 </td>
-</tr><tr><td> The status of the solution. The values in this column correspond to outputs from the Gurobi software package (<a href = 'http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html'>http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html</a>).</td>
+</tr><tr><td> The status of the solution. The values in this column correspond to
+ outputs from the Gurobi software package (<a href = 'http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html'>http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html</a>).</td>
 </tr><tr><td>
 <code>Score</code>
 </td>
@@ -112,11 +114,13 @@
 </tr><tr><td>
 <code>Connectivity_Total</code>
 </td>
-</tr><tr><td> The total amount of shared boundary length between all planning units. All solutions in the same object should have equal values for this column. </td>
+</tr><tr><td> The total amount of shared boundary length between all planning units.
+All solutions in the same object should have equal values for this column. </td>
 </tr><tr><td>
 <code>Connectivity_In</code>
 </td>
-</tr><tr><td> The amount of shared boundary length among planning units selected in the solution </td>
+</tr><tr><td> The amount of shared boundary length among planning units selected in
+the solution </td>
 </tr><tr><td>
 <code>Connectivity_Edge</code>
 </td>
@@ -124,21 +128,31 @@
 </tr><tr><td>
 <code>Connectivity_Out</code>
 </td>
-</tr><tr><td> The number of shared boundary length among planning units not selected in the solution  </td>
+</tr><tr><td> The number of shared boundary length among planning units not selected
+in the solution  </td>
 </tr><tr><td>
 <code>Connectivity_Fraction</code>
 </td>
-</tr><tr><td> The ratio of shared boundary length in the solution (<code>Connectivity_In</code>) to the total amount of boundary length (<code>Connectivity_Edge</code>). This ratio is an indicator of solution quality. Solutions with a lower ratio will have less planning units and will be more efficient. </td>
+</tr><tr><td> The ratio of shared boundary length in the solution
+(<code>Connectivity_In</code>) to the total amount of boundary length
+(<code>Connectivity_Edge</code>). This ratio is an indicator of solution quality.
+Solutions with a lower ratio will have less planning units and will be more
+efficient. </td>
 </tr></table>
     
     <h2 class="hasAnchor" id="slots"><a class="anchor" href="#slots"></a>Slots</h2>
 
     
     <dl class='dl-horizontal'>
-<dt><code>summary</code></dt><dd><p><code><a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with summary information on solutions.</p></dd>
-    <dt><code>selections</code></dt><dd><p><code><a href='http://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></code> with binary selections. The cell \(x_{ij}\) denotes if planning unit \(j\) is selected in the \(i\)'th solution</p></dd>
-    <dt><code>amount.held</code></dt><dd><p><code><a href='http://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></code> with the amount held for each species in each solution.</p></dd>
-    <dt><code>space.held</code></dt><dd><p><code><a href='http://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></code> with the proportion of attribute space sampled for each species in each solution.</p></dd>
+<dt><code>summary</code></dt><dd><p><code><a href='http://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></code> with summary information on
+solutions.</p></dd>
+    <dt><code>selections</code></dt><dd><p><code><a href='http://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></code> with binary selections. The cell
+\(x_{ij}\) denotes if planning unit \(j\) is selected in the
+\(i\)'th solution.</p></dd>
+    <dt><code>amount.held</code></dt><dd><p><code><a href='http://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></code> with the amount held for each
+species in each solution.</p></dd>
+    <dt><code>space.held</code></dt><dd><p><code><a href='http://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></code> with the proportion of attribute
+space sampled for each species in each solution.</p></dd>
     <dt><code>best</code></dt><dd><p><code>integer</code> with index of best solution.</p></dd>
     <dt><code>logging.file</code></dt><dd><p><code>character</code> Gurobi log files.</p></dd>
     <dt><code>.cache</code></dt><dd><p><code><a href='http://www.rdocumentation.org/packages/base/topics/environment'>environment</a></code> used to store extra data.</p></dd>
@@ -166,7 +180,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">

@@ -8,13 +8,18 @@ RapResults(summary, selections, amount.held, space.held, logging.file,
   .cache = new.env())
 }
 \arguments{
-\item{summary}{\code{\link[base]{data.frame}} with summary information on solutions. See details below for more information.}
+\item{summary}{\code{\link[base]{data.frame}} with summary information on
+solutions. See details below for more information.}
 
-\item{selections}{\code{\link[base]{matrix}} with binary selections. The cell \eqn{x_{ij}} denotes if planning unit \eqn{j} is selected in the \eqn{i}'th solution.}
+\item{selections}{\code{\link[base]{matrix}} with binary selections. The
+cell \eqn{x_{ij}} denotes if planning unit \eqn{j} is selected in the
+\eqn{i}'th solution.}
 
-\item{amount.held}{\code{\link[base]{matrix}} with the amount held for each species in each solution.}
+\item{amount.held}{\code{\link[base]{matrix}} with the amount held for each
+species in each solution.}
 
-\item{space.held}{\code{\link[base]{matrix}} with the proportion of attribute space sampled for each species in each solution.}
+\item{space.held}{\code{\link[base]{matrix}} with the proportion of
+attribute space sampled for each species in each solution.}
 
 \item{logging.file}{\code{character} Gurobi log files.}
 
@@ -27,12 +32,15 @@ RapResults(summary, selections, amount.held, space.held, logging.file,
 This function creates a new \code{\link{RapResults}} object.
 }
 \details{
-The \code{summary} table follows Marxan conventions (summary.dat in \url{http://marxan.net/downloads/uq_marxan_web_2/module5.html}). The columns are:
+The \code{summary} table follows Marxan conventions (summary.dat in \url{http://marxan.net/downloads/uq_marxan_web_2/module5.html}). The columns
+are:
+
 \tabular{cl}{
 \code{Run_Number}
 \tab The index of each solution in the object. \cr
 \code{Status}
-\tab The status of the solution. The values in this column correspond to outputs from the Gurobi software package (\url{http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html}).\cr
+\tab The status of the solution. The values in this column correspond to
+outputs from the Gurobi software package (\url{http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html}).\cr
 \code{Score}
 \tab The objective function for the solution. \cr
 \code{Cost}
@@ -40,20 +48,28 @@ The \code{summary} table follows Marxan conventions (summary.dat in \url{http://
 \code{Planning_Units}
 \tab Number of planning units selected in a solution \cr
 \code{Connectivity_Total}
-\tab The total amount of shared boundary length between all planning units. All solutions in the same object should have equal values for this column. \cr
+\tab The total amount of shared boundary length between all planning units.
+All solutions in the same object should have equal values for this column. \cr
 \code{Connectivity_In}
-\tab The amount of shared boundary length among planning units selected in the solution \cr
+\tab The amount of shared boundary length among planning units selected in
+the solution \cr
 \code{Connectivity_Edge}
 \tab The amount of exposed boundary length in the solution \cr
 \code{Connectivity_Out}
-\tab The number of shared boundary length among planning units not selected in the solution  \cr
+\tab The number of shared boundary length among planning units not selected
+in the solution  \cr
 \code{Connectivity_Fraction}
-\tab The ratio of shared boundary length in the solution (\code{Connectivity_In}) to the total amount of boundary length (\code{Connectivity_Edge}). This ratio is an indicator of solution quality. Solutions with a lower ratio will have less planning units and will be more efficient. \cr
+\tab The ratio of shared boundary length in the solution
+(\code{Connectivity_In}) to the total amount of boundary length
+(\code{Connectivity_Edge}). This ratio is an indicator of solution quality.
+Solutions with a lower ratio will have less planning units and will be more
+efficient. \cr
 }
 }
 \note{
-slot \code{best} is automatically determined based on data in \code{summary}.
+slot \code{best} is automatically determined based on data in
+  \code{summary}.
 }
 \seealso{
-\code{\link{RapResults-class}} \code{\link{read.RapResults}}
+\code{\link{RapResults-class}} \code{\link{read.RapResults}}.
 }

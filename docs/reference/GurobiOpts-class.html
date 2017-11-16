@@ -91,13 +91,22 @@
 
     
     <dl class='dl-horizontal'>
-<dt><code>Threads</code></dt><dd><p><code>integer</code> number of cores to use for processing. Defaults to 1L.</p></dd>
-    <dt><code>MIPGap</code></dt><dd><p><code>numeric</code> MIP gap specifying minimum solution quality. Defaults to 0.1.</p></dd>
-    <dt><code>Method</code></dt><dd><p><code>integer</code> Algorithm to use for solving model. Defaults to 0L.</p></dd>
-    <dt><code>Presolve</code></dt><dd><p><code>integer</code> code for level of computation in presolve. Defaults to 2.</p></dd>
-    <dt><code>TimeLimit</code></dt><dd><p><code>integer</code> number of seconds to allow for solving. Defaults to NA_integer_, and so a time limit is not imposed.</p></dd>
-    <dt><code>NumberSolutions</code></dt><dd><p><code>integer</code> number of solutions to generate. Defaults to 1L.</p></dd>
-    <dt><code>MultipleSolutionsMethod</code></dt><dd><p><code>character</code> name of method to obtain multiple solutions <code>NumberSolutions</code> &gt; 1. Available options are 'benders.cuts' and 'solution.pool'. Defaults to 'benders.cuts'. Note that the <code>rgurobi</code> package must be to use the 'solution.pool' method.</p></dd>
+<dt><code>Threads</code></dt><dd><p><code>integer</code> number of cores to use for processing. Defaults
+to 1L.</p></dd>
+    <dt><code>MIPGap</code></dt><dd><p><code>numeric</code> MIP gap specifying minimum solution quality.
+Defaults to 0.1.</p></dd>
+    <dt><code>Method</code></dt><dd><p><code>integer</code> Algorithm to use for solving model. Defaults to #'   0L.</p></dd>
+    <dt><code>Presolve</code></dt><dd><p><code>integer</code> code for level of computation in presolve.
+Defaults to 2.</p></dd>
+    <dt><code>TimeLimit</code></dt><dd><p><code>integer</code> number of seconds to allow for solving.
+Defaults to NA_integer_, and so a time limit is not imposed.</p></dd>
+    <dt><code>NumberSolutions</code></dt><dd><p><code>integer</code> number of solutions to generate.
+Defaults to 1L.</p></dd>
+    <dt><code>MultipleSolutionsMethod</code></dt><dd><p><code>character</code> name of method to obtain
+multiple solutions (used when <code>NumberSolutions</code> is greater than one).
+Available options are <code>"benders.cuts"</code> and <code>"solution.pool"</code>.
+Defaults to <code>"benders.cuts"</code>. Note that the <code>rgurobi</code> package
+must be to use the <code>"solution.pool"</code> method.</p></dd>
 </dl>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -120,7 +129,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">

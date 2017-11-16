@@ -26,27 +26,43 @@ spp.plot(x, species, ...)
   1, 0.7), grayscale = FALSE, main = NULL, force.reset = FALSE, ...)
 }
 \arguments{
-\item{x}{\code{\link{RapData}}, \code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.}
+\item{x}{\code{\link{RapData}}, \code{\link{RapUnsolved}}, or
+\code{\link{RapSolved}} object.}
 
-\item{species}{\code{character} name of species, or \code{integer} index for species.}
+\item{species}{\code{character} name of species, or \code{integer} index for
+species.}
 
 \item{...}{not used.}
 
-\item{prob.color.palette}{\code{character} name of color palette to denote probability of occupancy of the species in planning units (see \code{\link[RColorBrewer]{brewer.pal}}). Defaults to 'YlGnBu'.}
+\item{prob.color.palette}{\code{character} name of color palette to denote
+probability of occupancy of the species in planning units (see
+\code{\link[RColorBrewer]{brewer.pal}}). Defaults to \code{"YlGnBu"}.}
 
-\item{pu.color.palette}{\code{character} name of colors or color palette (\code{\link[RColorBrewer]{brewer.pal}}) to indicate planning unit statuses. Defaults to \code{c('grey30', 'green', 'black', 'red')} which indicate non selected, selected, locked in, and locked out (respectively).}
+\item{pu.color.palette}{\code{character} name of colors or color palette
+(\code{\link[RColorBrewer]{brewer.pal}}) to indicate planning unit
+statuses. Defaults to \code{c("grey30", "green", "black", "red")} which
+indicate non selected, selected, locked in, and locked out (respectively).}
 
-\item{basemap}{\code{character} object indicating the type of basemap to use (see \code{\link{basemap}}). Use either 'none', 'roadmap', 'mobile', 'satellite', 'terrain', 'hybrid', 'mapmaker-roadmap', 'mapmaker-hybrid'. Defaults to 'none'.}
+\item{basemap}{\code{character} object indicating the type of basemap to use
+(see \code{\link{basemap}}). Valid options include \code{"none"},
+\code{"roadmap"}, \code{"mobile"}, \code{"satellite"}, \code{"terrain"},
+\code{"hybrid"}, \code{"mapmaker-roadmap"}, \code{"mapmaker-hybrid"}.
+Defaults to \code{"none"}.}
 
-\item{alpha}{\code{numeric} value to indicate how transparent the planning unit colors should be.}
+\item{alpha}{\code{numeric} value to indicating the transparency level for
+plotting the planning units.}
 
 \item{grayscale}{\code{logical} should the basemap be gray-scaled?}
 
-\item{main}{\code{character} title for the plot. Defaults to \code{NULL} and a default title is used.}
+\item{main}{\code{character} title for the plot. Defaults to \code{NULL} and
+a default title is used.}
 
-\item{force.reset}{\code{logical} if basemap data has been cached, should it be re-downloaded?}
+\item{force.reset}{\code{logical} if basemap data has been cached, should it
+be re-downloaded?}
 
-\item{y}{\code{NULL} \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.}
+\item{y}{\code{NULL} \code{integer} 0 to return values for the best
+solution, \code{integer} value greater than 0 for \code{y}'th solution
+value.}
 }
 \description{
 This function plots the distribution of species across the study area.
@@ -54,8 +70,11 @@ This function plots the distribution of species across the study area.
 \examples{
 # load RapSolved objects
 data(sim_ru, sim_rs)
+
 # plot first species in sim_ru
-spp.plot(sim_ru, species=1)
-# plot 'bimodal' species in sim_rs
-spp.plot(sim_rs, species='bimodal')
+spp.plot(sim_ru, species = 1)
+
+# plot "bimodal" species in sim_rs
+spp.plot(sim_rs, species = "bimodal")
+
 }

@@ -3,7 +3,7 @@
 \name{as.list}
 \alias{as.list}
 \alias{as.list.GurobiOpts}
-\title{Convert object to list.}
+\title{Convert object to list}
 \usage{
 \method{as.list}{GurobiOpts}(x, ...)
 }
@@ -19,11 +19,14 @@
 Convert \code{\link{GurobiOpts}} object to list.
 }
 \note{
-This function will not include the \code{NumberSolutions} slot, the \code{MultipleSolutionsMethod} slot, or the \code{TimeLimit} slot if it is not finite.
+This function will not include the \code{NumberSolutions} slot, the
+ \code{MultipleSolutionsMethod} slot, or the \code{TimeLimit} slot if it is
+ not finite.
 }
 \examples{
 # make GuboriOpts object
 x <- GurobiOpts()
+
 # convert to list
 as.list(x)
 }

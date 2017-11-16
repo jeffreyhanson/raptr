@@ -83,11 +83,8 @@
     </div>
 
     
-    <p>This dataset contains data to generate example prioritisations for the pale-headed Rosella (<em>Platycercus adscitus</em>) in Queensland, Australia. Specific objects in the dataset include:</p><ul>
-<li><p>cs_pus: <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygonsDataFrame</a></code> planning units. The units were generated as \(30km^2\) squares across the species' range, and then clipped to the Queensland, Australia (using data obtained from the <a href = 'Australia Bureau of Statistics'>http://www.abs.gov.au/ausstats/abs@.nsf/mf/1259.0.30.001?OpenDocument</a>). They were then overliad with Australia's protected area network (obtained from the World Database on Protected Areas (WDPA) at <a href = 'http://www.protectedplanet.net/'>http://www.protectedplanet.net/</a>). This attribute table has 3 fields. The 'area' field contains the units' area, the 'cost' field is set to 1 for all units, and the 'status' filed indicates if 50% or more of the units' extent is covered by protected areas.</p></li>
-<li><p>cs_spp: <code><a href='http://www.rdocumentation.org/packages/raster/topics/Raster-classes'>RasterLayer-class</a></code> probability distribution map for the <em>P. adscitus</em> clipped to Queensland, Australia. This map was derived from records obtained from The Atlas of Living Australia (<a href = 'http://ala.org.au/'>http://ala.org.au/</a>).</p></li>
-<li><p>cs_space: <code>RasterStack</code> describing broad-scale variation across Queensland. containing the projections of the first two axes from a annual precipitation data across the species range (obtained from <a href = 'http://www.worldclim.org/'>http://www.worldclim.org/</a> as BIO12, and resampled to \(10km^2\) resolution).</p></li>
-</ul>
+    <p>This dataset contains data to generate example prioritisations for the
+pale-headed Rosella (<em>Platycercus adscitus</em>) in Queensland, Australia.</p>
     
 
     <pre class="usage"><span class='no'>cs_pus</span>
@@ -100,10 +97,37 @@
 
     <p>cs_pus: <code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygonsDataFrame</a></code>, cs_spp: <code><a href='http://www.rdocumentation.org/packages/raster/topics/Raster-classes'>RasterLayer-class</a></code>, cs_space: <code><a href='http://www.rdocumentation.org/packages/raster/topics/Raster-classes'>RasterStack-class</a></code>.</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The objects in the dataset are listed below.</p><dl class='dl-horizontal'>
+ <dt>cs_pus</dt><dd><p><code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygonsDataFrame</a></code> planning units.
+               The units were generated as \(30km^2\) squares across the
+               species' range, and then clipped to the Queensland, Australia
+               (using data obtained from the <a href = 'Australia Bureau of Statistics'>http://www.abs.gov.au/ausstats/abs@.nsf/mf/1259.0.30.001?OpenDocument</a>).
+               They were then overlaid with Australia's protected area
+               network (obtained from the World Database on Protected Areas
+               (WDPA) at <a href = 'http://www.protectedplanet.net/'>http://www.protectedplanet.net/</a>). This
+               attribute table has 3 fields. The <code>area</code> field denotes
+               the amount of land encompassed by each unit, the <code>cost</code>
+               field is set to 1 for all units, and the <code>status</code> field
+               indicates if 50% or more of the units' extent is covered by
+               protected areas.</p></dd>
+ <dt>cs_spp</dt><dd><p><code><a href='http://www.rdocumentation.org/packages/raster/topics/Raster-classes'>RasterLayer-class</a></code> probability
+               distribution map for the <em>P. adscitus</em> clipped to
+               Queensland, Australia. This map was derived from records
+               obtained from The Atlas of Living Australia
+               (<a href = 'http://ala.org.au/'>http://ala.org.au/</a>)</p></dd>.
+ <dt>cs_space</dt><dd><p><code><a href='http://www.rdocumentation.org/packages/raster/topics/stack'>stack</a></code> describing broad-scale climate
+                 variation across Queensland
+                 (obtained from <a href = 'http://www.worldclim.org/'>http://www.worldclim.org/</a>,
+                 and resampled to \(10km^2\) resolution).</p></dd>
+</dl>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load data</span>
 <span class='fu'>data</span>(<span class='no'>cs_pus</span>, <span class='no'>cs_spp</span>, <span class='no'>cs_space</span>)
+
 <span class='co'># plot data</span>
 
 <span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>cs_pus</span>)</div><img src='casestudy_data-2.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>cs_spp</span>)</div><img src='casestudy_data-4.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>cs_space</span>)</div><img src='casestudy_data-6.png' alt='' width='540' height='400' /><div class='input'>
@@ -114,6 +138,8 @@
     <ul class="nav nav-pills nav-stacked">
       
       <li><a href="#format">Format</a></li>
+
+      <li><a href="#details">Details</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
@@ -123,7 +149,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">

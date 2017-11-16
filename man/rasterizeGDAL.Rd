@@ -9,23 +9,37 @@ rasterizeGDAL(x, y, field = NULL)
 \arguments{
 \item{x}{\code{\link[sp]{SpatialPolygonsDataFrame}} object.}
 
-\item{y}{\code{\link[raster]{raster}} with dimensions, extent, and resolution to be used as a template for new raster.}
+\item{y}{\code{\link[raster]{raster}} with dimensions, extent, and
+resolution to be used as a template for new raster.}
 
-\item{field}{\code{character} column name with values to burn into the output raster. If not supplied, default behaviour is to burn polygon indices into the \code{\link[raster]{raster}}.}
+\item{field}{\code{character} column name with values to burn into the
+output raster. If not supplied, default behaviour is to burn polygon
+indices into the \code{\link[raster]{raster}}.}
 }
 \value{
 \code{RasterLayer} object.
 }
 \description{
-This function converts a \code{SpatialPolygonsDataFrame} to a \code{RasterLayer} using GDAL.
-It is expected to be faster than \code{\link[raster]{rasterize}} for large datasets.
-However, it will be significantly slower for small datasets because the data will need to be written and read from disk.
+This function converts a \code{SpatialPolygonsDataFrame} to a
+\code{RasterLayer} using GDAL. It is expected to be faster than
+\code{\link[raster]{rasterize}} for large datasets. However, it will be
+significantly slower for small datasets because the data will need to be
+written and read from disk.
 }
 \examples{
 \donttest{
+# load dat
 data(cs_pus,cs_spp)
+
+# rasterize spatial polygon data
 x <- rasterizeGDAL(cs_pus[1:5,], cs_spp[[1]])
+
+# plot data
+par(mfrow = c(1,2))
+plot(cs_pus[1:5,], main = "original data")
+plot(x, main = "rasterized data")
 }
+
 }
 \seealso{
 \code{\link[raster]{rasterize}}, \code{\link{is.gdalInstalled}}.

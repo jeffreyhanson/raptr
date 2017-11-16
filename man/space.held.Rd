@@ -12,26 +12,36 @@ space.held(x, y, species, space)
 \arguments{
 \item{x}{\code{\link{RapResults}} or \code{\link{RapSolved}} object.}
 
-\item{y}{\code{NULL} to return all values, \code{integer} 0 to return values for best solution, \code{integer} value greater than 0 for \code{y}'th solution value.}
+\item{y}{Available inputs include: \code{NULL} to return all values,
+\code{integer} number specifying the solution for which the value should
+be returned, and \code{0} to return the value for the best solution.}
 
-\item{species}{\code{NULL} for all species or \code{integer} indicating species.}
+\item{species}{\code{NULL} for all species or \code{integer} indicating
+species.}
 
-\item{space}{\code{NULL} for all spaces or \code{integer} indicating a specific space.}
+\item{space}{\code{NULL} for all spaces or \code{integer} indicating a
+specific space.}
 }
 \value{
 code{matrix} object.
 }
 \description{
-This function returns the attribute space held for each species in a solution.
+This function returns the attribute space held for each species in a
+solution.
 }
 \examples{
+# load data
 data(sim_rs)
+
 # space held (\\\%) for each species in best solution
 space.held(sim_rs, 0)
+
 # space held (\\\%) for each species in second solution
 space.held(sim_rs, 2)
+
 # space held (\\\%) for each species in each solution
 space.held(sim_rs)
+
 }
 \seealso{
 \code{\link{RapResults}}, \code{\link{RapSolved}}.

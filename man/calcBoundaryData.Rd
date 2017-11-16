@@ -15,32 +15,48 @@ calcBoundaryData(x, tol, length.factor, edge.factor)
   length.factor = 1, edge.factor = 1)
 }
 \arguments{
-\item{x}{\code{\link[PBSmapping]{PolySet}}, \code{\link[sp]{SpatialPolygons}} or \code{\link[sp]{SpatialPolygonsDataFrame}} object.}
+\item{x}{\code{\link[PBSmapping]{PolySet}},
+\code{\link[sp]{SpatialPolygons}} or
+\code{\link[sp]{SpatialPolygonsDataFrame}} object.}
 
-\item{tol}{\code{numeric} to specify precision of calculations (that is, how far apart do vertices have to be to be considered different).}
+\item{tol}{\code{numeric} to specify precision of calculations. In other
+words, how far apart vertices have to be to be considered different?}
 
 \item{length.factor}{\code{numeric} to scale boundary lengths.}
 
-\item{edge.factor}{\code{numeric} to scale boundary lengths for edges that do not have any neighbors, such as those that occur along the margins.}
+\item{edge.factor}{\code{numeric} to scale boundary lengths for edges that
+do not have any neighbors, such as those that occur along the margins.}
 
 \item{...}{not used.}
 }
 \value{
-\code{data.frame} with 'id1' (\code{integer}), 'id2' (\code{integer}), and 'amount' (\code{numeric}) columns.
+\code{data.frame} with 'id1' (\code{integer}), 'id2'
+  (\code{integer}), and 'amount' (\code{numeric}) columns.
 }
 \description{
-This function calculates boundary length data for \code{\link[PBSmapping]{PolySet}}, \code{\link[sp]{SpatialPolygons}}, and \code{\link[sp]{SpatialPolygonsDataFrame}} objects.
-Be aware that this function is designed to be as fast as possible, and as a consequence, if this
-function is used improperly then it may crash R. Furthermore, multipart polygons with touching edges will likely result in inaccuracies.
-If argument set to \code{\link[sp]{SpatialPolygons}} or \code{\link[sp]{SpatialPolygonsDataFrame}}, this will be converted to PolySet before processing.
+This function calculates boundary length data for
+\code{\link[PBSmapping]{PolySet}}, \code{\link[sp]{SpatialPolygons}}, and
+\code{\link[sp]{SpatialPolygonsDataFrame}} objects. Be aware that this
+function is designed with performance in mind, and as a consequence, if this
+function is used improperly then it may crash R. Furthermore, multipart
+polygons with touching edges will likely result in inaccuracies.
+If argument set to \code{\link[sp]{SpatialPolygons}} or
+\code{\link[sp]{SpatialPolygonsDataFrame}}, this will be converted to
+PolySet before processing.
 }
 \examples{
 # simulate planning units
 sim_pus <- sim.pus(225L)
+
 # calculate boundary data
 bound.dat <- calcBoundaryData(sim_pus)
+
+# print summary of boundary data
 summary(bound.dat)
+
 }
 \seealso{
-This function is based on the algorithm in QMARXAN \url{https://github.com/tsw-apropos/qmarxan} for calculating boundary length.
+This function is based on the algorithm in QMARXAN
+  \url{https://github.com/tsw-apropos/qmarxan} for calculating boundary
+  length.
 }

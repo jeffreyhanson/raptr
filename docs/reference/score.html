@@ -83,7 +83,8 @@
     </div>
 
     
-    <p>Extract solution score from <code><a href='RapResults.html'>RapResults</a></code> or <code><a href='RapSolved.html'>RapSolved</a></code> object.</p>
+    <p>Extract solution score from <code><a href='RapResults.html'>RapResults</a></code> or
+<code><a href='RapSolved.html'>RapSolved</a></code> object.</p>
     
 
     <pre class="usage"><span class='fu'>score</span>(<span class='no'>x</span>, <span class='no'>y</span>)
@@ -103,13 +104,16 @@
     </tr>
     <tr>
       <th>y</th>
-      <td><p>"NULL" to return all scores, "integer" 0 to return score for best solution, "integer" value greater than 0 for <code>y</code>'th solution score.</p></td>
+      <td><p>Available inputs include: <code>NULL</code> to return all scores,
+<code>integer</code> number specifying the solution for which the score should
+be returned, and <code>0</code> to return score for the best solution.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>"matrix" or "numeric" vector with solution score(s) depending on arguments.</p>
+    <p><code>matrix</code> or <code>numeric</code> vector with solution score(s)
+ depending on arguments.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -119,10 +123,14 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load data</span>
 <span class='fu'>data</span>(<span class='no'>sim_rs</span>)
-<span class='co'># score for best solution</span>
-<span class='fu'>score</span>(<span class='no'>sim_rs</span>, <span class='fl'>0</span>)</div><div class='output co'>#&gt; [1] 20</div><div class='input'><span class='co'># score for second solution</span>
-<span class='fu'>score</span>(<span class='no'>sim_rs</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; [1] 20</div><div class='input'><span class='co'># score for all solutions</span>
-<span class='fu'>score</span>(<span class='no'>sim_rs</span>, <span class='kw'>NULL</span>)</div><div class='output co'>#&gt; [1] 20 20 20</div></pre>
+
+<span class='co'># score for the best solution</span>
+<span class='fu'>score</span>(<span class='no'>sim_rs</span>, <span class='fl'>0</span>)</div><div class='output co'>#&gt; [1] 20</div><div class='input'>
+<span class='co'># score for the second solution</span>
+<span class='fu'>score</span>(<span class='no'>sim_rs</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; [1] 20</div><div class='input'>
+<span class='co'># score for all solutions</span>
+<span class='fu'>score</span>(<span class='no'>sim_rs</span>, <span class='kw'>NULL</span>)</div><div class='output co'>#&gt; [1] 20 20 20</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -141,7 +149,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">

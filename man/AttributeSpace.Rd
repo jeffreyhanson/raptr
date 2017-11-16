@@ -7,28 +7,29 @@
 AttributeSpace(planning.unit.points, demand.points, species)
 }
 \arguments{
-\item{planning.unit.points}{\code{\link{PlanningUnitPoints}} for planning unit in the space.}
+\item{planning.unit.points}{\code{\link{PlanningUnitPoints}} for planning
+unit in the space.}
 
 \item{demand.points}{\code{\link{DemandPoints}} object for the space.}
 
-\item{species}{\code{integer} species id to indicate which species the space is associated with.}
+\item{species}{\code{integer} species id to indicate which species the space
+is associated with.}
 }
 \description{
 This function creates a new \code{AttributeSpace} object.
 }
 \examples{
 space <- AttributeSpace(
-PlanningUnitPoints(
-	matrix(rnorm(100), ncol=2),
-	seq_len(50)
-),
-DemandPoints(
-	matrix(rnorm(100), ncol=2),
-	runif(50)
-),
-species=1L
-)
+ PlanningUnitPoints(
+   matrix(rnorm(100), ncol = 2),
+   seq_len(50)),
+ DemandPoints(
+   matrix(rnorm(100), ncol = 2),
+   runif(50)),
+ species = 1L)
+
 }
 \seealso{
-\code{\link{DemandPoints-class}}, \code{\link{PlanningUnitPoints-class}}.
+\code{\link{DemandPoints-class}},
+  \code{\link{PlanningUnitPoints-class}}.
 }

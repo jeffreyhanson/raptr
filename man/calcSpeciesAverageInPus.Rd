@@ -16,22 +16,32 @@ calcSpeciesAverageInPus(x, ...)
   ...)
 }
 \arguments{
-\item{x}{\code{\link[sp]{SpatialPolygons}} or \code{\link[sp]{SpatialPolygonsDataFrame}} object.}
+\item{x}{\code{\link[sp]{SpatialPolygons}} or
+\code{\link[sp]{SpatialPolygonsDataFrame}} object.}
 
 \item{...}{not used.}
 
-\item{y}{\code{\link[raster]{RasterLayer-class}}, \code{\link[raster]{RasterStack-class}}, or \code{\link[raster]{RasterBrick-class}} object.}
+\item{y}{\code{\link[raster]{RasterLayer-class}},
+\code{\link[raster]{RasterStack-class}}, or
+\code{\link[raster]{RasterBrick-class}} object.}
 
-\item{ids}{\code{integer} vector of ids. Defaults to indices of layers in the \code{y}.}
+\item{ids}{\code{integer} vector of ids. Defaults to indices of layers in
+arguement to \code{y}.}
 
-\item{ncores}{\code{integer} number of cores to use for processing. Defaults to 1.}
+\item{ncores}{\code{integer} number of cores to use for processing. Defaults
+to 1.}
 
-\item{gdal}{\code{logical} Should raster processing be performed using GDAL libraries? Defaults to \code{FALSE}.}
+\item{gdal}{\code{logical} Should raster processing be performed using GDAL
+libraries? Defaults to \code{FALSE}.}
 
-\item{field}{\code{integer} index or \code{character} name of column with planning unit ids. Valid only when \code{x} is a \code{\link[sp]{SpatialPolygonsDataFrame}} object. Default behaviour is to treat each polygon as a different planning unit.}
+\item{field}{\code{integer} index or \code{character} name of column with
+planning unit ids. Valid only when \code{x} is a
+\code{\link[sp]{SpatialPolygonsDataFrame}} object. Default behaviour is to
+treat each polygon as a different planning unit.}
 }
 \value{
-\code{\link[base]{data.frame}} with sum of raster values in each polygon.
+\code{\link[base]{data.frame}} with sum of raster values in each
+  polygon.
 }
 \description{
 This function calculates the average of species values in each planning unit.
@@ -41,12 +51,17 @@ By default all polygons will be treated as having separate ids.
 \examples{
 # simulate data
 sim_pus <- sim.pus(225L)
-sim_spp <- lapply(c('uniform','normal','bimodal'), sim.species, n=1, res=1, x=sim_pus)
+sim_spp <- lapply(c("uniform", "normal", "bimodal"), sim.species, n = 1,
+                  res = 1, x = sim_pus)
+
 # calculate average for 1 species
 puvspr1.dat <- calcSpeciesAverageInPus(sim_pus, sim_spp[[1]])
+
 # calculate average for multiple species
 puvspr2.dat <- calcSpeciesAverageInPus(sim_pus, stack(sim_spp))
+
 }
 \seealso{
-\code{\link{is.gdalInstalled}}, \url{http://www.gdal.org/}, \url{http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries}.
+\code{\link{is.gdalInstalled}}, \url{http://www.gdal.org/},
+  \url{http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries}.
 }

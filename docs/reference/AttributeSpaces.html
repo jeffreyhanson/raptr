@@ -93,7 +93,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>spaces</th>
-      <td><p><code>list</code> of <code><a href='AttributeSpace.html'>AttributeSpace</a></code> objects for different species.</p></td>
+      <td><p><code>list</code> of <code><a href='AttributeSpace.html'>AttributeSpace</a></code> objects for
+different species.</p></td>
     </tr>
     <tr>
       <th>name</th>
@@ -108,29 +109,24 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>space1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='AttributeSpace.html'>AttributeSpace</a></span>(
-<span class='fu'><a href='PlanningUnitPoints.html'>PlanningUnitPoints</a></span>(
-        <span class='fu'>matrix</span>(<span class='fu'>rnorm</span>(<span class='fl'>100</span>), <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>2</span>),
-        <span class='fu'>seq_len</span>(<span class='fl'>50</span>)
-),
-<span class='fu'><a href='DemandPoints.html'>DemandPoints</a></span>(
-        <span class='fu'>matrix</span>(<span class='fu'>rnorm</span>(<span class='fl'>100</span>), <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>2</span>),
-        <span class='fu'>runif</span>(<span class='fl'>50</span>)
-),
-<span class='kw'>species</span><span class='kw'>=</span><span class='fl'>1L</span>
-)
+  <span class='fu'><a href='PlanningUnitPoints.html'>PlanningUnitPoints</a></span>(
+    <span class='fu'>matrix</span>(<span class='fu'>rnorm</span>(<span class='fl'>100</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>2</span>),
+    <span class='fu'>seq_len</span>(<span class='fl'>50</span>)),
+  <span class='fu'><a href='DemandPoints.html'>DemandPoints</a></span>(
+    <span class='fu'>matrix</span>(<span class='fu'>rnorm</span>(<span class='fl'>100</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>2</span>),
+    <span class='fu'>runif</span>(<span class='fl'>50</span>)),
+  <span class='kw'>species</span> <span class='kw'>=</span> <span class='fl'>1L</span>)
 
 <span class='no'>space2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='AttributeSpace.html'>AttributeSpace</a></span>(
-<span class='fu'><a href='PlanningUnitPoints.html'>PlanningUnitPoints</a></span>(
-        <span class='fu'>matrix</span>(<span class='fu'>rnorm</span>(<span class='fl'>100</span>), <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>2</span>),
-        <span class='fu'>seq_len</span>(<span class='fl'>50</span>)
-),
-<span class='fu'><a href='DemandPoints.html'>DemandPoints</a></span>(
-        <span class='fu'>matrix</span>(<span class='fu'>rnorm</span>(<span class='fl'>100</span>), <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>2</span>),
-        <span class='fu'>runif</span>(<span class='fl'>50</span>)
-),
-<span class='kw'>species</span><span class='kw'>=</span><span class='fl'>2L</span>
-)
-<span class='no'>spaces1</span> <span class='kw'>&lt;-</span> <span class='fu'>AttributeSpaces</span>(<span class='fu'>list</span>(<span class='no'>space1</span>, <span class='no'>space2</span>), <span class='st'>'test'</span>)</div></pre>
+  <span class='fu'><a href='PlanningUnitPoints.html'>PlanningUnitPoints</a></span>(
+    <span class='fu'>matrix</span>(<span class='fu'>rnorm</span>(<span class='fl'>100</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>2</span>),
+    <span class='fu'>seq_len</span>(<span class='fl'>50</span>)),
+  <span class='fu'><a href='DemandPoints.html'>DemandPoints</a></span>(
+    <span class='fu'>matrix</span>(<span class='fu'>rnorm</span>(<span class='fl'>100</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>2</span>),
+    <span class='fu'>runif</span>(<span class='fl'>50</span>)),
+  <span class='kw'>species</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
+
+<span class='no'>spaces</span> <span class='kw'>&lt;-</span> <span class='fu'>AttributeSpaces</span>(<span class='fu'>list</span>(<span class='no'>space1</span>, <span class='no'>space2</span>), <span class='st'>"spaces"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -147,7 +143,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">

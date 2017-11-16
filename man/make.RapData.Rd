@@ -7,49 +7,72 @@
 make.RapData(pus, species, spaces = NULL, amount.target = 0.2,
   space.target = 0.2, n.demand.points = 100L, kernel.method = c("ks",
   "hypervolume")[1], quantile = 0.5, species.points = NULL,
-  n.species.points = ceiling(0.2 * cellStats(species, "sum")),
+  n.species.points = ceiling(0.2 * raster::cellStats(species, "sum")),
   include.geographic.space = TRUE, scale = TRUE, verbose = FALSE, ...)
 }
 \arguments{
 \item{pus}{\code{\link[sp]{SpatialPolygons}} with planning unit data.}
 
-\item{species}{\code{\link[raster]{raster}} with species probability distribution data.}
+\item{species}{\code{\link[raster]{raster}} with species probability
+distribution data.}
 
-\item{spaces}{\code{list} of/or \code{\link[raster]{raster}} representing projects of attribute space over geographic space. Use a \code{list} to denote separate attribute spaces.}
+\item{spaces}{\code{list} of/or \code{\link[raster]{raster}} representing
+projects of attribute space over geographic space. Use a \code{list} to
+denote separate attribute spaces.}
 
-\item{amount.target}{\code{numeric} vector for area targets (\%) for each species. Defaults to 0.2 for each attribute space for each species.}
+\item{amount.target}{\code{numeric} vector for area targets (\%) for each
+species. Defaults to 0.2 for each attribute space for each species.}
 
-\item{space.target}{\code{numeric} vector for attribute space targets (\%) for each species. Defaults to 0.2 for each attribute space for each species and each space.}
+\item{space.target}{\code{numeric} vector for attribute space targets (\%)
+for each species. Defaults to 0.2 for each attribute space for each
+species and each space.}
 
-\item{n.demand.points}{\code{integer} number of demand points to use for each attribute space for each species. Defaults to 100L.}
+\item{n.demand.points}{\code{integer} number of demand points to use for
+each attribute space for each species. Defaults to 100L.}
 
-\item{kernel.method}{\code{character} name of kernel method to use to generate demand points. Use either \code{ks} or \code{hypervolume}.}
+\item{kernel.method}{\code{character} name of kernel method to use to
+generate demand points. Use either \code{"ks"} or \code{"hypervolume"}.}
 
-\item{quantile}{\code{numeric} quantile to generate demand points within. If 0 then demand points are generated across the full range of values the \code{species.points} intersect. Defaults to 0.5.}
+\item{quantile}{\code{numeric} quantile to generate demand points within. If
+\code{species.points} intersect. Defaults to 0.5.}
 
-\item{species.points}{\code{list} of/or \code{\link[sp]{SpatialPointsDataFrame}} or \code{\link[sp]{SpatialPoints}} with species presence records. Use a \code{list} of objects to represent different species. Must have the same number of elements as \code{species}. If not supplied then use \code{n.species.points} to sample points from the species distributions.}
+\item{species.points}{\code{list} of/or
+\code{\link[sp]{SpatialPointsDataFrame}} or
+\code{\link[sp]{SpatialPoints}} with species presence records. Use a
+\code{list} of objects to represent different species. Must have the same
+number of elements as \code{species}. If not supplied then use
+\code{n.species.points} to sample points from the species distributions.}
 
-\item{n.species.points}{\code{numeric} vector specifiying the number points to sample the species distributions to use to generate demand points. Defaults to 20\% of the distribution.}
+\item{n.species.points}{\code{numeric} vector specifiying the number points
+to sample the species distributions to use to generate demand points.
+Defaults to 20\% of the distribution.}
 
-\item{include.geographic.space}{\code{logical} should the geographic space be considered an attribute space?}
+\item{include.geographic.space}{\code{logical} should the geographic space
+be considered an attribute space?}
 
-\item{scale}{\code{logical} scale the attribute spaces to unit mean and standard deviation? This prevents overflow. Defaults to \code{TRUE}.}
+\item{scale}{\code{logical} scale the attribute spaces to unit mean and
+standard deviation? This prevents overflow. Defaults to \code{TRUE}.}
 
 \item{verbose}{\code{logical} print statements during processing?}
 
-\item{...}{additional arguments to \code{\link{calcBoundaryData}} and \code{\link{calcSpeciesAverageInPus}}.}
+\item{...}{additional arguments to \code{\link{calcBoundaryData}} and
+\code{\link{calcSpeciesAverageInPus}}.}
 }
 \description{
-This function prepares spatially explicit planning unit, species data, and landscape data layers for RAP processing.
+This function prepares spatially explicit planning unit, species data, and
+landscape data layers for RAP processing.
 }
 \examples{
-\donttest{
 # load data
 data(cs_pus, cs_spp, cs_space)
-# make RapData object using the 1st 10 planning units
-x <- make.RapData(cs_pus[1:10,], cs_spp, cs_space, include.geographic.space=TRUE)
+\donttest{
+# make RapData object using the first 10 planning units in the dat
+x <- make.RapData(cs_pus[1:10,], cs_spp, cs_space,
+                  include.geographic.space = TRUE)
+# print object
 print(x)
 }
+
 }
 \seealso{
 \code{\link{RapData-class}}, \code{\link{RapData}}.

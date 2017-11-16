@@ -83,26 +83,13 @@
     </div>
 
     
-    <p>This function plots the solutions contained in <code><a href='RapSolved.html'>RapSolved</a></code> objects. It can be used to show a single solution, or the the selection frequencies of planning
-units contained in a single <code><a href='RapSolved.html'>RapSolved</a></code> object. Additionally, two <code><a href='RapSolved.html'>RapSolved</a></code> objects can be supplied to plot the differences between them.</p>
+    <p>This function plots the solutions contained in <code><a href='RapSolved.html'>RapSolved</a></code>
+objects. It can be used to show a single solution, or the the selection
+frequencies of planning units contained in a single <code><a href='RapSolved.html'>RapSolved</a></code>
+object. Additionally, two <code><a href='RapSolved.html'>RapSolved</a></code> objects can be supplied to
+plot the differences between them.</p>
     
 
-    <pre class="usage"><span class='co'># S4 method for RapSolved,numeric</span>
-<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>basemap</span> <span class='kw'>=</span> <span class='st'>"none"</span>,
-  <span class='kw'>pu.color.palette</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"#e5f5f9"</span>, <span class='st'>"#00441b"</span>, <span class='st'>"#FFFF00"</span>, <span class='st'>"#FF0000"</span>),
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fu'>ifelse</span>(<span class='no'>basemap</span> <span class='kw'>==</span> <span class='st'>"none"</span>, <span class='fl'>1</span>, <span class='fl'>0.7</span>), <span class='kw'>grayscale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>force.reset</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S4 method for RapSolved,missing</span>
-<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>basemap</span> <span class='kw'>=</span> <span class='st'>"none"</span>,
-  <span class='kw'>pu.color.palette</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PuBu"</span>, <span class='st'>"#FFFF00"</span>, <span class='st'>"#FF0000"</span>), <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fu'>ifelse</span>(<span class='no'>basemap</span>
-  <span class='kw'>==</span> <span class='st'>"none"</span>, <span class='fl'>1</span>, <span class='fl'>0.7</span>), <span class='kw'>grayscale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>force.reset</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S4 method for RapSolved,RapSolved</span>
-<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>i</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>j</span> <span class='kw'>=</span> <span class='no'>i</span>,
-  <span class='kw'>basemap</span> <span class='kw'>=</span> <span class='st'>"none"</span>, <span class='kw'>pu.color.palette</span> <span class='kw'>=</span> <span class='fu'>ifelse</span>(<span class='fu'>is.null</span>(<span class='no'>i</span>), <span class='fu'>c</span>(<span class='st'>"RdYlBu"</span>,
-  <span class='st'>"#FFFF00"</span>, <span class='st'>"#FF0000"</span>), <span class='st'>"Accent"</span>), <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fu'>ifelse</span>(<span class='no'>basemap</span> <span class='kw'>==</span> <span class='st'>"none"</span>, <span class='fl'>1</span>, <span class='fl'>0.7</span>),
-  <span class='kw'>grayscale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>force.reset</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -113,19 +100,45 @@ units contained in a single <code><a href='RapSolved.html'>RapSolved</a></code> 
     </tr>
     <tr>
       <th>y</th>
-      <td><p><code>NULL</code> to plot selection frequencies. <code>numeric</code> to plot the i'th solution, or 0 to plot the best solution. <code><a href='RapSolved.html'>RapSolved</a></code> object to plot differences in solutions between objects. Defaults to <code>ULL</code>.</p></td>
+      <td><p>Available inputs are: <code>NULL</code> to plot selection frequencies,
+<code>numeric</code> number to plot a specific solution,
+<code>0</code> to plot the best solution, and a <code><a href='RapSolved.html'>RapSolved</a></code>
+object to plot differences in solutions between objects. Defaults to
+<code>NULL</code>.</p></td>
+    </tr>
+    <tr>
+      <th>i</th>
+      <td><p>Available inputs are: <code>NULL</code> to plot selection frequencies.
+<code>numeric</code> to plot a specific solution, <code>0</code> to plot the best
+solution. This argument is only used when <code>y</code> is a
+<code><a href='RapSolved.html'>RapSolved</a></code> object. Defaults to <code>NULL</code>.</p></td>
+    </tr>
+    <tr>
+      <th>j</th>
+      <td><p>Available inputs are: <code>NULL</code> to plot selection frequencies.
+<code>numeric</code> to plot a specific solution, <code>0</code> to plot the best
+solution. This argument is only used when <code>y</code> is a
+<code><a href='RapSolved.html'>RapSolved</a></code> object. Defaults to argument <code>j</code>.</p></td>
     </tr>
     <tr>
       <th>basemap</th>
-      <td><p><code>character</code> object indicating the type of basemap to use (see <code><a href='basemap.html'>basemap</a></code>). Use either 'none', 'roadmap', 'mobile', 'satellite', 'terrain', 'hybrid', 'mapmaker-roadmap', 'mapmaker-hybrid'. Defaults to 'none'.</p></td>
+      <td><p><code>character</code> object indicating the type of basemap to use
+(see <code><a href='basemap.html'>basemap</a></code>). Valid options include <code>"none"</code>,
+<code>"roadmap"</code>, <code>"mobile"</code>, <code>"satellite"</code>, <code>"terrain"</code>,
+<code>"hybrid"</code>, <code>"mapmaker-roadmap"</code>, <code>"mapmaker-hybrid"</code>.
+Defaults to <code>"none"</code>.</p></td>
     </tr>
     <tr>
       <th>pu.color.palette</th>
-      <td><p><code>character</code> name of colors or color palette (<code><a href='http://www.rdocumentation.org/packages/RColorBrewer/topics/ColorBrewer'>brewer.pal</a></code>) to indicate planning unit statuses. Defaults to <code>c('grey30', 'green', 'yellow', 'black', 'gray80', 'red', 'orange')</code>.</p></td>
+      <td><p><code>character</code> name of colors or color palette
+(<code><a href='http://www.rdocumentation.org/packages/RColorBrewer/topics/ColorBrewer'>brewer.pal</a></code>) to indicate planning unit
+statuses. Defaults to <code>c("grey30", "green", "yellow", "black",
+"gray80", "red", "orange")</code>.</p></td>
     </tr>
     <tr>
       <th>alpha</th>
-      <td><p><code>numeric</code> value to indicate how transparent the planning unit colors should be.</p></td>
+      <td><p><code>numeric</code> value to indicating the transparency level for
+coloring the planning units.</p></td>
     </tr>
     <tr>
       <th>grayscale</th>
@@ -133,19 +146,13 @@ units contained in a single <code><a href='RapSolved.html'>RapSolved</a></code> 
     </tr>
     <tr>
       <th>main</th>
-      <td><p><code>character</code> title for the plot. Defaults to <code>NULL</code> and a default title is used.</p></td>
+      <td><p><code>character</code> title for the plot. Defaults to <code>NULL</code> and
+a default title is used.</p></td>
     </tr>
     <tr>
       <th>force.reset</th>
-      <td><p><code>logical</code> if basemap data has been cached, should it be re-downloaded?</p></td>
-    </tr>
-    <tr>
-      <th>i</th>
-      <td><p><code>NULL</code> to plot selection frequencies. <code>numeric</code> to plot the i'th solution, or 0 to plot the best solution. Only used when <code>y</code> is a <code><a href='RapSolved.html'>RapSolved</a></code> object. Defaults to <code>NULL</code>.</p></td>
-    </tr>
-    <tr>
-      <th>j</th>
-      <td><p><code>NULL</code> to plot selection frequencies. <code>numeric</code> to plot the i'th solution, or 0 to plot the best solution. Only used when <code>y</code> is a <code><a href='RapSolved.html'>RapSolved</a></code> object. Defaults to <code>j</code>.</p></td>
+      <td><p><code>logical</code> if basemap data has been cached, should it
+be re-downloaded?</p></td>
     </tr>
     </table>
     
@@ -155,13 +162,16 @@ units contained in a single <code><a href='RapSolved.html'>RapSolved</a></code> 
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># load data</span>
+    <pre class="examples"><div class='input'><span class='co'># load example data set with solutions</span>
 <span class='fu'>data</span>(<span class='no'>sim_rs</span>)
-<span class='co'>## simulated species examples</span>
+
 <span class='co'># plot selection frequencies</span>
-<span class='fu'>plot</span>(<span class='no'>sim_rs</span>)</div><img src='plot-2.png' alt='' width='540' height='400' /><div class='input'><span class='co'># plot best solution</span>
-<span class='fu'>plot</span>(<span class='no'>sim_rs</span>, <span class='fl'>0</span>)</div><img src='plot-4.png' alt='' width='540' height='400' /><div class='input'><span class='co'># plot second solution</span>
-<span class='fu'>plot</span>(<span class='no'>sim_rs</span>, <span class='fl'>2</span>)</div><img src='plot-6.png' alt='' width='540' height='400' /><div class='input'><span class='co'># plot different between best and second solutions</span>
+<span class='fu'>plot</span>(<span class='no'>sim_rs</span>)</div><img src='plot-2.png' alt='' width='540' height='400' /><div class='input'>
+<span class='co'># plot best solution</span>
+<span class='fu'>plot</span>(<span class='no'>sim_rs</span>, <span class='fl'>0</span>)</div><img src='plot-4.png' alt='' width='540' height='400' /><div class='input'>
+<span class='co'># plot second solution</span>
+<span class='fu'>plot</span>(<span class='no'>sim_rs</span>, <span class='fl'>2</span>)</div><img src='plot-6.png' alt='' width='540' height='400' /><div class='input'>
+<span class='co'># plot different between best and second solutions</span>
 <span class='fu'>plot</span>(<span class='no'>sim_rs</span>, <span class='no'>sim_rs</span>, <span class='fl'>0</span> ,<span class='fl'>2</span>)</div><img src='plot-8.png' alt='' width='540' height='400' /></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -179,7 +189,7 @@ units contained in a single <code><a href='RapSolved.html'>RapSolved</a></code> 
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">

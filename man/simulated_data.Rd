@@ -8,39 +8,58 @@
 \alias{sim_ru}
 \alias{sim_rs}
 \title{Simulated dataset for a conservation planning exercise}
-\format{\code{\link[sp]{SpatialPolygonsDataFrame}}, \code{\link[raster]{RasterStack-class}}, \code{list} of \code{\link{DemandPoints}} objects.}
+\format{\code{\link[sp]{SpatialPolygonsDataFrame}},
+  \code{\link[raster]{RasterStack-class}}, \code{list} of
+  \code{\link{DemandPoints}} objects.}
 \usage{
 sim_ru
 
 sim_rs
 }
 \description{
-This dataset contains all the data needed to generate prioritisations for three simulated species. This dataset contains planning units, species distribution
-maps, and demand points for each species. For the purposes of exploring the behaviour of the problem, demand points were generated using the centroids of planning units
-and the probability that they are occupied by the species. Note that methodology is not encouraged for real-world conservation planning.
-The species were simulated to represent different simplified versions of species distributions encountered:
-\itemize{
-\item uniform: This species has an equal probability (0.5) of occurring in all planning units.
-\item normal: This species has a single range-core where it is most likely to be found. It is less likely to be found in areas further away from the centre of its range.
-\item bimodal: This species has two distinct ecotypes. Each ecotype has its own range cores and range marginal areas.
-}
+This dataset contains all the data needed to generate prioritisations for
+three simulated species. This dataset contains planning units, species
+distribution maps, and demand points for each species. For the purposes of
+exploring the behaviour of the problem, demand points were generated using
+the centroids of planning units and the probability that they are occupied
+by the species. Note that methodology is not encouraged for real-world
+conservation planning.
 }
 \details{
-The objects contained in this dataset are:
-\itemize{
-\item sim_ru: A \code{\link{RapUnsolved}} object with all the simulated data.
-\item sim_rs: A \code{\link{RapSolved}} object with 5 near-optimal solutions.
+The species were simulated to represent various simplified species
+distributions.
+
+\describe{
+  \item{uniform}{This species has an equal probability (0.5) of occurring in
+                 all planning units.}
+ \item{normal}{This species has a single range-core where it is most likely
+               to be found. It is less likely to be found in areas further
+               away from the centre of its range.}
+ \item{bimodal}{This species has two distinct ecotypes. Each ecotype has its
+                own core and marginal area.}
+}
+
+The objects contained in this dataset are listed below.
+
+\describe{
+ \item{sim_ru}{A \code{\link{RapUnsolved}} object with all the simulated
+               data.}
+ \item{sim_rs}{A \code{\link{RapSolved}} object with 5 near-optimal
+               solutions.}
 }
 }
 \examples{
 # load data
 data(sim_ru, sim_rs)
+
 # plot species distributions
 spp.plot(sim_ru, 1)
 spp.plot(sim_ru, 2)
 spp.plot(sim_ru, 3)
+
 # plot selection frequencies
 plot(sim_rs)
+
 # plot best solution
 plot(sim_rs, 0)
 }

@@ -83,7 +83,8 @@
     </div>
 
     
-    <p>This functions creates a blank raster based on the spatial extent of a Spatial object.</p>
+    <p>This functions creates a blank raster based on the spatial extent of a
+Spatial object.</p>
     
 
     <pre class="usage"><span class='fu'>blank.raster</span>(<span class='no'>x</span>, <span class='no'>res</span>)</pre>
@@ -97,7 +98,9 @@
     </tr>
     <tr>
       <th>res</th>
-      <td><p><code>numeric vector</code> specifying resolution of the output raster in the x and y dimensions. If <code>vector</code> is of length one, then the pixels are assumed to be square.</p></td>
+      <td><p><code>numeric vector</code> specifying resolution of the output raster
+in the x and y dimensions. If <code>vector</code> is of length one, then the
+pixels are assumed to be square.</p></td>
     </tr>
     </table>
     
@@ -105,6 +108,7 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># make SpatialPolygons</span>
 <span class='no'>polys</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sim.pus.html'>sim.pus</a></span>(<span class='fl'>225L</span>)
+
 <span class='co'># make RasterLayer from SpatialPolygons</span>
 <span class='fu'>blank.raster</span>(<span class='no'>polys</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; class       : RasterLayer 
 #&gt; dimensions  : 15, 15, 225  (nrow, ncol, ncell)
@@ -114,7 +118,8 @@
 #&gt; data source : in memory
 #&gt; names       : layer 
 #&gt; values      : 1, 1  (min, max)
-#&gt; </div></pre>
+#&gt; </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -129,7 +134,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, Jonathan R Rhodes, Hugh P Possingham, Richard A Fuller.</p>
+  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">
