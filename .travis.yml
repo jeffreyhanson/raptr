@@ -1,9 +1,13 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: r
+
 sudo: required
+
 dist: trusty
+
 warnings_are_errors: true
+
 r:
   - release
   - devel
@@ -11,6 +15,8 @@ r:
 os:
   - linux
   - osx
+
+r_build_args: --no-build-vignettes
 
 env:
   global:
