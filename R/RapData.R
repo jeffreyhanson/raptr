@@ -705,9 +705,11 @@ print.RapData <- function(x, ..., header = TRUE) {
 
 #' @rdname show
 #'
+#' @usage \S4method{show}{RapData}(object)
+#'
 #' @name show
 #'
-#' @export
+#' @aliases show,RapData-method
 methods::setMethod("show",
   methods::signature(object = "RapData"),
   function(object) print.RapData(object))
@@ -730,11 +732,14 @@ methods::setMethod("cache",
   methods::signature(x = "RapData", name = "character", y = "missing"),
   function(x, name, y) return(x@.cache[[name]]))
 
+
 #' @rdname is.comparable
+#'
+#' @usage \S4method{is.comparable}{RapData,RapData}(x, y)
 #'
 #' @name is.comparable
 #'
-#' @export
+#' @aliases is.comparable,RapData,RapData-method
 methods::setMethod("is.comparable",
   methods::signature(x = "RapData", y = "RapData"),
   function(x, y) {

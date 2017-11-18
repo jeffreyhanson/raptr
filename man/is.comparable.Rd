@@ -4,12 +4,22 @@
 \name{is.comparable}
 \alias{is.comparable}
 \alias{is.comparable}
+\alias{is.comparable,RapData,RapData-method}
 \alias{is.comparable}
+\alias{is.comparable,RapUnsolOrSol,RapUnsolOrSol-method}
 \alias{is.comparable}
+\alias{is.comparable,RapData,RapUnsolOrSol-method}
 \alias{is.comparable}
+\alias{is.comparable,RapUnsolOrSol,RapData-method}
 \title{Compare Rap objects}
 \usage{
+\S4method{is.comparable}{RapData,RapData}(x, y)
+
+\S4method{is.comparable}{RapUnsolOrSol,RapUnsolOrSol}(x, y)
+
 \S4method{is.comparable}{RapData,RapUnsolOrSol}(x, y)
+
+\S4method{is.comparable}{RapUnsolOrSol,RapData}(x, y)
 }
 \arguments{
 \item{x}{\code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.}

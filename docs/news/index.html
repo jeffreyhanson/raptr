@@ -90,13 +90,16 @@
 <ul>
 <li>unit tests now compatible with <em>testthat R</em> package (version 1.0.2.9000).</li>
 <li>
-<em>assertthat R</em> package is now used for checking argument inputs.</li>
-<li>vignette now uses notangle engine and the placeholder file removed.</li>
+<em>assertthat R</em> package is now used for validating function arguments.</li>
+<li>vignette now uses <code>knitr::rmarkdown_notangle</code> engine to avoid running the code during package checks, and placeholder vignette file has been removed.</li>
 <li>code has been linted.</li>
 <li>functions from other packages are now called explicitly using <code>pkg::function</code>.</li>
 <li>messages are now displayed using <code>message</code> following best practices.</li>
 <li>updated readme.</li>
-<li>added citation for <em>Methods in Ecology and Evolution</em> paper. (TODO)</li>
+<li>added citation for <em>Methods in Ecology and Evolution</em> paper.</li>
+<li>strip debugging symbols from compiled files to reduce installation size.</li>
+<li>
+<code>is.GurobiInstalled</code> now does not run <em>gurobi</em> to avoid spurious notes during CRAN checks on academic license.</li>
 </ul>
 </div>
     <div id="raptr-0-0-5-released" class="section level1">

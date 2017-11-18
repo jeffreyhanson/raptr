@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>RapResults: An S4 class to represent RAP results <U+2014> RapResults-class <e2><80><a2> raptr</title>
+<title>RapResults: An S4 class to represent RAP results — RapResults-class • raptr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -89,56 +89,29 @@
         
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code>summary</code> table follows Marxan conventions (summary.dat in <a href = 'http://marxan.net/downloads/uq_marxan_web_2/module5.html'>http://marxan.net/downloads/uq_marxan_web_2/module5.html</a>). The columns
-are:</p><table><tr><td>
-<code>Run_Number</code>
-</td>
-</tr><tr><td> The index of each solution in the object. </td>
-</tr><tr><td>
-<code>Status</code>
-</td>
-</tr><tr><td> The status of the solution. The values in this column correspond to
- outputs from the Gurobi software package (<a href = 'http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html'>http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html</a>).</td>
-</tr><tr><td>
-<code>Score</code>
-</td>
-</tr><tr><td> The objective function for the solution. </td>
-</tr><tr><td>
-<code>Cost</code>
-</td>
-</tr><tr><td> Total cost associated with a solution </td>
-</tr><tr><td>
-<code>Planning_Units</code>
-</td>
-</tr><tr><td> Number of planning units selected in a solution </td>
-</tr><tr><td>
-<code>Connectivity_Total</code>
-</td>
-</tr><tr><td> The total amount of shared boundary length between all planning units.
-All solutions in the same object should have equal values for this column. </td>
-</tr><tr><td>
-<code>Connectivity_In</code>
-</td>
-</tr><tr><td> The amount of shared boundary length among planning units selected in
-the solution </td>
-</tr><tr><td>
-<code>Connectivity_Edge</code>
-</td>
-</tr><tr><td> The amount of exposed boundary length in the solution </td>
-</tr><tr><td>
-<code>Connectivity_Out</code>
-</td>
-</tr><tr><td> The number of shared boundary length among planning units not selected
-in the solution  </td>
-</tr><tr><td>
-<code>Connectivity_Fraction</code>
-</td>
-</tr><tr><td> The ratio of shared boundary length in the solution
-(<code>Connectivity_In</code>) to the total amount of boundary length
+    <p>The <code>summary</code> table follows Marxan conventions ("summary.dat" in <a href = 'http://marxan.net/downloads/uq_marxan_web_2/module5.html'>http://marxan.net/downloads/uq_marxan_web_2/module5.html</a>). The columns
+are:</p><dl class='dl-horizontal'>
+<dt>Run_Number</dt><dd><p>The index of each solution in the object.</p></dd>
+<dt>Status</dt><dd><p>The status of the solution. The values in this column
+correspond to outputs from the Gurobi software package (<a href = 'http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html'>http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html</a>).</p></dd>
+<dt>Score</dt><dd><p>The objective function for the solution.</p></dd>
+<dt>Cost</dt><dd><p>Total cost associated with a solution.</p></dd>
+<dt>Planning_Units</dt><dd><p>Number of planning units selected in a solution.</p></dd>
+<dt>Connectivity_Total</dt><dd><p>The total amount of shared boundary length between
+all planning units. All solutions in the same object should have equal
+values for this column.</p></dd>
+<dt>Connectivity_In</dt><dd><p>The amount of shared boundary length among planning
+units selected in the solution.</p></dd>
+<dt>Connectivity_Edge</dt><dd><p>The amount of exposed boundary length in the
+solution.</p></dd>
+<dt>Connectivity_Out</dt><dd><p>The number of shared boundary length among planning
+units not selected in the solution.</p></dd>
+<dt>Connectivity_Fraction</dt><dd><p>The ratio of shared boundary length in the
+solution (<code>Connectivity_In</code>) to the total amount of boundary length
 (<code>Connectivity_Edge</code>). This ratio is an indicator of solution quality.
 Solutions with a lower ratio will have less planning units and will be more
-efficient. </td>
-</tr></table>
+efficient.</p></dd>
+</dl>
     
     <h2 class="hasAnchor" id="slots"><a class="anchor" href="#slots"></a>Slots</h2>
 

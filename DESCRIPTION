@@ -17,13 +17,13 @@ Description: Biodiversity is in crisis. The overarching aim of conservation
     this package uses the commercial 'Gurobi' software package (obtained from
     <http://www.gurobi.com/>). Additionally, the 'rgurobi' package can also be
     installed to provide extra functionality (obtained from
-    <http://github.com/jeffreyhanson/rgurobi>) For more information on using
-    this package, see our paper published in Methods in Ecology and Evolution
-    (<https://dx.doi.org/10.1111/2041-210X.12862>).
+    <http://github.com/jeffreyhanson/rgurobi>). For more information on using
+    this package, see Hanson et al. (2017) <doi:10.1111/2041-210X.12862>.
 Imports:
     utils,
     methods,
     assertthat,
+    Matrix,
     boot,
     grDevices,
     PBSmapping,
@@ -31,7 +31,6 @@ Imports:
     stats,
     scales,
     shape,
-    Matrix,
     adehabitatHR,
     RgoogleMaps,
     RandomFields,

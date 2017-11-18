@@ -99,9 +99,11 @@ print.RapReliableOpts <- function(x, ..., header=TRUE) {
 
 #' @rdname show
 #'
+#' @usage \S4method{show}{RapReliableOpts}(object)
+#'
 #' @name show
 #'
-#' @export
+#' @aliases show,RapReliableOpts-method
 methods::setMethod("show", "RapReliableOpts",
                    function(object) print.RapReliableOpts(object))
 

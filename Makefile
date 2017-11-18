@@ -16,15 +16,10 @@ readme:
 	R --slave -e "devtools::load_all();rmarkdown::render('README.Rmd')"
 
 site:
-	R -e "devtools::load_all();pkgdown::build_site()"
+	R --slave -e "devtools::load_all();pkgdown::build_site()"
 
 vignette:
-	R -e "devtools::load_all();devtools::build_vignettes()"
-
-
-codoc:
-	echo "\n===== CODOC =====\n" > check.log 2>&1
-	R --slave -e "devtools::load_all();tools::codoc(dir = ".")" >> check.log 2>&1
+	R --slave -e "devtools::load_all();devtools::build_vignettes()"
 
 test:
 	echo "\n===== UNIT TESTS =====\n" > test.log 2>&1
@@ -32,11 +27,11 @@ test:
 	rm -f tests/testthat/Rplots.pdf
 	rm -f gurobi.log
 
-check:
+vcheck:
 	echo "\n===== R CMD CHECK (valgrind) =====\n" > check.log 2>&1
 	R --slave -d "valgrind --tool=memcheck" -e "devtools::check()" >> check.log 2>&1
 
-qcheck:
+check:
 	echo "\n===== R CMD CHECK =====\n" > check.log 2>&1
 	R --slave -e "devtools::check()" >> check.log 2>&1
 
@@ -49,4 +44,4 @@ build:
 install:
 	R --slave -e "devtools::install_local('../raptr')"
 
-.PHONY: clean initc readme man site man test check codoc wbcheck qcheck build install
+.PHONY: clean initc readme man site man test check codoc wbcheck vcheck build install

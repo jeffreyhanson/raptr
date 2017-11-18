@@ -3,9 +3,31 @@
 \name{plot}
 \alias{plot}
 \alias{plot}
+\alias{plot,RapSolved,numeric-method}
 \alias{plot}
+\alias{plot,RapSolved,missing-method}
 \alias{plot}
+\alias{plot,RapSolved,RapSolved-method}
 \title{Plot object}
+\usage{
+\S4method{plot}{RapSolved,numeric}(x, y, basemap = "none",
+ pu.color.palette = c("#e5f5f9", "#00441b", "#FFFF00", "#FF0000"), alpha =
+ ifelse(basemap == "none", 1, 0.7), grayscale = FALSE, main = NULL,
+ force.reset = FALSE)
+
+\S4method{plot}{RapSolved,missing}(x, y, basemap = "none",
+pu.color.palette = c("PuBu", "#FFFF00", "#FF0000"),
+alpha = ifelse(basemap == "none", 1, 0.7),
+grayscale = FALSE, main = NULL,
+force.reset = FALSE)
+
+\S4method{plot}{RapSolved,RapSolved}(x, y, i = NULL, j = i,
+basemap = "none",
+pu.color.palette = ifelse(is.null(i), c("RdYlBu", "#FFFF00",
+"#FF0000"), "Accent"),
+alpha = ifelse(basemap == "none", 1, 0.7),
+grayscale = FALSE, main = NULL, force.reset = FALSE)
+}
 \arguments{
 \item{x}{\code{\link{RapSolved}} object.}
 

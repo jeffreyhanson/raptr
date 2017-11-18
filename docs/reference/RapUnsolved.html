@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a new RapUnsolved object <U+2014> RapUnsolved <e2><80><a2> raptr</title>
+<title>Create a new RapUnsolved object — RapUnsolved • raptr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -122,9 +122,11 @@ object.</p></td>
 <span class='co'># create inputs for RapUnsolved</span>
 <span class='no'>ro</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RapUnreliableOpts.html'>RapUnreliableOpts</a></span>()
 <span class='no'>rd</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='make.RapData.html'>make.RapData</a></span>(<span class='no'>cs_pus</span>[<span class='fu'>seq_len</span>(<span class='fl'>10</span>), ], <span class='no'>cs_spp</span>, <span class='kw'>NULL</span>,
-                   <span class='kw'>include.geographic.space</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,<span class='kw'>n.demand.points</span> <span class='kw'>=</span> <span class='fl'>5L</span>)</div><div class='output co'>#&gt; <span class='error'>Error in .local(x, n, type, ...): iteration did not converge; try enlarging argument iter</span></div><div class='input'>
+                   <span class='kw'>include.geographic.space</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,<span class='kw'>n.demand.points</span> <span class='kw'>=</span> <span class='fl'>5L</span>)
+
 <span class='co'># create RapUnsolved object</span>
-<span class='no'>ru</span> <span class='kw'>&lt;-</span> <span class='fu'>RapUnsolved</span>(<span class='no'>ro</span>, <span class='no'>rd</span>)</div><div class='output co'>#&gt; <span class='error'>Error in initialize(value, ...): object 'rd' not found</span></div><div class='input'><span class='fu'><a href='print.html'>print</a></span>(<span class='no'>ru</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(ru): object 'ru' not found</span></div><div class='input'>
+<span class='no'>ru</span> <span class='kw'>&lt;-</span> <span class='fu'>RapUnsolved</span>(<span class='no'>ro</span>, <span class='no'>rd</span>)
+<span class='fu'><a href='print.html'>print</a></span>(<span class='no'>ru</span>)</div><div class='output co'>#&gt; <span class='message'>RapUnsolved object</span></div><div class='output co'>#&gt; <span class='message'>Parameters</span></div><div class='output co'>#&gt; <span class='message'>  BLM: 0</span></div><div class='output co'>#&gt; <span class='message'>Data</span></div><div class='output co'>#&gt; <span class='message'>  Number of planning units: 10</span></div><div class='output co'>#&gt; <span class='message'>  Number of species: 4</span></div><div class='output co'>#&gt; <span class='message'>  Number of attribute spaces: 1</span></div><div class='input'>
 
 </div></pre>
   </div>

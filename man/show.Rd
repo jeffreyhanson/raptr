@@ -10,16 +10,34 @@
 \alias{show}
 \alias{show,ManualOpts-method}
 \alias{show}
+\alias{show,RapData-method}
 \alias{show}
+\alias{show,RapReliableOpts-method}
 \alias{show}
+\alias{show,RapResults-method}
 \alias{show}
+\alias{show,RapUnreliableOpts-method}
 \alias{show}
+\alias{show,RapUnsolved-method}
 \alias{show}
+\alias{show,RapSolved-method}
 \title{Show objects}
 \usage{
 \S4method{show}{GurobiOpts}(object)
 
 \S4method{show}{ManualOpts}(object)
+
+\S4method{show}{RapData}(object)
+
+\S4method{show}{RapReliableOpts}(object)
+
+\S4method{show}{RapResults}(object)
+
+\S4method{show}{RapUnreliableOpts}(object)
+
+\S4method{show}{RapUnsolved}(object)
+
+\S4method{show}{RapSolved}(object)
 }
 \arguments{
 \item{object}{\code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}},

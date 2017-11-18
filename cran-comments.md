@@ -10,6 +10,7 @@ This version has the following updates:
 * registers native routines and disables symbol search to avoid generating an additional note
 
 ## Test environments
+
 * [Ubuntu 14.04 (travis-ci)](https://travis-ci.org/jeffreyhanson/raptr/builds)
   + R release
   + R devel
@@ -21,17 +22,11 @@ This version has the following updates:
 
 ## R CMD check results
 
-0 errors | 0 warnings | 3 notes
+0 errors | 0 warnings | 2 notes
 
 ### Notes
 
 This version of the package does not encounter any new notes. All of these notes were encountered in the package's initial submission to CRAN. To help with reviewing this submission, I have included the notes and a copy of my original comments regarding them.
-
-
-* Possibly mis-spelled words in DESCRIPTION:
-    prioritizations (14:67, 16:29)
-
-  _The appearance of this note can be attributed to two reasons. First, this is my first submission to CRAN. Second, the spell-checker used does not recognize the "prioritizations" as a word. This is a commonly used word in conservation science, [for instance it is present in the title of this paper](http://onlinelibrary.wiley.com/doi/10.1111/acv.12222/full), and not a mis-spelled word._
 
 * checking package dependencies ... NOTE
   package suggested but not available for checking: 'gurobi', 'rgurobi'

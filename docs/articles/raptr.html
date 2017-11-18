@@ -59,7 +59,6 @@
     <div class="page-header toc-ignore">
       <h1>raptr: Representative and Adequate Prioritisation Toolkit in R</h1>
             
-            <h4 class="date">16 November 2017</h4>
           </div>
 
     
@@ -151,7 +150,13 @@
 <span class="kw">set.seed</span>(<span class="dv">500</span>)
 
 <span class="co"># set number of threads for computation</span>
-threads &lt;-<span class="st"> </span><span class="kw">as.integer</span>(<span class="kw">max</span>(<span class="dv">1</span>, <span class="kw">detectCores</span>()<span class="op">-</span><span class="dv">2</span>))</code></pre></div>
+threads &lt;-<span class="st"> </span><span class="kw">as.integer</span>(<span class="kw">max</span>(<span class="dv">1</span>, <span class="kw">detectCores</span>() <span class="op">-</span><span class="st"> </span><span class="dv">2</span>))</code></pre></div>
+<p>Now we will check if the the Gurobi software suite and the <em>gurobi R</em> package are installed. To do this, run the following code.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/is.GurobiInstalled.html">is.GurobiInstalled</a></span>(<span class="dt">verbose =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## The rgorubi R package is not installed</code></pre>
+<pre><code>## Follow these instructions to install the "rgurobi" R package from GitHub:
+##   http://bit.ly/1RF19XO</code></pre>
+<pre><code>## [1] TRUE</code></pre>
 </div>
 <div id="simulated-examples" class="section level1">
 <h1 class="hasAnchor">
@@ -164,50 +169,28 @@ threads &lt;-<span class="st"> </span><span class="kw">as.integer</span>(<span c
 sim_pus &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sim.pus.html">sim.pus</a></span>(100L)
 
 <span class="co"># simulate species distributions</span>
-sim_spp &lt;-<span class="st"> </span><span class="kw">lapply</span>(
-    <span class="kw">c</span>(<span class="st">'uniform'</span>, <span class="st">'normal'</span>, <span class="st">'bimodal'</span>),
-    sim.species,
-    <span class="dt">n=</span><span class="dv">1</span>,
-    <span class="dt">x=</span>sim_pus,
-    <span class="dt">res=</span><span class="dv">1</span>
-)</code></pre></div>
+sim_spp &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="kw">c</span>(<span class="st">"uniform"</span>, <span class="st">"normal"</span>, <span class="st">"bimodal"</span>), sim.species, <span class="dt">n =</span> <span class="dv">1</span>,
+                  <span class="dt">x =</span> sim_pus, <span class="dt">res =</span> <span class="dv">1</span>)</code></pre></div>
 <p>Let’s see what these species’ distributions look like.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot species</span>
-<span class="kw"><a href="../reference/plot.html">plot</a></span>(
-    <span class="kw">stack</span>(sim_spp),
-    <span class="dt">main=</span><span class="kw">c</span>(<span class="st">'Uniform species'</span>,<span class="st">'Normal species'</span>,<span class="st">'Bimodal species'</span>),
-    <span class="dt">addfun=</span><span class="cf">function</span>(){<span class="kw">lines</span>(sim_pus)},
-    <span class="dt">nc=</span><span class="dv">3</span>
-)</code></pre></div>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(<span class="kw">stack</span>(sim_spp),
+     <span class="dt">main =</span> <span class="kw">c</span>(<span class="st">"Uniform species"</span>, <span class="st">"Normal species"</span>, <span class="st">"Bimodal species"</span>),
+     <span class="dt">addfun =</span> <span class="cf">function</span>() <span class="kw">lines</span>(sim_pus), <span class="dt">nc =</span> <span class="dv">3</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-5-1.png" alt="_Distribution of three simulated species. Each square represents a planning unit. The colour of each square denotes the probability that individuals from each species occupy it._" width="672"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-7-1.png" alt="_Distribution of three simulated species. Each square represents a planning unit. The colour of each square denotes the probability that individuals from each species occupy it._" width="672"><p class="caption">
 <em>Distribution of three simulated species. Each square represents a planning unit. The colour of each square denotes the probability that individuals from each species occupy it.</em>
 </p>
 </div>
 <p>Next, we will generate a set of demand points. To understand the effects of probabilities and weights on the demand points, we will generate the demand points in geographic space. These demand points will be the centroids of the planning units. Additionally, we will use the same set of demand points for each species and only vary the weights of the demand points between species. <strong>Note that we are only using the same distribution of demand points for different species for teaching purposes. It is strongly recommended to use different demand points for different species in real-world conservation planning exercises.</strong> See the case-study section of this tutorial for examples on how to generate suitable demand points.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># generate coordinates for pus/demand points</span>
-pu_coords &lt;-<span class="st"> </span><span class="kw">gCentroid</span>(sim_pus, <span class="dt">byid=</span><span class="ot">TRUE</span>)
+pu_coords &lt;-<span class="st"> </span><span class="kw">gCentroid</span>(sim_pus, <span class="dt">byid =</span> <span class="ot">TRUE</span>)
 
 <span class="co"># calculate weights</span>
-sim_dps &lt;-<span class="st"> </span><span class="kw">lapply</span>(
-    sim_spp,
-    <span class="cf">function</span>(x) {
-        <span class="kw">return</span>(<span class="kw">extract</span>(x, pu_coords))
-    }
-)
+sim_dps &lt;-<span class="st"> </span><span class="kw">lapply</span>(sim_spp, <span class="cf">function</span>(x) <span class="kw">extract</span>(x, pu_coords))
 
 <span class="co"># create demand point objects</span>
-sim_dps &lt;-<span class="st"> </span><span class="kw">lapply</span>(
-    sim_dps,
-    <span class="cf">function</span>(x) {
-        <span class="kw">return</span>(
-            <span class="kw"><a href="../reference/DemandPoints.html">DemandPoints</a></span>(
-                pu_coords<span class="op">@</span>coords,
-                <span class="dt">weights=</span><span class="kw">c</span>(x)
-            )
-        )
-    }
-)</code></pre></div>
+sim_dps &lt;-<span class="st"> </span><span class="kw">lapply</span>(sim_dps, <span class="cf">function</span>(x) <span class="kw"><a href="../reference/DemandPoints.html">DemandPoints</a></span>(pu_coords<span class="op">@</span>coords,
+                                                    <span class="dt">weights =</span> <span class="kw">c</span>(x)))</code></pre></div>
 <p>Now, we will construct a <code>RapUnsolved</code> object to store our input data and parameters. This contains all the information to generate prioritisations.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## create RapUnreliableOpts object
 <span class="co"># this stores parameters for the unreliable formulation problem (ie. BLM)</span>
@@ -215,18 +198,12 @@ sim_ro &lt;-<span class="st"> </span><span class="kw"><a href="../reference/RapU
 
 ## create RapData object
 <span class="co"># create data.frame with species info</span>
-species &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
-    <span class="dt">name=</span><span class="kw">c</span>(<span class="st">'uniform'</span>, <span class="st">'normal'</span>, <span class="st">'bimodal'</span>)
-)
+species &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">name =</span> <span class="kw">c</span>(<span class="st">"uniform"</span>, <span class="st">"normal"</span>, <span class="st">"bimodal"</span>))
 
 ## create data.frame with species and space targets
 <span class="co"># amount targets at 20% (denoted with target=0)</span>
 <span class="co"># space targets at 20% (denoted with target=1)</span>
-targets &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(
-    <span class="dt">species=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,
-    <span class="dt">target=</span><span class="dv">0</span><span class="op">:</span><span class="dv">1</span>,
-    <span class="dt">proportion=</span><span class="fl">0.2</span>
-)
+targets &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">species =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">target =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">proportion =</span> <span class="fl">0.2</span>)
 
 <span class="co"># calculate probability of each species in each pu</span>
 pu_probabilities &lt;-<span class="st"> </span><span class="kw"><a href="../reference/calcSpeciesAverageInPus.html">calcSpeciesAverageInPus</a></span>(sim_pus, <span class="kw">stack</span>(sim_spp))
@@ -234,50 +211,32 @@ pu_probabilities &lt;-<span class="st"> </span><span class="kw"><a href="../refe
 ## create AttributeSpace object
 <span class="co"># this stores the coordinates of the planning units in an attribute space</span>
 <span class="co"># and the coordinates and weights of demand points in the space</span>
-
-pu_points &lt;-<span class="st"> </span><span class="kw"><a href="../reference/PlanningUnitPoints.html">PlanningUnitPoints</a></span>(
-    <span class="dt">coords=</span>pu_coords<span class="op">@</span>coords,
-    <span class="dt">ids=</span><span class="kw">seq_len</span>(<span class="kw">nrow</span>(sim_pus<span class="op">@</span>data))
-)
+pu_points &lt;-<span class="st"> </span><span class="kw"><a href="../reference/PlanningUnitPoints.html">PlanningUnitPoints</a></span>(<span class="dt">coords =</span> pu_coords<span class="op">@</span>coords,
+                                <span class="dt">ids =</span> <span class="kw">seq_len</span>(<span class="kw">nrow</span>(sim_pus<span class="op">@</span>data)))
 
 attr_spaces &lt;-<span class="st"> </span><span class="kw"><a href="../reference/AttributeSpaces.html">AttributeSpaces</a></span>(
-    <span class="kw">list</span>(
-        <span class="kw"><a href="../reference/AttributeSpace.html">AttributeSpace</a></span>(
-            <span class="dt">planning.unit.points=</span>pu_points,
-            <span class="dt">demand.points=</span>sim_dps[[<span class="dv">1</span>]],
-            <span class="dt">species=</span>1L
-        ),
-        <span class="kw"><a href="../reference/AttributeSpace.html">AttributeSpace</a></span>(
-            <span class="dt">planning.unit.points=</span>pu_points,
-            <span class="dt">demand.points=</span>sim_dps[[<span class="dv">2</span>]],
-            <span class="dt">species=</span>2L
-        ),
-        <span class="kw"><a href="../reference/AttributeSpace.html">AttributeSpace</a></span>(
-            <span class="dt">planning.unit.points=</span>pu_points,
-            <span class="dt">demand.points=</span>sim_dps[[<span class="dv">3</span>]],
-            <span class="dt">species=</span>3L
-        )
-    ),
-    <span class="dt">name=</span><span class="st">'geographic'</span>
-)
+  <span class="kw">list</span>(<span class="kw"><a href="../reference/AttributeSpace.html">AttributeSpace</a></span>(<span class="dt">planning.unit.points =</span> pu_points,
+                      <span class="dt">demand.points =</span> sim_dps[[<span class="dv">1</span>]],
+                      <span class="dt">species =</span> 1L),
+       <span class="kw"><a href="../reference/AttributeSpace.html">AttributeSpace</a></span>(<span class="dt">planning.unit.points =</span> pu_points,
+                      <span class="dt">demand.points =</span> sim_dps[[<span class="dv">2</span>]],
+                      <span class="dt">species =</span> 2L),
+       <span class="kw"><a href="../reference/AttributeSpace.html">AttributeSpace</a></span>(<span class="dt">planning.unit.points =</span> pu_points,
+                      <span class="dt">demand.points =</span> sim_dps[[<span class="dv">3</span>]],
+                      <span class="dt">species =</span> 3L)),
+  <span class="dt">name =</span> <span class="st">"geographic"</span>)
 
 <span class="co"># generate boundary data information</span>
 boundary &lt;-<span class="st"> </span><span class="kw"><a href="../reference/calcBoundaryData.html">calcBoundaryData</a></span>(sim_pus)
 
 ## create RapData object
 <span class="co"># this stores all the input data for the prioritisation</span>
-sim_rd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/RapData.html">RapData</a></span>(
-    sim_pus<span class="op">@</span>data,
-    species,
-    targets,
-    pu_probabilities,
-    <span class="kw">list</span>(attr_spaces),
-    boundary,
-    <span class="kw"><a href="../reference/SpatialPolygons2PolySet.html">SpatialPolygons2PolySet</a></span>(sim_pus)
-)
+sim_rd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/RapData.html">RapData</a></span>(sim_pus<span class="op">@</span>data, species, targets, pu_probabilities,
+                  <span class="kw">list</span>(attr_spaces), boundary, <span class="kw"><a href="../reference/SpatialPolygons2PolySet.html">SpatialPolygons2PolySet</a></span>(sim_pus))
 
 ## create RapUnsolved object
-<span class="co"># this stores all the input data and parameters needed to generate prioritisations</span>
+<span class="co"># this stores all the input data and parameters needed to generate</span>
+<span class="co"># prioritisations</span>
 sim_ru &lt;-<span class="st"> </span><span class="kw"><a href="../reference/RapUnsolved.html">RapUnsolved</a></span>(sim_ro, sim_rd)</code></pre></div>
 </div>
 <div id="single-species-prioritisations" class="section level2">
@@ -288,16 +247,21 @@ sim_ru &lt;-<span class="st"> </span><span class="kw"><a href="../reference/RapU
 <a href="#amount-based-targets" class="anchor"></a>Amount-based targets</h3>
 <p>To investigate the effects of space-based targets, we will generate a prioritisation for each species using only amount-based targets and compare them to prioritisations generated using amount- and space-based targets. To start off, we will generate a prioritisation for the uniform species using amount-based targets. To do this, we will generate a new <code>sim_ru</code> object by subsetting out the data for the uniform species from the <code>sim_ru</code> object. Then, we will update the targets in the new object. Finally, we will solve the object to generate a prioritisation that fulfills the targets for minimal cost.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># create new object with just the uniform species</span>
-sim_ru_s1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/spp.subset.html">spp.subset</a></span>(sim_ru, <span class="st">'uniform'</span>)
+sim_ru_s1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/spp.subset.html">spp.subset</a></span>(sim_ru, <span class="st">"uniform"</span>)
 
 <span class="co"># update amount targets to 20% and space targets to 0%</span>
-sim_ru_s1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(sim_ru_s1, <span class="dt">amount.target=</span><span class="fl">0.2</span>, <span class="dt">space.target=</span><span class="ot">NA</span>, <span class="dt">solve=</span><span class="ot">FALSE</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># solve problem to identify prioritisation</span>
-sim_rs_s1_amount &lt;-<span class="st"> </span><span class="kw"><a href="../reference/solve.html">solve</a></span>(sim_ru_s1, <span class="dt">Threads=</span>threads)</code></pre></div>
+sim_ru_s1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(sim_ru_s1, <span class="dt">amount.target =</span> <span class="fl">0.2</span>, <span class="dt">space.target =</span> <span class="ot">NA</span>,
+                    <span class="dt">solve =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">error =</span> <span class="cf">function</span>() {
+    <span class="kw">traceback</span>()
+    <span class="kw">q</span>(<span class="st">"no"</span>, <span class="dv">1</span>, <span class="ot">FALSE</span>)
+})
+
+<span class="co"># solve problem to identify prioritisation</span>
+sim_rs_s1_amount &lt;-<span class="st"> </span><span class="kw"><a href="../reference/solve.html">solve</a></span>(sim_ru_s1, <span class="dt">Threads =</span> threads)</code></pre></div>
 <pre><code>## The rgorubi R package is not installed</code></pre>
-<pre><code>## To access multiple solutions from the solution pool,
-##  follow these instructions to install the "rgurobi" R package from GitHub:
-##  http://bit.ly/1RF19XO</code></pre>
+<pre><code>## Follow these instructions to install the "rgurobi" R package from GitHub:
+##   http://bit.ly/1RF19XO</code></pre>
 <pre><code>## Optimize a model with 1 rows, 100 columns and 100 nonzeros
 ## Variable types: 0 continuous, 100 integer (100 binary)
 ## Coefficient statistics:
@@ -310,7 +274,7 @@ sim_rs_s1_amount &lt;-<span class="st"> </span><span class="kw"><a href="../refe
 ## Presolve time: 0.00s
 ## Presolve: All rows and columns removed
 ## 
-## Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+## Explored 0 nodes (0 simplex iterations) in 0.01 seconds
 ## Thread count was 1 (of 4 available processors)
 ## 
 ## Solution count 1: 20 
@@ -337,22 +301,22 @@ sim_rs_s1_amount &lt;-<span class="st"> </span><span class="kw"><a href="../refe
 ## 1        -0.2363636</code></pre>
 <p>Now that we have generated a prioritisation, let’s see what it looks like. We can use the <code>spp.plot</code> method to see how the prioritisation overlaps with the uniform species’ distribution. Note that since all planning units have equal probabilities for this species, all planning units have the same fill colour.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the prioritisation and the uniform species' distribution</span>
-<span class="kw"><a href="../reference/spp.plot.html">spp.plot</a></span>(sim_rs_s1_amount, <span class="dv">1</span>, <span class="dt">main=</span><span class="st">'Uniform species'</span>)</code></pre></div>
+<span class="kw"><a href="../reference/spp.plot.html">spp.plot</a></span>(sim_rs_s1_amount, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Uniform species"</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-11-1.png" alt="_A prioritisation for the uniformly distributed species generated using amount-based targets (20\%). Sqaures represent planning units. Planning units with a green border are selected for prioritisation, and their colour denotes the probability they are inhabited by the species._" width="432"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-13-1.png" alt="_A prioritisation for the uniformly distributed species generated using amount-based targets (20\%). Sqaures represent planning units. Planning units with a green border are selected for prioritisation, and their colour denotes the probability they are inhabited by the species._" width="432"><p class="caption">
 <em>A prioritisation for the uniformly distributed species generated using amount-based targets (20%). Sqaures represent planning units. Planning units with a green border are selected for prioritisation, and their colour denotes the probability they are inhabited by the species.</em>
 </p>
 </div>
 <p>The prioritisation for the uniform species appears to be just a random selection of planning units. This behavior is due to the fact that any prioritisation with 20 planning units is optimal. By relying on just amount targets, this solution may preserve a section of the species’ range core, or just focus on the range margin, or some random part of its range–no emphasis is directed towards preserving different parts of the species’ range. This behavior highlights a fundamental limitation of just using amount-based targets. In the absence of additional criteria, conventional reserve selection problems do not contain any additional information to identify the most effective prioritisation.</p>
 <p>Now, we will generate a prioritisation for the normally distributed species using amount-based targets. We will use a similar process to what we used for the uniformly distributed species, but for brevity, we will use code to generate solutions immediately after updating the object.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># create new object with just the normal species</span>
-sim_ru_s2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/spp.subset.html">spp.subset</a></span>(sim_ru, <span class="st">'normal'</span>)</code></pre></div>
+sim_ru_s2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/spp.subset.html">spp.subset</a></span>(sim_ru, <span class="st">"normal"</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># update amount targets to 20% and space targets to 0% and solve it</span>
-sim_rs_s2_amount &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(sim_ru_s2, <span class="dt">amount.target=</span><span class="fl">0.2</span>, <span class="dt">space.target=</span><span class="ot">NA</span>, <span class="dt">solve=</span><span class="ot">TRUE</span>, <span class="dt">Threads=</span>threads)</code></pre></div>
+sim_rs_s2_amount &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(sim_ru_s2, <span class="dt">amount.target =</span> <span class="fl">0.2</span>, <span class="dt">space.target =</span> <span class="ot">NA</span>,
+                           <span class="dt">solve =</span> <span class="ot">TRUE</span>, <span class="dt">Threads =</span> threads)</code></pre></div>
 <pre><code>## The rgorubi R package is not installed</code></pre>
-<pre><code>## To access multiple solutions from the solution pool,
-##  follow these instructions to install the "rgurobi" R package from GitHub:
-##  http://bit.ly/1RF19XO</code></pre>
+<pre><code>## Follow these instructions to install the "rgurobi" R package from GitHub:
+##   http://bit.ly/1RF19XO</code></pre>
 <pre><code>## Optimize a model with 1 rows, 100 columns and 100 nonzeros
 ## Variable types: 0 continuous, 100 integer (100 binary)
 ## Coefficient statistics:
@@ -384,7 +348,7 @@ sim_rs_s2_amount &lt;-<span class="st"> </span><span class="kw"><a href="../refe
 ## Optimal solution found (tolerance 1.00e-01)
 ## Best objective 1.000000000000e+01, best bound 1.000000000000e+01, gap 0.0000%</code></pre>
 <pre><code>## Warning in validityMethod(object): some species have space.held values less
-## than 0, and are really poor represente</code></pre>
+## than 0, and are really poor represented</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show summary</span>
 <span class="kw"><a href="../reference/summary.html">summary</a></span>(sim_rs_s2_amount)</code></pre></div>
 <pre><code>##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
@@ -403,22 +367,22 @@ sim_rs_s2_amount &lt;-<span class="st"> </span><span class="kw"><a href="../refe
 ## 1        0.5909494</code></pre>
 <p>Now let’s visualise the prioritisation we made for the normal species.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the prioritisation and the normal species' distribution</span>
-<span class="kw"><a href="../reference/spp.plot.html">spp.plot</a></span>(sim_rs_s2_amount, <span class="dv">1</span>, <span class="dt">main=</span><span class="st">'Normal species'</span>)</code></pre></div>
+<span class="kw"><a href="../reference/spp.plot.html">spp.plot</a></span>(sim_rs_s2_amount, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Normal species"</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-15-1.png" alt="_A prioritisation for the normally distributed species generated using amount-based targets (20\%). See Figure 3 caption for conventions._" width="432"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-17-1.png" alt="_A prioritisation for the normally distributed species generated using amount-based targets (20\%). See Figure 3 caption for conventions._" width="432"><p class="caption">
 <em>A prioritisation for the normally distributed species generated using amount-based targets (20%). See Figure 3 caption for conventions.</em>
 </p>
 </div>
 <p>The amount-based prioritisation for the normal species focuses only on the species’ range core. This prioritisation fails to secure any peripheral parts of the species’ distribution. As a consequence, it may miss out on populations with novel adaptations to environmental conditions along the species’ range margin.</p>
 <p>Now, let’s generate an amount-based target for the bimodally distributed species view it.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># create new object with just the bimodal species</span>
-sim_ru_s3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/spp.subset.html">spp.subset</a></span>(sim_ru, <span class="st">'bimodal'</span>)</code></pre></div>
+sim_ru_s3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/spp.subset.html">spp.subset</a></span>(sim_ru, <span class="st">"bimodal"</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># update amount targets to 20% and space targets to 0% and solve it</span>
-sim_rs_s3_amount &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(sim_ru_s3, <span class="dt">amount.target=</span><span class="fl">0.2</span>, <span class="dt">space.target=</span><span class="ot">NA</span>, <span class="dt">Threads=</span>threads)</code></pre></div>
+sim_rs_s3_amount &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(sim_ru_s3, <span class="dt">amount.target =</span> <span class="fl">0.2</span>,
+                           <span class="dt">space.target =</span> <span class="ot">NA</span>, <span class="dt">Threads =</span> threads)</code></pre></div>
 <pre><code>## The rgorubi R package is not installed</code></pre>
-<pre><code>## To access multiple solutions from the solution pool,
-##  follow these instructions to install the "rgurobi" R package from GitHub:
-##  http://bit.ly/1RF19XO</code></pre>
+<pre><code>## Follow these instructions to install the "rgurobi" R package from GitHub:
+##   http://bit.ly/1RF19XO</code></pre>
 <pre><code>## Optimize a model with 1 rows, 100 columns and 100 nonzeros
 ## Variable types: 0 continuous, 100 integer (100 binary)
 ## Coefficient statistics:
@@ -450,11 +414,11 @@ sim_rs_s3_amount &lt;-<span class="st"> </span><span class="kw"><a href="../refe
 ## Optimal solution found (tolerance 1.00e-01)
 ## Best objective 8.000000000000e+00, best bound 8.000000000000e+00, gap 0.0000%</code></pre>
 <pre><code>## Warning in validityMethod(object): some species have space.held values less
-## than 0, and are really poor represente</code></pre>
+## than 0, and are really poor represented</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the prioritisation and the bimodal species' distribution</span>
-<span class="kw"><a href="../reference/spp.plot.html">spp.plot</a></span>(sim_rs_s3_amount, <span class="dv">1</span>, <span class="dt">main=</span><span class="st">'Bimodal species'</span>)</code></pre></div>
+<span class="kw"><a href="../reference/spp.plot.html">spp.plot</a></span>(sim_rs_s3_amount, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Bimodal species"</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-18-1.png" alt="_A prioritisation for the bimodally distributed species generated using amount-based targets (20\%). See Figure 3 caption for conventions._" width="432"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-20-1.png" alt="_A prioritisation for the bimodally distributed species generated using amount-based targets (20\%). See Figure 3 caption for conventions._" width="432"><p class="caption">
 <em>A prioritisation for the bimodally distributed species generated using amount-based targets (20%). See Figure 3 caption for conventions.</em>
 </p>
 </div>
@@ -482,11 +446,11 @@ sim_rs_s3_amount &lt;-<span class="st"> </span><span class="kw"><a href="../refe
 <p>Now that we have generated a prioritisation for each species using only amount-based targets, we will generate a prioritisations using both amount-based and space-targets. To do this we will update the space targets in our amount-based prioritisations to 85%, and store the new prioritisations in new objects.</p>
 <p>First, let’s do this for the uniform species.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make new prioritisation</span>
-sim_rs_s1_space &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(sim_rs_s1_amount, <span class="dt">amount.target=</span><span class="fl">0.2</span>, <span class="dt">space.target=</span><span class="fl">0.85</span>, <span class="dt">Threads=</span>threads)</code></pre></div>
+sim_rs_s1_space &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(sim_rs_s1_amount, <span class="dt">amount.target =</span> <span class="fl">0.2</span>,
+                          <span class="dt">space.target =</span> <span class="fl">0.85</span>, <span class="dt">Threads =</span> threads)</code></pre></div>
 <pre><code>## The rgorubi R package is not installed</code></pre>
-<pre><code>## To access multiple solutions from the solution pool,
-##  follow these instructions to install the "rgurobi" R package from GitHub:
-##  http://bit.ly/1RF19XO</code></pre>
+<pre><code>## Follow these instructions to install the "rgurobi" R package from GitHub:
+##   http://bit.ly/1RF19XO</code></pre>
 <pre><code>## Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored
 ## Optimize a model with 10102 rows, 10100 columns and 40000 nonzeros
 ## Variable types: 0 continuous, 10100 integer (10100 binary)
@@ -496,22 +460,30 @@ sim_rs_s1_space &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+00, 1e+02]
 ## Found heuristic solution: objective 95
+## Presolve removed 36 rows and 0 columns (presolve time = 5s) ...
 ## Presolve removed 36 rows and 0 columns
-## Presolve time: 1.90s
+## Presolve time: 5.29s
 ## Presolved: 10066 rows, 10100 columns, 40104 nonzeros
 ## Variable types: 0 continuous, 10100 integer (10100 binary)
 ## Presolved: 10066 rows, 10100 columns, 40104 nonzeros
 ## 
 ## Presolve removed 10066 rows and 10100 columns
 ## 
-## Root relaxation: objective 2.000000e+01, 621 iterations, 0.07 seconds
+## Root simplex log...
+## 
+## Iteration    Objective       Primal Inf.    Dual Inf.      Time
+##        0    1.0000000e+02   0.000000e+00   1.000000e+02      5s
+##      621    2.0000000e+01   0.000000e+00   0.000000e+00      6s
+##      621    2.0000000e+01   0.000000e+00   0.000000e+00      6s
+## 
+## Root relaxation: objective 2.000000e+01, 621 iterations, 0.24 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-## *    0     0               0      20.0000000   20.00000  0.00%     -    2s
+## *    0     0               0      20.0000000   20.00000  0.00%     -    5s
 ## 
-## Explored 0 nodes (1587 simplex iterations) in 2.06 seconds
+## Explored 0 nodes (1587 simplex iterations) in 5.75 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 20 95 
@@ -519,7 +491,7 @@ sim_rs_s1_space &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ## Optimal solution found (tolerance 1.00e-01)
 ## Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%</code></pre>
 <pre><code>## Warning in validityMethod(object): some species have space.held values less
-## than 0, and are really poor represente</code></pre>
+## than 0, and are really poor represented</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show summary</span>
 <span class="kw"><a href="../reference/summary.html">summary</a></span>(sim_rs_s1_space)</code></pre></div>
 <pre><code>##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
@@ -538,27 +510,28 @@ sim_rs_s1_space &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ## 1         0.9206061</code></pre>
 <p>Let’s take a look at the prioritisation for the uniform species with amount-based and space-based targets. Then, let’s compare the solutions for the amount-based prioritisation with the new prioritisation using both amount and space targets.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the prioritisation and the uniform species' distribution</span>
-<span class="kw"><a href="../reference/spp.plot.html">spp.plot</a></span>(sim_rs_s1_space, <span class="st">'uniform'</span>, <span class="dt">main=</span><span class="st">'Uniform species'</span>)</code></pre></div>
+<span class="kw"><a href="../reference/spp.plot.html">spp.plot</a></span>(sim_rs_s1_space, <span class="st">"uniform"</span>, <span class="dt">main =</span> <span class="st">"Uniform species"</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-22-1.png" alt="_A prioritisation for the uniformly distributed species generated using amount-based targets (20\%) and space-based targets (85\%). See Figure 3 caption for conventions._" width="432"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-24-1.png" alt="_A prioritisation for the uniformly distributed species generated using amount-based targets (20\%) and space-based targets (85\%). See Figure 3 caption for conventions._" width="432"><p class="caption">
 <em>A prioritisation for the uniformly distributed species generated using amount-based targets (20%) and space-based targets (85%). See Figure 3 caption for conventions.</em>
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the difference between old and new prioritisations</span>
-<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_rs_s1_amount, sim_rs_s1_space, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">main=</span><span class="st">'Difference between solutions'</span>)</code></pre></div>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_rs_s1_amount, sim_rs_s1_space, <span class="dv">1</span>, <span class="dv">1</span>,
+     <span class="dt">main =</span> <span class="st">"Difference between solutions"</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-23-1.png" alt="_Difference between two prioritisations for the uniformly distributed species. Prioritisation $X$ was generated using just amount-based targets (20\%), and prioritisation $Y$ was generated using an additional space-based target (85\%)._" width="432"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-25-1.png" alt="_Difference between two prioritisations for the uniformly distributed species. Prioritisation $X$ was generated using just amount-based targets (20\%), and prioritisation $Y$ was generated using an additional space-based target (85\%)._" width="432"><p class="caption">
 <em>Difference between two prioritisations for the uniformly distributed species. Prioritisation <span class="math inline">\(X\)</span> was generated using just amount-based targets (20%), and prioritisation <span class="math inline">\(Y\)</span> was generated using an additional space-based target (85%).</em>
 </p>
 </div>
 <p>Here we can see that by including a space-target, the prioritisation is spread out evenly across the species’ distribution. Unlike the amount-based prioritisation, this prioritisation samples all the different parts of the species’ distribution.</p>
 <p>Now, let’s generate a prioritisation for the normally distributed species that considers amount-based and space-based targets. Then, let’s visualise the new prioritisation and compare it to the old amount-based prioritisation.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make new prioritisation</span>
-sim_rs_s2_space &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(sim_rs_s2_amount, <span class="dt">amount.target=</span><span class="fl">0.2</span>, <span class="dt">space.target=</span><span class="fl">0.85</span>, <span class="dt">Threads=</span>threads)</code></pre></div>
+sim_rs_s2_space &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(sim_rs_s2_amount, <span class="dt">amount.target =</span> <span class="fl">0.2</span>,
+                          <span class="dt">space.target =</span> <span class="fl">0.85</span>, <span class="dt">Threads =</span> threads)</code></pre></div>
 <pre><code>## The rgorubi R package is not installed</code></pre>
-<pre><code>## To access multiple solutions from the solution pool,
-##  follow these instructions to install the "rgurobi" R package from GitHub:
-##  http://bit.ly/1RF19XO</code></pre>
+<pre><code>## Follow these instructions to install the "rgurobi" R package from GitHub:
+##   http://bit.ly/1RF19XO</code></pre>
 <pre><code>## Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored
 ## Optimize a model with 10102 rows, 10100 columns and 40000 nonzeros
 ## Variable types: 0 continuous, 10100 integer (10100 binary)
@@ -569,22 +542,22 @@ sim_rs_s2_space &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ##   RHS range        [1e+00, 6e+01]
 ## Found heuristic solution: objective 91
 ## Presolve removed 220 rows and 0 columns
-## Presolve time: 1.40s
+## Presolve time: 1.91s
 ## Presolved: 9882 rows, 10100 columns, 41664 nonzeros
 ## Variable types: 0 continuous, 10100 integer (10100 binary)
 ## Presolved: 9882 rows, 10100 columns, 41664 nonzeros
 ## 
 ## Presolve removed 9882 rows and 10100 columns
 ## 
-## Root relaxation: objective 1.232570e+01, 4165 iterations, 0.34 seconds
+## Root relaxation: objective 1.232570e+01, 4165 iterations, 0.60 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0   12.32570    0  290   91.00000   12.32570  86.5%     -    1s
-## H    0     0                      13.0000000   12.32570  5.19%     -    2s
+##      0     0   12.32570    0  290   91.00000   12.32570  86.5%     -    2s
+## H    0     0                      13.0000000   12.32570  5.19%     -    3s
 ## 
-## Explored 1 nodes (4528 simplex iterations) in 2.02 seconds
+## Explored 1 nodes (4528 simplex iterations) in 3.18 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 13 91 
@@ -592,7 +565,7 @@ sim_rs_s2_space &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ## Optimal solution found (tolerance 1.00e-01)
 ## Best objective 1.300000000000e+01, best bound 1.300000000000e+01, gap 0.0000%</code></pre>
 <pre><code>## Warning in validityMethod(object): some species have space.held values less
-## than 0, and are really poor represente</code></pre>
+## than 0, and are really poor represented</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show summary</span>
 <span class="kw"><a href="../reference/summary.html">summary</a></span>(sim_rs_s2_space)</code></pre></div>
 <pre><code>##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
@@ -610,27 +583,28 @@ sim_rs_s2_space &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 <pre><code>##   normal (Space 1)
 ## 1        0.8517463</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the prioritisation and the normal species' distribution</span>
-<span class="kw"><a href="../reference/spp.plot.html">spp.plot</a></span>(sim_rs_s2_space, <span class="st">'normal'</span>, <span class="dt">main=</span><span class="st">'Normal species'</span>)</code></pre></div>
+<span class="kw"><a href="../reference/spp.plot.html">spp.plot</a></span>(sim_rs_s2_space, <span class="st">"normal"</span>, <span class="dt">main =</span> <span class="st">"Normal species"</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-26-1.png" alt="_A prioritisation for the normally distributed species generated using amount-based targets (20\%) and space-based targets (85\%). See Figure 3 caption for conventions._" width="432"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-28-1.png" alt="_A prioritisation for the normally distributed species generated using amount-based targets (20\%) and space-based targets (85\%). See Figure 3 caption for conventions._" width="432"><p class="caption">
 <em>A prioritisation for the normally distributed species generated using amount-based targets (20%) and space-based targets (85%). See Figure 3 caption for conventions.</em>
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the difference between old and new prioritisations</span>
-<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_rs_s2_amount, sim_rs_s2_space, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">main=</span><span class="st">'Difference between solutions'</span>)</code></pre></div>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_rs_s2_amount, sim_rs_s2_space, <span class="dv">1</span>, <span class="dv">1</span>,
+     <span class="dt">main =</span> <span class="st">"Difference between solutions"</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-27-1.png" alt="_Difference between two prioritisations for the normally distributed species. See Figure 7 caption for conventions._" width="432"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-29-1.png" alt="_Difference between two prioritisations for the normally distributed species. See Figure 7 caption for conventions._" width="432"><p class="caption">
 <em>Difference between two prioritisations for the normally distributed species. See Figure 7 caption for conventions.</em>
 </p>
 </div>
 <p>We can see by using both amount-based and space-based targets we can obtain a prioritisation that secures both the species’ range core and parts of its range margin. As a consequence, it may capture any novel adaptations found along the species’ range margin–unlike the amount-based prioritisation.</p>
 <p>Finally, let’s generate a prioritisation for the bimodal species using amount-based and space-based targets.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make new prioritisation</span>
-sim_rs_s3_space &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(sim_rs_s3_amount, <span class="dt">amount.target=</span><span class="fl">0.2</span>, <span class="dt">space.target=</span><span class="fl">0.85</span>, <span class="dt">Threads=</span>threads)</code></pre></div>
+sim_rs_s3_space &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(sim_rs_s3_amount, <span class="dt">amount.target =</span> <span class="fl">0.2</span>,
+                          <span class="dt">space.target =</span> <span class="fl">0.85</span>, <span class="dt">Threads =</span> threads)</code></pre></div>
 <pre><code>## The rgorubi R package is not installed</code></pre>
-<pre><code>## To access multiple solutions from the solution pool,
-##  follow these instructions to install the "rgurobi" R package from GitHub:
-##  http://bit.ly/1RF19XO</code></pre>
+<pre><code>## Follow these instructions to install the "rgurobi" R package from GitHub:
+##   http://bit.ly/1RF19XO</code></pre>
 <pre><code>## Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored
 ## Optimize a model with 10102 rows, 10100 columns and 40000 nonzeros
 ## Variable types: 0 continuous, 10100 integer (10100 binary)
@@ -640,30 +614,37 @@ sim_rs_s3_space &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+00, 7e+01]
 ## Found heuristic solution: objective 87
+## Presolve removed 589 rows and 15 columns (presolve time = 6s) ...
 ## Presolve removed 589 rows and 15 columns
-## Presolve time: 4.52s
+## Presolve time: 5.74s
 ## Presolved: 9513 rows, 10085 columns, 51461 nonzeros
 ## Variable types: 0 continuous, 10085 integer (10085 binary)
 ## Presolved: 9513 rows, 10085 columns, 51461 nonzeros
 ## 
 ## Presolve removed 9513 rows and 10085 columns
 ## 
-## Root relaxation: objective 8.980792e+00, 5690 iterations, 0.45 seconds
-## Total elapsed time = 5.04s
+## Root simplex log...
+## 
+## Iteration    Objective       Primal Inf.    Dual Inf.      Time
+##        0    1.0000000e+02   0.000000e+00   1.000000e+02      6s
+##     5690    8.9807917e+00   0.000000e+00   0.000000e+00      7s
+##     5690    8.9807917e+00   0.000000e+00   0.000000e+00      7s
+## 
+## Root relaxation: objective 8.980792e+00, 5690 iterations, 1.26 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0    8.98079    0   75   87.00000    8.98079  89.7%     -    5s
-## H    0     0                      10.0000000    8.98079  10.2%     -    5s
-##      0     0     cutoff    0        10.00000   10.00000  0.00%     -    5s
+##      0     0    8.98079    0   75   87.00000    8.98079  89.7%     -    7s
+## H    0     0                      10.0000000    8.98079  10.2%     -    7s
+##      0     0     cutoff    0        10.00000   10.00000  0.00%     -    7s
 ## 
 ## Cutting planes:
 ##   Gomory: 1
 ##   MIR: 1
 ##   Zero half: 1
 ## 
-## Explored 1 nodes (5889 simplex iterations) in 5.39 seconds
+## Explored 1 nodes (5889 simplex iterations) in 7.50 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 10 87 
@@ -671,7 +652,7 @@ sim_rs_s3_space &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ## Optimal solution found (tolerance 1.00e-01)
 ## Best objective 1.000000000000e+01, best bound 1.000000000000e+01, gap 0.0000%</code></pre>
 <pre><code>## Warning in validityMethod(object): some species have space.held values less
-## than 0, and are really poor represente</code></pre>
+## than 0, and are really poor represented</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show summary</span>
 <span class="kw"><a href="../reference/summary.html">summary</a></span>(sim_rs_s3_space)</code></pre></div>
 <pre><code>##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
@@ -691,14 +672,15 @@ sim_rs_s3_space &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the prioritisation and the bimodal species' distribution</span>
 <span class="kw"><a href="../reference/spp.plot.html">spp.plot</a></span>(sim_rs_s3_space, <span class="st">'bimodal'</span>, <span class="dt">main=</span><span class="st">'Bimodal species'</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-30-1.png" alt="_A prioritisation for the normally distributed species generated using amount-based targets (20\%) and space-based targets (85\%). See Figure 3 caption for conventions._" width="432"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-32-1.png" alt="_A prioritisation for the normally distributed species generated using amount-based targets (20\%) and space-based targets (85\%). See Figure 3 caption for conventions._" width="432"><p class="caption">
 <em>A prioritisation for the normally distributed species generated using amount-based targets (20%) and space-based targets (85%). See Figure 3 caption for conventions.</em>
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the difference between old and new prioritisations</span>
-<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_rs_s3_amount, sim_rs_s3_space, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">main=</span><span class="st">'Difference between solutions'</span>)</code></pre></div>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_rs_s3_amount, sim_rs_s3_space, <span class="dv">1</span>, <span class="dv">1</span>,
+     <span class="dt">main =</span> <span class="st">"Difference between solutions"</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-31-1.png" alt="_Difference between two prioritisations for the bimodally distributed species. See Figure 7 caption for conventions._" width="432"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-33-1.png" alt="_Difference between two prioritisations for the bimodally distributed species. See Figure 7 caption for conventions._" width="432"><p class="caption">
 <em>Difference between two prioritisations for the bimodally distributed species. See Figure 7 caption for conventions.</em>
 </p>
 </div>
@@ -714,16 +696,11 @@ sim_rs_s3_space &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 <a href="#effects-of-including-space-based-targets" class="anchor"></a>Effects of including space-based targets</h3>
 <p>So far we have generated prioritisations using only a single species at a time. However, real world prioritisations are often generated using multiple species to ensure that they preserve a comprehensive set of biodiversity. Here, we will generate multi-species prioritisations that preserve all three of the simulated species. First, we will generate a prioritisation using amount-based targets that only aims to preserve 20% of the area they occupy. Then, we will generate a prioritisation that also incoperate space-based targets to also preserve 85% of their geographic distribution. We will then compare the two prioritisations.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make prioritisations</span>
-sim_mrs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(
-    sim_ru,
-    <span class="dt">amount.target=</span><span class="kw">c</span>(<span class="fl">0.2</span>,<span class="fl">0.2</span>,<span class="fl">0.2</span>),
-    <span class="dt">space.target=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),
-    <span class="dt">Threads=</span>threads
-)</code></pre></div>
+sim_mrs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(sim_ru, <span class="dt">amount.target =</span> <span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>),
+                         <span class="dt">space.target =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="dt">Threads =</span> threads)</code></pre></div>
 <pre><code>## The rgorubi R package is not installed</code></pre>
-<pre><code>## To access multiple solutions from the solution pool,
-##  follow these instructions to install the "rgurobi" R package from GitHub:
-##  http://bit.ly/1RF19XO</code></pre>
+<pre><code>## Follow these instructions to install the "rgurobi" R package from GitHub:
+##   http://bit.ly/1RF19XO</code></pre>
 <pre><code>## Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored
 ## Optimize a model with 30306 rows, 30100 columns and 120000 nonzeros
 ## Variable types: 0 continuous, 30100 integer (30100 binary)
@@ -733,22 +710,22 @@ sim_mrs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+00, 8e+02]
 ## Found heuristic solution: objective 98
-## Presolve time: 3.14s
+## Presolve time: 2.73s
 ## Presolved: 30306 rows, 30100 columns, 120000 nonzeros
 ## Variable types: 0 continuous, 30100 integer (30100 binary)
 ## Presolved: 30306 rows, 30100 columns, 120000 nonzeros
 ## 
 ## Presolve removed 30306 rows and 30100 columns
 ## 
-## Root relaxation: objective 2.000000e+01, 2464 iterations, 1.71 seconds
-## Total elapsed time = 5.65s
+## Root relaxation: objective 2.000000e+01, 2464 iterations, 1.56 seconds
+## Total elapsed time = 5.31s
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
 ## *    0     0               0      20.0000000   20.00000  0.00%     -    5s
 ## 
-## Explored 0 nodes (6504 simplex iterations) in 5.73 seconds
+## Explored 0 nodes (6504 simplex iterations) in 5.43 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 20 98 
@@ -756,18 +733,14 @@ sim_mrs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ## Optimal solution found (tolerance 1.00e-01)
 ## Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%</code></pre>
 <pre><code>## Warning in validityMethod(object): some species have space.held values less
-## than 0, and are really poor represente</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_mrs_space &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(
-    sim_ru,
-    <span class="dt">amount.target=</span><span class="kw">c</span>(<span class="fl">0.2</span>,<span class="fl">0.2</span>,<span class="fl">0.2</span>),
-    <span class="dt">space.target=</span><span class="kw">c</span>(<span class="fl">0.85</span>, <span class="fl">0.85</span>, <span class="fl">0.85</span>),
-    <span class="dt">Threads=</span>threads
-)</code></pre></div>
+## than 0, and are really poor represented</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_mrs_space &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(sim_ru, <span class="dt">amount.target =</span> <span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>),
+                        <span class="dt">space.target =</span> <span class="kw">c</span>(<span class="fl">0.85</span>, <span class="fl">0.85</span>, <span class="fl">0.85</span>),
+                        <span class="dt">Threads =</span> threads)</code></pre></div>
 <pre><code>## The rgorubi R package is not installed
 ## 
-## To access multiple solutions from the solution pool,
-##  follow these instructions to install the "rgurobi" R package from GitHub:
-##  http://bit.ly/1RF19XO</code></pre>
+## Follow these instructions to install the "rgurobi" R package from GitHub:
+##   http://bit.ly/1RF19XO</code></pre>
 <pre><code>## Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored
 ## Optimize a model with 30306 rows, 30100 columns and 120000 nonzeros
 ## Variable types: 0 continuous, 30100 integer (30100 binary)
@@ -777,9 +750,9 @@ sim_mrs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+00, 1e+02]
 ## Found heuristic solution: objective 99
-## Presolve removed 269 rows and 15 columns (presolve time = 5s) ...
+## Presolve removed 267 rows and 15 columns (presolve time = 5s) ...
 ## Presolve removed 360 rows and 15 columns
-## Presolve time: 7.54s
+## Presolve time: 8.65s
 ## Presolved: 29946 rows, 30085 columns, 131504 nonzeros
 ## Variable types: 0 continuous, 30085 integer (30085 binary)
 ## Presolve removed 67 rows and 1 columns
@@ -790,18 +763,19 @@ sim_mrs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    1.0000000e+02   0.000000e+00   1.000000e+02      9s
-##     5715    2.0000000e+01   0.000000e+00   0.000000e+00     10s
-##     5715    2.0000000e+01   0.000000e+00   0.000000e+00     10s
+##        0    1.0000000e+02   0.000000e+00   1.000000e+02     10s
+##     1000    5.9843020e+01   0.000000e+00   3.197180e+03     10s
+##     5715    2.0000000e+01   0.000000e+00   0.000000e+00     12s
+##     5715    2.0000000e+01   0.000000e+00   0.000000e+00     12s
 ## 
-## Root relaxation: objective 2.000000e+01, 5715 iterations, 2.46 seconds
+## Root relaxation: objective 2.000000e+01, 5715 iterations, 3.60 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-## *    0     0               0      20.0000000   20.00000  0.00%     -   11s
+## *    0     0               0      20.0000000   20.00000  0.00%     -   13s
 ## 
-## Explored 0 nodes (11023 simplex iterations) in 11.17 seconds
+## Explored 0 nodes (11023 simplex iterations) in 13.63 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 20 99 
@@ -809,7 +783,7 @@ sim_mrs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ## Optimal solution found (tolerance 1.00e-01)
 ## Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%</code></pre>
 <pre><code>## Warning in validityMethod(object): some species have space.held values less
-## than 0, and are really poor represente</code></pre>
+## than 0, and are really poor represented</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show summaries</span>
 <span class="kw"><a href="../reference/summary.html">summary</a></span>(sim_mrs_amount)</code></pre></div>
 <pre><code>##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
@@ -840,23 +814,23 @@ sim_mrs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 <pre><code>##   uniform (Space 1) normal (Space 1) bimodal (Space 1)
 ## 1         0.9363636        0.9123203         0.9311194</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot multi-species prioritisation with amount-based targets</span>
-<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_amount, <span class="dv">1</span>, <span class="dt">main=</span><span class="st">'Amount-based targets'</span>)</code></pre></div>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_amount, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Amount-based targets"</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-34-1.png" alt="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using just amount-based targets (20\%). Squares represent planning units. Dark green planning units are selected for preservation._" width="432"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-36-1.png" alt="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using just amount-based targets (20\%). Squares represent planning units. Dark green planning units are selected for preservation._" width="432"><p class="caption">
 <em>A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using just amount-based targets (20%). Squares represent planning units. Dark green planning units are selected for preservation.</em>
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot multi-species prioritisation with amount- and space-based targets</span>
-<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_space, <span class="dv">1</span>, <span class="dt">main=</span><span class="st">'Amount and space-based targets'</span>)</code></pre></div>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_space, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Amount and space-based targets"</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-35-1.png" alt="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\%) and space-based targets (85\%). See Figure 12 caption for conventions._" width="432"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-37-1.png" alt="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\%) and space-based targets (85\%). See Figure 12 caption for conventions._" width="432"><p class="caption">
 <em>A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20%) and space-based targets (85%). See Figure 12 caption for conventions.</em>
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># difference between the two prioritisations</span>
-<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_amount, sim_mrs_space, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">main=</span><span class="st">'Difference between solutions'</span>)</code></pre></div>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_amount, sim_mrs_space, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Difference between solutions"</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-36-1.png" alt="_Difference between two multi-species prioritisations. See Figure 7 caption for conventions.)" width="432"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-38-1.png" alt="_Difference between two multi-species prioritisations. See Figure 7 caption for conventions.)" width="432"><p class="caption">
 _Difference between two multi-species prioritisations. See Figure 7 caption for conventions.)
 </p>
 </div>
@@ -865,21 +839,15 @@ _Difference between two multi-species prioritisations. See Figure 7 caption for 
 <div id="uncertainty-in-species-distributions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#uncertainty-in-species-distributions" class="anchor"></a>Uncertainty in species’ distributions</h3>
-<p>The unreliable formulation does not consider the probability that the planning units are occupied by features when calculating how well a given solution secures a representative sample of an attribute space. Thus solutions identified using the unreliable formulation may select regions of an attribute space for a species using planning units that only have a small chance of being inhabited. As a consequence, if the prioritisation is implemented, it may fail to secure regions of an attribute space if individuals do not inhabit these planning units, and ultimately fail to fulfil the space-based targets.</p>
+<p>The unreliable formulation does not consider the probability that the planning units are occupied by features when calculating how well a given solution secures a representative sample of an attribute space. Thus solutions identified using the unreliable formulation may select regions of an attribute space for a species using planning units that only have a small chance of being inhabited. As a consequence, if the prioritisation is implemented, it may fail to secure regions of an attribute space if individuals do not inhabit these planning units, and ultimately fail to fulfill the space-based targets.</p>
 <p>A simple solution to this issue would be to ensure that planning units cannot be assigned to demand points if they have a low probability of occupancy. This can be achieved by setting a probability threshold for planning units, such that planning units with a probability of occupancy below the threshold are effectively set to zero.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make new prioritisation with probability threshold of 0.1 for each species</span>
-sim_mrs_space2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/solve.html">solve</a></span>(
-    <span class="kw"><a href="../reference/prob.subset.html">prob.subset</a></span>(
-        sim_mrs_space,
-        <span class="dt">species=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,
-        <span class="dt">threshold=</span><span class="kw">c</span>(<span class="fl">0.1</span>,<span class="fl">0.1</span>,<span class="fl">0.1</span>)
-    ),
-    <span class="dt">Threads=</span>threads
-)</code></pre></div>
+sim_mrs_space2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/solve.html">solve</a></span>(<span class="kw"><a href="../reference/prob.subset.html">prob.subset</a></span>(sim_mrs_space, <span class="dt">species =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,
+                                    <span class="dt">threshold =</span> <span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>)),
+                        <span class="dt">Threads =</span> threads)</code></pre></div>
 <pre><code>## The rgorubi R package is not installed</code></pre>
-<pre><code>## To access multiple solutions from the solution pool,
-##  follow these instructions to install the "rgurobi" R package from GitHub:
-##  http://bit.ly/1RF19XO</code></pre>
+<pre><code>## Follow these instructions to install the "rgurobi" R package from GitHub:
+##   http://bit.ly/1RF19XO</code></pre>
 <pre><code>## Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored
 ## Optimize a model with 30306 rows, 30100 columns and 119974 nonzeros
 ## Variable types: 0 continuous, 30100 integer (30100 binary)
@@ -889,9 +857,9 @@ sim_mrs_space2 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+00, 1e+02]
 ## Found heuristic solution: objective 99
-## Presolve removed 311 rows and 15 columns (presolve time = 5s) ...
+## Presolve removed 360 rows and 15 columns (presolve time = 5s) ...
 ## Presolve removed 360 rows and 15 columns
-## Presolve time: 7.40s
+## Presolve time: 6.44s
 ## Presolved: 29946 rows, 30085 columns, 131478 nonzeros
 ## Variable types: 0 continuous, 30085 integer (30085 binary)
 ## Presolve removed 67 rows and 1 columns
@@ -902,19 +870,18 @@ sim_mrs_space2 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    1.0000000e+02   0.000000e+00   1.000000e+02      9s
-##     5056    2.0942250e+01   0.000000e+00   2.383162e+03     10s
-##     5682    2.0000000e+01   0.000000e+00   0.000000e+00     10s
-##     5682    2.0000000e+01   0.000000e+00   0.000000e+00     11s
+##        0    1.0000000e+02   0.000000e+00   1.000000e+02      7s
+##     5682    2.0000000e+01   0.000000e+00   0.000000e+00      9s
+##     5682    2.0000000e+01   0.000000e+00   0.000000e+00      9s
 ## 
-## Root relaxation: objective 2.000000e+01, 5682 iterations, 3.08 seconds
+## Root relaxation: objective 2.000000e+01, 5682 iterations, 2.10 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-## *    0     0               0      20.0000000   20.00000  0.00%     -   10s
+## *    0     0               0      20.0000000   20.00000  0.00%     -    8s
 ## 
-## Explored 0 nodes (6073 simplex iterations) in 10.71 seconds
+## Explored 0 nodes (6073 simplex iterations) in 8.70 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 20 99 
@@ -922,7 +889,7 @@ sim_mrs_space2 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ## Optimal solution found (tolerance 1.00e-01)
 ## Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%</code></pre>
 <pre><code>## Warning in validityMethod(object): some species have space.held values less
-## than 0, and are really poor represente</code></pre>
+## than 0, and are really poor represented</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show summary</span>
 <span class="kw"><a href="../reference/summary.html">summary</a></span>(sim_mrs_space2)</code></pre></div>
 <pre><code>##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
@@ -934,24 +901,24 @@ sim_mrs_space2 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot prioritisation</span>
 <span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_space2, <span class="dv">1</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-39-1.png" alt="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\%) and space-based targets (85\%). This priorititisation was generated to be robust against low occupancy probabilities, by preventing planning units with low probabilities from being used to represent demand points. See Figure 12 caption for conventions._" width="432"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-42-1.png" alt="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\%) and space-based targets (85\%). This priorititisation was generated to be robust against low occupancy probabilities, by preventing planning units with low probabilities from being used to represent demand points. See Figure 12 caption for conventions._" width="432"><p class="caption">
 <em>A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20%) and space-based targets (85%). This priorititisation was generated to be robust against low occupancy probabilities, by preventing planning units with low probabilities from being used to represent demand points. See Figure 12 caption for conventions.</em>
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># difference between prioritisations that use and do not use thresholds</span>
-<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_space2, sim_mrs_space, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">main=</span><span class="st">'Difference between solutions'</span>)</code></pre></div>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_space2, sim_mrs_space, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Difference between solutions"</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-40-1.png" alt="_Difference between two multi-species prioritisations. See Figure 7 caption for conventions._" width="432"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-43-1.png" alt="_Difference between two multi-species prioritisations. See Figure 7 caption for conventions._" width="432"><p class="caption">
 <em>Difference between two multi-species prioritisations. See Figure 7 caption for conventions.</em>
 </p>
 </div>
 <p>But this method requires setting somewhat arbitrary thresholds. A more robust solution to this issue is to actually use the probability that species occupy planning units to generate the prioritisations. This is what the reliable formulation does. First we will try and generate a solution using existing targets and the reliable formulation. To reduce computational time, we will set the maximum backup <span class="math inline">\(R\)</span>-level to 1.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make new prioritisation using reliable formulation</span>
-sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw"><a href="../reference/update.html">update</a></span>(sim_mrs_space, <span class="dt">formulation=</span><span class="st">'reliable'</span>, <span class="dt">max.r.level=</span>1L, <span class="dt">Threads=</span>threads))</code></pre></div>
+sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw"><a href="../reference/update.html">update</a></span>(sim_mrs_space, <span class="dt">formulation =</span> <span class="st">"reliable"</span>,
+                             <span class="dt">max.r.level =</span> 1L, <span class="dt">Threads =</span> threads))</code></pre></div>
 <pre><code>## The rgorubi R package is not installed</code></pre>
-<pre><code>## To access multiple solutions from the solution pool,
-##  follow these instructions to install the "rgurobi" R package from GitHub:
-##  http://bit.ly/1RF19XO</code></pre>
+<pre><code>## Follow these instructions to install the "rgurobi" R package from GitHub:
+##   http://bit.ly/1RF19XO</code></pre>
 <pre><code>## Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored
 ## Optimize a model with 364206 rows, 181900 columns and 3847200 nonzeros
 ## Variable types: 0 continuous, 60700 integer (60700 binary)
@@ -962,9 +929,9 @@ sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw">try</span>(<span c
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [7e-03, 1e+02]
 ## Presolve removed 338606 rows and 156703 columns
-## Presolve time: 2.79s
+## Presolve time: 3.11s
 ## 
-## Explored 0 nodes (0 simplex iterations) in 3.32 seconds
+## Explored 0 nodes (0 simplex iterations) in 3.65 seconds
 ## Thread count was 1 (of 4 available processors)
 ## 
 ## Solution count 0
@@ -973,17 +940,12 @@ sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw">try</span>(<span c
 ## Best objective -, best bound -, gap -</code></pre>
 <p>However, this fails. The reason why we cannot generate a prioritisation that fulfills these targets is because even the solution that contains all the planning units is still insufficient when we consider probabilities. The negative maximum targets printed in the error message indicate that planning units have low probabilities of occupancy. To fulfill the targets, we must obtain more planning units with higher probabilities of occupancy. We also could attempt resolving the problem using a higher <span class="math inline">\(R\)</span>-level. Instead, we will set lower targets and generate solution.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make new prioritisation using reliable formulation and reduced targets</span>
-sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(
-    sim_mrs_space,
-    <span class="dt">formulation=</span><span class="st">'reliable'</span>,
-    <span class="dt">max.r.level=</span>1L,
-    <span class="dt">space.target=</span><span class="op">-</span><span class="dv">1000</span>,
-    <span class="dt">Threads=</span>threads
-)</code></pre></div>
+sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(sim_mrs_space, <span class="dt">formulation =</span> <span class="st">"reliable"</span>,
+                         <span class="dt">max.r.level =</span> 1L, <span class="dt">space.target =</span> <span class="op">-</span><span class="dv">1000</span>,
+                         <span class="dt">Threads =</span> threads)</code></pre></div>
 <pre><code>## The rgorubi R package is not installed</code></pre>
-<pre><code>## To access multiple solutions from the solution pool,
-##  follow these instructions to install the "rgurobi" R package from GitHub:
-##  http://bit.ly/1RF19XO</code></pre>
+<pre><code>## Follow these instructions to install the "rgurobi" R package from GitHub:
+##   http://bit.ly/1RF19XO</code></pre>
 <pre><code>## Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored
 ## Optimize a model with 364206 rows, 181900 columns and 3847200 nonzeros
 ## Variable types: 0 continuous, 60700 integer (60700 binary)
@@ -993,9 +955,9 @@ sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ##   Objective range  [1e+00, 1e+00]
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [7e-03, 8e+05]
-## Presolve removed 333903 rows and 151800 columns (presolve time = 5s) ...
+## Presolve removed 333703 rows and 151800 columns (presolve time = 5s) ...
 ## Presolve removed 333903 rows and 151800 columns
-## Presolve time: 6.95s
+## Presolve time: 6.79s
 ## Presolved: 30303 rows, 30100 columns, 90300 nonzeros
 ## Variable types: 0 continuous, 30100 integer (30100 binary)
 ## Found heuristic solution: objective 27.0000000
@@ -1010,14 +972,14 @@ sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ##      129    2.0000000e+01   0.000000e+00   0.000000e+00      8s
 ##      129    2.0000000e+01   0.000000e+00   0.000000e+00      8s
 ## 
-## Root relaxation: objective 2.000000e+01, 129 iterations, 0.56 seconds
+## Root relaxation: objective 2.000000e+01, 129 iterations, 0.35 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-## *    0     0               0      20.0000000   20.00000  0.00%     -    8s
+## *    0     0               0      20.0000000   20.00000  0.00%     -    7s
 ## 
-## Explored 0 nodes (182 simplex iterations) in 8.17 seconds
+## Explored 0 nodes (182 simplex iterations) in 7.79 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 20 27 
@@ -1035,18 +997,18 @@ sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot prioritisation</span>
 <span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_space3, <span class="dv">1</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-44-1.png" alt="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\%) and space-based targets (85\%). This priorititisation was generated to be robust against low occupancy probabilities, by explicitly using the probability of occupancy data when deriving a solution. See Figure 12 caption for conventions._" width="432"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-47-1.png" alt="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\%) and space-based targets (85\%). This priorititisation was generated to be robust against low occupancy probabilities, by explicitly using the probability of occupancy data when deriving a solution. See Figure 12 caption for conventions._" width="432"><p class="caption">
 <em>A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20%) and space-based targets (85%). This priorititisation was generated to be robust against low occupancy probabilities, by explicitly using the probability of occupancy data when deriving a solution. See Figure 12 caption for conventions.</em>
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># difference between prioritisations based on unreliable and reliable formulation</span>
-<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_space3, sim_mrs_space, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">main=</span><span class="st">'Difference between solutions'</span>)</code></pre></div>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_space3, sim_mrs_space, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Difference between solutions"</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-45-1.png" alt="_Difference between two multi-species prioritisations. See Figure 7 caption for conventions._" width="432"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-48-1.png" alt="_Difference between two multi-species prioritisations. See Figure 7 caption for conventions._" width="432"><p class="caption">
 <em>Difference between two multi-species prioritisations. See Figure 7 caption for conventions.</em>
 </p>
 </div>
-<p>An additional planning unit was selected using the reliable formulation. The prioritisation based on the unreliable formulation had 20 planning units, but the prioritisation based on the reliable formlation has 20 planning units. This difference occurs because the reliable formulation needs to ensure that all selected planning units with a low chance of being occupied have a suitable backup planning unit. While the reliable formulation can deliver more robust prioritisations, it takes much longer to solve conservation planning problems expressed using this formulation than the unreliable formulation. As a consequence, the reliable formulation is only feasible for particularly small problems, such as those involving few features and less than several hundred planning units.</p>
+<p>An additional planning unit was selected using the reliable formulation. The prioritisation based on the unreliable formulation had 20 planning units, but the prioritisation based on the reliable formulation has 20 planning units. This difference occurs because the reliable formulation needs to ensure that all selected planning units with a low chance of being occupied have a suitable backup planning unit. While the reliable formulation can deliver more robust prioritisations, it takes much longer to solve conservation planning problems expressed using this formulation than the unreliable formulation. As a consequence, the reliable formulation is only feasible for particularly small problems, such as those involving few features and less than several hundred planning units.</p>
 </div>
 <div id="fragmentation" class="section level3">
 <h3 class="hasAnchor">
@@ -1054,11 +1016,10 @@ sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 <p>Fragmentation is an important consideration in real-world planning situations. Up until now, we haven’t considered the effects of fragmentation on the viability of the prioritisation. As a consequence, our prioritisations have tended to contain planning units without any neighbours. We can use the <code>BLM</code> parameter to penalise fragmented solutions.</p>
 <p>Let’s generate a new prioritisation that heavily penalises fragmentation. Here, we will update the <code>sim_mrs_amount</code> object with <code>BLM</code> of 100.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># update prioritisation</span>
-sim_mrs_amount_blm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(sim_mrs_amount, <span class="dt">BLM=</span><span class="dv">100</span>, <span class="dt">Threads=</span>threads)</code></pre></div>
+sim_mrs_amount_blm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(sim_mrs_amount, <span class="dt">BLM =</span> <span class="dv">100</span>, <span class="dt">Threads =</span> threads)</code></pre></div>
 <pre><code>## The rgorubi R package is not installed</code></pre>
-<pre><code>## To access multiple solutions from the solution pool,
-##  follow these instructions to install the "rgurobi" R package from GitHub:
-##  http://bit.ly/1RF19XO</code></pre>
+<pre><code>## Follow these instructions to install the "rgurobi" R package from GitHub:
+##   http://bit.ly/1RF19XO</code></pre>
 <pre><code>## Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored
 ## Optimize a model with 30666 rows, 30280 columns and 120720 nonzeros
 ## Variable types: 0 continuous, 30280 integer (30280 binary)
@@ -1068,7 +1029,7 @@ sim_mrs_amount_blm &lt;-<span class="st"> </span><span class="kw"><a href="../re
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+00, 8e+02]
 ## Found heuristic solution: objective 4498
-## Presolve time: 1.74s
+## Presolve time: 1.51s
 ## Presolved: 30666 rows, 30280 columns, 120720 nonzeros
 ## Variable types: 0 continuous, 30280 integer (30280 binary)
 ## Presolved: 30666 rows, 30280 columns, 120720 nonzeros
@@ -1078,53 +1039,52 @@ sim_mrs_amount_blm &lt;-<span class="st"> </span><span class="kw"><a href="../re
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##     6083    5.8204583e+02   0.000000e+00   7.177369e+04      5s
-##     7759    4.6444444e+02   0.000000e+00   0.000000e+00      6s
-##     7759    4.6444444e+02   0.000000e+00   0.000000e+00      6s
+##     7238    4.8904714e+02   0.000000e+00   1.950483e+05      5s
+##     7759    4.6444444e+02   0.000000e+00   0.000000e+00      5s
+##     7759    4.6444444e+02   0.000000e+00   0.000000e+00      5s
 ## 
-## Root relaxation: objective 4.644444e+02, 7759 iterations, 4.07 seconds
+## Root relaxation: objective 4.644444e+02, 7759 iterations, 3.78 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0  464.44444    0 1725 4498.00000  464.44444  89.7%     -    6s
-## H    0     0                    2242.0000000  464.44444  79.3%     -   16s
-##      0     0  515.39560    0 1776 2242.00000  515.39560  77.0%     -   17s
-##      0     0  555.31166    0 1654 2242.00000  555.31166  75.2%     -   18s
-##      0     0  555.31166    0 1660 2242.00000  555.31166  75.2%     -   18s
-##      0     0  555.31166    0 1678 2242.00000  555.31166  75.2%     -   19s
-##      0     0  555.31166    0 1679 2242.00000  555.31166  75.2%     -   19s
-##      0     0  555.31166    0 1552 2242.00000  555.31166  75.2%     -   20s
-##      0     0  555.31166    0 1553 2242.00000  555.31166  75.2%     -   20s
-##      0     0  555.31166    0 1533 2242.00000  555.31166  75.2%     -   21s
-##      0     0  558.17064    0 1477 2242.00000  558.17064  75.1%     -   21s
-##      0     0  558.17064    0 1470 2242.00000  558.17064  75.1%     -   23s
-## H    0     0                    1535.0000000  558.17064  63.6%     -   28s
-##      0     0  558.17064    0 1472 1535.00000  558.17064  63.6%     -   28s
-##      0     0  558.17064    0 1561 1535.00000  558.17064  63.6%     -   28s
-##      0     0  558.17064    0 1611 1535.00000  558.17064  63.6%     -   29s
-##      0     0  558.17064    0 1493 1535.00000  558.17064  63.6%     -   30s
+##      0     0  464.44444    0 1725 4498.00000  464.44444  89.7%     -    5s
+## H    0     0                    2242.0000000  464.44444  79.3%     -   18s
+##      0     0  515.39560    0 1776 2242.00000  515.39560  77.0%     -   19s
+##      0     0  555.31166    0 1654 2242.00000  555.31166  75.2%     -   20s
+##      0     0  555.31166    0 1660 2242.00000  555.31166  75.2%     -   20s
+##      0     0  555.31166    0 1678 2242.00000  555.31166  75.2%     -   20s
+##      0     0  555.31166    0 1679 2242.00000  555.31166  75.2%     -   21s
+##      0     0  555.31166    0 1552 2242.00000  555.31166  75.2%     -   22s
+##      0     0  555.31166    0 1553 2242.00000  555.31166  75.2%     -   22s
+##      0     0  555.31166    0 1533 2242.00000  555.31166  75.2%     -   23s
+##      0     0  558.17064    0 1477 2242.00000  558.17064  75.1%     -   23s
+##      0     0  558.17064    0 1470 2242.00000  558.17064  75.1%     -   25s
+## H    0     0                    1535.0000000  558.17064  63.6%     -   29s
+##      0     0  558.17064    0 1472 1535.00000  558.17064  63.6%     -   29s
+##      0     0  558.17064    0 1561 1535.00000  558.17064  63.6%     -   30s
+##      0     0  558.17064    0 1611 1535.00000  558.17064  63.6%     -   30s
+##      0     0  558.17064    0 1493 1535.00000  558.17064  63.6%     -   31s
 ##      0     0  558.17064    0 1495 1535.00000  558.17064  63.6%     -   35s
-##      0     0  558.17064    0 1485 1535.00000  558.17064  63.6%     -   35s
-##      0     0  558.17064    0 1490 1535.00000  558.17064  63.6%     -   38s
-##      0     0  558.17064    0 1500 1535.00000  558.17064  63.6%     -   39s
+##      0     0  558.17064    0 1485 1535.00000  558.17064  63.6%     -   36s
+##      0     0  558.17064    0 1490 1535.00000  558.17064  63.6%     -   39s
+##      0     0  558.17064    0 1500 1535.00000  558.17064  63.6%     -   40s
 ##      0     0  558.17064    0 1479 1535.00000  558.17064  63.6%     -   40s
-## H    0     2                    1435.0000000  558.17064  61.1%     -   50s
-##      0     2  558.17064    0 1474 1435.00000  558.17064  61.1%     -   50s
-##     18    19  808.73239   10 1385 1435.00000  584.51018  59.3%  1384   55s
-## *   34    30              18     920.0000000  584.51018  36.5%  1247   56s
-##     60    40  771.77700    4 1471  920.00000  660.00000  28.3%  1024   60s
-##     92    43     cutoff    8       920.00000  710.69767  22.8%   954   65s
-##    170    59  899.00786   11 1382  920.00000  728.57143  20.8%   833   70s
-##    224    54  875.70640    7  925  920.00000  767.76119  16.5%   818   75s
-##    297    56     cutoff   10       920.00000  797.77778  13.3%   774   80s
-##    382    40  882.50000    8 1117  920.00000  825.88235  10.2%   716   86s
+## H    0     2                    1435.0000000  558.17064  61.1%     -   48s
+##      0     2  558.17064    0 1474 1435.00000  558.17064  61.1%     -   48s
+##      7     8  678.98618    4 1039 1435.00000  584.51018  59.3%  1644   50s
+## *   34    30              18     920.0000000  584.51018  36.5%  1247   53s
+##     44    33  762.85714    4 1612  920.00000  609.93723  33.7%  1164   55s
+##     87    43  890.58824    7  641  920.00000  661.54246  28.1%   933   60s
+##    164    58  815.77465    6 1324  920.00000  720.00000  21.7%   827   65s
+##    241    57     cutoff    6       920.00000  782.09150  15.0%   799   70s
+##    338    55  888.42105    8  617  920.00000  809.65517  12.0%   738   75s
 ## 
 ## Cutting planes:
 ##   Gomory: 3
 ##   Zero half: 29
 ## 
-## Explored 438 nodes (384090 simplex iterations) in 87.04 seconds
+## Explored 438 nodes (384090 simplex iterations) in 79.38 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 5: 920 1435 1535 ... 4498
@@ -1132,7 +1092,7 @@ sim_mrs_amount_blm &lt;-<span class="st"> </span><span class="kw"><a href="../re
 ## Optimal solution found (tolerance 1.00e-01)
 ## Best objective 9.200000000000e+02, best bound 8.440000000000e+02, gap 8.2609%</code></pre>
 <pre><code>## Warning in validityMethod(object): some species have space.held values less
-## than 0, and are really poor represente</code></pre>
+## than 0, and are really poor represented</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show summary of prioritisation</span>
 <span class="kw"><a href="../reference/summary.html">summary</a></span>(sim_mrs_amount_blm)</code></pre></div>
 <pre><code>##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
@@ -1152,14 +1112,15 @@ sim_mrs_amount_blm &lt;-<span class="st"> </span><span class="kw"><a href="../re
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot prioritisation</span>
 <span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_amount_blm, <span class="dv">1</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-48-1.png" alt="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using only amount-based targets (20\%). Additionally, this priorititisation was specified to have high connectivity, by using a high $BLM$ parameter. See Figure 12 caption for conventions._" width="432"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-52-1.png" alt="_A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using only amount-based targets (20\%). Additionally, this priorititisation was specified to have high connectivity, by using a high $BLM$ parameter. See Figure 12 caption for conventions._" width="432"><p class="caption">
 <em>A multi-species prioritisation for the uniformly, normally, and bimodally distributed species generated using only amount-based targets (20%). Additionally, this priorititisation was specified to have high connectivity, by using a high <span class="math inline">\(BLM\)</span> parameter. See Figure 12 caption for conventions.</em>
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># difference between the two prioritisations</span>
-<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_amount_blm, sim_mrs_amount, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">main=</span><span class="st">'Difference between solutions'</span>)</code></pre></div>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_amount_blm, sim_mrs_amount, <span class="dv">1</span>, <span class="dv">1</span>,
+     <span class="dt">main =</span> <span class="st">"Difference between solutions"</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-49-1.png" alt="_Difference between two multi-species prioritisations. See Figure 7 caption for conventions._" width="432"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-53-1.png" alt="_Difference between two multi-species prioritisations. See Figure 7 caption for conventions._" width="432"><p class="caption">
 <em>Difference between two multi-species prioritisations. See Figure 7 caption for conventions.</em>
 </p>
 </div>
@@ -1173,7 +1134,7 @@ sim_mrs_amount_blm &lt;-<span class="st"> </span><span class="kw"><a href="../re
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>Here we will investigate how space-based targets can affect prioritisations using a more realistic dataset. We will generate prioritisations for the four bird species– <a href="http://www.birdlife.org/datazone/speciesfactsheet.php?id=1092&amp;gclid=CjwKEAiApYGyBRC-g_jIstuduV8SJABCEzhZoONUy8VlwRZqeFB1Z5M03CjyneIvX8KdVKIPZvckrRoCgJDw_wcB">blue-winged kookaburra</a>, <a href="http://www.birdlife.org/datazone/species/factsheet/22704394?gclid=CjwKEAiApYGyBRC-g_jIstuduV8SJABCEzhZHxCTcR38YnFlhePYt19gD31lqxxwrMmtIuWFhUwLmRoCGJjw_wcB">brown-backed honeyeater</a>, <a href="http://www.birdlife.org/datazone/speciesfactsheet.php?id=3588">brown falcon</a>, <a href="http://www.birdlife.org/datazone/speciesfactsheet.php?id=1466">pale-headed rosella</a>–in Queensland, Australia. This region contains a broad range of different habitats–such as rainforests, woodlands, and deserts–making it ideal for this tutorial. First, we will generate a typical amount-based prioritisation that aims to capture 20% of the species’ distributions. Then we will generate a prioritisation that also aims to secure populations in representative parts of the species’ distributions in terms of their geographic location and their environmental heterogeneity. To do this we will generate a prioritisation using 20% amount-based targets and 85% space-based targets. Finally, we will compare these prioritisations to Australia’s existing protected network.</p>
+<p>Here we will investigate how space-based targets can affect prioritisations using a more realistic dataset. We will generate prioritisations for the four bird species—<a href="http://www.birdlife.org/datazone/speciesfactsheet.php?id=1092&amp;gclid=CjwKEAiApYGyBRC-g_jIstuduV8SJABCEzhZoONUy8VlwRZqeFB1Z5M03CjyneIvX8KdVKIPZvckrRoCgJDw_wcB">blue-winged kookaburra</a>, <a href="http://www.birdlife.org/datazone/species/factsheet/22704394?gclid=CjwKEAiApYGyBRC-g_jIstuduV8SJABCEzhZHxCTcR38YnFlhePYt19gD31lqxxwrMmtIuWFhUwLmRoCGJjw_wcB">brown-backed honeyeater</a>, <a href="http://www.birdlife.org/datazone/speciesfactsheet.php?id=3588">brown falcon</a>, <a href="http://www.birdlife.org/datazone/speciesfactsheet.php?id=1466">pale-headed rosella</a>—in Queensland, Australia. This region contains a broad range of different habitats–such as rainforests, woodlands, and deserts–making it ideal for this tutorial. First, we will generate a typical amount-based prioritisation that aims to capture 20% of the species’ distributions. Then we will generate a prioritisation that also aims to secure populations in representative parts of the species’ distributions in terms of their geographic location and their environmental heterogeneity. To do this we will generate a prioritisation using 20% amount-based targets and 85% space-based targets. Finally, we will compare these prioritisations to Australia’s existing protected network.</p>
 </div>
 <div id="data-1" class="section level2">
 <h2 class="hasAnchor">
@@ -1183,15 +1144,13 @@ sim_mrs_amount_blm &lt;-<span class="st"> </span><span class="kw"><a href="../re
 <span class="kw">data</span>(cs_spp)
 
 <span class="co"># remove areas with low occupancy (prob &lt; 0.6)</span>
-cs_spp[cs_spp<span class="op">&lt;</span><span class="fl">0.6</span>] &lt;-<span class="st"> </span><span class="ot">NA</span>
+cs_spp[cs_spp <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.6</span>] &lt;-<span class="st"> </span><span class="ot">NA</span>
 
 <span class="co"># plot species' distributions</span>
-<span class="kw"><a href="../reference/plot.html">plot</a></span>(cs_spp, <span class="dt">main=</span><span class="kw">c</span>(
-    <span class="st">"Blue-winged kookaburra"</span>, <span class="st">"Brown-backed honeyeater"</span>, 
-    <span class="st">"Brown falcon"</span>, <span class="st">"Pale-headed rosella"</span>
-))</code></pre></div>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(cs_spp, <span class="dt">main =</span> <span class="kw">c</span>(<span class="st">"Blue-winged kookaburra"</span>, <span class="st">"Brown-backed honeyeater"</span>,
+                      <span class="st">"Brown falcon"</span>, <span class="st">"Pale-headed rosella"</span>))</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-50-1.png" alt="_Distribution map for four Australian bird species. Pixel colours denote probability of occupancy._" width="480"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-54-1.png" alt="_Distribution map for four Australian bird species. Pixel colours denote probability of occupancy._" width="480"><p class="caption">
 <em>Distribution map for four Australian bird species. Pixel colours denote probability of occupancy.</em>
 </p>
 </div>
@@ -1206,34 +1165,31 @@ cs_pus2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/Spa
 <span class="co"># create vector of colours for planning units</span>
 <span class="co"># + light green: units not already inside reserve</span>
 <span class="co"># + yellow: units already inside reserve</span>
-cs_pus_cols &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">'#c7e9c0'</span>, <span class="kw">nrow</span>(cs_pus<span class="op">@</span>data))
-cs_pus_cols[<span class="kw">which</span>(cs_pus<span class="op">$</span>status<span class="op">==</span><span class="dv">2</span>)] &lt;-<span class="st"> 'yellow'</span>
+cs_pus_cols &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">"#c7e9c0"</span>, <span class="kw">nrow</span>(cs_pus<span class="op">@</span>data))
+cs_pus_cols[<span class="kw">which</span>(cs_pus<span class="op">$</span>status <span class="op">==</span><span class="st"> </span><span class="dv">2</span>)] &lt;-<span class="st"> "yellow"</span>
 
 <span class="co"># set plotting window</span>
-<span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">4.1</span>, <span class="fl">0.1</span>))
+<span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">4.1</span>, <span class="fl">0.1</span>))
 
 <span class="co"># plot polygons</span>
-PBSmapping<span class="op">::</span><span class="kw">plotPolys</span>(
-    cs_pus2, <span class="dt">col=</span>cs_pus_cols, <span class="dt">border=</span><span class="st">'gray30'</span>, 
-    <span class="dt">xlab=</span><span class="st">''</span>, <span class="dt">ylab=</span><span class="st">''</span>, <span class="dt">axes=</span><span class="ot">FALSE</span>, 
-    <span class="dt">main=</span><span class="st">'Case-study planning units'</span>,
-    <span class="dt">cex=</span><span class="fl">1.8</span>
-)</code></pre></div>
+PBSmapping<span class="op">::</span><span class="kw">plotPolys</span>(cs_pus2, <span class="dt">col =</span> cs_pus_cols, <span class="dt">border =</span> <span class="st">"gray30"</span>,
+                      <span class="dt">xlab =</span> <span class="st">""</span>, <span class="dt">ylab =</span> <span class="st">""</span>, <span class="dt">axes =</span> <span class="ot">FALSE</span>,
+                      <span class="dt">main =</span> <span class="st">"Case-study planning units"</span>, <span class="dt">cex =</span> <span class="fl">1.8</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-51-1.png" alt="_Planning units for the case-study examples. Polygons denote planning units. Yellow units have more than 50\% of their area already in a reserve.)" width="432"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-55-1.png" alt="_Planning units for the case-study examples. Polygons denote planning units. Yellow units have more than 50\% of their area already in a reserve.)" width="432"><p class="caption">
 _Planning units for the case-study examples. Polygons denote planning units. Yellow units have more than 50% of their area already in a reserve.)
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># reset plotting window</span>
-<span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="fl">5.1</span>, <span class="fl">4.1</span>, <span class="fl">4.1</span>, <span class="fl">2.1</span>))</code></pre></div>
+<span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="fl">5.1</span>, <span class="fl">4.1</span>, <span class="fl">4.1</span>, <span class="fl">2.1</span>))</code></pre></div>
 <p>To map the distribution of environmental conditions across the species’ range, 21 <a href="http://www.worldclim.org/bioclim">bioclimatic layers</a> were obtained. These layers were cropped to Australia and subject to <a href="http://cc.oulu.fi/~jarioksa/softhelp/vegan/html/decorana.html">detrended correspondence analysis</a> to produce two new variables. These layers are stored in the <code>cs_space</code> object.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load data</span>
 <span class="kw">data</span>(cs_space)
 
 <span class="co"># plot variables</span>
-<span class="kw"><a href="../reference/plot.html">plot</a></span>(cs_space, <span class="dt">main=</span><span class="kw">c</span>(<span class="st">'DC1'</span>, <span class="st">'DC2'</span>), <span class="dt">legend=</span><span class="ot">FALSE</span>, <span class="dt">axes=</span><span class="ot">FALSE</span>)</code></pre></div>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(cs_space, <span class="dt">main =</span> <span class="kw">c</span>(<span class="st">"DC1"</span>, <span class="st">"DC2"</span>), <span class="dt">legend =</span> <span class="ot">FALSE</span>, <span class="dt">axes =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-52-1.png" alt="_Broad-scale environmental variation across Australia. The variable DC1 describes the transition from wet and cool to dry and hot conditions. The variable DC2 describes the transition from wet and hot to dry and cool conditions._" width="672"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-56-1.png" alt="_Broad-scale environmental variation across Australia. The variable DC1 describes the transition from wet and cool to dry and hot conditions. The variable DC2 describes the transition from wet and hot to dry and cool conditions._" width="672"><p class="caption">
 <em>Broad-scale environmental variation across Australia. The variable DC1 describes the transition from wet and cool to dry and hot conditions. The variable DC2 describes the transition from wet and hot to dry and cool conditions.</em>
 </p>
 </div>
@@ -1243,23 +1199,20 @@ _Planning units for the case-study examples. Polygons denote planning units. Yel
 <a href="#analysis" class="anchor"></a>Analysis</h2>
 <p>To simplify the process of formatting data and generating prioritisations, we can use the <code>rap</code> function. First, we will generate an amount-based prioritisation that aims to capture 10% of the rosella’s range. We will use 50 demand points to map the geographic and environmental spaces. <strong>Be warned, the examples hereafter can take 5-10 minutes to run.</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make amount-based prioritisation</span>
-<span class="co"># and ignore existing protected areas by discarding values in the </span>
+<span class="co"># and ignore existing protected areas by discarding values in the</span>
 <span class="co"># status (third) column of the attribute table</span>
-cs_rs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rap.html">rap</a></span>(
-    cs_pus[,<span class="op">-</span><span class="dv">2</span>], cs_spp, cs_space,
-    <span class="dt">amount.target=</span><span class="fl">0.2</span>, <span class="dt">space.target=</span><span class="ot">NA</span>, <span class="dt">n.demand.points=</span>50L,
-    <span class="dt">include.geographic.space=</span><span class="ot">TRUE</span>, <span class="dt">formulation=</span><span class="st">'unreliable'</span>,
-    <span class="dt">kernel.method=</span><span class="st">'ks'</span>, <span class="dt">quantile=</span><span class="fl">0.7</span>, <span class="dt">solve=</span><span class="ot">FALSE</span>
-)</code></pre></div>
+cs_rs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rap.html">rap</a></span>(cs_pus[, <span class="op">-</span><span class="dv">2</span>], cs_spp, cs_space, <span class="dt">amount.target =</span> <span class="fl">0.2</span>,
+                    <span class="dt">space.target =</span> <span class="ot">NA</span>, <span class="dt">n.demand.points =</span> 50L,
+                    <span class="dt">include.geographic.space =</span> <span class="ot">TRUE</span>, <span class="dt">formulation =</span> <span class="st">"unreliable"</span>,
+                    <span class="dt">kernel.method =</span> <span class="st">"ks"</span>, <span class="dt">quantile =</span> <span class="fl">0.7</span>, <span class="dt">solve =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <pre><code>## Warning in (function (pus, species, spaces = NULL, amount.target = 0.2, :
 ## argument to pus does not have a "status" column, setting all planning unit
 ## statuses to 0.</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># generate prioritisation</span>
-cs_rs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../reference/solve.html">solve</a></span>(cs_rs_amount, <span class="dt">MIPGap=</span><span class="fl">0.1</span>, <span class="dt">Threads=</span>threads)</code></pre></div>
+cs_rs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../reference/solve.html">solve</a></span>(cs_rs_amount, <span class="dt">MIPGap =</span> <span class="fl">0.1</span>, <span class="dt">Threads =</span> threads)</code></pre></div>
 <pre><code>## The rgorubi R package is not installed</code></pre>
-<pre><code>## To access multiple solutions from the solution pool,
-##  follow these instructions to install the "rgurobi" R package from GitHub:
-##  http://bit.ly/1RF19XO</code></pre>
+<pre><code>## Follow these instructions to install the "rgurobi" R package from GitHub:
+##   http://bit.ly/1RF19XO</code></pre>
 <pre><code>## Optimize a model with 4 rows, 762 columns and 1336 nonzeros
 ## Variable types: 0 continuous, 762 integer (762 binary)
 ## Coefficient statistics:
@@ -1290,7 +1243,7 @@ cs_rs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../referenc
 ## Optimal solution found (tolerance 1.00e-01)
 ## Best objective 1.360000000000e+02, best bound 1.360000000000e+02, gap 0.0000%</code></pre>
 <pre><code>## Warning in validityMethod(object): some species have space.held values less
-## than 0, and are really poor represente</code></pre>
+## than 0, and are really poor represented</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show summary</span>
 <span class="kw"><a href="../reference/summary.html">summary</a></span>(cs_rs_amount)</code></pre></div>
 <pre><code>##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
@@ -1302,40 +1255,39 @@ cs_rs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../referenc
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot prioritisation</span>
 <span class="kw"><a href="../reference/plot.html">plot</a></span>(cs_rs_amount, <span class="dv">1</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-55-1.png" alt="_Multi-species prioritisation generated for four bird species using amount-based targets (20\%). See Figure 12 captions for conventions._" width="432"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-59-1.png" alt="_Multi-species prioritisation generated for four bird species using amount-based targets (20\%). See Figure 12 captions for conventions._" width="432"><p class="caption">
 <em>Multi-species prioritisation generated for four bird species using amount-based targets (20%). See Figure 12 captions for conventions.</em>
 </p>
 </div>
 <p>We can also see how well the prioritisation secures the species’ distributions in the geographic and environmental attribute spaces.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot prioritisation in geographic attribute space</span>
-p1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_amount, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dt">main=</span><span class="st">'Blue-winged</span><span class="ch">\n</span><span class="st">kookaburra'</span>)
-p2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_amount, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dt">main=</span><span class="st">'Brown-backed</span><span class="ch">\n</span><span class="st">honeyeater'</span>)
-p3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_amount, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dt">main=</span><span class="st">'Brown falcon'</span>)
-p4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_amount, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dt">main=</span><span class="st">'Pale-headed</span><span class="ch">\n</span><span class="st">rosella'</span>)
-gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(p1, p2, p3, p4, <span class="dt">ncol=</span><span class="dv">2</span>)</code></pre></div>
+p1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_amount, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dt">main =</span> <span class="st">"Blue-winged</span><span class="ch">\n</span><span class="st">kookaburra"</span>)
+p2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_amount, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dt">main =</span> <span class="st">"Brown-backed</span><span class="ch">\n</span><span class="st">honeyeater"</span>)
+p3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_amount, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dt">main =</span> <span class="st">"Brown falcon"</span>)
+p4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_amount, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dt">main =</span> <span class="st">"Pale-headed</span><span class="ch">\n</span><span class="st">rosella"</span>)
+gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(p1, p2, p3, p4, <span class="dt">ncol =</span> <span class="dv">2</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-56-1.png" alt="_Distribution of amount-based prioritisation in the geographic attribute space. Points denote combinations of environmental conditions. Green and grey points represent planning unit selected for and not selected for prioritisation (respectively). Blue points denote demand points, and their size indicates their weighting._" width="960"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-60-1.png" alt="_Distribution of amount-based prioritisation in the geographic attribute space. Points denote combinations of environmental conditions. Green and grey points represent planning unit selected for and not selected for prioritisation (respectively). Blue points denote demand points, and their size indicates their weighting._" width="960"><p class="caption">
 <em>Distribution of amount-based prioritisation in the geographic attribute space. Points denote combinations of environmental conditions. Green and grey points represent planning unit selected for and not selected for prioritisation (respectively). Blue points denote demand points, and their size indicates their weighting.</em>
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot prioritisation in environmental attribute space</span>
-p1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_amount, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">main=</span><span class="st">'Blue-winged</span><span class="ch">\n</span><span class="st">kookaburra'</span>)
-p2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_amount, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dt">main=</span><span class="st">'Brown-backed</span><span class="ch">\n</span><span class="st">honeyeater'</span>)
-p3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_amount, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dt">main=</span><span class="st">'Brown falcon'</span>)
-p4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_amount, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dt">main=</span><span class="st">'Pale-headed</span><span class="ch">\n</span><span class="st">rosella'</span>)
-gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(p1, p2, p3, p4, <span class="dt">ncol=</span><span class="dv">2</span>)</code></pre></div>
+p1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_amount, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Blue-winged</span><span class="ch">\n</span><span class="st">kookaburra"</span>)
+p2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_amount, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Brown-backed</span><span class="ch">\n</span><span class="st">honeyeater"</span>)
+p3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_amount, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Brown falcon"</span>)
+p4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_amount, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Pale-headed</span><span class="ch">\n</span><span class="st">rosella"</span>)
+gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(p1, p2, p3, p4, <span class="dt">ncol =</span> <span class="dv">2</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-57-1.png" alt="_Distribution of amount-based prioritisation in the environmental attribute space. See Figure 28 caption for conventions._" width="960"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-61-1.png" alt="_Distribution of amount-based prioritisation in the environmental attribute space. See Figure 28 caption for conventions._" width="960"><p class="caption">
 <em>Distribution of amount-based prioritisation in the environmental attribute space. See Figure 28 caption for conventions.</em>
 </p>
 </div>
 <p>Next, let’s generate a prioritisation using amount- and space-based targets. This prioritisation will secure 70% of the species distribution in geographic and environmental space.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make amount- and space-based prioritisation</span>
-cs_rs_space &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(cs_rs_amount, <span class="dt">space.target=</span><span class="fl">0.7</span>, <span class="dt">Threads=</span>threads)</code></pre></div>
+cs_rs_space &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(cs_rs_amount, <span class="dt">space.target =</span> <span class="fl">0.7</span>, <span class="dt">Threads =</span> threads)</code></pre></div>
 <pre><code>## The rgorubi R package is not installed</code></pre>
-<pre><code>## To access multiple solutions from the solution pool,
-##  follow these instructions to install the "rgurobi" R package from GitHub:
-##  http://bit.ly/1RF19XO</code></pre>
+<pre><code>## Follow these instructions to install the "rgurobi" R package from GitHub:
+##   http://bit.ly/1RF19XO</code></pre>
 <pre><code>## Optimize a model with 134012 rows, 134362 columns and 535736 nonzeros
 ## Variable types: 0 continuous, 134362 integer (134362 binary)
 ## Coefficient statistics:
@@ -1343,24 +1295,21 @@ cs_rs_space &lt;-<span class="st"> </span><span class="kw"><a href="../reference
 ##   Objective range  [1e+00, 1e+00]
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [7e-01, 3e+06]
-## Presolve removed 5226 rows and 4198 columns (presolve time = 5s) ...
-## Presolve removed 5765 rows and 4202 columns (presolve time = 10s) ...
-## Presolve removed 5876 rows and 4202 columns (presolve time = 15s) ...
-## Presolve removed 6063 rows and 4202 columns (presolve time = 20s) ...
-## Presolve removed 6848 rows and 4202 columns (presolve time = 25s) ...
-## Presolve removed 7796 rows and 4202 columns (presolve time = 30s) ...
-## Presolve removed 8456 rows and 4202 columns (presolve time = 35s) ...
-## Presolve removed 8496 rows and 4202 columns (presolve time = 40s) ...
-## Presolve removed 8499 rows and 4202 columns (presolve time = 45s) ...
-## Presolve removed 9292 rows and 4202 columns (presolve time = 50s) ...
-## Presolve removed 9878 rows and 4202 columns (presolve time = 55s) ...
-## Presolve removed 10112 rows and 4202 columns (presolve time = 60s) ...
-## Presolve removed 10305 rows and 4202 columns (presolve time = 65s) ...
-## Presolve removed 10315 rows and 4202 columns (presolve time = 70s) ...
-## Presolve removed 10315 rows and 4260 columns (presolve time = 86s) ...
-## Presolve removed 10330 rows and 4260 columns (presolve time = 92s) ...
+## Presolve removed 5499 rows and 4198 columns (presolve time = 5s) ...
+## Presolve removed 5853 rows and 4202 columns (presolve time = 10s) ...
+## Presolve removed 6053 rows and 4202 columns (presolve time = 15s) ...
+## Presolve removed 7342 rows and 4202 columns (presolve time = 20s) ...
+## Presolve removed 8326 rows and 4202 columns (presolve time = 25s) ...
+## Presolve removed 8489 rows and 4202 columns (presolve time = 30s) ...
+## Presolve removed 8499 rows and 4202 columns (presolve time = 35s) ...
+## Presolve removed 9040 rows and 4202 columns (presolve time = 40s) ...
+## Presolve removed 9874 rows and 4202 columns (presolve time = 45s) ...
+## Presolve removed 10303 rows and 4202 columns (presolve time = 50s) ...
+## Presolve removed 10315 rows and 4202 columns (presolve time = 55s) ...
+## Presolve removed 10315 rows and 4260 columns (presolve time = 69s) ...
+## Presolve removed 10330 rows and 4260 columns (presolve time = 75s) ...
 ## Presolve removed 10330 rows and 4260 columns
-## Presolve time: 92.31s
+## Presolve time: 75.03s
 ## Presolved: 123682 rows, 130102 columns, 569395 nonzeros
 ## Variable types: 0 continuous, 130102 integer (130102 binary)
 ## Found heuristic solution: objective 234.0000000
@@ -1372,24 +1321,23 @@ cs_rs_space &lt;-<span class="st"> </span><span class="kw"><a href="../reference
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    0.0000000e+00   1.230612e+02   1.557797e+10     97s
-##    13396    1.3643073e+02   0.000000e+00   1.042550e+03    100s
-##    31232    1.3569927e+02   0.000000e+00   1.163218e+03    105s
-##    44560    1.3560979e+02   0.000000e+00   2.798977e+01    110s
-##    57104    1.3556201e+02   0.000000e+00   1.642754e+01    115s
-##    63937    1.3555580e+02   7.978717e-02   0.000000e+00    120s
-##    63974    1.3555580e+02   0.000000e+00   0.000000e+00    120s
-##    63974    1.3555580e+02   0.000000e+00   0.000000e+00    120s
+##        0    0.0000000e+00   1.230612e+02   1.557797e+10     78s
+##    14572    1.3635366e+02   0.000000e+00   4.674253e+02     80s
+##    34760    1.3566764e+02   0.000000e+00   1.230029e+02     85s
+##    48284    1.3559081e+02   0.000000e+00   6.579415e+01     90s
+##    60828    1.3555769e+02   0.000000e+00   8.683199e-01     95s
+##    63974    1.3555580e+02   0.000000e+00   0.000000e+00     96s
+##    63974    1.3555580e+02   0.000000e+00   0.000000e+00     97s
 ## 
-## Root relaxation: objective 1.355558e+02, 63974 iterations, 27.11 seconds
+## Root relaxation: objective 1.355558e+02, 63974 iterations, 20.85 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0  135.55580    0  570  234.00000  135.55580  42.1%     -  122s
-## H    0     0                     136.0000000  135.55580  0.33%     -  122s
+##      0     0  135.55580    0  570  234.00000  135.55580  42.1%     -   97s
+## H    0     0                     136.0000000  135.55580  0.33%     -   98s
 ## 
-## Explored 1 nodes (79466 simplex iterations) in 122.87 seconds
+## Explored 1 nodes (79466 simplex iterations) in 98.24 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 136 234 
@@ -1397,7 +1345,7 @@ cs_rs_space &lt;-<span class="st"> </span><span class="kw"><a href="../reference
 ## Optimal solution found (tolerance 1.00e-01)
 ## Best objective 1.360000000000e+02, best bound 1.360000000000e+02, gap 0.0000%</code></pre>
 <pre><code>## Warning in validityMethod(object): some species have space.held values less
-## than 0, and are really poor represente</code></pre>
+## than 0, and are really poor represented</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show summary</span>
 <span class="kw"><a href="../reference/summary.html">summary</a></span>(cs_rs_space)</code></pre></div>
 <pre><code>##   Run_Number  Status Score Cost Planning_Units Connectivity_Total
@@ -1407,79 +1355,82 @@ cs_rs_space &lt;-<span class="st"> </span><span class="kw"><a href="../reference
 ##   Connectivity_In_Fraction
 ## 1               0.09517682</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot prioritisation</span>
-<span class="kw"><a href="../reference/plot.html">plot</a></span>(cs_rs_space,<span class="dv">1</span>)</code></pre></div>
-<p><img src="raptr_files/figure-html/unnamed-chunk-59-1.png" width="432" style="display: block; margin: auto;"></p>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(cs_rs_space, <span class="dv">1</span>)</code></pre></div>
+<p><img src="raptr_files/figure-html/unnamed-chunk-63-1.png" width="432" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot prioritisation in geographic attribute space</span>
-p1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_space, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dt">main=</span><span class="st">'Blue-winged</span><span class="ch">\n</span><span class="st">kookaburra'</span>)
-p2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_space, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dt">main=</span><span class="st">'Brown-backed</span><span class="ch">\n</span><span class="st">honeyeater'</span>)
-p3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_space, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dt">main=</span><span class="st">'Brown falcon'</span>)
-p4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_space, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dt">main=</span><span class="st">'Pale-headed</span><span class="ch">\n</span><span class="st">rosella'</span>)
-gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(p1, p2, p3, p4, <span class="dt">ncol=</span><span class="dv">2</span>)</code></pre></div>
+p1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_space, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dt">main =</span> <span class="st">"Blue-winged</span><span class="ch">\n</span><span class="st">kookaburra"</span>)
+p2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_space, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dt">main =</span> <span class="st">"Brown-backed</span><span class="ch">\n</span><span class="st">honeyeater"</span>)
+p3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_space, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dt">main =</span> <span class="st">"Brown falcon"</span>)
+p4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_space, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dt">main =</span> <span class="st">"Pale-headed</span><span class="ch">\n</span><span class="st">rosella"</span>)
+gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(p1, p2, p3, p4, <span class="dt">ncol =</span> <span class="dv">2</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-60-1.png" alt="_Distribution of the amount- and space-based prioritisation in the geographic attribute space. See Figure 28 caption for conventions._" width="960"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-64-1.png" alt="_Distribution of the amount- and space-based prioritisation in the geographic attribute space. See Figure 28 caption for conventions._" width="960"><p class="caption">
 <em>Distribution of the amount- and space-based prioritisation in the geographic attribute space. See Figure 28 caption for conventions.</em>
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot prioritisation in environmental attribute space</span>
-p1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_space, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">main=</span><span class="st">'Blue-winged</span><span class="ch">\n</span><span class="st">kookaburra'</span>)
-p2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_space, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dt">main=</span><span class="st">'Brown-backed</span><span class="ch">\n</span><span class="st">honeyeater'</span>)
-p3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_space, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dt">main=</span><span class="st">'Brown falcon'</span>)
-p4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_space, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dt">main=</span><span class="st">'Pale-headed</span><span class="ch">\n</span><span class="st">rosella'</span>)
-gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(p1, p2, p3, p4, <span class="dt">ncol=</span><span class="dv">2</span>)</code></pre></div>
+p1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_space, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Blue-winged</span><span class="ch">\n</span><span class="st">kookaburra"</span>)
+p2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_space, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Brown-backed</span><span class="ch">\n</span><span class="st">honeyeater"</span>)
+p3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_space, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Brown falcon"</span>)
+p4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_space, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Pale-headed</span><span class="ch">\n</span><span class="st">rosella"</span>)
+gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(p1, p2, p3, p4, <span class="dt">ncol =</span> <span class="dv">2</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-61-1.png" alt="_Distribution of the amount- and space-based prioritisation in the environmental attribute space. See Figure 28 caption for conventions._" width="960"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-65-1.png" alt="_Distribution of the amount- and space-based prioritisation in the environmental attribute space. See Figure 28 caption for conventions._" width="960"><p class="caption">
 <em>Distribution of the amount- and space-based prioritisation in the environmental attribute space. See Figure 28 caption for conventions.</em>
 </p>
 </div>
 <p>Let’s compare these prioritisations with Queensland’s existing protected areas system. To do this, we can create update the <code>cs_rs_space</code> with manually specified solutions to create a <code>RapSolved</code> object to represent the Queensland’s reserve network.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># generate vector with Australia's selections</span>
-aus_selections &lt;-<span class="st"> </span><span class="kw">which</span>(cs_pus<span class="op">$</span>status<span class="op">&gt;</span><span class="dv">0</span>)
+aus_selections &lt;-<span class="st"> </span><span class="kw">which</span>(cs_pus<span class="op">$</span>status <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)
 
 <span class="co"># create new object with Australia's network</span>
-cs_rs_aus &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(cs_rs_amount, <span class="dt">b=</span>aus_selections)</code></pre></div>
+cs_rs_aus &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update.html">update</a></span>(cs_rs_amount, <span class="dt">b =</span> aus_selections)</code></pre></div>
 <pre><code>## Warning in validityMethod(object): some species have space.held values less
-## than 0, and are really poor represente</code></pre>
+## than 0, and are really poor represented</code></pre>
 <p>Now, let’s plot the performance metrics for these prioritisations.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># define standard error function</span>
-se=<span class="cf">function</span>(x){<span class="kw">sd</span>(x,<span class="dt">na.rm=</span><span class="ot">TRUE</span>)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">sum</span>(<span class="op">!</span><span class="kw">is.na</span>(x)))}
+se &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">sd</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">sum</span>(<span class="op">!</span><span class="kw">is.na</span>(x)))
 
 <span class="co"># create a table to store the values for the 3 prioritisations</span>
 cs_results &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
-    <span class="dt">name=</span><span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">'Amount-based</span><span class="ch">\n</span><span class="st">prioritisation'</span>, 
-        <span class="st">'Amount &amp; space-based</span><span class="ch">\n</span><span class="st">prioritisation'</span>, <span class="st">'Queensland reserve</span><span class="ch">\n</span><span class="st">network'</span>),
-        <span class="dt">each=</span><span class="dv">4</span>),<span class="dv">3</span>), <span class="dt">levels=</span><span class="kw">c</span>(<span class="kw">c</span>(<span class="st">'Amount-based</span><span class="ch">\n</span><span class="st">prioritisation'</span>, 
-        <span class="st">'Amount &amp; space-based</span><span class="ch">\n</span><span class="st">prioritisation'</span>, <span class="st">'Queensland reserve</span><span class="ch">\n</span><span class="st">network'</span>))),
-    <span class="dt">variable=</span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">'Amount'</span>, <span class="st">'Geographic space'</span>, <span class="st">'Environmental space'</span>), <span class="dt">each=</span><span class="dv">12</span>),
-    <span class="dt">species=</span><span class="kw">colnames</span>(<span class="kw"><a href="../reference/amount.held.html">amount.held</a></span>(cs_rs_amount)),
-    <span class="dt">value=</span><span class="kw">c</span>(
-        <span class="kw"><a href="../reference/amount.held.html">amount.held</a></span>(cs_rs_amount)[<span class="dv">1</span>,], <span class="kw"><a href="../reference/amount.held.html">amount.held</a></span>(cs_rs_space)[<span class="dv">1</span>,],
-            <span class="kw"><a href="../reference/amount.held.html">amount.held</a></span>(cs_rs_aus)[<span class="dv">1</span>,],
-        <span class="kw"><a href="../reference/space.held.html">space.held</a></span>(cs_rs_amount, <span class="dt">space=</span><span class="dv">2</span>)[<span class="dv">1</span>,], <span class="kw"><a href="../reference/space.held.html">space.held</a></span>(cs_rs_space, <span class="dt">space=</span><span class="dv">2</span>)[<span class="dv">1</span>,], 
-            <span class="kw"><a href="../reference/space.held.html">space.held</a></span>(cs_rs_aus, <span class="dt">space=</span><span class="dv">2</span>)[<span class="dv">1</span>,],
-        <span class="kw"><a href="../reference/space.held.html">space.held</a></span>(cs_rs_amount, <span class="dt">space=</span><span class="dv">1</span>)[<span class="dv">1</span>,], <span class="kw"><a href="../reference/space.held.html">space.held</a></span>(cs_rs_space, <span class="dt">space=</span><span class="dv">1</span>)[<span class="dv">1</span>,],
-            <span class="kw"><a href="../reference/space.held.html">space.held</a></span>(cs_rs_aus, <span class="dt">space=</span><span class="dv">1</span>)[<span class="dv">1</span>,]
-    )
-) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(name,variable) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">mean=</span><span class="kw">mean</span>(value),<span class="dt">se=</span><span class="kw">se</span>(value))
+  <span class="dt">name =</span> <span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">"Amount-based</span><span class="ch">\n</span><span class="st">prioritisation"</span>,
+                          <span class="st">"Amount &amp; space-based</span><span class="ch">\n</span><span class="st">prioritisation"</span>,
+                          <span class="st">"Queensland reserve</span><span class="ch">\n</span><span class="st">network"</span>), <span class="dt">each =</span> <span class="dv">4</span>), <span class="dv">3</span>),
+                <span class="dt">levels =</span> <span class="kw">c</span>(<span class="kw">c</span>(<span class="st">"Amount-based</span><span class="ch">\n</span><span class="st">prioritisation"</span>,
+                             <span class="st">"Amount &amp; space-based</span><span class="ch">\n</span><span class="st">prioritisation"</span>,
+                              <span class="st">"Queensland reserve</span><span class="ch">\n</span><span class="st">network"</span>))),
+  <span class="dt">variable =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">"Amount"</span>, <span class="st">"Geographic space"</span>, <span class="st">"Environmental space"</span>),
+                 <span class="dt">each =</span> <span class="dv">12</span>),
+  <span class="dt">species =</span> <span class="kw">colnames</span>(<span class="kw"><a href="../reference/amount.held.html">amount.held</a></span>(cs_rs_amount)),
+  <span class="dt">value =</span> <span class="kw">c</span>(<span class="kw"><a href="../reference/amount.held.html">amount.held</a></span>(cs_rs_amount)[<span class="dv">1</span>,] , <span class="kw"><a href="../reference/amount.held.html">amount.held</a></span>(cs_rs_space)[<span class="dv">1</span>, ],
+            <span class="kw"><a href="../reference/amount.held.html">amount.held</a></span>(cs_rs_aus)[<span class="dv">1</span>, ],
+            <span class="kw"><a href="../reference/space.held.html">space.held</a></span>(cs_rs_amount, <span class="dt">space =</span> <span class="dv">2</span>)[<span class="dv">1</span>, ],
+            <span class="kw"><a href="../reference/space.held.html">space.held</a></span>(cs_rs_space, <span class="dt">space =</span> <span class="dv">2</span>)[<span class="dv">1</span>, ],
+            <span class="kw"><a href="../reference/space.held.html">space.held</a></span>(cs_rs_aus, <span class="dt">space =</span> <span class="dv">2</span>)[<span class="dv">1</span>, ],
+            <span class="kw"><a href="../reference/space.held.html">space.held</a></span>(cs_rs_amount, <span class="dt">space =</span> <span class="dv">1</span>)[<span class="dv">1</span>, ],
+            <span class="kw"><a href="../reference/space.held.html">space.held</a></span>(cs_rs_space, <span class="dt">space =</span> <span class="dv">1</span>)[<span class="dv">1</span>, ],
+            <span class="kw"><a href="../reference/space.held.html">space.held</a></span>(cs_rs_aus, <span class="dt">space =</span> <span class="dv">1</span>)[<span class="dv">1</span>, ])) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(name, variable) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(value), <span class="dt">se =</span> <span class="kw">se</span>(value))
 
 <span class="co"># plot the performance metrics</span>
-<span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>variable, <span class="dt">y=</span>mean, <span class="dt">fill=</span>name), <span class="dt">data=</span>cs_results) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="fl">0.9</span>), <span class="dt">stat=</span><span class="st">'identity'</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_errorbar</span>(
-        <span class="kw">aes</span>(<span class="dt">ymin=</span>mean<span class="op">-</span>se, <span class="dt">ymax=</span>mean<span class="op">+</span>se), <span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="fl">0.9</span>),
-        <span class="dt">width=</span><span class="fl">0.2</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">xlab</span>(<span class="st">'Property of species'</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">ylab</span>(<span class="st">'Proportion held in</span><span class="ch">\n</span><span class="st">selected planning units (%)'</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">scale_fill_discrete</span>(<span class="dt">name=</span><span class="st">''</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">theme_classic</span>() <span class="op">+</span>
-<span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">'bottom'</span>,<span class="dt">legend.direction=</span><span class="st">'horizontal'</span>,
-        <span class="dt">axis.line.x=</span><span class="kw">element_line</span>(),<span class="dt">axis.line.y=</span><span class="kw">element_line</span>())</code></pre></div>
+<span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> variable, <span class="dt">y =</span> mean, <span class="dt">fill =</span> name), <span class="dt">data =</span> cs_results) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="fl">0.9</span>), <span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> mean <span class="op">-</span><span class="st"> </span>se, <span class="dt">ymax =</span> mean <span class="op">+</span><span class="st"> </span>se),
+               <span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="fl">0.9</span>),
+               <span class="dt">width=</span><span class="fl">0.2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">"Property of species"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Proportion held in</span><span class="ch">\n</span><span class="st">selected planning units (%)"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_discrete</span>(<span class="dt">name =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>, <span class="dt">legend.direction =</span> <span class="st">"horizontal"</span>,
+        <span class="dt">axis.line.x =</span> <span class="kw">element_line</span>(), <span class="dt">axis.line.y =</span> <span class="kw">element_line</span>())</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="raptr_files/figure-html/unnamed-chunk-63-1.png" alt="_Prioritisations were generated using amount-based targets (20\%), and with additional space-based targets (85\%). These are compared to the Queensland reserve network. Data represent means and standard errors for the four species in each prioritisation._" width="768"><p class="caption">
+<img src="raptr_files/figure-html/unnamed-chunk-67-1.png" alt="_Prioritisations were generated using amount-based targets (20\%), and with additional space-based targets (85\%). These are compared to the Queensland reserve network. Data represent means and standard errors for the four species in each prioritisation._" width="768"><p class="caption">
 <em>Prioritisations were generated using amount-based targets (20%), and with additional space-based targets (85%). These are compared to the Queensland reserve network. Data represent means and standard errors for the four species in each prioritisation.</em>
 </p>
 </div>
-<p>We can see that a greater number of planning units is needed to satisfy the space-based targets. The prioritisation generated using just amount-based targets has 136 planning units, and the prioritisations using amount-based and space-based targets has 136 planning units. These results suggest only a few additional planning units can result in significant improvements in the effectivenss of a prioritisation.</p>
+<p>We can see that a greater number of planning units is needed to satisfy the space-based targets. The prioritisation generated using just amount-based targets has 136 planning units, and the prioritisations using amount-based and space-based targets has 136 planning units. These results suggest only a few additional planning units can result in significant improvements in the effectiveness of a prioritisation.</p>
 </div>
 </div>
 </div>

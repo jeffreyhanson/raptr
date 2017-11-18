@@ -55,19 +55,24 @@ RapSolved <- function(unsolved, solver, results) {
 
 #' @rdname solve
 #'
+#' @usage \S4method{solve}{RapUnsolOrSol,missing}(a, b, ..., verbose = FALSE)
+#'
 #' @name solve
 #'
-#' @export
+#' @aliases solve,RapUnsolOrSol,missing-method
 methods::setMethod("solve",
   methods::representation(a = "RapUnsolOrSol", b = "missing"),
   function(a, b, ..., verbose = FALSE)
     solve(a, b = GurobiOpts(...), verbose))
 
+
 #' @rdname solve
+#'
+#' @usage \S4method{solve}{RapUnsolOrSol,GurobiOpts}(a, b, verbose = FALSE)
 #'
 #' @name solve
 #'
-#' @export
+#' @aliases solve,RapUnsolOrSol,GurobiOpts-method
 methods::setMethod("solve",
   methods::representation(a = "RapUnsolOrSol", b = "GurobiOpts"),
   function(a, b, verbose = FALSE) {
@@ -194,9 +199,11 @@ methods::setMethod("solve",
 
 #' @rdname solve
 #'
+#' @usage \S4method{solve}{RapUnsolOrSol,matrix}(a, b, verbose = FALSE)
+#'
 #' @name solve
 #'
-#' @export
+#' @aliases solve,RapUnsolOrSol,matrix-method
 methods::setMethod("solve",
   methods::representation(a = "RapUnsolOrSol", b = "matrix"),
   function(a, b, verbose = FALSE) {
@@ -230,9 +237,11 @@ methods::setMethod("solve",
 
 #' @rdname solve
 #'
+#' @usage \S4method{solve}{RapUnsolOrSol,numeric}(a, b, verbose = FALSE)
+#'
 #' @name solve
 #'
-#' @export
+#' @aliases solve,RapUnsolOrSol,numeric-method
 methods::setMethod("solve",
   methods::representation(a = "RapUnsolOrSol",  b = "numeric"),
   function(a, b, verbose = FALSE) {
@@ -247,9 +256,11 @@ methods::setMethod("solve",
 
 #' @rdname solve
 #'
+#' @usage \S4method{solve}{RapUnsolOrSol,logical}(a, b, verbose = FALSE)
+#'
 #' @name solve
 #'
-#' @export
+#' @aliases solve,RapUnsolOrSol,logical-method
 methods::setMethod("solve",
   methods::representation(a = "RapUnsolOrSol", b = "logical"),
   function(a, b, verbose = FALSE) {
@@ -419,35 +430,43 @@ prob.subset.RapUnsolOrSol <- function(x, species, threshold) {
 
 #' @rdname show
 #'
+#' @usage \S4method{show}{RapSolved}(object)
+#'
 #' @name show
 #'
-#' @export
+#' @aliases show,RapSolved-method
 methods::setMethod("show", "RapSolved",
                    function(object) print.RapSolved(object))
 
 #' @rdname is.comparable
 #'
+#' @usage \S4method{is.comparable}{RapUnsolOrSol,RapUnsolOrSol}(x, y)
+#'
 #' @name is.comparable
 #'
-#' @export
+#' @aliases is.comparable,RapUnsolOrSol,RapUnsolOrSol-method
 methods::setMethod("is.comparable",
   methods::signature(x = "RapUnsolOrSol", y = "RapUnsolOrSol"),
   function(x, y) is.comparable(x@data, y@data))
 
 #' @rdname is.comparable
 #'
+#' @usage \S4method{is.comparable}{RapData,RapUnsolOrSol}(x, y)
+#'
 #' @name is.comparable
 #'
-#' @export
+#' @aliases is.comparable,RapData,RapUnsolOrSol-method
 setMethod("is.comparable",
   methods::signature(x = "RapData", y = "RapUnsolOrSol"),
   function(x, y) is.comparable(x, y@data))
 
 #' @rdname is.comparable
 #'
+#' @usage \S4method{is.comparable}{RapUnsolOrSol,RapData}(x, y)
+#'
 #' @name is.comparable
 #'
-#' @export
+#' @aliases is.comparable,RapUnsolOrSol,RapData-method
 methods::setMethod("is.comparable",
   methods::signature(x = "RapUnsolOrSol", y = "RapData"),
   function(x, y) is.comparable(x@data, y))
@@ -462,9 +481,14 @@ basemap.RapSolved <- function(x, basemap = "none", grayscale = FALSE,
 
 #' @rdname plot
 #'
+#' @usage \S4method{plot}{RapSolved,numeric}(x, y, basemap = "none",
+#'  pu.color.palette = c("#e5f5f9", "#00441b", "#FFFF00", "#FF0000"), alpha =
+#'  ifelse(basemap == "none", 1, 0.7), grayscale = FALSE, main = NULL,
+#'  force.reset = FALSE)
+#'
 #' @name plot
 #'
-#' @export
+#' @aliases plot,RapSolved,numeric-method
 methods::setMethod("plot",
   methods::signature(x = "RapSolved", y = "numeric"),
   function(x, y, basemap = "none",
@@ -513,9 +537,15 @@ methods::setMethod("plot",
 
 #' @rdname plot
 #'
+#' @usage \S4method{plot}{RapSolved,missing}(x, y, basemap = "none",
+#' pu.color.palette = c("PuBu", "#FFFF00", "#FF0000"),
+#' alpha = ifelse(basemap == "none", 1, 0.7),
+#' grayscale = FALSE, main = NULL,
+#' force.reset = FALSE)
+#'
 #' @name plot
 #'
-#' @export
+#' @aliases plot,RapSolved,missing-method
 methods::setMethod("plot",
   methods::signature(x = "RapSolved", y = "missing"),
   function(x, y, basemap = "none",
@@ -566,9 +596,16 @@ methods::setMethod("plot",
 
 #' @rdname plot
 #'
+#' @usage \S4method{plot}{RapSolved,RapSolved}(x, y, i = NULL, j = i,
+#' basemap = "none",
+#' pu.color.palette = ifelse(is.null(i), c("RdYlBu", "#FFFF00",
+#' "#FF0000"), "Accent"),
+#' alpha = ifelse(basemap == "none", 1, 0.7),
+#' grayscale = FALSE, main = NULL, force.reset = FALSE)
+#'
 #' @name plot
 #'
-#' @export
+#' @aliases plot,RapSolved,RapSolved-method
 methods::setMethod("plot",
   methods::signature(x = "RapSolved", y = "RapSolved"),
   function(x, y, i = NULL, j = i, basemap = "none",

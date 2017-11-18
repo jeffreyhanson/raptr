@@ -61,7 +61,6 @@ test_that("space calculations (reliable: 100%)", {
   expect_equal(1, metrics$prop)
 })
 
-
 test_that("rcpp_sum_duplicates", {
   # create data
   imat <- matrix(c(1, 1, 6,
@@ -203,15 +202,46 @@ test_that("PolySet conversion function", {
                              crs = sp::CRS(paste("+proj=merc +lon_0=0 +k=1",
                                                  "+x_0=0 +y_0=0 +ellps=WGS84",
                                                  "+datum=WGS84 +units=m",
-                                                 "+no_defs ")))
+                                                 "+no_defs")))
   polys <- raster::rasterToPolygons(template, n = 4)
   pdf1 <- raptr:::rcpp_Polygons2PolySet(polys@polygons)
-  pdf2 <- maptools::SpatialPolygons2PolySet(polys)
-  expect_identical(pdf1[[1]], pdf2[[1]])
-  expect_identical(pdf1[[2]], pdf2[[2]])
-  expect_identical(pdf1[[3]], pdf2[[3]])
-  expect_identical(pdf1[[4]], pdf2[[4]])
-  expect_identical(pdf1[[5]], pdf2[[5]])
+  pdf2 <- structure(list(
+    PID = c(1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 2L, 3L, 3L, 3L, 3L, 3L, 4L, 4L,
+            4L, 4L, 4L, 5L, 5L, 5L, 5L, 5L, 6L, 6L, 6L, 6L, 6L, 7L, 7L,
+            7L, 7L, 7L, 8L, 8L, 8L, 8L, 8L, 9L, 9L, 9L, 9L, 9L),
+    SID = c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
+            1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
+                 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L),
+    POS = c(1L, 2L, 3L, 4L, 5L, 1L, 2L, 3L, 4L, 5L, 1L, 2L, 3L, 4L, 5L, 1L, 2L,
+            3L, 4L, 5L, 1L, 2L, 3L, 4L, 5L, 1L, 2L, 3L, 4L, 5L, 1L, 2L,
+            3L, 4L, 5L, 1L, 2L, 3L, 4L, 5L, 1L, 2L, 3L, 4L, 5L),
+    X = c(0, 0.333333333333, 0.333333333333, 0, 0, 0.333333333333,
+          0.666666666667, 0.666666666667, 0.333333333333, 0.333333333333,
+          0.666666666667, 1, 1, 0.666666666667,  0.666666666667, 0,
+          0.333333333333, 0.333333333333, 0, 0, 0.333333333333,
+          0.666666666667, 0.666666666667, 0.333333333333, 0.333333333333,
+          0.666666666667, 1, 1, 0.666666666667, 0.666666666667, 0,
+          0.333333333333, 0.333333333333, 0, 0, 0.333333333333,
+          0.666666666667, 0.666666666667, 0.333333333333,
+          0.333333333333, 0.666666666667, 1, 1,  0.666666666667,
+          0.666666666667),
+    Y = c(1, 1, 0.666666666667, 0.666666666667, 1, 1, 1, 0.666666666667,
+          0.666666666667, 1, 1, 1, 0.666666666667, 0.666666666667, 1,
+          0.666666666667, 0.666666666667, 0.333333333333, 0.333333333333,
+          0.666666666667, 0.666666666667, 0.666666666667, 0.333333333333,
+          0.333333333333, 0.666666666667, 0.666666666667, 0.666666666667,
+          0.333333333333, 0.333333333333, 0.666666666667, 0.333333333333,
+          0.333333333333, 0, 0, 0.333333333333, 0.333333333333, 0.333333333333,
+          0, 0, 0.333333333333, 0.333333333333, 0.333333333333, 0, 0,
+          0.333333333333)),
+    .Names = c("PID", "SID", "POS", "X", "Y"),  row.names = c(NA, -45L),
+    class = c("PolySet", "data.frame"), projection = "1")
+  expect_is(pdf1, "PolySet")
+  expect_true(max(pdf1[[1]] - pdf2[[1]]) < 1e-5)
+  expect_true(max(pdf1[[2]] - pdf2[[2]]) < 1e-5)
+  expect_true(max(pdf1[[3]] - pdf2[[3]]) < 1e-5)
+  expect_true(max(pdf1[[4]] - pdf2[[4]]) < 1e-5)
+  expect_true(max(pdf1[[5]] - pdf2[[5]]) < 1e-5)
 })
 
 test_that("boundary length data functions", {

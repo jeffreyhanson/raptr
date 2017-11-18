@@ -3,11 +3,27 @@
 \name{solve}
 \alias{solve}
 \alias{solve}
+\alias{solve,RapUnsolOrSol,missing-method}
 \alias{solve}
+\alias{solve,RapUnsolOrSol,GurobiOpts-method}
 \alias{solve}
+\alias{solve,RapUnsolOrSol,matrix-method}
 \alias{solve}
+\alias{solve,RapUnsolOrSol,numeric-method}
 \alias{solve}
+\alias{solve,RapUnsolOrSol,logical-method}
 \title{Solve RAP object}
+\usage{
+\S4method{solve}{RapUnsolOrSol,missing}(a, b, ..., verbose = FALSE)
+
+\S4method{solve}{RapUnsolOrSol,GurobiOpts}(a, b, verbose = FALSE)
+
+\S4method{solve}{RapUnsolOrSol,matrix}(a, b, verbose = FALSE)
+
+\S4method{solve}{RapUnsolOrSol,numeric}(a, b, verbose = FALSE)
+
+\S4method{solve}{RapUnsolOrSol,logical}(a, b, verbose = FALSE)
+}
 \arguments{
 \item{a}{\code{\link{RapUnsolved}} or \code{\link{RapSolved}} object.}
 

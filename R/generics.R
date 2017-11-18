@@ -173,6 +173,7 @@ sim.space <- function(x, ...) UseMethod("sim.space")
 #'
 #' @param verbose \code{logical} should messages be printed during creation of
 #'   the initial model matrix?.
+#'
 #' @param ... not used.
 #'
 #' @return \code{\link{RapSolved}} object
@@ -202,8 +203,13 @@ sim.space <- function(x, ...) UseMethod("sim.space")
 #' }
 #'
 #' @name solve
-methods::setGeneric("solve",
-                    function(a, b, ...) methods::standardGeneric("solve"))
+#'
+#' @rdname solve
+#'
+#' @importFrom Matrix solve
+#'
+#' @export solve
+NULL
 
 #' Plot object
 #'
@@ -426,39 +432,30 @@ NULL
 #'
 #' @param ... not used.
 #'
-#' @details This table follows Marxan conventions (summary.dat in
+#' @details This table follows Marxan conventions ("summary.dat" in
 #'   \url{http://marxan.net/downloads/uq_marxan_web_2/module5.html}). The
 #'   columns are:
-#' \tabular{cl}{
-#' \code{Run_Number}
-#' \tab The index of each solution in the object. \cr
-#' \code{Status}
-#' \tab The status of the solution. The values in this column correspond to
-#' outputs from the Gurobi software package (\url{http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html}).\cr
-#' \code{Score}
-#' \tab The objective function for the solution. \cr
-#' \code{Cost}
-#' \tab Total cost associated with a solution \cr
-#' \code{Planning_Units}
-#' \tab Number of planning units selected in a solution \cr
-#' \code{Connectivity_Total}
-#' \tab The total amount of shared boundary length between all planning units.
-#' All solutions in the same object should have equal values for this column.
-#' \cr
-#' \code{Connectivity_In}
-#' \tab The amount of shared boundary length among planning units selected in
-#' the solution \cr
-#' \code{Connectivity_Edge}
-#' \tab The amount of exposed boundary length in the solution \cr
-#' \code{Connectivity_Out}
-#' \tab The number of shared boundary length among planning units not selected
-#' in the solution  \cr
-#' \code{Connectivity_Fraction}
-#' \tab The ratio of shared boundary length in the solution
-#' (\code{Connectivity_In}) to the total amount of boundary length
+#' \describe{
+#' \item{Run_Number}{The index of each solution in the object.}
+#' \item{Status}{The status of the solution. The values in this column
+#' correspond to outputs from the Gurobi software package (\url{http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html}).}
+#' \item{Score}{The objective function for the solution.}
+#' \item{Cost}{Total cost associated with a solution.}
+#' \item{Planning_Units}{Number of planning units selected in a solution.}
+#' \item{Connectivity_Total}{The total amount of shared boundary length between
+#' all planning units. All solutions in the same object should have equal
+#' values for this column.}
+#' \item{Connectivity_In}{The amount of shared boundary length among planning
+#' units selected in the solution.}
+#' \item{Connectivity_Edge}{The amount of exposed boundary length in the
+#' solution.}
+#' \item{Connectivity_Out}{The number of shared boundary length among planning
+#' units not selected in the solution.}
+#' \item{Connectivity_Fraction}{The ratio of shared boundary length in the
+#' solution (\code{Connectivity_In}) to the total amount of boundary length
 #' (\code{Connectivity_Edge}). This ratio is an indicator of solution quality.
 #' Solutions with a lower ratio will have less planning units and will be more
-#' efficient. \cr
+#' efficient.}
 #' }
 #'
 #' @name summary

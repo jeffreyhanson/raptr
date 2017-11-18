@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot object <U+2014> plot <e2><80><a2> raptr</title>
+<title>Plot object — plot • raptr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -90,6 +90,26 @@ object. Additionally, two <code><a href='RapSolved.html'>RapSolved</a></code> ob
 plot the differences between them.</p>
     
 
+    <pre class="usage"><span class='co'># S4 method for RapSolved,numeric</span>
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>basemap</span> <span class='kw'>=</span> <span class='st'>"none"</span>,
+ <span class='kw'>pu.color.palette</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"#e5f5f9"</span>, <span class='st'>"#00441b"</span>, <span class='st'>"#FFFF00"</span>, <span class='st'>"#FF0000"</span>), <span class='kw'>alpha</span> <span class='kw'>=</span>
+ <span class='fu'>ifelse</span>(<span class='no'>basemap</span> <span class='kw'>==</span> <span class='st'>"none"</span>, <span class='fl'>1</span>, <span class='fl'>0.7</span>), <span class='kw'>grayscale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+ <span class='kw'>force.reset</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'># S4 method for RapSolved,missing</span>
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>basemap</span> <span class='kw'>=</span> <span class='st'>"none"</span>,
+<span class='kw'>pu.color.palette</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PuBu"</span>, <span class='st'>"#FFFF00"</span>, <span class='st'>"#FF0000"</span>),
+<span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fu'>ifelse</span>(<span class='no'>basemap</span> <span class='kw'>==</span> <span class='st'>"none"</span>, <span class='fl'>1</span>, <span class='fl'>0.7</span>),
+<span class='kw'>grayscale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+<span class='kw'>force.reset</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'># S4 method for RapSolved,RapSolved</span>
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>i</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>j</span> <span class='kw'>=</span> <span class='no'>i</span>,
+<span class='kw'>basemap</span> <span class='kw'>=</span> <span class='st'>"none"</span>,
+<span class='kw'>pu.color.palette</span> <span class='kw'>=</span> <span class='fu'>ifelse</span>(<span class='fu'>is.null</span>(<span class='no'>i</span>), <span class='fu'>c</span>(<span class='st'>"RdYlBu"</span>, <span class='st'>"#FFFF00"</span>,
+<span class='st'>"#FF0000"</span>), <span class='st'>"Accent"</span>),
+<span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fu'>ifelse</span>(<span class='no'>basemap</span> <span class='kw'>==</span> <span class='st'>"none"</span>, <span class='fl'>1</span>, <span class='fl'>0.7</span>),
+<span class='kw'>grayscale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>force.reset</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">

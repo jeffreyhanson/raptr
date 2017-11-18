@@ -62,9 +62,11 @@ print.RapUnreliableOpts <- function(x, ..., header = TRUE) {
 
 #' @rdname show
 #'
+#' @usage \S4method{show}{RapUnreliableOpts}(object)
+#'
 #' @name show
 #'
-#' @export
+#' @aliases show,RapUnreliableOpts-method
 methods::setMethod("show", "RapUnreliableOpts",
                    function(object) print.RapUnreliableOpts(object))
 

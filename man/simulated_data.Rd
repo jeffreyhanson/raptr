@@ -30,22 +30,22 @@ The species were simulated to represent various simplified species
 distributions.
 
 \describe{
-  \item{uniform}{This species has an equal probability (0.5) of occurring in
-                 all planning units.}
- \item{normal}{This species has a single range-core where it is most likely
-               to be found. It is less likely to be found in areas further
-               away from the centre of its range.}
- \item{bimodal}{This species has two distinct ecotypes. Each ecotype has its
-                own core and marginal area.}
+\item{uniform}{This species has an equal probability (0.5) of occurring in
+all planning units.}
+\item{normal}{This species has a single range-core where it is most likely
+to be found. It is less likely to be found in areas further
+away from the centre of its range.}
+\item{bimodal}{This species has two distinct ecotypes. Each ecotype has its
+own core and marginal area.}
 }
 
 The objects contained in this dataset are listed below.
 
 \describe{
- \item{sim_ru}{A \code{\link{RapUnsolved}} object with all the simulated
-               data.}
- \item{sim_rs}{A \code{\link{RapSolved}} object with 5 near-optimal
-               solutions.}
+\item{sim_ru}{A \code{\link{RapUnsolved}} object with all the simulated
+data.}
+\item{sim_rs}{A \code{\link{RapSolved}} object with 5 near-optimal
+solutions.}
 }
 }
 \examples{

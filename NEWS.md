@@ -1,13 +1,17 @@
 # raptr 0.1.0 (released)
 
 - unit tests now compatible with _testthat R_ package (version 1.0.2.9000).
-- _assertthat R_ package is now used for checking argument inputs.
-- vignette now uses notangle engine and the placeholder file removed.
+- _assertthat R_ package is now used for validating function arguments.
+- vignette now uses `knitr::rmarkdown_notangle` engine to avoid running the
+  code during package checks, and placeholder vignette file has been removed.
 - code has been linted.
 - functions from other packages are now called explicitly using `pkg::function`.
 - messages are now displayed using `message` following best practices.
 - updated readme.
-- added citation for _Methods in Ecology and Evolution_ paper. (TODO)
+- added citation for _Methods in Ecology and Evolution_ paper.
+- strip debugging symbols from compiled files to reduce installation size.
+- `is.GurobiInstalled` now does not run _gurobi_ to avoid spurious notes during
+  CRAN checks on academic license.
 
 # raptr 0.0.5 (released)
 

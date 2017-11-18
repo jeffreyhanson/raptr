@@ -22,25 +22,24 @@ NULL
 #' }
 #'
 #' @export
-is.GurobiInstalled <- function(verbose=TRUE) {
+is.GurobiInstalled <- function(verbose = TRUE) {
   # define installation instructions
   gurobiInstallationInstructions <- paste(
-    "Follow these instructions to download the Gurobi software suite:\n\t",
+    "Follow these instructions to download the Gurobi software suite:\n  ",
     c("Linux" = "http://bit.ly/1ksXUaQ", "Windows" = "http://bit.ly/1MrjXWc",
       "Darwin" = "http://bit.ly/1N0AlT0")[Sys.info()[["sysname"]]])
 
   rInstallationInstructions1 <- paste(
-    "Follow these instructions to install the \"gurobi\" R package:\n\t",
+    "Follow these instructions to install the \"gurobi\" R package:\n  ",
     c("Linux" = "http://bit.ly/1HLCRoE", "Windows" = "http://bit.ly/1MMSZaH",
       "Darwin" = "http://bit.ly/1Pr2WRG")[Sys.info()[["sysname"]]])
 
-  rInstallationInstructions2 <- paste0("To access multiple solutions from the ",
-    "solution pool,\n\tfollow these instructions to install the \"rgurobi\" R ",
-    "package from GitHub:\n\thttp://bit.ly/1RF19XO")
+  rInstallationInstructions2 <- paste0("Follow these instructions to install ",
+    "the \"rgurobi\" R package from GitHub:\n  http://bit.ly/1RF19XO")
 
   licenseInstructions <- paste0("The Gurobi R package requires a Gurobi ",
-    "license to work:\n\tvisit this web-page for an overview: ",
-    "http://bit.ly/1OHEQCm\n\t academics can obtain a license at no cost ",
+    "license to work:\n  visit this web-page for an overview: ",
+    "http://bit.ly/1OHEQCm\n  academics can obtain a license at no cost ",
     "here: http://bit.ly/1iYg3LX")
 
   # check if gurobi installed
@@ -56,6 +55,7 @@ is.GurobiInstalled <- function(verbose=TRUE) {
     options(GurobiInstalled = list(gurobi = FALSE, rgurobi = FALSE))
     return(FALSE)
   }
+
   # check if R packages installed
   pkgs.installed <- list(gurobi = requireNamespace("gurobi", quietly = TRUE),
                          rgurobi = requireNamespace("rgurobi", quietly = TRUE))
@@ -74,28 +74,6 @@ is.GurobiInstalled <- function(verbose=TRUE) {
   options(GurobiInstalled = pkgs.installed)
   if (!pkgs.installed[[1]])
     return(FALSE)
-
-  # try running example problem - from the gurobi help file
-  tmp <- utils::capture.output({
-    result <- gurobi::gurobi(list(A = matrix(c(1, 2, 3, 1, 1, 0), nrow = 2,
-                                             ncol = 3, byrow = TRUE),
-                                  obj = c(1, 1, 2), sense = c("<=", ">="),
-                                  rhs = c(4, 1), vtype = "B"),
-      list(Presolve = 2, TimeLimit = 10.0))
-  })
-  if (file.exists("gurobi.log")) unlink("gurobi.log")
-  if (!identical(result$status, "OPTIMAL")) {
-    if (verbose) {
-      message("The gurobi R package is installed, but R is having issues",
-              "using it\n")
-      message("\nOutput from trying to run Gurobi:\n")
-      message(paste(tmp, collapse = "\n"))
-      message("\nThis might be due to licensing issues.\n",
-              licenseInstructions, "\n")
-    }
-    options(GurobiInstalled = list(gurobi = FALSE, rgurobi = FALSE))
-    return(FALSE)
-  }
   return(TRUE)
 }
 

@@ -74,9 +74,11 @@ print.RapUnsolved <- function(x, ...) {
 
 #' @rdname show
 #'
+#' @usage \S4method{show}{RapUnsolved}(object)
+#'
 #' @name show
 #'
-#' @export
+#' @aliases show,RapUnsolved-method
 methods::setMethod("show", "RapUnsolved",
                    function(object) print.RapUnsolved(object))
 

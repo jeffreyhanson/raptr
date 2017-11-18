@@ -15,22 +15,22 @@ NULL
 #' distributions.
 #'
 #' \describe{
-#'   \item{uniform}{This species has an equal probability (0.5) of occurring in
-#'                  all planning units.}
-#'  \item{normal}{This species has a single range-core where it is most likely
-#'                to be found. It is less likely to be found in areas further
-#'                away from the centre of its range.}
-#'  \item{bimodal}{This species has two distinct ecotypes. Each ecotype has its
-#'                 own core and marginal area.}
+#' \item{uniform}{This species has an equal probability (0.5) of occurring in
+#' all planning units.}
+#' \item{normal}{This species has a single range-core where it is most likely
+#' to be found. It is less likely to be found in areas further
+#' away from the centre of its range.}
+#' \item{bimodal}{This species has two distinct ecotypes. Each ecotype has its
+#' own core and marginal area.}
 #' }
 #'
 #' The objects contained in this dataset are listed below.
 #'
 #' \describe{
-#'  \item{sim_ru}{A \code{\link{RapUnsolved}} object with all the simulated
-#'                data.}
-#'  \item{sim_rs}{A \code{\link{RapSolved}} object with 5 near-optimal
-#'                solutions.}
+#' \item{sim_ru}{A \code{\link{RapUnsolved}} object with all the simulated
+#' data.}
+#' \item{sim_rs}{A \code{\link{RapSolved}} object with 5 near-optimal
+#' solutions.}
 #' }
 #'
 #' @docType data
@@ -74,27 +74,26 @@ NULL
 #'
 #' The objects in the dataset are listed below.
 #' \describe{
-#'  \item{cs_pus}{\code{\link[sp]{SpatialPolygonsDataFrame}} planning units.
-#'                The units were generated as \eqn{30km^2} squares across the
-#'                species' range, and then clipped to the Queensland, Australia
-#'                (using data obtained from the \href{Australia Bureau of Statistics}{http://www.abs.gov.au/ausstats/abs@@.nsf/mf/1259.0.30.001?OpenDocument}).
-#'                They were then overlaid with Australia's protected area
-#'                network (obtained from the World Database on Protected Areas
-#'                (WDPA) at \url{http://www.protectedplanet.net/}). This
-#'                attribute table has 3 fields. The \code{area} field denotes
-#'                the amount of land encompassed by each unit, the \code{cost}
-#'                field is set to 1 for all units, and the \code{status} field
-#'                indicates if 50\% or more of the units' extent is covered by
-#'                protected areas.}
-#'  \item{cs_spp}{\code{\link[raster]{RasterLayer-class}} probability
-#'                distribution map for the \emph{P. adscitus} clipped to
-#'                Queensland, Australia. This map was derived from records
-#'                obtained from The Atlas of Living Australia
-#'                (\url{http://ala.org.au/})}.
-#'  \item{cs_space}{\code{\link[raster]{stack}} describing broad-scale climate
-#'                  variation across Queensland
-#'                  (obtained from \url{http://www.worldclim.org/},
-#'                  and resampled to \eqn{10km^2} resolution).}
+#' \item{cs_pus}{\code{\link[sp]{SpatialPolygonsDataFrame}} planning units.
+#' The units were generated as \eqn{30km^2} squares across the
+#' species' range, and then clipped to the Queensland, Australia
+#' (using data obtained from the \href{Australia Bureau of Statistics}{http://www.abs.gov.au/ausstats/abs@@.nsf/mf/1259.0.30.001?OpenDocument}).
+#' They were then overlaid with Australia's protected area
+#' network (obtained from the World Database on Protected Areas
+#' (WDPA) at \url{http://www.protectedplanet.net/}). This
+#' attribute table has 3 fields. The \code{area} field denotes
+#' the amount of land encompassed by each unit, the \code{cost}
+#' field is set to 1 for all units, and the \code{status} field
+#' indicates if 50\% or more of the units' extent is covered by
+#' protected areas.}
+#' \item{cs_spp}{\code{\link[raster]{RasterLayer-class}} probability
+#' distribution map for the \emph{P. adscitus} clipped to
+#' Queensland, Australia. This map was derived from records
+#' obtained from The Atlas of Living Australia (\url{http://ala.org.au/})}.
+#' \item{cs_space}{\code{\link[raster]{stack}} describing broad-scale climate
+#' variation across Queensland
+#' (obtained from \url{http://www.worldclim.org/},
+#' and resampled to \eqn{10km^2} resolution).}
 #' }
 #'
 #' @docType data

@@ -66,7 +66,7 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#raptr-representative-and-adequate-prioritization-toolkit-in-r" class="anchor"></a>raptr: Representative and Adequate Prioritization Toolkit in R</h1></div>
 
-<p>Biodiversity is in crisis. The overarching aim of conservation is to preserve biodiversity patterns and processes. To this end, protected areas are established to buffer species and preserve biodiversity processes. But resources are limited and so protected areas must be cost-effective. This package contains tools to generate plans for protected areas (prioritizations), using spatially explicit targets for biodiversity patterns and processes. To obtain solutions in a feasible amount of time, this package uses the commercial ‘Gurobi’ software package (obtained from <a href="http://www.gurobi.com/" class="uri">http://www.gurobi.com/</a>). Additionally, the ‘rgurobi’ package can also be installed to provide extra functionality (obtained from <a href="http://github.com/jeffreyhanson/rgurobi" class="uri">http://github.com/jeffreyhanson/rgurobi</a>). For more information on using this package, see our paper published in Methods in Ecology and Evolution (<a href="https://dx.doi.org/10.1111/2041-210X.12862" class="uri">https://dx.doi.org/10.1111/2041-210X.12862</a>)</p>
+<p>Biodiversity is in crisis. The overarching aim of conservation is to preserve biodiversity patterns and processes. To this end, protected areas are established to buffer species and preserve biodiversity processes. But resources are limited and so protected areas must be cost-effective. This package contains tools to generate plans for protected areas (prioritizations), using spatially explicit targets for biodiversity patterns and processes. To obtain solutions in a feasible amount of time, this package uses the commercial ‘Gurobi’ software package (obtained from <a href="http://www.gurobi.com/" class="uri">http://www.gurobi.com/</a>). Additionally, the ‘rgurobi’ package can also be installed to provide extra functionality (obtained from <a href="http://github.com/jeffreyhanson/rgurobi" class="uri">http://github.com/jeffreyhanson/rgurobi</a>). For more information on using this package, see our paper published in Methods in Ecology and Evolution (<a href="doi:10.1111/2041-210X.12862" class="uri">doi:10.1111/2041-210X.12862</a>).</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -80,7 +80,7 @@ sudo apt-get build-dep r-cran-rgl</code></pre>
 <pre><code>brew install Caskroom/cask/xquartz
 brew install gdal
 Rscript -e "setRepositories(ind = 1:2); install.packages(c('rgdal', 'rgeos'))"</code></pre>
-<p>To install the <a href="https://cran.r-project.org/web/packages/raptr/index.html">latest official version on CRAN</a>, use the following R code:</p>
+<p>To install the <a href="https://CRAN.R-project.org/package=raptr">latest official version on CRAN</a>, use the following R code:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"raptr"</span>)</code></pre></div>
 <p>To install the <a href="https://github.com/jeffreyhanson/raptr">development version on GitHub</a>, use this R code:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">"devtools"</span>))
@@ -96,22 +96,25 @@ devtools<span class="op">:::</span><span class="kw">install_github</span>(<span 
 <a href="#citation" class="anchor"></a>Citation</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">citation</span>(<span class="st">"raptr"</span>)</code></pre></div>
 <pre><code>## 
-## To cite package 'raptr' in publications use:
+## To cite the raptr package in publications, use:
 ## 
-##   Jeffrey O Hanson, Jonathan R Rhodes, Hugh P Possingham and
-##   Richard A Fuller (2017). raptr: Representative and Adequate
-##   Prioritization Toolkit in R. R package version 0.0.5.
-##   https://CRAN.R-project.org/package=raptr
+##   Hanson JO, Rhodes JR, Possingham HP &amp; Fuller RA raptr:
+##   Representative and Adequate Prioritization Toolkit in R. Methods
+##   in Ecology &amp; Evolution, In press. DOI: 10.1111/2041-210X.12862
 ## 
 ## A BibTeX entry for LaTeX users is
 ## 
-##   @Manual{,
-##     title = {raptr: Representative and Adequate Prioritization Toolkit in R},
+##   @Article{,
 ##     author = {Jeffrey O Hanson and Jonathan R Rhodes and Hugh P Possingham and Richard A Fuller},
+##     title = {raptr: Representative and adequate prioritization toolkit in R},
+##     journal = {Methods in Ecology and Evolution},
 ##     year = {2017},
-##     note = {R package version 0.0.5},
-##     url = {https://CRAN.R-project.org/package=raptr},
-##   }</code></pre>
+##     volume = {In press},
+##     url = {https://dx.doi.org/10.1111/2041-210X.12862},
+##   }
+## 
+## You may also want to cite the package version. Find it with
+## "help(package=raptr)".</code></pre>
 </div>
 </div>
 </div>
