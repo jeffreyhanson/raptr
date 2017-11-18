@@ -57,6 +57,7 @@ BugReports: https://github.com/jeffreyhanson/raptr/issues
 VignetteBuilder: knitr
 Suggests:
     knitr,
+    roxygen2,
     dplyr,
     vegan,
     gurobi,
