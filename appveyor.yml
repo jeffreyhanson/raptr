@@ -21,7 +21,6 @@ install:
 # Adapt as necessary starting from here
 build_script:
   - travis-tool.sh install_deps
-  - R -e "options(repos='https://cran.csiro.au');install.packages(c('maps','rcdd','hitandrun')); install.packages('hypervolume', type = 'source')"
 
 test_script:
   - travis-tool.sh run_tests
