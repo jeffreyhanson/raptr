@@ -27,7 +27,12 @@ This version has the following updates:
 
 ### Notes
 
-This version of the package does not encounter any new notes. All of these notes were encountered in the package's initial submission to CRAN. To help with reviewing this submission, I have included the notes and a copy of my original comments regarding them.
+* Possibly mis-spelled words in DESCRIPTION:
+  al (21:33)
+  et (21:30)
+  prioritizations (15:6)
+
+  _These words have not been mis-spelled._
 
 * checking package dependencies ... NOTE
   package suggested but not available for checking: 'gurobi', 'rgurobi'
