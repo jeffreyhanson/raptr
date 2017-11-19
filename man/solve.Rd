@@ -27,7 +27,7 @@
 \arguments{
 \item{a}{\code{\link{RapUnsolved}} or \code{\link{RapSolved}} object.}
 
-\item{b}{\code{missing} to generate solutions using Gurobi. Prioritisations
+\item{b}{\code{missing} to generate solutions using Gurobi. Prioritizations
 can be specified using  \code{logical}, \code{numeric}, or
 \code{\link[base]{matrix}} objects. This may be useful for evaluating the
 performance of solutions obtained using other software.}
@@ -41,7 +41,7 @@ the initial model matrix?.}
 \code{\link{RapSolved}} object
 }
 \description{
-This function uses Gurobi to find prioritisations using the input parameter
+This function uses Gurobi to find prioritizations using the input parameter
 and data stored in a \code{\link{RapUnsolved}} object, and returns a
 \code{\link{RapSolved}} object with outputs in it.
 }

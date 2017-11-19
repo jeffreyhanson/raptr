@@ -22,7 +22,7 @@ Defaults to 0.1.}
 (lp_solve parameter). Defaults to 2.}
 
 \item{TimeLimit}{\code{integer} number of seconds to allow for solving.
-sDefaults to \code{NA_integer_}, and so a time limit is not imposed.}
+Defaults to \code{NA_integer_}, and so a time limit is not imposed.}
 
 \item{NumberSolutions}{\code{integer} number of solutions to generate.
 Defaults to 1L.}

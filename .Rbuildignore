@@ -13,3 +13,5 @@ cran-comments.md
 .directory
 _pkgdown.yml
 README.Rmd
+inst/dictionary.txt
+spell.log

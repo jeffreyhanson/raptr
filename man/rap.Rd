@@ -2,7 +2,7 @@
 % Please edit documentation in R/rap.R
 \name{rap}
 \alias{rap}
-\title{Generate prioritisations using RAP}
+\title{Generate prioritizations using RAP}
 \usage{
 rap(pus, species, spaces = NULL, formulation = c("unreliable",
   "reliable")[1], solve = TRUE, ...)
@@ -19,7 +19,7 @@ elements denotes the spatial distribution for each space. Defaults to
 \code{NULL}.}
 
 \item{formulation}{\code{character} to indicate if the \code{"unreliable"} or
-\code{"reliable"} formulation should be used to generate prioritisations.
+\code{"reliable"} formulation should be used to generate prioritizations.
 Defaults to \code{"unreliable"}.}
 
 \item{solve}{\code{logical} should solutions be generated?}

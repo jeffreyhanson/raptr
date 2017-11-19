@@ -3,7 +3,7 @@ NULL
 
 #' Simulated dataset for a conservation planning exercise
 #'
-#' This dataset contains all the data needed to generate prioritisations for
+#' This dataset contains all the data needed to generate prioritizations for
 #' three simulated species. This dataset contains planning units, species
 #' distribution maps, and demand points for each species. For the purposes of
 #' exploring the behaviour of the problem, demand points were generated using
@@ -19,7 +19,7 @@ NULL
 #' all planning units.}
 #' \item{normal}{This species has a single range-core where it is most likely
 #' to be found. It is less likely to be found in areas further
-#' away from the centre of its range.}
+#' away from the center of its range.}
 #' \item{bimodal}{This species has two distinct ecotypes. Each ecotype has its
 #' own core and marginal area.}
 #' }
@@ -69,7 +69,7 @@ NULL
 
 #' Case-study dataset for a conservation planning exercise
 #'
-#' This dataset contains data to generate example prioritisations for the
+#' This dataset contains data to generate example prioritizations for the
 #' pale-headed Rosella (\emph{Platycercus adscitus}) in Queensland, Australia.
 #'
 #' The objects in the dataset are listed below.

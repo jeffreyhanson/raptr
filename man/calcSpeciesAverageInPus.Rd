@@ -26,7 +26,7 @@ calcSpeciesAverageInPus(x, ...)
 \code{\link[raster]{RasterBrick-class}} object.}
 
 \item{ids}{\code{integer} vector of ids. Defaults to indices of layers in
-arguement to \code{y}.}
+argument to \code{y}.}
 
 \item{ncores}{\code{integer} number of cores to use for processing. Defaults
 to 1.}

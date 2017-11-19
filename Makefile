@@ -27,6 +27,10 @@ test:
 	rm -f tests/testthat/Rplots.pdf
 	rm -f gurobi.log
 
+spellcheck:
+	echo "\n===== SPELL CHECK =====\n" > spell.log 2>&1
+	R --slave -e "devtools::spell_check(ignore = readLines('inst/dictionary.txt'))" >> spell.log 2>&1
+
 vcheck:
 	echo "\n===== R CMD CHECK (valgrind) =====\n" > check.log 2>&1
 	R --slave -d "valgrind --tool=memcheck" -e "devtools::check()" >> check.log 2>&1

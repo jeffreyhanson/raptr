@@ -19,7 +19,7 @@ cs_space
 cs_spp
 }
 \description{
-This dataset contains data to generate example prioritisations for the
+This dataset contains data to generate example prioritizations for the
 pale-headed Rosella (\emph{Platycercus adscitus}) in Queensland, Australia.
 }
 \details{

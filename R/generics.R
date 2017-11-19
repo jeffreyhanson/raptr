@@ -15,7 +15,7 @@ NULL
 #'   \code{\link[raster]{RasterBrick-class}} object.
 #'
 #' @param ids \code{integer} vector of ids. Defaults to indices of layers in
-#'   arguement to \code{y}.
+#'   argument to \code{y}.
 #'
 #' @param ncores \code{integer} number of cores to use for processing. Defaults
 #'   to 1.
@@ -160,13 +160,13 @@ sim.space <- function(x, ...) UseMethod("sim.space")
 
 #' Solve RAP object
 #'
-#' This function uses Gurobi to find prioritisations using the input parameter
+#' This function uses Gurobi to find prioritizations using the input parameter
 #' and data stored in a \code{\link{RapUnsolved}} object, and returns a
 #' \code{\link{RapSolved}} object with outputs in it.
 #'
 #' @param a \code{\link{RapUnsolved}} or \code{\link{RapSolved}} object.
 #'
-#' @param b \code{missing} to generate solutions using Gurobi. Prioritisations
+#' @param b \code{missing} to generate solutions using Gurobi. Prioritizations
 #'   can be specified using  \code{logical}, \code{numeric}, or
 #'   \code{\link[base]{matrix}} objects. This may be useful for evaluating the
 #'   performance of solutions obtained using other software.
@@ -1119,7 +1119,7 @@ space.plot <- function(x, species, space, ...) UseMethod("space.plot")
 #' This function accepts a \code{\link{RapUnsolved}} object and returns a
 #' \code{data.frame} containing the amount-based and space-based targets for
 #' each species and attribute space. These are calculated using a
-#' prioritisation that contains all the available planning units. Note that the
+#' prioritization that contains all the available planning units. Note that the
 #' maximum amount-based targets are always 1.
 #'
 #' @param x \code{\link{RapUnsolved}} or \code{\link{RapSolved}} object.

@@ -395,7 +395,7 @@ RapData <- function(pu, species, targets, pu.species.probabilities,
 #'   number of elements as \code{species}. If not supplied then use
 #'   \code{n.species.points} to sample points from the species distributions.
 #'
-#' @param n.species.points \code{numeric} vector specifiying the number points
+#' @param n.species.points \code{numeric} vector specifying the number points
 #'   to sample the species distributions to use to generate demand points.
 #'   Defaults to 20\% of the distribution.
 #'

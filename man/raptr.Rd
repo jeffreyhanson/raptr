@@ -4,16 +4,16 @@
 \name{raptr}
 \alias{raptr}
 \alias{raptr-package}
-\title{raptr: Representative and Adequate Prioritisation Toolkit in R}
+\title{raptr: Representative and Adequate Prioritization Toolkit in R}
 \description{
-Biodivesity is in crisis. The overarching aim of conservation is to preserve
+Biodiversity is in crisis. The overarching aim of conservation is to preserve
 biodiversity patterns and processes. To this end, protected areas are
 established to buffer species and preserve biodiversity processes. But
 resources are limited and so protected areas must be cost-effective. This
 package contains tools to generate plans for protected areas
 (prioritizations). Conservation planning data are used to construct an
-optimisation problem, which is then solved to yield prioritizations. To
-solve the optimisation problems in a feasible amount of time, this package
+optimization problem, which is then solved to yield prioritizations. To
+solve the optimization problems in a feasible amount of time, this package
 uses the commercial 'Gurobi' software package (obtained from
 <http://www.gurobi.com/>). Additionally, the 'rgurobi' package can also be
 installed to provide extra functionality (obtained from
@@ -22,9 +22,9 @@ this package, see Hanson et al. (2017) <doi:10.1111/2041-210X.12862>.
 }
 \details{
 The main classes used in this package are used to store input data and
-prioritisations:
+prioritizations:
 \describe{
-\item{\code{\link{GurobiOpts-class}}}{parameters for solving optimisation
+\item{\code{\link{GurobiOpts-class}}}{parameters for solving optimization
 problems using Gurobi.}
 \item{\code{\link{RapReliableOpts-class}}}{parameters for the reliable
 formulation of RAP.}
@@ -33,11 +33,11 @@ formulation of RAP.}
 \item{\code{\link{RapData-class}}}{planning unit, species data, and demand
 points for RAP.}
 \item{\code{\link{RapUnsolved-class}}}{contains all the data and input
-parameters required to generate prioritisations using RAP. This class
+parameters required to generate prioritizations using RAP. This class
 contains a \code{\link{GurobiOpts-class}} object, a
 \code{\link{RapReliableOpts-class}} or \code{\link{RapUnreliableOpts-class}}
 object, and a \code{\link{RapData-class}} object.}
-\item{\code{\link{RapResults-class}}}{prioritisations and summary
+\item{\code{\link{RapResults-class}}}{prioritizations and summary
 statistics on their performance.}
 \item{\code{\link{RapSolved-class}}}{contains all the input data,
 parameters and output data. This class contains all the objects in a

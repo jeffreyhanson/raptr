@@ -22,7 +22,7 @@ calculations? Defaults to \code{FALSE}.}
 This function accepts a \code{\link{RapUnsolved}} object and returns a
 \code{data.frame} containing the amount-based and space-based targets for
 each species and attribute space. These are calculated using a
-prioritisation that contains all the available planning units. Note that the
+prioritization that contains all the available planning units. Note that the
 maximum amount-based targets are always 1.
 }
 \examples{

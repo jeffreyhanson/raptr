@@ -1,7 +1,7 @@
 #' @include RcppExports.R raptr-internal.R misc.R generics.R RapReliableOpts.R RapUnreliableOpts.R GurobiOpts.R RapData.R RapUnsolved.R RapResults.R RapSolved.R
 NULL
 
-#' Generate prioritisations using RAP
+#' Generate prioritizations using RAP
 #'
 #' This is a general function to create Rap objects from scratch and solve them
 #' to generate solutions.
@@ -17,7 +17,7 @@ NULL
 #'   \code{NULL}.
 #'
 #' @param formulation \code{character} to indicate if the \code{"unreliable"} or
-#'   \code{"reliable"} formulation should be used to generate prioritisations.
+#'   \code{"reliable"} formulation should be used to generate prioritizations.
 #'   Defaults to \code{"unreliable"}.
 #'
 #' @param solve \code{logical} should solutions be generated?

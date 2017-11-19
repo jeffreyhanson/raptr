@@ -83,7 +83,7 @@
     </div>
 
     
-    <p>This function uses Gurobi to find prioritisations using the input parameter
+    <p>This function uses Gurobi to find prioritizations using the input parameter
 and data stored in a <code><a href='RapUnsolved.html'>RapUnsolved</a></code> object, and returns a
 <code><a href='RapSolved.html'>RapSolved</a></code> object with outputs in it.</p>
     
@@ -112,7 +112,7 @@ and data stored in a <code><a href='RapUnsolved.html'>RapUnsolved</a></code> obj
     </tr>
     <tr>
       <th>b</th>
-      <td><p><code>missing</code> to generate solutions using Gurobi. Prioritisations
+      <td><p><code>missing</code> to generate solutions using Gurobi. Prioritizations
 can be specified using  <code>logical</code>, <code>numeric</code>, or
 <code><a href='http://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></code> objects. This may be useful for evaluating the
 performance of solutions obtained using other software.</p></td>
@@ -158,18 +158,9 @@ the initial model matrix?.</p></td>
 #&gt;   Bounds range     [1e+00, 1e+00]
 #&gt;   RHS range        [1e+00, 1e+02]
 #&gt; Found heuristic solution: objective 99
-#&gt; Presolve removed 34 rows and 15 columns (presolve time = 5s) ...
-#&gt; Presolve removed 52 rows and 15 columns (presolve time = 10s) ...
-#&gt; Presolve removed 226 rows and 15 columns (presolve time = 15s) ...
-#&gt; Presolve removed 265 rows and 15 columns (presolve time = 20s) ...
-#&gt; Presolve removed 266 rows and 15 columns (presolve time = 25s) ...
-#&gt; Presolve removed 268 rows and 15 columns (presolve time = 30s) ...
-#&gt; Presolve removed 271 rows and 15 columns (presolve time = 35s) ...
-#&gt; Presolve removed 360 rows and 15 columns (presolve time = 40s) ...
-#&gt; Presolve removed 360 rows and 15 columns (presolve time = 47s) ...
-#&gt; Presolve removed 360 rows and 15 columns (presolve time = 52s) ...
+#&gt; Presolve removed 330 rows and 15 columns (presolve time = 5s) ...
 #&gt; Presolve removed 360 rows and 15 columns
-#&gt; Presolve time: 51.93s
+#&gt; Presolve time: 6.77s
 #&gt; Presolved: 29946 rows, 30085 columns, 131504 nonzeros
 #&gt; Variable types: 0 continuous, 30085 integer (30085 binary)
 #&gt; Presolve removed 67 rows and 1 columns
@@ -180,20 +171,18 @@ the initial model matrix?.</p></td>
 #&gt; Root simplex log...
 #&gt; 
 #&gt; Iteration    Objective       Primal Inf.    Dual Inf.      Time
-#&gt;        0    1.0000000e+02   0.000000e+00   1.000000e+02     56s
-#&gt;     3496    2.4641678e+01   0.000000e+00   3.547533e+03     60s
-#&gt;     5715    2.0000000e+01   0.000000e+00   0.000000e+00     64s
-#&gt;     5715    2.0000000e+01   0.000000e+00   0.000000e+00     64s
+#&gt;        0    1.0000000e+02   0.000000e+00   1.000000e+02      7s
+#&gt;     5715    2.0000000e+01   0.000000e+00   0.000000e+00      9s
+#&gt;     5715    2.0000000e+01   0.000000e+00   0.000000e+00      9s
 #&gt; 
-#&gt; Root relaxation: objective 2.000000e+01, 5715 iterations, 11.75 seconds
-#&gt; Total elapsed time = 66.60s
+#&gt; Root relaxation: objective 2.000000e+01, 5715 iterations, 1.97 seconds
 #&gt; 
 #&gt;     Nodes    |    Current Node    |     Objective Bounds      |     Work
 #&gt;  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 #&gt; 
-#&gt; *    0     0               0      20.0000000   20.00000  0.00%     -   69s
+#&gt; *    0     0               0      20.0000000   20.00000  0.00%     -    9s
 #&gt; 
-#&gt; Explored 0 nodes (11023 simplex iterations) in 69.10 seconds
+#&gt; Explored 0 nodes (11023 simplex iterations) in 9.61 seconds
 #&gt; Thread count was 1 (of 4 available processors)
 #&gt; 
 #&gt; Solution count 2: 20 99 

@@ -43,7 +43,7 @@ generate demand points. Use either \code{"ks"} or \code{"hypervolume"}.}
 number of elements as \code{species}. If not supplied then use
 \code{n.species.points} to sample points from the species distributions.}
 
-\item{n.species.points}{\code{numeric} vector specifiying the number points
+\item{n.species.points}{\code{numeric} vector specifying the number points
 to sample the species distributions to use to generate demand points.
 Defaults to 20\% of the distribution.}
 
