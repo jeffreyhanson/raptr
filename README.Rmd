@@ -9,9 +9,9 @@ output:
 # raptr: Representative and Adequate Prioritization Toolkit in R
 
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-[![Travis Build Status](https://img.shields.io/travis/jeffreyhanson/raptr/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/jeffreyhanson/raptr)
-[![AppVeyor Build Status](https://img.shields.io/appveyor/ci/jeffreyhanson/raptr/master.svg?label=Windows)](https://ci.appveyor.com/project/jeffreyhanson/raptr)
-[![Coverage Status](https://codecov.io/github/jeffreyhanson/raptr/coverage.svg?branch=master)](https://codecov.io/github/jeffreyhanson/raptr?branch=master)
+[![Travis Build Status](http://img.shields.io/travis/jeffreyhanson/raptr/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/jeffreyhanson/raptr)
+[![AppVeyor Build Status](http://img.shields.io/appveyor/ci/jeffreyhanson/raptr/master.svg?label=Windows)](https://ci.appveyor.com/project/jeffreyhanson/raptr)
+[![Coverage Status](http://codecov.io/github/jeffreyhanson/raptr/coverage.svg?branch=master)](https://codecov.io/github/jeffreyhanson/raptr?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/raptr)](https://CRAN.R-project.org/package=raptr)
 
 Biodiversity is in crisis. The overarching aim of conservation is to preserve biodiversity patterns and processes. To this end, protected areas are established to buffer species and preserve biodiversity processes. But resources are limited and so protected areas must be cost-effective. This package contains tools to generate plans for protected areas (prioritizations), using spatially explicit targets for biodiversity patterns and processes. To obtain solutions in a feasible amount  of time, this package uses the commercial 'Gurobi' software package (obtained from <http://www.gurobi.com/>). Additionally, the 'rgurobi' package can also be installed to provide extra functionality (obtained from <http://github.com/jeffreyhanson/rgurobi>). For more information on using this package, see our paper published in Methods in Ecology and Evolution (<doi:10.1111/2041-210X.12862>).
