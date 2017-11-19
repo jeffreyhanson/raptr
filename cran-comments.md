@@ -12,14 +12,15 @@ This version has the following updates:
 ## Test environments
 
 * [Ubuntu 14.04 (travis-ci)](https://travis-ci.org/jeffreyhanson/raptr/builds)
-  + R release
-  + R devel
+  + release
+  + devel
 * [Mac OSX 10.9.5 (travis-ci](https://travis-ci.org/jeffreyhanson/raptr/builds)
-  + R release
-  + R devel
+  + release
 * [Windows Server 2012 R2 (x64) (appveyor)](https://ci.appveyor.com/project/jeffreyhanson/raptr)
-  + R release
-
+  + release
+* [Win-Builder](https://win-builder.r-project.org/)
+  + devel
+  
 ## R CMD check results
 
 0 errors | 0 warnings | 2 notes
