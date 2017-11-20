@@ -1,4 +1,9 @@
-# raptr 0.1.0 (released)
+# raptr 0.1.1 (released)
+
+- vignette size has been reduced.
+- updated DOI in readme.
+
+# raptr 0.1.0 (unreleased)
 
 - unit tests now compatible with _testthat R_ package (version 1.0.2.9000).
 - _assertthat R_ package is now used for validating function arguments.
@@ -12,8 +17,6 @@
 - strip debugging symbols from compiled files to reduce installation size.
 - `is.GurobiInstalled` now does not run _gurobi_ to avoid spurious notes during
   CRAN checks on academic license.
-- vignette size has been reduced.
-
 
 # raptr 0.0.5 (released)
 

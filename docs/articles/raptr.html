@@ -461,21 +461,21 @@ sim_rs_s1_space &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ##   RHS range        [1e+00, 1e+02]
 ## Found heuristic solution: objective 95
 ## Presolve removed 36 rows and 0 columns
-## Presolve time: 3.09s
+## Presolve time: 2.85s
 ## Presolved: 10066 rows, 10100 columns, 40104 nonzeros
 ## Variable types: 0 continuous, 10100 integer (10100 binary)
 ## Presolved: 10066 rows, 10100 columns, 40104 nonzeros
 ## 
 ## Presolve removed 10066 rows and 10100 columns
 ## 
-## Root relaxation: objective 2.000000e+01, 621 iterations, 0.16 seconds
+## Root relaxation: objective 2.000000e+01, 621 iterations, 0.13 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
 ## *    0     0               0      20.0000000   20.00000  0.00%     -    3s
 ## 
-## Explored 0 nodes (1587 simplex iterations) in 3.39 seconds
+## Explored 0 nodes (1587 simplex iterations) in 3.14 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 20 95 
@@ -534,14 +534,14 @@ sim_rs_s2_space &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ##   RHS range        [1e+00, 6e+01]
 ## Found heuristic solution: objective 91
 ## Presolve removed 220 rows and 0 columns
-## Presolve time: 2.64s
+## Presolve time: 2.20s
 ## Presolved: 9882 rows, 10100 columns, 41664 nonzeros
 ## Variable types: 0 continuous, 10100 integer (10100 binary)
 ## Presolved: 9882 rows, 10100 columns, 41664 nonzeros
 ## 
 ## Presolve removed 9882 rows and 10100 columns
 ## 
-## Root relaxation: objective 1.232570e+01, 4165 iterations, 0.46 seconds
+## Root relaxation: objective 1.232570e+01, 4165 iterations, 0.68 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
@@ -549,7 +549,7 @@ sim_rs_s2_space &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ##      0     0   12.32570    0  290   91.00000   12.32570  86.5%     -    3s
 ## H    0     0                      13.0000000   12.32570  5.19%     -    3s
 ## 
-## Explored 1 nodes (4528 simplex iterations) in 3.42 seconds
+## Explored 1 nodes (4528 simplex iterations) in 3.20 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 13 91 
@@ -606,9 +606,8 @@ sim_rs_s3_space &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+00, 7e+01]
 ## Found heuristic solution: objective 87
-## Presolve removed 581 rows and 15 columns (presolve time = 5s) ...
 ## Presolve removed 589 rows and 15 columns
-## Presolve time: 6.45s
+## Presolve time: 4.63s
 ## Presolved: 9513 rows, 10085 columns, 51461 nonzeros
 ## Variable types: 0 continuous, 10085 integer (10085 binary)
 ## Presolved: 9513 rows, 10085 columns, 51461 nonzeros
@@ -618,25 +617,25 @@ sim_rs_s3_space &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    1.0000000e+02   0.000000e+00   1.000000e+02      7s
-##     5690    8.9807917e+00   0.000000e+00   0.000000e+00      7s
-##     5690    8.9807917e+00   0.000000e+00   0.000000e+00      7s
+##     4152    9.8286149e+00   0.000000e+00   4.178263e+02      5s
+##     5690    8.9807917e+00   0.000000e+00   0.000000e+00      5s
+##     5690    8.9807917e+00   0.000000e+00   0.000000e+00      5s
 ## 
-## Root relaxation: objective 8.980792e+00, 5690 iterations, 0.53 seconds
+## Root relaxation: objective 8.980792e+00, 5690 iterations, 0.57 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0    8.98079    0   75   87.00000    8.98079  89.7%     -    7s
-## H    0     0                      10.0000000    8.98079  10.2%     -    7s
-##      0     0     cutoff    0        10.00000   10.00000  0.00%     -    7s
+##      0     0    8.98079    0   75   87.00000    8.98079  89.7%     -    5s
+## H    0     0                      10.0000000    8.98079  10.2%     -    5s
+##      0     0     cutoff    0        10.00000   10.00000  0.00%     -    5s
 ## 
 ## Cutting planes:
 ##   Gomory: 1
 ##   MIR: 1
 ##   Zero half: 1
 ## 
-## Explored 1 nodes (5889 simplex iterations) in 7.34 seconds
+## Explored 1 nodes (5889 simplex iterations) in 5.53 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 10 87 
@@ -702,22 +701,22 @@ sim_mrs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+00, 8e+02]
 ## Found heuristic solution: objective 98
-## Presolve time: 2.81s
+## Presolve time: 2.66s
 ## Presolved: 30306 rows, 30100 columns, 120000 nonzeros
 ## Variable types: 0 continuous, 30100 integer (30100 binary)
 ## Presolved: 30306 rows, 30100 columns, 120000 nonzeros
 ## 
 ## Presolve removed 30306 rows and 30100 columns
 ## 
-## Root relaxation: objective 2.000000e+01, 2464 iterations, 2.00 seconds
-## Total elapsed time = 5.76s
+## Root relaxation: objective 2.000000e+01, 2464 iterations, 2.03 seconds
+## Total elapsed time = 5.73s
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
 ## *    0     0               0      20.0000000   20.00000  0.00%     -    5s
 ## 
-## Explored 0 nodes (6504 simplex iterations) in 5.84 seconds
+## Explored 0 nodes (6504 simplex iterations) in 5.81 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 20 98 
@@ -742,10 +741,10 @@ sim_mrs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+00, 1e+02]
 ## Found heuristic solution: objective 99
-## Presolve removed 230 rows and 15 columns (presolve time = 5s) ...
-## Presolve removed 329 rows and 15 columns (presolve time = 10s) ...
+## Presolve removed 267 rows and 15 columns (presolve time = 5s) ...
+## Presolve removed 360 rows and 15 columns (presolve time = 10s) ...
 ## Presolve removed 360 rows and 15 columns
-## Presolve time: 12.84s
+## Presolve time: 10.33s
 ## Presolved: 29946 rows, 30085 columns, 131504 nonzeros
 ## Variable types: 0 continuous, 30085 integer (30085 binary)
 ## Presolve removed 67 rows and 1 columns
@@ -756,19 +755,19 @@ sim_mrs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    1.0000000e+02   0.000000e+00   1.000000e+02     14s
-##     3288    2.5504236e+01   0.000000e+00   2.859619e+03     15s
-##     5715    2.0000000e+01   0.000000e+00   0.000000e+00     16s
-##     5715    2.0000000e+01   0.000000e+00   0.000000e+00     16s
+##        0    1.0000000e+02   0.000000e+00   1.000000e+02     12s
+##     5715    2.0000000e+01   0.000000e+00   0.000000e+00     14s
+##     5715    2.0000000e+01   0.000000e+00   0.000000e+00     14s
 ## 
-## Root relaxation: objective 2.000000e+01, 5715 iterations, 3.35 seconds
+## Root relaxation: objective 2.000000e+01, 5715 iterations, 3.92 seconds
+## Total elapsed time = 15.24s
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-## *    0     0               0      20.0000000   20.00000  0.00%     -   17s
+## *    0     0               0      20.0000000   20.00000  0.00%     -   16s
 ## 
-## Explored 0 nodes (11023 simplex iterations) in 17.64 seconds
+## Explored 0 nodes (11023 simplex iterations) in 16.22 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 20 99 
@@ -850,9 +849,10 @@ sim_mrs_space2 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+00, 1e+02]
 ## Found heuristic solution: objective 99
-## Presolve removed 267 rows and 15 columns (presolve time = 5s) ...
+## Presolve removed 265 rows and 15 columns (presolve time = 5s) ...
+## Presolve removed 360 rows and 15 columns (presolve time = 10s) ...
 ## Presolve removed 360 rows and 15 columns
-## Presolve time: 9.83s
+## Presolve time: 11.36s
 ## Presolved: 29946 rows, 30085 columns, 131478 nonzeros
 ## Variable types: 0 continuous, 30085 integer (30085 binary)
 ## Presolve removed 67 rows and 1 columns
@@ -863,18 +863,19 @@ sim_mrs_space2 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    1.0000000e+02   0.000000e+00   1.000000e+02     11s
-##     5682    2.0000000e+01   0.000000e+00   0.000000e+00     13s
-##     5682    2.0000000e+01   0.000000e+00   0.000000e+00     13s
+##        0    1.0000000e+02   0.000000e+00   1.000000e+02     13s
+##     5264    2.0868921e+01   0.000000e+00   7.636712e+03     15s
+##     5682    2.0000000e+01   0.000000e+00   0.000000e+00     15s
+##     5682    2.0000000e+01   0.000000e+00   0.000000e+00     16s
 ## 
-## Root relaxation: objective 2.000000e+01, 5682 iterations, 3.53 seconds
+## Root relaxation: objective 2.000000e+01, 5682 iterations, 4.11 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-## *    0     0               0      20.0000000   20.00000  0.00%     -   13s
+## *    0     0               0      20.0000000   20.00000  0.00%     -   15s
 ## 
-## Explored 0 nodes (6073 simplex iterations) in 13.60 seconds
+## Explored 0 nodes (6073 simplex iterations) in 15.81 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 20 99 
@@ -922,9 +923,9 @@ sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw">try</span>(<span c
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [7e-03, 1e+02]
 ## Presolve removed 338606 rows and 156703 columns
-## Presolve time: 4.35s
+## Presolve time: 4.96s
 ## 
-## Explored 0 nodes (0 simplex iterations) in 5.17 seconds
+## Explored 0 nodes (0 simplex iterations) in 5.90 seconds
 ## Thread count was 1 (of 4 available processors)
 ## 
 ## Solution count 0
@@ -948,10 +949,10 @@ sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ##   Objective range  [1e+00, 1e+00]
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [7e-03, 8e+05]
-## Presolve removed 333703 rows and 151600 columns (presolve time = 5s) ...
+## Presolve removed 333403 rows and 151500 columns (presolve time = 5s) ...
 ## Presolve removed 333903 rows and 151800 columns (presolve time = 10s) ...
 ## Presolve removed 333903 rows and 151800 columns
-## Presolve time: 10.24s
+## Presolve time: 12.36s
 ## Presolved: 30303 rows, 30100 columns, 90300 nonzeros
 ## Variable types: 0 continuous, 30100 integer (30100 binary)
 ## Found heuristic solution: objective 27.0000000
@@ -962,18 +963,18 @@ sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    1.0000000e+02   0.000000e+00   1.000000e+02     12s
-##      129    2.0000000e+01   0.000000e+00   0.000000e+00     12s
-##      129    2.0000000e+01   0.000000e+00   0.000000e+00     12s
+##        0    1.0000000e+02   0.000000e+00   1.000000e+02     14s
+##      129    2.0000000e+01   0.000000e+00   0.000000e+00     14s
+##      129    2.0000000e+01   0.000000e+00   0.000000e+00     14s
 ## 
-## Root relaxation: objective 2.000000e+01, 129 iterations, 0.73 seconds
+## Root relaxation: objective 2.000000e+01, 129 iterations, 0.69 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-## *    0     0               0      20.0000000   20.00000  0.00%     -   11s
+## *    0     0               0      20.0000000   20.00000  0.00%     -   14s
 ## 
-## Explored 0 nodes (182 simplex iterations) in 11.98 seconds
+## Explored 0 nodes (182 simplex iterations) in 14.21 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 20 27 
@@ -1023,7 +1024,7 @@ sim_mrs_amount_blm &lt;-<span class="st"> </span><span class="kw"><a href="../re
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+00, 8e+02]
 ## Found heuristic solution: objective 4498
-## Presolve time: 2.37s
+## Presolve time: 3.15s
 ## Presolved: 30666 rows, 30280 columns, 120720 nonzeros
 ## Variable types: 0 continuous, 30280 integer (30280 binary)
 ## Presolved: 30666 rows, 30280 columns, 120720 nonzeros
@@ -1033,57 +1034,57 @@ sim_mrs_amount_blm &lt;-<span class="st"> </span><span class="kw"><a href="../re
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##     4403    7.9743478e+02   0.000000e+00   3.225501e+05      5s
-##     7759    4.6444444e+02   0.000000e+00   0.000000e+00      8s
-##     7759    4.6444444e+02   0.000000e+00   0.000000e+00      8s
+##     2513    1.0895791e+03   0.000000e+00   2.437040e+05      5s
+##     7759    4.6444444e+02   0.000000e+00   0.000000e+00     10s
+##     7759    4.6444444e+02   0.000000e+00   0.000000e+00     10s
 ## 
-## Root relaxation: objective 4.644444e+02, 7759 iterations, 5.56 seconds
+## Root relaxation: objective 4.644444e+02, 7759 iterations, 6.71 seconds
+## Total elapsed time = 10.23s
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0  464.44444    0 1725 4498.00000  464.44444  89.7%     -    8s
-## H    0     0                    2242.0000000  464.44444  79.3%     -   25s
-##      0     0  515.39560    0 1776 2242.00000  515.39560  77.0%     -   26s
-##      0     0  555.31166    0 1654 2242.00000  555.31166  75.2%     -   28s
-##      0     0  555.31166    0 1660 2242.00000  555.31166  75.2%     -   28s
-##      0     0  555.31166    0 1678 2242.00000  555.31166  75.2%     -   29s
-##      0     0  555.31166    0 1679 2242.00000  555.31166  75.2%     -   29s
-##      0     0  555.31166    0 1552 2242.00000  555.31166  75.2%     -   32s
-##      0     0  555.31166    0 1553 2242.00000  555.31166  75.2%     -   32s
-##      0     0  555.31166    0 1533 2242.00000  555.31166  75.2%     -   34s
-##      0     0  558.17064    0 1477 2242.00000  558.17064  75.1%     -   34s
-##      0     0  558.17064    0 1470 2242.00000  558.17064  75.1%     -   36s
-## H    0     0                    1535.0000000  558.17064  63.6%     -   42s
-##      0     0  558.17064    0 1472 1535.00000  558.17064  63.6%     -   43s
-##      0     0  558.17064    0 1561 1535.00000  558.17064  63.6%     -   44s
-##      0     0  558.17064    0 1611 1535.00000  558.17064  63.6%     -   44s
-##      0     0  558.17064    0 1493 1535.00000  558.17064  63.6%     -   46s
-##      0     0  558.17064    0 1495 1535.00000  558.17064  63.6%     -   53s
-##      0     0  558.17064    0 1485 1535.00000  558.17064  63.6%     -   56s
-##      0     0  558.17064    0 1490 1535.00000  558.17064  63.6%     -   61s
-##      0     0  558.17064    0 1500 1535.00000  558.17064  63.6%     -   63s
-##      0     0  558.17064    0 1479 1535.00000  558.17064  63.6%     -   64s
-## H    0     2                    1435.0000000  558.17064  61.1%     -   78s
-##      0     2  558.17064    0 1474 1435.00000  558.17064  61.1%     -   78s
-##      5     8  659.06945    3 1507 1435.00000  584.51018  59.3%  1426   80s
-##     18    19  808.73239   10 1385 1435.00000  584.51018  59.3%  1384   85s
-## *   34    30              18     920.0000000  584.51018  36.5%  1247   88s
-##     41    31  707.17949    3 1617  920.00000  609.93723  33.7%  1184   90s
-##     66    42  887.56757    7 1348  920.00000  660.00000  28.3%  1013   95s
-##     87    43  890.58824    7  641  920.00000  661.54246  28.1%   933  100s
-##    141    54  876.86275   12  909  920.00000  710.90909  22.7%   854  105s
-##    183    65  897.99767    5 1504  920.00000  728.57143  20.8%   834  111s
-##    224    54  875.70640    7  925  920.00000  767.76119  16.5%   818  115s
-##    282    56     cutoff    9       920.00000  794.70663  13.6%   778  120s
-##    338    55  888.42105    8  617  920.00000  809.65517  12.0%   738  125s
-##    402    17     cutoff    8       920.00000  840.00000  8.70%   715  130s
+##      0     0  464.44444    0 1725 4498.00000  464.44444  89.7%     -   10s
+## H    0     0                    2242.0000000  464.44444  79.3%     -   28s
+##      0     0  515.39560    0 1776 2242.00000  515.39560  77.0%     -   30s
+##      0     0  555.31166    0 1654 2242.00000  555.31166  75.2%     -   31s
+##      0     0  555.31166    0 1660 2242.00000  555.31166  75.2%     -   32s
+##      0     0  555.31166    0 1678 2242.00000  555.31166  75.2%     -   32s
+##      0     0  555.31166    0 1679 2242.00000  555.31166  75.2%     -   33s
+##      0     0  555.31166    0 1552 2242.00000  555.31166  75.2%     -   35s
+##      0     0  555.31166    0 1553 2242.00000  555.31166  75.2%     -   35s
+##      0     0  555.31166    0 1533 2242.00000  555.31166  75.2%     -   38s
+##      0     0  558.17064    0 1477 2242.00000  558.17064  75.1%     -   38s
+##      0     0  558.17064    0 1470 2242.00000  558.17064  75.1%     -   41s
+## H    0     0                    1535.0000000  558.17064  63.6%     -   48s
+##      0     0  558.17064    0 1472 1535.00000  558.17064  63.6%     -   49s
+##      0     0  558.17064    0 1561 1535.00000  558.17064  63.6%     -   49s
+##      0     0  558.17064    0 1611 1535.00000  558.17064  63.6%     -   50s
+##      0     0  558.17064    0 1493 1535.00000  558.17064  63.6%     -   52s
+##      0     0  558.17064    0 1495 1535.00000  558.17064  63.6%     -   59s
+##      0     0  558.17064    0 1485 1535.00000  558.17064  63.6%     -   61s
+##      0     0  558.17064    0 1490 1535.00000  558.17064  63.6%     -   66s
+##      0     0  558.17064    0 1500 1535.00000  558.17064  63.6%     -   68s
+##      0     0  558.17064    0 1479 1535.00000  558.17064  63.6%     -   69s
+## H    0     2                    1435.0000000  558.17064  61.1%     -   83s
+##      0     2  558.17064    0 1474 1435.00000  558.17064  61.1%     -   83s
+##      3     6  606.58699    2 1524 1435.00000  584.51018  59.3%  1613   85s
+##     22    23  843.52941   12 1376 1435.00000  584.51018  59.3%  1286   90s
+## *   34    30              18     920.0000000  584.51018  36.5%  1247   92s
+##     47    34  795.00000    5 1340  920.00000  609.93723  33.7%  1160   95s
+##     71    43  918.52941   10 1292  920.00000  660.00000  28.3%   962  100s
+##     92    43     cutoff    8       920.00000  710.69767  22.8%   954  105s
+##    148    51  884.00000   13  902  920.00000  720.00000  21.7%   861  110s
+##    193    60     cutoff    7       920.00000  745.00000  19.0%   833  115s
+##    252    59  880.46512    7  891  920.00000  786.66667  14.5%   785  120s
+##    313    57  869.70990    5 1247  920.00000  807.09677  12.3%   765  126s
+##    360    42     cutoff    8       920.00000  820.00000  10.9%   726  130s
 ## 
 ## Cutting planes:
 ##   Gomory: 3
 ##   Zero half: 29
 ## 
-## Explored 438 nodes (384090 simplex iterations) in 130.79 seconds
+## Explored 438 nodes (384090 simplex iterations) in 134.02 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 5: 920 1435 1535 ... 4498
@@ -1220,13 +1221,13 @@ cs_rs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../referenc
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+05, 3e+06]
 ## Found heuristic solution: objective 159
-## Presolve time: 0.01s
+## Presolve time: 0.00s
 ## Presolved: 4 rows, 762 columns, 1336 nonzeros
 ## Variable types: 0 continuous, 762 integer (762 binary)
 ## Presolved: 4 rows, 762 columns, 1336 nonzeros
 ## 
 ## 
-## Root relaxation: objective 1.354267e+02, 734 iterations, 0.02 seconds
+## Root relaxation: objective 1.354267e+02, 734 iterations, 0.01 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
@@ -1234,7 +1235,7 @@ cs_rs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../referenc
 ##      0     0  135.42671    0    4  159.00000  135.42671  14.8%     -    0s
 ## H    0     0                     136.0000000  135.42671  0.42%     -    0s
 ## 
-## Explored 1 nodes (734 simplex iterations) in 0.04 seconds
+## Explored 1 nodes (734 simplex iterations) in 0.01 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 136 159 
@@ -1294,37 +1295,29 @@ cs_rs_space &lt;-<span class="st"> </span><span class="kw"><a href="../reference
 ##   Objective range  [1e+00, 1e+00]
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [7e-01, 3e+06]
-## Presolve removed 5067 rows and 4198 columns (presolve time = 5s) ...
+## Presolve removed 5015 rows and 4198 columns (presolve time = 5s) ...
 ## Presolve removed 5576 rows and 4198 columns (presolve time = 10s) ...
-## Presolve removed 5765 rows and 4202 columns (presolve time = 15s) ...
-## Presolve removed 5852 rows and 4202 columns (presolve time = 20s) ...
-## Presolve removed 5915 rows and 4202 columns (presolve time = 25s) ...
-## Presolve removed 6023 rows and 4202 columns (presolve time = 30s) ...
-## Presolve removed 6233 rows and 4202 columns (presolve time = 35s) ...
-## Presolve removed 7398 rows and 4202 columns (presolve time = 40s) ...
-## Presolve removed 7932 rows and 4202 columns (presolve time = 45s) ...
-## Presolve removed 8327 rows and 4202 columns (presolve time = 50s) ...
-## Presolve removed 8368 rows and 4202 columns (presolve time = 55s) ...
-## Presolve removed 8481 rows and 4202 columns (presolve time = 60s) ...
-## Presolve removed 8496 rows and 4202 columns (presolve time = 65s) ...
-## Presolve removed 8496 rows and 4202 columns (presolve time = 70s) ...
-## Presolve removed 8499 rows and 4202 columns (presolve time = 75s) ...
-## Presolve removed 8555 rows and 4202 columns (presolve time = 80s) ...
-## Presolve removed 8610 rows and 4202 columns (presolve time = 85s) ...
-## Presolve removed 9293 rows and 4202 columns (presolve time = 90s) ...
-## Presolve removed 9853 rows and 4202 columns (presolve time = 95s) ...
-## Presolve removed 9867 rows and 4202 columns (presolve time = 100s) ...
-## Presolve removed 9914 rows and 4202 columns (presolve time = 105s) ...
-## Presolve removed 9914 rows and 4202 columns (presolve time = 110s) ...
-## Presolve removed 10303 rows and 4202 columns (presolve time = 115s) ...
-## Presolve removed 10303 rows and 4202 columns (presolve time = 120s) ...
-## Presolve removed 10315 rows and 4202 columns (presolve time = 125s) ...
-## Presolve removed 10315 rows and 4202 columns (presolve time = 130s) ...
-## Presolve removed 10315 rows and 4202 columns (presolve time = 137s) ...
-## Presolve removed 10315 rows and 4260 columns (presolve time = 154s) ...
-## Presolve removed 10330 rows and 4260 columns (presolve time = 163s) ...
+## Presolve removed 5849 rows and 4202 columns (presolve time = 15s) ...
+## Presolve removed 5910 rows and 4202 columns (presolve time = 20s) ...
+## Presolve removed 6044 rows and 4202 columns (presolve time = 25s) ...
+## Presolve removed 6157 rows and 4202 columns (presolve time = 30s) ...
+## Presolve removed 7729 rows and 4202 columns (presolve time = 35s) ...
+## Presolve removed 8362 rows and 4202 columns (presolve time = 40s) ...
+## Presolve removed 8479 rows and 4202 columns (presolve time = 45s) ...
+## Presolve removed 8496 rows and 4202 columns (presolve time = 50s) ...
+## Presolve removed 8499 rows and 4202 columns (presolve time = 55s) ...
+## Presolve removed 8555 rows and 4202 columns (presolve time = 60s) ...
+## Presolve removed 9356 rows and 4202 columns (presolve time = 65s) ...
+## Presolve removed 9853 rows and 4202 columns (presolve time = 70s) ...
+## Presolve removed 9914 rows and 4202 columns (presolve time = 75s) ...
+## Presolve removed 10190 rows and 4202 columns (presolve time = 80s) ...
+## Presolve removed 10304 rows and 4202 columns (presolve time = 85s) ...
+## Presolve removed 10315 rows and 4202 columns (presolve time = 90s) ...
+## Presolve removed 10315 rows and 4202 columns (presolve time = 96s) ...
+## Presolve removed 10315 rows and 4260 columns (presolve time = 113s) ...
+## Presolve removed 10330 rows and 4260 columns (presolve time = 123s) ...
 ## Presolve removed 10330 rows and 4260 columns
-## Presolve time: 163.47s
+## Presolve time: 123.43s
 ## Presolved: 123682 rows, 130102 columns, 569395 nonzeros
 ## Variable types: 0 continuous, 130102 integer (130102 binary)
 ## Found heuristic solution: objective 234.0000000
@@ -1336,28 +1329,27 @@ cs_rs_space &lt;-<span class="st"> </span><span class="kw"><a href="../reference
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    0.0000000e+00   1.230612e+02   1.557797e+10    169s
-##     4182    1.4371341e+02   0.000000e+00   2.952023e+02    170s
-##    21236    1.3597554e+02   0.000000e+00   6.990747e+03    175s
-##    29860    1.3570857e+02   0.000000e+00   9.956635e+01    180s
-##    36524    1.3565870e+02   0.000000e+00   8.909781e+01    185s
-##    41032    1.3562071e+02   0.000000e+00   9.418953e+01    190s
-##    47500    1.3559476e+02   0.000000e+00   4.999487e+03    195s
-##    52596    1.3557351e+02   0.000000e+00   1.075163e+02    200s
-##    56908    1.3556214e+02   0.000000e+00   1.727329e+01    205s
-##    62592    1.3555681e+02   0.000000e+00   1.255949e-01    210s
-##    63974    1.3555580e+02   0.000000e+00   0.000000e+00    211s
-##    63974    1.3555580e+02   0.000000e+00   0.000000e+00    212s
+##        0    0.0000000e+00   1.230612e+02   1.557797e+10    130s
+##      755    7.6200000e+02   0.000000e+00   4.984375e+00    130s
+##    16532    1.3619049e+02   0.000000e+00   3.414579e+02    135s
+##    28684    1.3571349e+02   0.000000e+00   1.392106e+02    140s
+##    36132    1.3566131e+02   0.000000e+00   6.925778e+02    145s
+##    42600    1.3561492e+02   0.000000e+00   3.996313e+01    150s
+##    49264    1.3558776e+02   0.000000e+00   3.618134e+02    155s
+##    55340    1.3556341e+02   0.000000e+00   6.644240e+01    160s
+##    61612    1.3555749e+02   0.000000e+00   1.119426e+01    165s
+##    63974    1.3555580e+02   0.000000e+00   0.000000e+00    167s
+##    63974    1.3555580e+02   0.000000e+00   0.000000e+00    167s
 ## 
-## Root relaxation: objective 1.355558e+02, 63974 iterations, 46.91 seconds
+## Root relaxation: objective 1.355558e+02, 63974 iterations, 42.07 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0  135.55580    0  570  234.00000  135.55580  42.1%     -  214s
-## H    0     0                     136.0000000  135.55580  0.33%     -  215s
+##      0     0  135.55580    0  570  234.00000  135.55580  42.1%     -  169s
+## H    0     0                     136.0000000  135.55580  0.33%     -  170s
 ## 
-## Explored 1 nodes (79466 simplex iterations) in 216.01 seconds
+## Explored 1 nodes (79466 simplex iterations) in 170.51 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 136 234 
