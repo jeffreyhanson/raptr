@@ -12,6 +12,8 @@
 - strip debugging symbols from compiled files to reduce installation size.
 - `is.GurobiInstalled` now does not run _gurobi_ to avoid spurious notes during
   CRAN checks on academic license.
+- vignette size has been reduced.
+
 
 # raptr 0.0.5 (released)
 

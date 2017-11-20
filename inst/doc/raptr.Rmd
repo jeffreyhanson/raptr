@@ -1,7 +1,7 @@
 ---
 title: "raptr: Representative and Adequate Prioritization Toolkit in R"
 output:
-  rmarkdown::html_document:
+  rmarkdown::html_vignette:
     toc: true
     fig_caption: true
     self_contained: yes
@@ -311,7 +311,7 @@ Let's take a look at the prioritization for the uniform species with amount-base
 spp.plot(sim_rs_s1_space, "uniform", main = "Uniform species")
 ```
 
-```{r, fig.height=3.5, fig.width=4.5, fig.align="center", fig.cap="_Difference between two prioritizations for the uniformly distributed species. Prioritisation $X$ was generated using just amount-based targets (20\\%), and prioritization $Y$ was generated using an additional space-based target (85\\%)._"}
+```{r, fig.height=3.5, fig.width=6.0, fig.align="center", fig.cap="_Difference between two prioritizations for the uniformly distributed species. Prioritisation $X$ was generated using just amount-based targets (20\\%), and prioritization $Y$ was generated using an additional space-based target (85\\%)._"}
 # plot the difference between old and new prioritizations
 plot(sim_rs_s1_amount, sim_rs_s1_space, 1, 1,
      main = "Difference between solutions")
@@ -344,7 +344,7 @@ space.held(sim_rs_s2_space)
 spp.plot(sim_rs_s2_space, "normal", main = "Normal species")
 ```
 
-```{r, fig.height=3.5, fig.width=4.5, fig.align="center", fig.cap="_Difference between two prioritizations for the normally distributed species. See Figure 7 caption for conventions._"}
+```{r, fig.height=3.5, fig.width=6.0, fig.align="center", fig.cap="_Difference between two prioritizations for the normally distributed species. See Figure 7 caption for conventions._"}
 # plot the difference between old and new prioritizations
 plot(sim_rs_s2_amount, sim_rs_s2_space, 1, 1,
      main = "Difference between solutions")
@@ -376,7 +376,7 @@ space.held(sim_rs_s3_space)
 spp.plot(sim_rs_s3_space, 'bimodal', main='Bimodal species')
 ```
 
-```{r, fig.height=3.5, fig.width=4.5, fig.align="center", fig.cap="_Difference between two prioritizations for the bimodally distributed species. See Figure 7 caption for conventions._"}
+```{r, fig.height=3.5, fig.width=6.0, fig.align="center", fig.cap="_Difference between two prioritizations for the bimodally distributed species. See Figure 7 caption for conventions._"}
 # plot the difference between old and new prioritizations
 plot(sim_rs_s3_amount, sim_rs_s3_space, 1, 1,
      main = "Difference between solutions")
@@ -426,7 +426,7 @@ plot(sim_mrs_amount, 1, main = "Amount-based targets")
 plot(sim_mrs_space, 1, main = "Amount and space-based targets")
 ```
 
-```{r, fig.height=3.5, fig.width=4.5, fig.align="center", fig.cap="_Difference between two multi-species prioritizations. See Figure 7 caption for conventions.)"}
+```{r, fig.height=3.5, fig.width=6.0, fig.align="center", fig.cap="_Difference between two multi-species prioritizations. See Figure 7 caption for conventions.)"}
 # difference between the two prioritizations
 plot(sim_mrs_amount, sim_mrs_space, 1, 1, main = "Difference between solutions")
 ```
@@ -469,7 +469,7 @@ summary(sim_mrs_space2)
 plot(sim_mrs_space2, 1)
 ```
 
-```{r, fig.height=3.5, fig.width=4.5, fig.align="center", fig.cap="_Difference between two multi-species prioritizations. See Figure 7 caption for conventions._"}
+```{r, fig.height=3.5, fig.width=6.0, fig.align="center", fig.cap="_Difference between two multi-species prioritizations. See Figure 7 caption for conventions._"}
 # difference between prioritizations that use and do not use thresholds
 plot(sim_mrs_space2, sim_mrs_space, 1, 1, main = "Difference between solutions")
 ```
@@ -501,7 +501,7 @@ summary(sim_mrs_space3)
 plot(sim_mrs_space3, 1)
 ```
 
-```{r, fig.height=3.5, fig.width=4.5, fig.align="center", fig.cap="_Difference between two multi-species prioritizations. See Figure 7 caption for conventions._"}
+```{r, fig.height=3.5, fig.width=6.0, fig.align="center", fig.cap="_Difference between two multi-species prioritizations. See Figure 7 caption for conventions._"}
 # difference between prioritizations based on unreliable and reliable formulation
 plot(sim_mrs_space3, sim_mrs_space, 1, 1, main = "Difference between solutions")
 ```
@@ -544,7 +544,7 @@ space.held(sim_mrs_amount_blm)
 plot(sim_mrs_amount_blm, 1)
 ```
 
-```{r, fig.height=3.5, fig.width=4.5, fig.align="center", fig.cap="_Difference between two multi-species prioritizations. See Figure 7 caption for conventions._"}
+```{r, fig.height=3.5, fig.width=6.0, fig.align="center", fig.cap="_Difference between two multi-species prioritizations. See Figure 7 caption for conventions._"}
 # difference between the two prioritizations
 plot(sim_mrs_amount_blm, sim_mrs_amount, 1, 1,
      main = "Difference between solutions")
