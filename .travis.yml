@@ -19,7 +19,7 @@ os:
 matrix:
   exclude:
     - os: osx
-    - r: devel
+      r: devel
 
 r_build_args: --no-build-vignettes
 
