@@ -35,11 +35,12 @@ apt_packages:
   - libgeos-dev
   - libgeos-c1
   - libproj-dev
+  - libgl1-mesa-glx
+  - libglu1-mesa
+  - libpng12-0
+  - libx11-6
   - curl
   - qpdf
-  - r-cran-rgdal
-  - r-cran-rgl
-  - r-cran-rgeos
 
 before_install:
   - echo "TRAVIS_OS_NAME = $TRAVIS_OS_NAME"
