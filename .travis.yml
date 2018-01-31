@@ -49,7 +49,7 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get --yes --force-yes update -qq; fi;
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install -y; fi;
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then Rscript -e "install.packages(c('devtools'))"; fi;  
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos','RandomFieldsUtils','RandomFields','adehabitatHR','BH','doParallel','gdalUtils','ggplot2', 'hypervolume','ks','mvtnorm','PBSmapping','plyr','raster','RColorBrewer','RcppEigen','RgoogleMaps','scales','shape'))"; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos','RandomFieldsUtils','RandomFields','adehabitatHR','BH','doParallel','gdalUtils','ggplot2', 'hypervolume','ks','mvtnorm','PBSmapping','plyr','raster','RColorBrewer','RcppEigen','RgoogleMaps','scales','shape', 'digest'))"; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo tlmgr update --self; fi;
 
 r_packages:
