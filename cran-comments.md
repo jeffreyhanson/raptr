@@ -26,30 +26,17 @@ Jeffrey Hanson
 
 ### Notes
 
-* Possibly mis-spelled words in DESCRIPTION:
-  al (21:33)
-  et (21:30)
-  prioritizations (15:6)
-
-  _These words have not been mis-spelled._
-
 * checking package dependencies ... NOTE
   package suggested but not available for checking: 'gurobi'
 
   _This package depends heavily on the Gurobi software platform and the gurobi R package distributed with it. Instructions for installing the gurobi R package are contained in the package's description and README files. The 'gurobi' R package is an R package that is distributed along with the gurobi program. It would not be practical to use another R package (eg. lpSolveAPI) because non-commercial exact algorithm solvers cannot solve even moderately sized problems in a feasible amount of time. Several existing R packages on CRAN use the gurobi R package (eg. cherry, DESP)._
 
 * checking installed package size ... NOTE
-  installed size is  7.9Mb
+  installed size is  5.8Mb
   sub-directories of 1Mb or more:
     data   3.6Mb
-    doc    1.7Mb
-    libs   2.1Mb
 
   + _data: The ./data directory contains case-study data for a vignette. Although a separate package could be created to store the case-study data, this seems unnecessary because the data sets are used in both package testing in the vignette. I would prefer to keep the data sets in this package for simplicity._
-
-  + _doc: The documentation for this package is comprehensive. It contains a html vignette with several detailed examples._
-
-  + _libs: To improve performance, many functions in this package are written in C++. This has resulted in a large ./libs folder. The ./libs folder could be reduced in size by rewriting the functions in R, however, this would severely reduce the usability of the package. I would prefer to keep the C++ functions and the large ./libs folder._
 
 ## Reverse dependencies
 
