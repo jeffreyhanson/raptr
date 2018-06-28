@@ -11,18 +11,32 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="Case-study dataset for a conservation planning exercise — casestudy_data" />
+
+<meta property="og:description" content="This dataset contains data to generate example prioritizations for the
+pale-headed Rosella (Platycercus adscitus) in Queensland, Australia." />
+<meta name="twitter:card" content="summary" />
+
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,18 +60,28 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">raptr</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">raptr</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="../articles/raptr.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
-</li>
-<li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -69,6 +93,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -76,16 +101,20 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Case-study dataset for a conservation planning exercise</h1>
+    <small class="dont-index">Source: <a href='https://github.com/jeffreyhanson/raptr/blob/master/R/data.R'><code>R/data.R</code></a></small>
+    <div class="hidden name"><code>casestudy_data.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This dataset contains data to generate example prioritizations for the
 pale-headed Rosella (<em>Platycercus adscitus</em>) in Queensland, Australia.</p>
     
+    </div>
 
     <pre class="usage"><span class='no'>cs_pus</span>
 
@@ -103,10 +132,10 @@ pale-headed Rosella (<em>Platycercus adscitus</em>) in Queensland, Australia.</p
 <dt>cs_pus</dt><dd><p><code><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygonsDataFrame</a></code> planning units.
 The units were generated as \(30km^2\) squares across the
 species' range, and then clipped to the Queensland, Australia
-(using data obtained from the <a href = 'Australia Bureau of Statistics'>http://www.abs.gov.au/ausstats/abs@.nsf/mf/1259.0.30.001?OpenDocument</a>).
+(using data obtained from the <a href='Australia Bureau of Statistics'>http://www.abs.gov.au/ausstats/abs@.nsf/mf/1259.0.30.001?OpenDocument</a>).
 They were then overlaid with Australia's protected area
 network (obtained from the World Database on Protected Areas
-(WDPA) at <a href = 'http://www.protectedplanet.net/'>http://www.protectedplanet.net/</a>). This
+(WDPA) at <a href='http://www.protectedplanet.net/'>http://www.protectedplanet.net/</a>). This
 attribute table has 3 fields. The <code>area</code> field denotes
 the amount of land encompassed by each unit, the <code>cost</code>
 field is set to 1 for all units, and the <code>status</code> field
@@ -115,10 +144,10 @@ protected areas.</p></dd>
 <dt>cs_spp</dt><dd><p><code><a href='http://www.rdocumentation.org/packages/raster/topics/Raster-classes'>RasterLayer-class</a></code> probability
 distribution map for the <em>P. adscitus</em> clipped to
 Queensland, Australia. This map was derived from records
-obtained from The Atlas of Living Australia (<a href = 'http://ala.org.au/'>http://ala.org.au/</a>)</p></dd>.
+obtained from The Atlas of Living Australia (<a href='http://ala.org.au/'>http://ala.org.au/</a>)</p></dd>.
 <dt>cs_space</dt><dd><p><code><a href='http://www.rdocumentation.org/packages/raster/topics/stack'>stack</a></code> describing broad-scale climate
 variation across Queensland
-(obtained from <a href = 'http://www.worldclim.org/'>http://www.worldclim.org/</a>,
+(obtained from <a href='http://www.worldclim.org/'>http://www.worldclim.org/</a>,
 and resampled to \(10km^2\) resolution).</p></dd>
 </dl>
     
@@ -127,10 +156,7 @@ and resampled to \(10km^2\) resolution).</p></dd>
     <pre class="examples"><div class='input'><span class='co'># load data</span>
 <span class='fu'>data</span>(<span class='no'>cs_pus</span>, <span class='no'>cs_spp</span>, <span class='no'>cs_space</span>)
 
-<span class='co'># plot data</span>
-
-<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>cs_pus</span>)</div><img src='casestudy_data-2.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>cs_spp</span>)</div><img src='casestudy_data-4.png' alt='' width='540' height='400' /><div class='input'><span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>cs_space</span>)</div><img src='casestudy_data-6.png' alt='' width='540' height='400' /><div class='input'>
-</div></pre>
+<span class='co'># plot data</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>cs_pus</span>)</div><div class='img'><img src='casestudy_data-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>cs_spp</span>)</div><div class='img'><img src='casestudy_data-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>cs_space</span>)</div><div class='img'><img src='casestudy_data-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -152,11 +178,14 @@ and resampled to \(10km^2\) resolution).</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

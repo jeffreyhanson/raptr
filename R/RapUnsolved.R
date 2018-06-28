@@ -39,8 +39,11 @@ methods::setClass("RapUnsolved",
 #'   \code{\link{RapUnreliableOpts-class}}, \code{\link{RapData-class}}.
 #'
 #' @examples
-#' # load data
 #' \donttest{
+#' # set random number generator seed
+#' set.seed(500)
+#'
+#' # load data
 #' data(cs_pus, cs_spp)
 #'
 #' # create inputs for RapUnsolved
@@ -50,9 +53,10 @@ methods::setClass("RapUnsolved",
 #'
 #' # create RapUnsolved object
 #' ru <- RapUnsolved(ro, rd)
+#'
+#' # print object
 #' print(ru)
 #' }
-#'
 #' @export
 RapUnsolved <- function(opts, data) {
   methods::new("RapUnsolved", opts = opts, data = data)

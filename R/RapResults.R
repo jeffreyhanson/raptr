@@ -81,9 +81,9 @@ methods::setClass("RapResults",
       msg = "amount.held contains values less than 0 or greater than 1")
 
     # space.held
-    if (any(na.omit(object@space.held) > 0))
+    if (any(na.omit(object@space.held) < 0))
       warning(paste0("some species have space.held values less than 0, ",
-                     "and are really poor represented"))
+                     "and thus are poorly represented"))
     if (any(na.omit(object@space.held) > 1))
       warning(paste0("some species have space.held values greater than 1, ",
                      "due to low precision in the calculations. Increase the ",
@@ -239,7 +239,7 @@ print.RapResults <- function(x, ..., header = TRUE) {
   assertthat::assert_that(assertthat::is.flag(header))
   if (header)
     message("RapResults object.")
-  message("  Number of solutions:", nrow(x@summary))
+  message("  Number of solutions: ", nrow(x@summary))
   message(paste0("  Best solution score: ", score(x, 0),
                  " (", sum(selections(x, 0)), " planning units)"))
   invisible()

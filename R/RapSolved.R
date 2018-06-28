@@ -89,13 +89,6 @@ methods::setMethod("solve",
         stop(paste0("The Gurobi software package and the \"gurobi\" R package ",
                     "must be intalled."))
     }
-    if (!options()$GurobiInstalled$rgurobi &&
-        b@MultipleSolutionsMethod == "solution.pool") {
-      is.GurobiInstalled()
-      stop(paste0("The \"rgurobi\" R package must be intalled to access the ",
-                  "solution pool."))
-    }
-
     # generate model object
     model <- rcpp_generate_model_object(a@opts,
                                         inherits(a@opts, "RapUnreliableOpts"),
@@ -113,17 +106,16 @@ methods::setMethod("solve",
     log.pth <- tempfile(fileext = ".log")
     gparams <- append(as.list(b), list("LogFile" = log.pth))
     if (b@MultipleSolutionsMethod == "benders.cuts") {
-      if (options()$GurobiInstalled$gurobi) {
-        solution <- gurobi::gurobi(model, gparams)
-      }
+      solution <- gurobi::gurobi(model, gparams)
     } else {
-      if (options()$GurobiInstalled$rgurobi) {
-        solution <- rgurobi::gurobi(model, gparams,
-                                    NumberSolutions = b@NumberSolutions)
-      }
+      solution <- gurobi::gurobi(model,
+          append(gparams,
+                 list(PoolSolutions = b@NumberSolutions,
+                      PoolSearchMode = as.numeric(
+                        gsub("solution.pool.", "",  b@MultipleSolutionsMethod,
+                             fixed = TRUE)))))
     }
     if (file.exists("gurobi.log")) unlink("gurobi.log")
-
     # check solution object
     if (!is.null(solution$status))
       if (solution$status == "INFEASIBLE") {
@@ -135,7 +127,6 @@ methods::setMethod("solve",
       stop(paste0("No solution found because Gurobi parameters do not allow ",
                   "sufficient time."))
     }
-
     ## Subsequent runs if using Bender's cuts to obtain multiple solutions
     if (b@MultipleSolutionsMethod == "benders.cuts") {
       # store results
@@ -168,7 +159,6 @@ methods::setMethod("solve",
           warning(paste0("only ", i, " solutions found"))
           break
         }
-
         # store results
         currResult <- read.RapResults(a@opts, a@data, model,
                                       paste(readLines(log.pth),
@@ -178,20 +168,22 @@ methods::setMethod("solve",
                                      list(selections(currResult)))
       }
     } else {
-      # init results list
-      results <- list()
+      # format results into a single list
+      raw.results <- list(solution[c("x", "objval", "status", "runtime")])
+      if (!is.null(solution$pool))
+        raw.results <- append(raw.results,
+          lapply(solution$pool, function(z)
+            list(x = z$xn, objval = z$objval,
+                 status = ifelse(abs(z$objval - raw.results[[1]]$objval) < 1e-10, "OPTIMAL", "SUBOPTIMAL"),
+                 runtime = solution$runtime)))
+      if (length(raw.results) > b@NumberSolutions)
+        raw.results <- raw.results[seq_len(b@NumberSolutions)]
       # extract solutions
-      for (i in seq_along(solution$obj)) {
-        # generate result object
-        currList <- solution
-        currList$x <- solution$x[i,, drop = TRUE]
-        currList$objval <- solution$objval[i]
-        currResult <- read.RapResults(a@opts, a@data, model,
-                                      paste(readLines(log.pth),
-                                            collapse = "\n"),
-                                      currList, verbose)
-        results <- append(results, currResult)
-      }
+      results <- lapply(raw.results, function(z) {
+        read.RapResults(a@opts, a@data, model,
+                        paste(readLines(log.pth), collapse = "\n"),
+                        z, verbose)
+      })
     }
     # return RapSolved object
     RapSolved(unsolved = a, solver = b, results = mergeRapResults(results))
@@ -387,7 +379,7 @@ print.RapSolved <- function(x, ...) {
   print(x@solver, header = FALSE)
   message("Data")
   print.RapData(x@data, header = FALSE)
-  cat("Results")
+  message("Results")
   print.RapResults(x@results, header = FALSE)
   invisible()
 }

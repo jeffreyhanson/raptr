@@ -15,9 +15,7 @@ package contains tools to generate plans for protected areas
 optimization problem, which is then solved to yield prioritizations. To
 solve the optimization problems in a feasible amount of time, this package
 uses the commercial 'Gurobi' software package (obtained from
-<http://www.gurobi.com/>). Additionally, the 'rgurobi' package can also be
-installed to provide extra functionality (obtained from
-<http://github.com/jeffreyhanson/rgurobi>). For more information on using
+<http://www.gurobi.com/>). For more information on using
 this package, see Hanson et al. (2017) <doi:10.1111/2041-210X.12862>.
 }
 \details{

@@ -19,7 +19,7 @@ test_that("Gurobi solver (unreliable)", {
                                   x = model$Ar[[3]])
   # solve the model
   result <- gurobi::gurobi(model, append(as.list(
-    GurobiOpts(MIPGap = 0.99, Presolve = 1L)),
+    GurobiOpts(MIPGap = 0, Presolve = 1L)),
     list("LogFile" = tempfile(fileext = ".log"))))
   if (file.exists("gurobi.log")) unlink("gurobi.log")
   # check solution variables
@@ -44,7 +44,7 @@ test_that("Gurobi solver (reliable)", {
                                   x = model$Ar[[3]])
   # solve the model
   result <- gurobi::gurobi(model, append(as.list(
-    GurobiOpts(MIPGap = 0.99, Presolve = 1L)),
+    GurobiOpts(MIPGap = 0, Presolve = 1L)),
     list("LogFile" = tempfile(fileext = ".log"))))
   if (file.exists("gurobi.log")) unlink("gurobi.log")
   # checks
@@ -94,12 +94,10 @@ test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=1 - ",
   data(sim_ru)
   sim_ru <- pu.subset(sim_ru, 1:10)
   sim_ru <- dp.subset(sim_ru, species = 1:3, space = 1, points = 1:5)
-  sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, -10, -10, -10)
+  sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, 0.1, 0.1, 0.1)
   # solve it
-  expect_warning({
-    sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0.99, Presolve = 2L),
-                           verbose = TRUE)
-  })
+  sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0, Presolve = 2L),
+                         verbose = TRUE)
   # run checks
   expect_equal(nrow(summary(sim_rs)), 1L)
   runUnreliableChecks(sim_rs)
@@ -118,44 +116,42 @@ test_that(paste0("solve.RapUnsolved (reliable - NumberSolutions=1 - ",
   sim_ru@opts <- RapReliableOpts(failure.multiplier = 10)
   sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, -10000, -10000, -10000)
   # solve it
-  sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0.99, Presolve = 2L),
-                         verbose = TRUE)
+  expect_warning({
+    sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0, Presolve = 2L),
+                           verbose = TRUE)
+  })
   # run checks
   expect_equal(nrow(summary(sim_rs)), 1L)
   runReliableChecks(sim_rs)
 })
 
 test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=1 - ",
-                 "MultipleSolutionsMethod=solution.pool)"), {
+                 "MultipleSolutionsMethod=solution.pool.2)"), {
   # skip if gurobi not installed
   if (!is.GurobiInstalled(FALSE))
     skip("Gurobi not installed on system")
-  skip_if_not_installed("rgurobi")
   # load RapUnsolved object
   set.seed(500)
   data(sim_ru)
   sim_ru <- pu.subset(sim_ru, 1:10)
   sim_ru <- dp.subset(sim_ru, species = 1:3, space = 1, points = 1:5)
-  sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, -10, -10, -10)
+  sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, 0.1, 0.1, 0.1)
   # solve it
-  expect_warning({
-    sim_rs <- raptr::solve(sim_ru,
-                           GurobiOpts(MIPGap = 0.99, Presolve = 2L,
-                                      MultipleSolutionsMethod =
-                                        "solution.pool"),
-                           verbose = TRUE)
-  })
+  sim_rs <- raptr::solve(sim_ru,
+                         GurobiOpts(MIPGap = 0, Presolve = 2L,
+                                    MultipleSolutionsMethod =
+                                      "solution.pool.2"),
+                         verbose = TRUE)
   # run checks
   expect_equal(nrow(summary(sim_rs)), 1L)
   runUnreliableChecks(sim_rs)
 })
 
 test_that(paste0("solve.RapUnsolved (reliable - NumberSolutions=1 - ",
-                 "MultipleSolutionsMethod=solution.pool)"), {
+                 "MultipleSolutionsMethod=solution.pool.1)"), {
   # skip if gurobi not installed
   if (!is.GurobiInstalled(FALSE))
     skip("Gurobi not installed on system")
-  skip_if_not_installed("rgurobi")
   # load RapUnsolved object
   set.seed(500)
   data(sim_ru)
@@ -166,9 +162,9 @@ test_that(paste0("solve.RapUnsolved (reliable - NumberSolutions=1 - ",
   # solve it
   expect_warning({
     sim_rs <- raptr::solve(sim_ru,
-                           GurobiOpts(MIPGap = 0.99, Presolve = 2L,
+                           GurobiOpts(MIPGap = 0, Presolve = 2L,
                                       MultipleSolutionsMethod =
-                                        "solution.pool"),
+                                        "solution.pool.1"),
                            verbose = TRUE)
   })
   # run checks
@@ -186,7 +182,7 @@ test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=1 -",
   data(sim_ru)
   sim_ru <- pu.subset(sim_ru, 1:10)
   sim_ru <- dp.subset(sim_ru, species = 1:3, space = 1, points = 1:30)
-  sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, -1000000, -1000000, -1000000)
+  sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, 0.1, 0.1, 0.1)
   sim_ru@opts <- RapUnreliableOpts()
   sim_ru@data@pu.species.probabilities <-
     sim_ru@data@pu.species.probabilities[sample(
@@ -215,9 +211,7 @@ test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=1 -",
       )
   })
   # solve it
-  expect_warning({
-    sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0.99, Presolve = 2L))
-  })
+  sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0, Presolve = 2L))
   # run checks
   expect_equal(nrow(summary(sim_rs)), 1L)
   runUnreliableChecks(sim_rs)
@@ -260,8 +254,10 @@ test_that(paste0("solve.RapUnsolved (reliable - NumberSolutions=1 - sparse ",
   sim_ru@opts <- RapReliableOpts()
   sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, -1000000, -1000000, -1000000)
   # solve it
-  sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0.15, Presolve = 2L),
-                         verbose = TRUE)
+  expect_warning({
+    sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0.5, Presolve = 2L),
+                           verbose = TRUE)
+  })
   # run checks
   expect_equal(nrow(summary(sim_rs)), 1L)
   runReliableChecks(sim_rs)
@@ -278,13 +274,11 @@ test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=3 - ",
   sim_ru <- pu.subset(sim_ru, 1:20)
   sim_ru <- dp.subset(sim_ru, species = 1:3, space = 1, points = 1:5)
   sim_ru@opts <- RapUnreliableOpts()
-  sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, -10000, -10000, -10000)
+  sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, 0.1, 0.1, 0.1)
   # solve it
-  expect_warning({
-    sim_rs <- raptr::solve(sim_ru,
-                           GurobiOpts(MIPGap = 0.99, Presolve = 2L,
-                                      NumberSolutions = 3L))
-  })
+  sim_rs <- raptr::solve(sim_ru,
+                         GurobiOpts(MIPGap = 0, Presolve = 2L,
+                                    NumberSolutions = 3L))
   # run checks
   expect_equal(nrow(summary(sim_rs)), 3L)
   runUnreliableChecks(sim_rs)
@@ -303,34 +297,33 @@ test_that(paste0("solve.RapUnsolved (reliable - NumberSolutions=3 - ",
   sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, -10000, -10000, -10000)
   sim_ru@opts <- RapReliableOpts()
   # solve it
-  sim_rs <- raptr::solve(sim_ru,
-                         GurobiOpts(MIPGap = 0.99, Presolve = 2L,
-                                    NumberSolutions = 3L))
+  expect_warning({
+    sim_rs <- raptr::solve(sim_ru,
+                           GurobiOpts(MIPGap = 0, Presolve = 2L,
+                                      NumberSolutions = 3L))
+  })
   # check number of selections is 1
   expect_equal(nrow(summary(sim_rs)), 3L)
   runReliableChecks(sim_rs)
 })
 
 test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=2 - ",
-                 "MultipleSolutionsMethod=solution.pool)"), {
+                 "MultipleSolutionsMethod=solution.pool.2)"), {
   # skip if gurobi not installed
   if (!is.GurobiInstalled(FALSE)) skip("Gurobi not installed on system")
-  skip_if_not_installed("rgurobi")
   # load RapUnsolved object
   set.seed(500)
   data(sim_ru)
   sim_ru <- pu.subset(sim_ru, 1:20)
   sim_ru <- dp.subset(sim_ru, species = 1:3, space = 1, points = 1:5)
   sim_ru@opts <- RapUnreliableOpts()
-  sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, -10000, -10000, -10000)
+  sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, 0.1, 0.1, 0.1)
   # solve it
-  expect_warning({
-    sim_rs <- raptr::solve(sim_ru,
-                           GurobiOpts(MIPGap = 0.99, Presolve = 2L,
-                                      NumberSolutions = 2L,
-                                      MultipleSolutionsMethod =
-                                        "solution.pool"))
-  })
+  sim_rs <- raptr::solve(sim_ru,
+                         GurobiOpts(MIPGap = 0, Presolve = 2L,
+                                    NumberSolutions = 2L,
+                                    MultipleSolutionsMethod =
+                                      "solution.pool.2"))
   # run checks
   expect_equal(nrow(summary(sim_rs)), 2L)
   runUnreliableChecks(sim_rs)
@@ -345,16 +338,14 @@ test_that("solve.RapUnsolved (unreliable - STATUS test)", {
   data(sim_ru)
   sim_ru <- pu.subset(sim_ru, 1:10)
   sim_ru <- dp.subset(sim_ru, species = 1:3, space = 1, points = 1:30)
-  sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, -10000, -10000, -10000)
+  sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, 0.1, 0.1, 0.1)
   sim_ru@opts <- RapUnreliableOpts()
   # lock in and lock out planning units
   sim_ru@data@pu$status[1] <- 0L
   sim_ru@data@pu$status[2] <- 2L
   sim_ru@data@pu$status[3] <- 3L
   # solve it
-  expect_warning({
-    sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0.99, Presolve = 2L))
-  })
+  sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0, Presolve = 2L))
   # run checks
   expect_equal(nrow(summary(sim_rs)), 1L)
   expect_identical(selections(sim_rs)[2], 1L)
@@ -379,7 +370,7 @@ test_that("solve.RapUnsolved (reliable - STATUS test)", {
   sim_ru@data@pu$status[3] <- 3L
   # solve it
   expect_warning({
-    sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0.99, Presolve = 2L))
+    sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0, Presolve = 2L))
   })
   # run checks
   expect_equal(nrow(summary(sim_rs)), 1L)
@@ -398,11 +389,9 @@ test_that("solve.RapUnsolved (unreliable - BLM test)", {
   sim_ru <- pu.subset(sim_ru, 1:10)
   sim_ru@opts <- RapUnreliableOpts(BLM = 100)
   sim_ru <- dp.subset(sim_ru, species = 1:3, space = 1, points = 1:30)
-  sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, -10000, -10000, -10000)
+  sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, 0.1, 0.1, 0.1)
   # solve it
-  expect_warning({
-    sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0.99, Presolve = 2L))
-  })
+  sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0, Presolve = 2L))
   # run checks
   runUnreliableChecks(sim_rs)
 })
@@ -420,7 +409,7 @@ test_that("solve.RapUnsolved (reliable - BLM test)", {
   sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, -10000, -10000, -10000)
   # solve it
   expect_warning({
-    sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0.99, Presolve = 2L))
+    sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0, Presolve = 2L))
   })
   # run checks
   runReliableChecks(sim_rs)

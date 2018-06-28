@@ -1,3 +1,4 @@
+url: https://jeffrey-hanson.com/raptr
 
 authors:
   Jeffrey O Hanson:
@@ -8,7 +9,7 @@ authors:
     href: http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html
   Richard A Fuller:
     href: https://www.fullerlab.org/drrichardfuller/
-  
+
 template:
   params:
-    bootswatch: cerulean
+    bootswatch: sandstone

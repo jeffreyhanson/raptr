@@ -107,6 +107,8 @@ test_that("demand.points.density2d", {
 })
 
 test_that("demand.points.hypervolume", {
+  # skip on cran due to issues in hypervolume's progress bars
+  skip_on_cran()
   # make points
   pts <- matrix(rnorm(999), ncol = 3)
   # make demand points

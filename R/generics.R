@@ -25,7 +25,7 @@ NULL
 #'
 #' @param field \code{integer} index or \code{character} name of column with
 #'   planning unit ids. Valid only when \code{x} is a
-#'   \code{\link[sp]{SpatialPolygonsDataFrame}} object. Default behaviour is to
+#'   \code{\link[sp]{SpatialPolygonsDataFrame}} object. Default behavior is to
 #'   treat each polygon as a different planning unit.
 #'
 #' @param ... not used.
@@ -495,12 +495,22 @@ NULL
 #'
 #' @param NumberSolutions \code{integer} number of solutions to generate.
 #'
-#' @param MultipleSolutionsMethod \code{character} name of method to obtain
-#'   multiple solutions (used when argument to \code{NumberSolutions} greater
-#'   than one). Available options are \code{"benders.cuts"} and
-#'   \code{"solution.pool"}s. Defaults to 'benders.cuts'. Note that
-#'   the \code{rgurobi} package must be to use the \code{"solution.pool"}
-#'   method.
+#' @param MultipleSolutionsMethod \code{integer} name of method to obtain
+#'   multiple solutions (used when \code{NumberSolutions} is greater than one).
+#'   Available options are \code{"benders.cuts"}, \code{"solution.pool.0"},
+#'   \code{"solution.pool.1"}, and \code{"solution.pool.2"}. The
+#'   \code{"benders.cuts"} method produces a set of distinct solutions that
+#'   are all within the optimality gap. The \code{"solution.pool.0"}
+#'   method returns all solutions identified whilst trying to find
+#'   a solution that is within the specified optimality gap. The
+#'   \code{"solution.pool.1"} method finds one solution within the optimality
+#'   gap and a number of additional solutions that are of any level of quality
+#'   (such that the total number of solutions is equal to
+#'   \code{number_solutions}). The \code{"solution.pool.2"} finds a
+#'   specified number of solutions that are nearest to optimality. The
+#'   search pool methods correspond to the parameters used by the Gurobi
+#'   software suite (see \url{http://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode}).
+#'   Defaults to \code{"benders.cuts"}.
 #'
 #' @param BLM \code{numeric} boundary length modifier.
 #'
@@ -510,7 +520,7 @@ NULL
 #' @param max.r.level \code{numeric} maximum R failure level for approximation.
 #'
 #' @param formulation \code{character} indicating new problem formulation to
-#'   use. This can be either 'unreliable' or 'reliable'. The default is
+#'   use. This can be either "unreliable" or "reliable". The default is
 #'   \code{NULL} so that formulation in \code{object} is used.
 #'
 #' @param species \code{integer} or \code{character} denoting species for which

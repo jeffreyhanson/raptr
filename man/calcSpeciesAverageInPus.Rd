@@ -36,7 +36,7 @@ libraries? Defaults to \code{FALSE}.}
 
 \item{field}{\code{integer} index or \code{character} name of column with
 planning unit ids. Valid only when \code{x} is a
-\code{\link[sp]{SpatialPolygonsDataFrame}} object. Default behaviour is to
+\code{\link[sp]{SpatialPolygonsDataFrame}} object. Default behavior is to
 treat each polygon as a different planning unit.}
 }
 \value{

@@ -11,7 +11,8 @@ NULL
 #' @slot MIPGap \code{numeric} MIP gap specifying minimum solution quality.
 #'   Defaults to 0.1.
 #'
-#' @slot Method \code{integer} Algorithm to use for solving model. Defaults to #'   0L.
+#' @slot Method \code{integer} Algorithm to use for solving model. Defaults to
+#'   0L.
 #'
 #' @slot Presolve \code{integer} code for level of computation in presolve.
 #'  Defaults to 2.
@@ -22,11 +23,22 @@ NULL
 #' @slot NumberSolutions \code{integer} number of solutions to generate.
 #'   Defaults to 1L.
 #'
-#' @slot MultipleSolutionsMethod \code{character} name of method to obtain
+#' @slot MultipleSolutionsMethod \code{integer} name of method to obtain
 #'   multiple solutions (used when \code{NumberSolutions} is greater than one).
-#'   Available options are \code{"benders.cuts"} and \code{"solution.pool"}.
-#'   Defaults to \code{"benders.cuts"}. Note that the \code{rgurobi} package
-#'   must be to use the \code{"solution.pool"} method.
+#'   Available options are \code{"benders.cuts"}, \code{"solution.pool.0"},
+#'   \code{"solution.pool.1"}, and \code{"solution.pool.2"}. The
+#'   \code{"benders.cuts"} method produces a set of distinct solutions that
+#'   are all within the optimality gap. The \code{"solution.pool.0"}
+#'   method returns all solutions identified whilst trying to find
+#'   a solution that is within the specified optimality gap. The
+#'   \code{"solution.pool.1"} method finds one solution within the optimality
+#'   gap and a number of additional solutions that are of any level of quality
+#'   (such that the total number of solutions is equal to
+#'   \code{number_solutions}). The \code{"solution.pool.2"} finds a
+#'   specified number of solutions that are nearest to optimality. The
+#'   search pool methods correspond to the parameters used by the Gurobi
+#'   software suite (see \url{http://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode}).
+#'   Defaults to \code{"benders.cuts"}.
 #'
 #' @seealso \code{\link{GurobiOpts}}.
 #'
@@ -58,7 +70,9 @@ methods::setClass("GurobiOpts",
     # MultipleSolutionsMethod
     assertthat::assert_that(
       assertthat::is.string(object@MultipleSolutionsMethod),
-      object@MultipleSolutionsMethod %in% c("benders.cuts", "solution.pool"))
+      object@MultipleSolutionsMethod %in%
+      c("benders.cuts", "solution.pool.0", "solution.pool.1",
+        "solution.pool.2"))
     # Presolve
     assertthat::assert_that(assertthat::is.scalar(object@Presolve),
                             is.finite(object@Presolve),
@@ -71,7 +85,7 @@ methods::setClass("GurobiOpts",
                             object@Method <= 4, object@Method >= -1)
     # MIPGap
     assertthat::assert_that(assertthat::is.scalar(object@MIPGap),
-                            is.finite(object@MIPGap), object@MIPGap > 0)
+                            is.finite(object@MIPGap), object@MIPGap >= 0)
     return(TRUE)
   }
 )
@@ -98,11 +112,22 @@ methods::setClass("GurobiOpts",
 #' @param NumberSolutions \code{integer} number of solutions to generate.
 #'   Defaults to 1L.
 #'
-#' @param MultipleSolutionsMethod \code{character} name of method to obtain
-#'   multiple solutions (when \code{NumberSolutions} is greater than one).
-#'   Available options are \code{"benders.cuts"} and \code{"solution.pool"}.
-#'   Defaults to \code{"benders.cuts"}. Note that the \code{rgurobi} package
-#'   must be to use the \code{"solution.pool"} method.
+#' @param MultipleSolutionsMethod \code{integer} name of method to obtain
+#'   multiple solutions (used when \code{NumberSolutions} is greater than one).
+#'   Available options are \code{"benders.cuts"}, \code{"solution.pool.0"},
+#'   \code{"solution.pool.1"}, and \code{"solution.pool.2"}. The
+#'   \code{"benders.cuts"} method produces a set of distinct solutions that
+#'   are all within the optimality gap. The \code{"solution.pool.0"}
+#'   method returns all solutions identified whilst trying to find
+#'   a solution that is within the specified optimality gap. The
+#'   \code{"solution.pool.1"} method finds one solution within the optimality
+#'   gap and a number of additional solutions that are of any level of quality
+#'   (such that the total number of solutions is equal to
+#'   \code{number_solutions}). The \code{"solution.pool.2"} finds a
+#'   specified number of solutions that are nearest to optimality. The
+#'   search pool methods correspond to the parameters used by the Gurobi
+#'   software suite (see \url{http://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode}).
+#'   Defaults to \code{"benders.cuts"}.
 #'
 #' @return \code{GurobiOpts} object
 #'
@@ -117,7 +142,9 @@ methods::setClass("GurobiOpts",
 GurobiOpts <- function(Threads = 1L, MIPGap = 0.1, Method = 0L, Presolve = 2L,
                        TimeLimit = NA_integer_, NumberSolutions = 1L,
                        MultipleSolutionsMethod = c("benders.cuts",
-                                                   "solution.pool")[1]) {
+                                                   "solution.pool.0",
+                                                   "solution.pool.1",
+                                                   "solution.pool.2")[1]) {
   go <- methods::new("GurobiOpts", Threads = Threads, MIPGap = MIPGap,
                      Method = Method, Presolve = Presolve,
                      TimeLimit = TimeLimit, NumberSolutions = NumberSolutions,
@@ -169,7 +196,6 @@ as.list.GurobiOpts <- function(x, ...) {
     y$TimeLimit <- x@TimeLimit
   return(y)
 }
-
 
 #' @rdname update
 #'

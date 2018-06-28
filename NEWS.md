@@ -1,3 +1,18 @@
+# raptr 0.1.2 (released)
+
+- fix compatibility issues with demand point examples and _hypervolume_ R 
+  package (version 2.0.10).
+- update package citation.
+- removed _rgurobi_ R package dependency because the _gurobi_ R package
+  (version 8.0.0+) provides the functionality to access solutions from the
+  solution pool.
+- multiple solutions can now be generated using the three different search pool
+  methods provided Gurobi.
+- permit a zero MIPGAP in argument to `GurobiOpts`.
+- the `print.RapResults` function now prints information in a prettier manner.
+- the `raptr::solve` function now throws a warning if some species are poorly
+  represented in the solution.
+
 # raptr 0.1.1 (released)
 
 - vignette size has been reduced.

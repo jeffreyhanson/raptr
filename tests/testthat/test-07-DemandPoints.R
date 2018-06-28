@@ -45,6 +45,8 @@ test_that("demand.points (ks, attribute space)", {
 })
 
 test_that("demand.points (hypervolume, geographic space)", {
+  # skip on cran due to issues in hypervolume's progress bars
+  skip_on_cran()
   # load data
   data(cs_spp)
   # generate points
@@ -52,7 +54,8 @@ test_that("demand.points (hypervolume, geographic space)", {
                                                  prob = TRUE))@coords
   # create demand points
   dp <- make.DemandPoints(points = pts, n = 100L,
-                          kernel.method = "hypervolume")
+                          kernel.method = "hypervolume",
+                          verbose = FALSE)
   # check objects
   expect_is(dp, "DemandPoints")
   expect_equal(ncol(dp@coords), 2)
@@ -63,6 +66,8 @@ test_that("demand.points (hypervolume, geographic space)", {
 })
 
 test_that("demand.points (hypervolume, attribute space)", {
+  # skip on cran due to issues in hypervolume's progress bars
+  skip_on_cran()
   # load data
   data(cs_spp, cs_space)
   # generate points
@@ -70,7 +75,8 @@ test_that("demand.points (hypervolume, attribute space)", {
                            prob = TRUE))@coords
   # create demand points
   dp <- make.DemandPoints(points = pts, n = 100L,
-                          kernel.method = "hypervolume")
+                          kernel.method = "hypervolume",
+                          verbose = FALSE)
   # check objects
   expect_is(dp, "DemandPoints")
   expect_equal(ncol(dp@coords), 2)

@@ -21,8 +21,11 @@ This function creates a \code{\link{RapUnsolved}} object using a
 \code{\link{RapUnreliableOpts}} object, and a \code{\link{RapData}} object.
 }
 \examples{
-# load data
 \donttest{
+# set random number generator seed
+set.seed(500)
+
+# load data
 data(cs_pus, cs_spp)
 
 # create inputs for RapUnsolved
@@ -32,9 +35,10 @@ rd <- make.RapData(cs_pus[seq_len(10), ], cs_spp, NULL,
 
 # create RapUnsolved object
 ru <- RapUnsolved(ro, rd)
+
+# print object
 print(ru)
 }
-
 }
 \seealso{
 \code{\link{RapReliableOpts-class}},

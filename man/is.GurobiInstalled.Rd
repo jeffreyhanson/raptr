@@ -2,7 +2,7 @@
 % Please edit documentation in R/misc.R
 \name{is.GurobiInstalled}
 \alias{is.GurobiInstalled}
-\title{Test if Gurobi is installed on computer}
+\title{Test if Gurobi is installed}
 \usage{
 is.GurobiInstalled(verbose = TRUE)
 }

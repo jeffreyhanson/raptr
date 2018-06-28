@@ -115,6 +115,9 @@ DemandPoints <- function(coords, weights) {
 #'   \code{\link[adehabitatHR]{mcp}}.
 #'
 #' @examples
+#' # set random number generator seed
+#' set.seed(500)
+#'
 #' # load data
 #' data(cs_spp, cs_space)
 #'
@@ -123,13 +126,21 @@ DemandPoints <- function(coords, weights) {
 #' env.points <- raster::extract(cs_space, species.points)
 #'
 #' # generate demand points for a 1d space using ks
-#' dps1 <- make.DemandPoints(points = env.points[,1], kernel.method = "ks")
+#' dps1 <- make.DemandPoints(points = env.points[, 1], kernel.method = "ks")
 #'
+#' # print object
+#' print(dps1)
+#'
+#' \donttest{
 #' # generate demand points for a 2d space using hypervolume
 #' dps2 <- make.DemandPoints(points = env.points,
 #'                           kernel.method = "hypervolume",
-#'                           samples.per.point = 10)
+#'                           samples.per.point = 50,
+#'                           verbose = FALSE)
 #'
+#' # print object
+#' print(dps2)
+#' }
 #' @export
 make.DemandPoints <- function(points, n = 100L, quantile = 0.5,
                               kernel.method = c("ks", "hypervolume")[1], ...) {

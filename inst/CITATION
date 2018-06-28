@@ -1,21 +1,22 @@
 citHeader("To cite the raptr package in publications, use:")
 
 citEntry(
-  entry = "Article", 
+  entry = "Article",
   author = personList(person(c("Jeffrey", "O"), "Hanson"),
                       person(c("Jonathan", "R"), "Rhodes"),
                       person(c("Hugh", "P"), "Possingham"),
                       person(c("Richard", "A"), "Fuller")),
-  title = "raptr: Representative and adequate prioritization toolkit in R", 
-  journal = "Methods in Ecology and Evolution", 
-  year = 2017, 
-  volume = "In press", 
+  title = "raptr: Representative and adequate prioritization toolkit in R",
+  journal = "Methods in Ecology and Evolution",
+  year = 2017,
+  volume = "9",
+  pages = "320--330",
   url = "https://dx.doi.org/10.1111/2041-210X.12862", 
   textVersion = paste(
      "Hanson JO, Rhodes JR, Possingham HP & Fuller RA",
      "raptr: Representative and Adequate Prioritization",
      "Toolkit in R. Methods in Ecology & Evolution,",
-     "In press. DOI: 10.1111/2041-210X.12862"
+     "9: 320--330. DOI: 10.1111/2041-210X.12862"
   )
 )
   

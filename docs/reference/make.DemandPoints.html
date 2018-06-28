@@ -11,18 +11,32 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="Generate demand points for RAP — make.DemandPoints" />
+
+<meta property="og:description" content="This function generates demand points to characterize a distribution of
+points." />
+<meta name="twitter:card" content="summary" />
+
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,18 +60,28 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">raptr</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">raptr</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="../articles/raptr.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
-</li>
-<li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -69,6 +93,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -76,21 +101,25 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Generate demand points for RAP</h1>
+    <small class="dont-index">Source: <a href='https://github.com/jeffreyhanson/raptr/blob/master/R/DemandPoints.R'><code>R/DemandPoints.R</code></a></small>
+    <div class="hidden name"><code>make.DemandPoints.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function generates demand points to characterize a distribution of
 points.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>make.DemandPoints</span>(<span class='no'>points</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100L</span>, <span class='kw'>quantile</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
   <span class='kw'>kernel.method</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ks"</span>, <span class='st'>"hypervolume"</span>)[<span class='fl'>1</span>], <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -141,33 +170,279 @@ generate demand points. Defaults to <code>'ks'</code>.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/hypervolume/topics/hypervolume'>hypervolume</a></code>, <code><a href='http://www.rdocumentation.org/packages/ks/topics/kde'>kde</a></code>,
-  <code><a href='http://www.rdocumentation.org/packages/adehabitatHR/topics/mcp'>mcp</a></code>.</p>
+    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/hypervolume/topics/hypervolume'>hypervolume</a></code>, <code><a href='http://www.rdocumentation.org/packages/ks/topics/kde'>kde</a></code>,
+  <code><a href='http://www.rdocumentation.org/packages/adehabitatHR/topics/mcp'>mcp</a></code>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># load data</span>
+    <pre class="examples"><div class='input'><span class='co'># set random number generator seed</span>
+<span class='fu'>set.seed</span>(<span class='fl'>500</span>)
+
+<span class='co'># load data</span>
 <span class='fu'>data</span>(<span class='no'>cs_spp</span>, <span class='no'>cs_space</span>)
 
 <span class='co'># generate species points</span>
 <span class='no'>species.points</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='randomPoints.html'>randomPoints</a></span>(<span class='no'>cs_spp</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>env.points</span> <span class='kw'>&lt;-</span> <span class='kw'>raster</span><span class='kw'>::</span><span class='fu'>extract</span>(<span class='no'>cs_space</span>, <span class='no'>species.points</span>)
+<span class='no'>env.points</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/raster/topics/extract'>extract</a></span>(<span class='no'>cs_space</span>, <span class='no'>species.points</span>)
 
 <span class='co'># generate demand points for a 1d space using ks</span>
-<span class='no'>dps1</span> <span class='kw'>&lt;-</span> <span class='fu'>make.DemandPoints</span>(<span class='kw'>points</span> <span class='kw'>=</span> <span class='no'>env.points</span>[,<span class='fl'>1</span>], <span class='kw'>kernel.method</span> <span class='kw'>=</span> <span class='st'>"ks"</span>)
+<span class='no'>dps1</span> <span class='kw'>&lt;-</span> <span class='fu'>make.DemandPoints</span>(<span class='kw'>points</span> <span class='kw'>=</span> <span class='no'>env.points</span>[, <span class='fl'>1</span>], <span class='kw'>kernel.method</span> <span class='kw'>=</span> <span class='st'>"ks"</span>)
 
-<span class='co'># generate demand points for a 2d space using hypervolume</span>
+<span class='co'># print object</span>
+<span class='fu'><a href='print.html'>print</a></span>(<span class='no'>dps1</span>)</div><div class='output co'>#&gt; An object of class "DemandPoints"
+#&gt; Slot "coords":
+#&gt;                 [,1]
+#&gt;   [1,]  0.0808103965
+#&gt;   [2,] -0.0046110220
+#&gt;   [3,]  0.0668303872
+#&gt;   [4,] -0.0041704372
+#&gt;   [5,]  0.0967735148
+#&gt;   [6,]  0.0861980940
+#&gt;   [7,]  0.0132235371
+#&gt;   [8,]  0.0310942531
+#&gt;   [9,]  0.0825810501
+#&gt;  [10,] -0.0060209785
+#&gt;  [11,]  0.0564411165
+#&gt;  [12,]  0.0481650725
+#&gt;  [13,]  0.0344428694
+#&gt;  [14,]  0.0926038712
+#&gt;  [15,] -0.0147107140
+#&gt;  [16,]  0.0756575648
+#&gt;  [17,]  0.0369092063
+#&gt;  [18,]  0.0799855539
+#&gt;  [19,] -0.0117221542
+#&gt;  [20,]  0.0577459375
+#&gt;  [21,]  0.0920794479
+#&gt;  [22,]  0.0952088934
+#&gt;  [23,] -0.0037990803
+#&gt;  [24,]  0.0305098018
+#&gt;  [25,]  0.0693633653
+#&gt;  [26,]  0.0298491904
+#&gt;  [27,] -0.0151671063
+#&gt;  [28,]  0.0661814398
+#&gt;  [29,]  0.0964706920
+#&gt;  [30,]  0.0960502611
+#&gt;  [31,]  0.0230169779
+#&gt;  [32,] -0.0062315867
+#&gt;  [33,]  0.0466713173
+#&gt;  [34,]  0.0430020562
+#&gt;  [35,] -0.0034828316
+#&gt;  [36,]  0.0139532329
+#&gt;  [37,]  0.0610430386
+#&gt;  [38,]  0.0638028609
+#&gt;  [39,]  0.0141869346
+#&gt;  [40,]  0.0614487429
+#&gt;  [41,]  0.0174622277
+#&gt;  [42,]  0.0569979267
+#&gt;  [43,]  0.0758035877
+#&gt;  [44,]  0.0911338269
+#&gt;  [45,]  0.0613651952
+#&gt;  [46,]  0.0712111251
+#&gt;  [47,] -0.0153747193
+#&gt;  [48,]  0.0053567867
+#&gt;  [49,]  0.0001290641
+#&gt;  [50,]  0.0748831151
+#&gt;  [51,]  0.0913816999
+#&gt;  [52,]  0.0696987094
+#&gt;  [53,]  0.0081708489
+#&gt;  [54,] -0.0165420546
+#&gt;  [55,]  0.0685402103
+#&gt;  [56,]  0.0458259356
+#&gt;  [57,]  0.0473664530
+#&gt;  [58,]  0.0598048637
+#&gt;  [59,]  0.0029895715
+#&gt;  [60,]  0.0134756199
+#&gt;  [61,]  0.0898856664
+#&gt;  [62,]  0.0962462809
+#&gt;  [63,]  0.0379707443
+#&gt;  [64,]  0.0634802594
+#&gt;  [65,]  0.0808849064
+#&gt;  [66,]  0.0236644932
+#&gt;  [67,]  0.0044193706
+#&gt;  [68,]  0.0343277188
+#&gt;  [69,]  0.0193473450
+#&gt;  [70,]  0.0633850620
+#&gt;  [71,] -0.0002382388
+#&gt;  [72,]  0.0894711454
+#&gt;  [73,]  0.0148280822
+#&gt;  [74,]  0.0381031305
+#&gt;  [75,] -0.0069926641
+#&gt;  [76,]  0.0202786370
+#&gt;  [77,]  0.0664897503
+#&gt;  [78,] -0.0106829767
+#&gt;  [79,]  0.0283130895
+#&gt;  [80,]  0.0461905186
+#&gt;  [81,]  0.0069314659
+#&gt;  [82,]  0.0376396247
+#&gt;  [83,]  0.0641600909
+#&gt;  [84,]  0.0807674019
+#&gt;  [85,]  0.0180828540
+#&gt;  [86,] -0.0002938120
+#&gt;  [87,]  0.0006463103
+#&gt;  [88,]  0.0537719354
+#&gt;  [89,]  0.0851661386
+#&gt;  [90,]  0.0983258658
+#&gt;  [91,]  0.0782045448
+#&gt;  [92,]  0.0684126645
+#&gt;  [93,]  0.0848222982
+#&gt;  [94,] -0.0010883922
+#&gt;  [95,] -0.0058721566
+#&gt;  [96,]  0.0018729637
+#&gt;  [97,]  0.0066104837
+#&gt;  [98,]  0.0284932295
+#&gt;  [99,] -0.0145268795
+#&gt; [100,]  0.0098583588
+#&gt; 
+#&gt; Slot "weights":
+#&gt;   [1] 0.3010606 0.3850167 0.3296584 0.3854821 0.2703865 0.2904376 0.3967625
+#&gt;   [8] 0.3896309 0.2975354 0.3834467 0.3506640 0.3660383 0.3861334 0.2781870
+#&gt;  [15] 0.3723192 0.3114736 0.3831519 0.3027107 0.3764002 0.3480990 0.2791764
+#&gt;  [22] 0.2733036 0.3858744 0.3901590 0.3244229 0.3907559 0.3716687 0.3309954
+#&gt;  [29] 0.2709490 0.2717331 0.3953379 0.3832109 0.3686019 0.3745554 0.3862085
+#&gt;  [36] 0.3968460 0.3414976 0.3358828 0.3968727 0.3406761 0.3968743 0.3495757
+#&gt;  [43] 0.3111759 0.2809656 0.3408453 0.3206091 0.3713728 0.3936252 0.3896931
+#&gt;  [50] 0.3130564 0.2804945 0.3237301 0.3951657 0.3696947 0.3261238 0.3700298
+#&gt;  [57] 0.3674278 0.3439926 0.3920070 0.3967913 0.2833381 0.2713672 0.3817864
+#&gt;  [64] 0.3365415 0.3009117 0.3950104 0.3930144 0.3862627 0.3965723 0.3367357
+#&gt;  [71] 0.3893554 0.2841316 0.3969455 0.3816087 0.3823203 0.3963328 0.3303602
+#&gt;  [78] 0.3777600 0.3920285 0.3694140 0.3945385 0.3822290 0.3351498 0.3011465
+#&gt;  [85] 0.3968180 0.3893043 0.3901301 0.3558121 0.2924465 0.2675060 0.3062967
+#&gt;  [92] 0.3263876 0.2931186 0.3885737 0.3836134 0.3911561 0.3943711 0.3918831
+#&gt;  [99] 0.3725805 0.3958686
+#&gt; </div><div class='input'>
+</div><div class='input'><span class='co'># generate demand points for a 2d space using hypervolume</span>
 <span class='no'>dps2</span> <span class='kw'>&lt;-</span> <span class='fu'>make.DemandPoints</span>(<span class='kw'>points</span> <span class='kw'>=</span> <span class='no'>env.points</span>,
                           <span class='kw'>kernel.method</span> <span class='kw'>=</span> <span class='st'>"hypervolume"</span>,
-                          <span class='kw'>samples.per.point</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; 
-#&gt; Building tree... 
-#&gt; done.
-#&gt; Ball query... 
+                          <span class='kw'>samples.per.point</span> <span class='kw'>=</span> <span class='fl'>50</span>,
+                          <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'># print object</span>
+<span class='fu'><a href='print.html'>print</a></span>(<span class='no'>dps2</span>)</div><div class='output co'>#&gt; An object of class "DemandPoints"
+#&gt; Slot "coords":
+#&gt;                 dc1          dc2
+#&gt;   [1,]  0.103205458 -0.270759848
+#&gt;   [2,] -0.085328496 -0.009744130
+#&gt;   [3,]  0.041406147 -0.296846256
+#&gt;   [4,]  0.079482103 -0.229604872
+#&gt;   [5,]  0.046924831 -0.170428211
+#&gt;   [6,] -0.007922185 -0.198939745
+#&gt;   [7,] -0.046816510 -0.166434118
+#&gt;   [8,]  0.059627949 -0.128834556
+#&gt;   [9,] -0.012363344 -0.106882963
+#&gt;  [10,] -0.047634302 -0.149027311
+#&gt;  [11,] -0.036732667 -0.147474150
+#&gt;  [12,]  0.018702909 -0.225276191
+#&gt;  [13,] -0.090535026 -0.050881603
+#&gt;  [14,]  0.045229929 -0.301520476
+#&gt;  [15,] -0.091211087 -0.068792879
+#&gt;  [16,]  0.028014395 -0.101737827
+#&gt;  [17,]  0.031965494 -0.296232937
+#&gt;  [18,] -0.010051068 -0.161969570
+#&gt;  [19,] -0.091126689 -0.043993782
+#&gt;  [20,]  0.058414496 -0.213916734
+#&gt;  [21,]  0.039587248 -0.154114078
+#&gt;  [22,]  0.086394162 -0.264011804
+#&gt;  [23,]  0.035062273 -0.212467723
+#&gt;  [24,]  0.033169515 -0.168449979
+#&gt;  [25,]  0.062853461 -0.156789258
+#&gt;  [26,]  0.053002849 -0.322839432
+#&gt;  [27,]  0.077608412 -0.269519091
+#&gt;  [28,]  0.031270681 -0.047853699
+#&gt;  [29,] -0.008909874 -0.106109787
+#&gt;  [30,] -0.010185851 -0.113369486
+#&gt;  [31,] -0.043943918 -0.064707636
+#&gt;  [32,]  0.007770390 -0.035588634
+#&gt;  [33,] -0.002335254 -0.046421446
+#&gt;  [34,] -0.031938743 -0.008315658
+#&gt;  [35,] -0.018210636 -0.245074929
+#&gt;  [36,] -0.017681526 -0.011978793
+#&gt;  [37,] -0.056008957 -0.170724649
+#&gt;  [38,]  0.037835993 -0.239396938
+#&gt;  [39,]  0.001425408 -0.233868533
+#&gt;  [40,]  0.113577726 -0.327378811
+#&gt;  [41,]  0.052524278 -0.283522356
+#&gt;  [42,] -0.070554523  0.011880192
+#&gt;  [43,]  0.076420418 -0.200812962
+#&gt;  [44,]  0.004750353 -0.174420334
+#&gt;  [45,]  0.030490038 -0.269612692
+#&gt;  [46,]  0.045916063 -0.123269871
+#&gt;  [47,]  0.061171833 -0.115692147
+#&gt;  [48,]  0.032966403 -0.304903415
+#&gt;  [49,]  0.023434421 -0.071411571
+#&gt;  [50,] -0.071805197 -0.111164958
+#&gt;  [51,]  0.091887914 -0.339704401
+#&gt;  [52,] -0.003402752 -0.214457728
+#&gt;  [53,]  0.069548324 -0.167132126
+#&gt;  [54,] -0.065616804 -0.099527492
+#&gt;  [55,] -0.051339521 -0.013730011
+#&gt;  [56,] -0.023103508 -0.223515411
+#&gt;  [57,]  0.021393301 -0.146078421
+#&gt;  [58,]  0.037028388 -0.291955925
+#&gt;  [59,] -0.062766325 -0.067795300
+#&gt;  [60,]  0.040389257 -0.282798928
+#&gt;  [61,] -0.047394023 -0.034390859
+#&gt;  [62,]  0.037125313 -0.136013060
+#&gt;  [63,]  0.041547655 -0.068306700
+#&gt;  [64,]  0.089001853 -0.244351304
+#&gt;  [65,]  0.034734041 -0.261130602
+#&gt;  [66,]  0.073504583 -0.297272345
+#&gt;  [67,]  0.051565201 -0.169916592
+#&gt;  [68,]  0.042581763 -0.078789625
+#&gt;  [69,] -0.025513777 -0.020843036
+#&gt;  [70,]  0.052690576 -0.259826501
+#&gt;  [71,]  0.008641090 -0.283079441
+#&gt;  [72,]  0.051427074 -0.227520244
+#&gt;  [73,] -0.069716956 -0.020988682
+#&gt;  [74,] -0.028030954 -0.202230001
+#&gt;  [75,]  0.039044921 -0.260226545
+#&gt;  [76,] -0.038567514 -0.124763341
+#&gt;  [77,] -0.009898050 -0.217664188
+#&gt;  [78,] -0.034729064 -0.130200631
+#&gt;  [79,] -0.060130514 -0.090645702
+#&gt;  [80,] -0.031066691 -0.209257352
+#&gt;  [81,]  0.046911035 -0.273045693
+#&gt;  [82,] -0.048418444 -0.195028312
+#&gt;  [83,] -0.048293835 -0.125286629
+#&gt;  [84,]  0.070237107 -0.250139757
+#&gt;  [85,]  0.081467727 -0.330927654
+#&gt;  [86,]  0.052027543 -0.286482892
+#&gt;  [87,]  0.008298194 -0.247212157
+#&gt;  [88,] -0.078539265 -0.088461963
+#&gt;  [89,] -0.058297844 -0.066370019
+#&gt;  [90,]  0.045493200 -0.259938937
+#&gt;  [91,] -0.057124622 -0.174897773
+#&gt;  [92,]  0.032237191 -0.040528186
+#&gt;  [93,]  0.001807357 -0.189862705
+#&gt;  [94,]  0.004914528 -0.243133339
+#&gt;  [95,] -0.052027071 -0.076230645
+#&gt;  [96,]  0.090735543 -0.280933800
+#&gt;  [97,]  0.097320763 -0.295031475
+#&gt;  [98,] -0.088135994 -0.029341170
+#&gt;  [99,]  0.031239480 -0.104618267
+#&gt; [100,] -0.011279293 -0.221203600
 #&gt; 
-#&gt; done.
-#&gt; Requested probability quantile 0.500000, obtained 0.498253 - setting threshold value 0.082423.
-#&gt;  For a closer match, you can increase num.thresholds in hypervolume_threshold.</div><div class='input'>
-</div></pre>
+#&gt; Slot "weights":
+#&gt;   [1] 0.0009278472 0.0008758480 0.0010384468 0.0010009476 0.0011975990
+#&gt;   [6] 0.0016118394 0.0010909859 0.0008934505 0.0012982197 0.0011500441
+#&gt;  [11] 0.0013011059 0.0016101852 0.0008900835 0.0010180540 0.0008509520
+#&gt;  [16] 0.0010484553 0.0009598659 0.0015370350 0.0008787217 0.0012158464
+#&gt;  [21] 0.0011997489 0.0010740316 0.0015203475 0.0013569598 0.0009491740
+#&gt;  [26] 0.0008419924 0.0011688033 0.0008867494 0.0012783817 0.0013092752
+#&gt;  [31] 0.0013800470 0.0009685171 0.0010735359 0.0010063038 0.0010179755
+#&gt;  [36] 0.0009622440 0.0008926124 0.0014665610 0.0014603041 0.0009196136
+#&gt;  [41] 0.0012177179 0.0008401965 0.0009258500 0.0016154343 0.0012549933
+#&gt;  [46] 0.0009961421 0.0008436734 0.0008638050 0.0009931797 0.0009981238
+#&gt;  [51] 0.0008860927 0.0015858304 0.0009051139 0.0011652173 0.0011174664
+#&gt;  [56] 0.0011945911 0.0013239285 0.0010568892 0.0013040512 0.0011767197
+#&gt;  [61] 0.0012713409 0.0011278481 0.0008777598 0.0009577597 0.0013489652
+#&gt;  [66] 0.0011562201 0.0011356111 0.0008945415 0.0010813568 0.0013255171
+#&gt;  [71] 0.0008685165 0.0013445611 0.0011038587 0.0012827224 0.0013581585
+#&gt;  [76] 0.0013202984 0.0014825282 0.0013368817 0.0012741926 0.0011670635
+#&gt;  [81] 0.0012773555 0.0008990355 0.0012376344 0.0011869904 0.0009314096
+#&gt;  [86] 0.0011955999 0.0013669469 0.0010171065 0.0013414787 0.0013506685
+#&gt;  [91] 0.0008461502 0.0008554146 0.0016734029 0.0013857907 0.0013701284
+#&gt;  [96] 0.0010860910 0.0010544967 0.0009090005 0.0010377478 0.0014298202
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -192,11 +467,14 @@ generate demand points. Defaults to <code>'ks'</code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

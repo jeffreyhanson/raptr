@@ -80,15 +80,17 @@ test_that("rap (unreliable - custom RapOpts and GurobiOpts - solve=TRUE)", {
   data(cs_pus, cs_spp)
   cs_pus <- cs_pus[1:10, ]
   # run function
-  cs_rs <- rap(pus = cs_pus,
-               species = cs_spp,
-               formulation = "unreliable",
-               amount.target = 0.2,
-               space.target = -100000,
-               n.demand.points = 3L,
-               include.geographic.space = TRUE,
-               MIPGap = 0.9,
-               BLM = 100)
+  expect_warning({
+    cs_rs <- rap(pus = cs_pus,
+                 species = cs_spp,
+                 formulation = "unreliable",
+                 amount.target = 0.2,
+                 space.target = -100000,
+                 n.demand.points = 3L,
+                 include.geographic.space = TRUE,
+                 MIPGap = 0.9,
+                 BLM = 100)
+  })
   # check calculations
   expect_true(all(space.held(cs_rs) >= -100000))
   expect_true(all(space.held(cs_rs) <= 1))
@@ -141,15 +143,17 @@ test_that("rap (reliable - custom RapOpts and GurobiOpts - solve=TRUE)", {
   data(cs_pus, cs_spp)
   cs_pus <- cs_pus[1:10, ]
   # run function
-  cs_rs <- rap(pus = cs_pus,
-               species = cs_spp,
-               formulation = "reliable",
-               amount.target = 0.2,
-               space.target = -10000,
-               n.demand.points = 3L,
-               include.geographic.space = TRUE,
-               MIPGap = 0.9,
-               BLM = 100)
+  expect_warning({
+    cs_rs <- rap(pus = cs_pus,
+                 species = cs_spp,
+                 formulation = "reliable",
+                 amount.target = 0.2,
+                 space.target = -10000,
+                 n.demand.points = 3L,
+                 include.geographic.space = TRUE,
+                 MIPGap = 0.9,
+                 BLM = 100)
+  })
   # check calculations
   expect_true(all(space.held(cs_rs) >= -10000))
   expect_true(all(amount.held(cs_rs) >= 0.2))

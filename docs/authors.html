@@ -6,23 +6,33 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Authors • raptr</title>
+<title>Citation and Authors • raptr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="pkgdown.css" rel="stylesheet">
-<script src="jquery.sticky-kit.min.js"></script>
 <script src="pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="Citation and Authors" />
+
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -36,7 +46,7 @@
   </head>
 
   <body>
-    <div class="container template-authors">
+    <div class="container template-citation-authors">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -46,18 +56,28 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">raptr</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="index.html">raptr</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="articles/raptr.html">Get started</a>
+</li>
+<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="articles/index.html">Articles</a>
-</li>
-<li>
-  <a href="news/index.html">News</a>
+  <a href="news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -69,6 +89,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -76,27 +97,45 @@
       
       </header>
 
-      <div class="row">
-  <div class="contents col-md-12">
+<div class="row">
+  <div class="contents col-md-9">
+    <div class="page-header">
+      <h1>Citation</h1>
+    </div>
+
+    <p>Hanson JO, Rhodes JR, Possingham HP and Fuller RA (2017).
+&ldquo;raptr: Representative and adequate prioritization toolkit in R.&rdquo;
+<em>Methods in Ecology and Evolution</em>, <b>9</b>, pp. 320&ndash;330.
+<a href="https://dx.doi.org/10.1111/2041-210X.12862">https://dx.doi.org/10.1111/2041-210X.12862</a>. 
+</p>
+    <pre>@Article{,
+  author = {Jeffrey O Hanson and Jonathan R Rhodes and Hugh P Possingham and Richard A Fuller},
+  title = {raptr: Representative and adequate prioritization toolkit in R},
+  journal = {Methods in Ecology and Evolution},
+  year = {2017},
+  volume = {9},
+  pages = {320--330},
+  url = {https://dx.doi.org/10.1111/2041-210X.12862},
+}</pre>
     <div class="page-header">
       <h1>Authors</h1>
     </div>
 
     <ul class="list-unstyled">
       <li>
-        <p><strong><a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a></strong>. Author, maintainer.
+        <p><strong><a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a></strong>. Author, maintainer. 
         </p>
       </li>
       <li>
-        <p><strong><a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a></strong>. Author.
+        <p><strong><a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a></strong>. Author. 
         </p>
       </li>
       <li>
-        <p><strong><a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a></strong>. Author.
+        <p><strong><a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a></strong>. Author. 
         </p>
       </li>
       <li>
-        <p><strong><a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a></strong>. Author.
+        <p><strong><a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a></strong>. Author. 
         </p>
       </li>
     </ul>
@@ -112,11 +151,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

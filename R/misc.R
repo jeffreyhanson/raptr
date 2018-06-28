@@ -1,7 +1,7 @@
 #' @include RcppExports.R raptr-internal.R
 NULL
 
-#' Test if Gurobi is installed on computer
+#' Test if Gurobi is installed
 #'
 #' This function determines if the Gurobi R package is installed on the
 #' computer and that it can be used \code{\link[base]{options}}.
@@ -34,9 +34,6 @@ is.GurobiInstalled <- function(verbose = TRUE) {
     c("Linux" = "http://bit.ly/1HLCRoE", "Windows" = "http://bit.ly/1MMSZaH",
       "Darwin" = "http://bit.ly/1Pr2WRG")[Sys.info()[["sysname"]]])
 
-  rInstallationInstructions2 <- paste0("Follow these instructions to install ",
-    "the \"rgurobi\" R package from GitHub:\n  http://bit.ly/1RF19XO")
-
   licenseInstructions <- paste0("The Gurobi R package requires a Gurobi ",
     "license to work:\n  visit this web-page for an overview: ",
     "http://bit.ly/1OHEQCm\n  academics can obtain a license at no cost ",
@@ -49,26 +46,20 @@ is.GurobiInstalled <- function(verbose = TRUE) {
     if (verbose) {
       message("The gorubi software is not installed")
       message(gurobiInstallationInstructions, "\n\n", licenseInstructions,
-              "\n\n", rInstallationInstructions1, "\n\n",
-              rInstallationInstructions2)
+              "\n\n", rInstallationInstructions1)
     }
-    options(GurobiInstalled = list(gurobi = FALSE, rgurobi = FALSE))
+    options(GurobiInstalled = list(gurobi = FALSE))
     return(FALSE)
   }
 
   # check if R packages installed
-  pkgs.installed <- list(gurobi = requireNamespace("gurobi", quietly = TRUE),
-                         rgurobi = requireNamespace("rgurobi", quietly = TRUE))
+  pkgs.installed <- list(gurobi =
+    requireNamespace("gurobi", quietly = TRUE) &&
+    utils::packageVersion("gurobi") >= as.package_version("8.0.0"))
   if (!pkgs.installed[[1]]) {
     if (verbose) {
-      message("The gorubi R package is not installed\n")
+      message("The gorubi R package (version 8.0.0+) is not installed\n")
       message(rInstallationInstructions1, "\n")
-    }
-  }
-  if (!pkgs.installed[[2]]) {
-    if (verbose) {
-      message("The rgorubi R package is not installed\n")
-      message(rInstallationInstructions2, "\n")
     }
   }
   options(GurobiInstalled = pkgs.installed)

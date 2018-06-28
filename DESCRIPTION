@@ -1,7 +1,7 @@
 Package: raptr
 Type: Package
 Title: Representative and Adequate Prioritization Toolkit in R
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(person(c("Jeffrey", "O"), "Hanson",
     email="jeffrey.hanson@uqconnect.edu.au", role = c("aut", "cre")),
     person(c("Jonathan", "R"), "Rhodes", role = c("aut")),
@@ -15,9 +15,7 @@ Description: Biodiversity is in crisis. The overarching aim of conservation
     (prioritizations), using spatially explicit targets for biodiversity
     patterns and processes. To obtain solutions in a feasible amount  of time,
     this package uses the commercial 'Gurobi' software package (obtained from
-    <http://www.gurobi.com/>). Additionally, the 'rgurobi' package can also be
-    installed to provide extra functionality (obtained from
-    <http://github.com/jeffreyhanson/rgurobi>). For more information on using
+    <http://www.gurobi.com/>). For more information on using
     this package, see Hanson et al. (2017) <doi:10.1111/2041-210X.12862>.
 Imports:
     utils,
@@ -52,7 +50,7 @@ Depends:
 LinkingTo: Rcpp, RcppEigen, BH
 LazyData: true
 License: GPL-3
-URL: https://github.com/jeffreyhanson/raptr
+URL: https://jeffrey-hanson.com/raptr, https://github.com/jeffreyhanson/raptr
 BugReports: https://github.com/jeffreyhanson/raptr/issues
 VignetteBuilder: knitr
 Suggests:
@@ -61,7 +59,6 @@ Suggests:
     dplyr,
     vegan,
     gurobi,
-    rgurobi,
     gridExtra,
     rgl,
     testthat
