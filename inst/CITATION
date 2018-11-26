@@ -8,10 +8,10 @@ citEntry(
                       person(c("Richard", "A"), "Fuller")),
   title = "raptr: Representative and adequate prioritization toolkit in R",
   journal = "Methods in Ecology and Evolution",
-  year = 2017,
+  year = 2018,
   volume = "9",
   pages = "320--330",
-  url = "https://dx.doi.org/10.1111/2041-210X.12862", 
+  url = "https://dx.doi.org/10.1111/2041-210X.12862",
   textVersion = paste(
      "Hanson JO, Rhodes JR, Possingham HP & Fuller RA",
      "raptr: Representative and Adequate Prioritization",
@@ -19,6 +19,5 @@ citEntry(
      "9: 320--330. DOI: 10.1111/2041-210X.12862"
   )
 )
-  
-citFooter("You may also want to cite the package version.\nFind it with \"help(package=raptr)\".")
 
+citFooter("You may also want to cite the package version.\nFind it with \"help(package=raptr)\".")
