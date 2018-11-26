@@ -23,7 +23,7 @@ contrib:
 
 vigns:
 	R --slave -e "devtools::build_vignettes()"
-  mv doc inst/
+	mv doc inst/
 
 site:
 	R --slave -e "pkgdown::clean_site()"
