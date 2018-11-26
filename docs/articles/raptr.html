@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -187,7 +187,7 @@ sim_spp &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdoc
                   <span class="dt">x =</span> sim_pus, <span class="dt">res =</span> <span class="dv">1</span>)</code></pre></div>
 <p>Let’s see what these species’ distributions look like.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot species</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/raptr/topics/plot">plot</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/stack">stack</a></span>(sim_spp),
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/stack">stack</a></span>(sim_spp),
      <span class="dt">main =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/RandomFields/topics/QMath">c</a></span>(<span class="st">"Uniform species"</span>, <span class="st">"Normal species"</span>, <span class="st">"Bimodal species"</span>),
      <span class="dt">addfun =</span> <span class="cf">function</span>() <span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/lines">lines</a></span>(sim_pus), <span class="dt">nc =</span> <span class="dv">3</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
@@ -272,7 +272,7 @@ sim_ru_s1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/u
 })
 
 <span class="co"># solve problem to identify prioritization</span>
-sim_rs_s1_amount &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/raptr/topics/solve">solve</a></span>(sim_ru_s1, <span class="dt">Threads =</span> threads)</code></pre></div>
+sim_rs_s1_amount &lt;-<span class="st"> </span><span class="kw"><a href="../reference/solve.html">solve</a></span>(sim_ru_s1, <span class="dt">Threads =</span> threads)</code></pre></div>
 <pre><code>## Optimize a model with 1 rows, 100 columns and 100 nonzeros
 ## Variable types: 0 continuous, 100 integer (100 binary)
 ## Coefficient statistics:
@@ -460,13 +460,13 @@ sim_rs_s1_space &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ##   RHS range        [1e+00, 1e+02]
 ## Found heuristic solution: objective 95.0000000
 ## Presolve removed 36 rows and 0 columns
-## Presolve time: 1.64s
+## Presolve time: 1.63s
 ## Presolved: 10066 rows, 10100 columns, 40104 nonzeros
 ## Variable types: 0 continuous, 10100 integer (10100 binary)
 ## Presolved: 10066 rows, 10100 columns, 40104 nonzeros
 ## 
 ## 
-## Root relaxation: objective 2.000000e+01, 621 iterations, 0.06 seconds
+## Root relaxation: objective 2.000000e+01, 621 iterations, 0.07 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
@@ -505,7 +505,7 @@ sim_rs_s1_space &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the difference between old and new prioritizations</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/raptr/topics/plot">plot</a></span>(sim_rs_s1_amount, sim_rs_s1_space, <span class="dv">1</span>, <span class="dv">1</span>,
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_rs_s1_amount, sim_rs_s1_space, <span class="dv">1</span>, <span class="dv">1</span>,
      <span class="dt">main =</span> <span class="st">"Difference between solutions"</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="raptr_files/figure-html/unnamed-chunk-25-1.png" alt="_Difference between two prioritizations for the uniformly distributed species. Prioritisation $X$ was generated using just amount-based targets (20\%), and prioritization $Y$ was generated using an additional space-based target (85\%)._" width="576"><p class="caption">
@@ -526,7 +526,7 @@ sim_rs_s2_space &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ##   RHS range        [1e+00, 6e+01]
 ## Found heuristic solution: objective 91.0000000
 ## Presolve removed 220 rows and 0 columns
-## Presolve time: 1.20s
+## Presolve time: 1.22s
 ## Presolved: 9882 rows, 10100 columns, 41664 nonzeros
 ## Variable types: 0 continuous, 10100 integer (10100 binary)
 ## Presolved: 9882 rows, 10100 columns, 41664 nonzeros
@@ -540,7 +540,7 @@ sim_rs_s2_space &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ##      0     0   12.32570    0  294   91.00000   12.32570  86.5%     -    1s
 ## H    0     0                      13.0000000   12.32570  5.19%     -    1s
 ## 
-## Explored 1 nodes (4562 simplex iterations) in 1.50 seconds
+## Explored 1 nodes (4562 simplex iterations) in 1.52 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 13 91 
@@ -571,7 +571,7 @@ sim_rs_s2_space &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the difference between old and new prioritizations</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/raptr/topics/plot">plot</a></span>(sim_rs_s2_amount, sim_rs_s2_space, <span class="dv">1</span>, <span class="dv">1</span>,
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_rs_s2_amount, sim_rs_s2_space, <span class="dv">1</span>, <span class="dv">1</span>,
      <span class="dt">main =</span> <span class="st">"Difference between solutions"</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="raptr_files/figure-html/unnamed-chunk-29-1.png" alt="_Difference between two prioritizations for the normally distributed species. See Figure 7 caption for conventions._" width="576"><p class="caption">
@@ -592,7 +592,7 @@ sim_rs_s3_space &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ##   RHS range        [1e+00, 7e+01]
 ## Found heuristic solution: objective 87.0000000
 ## Presolve removed 589 rows and 15 columns
-## Presolve time: 2.35s
+## Presolve time: 2.37s
 ## Presolved: 9513 rows, 10085 columns, 51461 nonzeros
 ## Variable types: 0 continuous, 10085 integer (10085 binary)
 ## Presolved: 9513 rows, 10085 columns, 51461 nonzeros
@@ -612,7 +612,7 @@ sim_rs_s3_space &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 ##   MIR: 1
 ##   Zero half: 1
 ## 
-## Explored 1 nodes (5911 simplex iterations) in 2.73 seconds
+## Explored 1 nodes (5911 simplex iterations) in 2.75 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 10 87 
@@ -643,7 +643,7 @@ sim_rs_s3_space &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the difference between old and new prioritizations</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/raptr/topics/plot">plot</a></span>(sim_rs_s3_amount, sim_rs_s3_space, <span class="dv">1</span>, <span class="dv">1</span>,
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_rs_s3_amount, sim_rs_s3_space, <span class="dv">1</span>, <span class="dv">1</span>,
      <span class="dt">main =</span> <span class="st">"Difference between solutions"</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="raptr_files/figure-html/unnamed-chunk-33-1.png" alt="_Difference between two prioritizations for the bimodally distributed species. See Figure 7 caption for conventions._" width="576"><p class="caption">
@@ -672,13 +672,13 @@ sim_mrs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+00, 8e+02]
 ## Found heuristic solution: objective 98.0000000
-## Presolve time: 1.07s
+## Presolve time: 1.14s
 ## Presolved: 30306 rows, 30100 columns, 120000 nonzeros
 ## Variable types: 0 continuous, 30100 integer (30100 binary)
 ## Presolved: 30306 rows, 30100 columns, 120000 nonzeros
 ## 
 ## 
-## Root relaxation: objective 2.000000e+01, 2839 iterations, 0.94 seconds
+## Root relaxation: objective 2.000000e+01, 2839 iterations, 1.02 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
@@ -686,7 +686,7 @@ sim_mrs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ## H    0     0                      20.0000000    0.00000   100%     -    2s
 ##      0     0          -    0        20.00000   20.00000  0.00%     -    2s
 ## 
-## Explored 0 nodes (4267 simplex iterations) in 2.48 seconds
+## Explored 0 nodes (4267 simplex iterations) in 2.68 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 20 98 
@@ -704,8 +704,9 @@ sim_mrs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+00, 1e+02]
 ## Found heuristic solution: objective 99.0000000
+## Presolve removed 360 rows and 15 columns (presolve time = 5s) ...
 ## Presolve removed 360 rows and 15 columns
-## Presolve time: 4.94s
+## Presolve time: 5.33s
 ## Presolved: 29946 rows, 30085 columns, 131504 nonzeros
 ## Variable types: 0 continuous, 30085 integer (30085 binary)
 ## Presolve removed 67 rows and 1 columns
@@ -715,19 +716,19 @@ sim_mrs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    1.0000000e+02   0.000000e+00   1.000000e+02      5s
-##     5887    2.0000000e+01   0.000000e+00   0.000000e+00      6s
-##     5887    2.0000000e+01   0.000000e+00   0.000000e+00      6s
+##        0    1.0000000e+02   0.000000e+00   1.000000e+02      6s
+##     5887    2.0000000e+01   0.000000e+00   0.000000e+00      7s
+##     5887    2.0000000e+01   0.000000e+00   0.000000e+00      7s
 ## 
-## Root relaxation: objective 2.000000e+01, 5887 iterations, 1.41 seconds
+## Root relaxation: objective 2.000000e+01, 5887 iterations, 1.64 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-## H    0     0                      20.0000000    0.00000   100%     -    7s
-##      0     0          -    0        20.00000   20.00000  0.00%     -    7s
+## H    0     0                      20.0000000    0.00000   100%     -    8s
+##      0     0          -    0        20.00000   20.00000  0.00%     -    8s
 ## 
-## Explored 0 nodes (11017 simplex iterations) in 7.46 seconds
+## Explored 0 nodes (11017 simplex iterations) in 8.37 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 20 99 
@@ -764,21 +765,21 @@ sim_mrs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 <pre><code>##   uniform (Space 1) normal (Space 1) bimodal (Space 1)
 ## 1         0.9284848        0.9021208         0.9313511</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot multi-species prioritization with amount-based targets</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/raptr/topics/plot">plot</a></span>(sim_mrs_amount, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Amount-based targets"</span>)</code></pre></div>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_amount, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Amount-based targets"</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="raptr_files/figure-html/unnamed-chunk-36-1.png" alt="_A multi-species prioritization for the uniformly, normally, and bimodally distributed species generated using just amount-based targets (20\%). Squares represent planning units. Dark green planning units are selected for preservation._" width="432"><p class="caption">
 <em>A multi-species prioritization for the uniformly, normally, and bimodally distributed species generated using just amount-based targets (20%). Squares represent planning units. Dark green planning units are selected for preservation.</em>
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot multi-species prioritization with amount- and space-based targets</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/raptr/topics/plot">plot</a></span>(sim_mrs_space, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Amount and space-based targets"</span>)</code></pre></div>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_space, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Amount and space-based targets"</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="raptr_files/figure-html/unnamed-chunk-37-1.png" alt="_A multi-species prioritization for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\%) and space-based targets (85\%). See Figure 12 caption for conventions._" width="432"><p class="caption">
 <em>A multi-species prioritization for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20%) and space-based targets (85%). See Figure 12 caption for conventions.</em>
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># difference between the two prioritizations</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/raptr/topics/plot">plot</a></span>(sim_mrs_amount, sim_mrs_space, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Difference between solutions"</span>)</code></pre></div>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_amount, sim_mrs_space, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Difference between solutions"</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="raptr_files/figure-html/unnamed-chunk-38-1.png" alt="_Difference between two multi-species prioritizations. See Figure 7 caption for conventions.)" width="576"><p class="caption">
 _Difference between two multi-species prioritizations. See Figure 7 caption for conventions.)
@@ -792,7 +793,7 @@ _Difference between two multi-species prioritizations. See Figure 7 caption for 
 <p>The unreliable formulation does not consider the probability that the planning units are occupied by features when calculating how well a given solution secures a representative sample of an attribute space. Thus solutions identified using the unreliable formulation may select regions of an attribute space for a species using planning units that only have a small chance of being inhabited. As a consequence, if the prioritization is implemented, it may fail to secure regions of an attribute space if individuals do not inhabit these planning units, and ultimately fail to fulfill the space-based targets.</p>
 <p>A simple solution to this issue would be to ensure that planning units cannot be assigned to demand points if they have a low probability of occupancy. This can be achieved by setting a probability threshold for planning units, such that planning units with a probability of occupancy below the threshold are effectively set to zero.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make new prioritization with probability threshold of 0.1 for each species</span>
-sim_mrs_space2 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/raptr/topics/solve">solve</a></span>(<span class="kw"><a href="../reference/prob.subset.html">prob.subset</a></span>(sim_mrs_space, <span class="dt">species =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,
+sim_mrs_space2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/solve.html">solve</a></span>(<span class="kw"><a href="../reference/prob.subset.html">prob.subset</a></span>(sim_mrs_space, <span class="dt">species =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,
                                     <span class="dt">threshold =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/RandomFields/topics/QMath">c</a></span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>)),
                         <span class="dt">Threads =</span> threads)</code></pre></div>
 <pre><code>## Optimize a model with 30306 rows, 30100 columns and 119974 nonzeros
@@ -803,8 +804,9 @@ sim_mrs_space2 &lt;-<span class="st"> </span><span class="kw"><a href="https://w
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+00, 1e+02]
 ## Found heuristic solution: objective 99.0000000
+## Presolve removed 360 rows and 15 columns (presolve time = 5s) ...
 ## Presolve removed 360 rows and 15 columns
-## Presolve time: 4.84s
+## Presolve time: 5.49s
 ## Presolved: 29946 rows, 30085 columns, 131478 nonzeros
 ## Variable types: 0 continuous, 30085 integer (30085 binary)
 ## Presolve removed 67 rows and 1 columns
@@ -814,19 +816,19 @@ sim_mrs_space2 &lt;-<span class="st"> </span><span class="kw"><a href="https://w
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    1.0000000e+02   0.000000e+00   1.000000e+02      5s
-##     5510    2.0000000e+01   0.000000e+00   0.000000e+00      6s
-##     5510    2.0000000e+01   0.000000e+00   0.000000e+00      6s
+##        0    1.0000000e+02   0.000000e+00   1.000000e+02      6s
+##     5510    2.0000000e+01   0.000000e+00   0.000000e+00      7s
+##     5510    2.0000000e+01   0.000000e+00   0.000000e+00      7s
 ## 
 ## Root relaxation: objective 2.000000e+01, 5510 iterations, 1.36 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-## H    0     0                      20.0000000    0.00000   100%     -    6s
-##      0     0          -    0        20.00000   20.00000  0.00%     -    6s
+## H    0     0                      20.0000000    0.00000   100%     -    7s
+##      0     0          -    0        20.00000   20.00000  0.00%     -    7s
 ## 
-## Explored 0 nodes (8707 simplex iterations) in 6.63 seconds
+## Explored 0 nodes (8707 simplex iterations) in 7.25 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 20 99 
@@ -842,14 +844,14 @@ sim_mrs_space2 &lt;-<span class="st"> </span><span class="kw"><a href="https://w
 ##   Connectivity_In_Fraction
 ## 1               0.02727273</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot prioritization</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/raptr/topics/plot">plot</a></span>(sim_mrs_space2, <span class="dv">1</span>)</code></pre></div>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_space2, <span class="dv">1</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="raptr_files/figure-html/unnamed-chunk-42-1.png" alt="_A multi-species prioritization for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\%) and space-based targets (85\%). This prioritization was generated to be robust against low occupancy probabilities, by preventing planning units with low probabilities from being used to represent demand points. See Figure 12 caption for conventions._" width="432"><p class="caption">
 <em>A multi-species prioritization for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20%) and space-based targets (85%). This prioritization was generated to be robust against low occupancy probabilities, by preventing planning units with low probabilities from being used to represent demand points. See Figure 12 caption for conventions.</em>
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># difference between prioritizations that use and do not use thresholds</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/raptr/topics/plot">plot</a></span>(sim_mrs_space2, sim_mrs_space, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Difference between solutions"</span>)</code></pre></div>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_space2, sim_mrs_space, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Difference between solutions"</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="raptr_files/figure-html/unnamed-chunk-43-1.png" alt="_Difference between two multi-species prioritizations. See Figure 7 caption for conventions._" width="576"><p class="caption">
 <em>Difference between two multi-species prioritizations. See Figure 7 caption for conventions.</em>
@@ -868,9 +870,9 @@ sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw"><a href="https://w
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [7e-03, 1e+02]
 ## Presolve removed 338506 rows and 156703 columns
-## Presolve time: 2.93s
+## Presolve time: 2.91s
 ## 
-## Explored 0 nodes (0 simplex iterations) in 3.28 seconds
+## Explored 0 nodes (0 simplex iterations) in 3.25 seconds
 ## Thread count was 1 (of 4 available processors)
 ## 
 ## Solution count 0
@@ -890,9 +892,9 @@ sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ##   Objective range  [1e+00, 1e+00]
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [7e-03, 8e+05]
-## Presolve removed 333903 rows and 151800 columns (presolve time = 5s) ...
+## Presolve removed 333703 rows and 151800 columns (presolve time = 5s) ...
 ## Presolve removed 333903 rows and 151800 columns
-## Presolve time: 5.72s
+## Presolve time: 6.49s
 ## Presolved: 30303 rows, 30100 columns, 90300 nonzeros
 ## Variable types: 0 continuous, 30100 integer (30100 binary)
 ## Found heuristic solution: objective 27.0000000
@@ -902,19 +904,19 @@ sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    1.0000000e+02   0.000000e+00   1.000000e+02      6s
-##      129    2.0000000e+01   0.000000e+00   0.000000e+00      6s
-##      129    2.0000000e+01   0.000000e+00   0.000000e+00      6s
+##        0    1.0000000e+02   0.000000e+00   1.000000e+02      7s
+##      129    2.0000000e+01   0.000000e+00   0.000000e+00      7s
+##      129    2.0000000e+01   0.000000e+00   0.000000e+00      7s
 ## 
-## Root relaxation: objective 2.000000e+01, 129 iterations, 0.27 seconds
+## Root relaxation: objective 2.000000e+01, 129 iterations, 0.28 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0   20.00000    0    3   27.00000   20.00000  25.9%     -    6s
-## H    0     0                      20.0000000   20.00000  0.00%     -    6s
+##      0     0   20.00000    0    3   27.00000   20.00000  25.9%     -    7s
+## H    0     0                      20.0000000   20.00000  0.00%     -    7s
 ## 
-## Explored 1 nodes (129 simplex iterations) in 6.41 seconds
+## Explored 1 nodes (129 simplex iterations) in 7.30 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 20 27 
@@ -932,14 +934,14 @@ sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 ##   Connectivity_In_Fraction
 ## 1                0.1090909</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot prioritization</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/raptr/topics/plot">plot</a></span>(sim_mrs_space3, <span class="dv">1</span>)</code></pre></div>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_space3, <span class="dv">1</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="raptr_files/figure-html/unnamed-chunk-47-1.png" alt="_A multi-species prioritization for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20\%) and space-based targets (85\%). This prioritization was generated to be robust against low occupancy probabilities, by explicitly using the probability of occupancy data when deriving a solution. See Figure 12 caption for conventions._" width="432"><p class="caption">
 <em>A multi-species prioritization for the uniformly, normally, and bimodally distributed species generated using amount-based targets (20%) and space-based targets (85%). This prioritization was generated to be robust against low occupancy probabilities, by explicitly using the probability of occupancy data when deriving a solution. See Figure 12 caption for conventions.</em>
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># difference between prioritizations based on unreliable and reliable formulation</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/raptr/topics/plot">plot</a></span>(sim_mrs_space3, sim_mrs_space, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Difference between solutions"</span>)</code></pre></div>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_space3, sim_mrs_space, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">"Difference between solutions"</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="raptr_files/figure-html/unnamed-chunk-48-1.png" alt="_Difference between two multi-species prioritizations. See Figure 7 caption for conventions._" width="576"><p class="caption">
 <em>Difference between two multi-species prioritizations. See Figure 7 caption for conventions.</em>
@@ -968,50 +970,52 @@ sim_mrs_amount_blm &lt;-<span class="st"> </span><span class="kw"><a href="../re
 ## Presolved: 30666 rows, 30280 columns, 120720 nonzeros
 ## 
 ## 
-## Root relaxation: objective 4.644444e+02, 4432 iterations, 1.68 seconds
+## Root relaxation: objective 4.644444e+02, 4432 iterations, 1.71 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
 ##      0     0  464.44444    0 1725 4498.00000  464.44444  89.7%     -    3s
-## H    0     0                    2130.0000000  464.44444  78.2%     -   10s
-##      0     0  537.57397    0 1665 2130.00000  537.57397  74.8%     -   11s
-##      0     0  537.57397    0 1664 2130.00000  537.57397  74.8%     -   11s
-##      0     0  571.03030    0 1531 2130.00000  571.03030  73.2%     -   12s
-##      0     0  574.69174    0 1761 2130.00000  574.69174  73.0%     -   12s
-##      0     0  574.69174    0 1765 2130.00000  574.69174  73.0%     -   12s
-##      0     0  574.69174    0 1825 2130.00000  574.69174  73.0%     -   13s
-##      0     0  574.69174    0 1828 2130.00000  574.69174  73.0%     -   13s
-##      0     0  574.69174    0 1818 2130.00000  574.69174  73.0%     -   13s
-##      0     0  574.69174    0 1818 2130.00000  574.69174  73.0%     -   13s
-##      0     0  574.69174    0 1478 2130.00000  574.69174  73.0%     -   17s
-## H    0     0                    1335.0000000  574.69174  57.0%     -   19s
-##      0     0  574.69174    0 1477 1335.00000  574.69174  57.0%     -   19s
-##      0     0  574.69174    0 1488 1335.00000  574.69174  57.0%     -   21s
-## H    0     0                    1333.0000000  574.69174  56.9%     -   23s
-##      0     0  574.69174    0 1487 1333.00000  574.69174  56.9%     -   23s
-##      0     0  574.69174    0 1487 1333.00000  574.69174  56.9%     -   24s
-## H    0     0                    1332.0000000  574.69174  56.9%     -   26s
-##      0     0  574.69174    0 1487 1332.00000  574.69174  56.9%     -   26s
-##      0     0  574.69174    0 1480 1332.00000  574.69174  56.9%     -   28s
-##      0     0  574.69174    0 1481 1332.00000  574.69174  56.9%     -   31s
-##      0     0  574.69174    0 1480 1332.00000  574.69174  56.9%     -   32s
-##      0     0  574.69174    0 1441 1332.00000  574.69174  56.9%     -   33s
-## H    0     2                    1020.0000000  574.69174  43.7%     -   38s
-##      0     2  574.69174    0 1363 1020.00000  574.69174  43.7%     -   38s
-##     11    12  722.26926    6 1521 1020.00000  611.84151  40.0%  1412   40s
-##     75    55  934.28571    8  589 1020.00000  648.92237  36.4%   939   45s
-##    159    73  975.81751   11 1110 1020.00000  697.28516  31.6%   941   50s
-##    301   115     cutoff   18      1020.00000  756.27360  25.9%   761   55s
-##    469   158  920.00000   12  436 1020.00000  783.90493  23.1%   693   60s
-##    645   223 1004.79962    8  693 1020.00000  805.84418  21.0%   621   65s
-## H  712   124                     920.0000000  810.24108  11.9%   596   67s
+## H    0     0                    2130.0000000  464.44444  78.2%     -   11s
+##      0     0  537.57397    0 1665 2130.00000  537.57397  74.8%     -   12s
+##      0     0  537.57397    0 1664 2130.00000  537.57397  74.8%     -   12s
+##      0     0  571.03030    0 1531 2130.00000  571.03030  73.2%     -   13s
+##      0     0  574.69174    0 1761 2130.00000  574.69174  73.0%     -   13s
+##      0     0  574.69174    0 1765 2130.00000  574.69174  73.0%     -   13s
+##      0     0  574.69174    0 1825 2130.00000  574.69174  73.0%     -   14s
+##      0     0  574.69174    0 1828 2130.00000  574.69174  73.0%     -   14s
+##      0     0  574.69174    0 1818 2130.00000  574.69174  73.0%     -   14s
+##      0     0  574.69174    0 1818 2130.00000  574.69174  73.0%     -   15s
+##      0     0  574.69174    0 1478 2130.00000  574.69174  73.0%     -   20s
+## H    0     0                    1335.0000000  574.69174  57.0%     -   23s
+##      0     0  574.69174    0 1477 1335.00000  574.69174  57.0%     -   23s
+##      0     0  574.69174    0 1488 1335.00000  574.69174  57.0%     -   27s
+## H    0     0                    1333.0000000  574.69174  56.9%     -   30s
+##      0     0  574.69174    0 1487 1333.00000  574.69174  56.9%     -   30s
+##      0     0  574.69174    0 1487 1333.00000  574.69174  56.9%     -   33s
+## H    0     0                    1332.0000000  574.69174  56.9%     -   36s
+##      0     0  574.69174    0 1487 1332.00000  574.69174  56.9%     -   36s
+##      0     0  574.69174    0 1480 1332.00000  574.69174  56.9%     -   38s
+##      0     0  574.69174    0 1481 1332.00000  574.69174  56.9%     -   40s
+##      0     0  574.69174    0 1480 1332.00000  574.69174  56.9%     -   43s
+##      0     0  574.69174    0 1441 1332.00000  574.69174  56.9%     -   44s
+## H    0     2                    1020.0000000  574.69174  43.7%     -   49s
+##      0     2  574.69174    0 1363 1020.00000  574.69174  43.7%     -   49s
+##      3     6  641.80026    2 1458 1020.00000  611.84151  40.0%  3774   50s
+##     72    52  853.33333    7  657 1020.00000  648.92237  36.4%   894   55s
+##    119    68 1004.31657   14  730 1020.00000  688.66747  32.5%   978   60s
+##    209    88  848.33022    6  719 1020.00000  737.58217  27.7%   809   65s
+##    343   126  938.60465    9  375 1020.00000  762.71228  25.2%   712   70s
+##    449   153  871.56250    9 1173 1020.00000  783.90493  23.1%   691   75s
+##    564   197  958.09524   15  407 1020.00000  799.66753  21.6%   628   80s
+##    705   237     cutoff   12      1020.00000  810.24108  20.6%   599   85s
+## H  712   124                     920.0000000  810.24108  11.9%   596   85s
 ## 
 ## Cutting planes:
 ##   Gomory: 3
 ##   Zero half: 33
 ## 
-## Explored 833 nodes (582370 simplex iterations) in 69.64 seconds
+## Explored 833 nodes (582370 simplex iterations) in 89.23 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 7: 920 1020 1332 ... 4498
@@ -1035,14 +1039,14 @@ sim_mrs_amount_blm &lt;-<span class="st"> </span><span class="kw"><a href="../re
 <pre><code>##   uniform (Space 1) normal (Space 1) bimodal (Space 1)
 ## 1         0.4727273        0.4694515         0.3551407</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot prioritization</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/raptr/topics/plot">plot</a></span>(sim_mrs_amount_blm, <span class="dv">1</span>)</code></pre></div>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_amount_blm, <span class="dv">1</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="raptr_files/figure-html/unnamed-chunk-52-1.png" alt="_A multi-species prioritization for the uniformly, normally, and bimodally distributed species generated using only amount-based targets (20\%). Additionally, this prioritization was specified to have high connectivity, by using a high $BLM$ parameter. See Figure 12 caption for conventions._" width="432"><p class="caption">
 <em>A multi-species prioritization for the uniformly, normally, and bimodally distributed species generated using only amount-based targets (20%). Additionally, this prioritization was specified to have high connectivity, by using a high <span class="math inline">\(BLM\)</span> parameter. See Figure 12 caption for conventions.</em>
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># difference between the two prioritizations</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/raptr/topics/plot">plot</a></span>(sim_mrs_amount_blm, sim_mrs_amount, <span class="dv">1</span>, <span class="dv">1</span>,
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(sim_mrs_amount_blm, sim_mrs_amount, <span class="dv">1</span>, <span class="dv">1</span>,
      <span class="dt">main =</span> <span class="st">"Difference between solutions"</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="raptr_files/figure-html/unnamed-chunk-53-1.png" alt="_Difference between two multi-species prioritizations. See Figure 7 caption for conventions._" width="576"><p class="caption">
@@ -1072,7 +1076,7 @@ sim_mrs_amount_blm &lt;-<span class="st"> </span><span class="kw"><a href="../re
 cs_spp[cs_spp <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.6</span>] &lt;-<span class="st"> </span><span class="ot">NA</span>
 
 <span class="co"># plot species' distributions</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/raptr/topics/plot">plot</a></span>(cs_spp, <span class="dt">main =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/RandomFields/topics/QMath">c</a></span>(<span class="st">"Blue-winged kookaburra"</span>, <span class="st">"Brown-backed honeyeater"</span>,
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(cs_spp, <span class="dt">main =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/RandomFields/topics/QMath">c</a></span>(<span class="st">"Blue-winged kookaburra"</span>, <span class="st">"Brown-backed honeyeater"</span>,
                       <span class="st">"Brown falcon"</span>, <span class="st">"Pale-headed rosella"</span>))</code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="raptr_files/figure-html/unnamed-chunk-54-1.png" alt="_Distribution map for four Australian bird species. Pixel colours denote probability of occupancy._" width="480"><p class="caption">
@@ -1112,7 +1116,7 @@ _Planning units for the case-study examples. Polygons denote planning units. Yel
 <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(cs_space)
 
 <span class="co"># plot variables</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/raptr/topics/plot">plot</a></span>(cs_space, <span class="dt">main =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/RandomFields/topics/QMath">c</a></span>(<span class="st">"DC1"</span>, <span class="st">"DC2"</span>), <span class="dt">legend =</span> <span class="ot">FALSE</span>, <span class="dt">axes =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(cs_space, <span class="dt">main =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/RandomFields/topics/QMath">c</a></span>(<span class="st">"DC1"</span>, <span class="st">"DC2"</span>), <span class="dt">legend =</span> <span class="ot">FALSE</span>, <span class="dt">axes =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="raptr_files/figure-html/unnamed-chunk-56-1.png" alt="_Broad-scale environmental variation across Australia. The variable DC1 describes the transition from wet and cool to dry and hot conditions. The variable DC2 describes the transition from wet and hot to dry and cool conditions._" width="672"><p class="caption">
 <em>Broad-scale environmental variation across Australia. The variable DC1 describes the transition from wet and cool to dry and hot conditions. The variable DC2 describes the transition from wet and hot to dry and cool conditions.</em>
@@ -1134,7 +1138,7 @@ cs_rs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../referenc
 ## argument to pus does not have a "status" column, setting all planning unit
 ## statuses to 0.</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># generate prioritization</span>
-cs_rs_amount &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/raptr/topics/solve">solve</a></span>(cs_rs_amount, <span class="dt">MIPGap =</span> <span class="fl">0.1</span>, <span class="dt">Threads =</span> threads)</code></pre></div>
+cs_rs_amount &lt;-<span class="st"> </span><span class="kw"><a href="../reference/solve.html">solve</a></span>(cs_rs_amount, <span class="dt">MIPGap =</span> <span class="fl">0.1</span>, <span class="dt">Threads =</span> threads)</code></pre></div>
 <pre><code>## Optimize a model with 4 rows, 762 columns and 1336 nonzeros
 ## Variable types: 0 continuous, 762 integer (762 binary)
 ## Coefficient statistics:
@@ -1173,7 +1177,7 @@ cs_rs_amount &lt;-<span class="st"> </span><span class="kw"><a href="https://www
 ##   Connectivity_In_Fraction
 ## 1               0.09896624</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot prioritization</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/raptr/topics/plot">plot</a></span>(cs_rs_amount, <span class="dv">1</span>)</code></pre></div>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(cs_rs_amount, <span class="dv">1</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="raptr_files/figure-html/unnamed-chunk-59-1.png" alt="_Multi-species prioritization generated for four bird species using amount-based targets (20\%). See Figure 12 captions for conventions._" width="432"><p class="caption">
 <em>Multi-species prioritization generated for four bird species using amount-based targets (20%). See Figure 12 captions for conventions.</em>
@@ -1212,20 +1216,24 @@ cs_rs_space &lt;-<span class="st"> </span><span class="kw"><a href="../reference
 ##   Objective range  [1e+00, 1e+00]
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [7e-01, 3e+06]
-## Presolve removed 5482 rows and 4199 columns (presolve time = 5s) ...
-## Presolve removed 5856 rows and 4203 columns (presolve time = 10s) ...
-## Presolve removed 6064 rows and 4203 columns (presolve time = 15s) ...
-## Presolve removed 7898 rows and 4203 columns (presolve time = 20s) ...
-## Presolve removed 8510 rows and 4203 columns (presolve time = 25s) ...
-## Presolve removed 8538 rows and 4203 columns (presolve time = 30s) ...
-## Presolve removed 8679 rows and 4203 columns (presolve time = 35s) ...
-## Presolve removed 9973 rows and 4203 columns (presolve time = 40s) ...
-## Presolve removed 10225 rows and 4203 columns (presolve time = 45s) ...
-## Presolve removed 10466 rows and 4203 columns (presolve time = 50s) ...
-## Presolve removed 10466 rows and 4252 columns (presolve time = 60s) ...
-## Presolve removed 10478 rows and 4252 columns (presolve time = 63s) ...
+## Presolve removed 5061 rows and 4199 columns (presolve time = 5s) ...
+## Presolve removed 5702 rows and 4199 columns (presolve time = 10s) ...
+## Presolve removed 5878 rows and 4203 columns (presolve time = 15s) ...
+## Presolve removed 6045 rows and 4203 columns (presolve time = 20s) ...
+## Presolve removed 7072 rows and 4203 columns (presolve time = 25s) ...
+## Presolve removed 7895 rows and 4203 columns (presolve time = 30s) ...
+## Presolve removed 8393 rows and 4203 columns (presolve time = 35s) ...
+## Presolve removed 8513 rows and 4203 columns (presolve time = 40s) ...
+## Presolve removed 8538 rows and 4203 columns (presolve time = 45s) ...
+## Presolve removed 8600 rows and 4203 columns (presolve time = 50s) ...
+## Presolve removed 9959 rows and 4203 columns (presolve time = 55s) ...
+## Presolve removed 10020 rows and 4203 columns (presolve time = 60s) ...
+## Presolve removed 10453 rows and 4203 columns (presolve time = 65s) ...
+## Presolve removed 10466 rows and 4203 columns (presolve time = 71s) ...
+## Presolve removed 10466 rows and 4252 columns (presolve time = 77s) ...
+## Presolve removed 10478 rows and 4252 columns (presolve time = 80s) ...
 ## Presolve removed 10478 rows and 4252 columns
-## Presolve time: 62.94s
+## Presolve time: 80.47s
 ## Presolved: 123534 rows, 130110 columns, 572443 nonzeros
 ## Variable types: 0 continuous, 130110 integer (130110 binary)
 ## Found heuristic solution: objective 234.0000000
@@ -1236,23 +1244,23 @@ cs_rs_space &lt;-<span class="st"> </span><span class="kw"><a href="../reference
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    0.0000000e+00   1.227039e+02   1.565581e+10     65s
-##      870    7.6200000e+02   0.000000e+00   4.984375e+00     65s
-##    32078    1.3570984e+02   0.000000e+00   1.384702e+02     70s
-##    47700    1.3557504e+02   0.000000e+00   1.216358e+01     75s
-##    60059    1.3555590e+02   0.000000e+00   0.000000e+00     79s
-##    60059    1.3555590e+02   0.000000e+00   0.000000e+00     79s
+##        0    0.0000000e+00   1.227039e+02   1.565581e+10     83s
+##    17014    1.3625419e+02   0.000000e+00   1.092337e+03     85s
+##    38350    1.3564067e+02   0.000000e+00   2.892031e+02     90s
+##    50248    1.3556400e+02   0.000000e+00   7.828193e+00     95s
+##    60059    1.3555590e+02   0.000000e+00   0.000000e+00     99s
+##    60059    1.3555590e+02   0.000000e+00   0.000000e+00     99s
 ## 
-## Root relaxation: objective 1.355559e+02, 60059 iterations, 15.88 seconds
-## Total elapsed time = 80.97s
+## Root relaxation: objective 1.355559e+02, 60059 iterations, 18.01 seconds
+## Total elapsed time = 100.61s
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0  135.55590    0  567  234.00000  135.55590  42.1%     -   81s
-## H    0     0                     136.0000000  135.55590  0.33%     -   82s
+##      0     0  135.55590    0  567  234.00000  135.55590  42.1%     -  101s
+## H    0     0                     136.0000000  135.55590  0.33%     -  101s
 ## 
-## Explored 1 nodes (81161 simplex iterations) in 82.05 seconds
+## Explored 1 nodes (81161 simplex iterations) in 101.81 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 136 234 
@@ -1268,7 +1276,7 @@ cs_rs_space &lt;-<span class="st"> </span><span class="kw"><a href="../reference
 ##   Connectivity_In_Fraction
 ## 1               0.09543888</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot prioritization</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/raptr/topics/plot">plot</a></span>(cs_rs_space, <span class="dv">1</span>)</code></pre></div>
+<span class="kw"><a href="../reference/plot.html">plot</a></span>(cs_rs_space, <span class="dv">1</span>)</code></pre></div>
 <p><img src="raptr_files/figure-html/unnamed-chunk-63-1.png" width="432" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot prioritization in geographic attribute space</span>
 p1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/space.plot.html">space.plot</a></span>(cs_rs_space, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dt">main =</span> <span class="st">"Blue-winged</span><span class="ch">\n</span><span class="st">kookaburra"</span>)
