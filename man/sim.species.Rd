@@ -11,8 +11,9 @@ sim.species(x, ...)
 \method{sim.species}{RasterLayer}(x, n = 1, model = list("uniform",
   "normal", "bimodal", RandomFields::RPgauss())[[1]], ...)
 
-\method{sim.species}{SpatialPolygons}(x, res, n = 1, model = list("normal",
-  "uniform", "bimodal", RandomFields::RPgauss())[[1]], ...)
+\method{sim.species}{SpatialPolygons}(x, res, n = 1,
+  model = list("normal", "uniform", "bimodal",
+  RandomFields::RPgauss())[[1]], ...)
 }
 \arguments{
 \item{x}{\code{\link[raster]{RasterLayer-class}} or

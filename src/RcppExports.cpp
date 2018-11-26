@@ -39,6 +39,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_Polygons2PolySet
+Rcpp::DataFrame rcpp_Polygons2PolySet(Rcpp::List polys, std::size_t n_preallocate);
+RcppExport SEXP _raptr_rcpp_Polygons2PolySet(SEXP polysSEXP, SEXP n_preallocateSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type polys(polysSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type n_preallocate(n_preallocateSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_Polygons2PolySet(polys, n_preallocate));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_append_model_object
 Rcpp::List rcpp_append_model_object(Rcpp::List model, Rcpp::List existing_sols);
 RcppExport SEXP _raptr_rcpp_append_model_object(SEXP modelSEXP, SEXP existing_solsSEXP) {
@@ -116,18 +128,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< IntegerVector >::type cat_vec(cat_vecSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type val_vec(val_vecSEXP);
     rcpp_result_gen = Rcpp::wrap(rcpp_groupmean(cat_vec, val_vec));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_Polygons2PolySet
-Rcpp::DataFrame rcpp_Polygons2PolySet(Rcpp::List polys, std::size_t n_preallocate);
-RcppExport SEXP _raptr_rcpp_Polygons2PolySet(SEXP polysSEXP, SEXP n_preallocateSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::List >::type polys(polysSEXP);
-    Rcpp::traits::input_parameter< std::size_t >::type n_preallocate(n_preallocateSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_Polygons2PolySet(polys, n_preallocate));
     return rcpp_result_gen;
 END_RCPP
 }

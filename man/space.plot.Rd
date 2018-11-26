@@ -11,16 +11,16 @@
 space.plot(x, species, space, ...)
 
 \method{space.plot}{RapData}(x, species, space = 1,
-  pu.color.palette = c("#4D4D4D4D", "#00FF0080", "#FFFF0080", "#FF00004D"),
-  main = NULL, ...)
+  pu.color.palette = c("#4D4D4D4D", "#00FF0080", "#FFFF0080",
+  "#FF00004D"), main = NULL, ...)
 
 \method{space.plot}{RapUnsolved}(x, species, space = 1,
-  pu.color.palette = c("#4D4D4D4D", "#00FF0080", "#FFFF0080", "#FF00004D"),
-  main = NULL, ...)
+  pu.color.palette = c("#4D4D4D4D", "#00FF0080", "#FFFF0080",
+  "#FF00004D"), main = NULL, ...)
 
 \method{space.plot}{RapSolved}(x, species, space = 1, y = 0,
-  pu.color.palette = c("#4D4D4D4D", "#00FF0080", "#FFFF0080", "#FF00004D"),
-  main = NULL, ...)
+  pu.color.palette = c("#4D4D4D4D", "#00FF0080", "#FFFF0080",
+  "#FF00004D"), main = NULL, ...)
 }
 \arguments{
 \item{x}{\code{\link{RapData}}, \code{\link{RapUnsolved}}, or

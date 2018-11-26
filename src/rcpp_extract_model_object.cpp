@@ -157,7 +157,7 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
   std::vector<std::vector<std::size_t>> selected_species_space_puids_INT(n_species_attributespace_INT);
   std::vector<std::vector<std::size_t>> selected_species_space_pupos_INT(n_species_attributespace_INT);
   for (std::size_t a=0; a<n_species_attributespace_INT; ++a) {
-    for (std::size_t l=0; l<species_space_puids_RIV[a].size(); ++l) {
+    for (std::size_t l=0; l<static_cast<std::size_t>(species_space_puids_RIV[a].size()); ++l) {
       if (selections_MTX(0,species_space_puids_RIV[a][l])>0) {
         selected_species_space_pupos_INT[a].push_back(l);
         selected_species_space_puids_INT[a].push_back(species_space_puids_RIV[a][l]);
@@ -169,37 +169,27 @@ Rcpp::S4 rcpp_extract_model_object(Rcpp::S4 opts, bool unreliable_formulation, R
  if (verbose) Rcout << "\t\tcalculating representation props." << std::endl;
  Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> species_space_propheld_MTX(1, n_species_INT*n_attribute_spaces_INT);
  species_space_propheld_MTX.fill(NAN);
-  if (unreliable_formulation) {
-    for (std::size_t a=0; a<n_species_attributespace_INT; ++a) {
-      species_space_propheld_MTX(
-        0,
-        (species_attributespace_species_INT[a]*n_attribute_spaces_INT)+species_attributespace_space_INT[a]
-      ) = (
-        1.0-(
-          unreliable_space_value(
-            species_space_weightdist_MTX[a],
-            selected_species_space_pupos_INT[a]
-          ) / species_space_tss_DBL[a]
-        )
-      );
-    }
+ std::size_t curr_matrix_column;
+ for (std::size_t a=0; a<n_species_attributespace_INT; ++a) {
+   curr_matrix_column = (species_attributespace_species_INT[a]*n_attribute_spaces_INT)+species_attributespace_space_INT[a];
+  if (selected_species_space_pupos_INT[a].size() == 0) {
+    species_space_propheld_MTX(0, curr_matrix_column) = -std::numeric_limits<double>::infinity();
+  } else if (unreliable_formulation) {
+    species_space_propheld_MTX(0, curr_matrix_column) = 1.0 - (
+      unreliable_space_value(
+        species_space_weightdist_MTX[a],
+        selected_species_space_pupos_INT[a]
+      ) / species_space_tss_DBL[a]);
   } else {
-    for (std::size_t a=0; a<n_species_attributespace_INT; ++a) {
-      species_space_propheld_MTX(
-        0,
-        (species_attributespace_species_INT[a]*n_attribute_spaces_INT)+species_attributespace_space_INT[a]
-      ) = (
-        1.0-(
-          reliable_space_value(
-              species_space_weightdist_MTX[a],
-              selected_species_space_pupos_INT[a],
-              species_space_pu_probs_RDV[a],
-              species_space_rlevel_INT[a]
-          ) / species_space_tss_DBL[a]
-        )
-      );
-    }
+    species_space_propheld_MTX(0, curr_matrix_column) = 1.0 - (
+      reliable_space_value(
+          species_space_weightdist_MTX[a],
+          selected_species_space_pupos_INT[a],
+          species_space_pu_probs_RDV[a],
+          species_space_rlevel_INT[a]
+      ) / species_space_tss_DBL[a]);
   }
+ }
 
  /// calculated vars
  // extract summaryDF

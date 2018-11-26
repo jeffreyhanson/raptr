@@ -6,9 +6,6 @@
 \alias{cs_pus}
 \alias{cs_spp}
 \alias{cs_space}
-\alias{cs_pus}
-\alias{cs_space}
-\alias{cs_spp}
 \title{Case-study dataset for a conservation planning exercise}
 \format{cs_pus: \code{\link[sp]{SpatialPolygonsDataFrame}}, cs_spp: \code{\link[raster]{RasterLayer-class}}, cs_space: \code{\link[raster]{RasterStack-class}}.}
 \usage{

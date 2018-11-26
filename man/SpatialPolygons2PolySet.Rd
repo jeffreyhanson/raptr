@@ -11,7 +11,8 @@ SpatialPolygons2PolySet(x, n_preallocate)
 \method{SpatialPolygons2PolySet}{SpatialPolygonsDataFrame}(x,
   n_preallocate = 10000L)
 
-\method{SpatialPolygons2PolySet}{SpatialPolygons}(x, n_preallocate = 10000L)
+\method{SpatialPolygons2PolySet}{SpatialPolygons}(x,
+  n_preallocate = 10000L)
 }
 \arguments{
 \item{x}{\code{\link[sp]{SpatialPolygons}} or

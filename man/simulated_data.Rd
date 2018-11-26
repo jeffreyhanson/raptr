@@ -5,8 +5,6 @@
 \alias{simulated_data}
 \alias{sim_ru}
 \alias{sim_rs}
-\alias{sim_ru}
-\alias{sim_rs}
 \title{Simulated dataset for a conservation planning exercise}
 \format{\code{\link[sp]{SpatialPolygonsDataFrame}},
   \code{\link[raster]{RasterStack-class}}, \code{list} of

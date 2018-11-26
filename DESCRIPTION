@@ -93,6 +93,6 @@ Collate:
     'sim.species.R'
     'urap.proportion.held.R'
     'zzz.R'
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 NeedsCompilation: yes
 Maintainer: Jeffrey O Hanson <jeffrey.hanson@uqconnect.edu.au>

@@ -13,6 +13,10 @@ rcpp_dump_character_object <- function(x) {
     .Call('_raptr_rcpp_dump_character_object', PACKAGE = 'raptr', x)
 }
 
+rcpp_Polygons2PolySet <- function(polys, n_preallocate = 10000L) {
+    .Call('_raptr_rcpp_Polygons2PolySet', PACKAGE = 'raptr', polys, n_preallocate)
+}
+
 rcpp_append_model_object <- function(model, existing_sols) {
     .Call('_raptr_rcpp_append_model_object', PACKAGE = 'raptr', model, existing_sols)
 }
@@ -35,10 +39,6 @@ rcpp_groupcombine <- function(group_means) {
 
 rcpp_groupmean <- function(cat_vec, val_vec) {
     .Call('_raptr_rcpp_groupmean', PACKAGE = 'raptr', cat_vec, val_vec)
-}
-
-rcpp_Polygons2PolySet <- function(polys, n_preallocate = 10000L) {
-    .Call('_raptr_rcpp_Polygons2PolySet', PACKAGE = 'raptr', polys, n_preallocate)
 }
 
 rcpp_proportion_held <- function(x, y, y_weights) {

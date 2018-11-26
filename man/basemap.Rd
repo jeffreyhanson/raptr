@@ -6,7 +6,8 @@
 \alias{basemap.RapSolved}
 \title{Basemap}
 \usage{
-basemap(x, basemap = "hybrid", grayscale = FALSE, force.reset = FALSE)
+basemap(x, basemap = "hybrid", grayscale = FALSE,
+  force.reset = FALSE)
 
 \method{basemap}{RapData}(x, basemap = "hybrid", grayscale = FALSE,
   force.reset = FALSE)

@@ -2,10 +2,6 @@
 % Please edit documentation in R/raptr-internal.R, R/RapData.R, R/RapResults.R
 \name{cache}
 \alias{cache}
-\alias{cache}
-\alias{cache}
-\alias{cache}
-\alias{cache}
 \title{Get and set cache methods}
 \arguments{
 \item{x}{\code{RapData} or \code{RapResults} object}

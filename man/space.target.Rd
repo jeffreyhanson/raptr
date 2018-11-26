@@ -15,7 +15,8 @@ space.target(x, species, space) <- value
 
 \method{space.target}{RapData}(x, species = NULL, space = NULL)
 
-\method{space.target}{RapData}(x, species = NULL, space = NULL) <- value
+\method{space.target}{RapData}(x, species = NULL,
+  space = NULL) <- value
 
 \method{space.target}{RapUnsolOrSol}(x, species = NULL, space = NULL)
 

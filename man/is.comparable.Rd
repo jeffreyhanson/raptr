@@ -3,13 +3,9 @@
 \docType{methods}
 \name{is.comparable}
 \alias{is.comparable}
-\alias{is.comparable}
 \alias{is.comparable,RapData,RapData-method}
-\alias{is.comparable}
 \alias{is.comparable,RapUnsolOrSol,RapUnsolOrSol-method}
-\alias{is.comparable}
 \alias{is.comparable,RapData,RapUnsolOrSol-method}
-\alias{is.comparable}
 \alias{is.comparable,RapUnsolOrSol,RapData-method}
 \title{Compare Rap objects}
 \usage{

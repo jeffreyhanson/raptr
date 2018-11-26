@@ -1,3 +1,10 @@
+# raptr 0.1.3 (unreleased)
+
+- fix bug that caused the R session to crash when none of the planning
+  units associated with an attribute space were selected in a manually
+  specified solution. Now the space-held calculations will return
+  a negative infinity value in such cases.
+
 # raptr 0.1.2 (released)
 
 - fix compatibility issues with demand point examples and _hypervolume_ R 

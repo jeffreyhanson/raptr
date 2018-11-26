@@ -2,15 +2,10 @@
 % Please edit documentation in R/generics.R, R/RapSolved.R
 \name{solve}
 \alias{solve}
-\alias{solve}
 \alias{solve,RapUnsolOrSol,missing-method}
-\alias{solve}
 \alias{solve,RapUnsolOrSol,GurobiOpts-method}
-\alias{solve}
 \alias{solve,RapUnsolOrSol,matrix-method}
-\alias{solve}
 \alias{solve,RapUnsolOrSol,numeric-method}
-\alias{solve}
 \alias{solve,RapUnsolOrSol,logical-method}
 \title{Solve RAP object}
 \usage{

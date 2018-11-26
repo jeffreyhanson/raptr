@@ -2,8 +2,6 @@
 % Please edit documentation in R/raptr-internal.R, R/RapData.R, R/RapResults.R
 \name{is.cached}
 \alias{is.cached}
-\alias{is.cached}
-\alias{is.cached}
 \title{Test if hash is cached in a Rap object}
 \arguments{
 \item{x}{\code{RapData} or \code{RapResults} object}

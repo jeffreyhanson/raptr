@@ -2,11 +2,8 @@
 % Please edit documentation in R/generics.R, R/RapSolved.R
 \name{plot}
 \alias{plot}
-\alias{plot}
 \alias{plot,RapSolved,numeric-method}
-\alias{plot}
 \alias{plot,RapSolved,missing-method}
-\alias{plot}
 \alias{plot,RapSolved,RapSolved-method}
 \title{Plot object}
 \usage{

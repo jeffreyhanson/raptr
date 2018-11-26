@@ -415,6 +415,27 @@ test_that("solve.RapUnsolved (reliable - BLM test)", {
   runReliableChecks(sim_rs)
 })
 
+test_that("solve.RapUnsolved (manual solution, omitting all attribute space planning units)", {
+  # load RapUnsolved object
+  set.seed(500)
+  data(sim_ru)
+  sim_ru <- pu.subset(sim_ru, 1:10)
+  sim_ru <- spp.subset(sim_ru, 1)
+  sim_ru <- dp.subset(sim_ru, species = 1, space = 1, points = 1:10)
+  sim_ru@data@pu.species.probabilities <- sim_ru@data@pu.species.probabilities[-1, , drop = FALSE]
+  sim_ru@data@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points@coords <- 
+    sim_ru@data@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points@coords[-1, , drop = FALSE]
+  sim_ru@data@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points@ids <- 
+    sim_ru@data@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points@ids[-1]
+  sim_ru@data@targets[[3]] <- c(0.5, 0.1)
+  # solve it
+  sim_rs <- suppressWarnings(raptr::solve(sim_ru, c(1)))
+  expect_is(sim_rs, "RapSolved")
+  expect_equal(space.held(sim_rs, 1)[[1]], -Inf)
+})
+
+
+
 test_that("update.RapUnsolved", {
   # load RapUnsolved object
   set.seed(500)

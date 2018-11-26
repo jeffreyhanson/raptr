@@ -7,7 +7,8 @@
 \usage{
 space.held(x, y, species, space)
 
-\method{space.held}{RapSolved}(x, y = 0, species = NULL, space = NULL)
+\method{space.held}{RapSolved}(x, y = 0, species = NULL,
+  space = NULL)
 }
 \arguments{
 \item{x}{\code{\link{RapResults}} or \code{\link{RapSolved}} object.}

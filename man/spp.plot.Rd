@@ -21,9 +21,10 @@ spp.plot(x, species, ...)
   grayscale = FALSE, main = NULL, force.reset = FALSE, ...)
 
 \method{spp.plot}{RapSolved}(x, species, y = 0,
-  prob.color.palette = "YlGnBu", pu.color.palette = c("#4D4D4D", "#00FF00",
-  "#FFFF00", "#FF0000"), basemap = "none", alpha = ifelse(basemap == "none",
-  1, 0.7), grayscale = FALSE, main = NULL, force.reset = FALSE, ...)
+  prob.color.palette = "YlGnBu", pu.color.palette = c("#4D4D4D",
+  "#00FF00", "#FFFF00", "#FF0000"), basemap = "none",
+  alpha = ifelse(basemap == "none", 1, 0.7), grayscale = FALSE,
+  main = NULL, force.reset = FALSE, ...)
 }
 \arguments{
 \item{x}{\code{\link{RapData}}, \code{\link{RapUnsolved}}, or

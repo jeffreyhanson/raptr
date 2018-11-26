@@ -8,8 +8,8 @@
 \usage{
 sim.space(x, ...)
 
-\method{sim.space}{RasterLayer}(x, d = 2, model = RandomFields::RMgauss(),
-  ...)
+\method{sim.space}{RasterLayer}(x, d = 2,
+  model = RandomFields::RMgauss(), ...)
 
 \method{sim.space}{SpatialPolygons}(x, res, d = 2,
   model = RandomFields::RMgauss(), ...)

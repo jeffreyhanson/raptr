@@ -18,8 +18,8 @@
 \method{update}{ManualOpts}(object, NumberSolutions = NULL, ...)
 
 \method{update}{RapData}(object, species = NULL, space = NULL,
-  name = NULL, amount.target = NULL, space.target = NULL, pu = NULL,
-  cost = NULL, status = NULL, ...)
+  name = NULL, amount.target = NULL, space.target = NULL,
+  pu = NULL, cost = NULL, status = NULL, ...)
 
 \method{update}{RapReliableOpts}(object, BLM = NULL,
   failure.multiplier = NULL, max.r.level = NULL, ...)

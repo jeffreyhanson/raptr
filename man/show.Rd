@@ -5,21 +5,13 @@
 \docType{methods}
 \name{show}
 \alias{show}
-\alias{show}
 \alias{show,GurobiOpts-method}
-\alias{show}
 \alias{show,ManualOpts-method}
-\alias{show}
 \alias{show,RapData-method}
-\alias{show}
 \alias{show,RapReliableOpts-method}
-\alias{show}
 \alias{show,RapResults-method}
-\alias{show}
 \alias{show,RapUnreliableOpts-method}
-\alias{show}
 \alias{show,RapUnsolved-method}
-\alias{show}
 \alias{show,RapSolved-method}
 \title{Show objects}
 \usage{

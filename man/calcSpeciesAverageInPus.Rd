@@ -12,8 +12,8 @@ calcSpeciesAverageInPus(x, ...)
   ids = seq_len(nlayers(y)), ncores = 1, gdal = FALSE, ...)
 
 \method{calcSpeciesAverageInPus}{SpatialPolygonsDataFrame}(x, y,
-  ids = seq_len(nlayers(y)), ncores = 1, gdal = FALSE, field = NULL,
-  ...)
+  ids = seq_len(nlayers(y)), ncores = 1, gdal = FALSE,
+  field = NULL, ...)
 }
 \arguments{
 \item{x}{\code{\link[sp]{SpatialPolygons}} or
