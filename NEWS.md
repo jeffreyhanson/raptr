@@ -1,4 +1,4 @@
-# raptr 0.1.3 (unreleased)
+# raptr 0.1.3 (released)
 
 - fix bug that caused the R session to crash when none of the planning
   units associated with an attribute space were selected in a manually
