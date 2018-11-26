@@ -1,6 +1,6 @@
 # Comments for submission to CRAN
 
-This version catches a rare edge-case in the underlying C++ code that previously resulted in a segmentation fault.
+This update catches a couple of rare edge cases that would previously result in an error or a segmentation fault.
 
 Thanks!
 
@@ -18,6 +18,7 @@ Jeffrey Hanson
 * [Windows Server 2012 R2 (x64) (appveyor)](https://ci.appveyor.com/project/jeffreyhanson/raptr)
   + release
 * [Win-Builder](https://win-builder.r-project.org/)
+  + release
   + devel
 
 ## R CMD check results
