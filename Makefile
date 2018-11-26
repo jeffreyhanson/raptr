@@ -21,8 +21,9 @@ readme:
 contrib:
 	R --slave -e "rmarkdown::render('CONTRIBUTING.Rmd')"
 
-vigns: install
+vigns:
 	R --slave -e "devtools::build_vignettes()"
+  mv doc inst/
 
 site:
 	R --slave -e "pkgdown::clean_site()"
