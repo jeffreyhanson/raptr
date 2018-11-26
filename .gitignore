@@ -17,3 +17,4 @@ gurobi.log
 check.log
 test.log
 spell.log
+!inst/doc
