@@ -20,9 +20,10 @@ methods::setClass("DemandPoints",
   methods::representation(coords = "matrix", weights = "numeric"),
   validity = function(object) {
     # check coords have variance
-    assertthat::assert_that(max(apply(object@coords, 2,
-                                      function(x) length(unique(x)))) > 1,
-                            msg = "demand points must not all be identical")
+    if (nrow(object@coords) > 1)
+      assertthat::assert_that(max(apply(object@coords, 2,
+                                        function(x) length(unique(x)))) > 1,
+                              msg = "demand points must not all be identical")
     # check coords are not NA
     assertthat::assert_that(all(is.finite(c(object@coords))),
                             msg = paste0("argument to coords contains NA or ",

@@ -4,10 +4,11 @@
   units associated with an attribute space were selected in a manually
   specified solution. Now the space-held calculations will return
   a negative infinity value in such cases.
+- permit attribute spaces to have a single demand point.
 
 # raptr 0.1.2 (released)
 
-- fix compatibility issues with demand point examples and _hypervolume_ R 
+- fix compatibility issues with demand point examples and _hypervolume_ R
   package (version 2.0.10).
 - update package citation.
 - removed _rgurobi_ R package dependency because the _gurobi_ R package

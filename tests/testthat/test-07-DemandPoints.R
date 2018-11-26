@@ -10,6 +10,16 @@ test_that("DemandPoints generator function", {
   expect_equal(length(dp@weights), 50)
 })
 
+test_that("DemandPoints generator function (single point)", {
+  # create object
+  dp <- DemandPoints(matrix(1, ncol = 2, nrow = 1), 1)
+  # check object
+  expect_is(dp, "DemandPoints")
+  expect_equal(ncol(dp@coords), 2)
+  expect_equal(nrow(dp@coords), 1)
+  expect_equal(length(dp@weights), 1)
+})
+
 test_that("demand.points (ks, geographic space)", {
   # load data
   sim_spp <- sim.species(sim.pus(225L), model = "normal", res = 1)

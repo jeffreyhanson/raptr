@@ -33,9 +33,13 @@ test:
 	R --slave -e "devtools::test()" > test.log 2>&1
 	rm -f tests/testthat/Rplots.pdf
 
+quickcheck:
+	echo "\n===== R CMD CHECK =====\n" > check.log 2>&1
+	R --slave -e "devtools::check(build_args = '--no-build-vignettes', args = '--no-build-vignettes', run_dont_test = TRUE, vignettes = FALSE)" >> check.log 2>&1
+
 check:
 	echo "\n===== R CMD CHECK =====\n" > check.log 2>&1
-	R --slave -e "devtools::check()" >> check.log 2>&1
+	R --slave -e "devtools::check(build_args = '--no-build-vignettes', run_dont_test = TRUE, vignettes = FALSE)" >> check.log 2>&1
 
 wbcheck:
 	R --slave -e "devtools::build_win()"
