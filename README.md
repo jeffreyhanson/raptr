@@ -69,7 +69,7 @@ citation("raptr")
     ##     author = {Jeffrey O Hanson and Jonathan R Rhodes and Hugh P Possingham and Richard A Fuller},
     ##     title = {raptr: Representative and adequate prioritization toolkit in R},
     ##     journal = {Methods in Ecology and Evolution},
-    ##     year = {2017},
+    ##     year = {2018},
     ##     volume = {9},
     ##     pages = {320--330},
     ##     url = {https://dx.doi.org/10.1111/2041-210X.12862},

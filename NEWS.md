@@ -1,3 +1,7 @@
+# raptr 0.1.4 (released)
+
+- retain debugging symbols to conform with CRAN policies.
+
 # raptr 0.1.3 (released)
 
 - fix bug that caused the R session to crash when none of the planning
