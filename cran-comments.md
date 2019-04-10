@@ -4,7 +4,7 @@ I received an email from Prof Brian Ripley informing me that CRAN policies requi
 
 Cheers,
 
-Richard
+Jeff
 
 ## Test environments
 
