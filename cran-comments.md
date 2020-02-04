@@ -1,6 +1,6 @@
 Dear CRAN maintainers,
 
-I received an email from Prof Brian Ripley informing me that CRAN policies require packages to retain debugging symbols. In earlier versions of this package, debugging symbols were unconditionally stripped from shared object library files. This version addresses this issue.
+This update fixes documentation issues causing the package to fail R-devel checks on CRAN.
 
 Cheers,
 
