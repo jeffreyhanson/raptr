@@ -26,8 +26,6 @@ words, how far apart vertices have to be to be considered different?}
 
 \item{edge.factor}{\code{numeric} to scale boundary lengths for edges that
 do not have any neighbors, such as those that occur along the margins.}
-
-\item{...}{not used.}
 }
 \value{
 \code{data.frame} with 'id1' (\code{integer}), 'id2'

@@ -971,8 +971,6 @@ space.target <- function(x, species, space) UseMethod("space.target")
 #'   for the best solution, \code{integer} value greater than 0 for \code{y}'th
 #'   solution value.
 #'
-#' @param ... not used.
-#'
 #' @return \code{\link[base]{matrix}} or \code{numeric} vector depending on
 #'   arguments.
 #'

@@ -25,8 +25,6 @@ NULL
 #' @param edge.factor \code{numeric} to scale boundary lengths for edges that
 #'   do not have any neighbors, such as those that occur along the margins.
 #'
-#' @param ... not used.
-#'
 #' @return \code{data.frame} with 'id1' (\code{integer}), 'id2'
 #'   (\code{integer}), and 'amount' (\code{numeric}) columns.
 #'

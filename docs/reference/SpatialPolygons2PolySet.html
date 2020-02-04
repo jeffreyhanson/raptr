@@ -8,10 +8,12 @@
 
 <title>Convert SpatialPolygons to PolySet data — SpatialPolygons2PolySet • raptr</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -30,12 +32,13 @@
 
 
 
-<meta property="og:title" content="Convert SpatialPolygons to PolySet data — SpatialPolygons2PolySet" />
 
+<meta property="og:title" content="Convert SpatialPolygons to PolySet data — SpatialPolygons2PolySet" />
 <meta property="og:description" content="This function converts spatial SpatialPolygons and
 SpatialPolygonsDataFrame objects to
 PolySet objects." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -65,7 +68,7 @@ PolySet objects." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
       </span>
     </div>
 
@@ -87,7 +90,6 @@ PolySet objects." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/jeffreyhanson/raptr">
@@ -113,11 +115,9 @@ PolySet objects." />
     </div>
 
     <div class="ref-description">
-    
     <p>This function converts spatial <code><a href='https://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygons</a></code> and
 <code><a href='https://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygonsDataFrame</a></code> objects to
 <code><a href='https://www.rdocumentation.org/packages/PBSmapping/topics/PolySet'>PolySet</a></code> objects.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>SpatialPolygons2PolySet</span>(<span class='no'>x</span>, <span class='no'>n_preallocate</span>)
@@ -129,7 +129,7 @@ PolySet objects." />
 <span class='co'># S3 method for SpatialPolygons</span>
 <span class='fu'>SpatialPolygons2PolySet</span>(<span class='no'>x</span>,
   <span class='kw'>n_preallocate</span> <span class='kw'>=</span> <span class='fl'>10000L</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -146,22 +146,19 @@ in the <code><a href='https://www.rdocumentation.org/packages/sp/topics/SpatialP
 taking too long consider increasing this value.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code><a href='https://www.rdocumentation.org/packages/PBSmapping/topics/PolySet'>PolySet</a></code> object.</p>
-    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Be aware that this function is designed to be as fast as possible, but
   as a result it depends on C++ code and if used inappropriately this
   function will crash R.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>For a slower, more stable equivalent see
   <code><a href='https://www.rdocumentation.org/packages/maptools/topics/SpatialLines2PolySet'>maptools::SpatialPolygons2PolySet</a></code>.</p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># generate SpatialPolygons object</span>
@@ -174,13 +171,9 @@ taking too long consider increasing this value.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#note">Note</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

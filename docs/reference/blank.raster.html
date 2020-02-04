@@ -8,10 +8,12 @@
 
 <title>Blank raster — blank.raster • raptr</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -30,11 +32,12 @@
 
 
 
-<meta property="og:title" content="Blank raster — blank.raster" />
 
+<meta property="og:title" content="Blank raster — blank.raster" />
 <meta property="og:description" content="This functions creates a blank raster based on the spatial extent of a
 Spatial object." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -64,7 +67,7 @@ Spatial object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
       </span>
     </div>
 
@@ -86,7 +89,6 @@ Spatial object." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/jeffreyhanson/raptr">
@@ -112,14 +114,12 @@ Spatial object." />
     </div>
 
     <div class="ref-description">
-    
     <p>This functions creates a blank raster based on the spatial extent of a
 Spatial object.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>blank.raster</span>(<span class='no'>x</span>, <span class='no'>res</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -134,21 +134,21 @@ in the x and y dimensions. If <code>vector</code> is of length one, then the
 pixels are assumed to be square.</p></td>
     </tr>
     </table>
-    
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># make SpatialPolygons</span>
 <span class='no'>polys</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sim.pus.html'>sim.pus</a></span>(<span class='fl'>225L</span>)
 
 <span class='co'># make RasterLayer from SpatialPolygons</span>
-<span class='fu'>blank.raster</span>(<span class='no'>polys</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; class       : RasterLayer 
-#&gt; dimensions  : 15, 15, 225  (nrow, ncol, ncell)
-#&gt; resolution  : 1, 1  (x, y)
-#&gt; extent      : -7.5, 7.5, -7.5, 7.5  (xmin, xmax, ymin, ymax)
-#&gt; coord. ref. : +proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0 
-#&gt; data source : in memory
-#&gt; names       : layer 
-#&gt; values      : 1, 1  (min, max)
+<span class='fu'>blank.raster</span>(<span class='no'>polys</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; class      : RasterLayer 
+#&gt; dimensions : 15, 15, 225  (nrow, ncol, ncell)
+#&gt; resolution : 1, 1  (x, y)
+#&gt; extent     : -7.5, 7.5, -7.5, 7.5  (xmin, xmax, ymin, ymax)
+#&gt; crs        : +proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0 
+#&gt; source     : memory
+#&gt; names      : layer 
+#&gt; values     : 1, 1  (min, max)
 #&gt; </div><div class='input'>
 </div></pre>
   </div>
@@ -156,7 +156,6 @@ pixels are assumed to be square.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
       <li><a href="#examples">Examples</a></li>
     </ul>
 

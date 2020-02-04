@@ -1,3 +1,7 @@
+# raptr 0.1.5 (released)
+
+- fix warnings in R-devel CRAN checks related to documentation.
+
 # raptr 0.1.4 (released)
 
 - retain debugging symbols to conform with CRAN policies.

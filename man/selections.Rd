@@ -18,8 +18,6 @@ selections(x, y)
 \item{y}{\code{NULL} to return all values, \code{integer} 0 to return values
 for the best solution, \code{integer} value greater than 0 for \code{y}'th
 solution value.}
-
-\item{...}{not used.}
 }
 \value{
 \code{\link[base]{matrix}} or \code{numeric} vector depending on
