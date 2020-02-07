@@ -77,7 +77,7 @@ NULL
 #' \item{cs_pus}{\code{\link[sp]{SpatialPolygonsDataFrame}} planning units.
 #' The units were generated as \eqn{30km^2} squares across the
 #' species' range, and then clipped to the Queensland, Australia
-#' (using data obtained from the \href{Australia Bureau of Statistics}{http://www.abs.gov.au/ausstats/abs@@.nsf/mf/1259.0.30.001?OpenDocument}).
+#' (using data obtained from the Australia Bureau of Statistics; \url{http://www.abs.gov.au/ausstats/abs@@.nsf/mf/1259.0.30.001?OpenDocument}).
 #' They were then overlaid with Australia's protected area
 #' network (obtained from the World Database on Protected Areas
 #' (WDPA) at \url{http://www.protectedplanet.net/}). This

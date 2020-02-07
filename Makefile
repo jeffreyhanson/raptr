@@ -31,6 +31,11 @@ site:
 	R --slave -e "pkgdown::build_site(run_dont_run = TRUE, lazy = FALSE)"
 	cp -R doc inst/
 
+quicksite:
+	R --slave -e "pkgdown::build_site(run_dont_run = TRUE, lazy = TRUE)"
+	cp -R doc inst/
+	touch inst/doc/.gitkeep
+
 test:
 	R --slave -e "devtools::test()" > test.log 2>&1
 	rm -f tests/testthat/Rplots.pdf
@@ -48,7 +53,9 @@ check:
 	touch inst/doc/.gitkeep
 
 wbcheck:
-	R --slave -e "devtools::build_win()"
+	R --slave -e "devtools::check_win_devel()"
+	R --slave -e "devtools::check_win_release()"
+	cp -R doc inst/
 
 solarischeck:
 	R --slave -e "rhub::check(platform = 'solaris-x86-patched', email = 'jeffrey.hanson@uqconnect.edu.au', show_status = FALSE)"
