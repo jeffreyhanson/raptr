@@ -68,7 +68,7 @@ RapSolved object with outputs in it." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6</span>
       </span>
     </div>
 
@@ -175,7 +175,9 @@ the initial model matrix?.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load RapUnsolved object</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>sim_ru</span>)</div><div class='input'><span class='co'># solve it using Gurobi</span>
-<span class='no'>sim_rs</span> <span class='kw'>&lt;-</span> <span class='fu'>solve</span>(<span class='no'>sim_ru</span>)</div><div class='output co'>#&gt; Optimize a model with 30306 rows, 30100 columns and 120000 nonzeros
+<span class='no'>sim_rs</span> <span class='kw'>&lt;-</span> <span class='fu'>solve</span>(<span class='no'>sim_ru</span>)</div><div class='output co'>#&gt; Gurobi Optimizer version 9.0.1 build v9.0.1rc0 (linux64)
+#&gt; Optimize a model with 30306 rows, 30100 columns and 120000 nonzeros
+#&gt; Model fingerprint: 0xba2fdd45
 #&gt; Variable types: 0 continuous, 30100 integer (30100 binary)
 #&gt; Coefficient statistics:
 #&gt;   Matrix range     [7e-03, 9e+01]
@@ -183,17 +185,9 @@ the initial model matrix?.</p></td>
 #&gt;   Bounds range     [1e+00, 1e+00]
 #&gt;   RHS range        [1e+00, 1e+02]
 #&gt; Found heuristic solution: objective 99.0000000
-#&gt; Presolve removed 35 rows and 15 columns (presolve time = 5s) ...
-#&gt; Presolve removed 104 rows and 15 columns (presolve time = 10s) ...
-#&gt; Presolve removed 264 rows and 15 columns (presolve time = 15s) ...
-#&gt; Presolve removed 265 rows and 15 columns (presolve time = 20s) ...
-#&gt; Presolve removed 268 rows and 15 columns (presolve time = 25s) ...
-#&gt; Presolve removed 271 rows and 15 columns (presolve time = 30s) ...
-#&gt; Presolve removed 360 rows and 15 columns (presolve time = 35s) ...
-#&gt; Presolve removed 360 rows and 15 columns (presolve time = 42s) ...
-#&gt; Presolve removed 360 rows and 15 columns (presolve time = 46s) ...
+#&gt; Presolve removed 360 rows and 15 columns (presolve time = 5s) ...
 #&gt; Presolve removed 360 rows and 15 columns
-#&gt; Presolve time: 46.08s
+#&gt; Presolve time: 5.70s
 #&gt; Presolved: 29946 rows, 30085 columns, 131504 nonzeros
 #&gt; Variable types: 0 continuous, 30085 integer (30085 binary)
 #&gt; Presolve removed 67 rows and 1 columns
@@ -203,27 +197,25 @@ the initial model matrix?.</p></td>
 #&gt; Root simplex log...
 #&gt; 
 #&gt; Iteration    Objective       Primal Inf.    Dual Inf.      Time
-#&gt;        0    1.0000000e+02   0.000000e+00   1.000000e+02     49s
-#&gt;     2767    3.1513536e+01   0.000000e+00   3.734824e+03     50s
-#&gt;     5887    2.0000000e+01   0.000000e+00   0.000000e+00     54s
-#&gt;     5887    2.0000000e+01   0.000000e+00   0.000000e+00     54s
+#&gt;        0    1.0000000e+02   0.000000e+00   1.000000e+02      6s
+#&gt;     5346    2.0000000e+01   0.000000e+00   0.000000e+00      7s
+#&gt;     5346    2.0000000e+01   0.000000e+00   0.000000e+00      7s
 #&gt; 
-#&gt; Root relaxation: objective 2.000000e+01, 5887 iterations, 7.45 seconds
-#&gt; Total elapsed time = 59.75s
+#&gt; Root relaxation: objective 2.000000e+01, 5346 iterations, 1.37 seconds
 #&gt; 
 #&gt;     Nodes    |    Current Node    |     Objective Bounds      |     Work
 #&gt;  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 #&gt; 
-#&gt; H    0     0                      20.0000000    0.00000   100%     -   59s
-#&gt;      0     0          -    0        20.00000   20.00000  0.00%     -   59s
+#&gt;      0     0   20.00000    0   21   99.00000   20.00000  79.8%     -    7s
+#&gt; H    0     0                      21.0000000   20.00000  4.76%     -    7s
 #&gt; 
-#&gt; Explored 0 nodes (11017 simplex iterations) in 59.92 seconds
+#&gt; Explored 1 nodes (10151 simplex iterations) in 7.53 seconds
 #&gt; Thread count was 1 (of 4 available processors)
 #&gt; 
-#&gt; Solution count 2: 20 99 
+#&gt; Solution count 2: 21 99 
 #&gt; 
 #&gt; Optimal solution found (tolerance 1.00e-01)
-#&gt; Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%</div><div class='input'>
+#&gt; Best objective 2.100000000000e+01, best bound 2.000000000000e+01, gap 4.7619%</div><div class='input'>
 <span class='co'># evaluate manually specified solution using planning unit indices</span>
 <span class='no'>sim_rs2</span> <span class='kw'>&lt;-</span> <span class='fu'>solve</span>(<span class='no'>sim_ru</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq_len</a></span>(<span class='fl'>10</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: some species have space.held values less than 0, and thus are poorly represented</span></div><div class='input'>
 <span class='co'># evaluate manually specifed solution using binary selections</span>

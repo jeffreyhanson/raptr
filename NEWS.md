@@ -1,3 +1,8 @@
+# raptr 0.1.6 (released)
+
+- fix errors in R-devel CRAN checks due changes in `is.finite` behaviour for
+  `character` class objects.
+
 # raptr 0.1.5 (released)
 
 - fix warnings in R-devel CRAN checks related to documentation.

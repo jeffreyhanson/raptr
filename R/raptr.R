@@ -10,7 +10,7 @@
 #' solve the optimization problems in a feasible amount of time, this package
 #' uses the commercial 'Gurobi' software package (obtained from
 #' <http://www.gurobi.com/>). For more information on using
-#' this package, see Hanson et al. (2017) <doi:10.1111/2041-210X.12862>.
+#' this package, see Hanson et al. (2018) <doi:10.1111/2041-210X.12862>.
 #'
 #' The main classes used in this package are used to store input data and
 #' prioritizations:

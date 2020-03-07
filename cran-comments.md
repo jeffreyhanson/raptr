@@ -1,6 +1,6 @@
 Dear CRAN maintainers,
 
-This update fixes documentation issues causing the package to fail R-devel checks on CRAN.
+This update fixes issues causing the package to fail R-devel checks on CRAN.
 
 Cheers,
 

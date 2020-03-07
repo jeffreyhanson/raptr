@@ -64,7 +64,7 @@ methods::setClass("RapResults",
   validity = function(object) {
     # summary
     assertthat::assert_that(
-      all(unlist(sapply(object@summary, is.finite))),
+      all(unlist(sapply(object@summary, function(x) all(!is.na(x))))),
       msg = "summary contains NA or non-finite values")
 
     # selections

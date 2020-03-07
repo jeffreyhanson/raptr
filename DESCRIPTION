@@ -1,7 +1,7 @@
 Package: raptr
 Type: Package
 Title: Representative and Adequate Prioritization Toolkit in R
-Version: 0.1.5
+Version: 0.1.6
 Authors@R: c(person(c("Jeffrey", "O"), "Hanson",
     email="jeffrey.hanson@uqconnect.edu.au", role = c("aut", "cre")),
     person(c("Jonathan", "R"), "Rhodes", role = c("aut")),
@@ -44,7 +44,7 @@ Imports:
     mvtnorm,
     ggplot2
 Depends:
-    R(>= 3.1.0),
+    R(>= 3.5.0),
     sp,
     raster
 LinkingTo: Rcpp, RcppEigen, BH
@@ -95,4 +95,3 @@ Collate:
     'zzz.R'
 RoxygenNote: 6.1.1
 NeedsCompilation: yes
-Maintainer: Jeffrey O Hanson <jeffrey.hanson@uqconnect.edu.au>
