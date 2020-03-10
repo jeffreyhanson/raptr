@@ -92,7 +92,7 @@ NULL
 #' obtained from The Atlas of Living Australia (\url{http://ala.org.au/})}.
 #' \item{cs_space}{\code{\link[raster]{stack}} describing broad-scale climate
 #' variation across Queensland
-#' (obtained from \url{http://www.worldclim.org/},
+#' (obtained from \url{http://worldclim.org/},
 #' and resampled to \eqn{10km^2} resolution).}
 #' }
 #'

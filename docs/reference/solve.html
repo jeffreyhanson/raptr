@@ -185,9 +185,11 @@ the initial model matrix?.</p></td>
 #&gt;   Bounds range     [1e+00, 1e+00]
 #&gt;   RHS range        [1e+00, 1e+02]
 #&gt; Found heuristic solution: objective 99.0000000
-#&gt; Presolve removed 360 rows and 15 columns (presolve time = 5s) ...
+#&gt; Presolve removed 262 rows and 15 columns (presolve time = 5s) ...
+#&gt; Presolve removed 329 rows and 15 columns (presolve time = 10s) ...
+#&gt; Presolve removed 360 rows and 15 columns (presolve time = 16s) ...
 #&gt; Presolve removed 360 rows and 15 columns
-#&gt; Presolve time: 5.70s
+#&gt; Presolve time: 15.78s
 #&gt; Presolved: 29946 rows, 30085 columns, 131504 nonzeros
 #&gt; Variable types: 0 continuous, 30085 integer (30085 binary)
 #&gt; Presolve removed 67 rows and 1 columns
@@ -197,19 +199,20 @@ the initial model matrix?.</p></td>
 #&gt; Root simplex log...
 #&gt; 
 #&gt; Iteration    Objective       Primal Inf.    Dual Inf.      Time
-#&gt;        0    1.0000000e+02   0.000000e+00   1.000000e+02      6s
-#&gt;     5346    2.0000000e+01   0.000000e+00   0.000000e+00      7s
-#&gt;     5346    2.0000000e+01   0.000000e+00   0.000000e+00      7s
+#&gt;        0    1.0000000e+02   0.000000e+00   1.000000e+02     18s
+#&gt;     4523    2.2357178e+01   0.000000e+00   2.237491e+05     20s
+#&gt;     5346    2.0000000e+01   0.000000e+00   0.000000e+00     21s
+#&gt;     5346    2.0000000e+01   0.000000e+00   0.000000e+00     21s
 #&gt; 
-#&gt; Root relaxation: objective 2.000000e+01, 5346 iterations, 1.37 seconds
+#&gt; Root relaxation: objective 2.000000e+01, 5346 iterations, 4.72 seconds
 #&gt; 
 #&gt;     Nodes    |    Current Node    |     Objective Bounds      |     Work
 #&gt;  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 #&gt; 
-#&gt;      0     0   20.00000    0   21   99.00000   20.00000  79.8%     -    7s
-#&gt; H    0     0                      21.0000000   20.00000  4.76%     -    7s
+#&gt;      0     0   20.00000    0   21   99.00000   20.00000  79.8%     -   21s
+#&gt; H    0     0                      21.0000000   20.00000  4.76%     -   21s
 #&gt; 
-#&gt; Explored 1 nodes (10151 simplex iterations) in 7.53 seconds
+#&gt; Explored 1 nodes (10151 simplex iterations) in 21.93 seconds
 #&gt; Thread count was 1 (of 4 available processors)
 #&gt; 
 #&gt; Solution count 2: 21 99 

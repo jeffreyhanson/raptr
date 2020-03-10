@@ -2,6 +2,7 @@
 
 - fix errors in R-devel CRAN checks due changes in `is.finite` behaviour for
   `character` class objects.
+- Fix WorldClim URLs.
 
 # raptr 0.1.5 (released)
 
