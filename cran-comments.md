@@ -1,11 +1,3 @@
-Dear CRAN maintainers,
-
-This update fixes issues causing the package to fail R-devel checks on CRAN.
-
-Cheers,
-
-Jeff
-
 ## Test environments
 
 * [Ubuntu 16.04 (travis-ci)](https://travis-ci.org/jeffreyhanson/raptr/builds)
