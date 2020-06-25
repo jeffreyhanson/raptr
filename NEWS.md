@@ -89,6 +89,6 @@
 - fixed authorship typo.
 - updated README with instructions for installing from CRAN.
 
-# raptr 0.0.1
+# raptr 0.0.1 (released)
 
 - Initial package version.

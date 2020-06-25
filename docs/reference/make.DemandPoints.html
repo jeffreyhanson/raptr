@@ -10,21 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -36,7 +42,6 @@
 <meta property="og:title" content="Generate demand points for RAP — make.DemandPoints" />
 <meta property="og:description" content="This function generates demand points to characterize a distribution of
 points." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -51,9 +56,10 @@ points." />
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -67,7 +73,7 @@ points." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6.1</span>
       </span>
     </div>
 
@@ -75,7 +81,7 @@ points." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -91,8 +97,8 @@ points." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/jeffreyhanson/raptr">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/jeffreyhanson/raptr/">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -103,6 +109,7 @@ points." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -118,15 +125,20 @@ points." />
 points.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>make.DemandPoints</span>(<span class='no'>points</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100L</span>, <span class='kw'>quantile</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='kw'>kernel.method</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"ks"</span>, <span class='st'>"hypervolume"</span>)[<span class='fl'>1</span>], <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>make.DemandPoints</span>(
+  <span class='no'>points</span>,
+  <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100L</span>,
+  <span class='kw'>quantile</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+  <span class='kw'>kernel.method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ks"</span>, <span class='st'>"hypervolume"</span>)[<span class='fl'>1</span>],
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>points</th>
-      <td><p><code><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></code> object containing points.</p></td>
+      <td><p><code><a href='https://rdrr.io/r/base/matrix.html'>base::matrix()</a></code> object containing points.</p></td>
     </tr>
     <tr>
       <th>n</th>
@@ -152,37 +164,37 @@ generate demand points. Defaults to <code>'ks'</code>.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code><a href='DemandPoints.html'>DemandPoints</a></code> object.</p>
+    <p><code><a href='DemandPoints.html'>DemandPoints()</a></code> object.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Broadly speaking, demand points are generated by fitting a kernal
-  to the input <code>points</code>. A shape is then fit to the extent of
-  the kernal, and then points are randomly generated inside the shape. The
-  demand points are generated as random points inside the shape. The weights
-  for each demand point are calculated the estimated density of input points
-  at the demand point. By supplying 'ks' as an argument to <code>method</code> in
-  <code>kernel.method</code>, the shape is defined using a minimum convex polygon
-  <code><a href='https://www.rdocumentation.org/packages/adehabitatHR/topics/mcp'>mcp</a></code> and <code><a href='https://www.rdocumentation.org/packages/ks/topics/kde'>kde</a></code> is used to fit
-  the kernel. Note this can only be used when the data is low-dimensional (d
-  &lt; 3). By supplying <code>"hypervolume"</code> as an argument to <code>method</code>,
-  the <code><a href='https://www.rdocumentation.org/packages/hypervolume/topics/hypervolume'>hypervolume</a></code> function is used to create the
-  demand points. This method can be used for hyper-dimensional data
-  (\(d &lt;&lt; 3\)).</p>
+to the input <code>points</code>. A shape is then fit to the extent of
+the kernal, and then points are randomly generated inside the shape. The
+demand points are generated as random points inside the shape. The weights
+for each demand point are calculated the estimated density of input points
+at the demand point. By supplying 'ks' as an argument to <code>method</code> in
+<code>kernel.method</code>, the shape is defined using a minimum convex polygon
+<code><a href='https://rdrr.io/pkg/adehabitatHR/man/mcp.html'>adehabitatHR::mcp()</a></code> and <code><a href='https://rdrr.io/pkg/ks/man/kde.html'>ks::kde()</a></code> is used to fit
+the kernel. Note this can only be used when the data is low-dimensional (d
+&lt; 3). By supplying <code>"hypervolume"</code> as an argument to <code>method</code>,
+the <code><a href='https://rdrr.io/pkg/hypervolume/man/hypervolume.html'>hypervolume::hypervolume()</a></code> function is used to create the
+demand points. This method can be used for hyper-dimensional data
+(\(d &lt;&lt; 3\)).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/hypervolume/topics/hypervolume'>hypervolume</a></code>, <code><a href='https://www.rdocumentation.org/packages/ks/topics/kde'>kde</a></code>,
-  <code><a href='https://www.rdocumentation.org/packages/adehabitatHR/topics/mcp'>mcp</a></code>.</p></div>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/hypervolume/man/hypervolume.html'>hypervolume::hypervolume()</a></code>, <code><a href='https://rdrr.io/pkg/ks/man/kde.html'>ks::kde()</a></code>,
+<code><a href='https://rdrr.io/pkg/adehabitatHR/man/mcp.html'>adehabitatHR::mcp()</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># set random number generator seed</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>500</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>500</span>)
 
 <span class='co'># load data</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>cs_spp</span>, <span class='no'>cs_space</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>cs_spp</span>, <span class='no'>cs_space</span>)
 
 <span class='co'># generate species points</span>
 <span class='no'>species.points</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='randomPoints.html'>randomPoints</a></span>(<span class='no'>cs_spp</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>env.points</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/raster/topics/extract'>extract</a></span>(<span class='no'>cs_space</span>, <span class='no'>species.points</span>)
+<span class='no'>env.points</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/extract.html'>extract</a></span>(<span class='no'>cs_space</span>, <span class='no'>species.points</span>)
 
 <span class='co'># generate demand points for a 1d space using ks</span>
 <span class='no'>dps1</span> <span class='kw'>&lt;-</span> <span class='fu'>make.DemandPoints</span>(<span class='kw'>points</span> <span class='kw'>=</span> <span class='no'>env.points</span>[, <span class='fl'>1</span>], <span class='kw'>kernel.method</span> <span class='kw'>=</span> <span class='st'>"ks"</span>)
@@ -309,7 +321,8 @@ generate demand points. Defaults to <code>'ks'</code>.</p></td>
 #&gt;  [92] 0.3263876 0.2931186 0.3885737 0.3836134 0.3911561 0.3943711 0.3918831
 #&gt;  [99] 0.3725805 0.3958686
 #&gt; </div><div class='input'>
-</div><div class='input'><span class='co'># generate demand points for a 2d space using hypervolume</span>
+<span class='co'># \donttest{</span>
+<span class='co'># generate demand points for a 2d space using hypervolume</span>
 <span class='no'>dps2</span> <span class='kw'>&lt;-</span> <span class='fu'>make.DemandPoints</span>(<span class='kw'>points</span> <span class='kw'>=</span> <span class='no'>env.points</span>,
                           <span class='kw'>kernel.method</span> <span class='kw'>=</span> <span class='st'>"hypervolume"</span>,
                           <span class='kw'>samples.per.point</span> <span class='kw'>=</span> <span class='fl'>50</span>,
@@ -441,20 +454,16 @@ generate demand points. Defaults to <code>'ks'</code>.</p></td>
 #&gt;  [86] 0.0009820880 0.0014563212 0.0013284572 0.0011139472 0.0012126921
 #&gt;  [91] 0.0008391471 0.0013030305 0.0013655273 0.0008730052 0.0012113548
 #&gt;  [96] 0.0015482540 0.0012577089 0.0009965207 0.0009473615 0.0008264729
-#&gt; </div></pre>
+#&gt; </div><div class='input'># }
+</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -462,13 +471,16 @@ generate demand points. Defaults to <code>'ks'</code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
