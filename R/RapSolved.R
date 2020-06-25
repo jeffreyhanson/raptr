@@ -266,16 +266,12 @@ methods::setMethod("solve",
 
 #' @rdname selections
 #'
-#' @inheritParams selections
-#'
 #' @export
 selections.RapSolved <- function(x, y = 0) {
   selections.RapResults(x@results, y)
 }
 
 #' @rdname score
-#'
-#' @inheritParams score
 #'
 #' @export
 score.RapSolved <- function(x, y = 0) {
@@ -290,8 +286,6 @@ summary.RapSolved <- function(object, ...) {
 }
 
 #' @export
-#'
-#' @inheritParams amount.held
 #'
 #' @rdname amount.held
 amount.held.RapSolved <- function(x, y = 0, species = NULL) {
@@ -313,8 +307,6 @@ amount.held.RapSolved <- function(x, y = 0, species = NULL) {
 }
 
 #' @rdname space.held
-#'
-#' @inheritParams space.held
 #'
 #' @export
 space.held.RapSolved <- function(x, y = 0, species = NULL, space = NULL) {
@@ -358,8 +350,6 @@ space.held.RapSolved <- function(x, y = 0, species = NULL, space = NULL) {
 }
 
 #' @rdname logging.file
-#'
-#' @inheritParams logging.file
 #'
 #' @export
 logging.file.RapSolved <- function(x, y = 0) {

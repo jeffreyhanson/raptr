@@ -21,7 +21,7 @@ be returned, and \code{0} to return score for the best solution.}
 }
 \value{
 \code{matrix} or \code{numeric} vector with solution score(s)
- depending on arguments.
+depending on arguments.
 }
 \description{
 Extract solution score from \code{\link{RapResults}} or

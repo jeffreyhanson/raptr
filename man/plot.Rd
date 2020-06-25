@@ -34,16 +34,6 @@ grayscale = FALSE, main = NULL, force.reset = FALSE)
 object to plot differences in solutions between objects. Defaults to
 \code{NULL}.}
 
-\item{i}{Available inputs are: \code{NULL} to plot selection frequencies.
-\code{numeric} to plot a specific solution, \code{0} to plot the best
-solution. This argument is only used when \code{y} is a
-\code{\link{RapSolved}} object. Defaults to \code{NULL}.}
-
-\item{j}{Available inputs are: \code{NULL} to plot selection frequencies.
-\code{numeric} to plot a specific solution, \code{0} to plot the best
-solution. This argument is only used when \code{y} is a
-\code{\link{RapSolved}} object. Defaults to argument \code{j}.}
-
 \item{basemap}{\code{character} object indicating the type of basemap to use
 (see \code{\link{basemap}}). Valid options include \code{"none"},
 \code{"roadmap"}, \code{"mobile"}, \code{"satellite"}, \code{"terrain"},
@@ -53,7 +43,7 @@ Defaults to \code{"none"}.}
 \item{pu.color.palette}{\code{character} name of colors or color palette
 (\code{\link[RColorBrewer]{brewer.pal}}) to indicate planning unit
 statuses. Defaults to \code{c("grey30", "green", "yellow", "black",
-"gray80", "red", "orange")}.}
+  "gray80", "red", "orange")}.}
 
 \item{alpha}{\code{numeric} value to indicating the transparency level for
 coloring the planning units.}
@@ -65,6 +55,16 @@ a default title is used.}
 
 \item{force.reset}{\code{logical} if basemap data has been cached, should it
 be re-downloaded?}
+
+\item{i}{Available inputs are: \code{NULL} to plot selection frequencies.
+\code{numeric} to plot a specific solution, \code{0} to plot the best
+solution. This argument is only used when \code{y} is a
+\code{\link{RapSolved}} object. Defaults to \code{NULL}.}
+
+\item{j}{Available inputs are: \code{NULL} to plot selection frequencies.
+\code{numeric} to plot a specific solution, \code{0} to plot the best
+solution. This argument is only used when \code{y} is a
+\code{\link{RapSolved}} object. Defaults to argument \code{j}.}
 }
 \description{
 This function plots the solutions contained in \code{\link{RapSolved}}

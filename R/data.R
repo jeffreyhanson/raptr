@@ -84,7 +84,7 @@ NULL
 #' attribute table has 3 fields. The \code{area} field denotes
 #' the amount of land encompassed by each unit, the \code{cost}
 #' field is set to 1 for all units, and the \code{status} field
-#' indicates if 50\% or more of the units' extent is covered by
+#' indicates if 50% or more of the units' extent is covered by
 #' protected areas.}
 #' \item{cs_spp}{\code{\link[raster]{RasterLayer-class}} probability
 #' distribution map for the \emph{P. adscitus} clipped to

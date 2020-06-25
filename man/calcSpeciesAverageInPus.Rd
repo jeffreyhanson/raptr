@@ -8,12 +8,24 @@
 \usage{
 calcSpeciesAverageInPus(x, ...)
 
-\method{calcSpeciesAverageInPus}{SpatialPolygons}(x, y,
-  ids = seq_len(nlayers(y)), ncores = 1, gdal = FALSE, ...)
+\method{calcSpeciesAverageInPus}{SpatialPolygons}(
+  x,
+  y,
+  ids = seq_len(nlayers(y)),
+  ncores = 1,
+  gdal = FALSE,
+  ...
+)
 
-\method{calcSpeciesAverageInPus}{SpatialPolygonsDataFrame}(x, y,
-  ids = seq_len(nlayers(y)), ncores = 1, gdal = FALSE,
-  field = NULL, ...)
+\method{calcSpeciesAverageInPus}{SpatialPolygonsDataFrame}(
+  x,
+  y,
+  ids = seq_len(nlayers(y)),
+  ncores = 1,
+  gdal = FALSE,
+  field = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{\code{\link[sp]{SpatialPolygons}} or
@@ -41,7 +53,7 @@ treat each polygon as a different planning unit.}
 }
 \value{
 \code{\link[base]{data.frame}} with sum of raster values in each
-  polygon.
+polygon.
 }
 \description{
 This function calculates the average of species values in each planning unit.
@@ -63,5 +75,5 @@ puvspr2.dat <- calcSpeciesAverageInPus(sim_pus, stack(sim_spp))
 }
 \seealso{
 \code{\link{is.gdalInstalled}}, \url{http://www.gdal.org/},
-  \url{http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries}.
+\url{http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries}.
 }

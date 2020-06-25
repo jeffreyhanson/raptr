@@ -21,7 +21,7 @@ index or species names to subset.}
 }
 \value{
 \code{\link{RapData}} or \code{\link{RapUnsolved}} object depending
-  on input object.
+on input object.
 }
 \description{
 Subset species from a \code{\link{RapData}}, \code{\link{RapUnsolved}}, or
@@ -37,5 +37,5 @@ sim_ru2 <- spp.subset(sim_ru, 1)
 }
 \seealso{
 \code{\link{RapData}}, \code{\link{RapUnsolved}},
-  \code{\link{RapSolved}}.
+\code{\link{RapSolved}}.
 }

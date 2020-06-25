@@ -2,7 +2,6 @@
 % Please edit documentation in R/generics.R, R/GurobiOpts.R, R/ManualOpts.R,
 %   R/RapData.R, R/RapReliableOpts.R, R/RapResults.R, R/RapUnreliableOpts.R,
 %   R/RapUnsolved.R, R/RapSolved.R
-\docType{methods}
 \name{show}
 \alias{show}
 \alias{show,GurobiOpts-method}
@@ -67,7 +66,7 @@ sim_rs
 }
 \seealso{
 \code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}},
-  \code{\link{RapReliableOpts}}, \code{\link{RapData}},
-  \code{\link{RapUnsolved}}, \code{\link{RapResults}},
-  \code{\link{RapSolved}}.
+\code{\link{RapReliableOpts}}, \code{\link{RapData}},
+\code{\link{RapUnsolved}}, \code{\link{RapResults}},
+\code{\link{RapSolved}}.
 }

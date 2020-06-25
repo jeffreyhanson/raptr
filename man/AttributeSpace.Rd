@@ -31,5 +31,5 @@ space <- AttributeSpace(
 }
 \seealso{
 \code{\link{DemandPoints-class}},
-  \code{\link{PlanningUnitPoints-class}}.
+\code{\link{PlanningUnitPoints-class}}.
 }

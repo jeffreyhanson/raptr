@@ -15,13 +15,11 @@ space.target(x, species, space) <- value
 
 \method{space.target}{RapData}(x, species = NULL, space = NULL)
 
-\method{space.target}{RapData}(x, species = NULL,
-  space = NULL) <- value
+\method{space.target}{RapData}(x, species = NULL, space = NULL) <- value
 
 \method{space.target}{RapUnsolOrSol}(x, species = NULL, space = NULL)
 
-\method{space.target}{RapUnsolOrSol}(x, species = NULL,
-  space = NULL) <- value
+\method{space.target}{RapUnsolOrSol}(x, species = NULL, space = NULL) <- value
 }
 \arguments{
 \item{x}{\code{\link{RapData}}, \code{\link{RapUnsolved}}, or
@@ -60,5 +58,5 @@ space.target(sim_rs, 1, 1) <- 0.5
 }
 \seealso{
 \code{\link{RapData}}, \code{\link{RapResults}},
-  \code{\link{RapSolved}}.
+\code{\link{RapSolved}}.
 }

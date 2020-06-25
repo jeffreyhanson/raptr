@@ -7,8 +7,7 @@
 \usage{
 space.held(x, y, species, space)
 
-\method{space.held}{RapSolved}(x, y = 0, species = NULL,
-  space = NULL)
+\method{space.held}{RapSolved}(x, y = 0, species = NULL, space = NULL)
 }
 \arguments{
 \item{x}{\code{\link{RapResults}} or \code{\link{RapSolved}} object.}
@@ -34,13 +33,13 @@ solution.
 # load data
 data(sim_rs)
 
-# space held (\\\%) for each species in best solution
+# space held (\%) for each species in best solution
 space.held(sim_rs, 0)
 
-# space held (\\\%) for each species in second solution
+# space held (\%) for each species in second solution
 space.held(sim_rs, 2)
 
-# space held (\\\%) for each species in each solution
+# space held (\%) for each species in each solution
 space.held(sim_rs)
 
 }

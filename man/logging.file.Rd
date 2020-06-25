@@ -25,7 +25,7 @@ an optimization problem.
 }
 \note{
 The term logging file was used due to collisions with the \code{log}
-  function.
+function.
 }
 \examples{
 # load data

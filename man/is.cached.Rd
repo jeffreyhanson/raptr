@@ -3,6 +3,13 @@
 \name{is.cached}
 \alias{is.cached}
 \title{Test if hash is cached in a Rap object}
+\usage{
+is.cached(x, name)
+
+\S4method{is.cached}{RapData,character}(x, name)
+
+\S4method{is.cached}{RapResults,character}(x, name)
+}
 \arguments{
 \item{x}{\code{RapData} or \code{RapResults} object}
 
@@ -16,6 +23,6 @@ Tests if hash is cached in Rap object.
 }
 \note{
 caches are implemented using environments, the hash is used as the
-  name of the object in the environment.
+name of the object in the environment.
 }
 \keyword{internal}

@@ -21,7 +21,7 @@ subset.}
 }
 \value{
 \code{\link{RapData}} or \code{\link{RapUnsolved}} object depending
-  on input object.
+on input object.
 }
 \description{
 Subset planning units from a \code{\link{RapData}},
@@ -37,5 +37,5 @@ sim_ru2 <- pu.subset(sim_ru, seq_len(10))
 }
 \seealso{
 \code{\link{RapData}}, \code{\link{RapUnsolved}},
-  \code{\link{RapSolved}}.
+\code{\link{RapSolved}}.
 }

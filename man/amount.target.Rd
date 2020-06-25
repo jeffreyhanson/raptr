@@ -55,5 +55,5 @@ amount.target(sim_rs, 1) <- 0.5
 }
 \seealso{
 \code{\link{RapData}}, \code{\link{RapResults}},
-  \code{\link{RapSolved}}.
+\code{\link{RapSolved}}.
 }

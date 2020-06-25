@@ -17,8 +17,8 @@ Extracts summary of solutions in a \code{\link{RapResults}} or
 }
 \details{
 This table follows Marxan conventions ("summary.dat" in
-  \url{http://marxan.net/downloads/uq_marxan_web_2/module5.html}). The
-  columns are:
+\url{http://marxan.net/downloads/uq_marxan_web_2/module5.html}). The
+columns are:
 \describe{
 \item{Run_Number}{The index of each solution in the object.}
 \item{Status}{The status of the solution. The values in this column

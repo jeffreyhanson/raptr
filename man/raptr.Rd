@@ -3,7 +3,6 @@
 \docType{package}
 \name{raptr}
 \alias{raptr}
-\alias{raptr-package}
 \title{raptr: Representative and Adequate Prioritization Toolkit in R}
 \description{
 Biodiversity is in crisis. The overarching aim of conservation is to preserve
@@ -15,8 +14,8 @@ package contains tools to generate plans for protected areas
 optimization problem, which is then solved to yield prioritizations. To
 solve the optimization problems in a feasible amount of time, this package
 uses the commercial 'Gurobi' software package (obtained from
-<http://www.gurobi.com/>). For more information on using
-this package, see Hanson et al. (2018) <doi:10.1111/2041-210X.12862>.
+\url{http://www.gurobi.com/}). For more information on using
+this package, see Hanson et al. (2018) \url{doi:10.1111/2041-210X.12862}.
 }
 \details{
 The main classes used in this package are used to store input data and

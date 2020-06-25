@@ -21,7 +21,7 @@ solution value.}
 }
 \value{
 \code{\link[base]{matrix}} or \code{numeric} vector depending on
-  arguments.
+arguments.
 }
 \description{
 Extract selections for a given solution from a \code{\link{RapResults}} or

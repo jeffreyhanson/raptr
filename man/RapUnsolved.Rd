@@ -42,5 +42,5 @@ print(ru)
 }
 \seealso{
 \code{\link{RapReliableOpts-class}},
-  \code{\link{RapUnreliableOpts-class}}, \code{\link{RapData-class}}.
+\code{\link{RapUnreliableOpts-class}}, \code{\link{RapData-class}}.
 }

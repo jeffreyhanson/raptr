@@ -16,7 +16,7 @@ Defaults to \code{FALSE}.}
 }
 \value{
 \code{\link[base]{matrix}} with x-coordinates, y-coordinates, and
-  cell values.
+cell values.
 }
 \description{
 This function generates random points in a \code{\link[raster]{raster}}

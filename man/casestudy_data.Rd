@@ -7,7 +7,15 @@
 \alias{cs_spp}
 \alias{cs_space}
 \title{Case-study dataset for a conservation planning exercise}
-\format{cs_pus: \code{\link[sp]{SpatialPolygonsDataFrame}}, cs_spp: \code{\link[raster]{RasterLayer-class}}, cs_space: \code{\link[raster]{RasterStack-class}}.}
+\format{
+cs_pus: \code{\link[sp]{SpatialPolygonsDataFrame}}, cs_spp: \code{\link[raster]{RasterLayer-class}}, cs_space: \code{\link[raster]{RasterStack-class}}.
+
+An object of class \code{SpatialPolygonsDataFrame} with 762 rows and 3 columns.
+
+An object of class \code{RasterBrick} of dimension 216 x 153 x 2.
+
+An object of class \code{RasterStack} of dimension 216 x 153 x 4.
+}
 \usage{
 cs_pus
 

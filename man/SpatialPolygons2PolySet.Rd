@@ -8,11 +8,9 @@
 \usage{
 SpatialPolygons2PolySet(x, n_preallocate)
 
-\method{SpatialPolygons2PolySet}{SpatialPolygonsDataFrame}(x,
-  n_preallocate = 10000L)
+\method{SpatialPolygons2PolySet}{SpatialPolygonsDataFrame}(x, n_preallocate = 10000L)
 
-\method{SpatialPolygons2PolySet}{SpatialPolygons}(x,
-  n_preallocate = 10000L)
+\method{SpatialPolygons2PolySet}{SpatialPolygons}(x, n_preallocate = 10000L)
 }
 \arguments{
 \item{x}{\code{\link[sp]{SpatialPolygons}} or
@@ -33,8 +31,8 @@ This function converts spatial \code{\link[sp]{SpatialPolygons}} and
 }
 \note{
 Be aware that this function is designed to be as fast as possible, but
-  as a result it depends on C++ code and if used inappropriately this
-  function will crash R.
+as a result it depends on C++ code and if used inappropriately this
+function will crash R.
 }
 \examples{
 # generate SpatialPolygons object
@@ -46,5 +44,5 @@ x <- SpatialPolygons2PolySet(sim_pus)
 }
 \seealso{
 For a slower, more stable equivalent see
-  \code{maptools::SpatialPolygons2PolySet}.
+\code{maptools::SpatialPolygons2PolySet}.
 }

@@ -20,8 +20,8 @@ Convert \code{\link{GurobiOpts}} object to list.
 }
 \note{
 This function will not include the \code{NumberSolutions} slot, the
- \code{MultipleSolutionsMethod} slot, or the \code{TimeLimit} slot if it is
- not finite.
+\code{MultipleSolutionsMethod} slot, or the \code{TimeLimit} slot if it is
+not finite.
 }
 \examples{
 # make GuboriOpts object

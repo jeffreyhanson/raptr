@@ -16,7 +16,7 @@ urap.proportion.held(x, y, y.weights = rep(1, nrow(y)))
 }
 \value{
 \code{numeric} value indicating the proportion of variation that
-  \code{x} explains in \code{y}
+\code{x} explains in \code{y}
 }
 \description{
 This is a convenience function to quickly calculate the proportion of

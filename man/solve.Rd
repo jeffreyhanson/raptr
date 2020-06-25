@@ -27,10 +27,10 @@ can be specified using  \code{logical}, \code{numeric}, or
 \code{\link[base]{matrix}} objects. This may be useful for evaluating the
 performance of solutions obtained using other software.}
 
+\item{...}{not used.}
+
 \item{verbose}{\code{logical} should messages be printed during creation of
 the initial model matrix?.}
-
-\item{...}{not used.}
 }
 \value{
 \code{\link{RapSolved}} object
@@ -42,8 +42,8 @@ and data stored in a \code{\link{RapUnsolved}} object, and returns a
 }
 \note{
 This function is used to solve a \code{\link{RapUnsolved}} object that
-  has all of its inputs generated. The rap function (without lower case 'r')
-  provides a more general interface for generating inputs and outputs.
+has all of its inputs generated. The rap function (without lower case 'r')
+provides a more general interface for generating inputs and outputs.
 }
 \examples{
 # load RapUnsolved object

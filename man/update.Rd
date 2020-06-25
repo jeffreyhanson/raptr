@@ -11,23 +11,38 @@
 \alias{update.RapUnsolOrSol}
 \title{Update object}
 \usage{
-\method{update}{GurobiOpts}(object, Threads = NULL, MIPGap = NULL,
-  Method = NULL, Presolve = NULL, TimeLimit = NULL,
-  NumberSolutions = NULL, MultipleSolutionsMethod = NULL, ...)
+\method{update}{GurobiOpts}(
+  object,
+  Threads = NULL,
+  MIPGap = NULL,
+  Method = NULL,
+  Presolve = NULL,
+  TimeLimit = NULL,
+  NumberSolutions = NULL,
+  MultipleSolutionsMethod = NULL,
+  ...
+)
 
 \method{update}{ManualOpts}(object, NumberSolutions = NULL, ...)
 
-\method{update}{RapData}(object, species = NULL, space = NULL,
-  name = NULL, amount.target = NULL, space.target = NULL,
-  pu = NULL, cost = NULL, status = NULL, ...)
+\method{update}{RapData}(
+  object,
+  species = NULL,
+  space = NULL,
+  name = NULL,
+  amount.target = NULL,
+  space.target = NULL,
+  pu = NULL,
+  cost = NULL,
+  status = NULL,
+  ...
+)
 
-\method{update}{RapReliableOpts}(object, BLM = NULL,
-  failure.multiplier = NULL, max.r.level = NULL, ...)
+\method{update}{RapReliableOpts}(object, BLM = NULL, failure.multiplier = NULL, max.r.level = NULL, ...)
 
 \method{update}{RapUnreliableOpts}(object, BLM = NULL, ...)
 
-\method{update}{RapUnsolOrSol}(object, ..., formulation = NULL,
-  solve = TRUE)
+\method{update}{RapUnsolOrSol}(object, ..., formulation = NULL, solve = TRUE)
 }
 \arguments{
 \item{object}{\code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}},
@@ -103,10 +118,10 @@ objects. Defaults to \code{TRUE}.}
 }
 \value{
 \code{\link{GurobiOpts-class}},
-  \code{\link{RapUnreliableOpts-class}},
-  \code{\link{RapReliableOpts-class}}, \code{\link{RapData-class}},
-  \code{\link{RapUnsolved-class}}, or \code{\link{RapSolved-class}} object
-  depending on argument to \code{x}.
+\code{\link{RapUnreliableOpts-class}},
+\code{\link{RapReliableOpts-class}}, \code{\link{RapData-class}},
+\code{\link{RapUnsolved-class}}, or \code{\link{RapSolved-class}} object
+depending on argument to \code{x}.
 }
 \description{
 This function updates parameters or data stored in an existing
@@ -157,7 +172,7 @@ print(y@opts@BLM); print(space.target(y))
 }
 \seealso{
 \code{\link{GurobiOpts-class}},
-  \code{\link{RapUnreliableOpts-class}},
-  \code{\link{RapReliableOpts-class}}, \code{\link{RapData-class}},
-  \code{\link{RapUnsolved-class}}, \code{\link{RapSolved-class}}.
+\code{\link{RapUnreliableOpts-class}},
+\code{\link{RapReliableOpts-class}}, \code{\link{RapData-class}},
+\code{\link{RapUnsolved-class}}, \code{\link{RapSolved-class}}.
 }

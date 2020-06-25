@@ -4,8 +4,17 @@
 \alias{RapData}
 \title{Create new RapData object}
 \usage{
-RapData(pu, species, targets, pu.species.probabilities, attribute.spaces,
-  boundary, polygons = NA, skipchecks = FALSE, .cache = new.env())
+RapData(
+  pu,
+  species,
+  targets,
+  pu.species.probabilities,
+  attribute.spaces,
+  boundary,
+  polygons = NA,
+  skipchecks = FALSE,
+  .cache = new.env()
+)
 }
 \arguments{
 \item{pu}{\code{\link[base]{data.frame}} planning unit data. Columns must be
@@ -47,7 +56,7 @@ This function creates a "RapData" object using pre-processed data.
 }
 \note{
 Generally, users are not encouraged to change arguments to
-  \code{.cache}.
+\code{.cache}.
 }
 \examples{
 # load data
@@ -89,6 +98,6 @@ print(x)
 }
 \seealso{
 \code{\link[PBSmapping]{PolySet}}, \code{\link[sp]{SpatialPoints}},
-  \code{\link[sp]{SpatialPointsDataFrame}}, \code{\link{make.RapData}},
-  \code{\link{RapData-class}}.
+\code{\link[sp]{SpatialPointsDataFrame}}, \code{\link{make.RapData}},
+\code{\link{RapData-class}}.
 }

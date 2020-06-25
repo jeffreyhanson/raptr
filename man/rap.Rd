@@ -4,8 +4,14 @@
 \alias{rap}
 \title{Generate prioritizations using RAP}
 \usage{
-rap(pus, species, spaces = NULL, formulation = c("unreliable",
-  "reliable")[1], solve = TRUE, ...)
+rap(
+  pus,
+  species,
+  spaces = NULL,
+  formulation = c("unreliable", "reliable")[1],
+  solve = TRUE,
+  ...
+)
 }
 \arguments{
 \item{pus}{\code{\link[sp]{SpatialPolygons}} object representing planning
@@ -30,7 +36,7 @@ Defaults to \code{"unreliable"}.}
 }
 \value{
 \code{\link{RapSolved}} object if \code{solve} is \code{TRUE},
- otherwise an \code{\link{RapUnsolved}} is returned.
+otherwise an \code{\link{RapUnsolved}} is returned.
 }
 \description{
 This is a general function to create Rap objects from scratch and solve them
@@ -38,11 +44,11 @@ to generate solutions.
 }
 \note{
 Type \code{vignette("raptr")} to see the package vignette for a
-  tutorial.
+tutorial.
 }
 \seealso{
 \code{\link{GurobiOpts}}, \code{\link{RapReliableOpts}},
-  \code{\link{RapUnreliableOpts}} \code{\link{RapData}},
-  \code{\link{RapResults}}, \code{\link{RapUnsolved}},
-  \code{\link{RapSolved}}.
+\code{\link{RapUnreliableOpts}} \code{\link{RapData}},
+\code{\link{RapResults}}, \code{\link{RapUnsolved}},
+\code{\link{RapSolved}}.
 }

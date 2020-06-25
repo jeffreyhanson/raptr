@@ -23,7 +23,7 @@ which the threshold should be applied.}
 }
 \value{
 \code{\link{RapData}} or \code{\link{RapUnsolved}} object depending
-  on input object.
+on input object.
 }
 \description{
 This function subsets out probabilities assigned to planning units above a
@@ -40,5 +40,5 @@ sim_ru2 <- prob.subset(sim_ru, seq_len(3), c(0.1, 0.2, 0.3))
 }
 \seealso{
 \code{\link{RapData}}, \code{\link{RapUnsolved}},
-  \code{\link{RapSolved}}.
+\code{\link{RapSolved}}.
 }

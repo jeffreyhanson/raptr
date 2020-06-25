@@ -77,7 +77,7 @@ print(sim_rs)
 }
 \seealso{
 \code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}},
-  \code{\link{RapReliableOpts}}, \code{\link{RapData}},
-  \code{\link{RapUnsolved}}, \code{\link{RapResults}},
-  \code{\link{RapSolved}}.
+\code{\link{RapReliableOpts}}, \code{\link{RapData}},
+\code{\link{RapUnsolved}}, \code{\link{RapResults}},
+\code{\link{RapSolved}}.
 }

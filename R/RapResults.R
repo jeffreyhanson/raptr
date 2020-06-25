@@ -187,8 +187,6 @@ RapResults <- function(summary, selections, amount.held, space.held,
 
 #' @rdname selections
 #'
-#' @inheritParams selections
-#'
 #' @export
 selections.RapResults <- function(x, y = 0) {
   if (is.null(y))
@@ -200,8 +198,6 @@ selections.RapResults <- function(x, y = 0) {
 
 
 #' @rdname score
-#'
-#' @inheritParams score
 #'
 #' @export
 score.RapResults <- function(x, y = 0) {
@@ -220,7 +216,7 @@ summary.RapResults <- function(object) {
 }
 
 #' @rdname logging.file
-#' @inheritParams logging.file
+#'
 #' @export
 logging.file.RapResults <- function(x, y = 0) {
   if (is.null(y))

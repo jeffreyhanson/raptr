@@ -50,8 +50,6 @@ calcBoundaryData <- function(x, tol, length.factor, edge.factor)
 #'
 #' @method calcBoundaryData PolySet
 #'
-#' @inheritParams calcBoundaryData
-#'
 #' @export
 calcBoundaryData.PolySet <- function(x, tol = 0.001, length.factor = 1.0,
                                      edge.factor = 1.0) {
@@ -71,8 +69,6 @@ calcBoundaryData.PolySet <- function(x, tol = 0.001, length.factor = 1.0,
 #' @rdname calcBoundaryData
 #'
 #' @method calcBoundaryData SpatialPolygons
-#'
-#' @inheritParams calcBoundaryData
 #'
 #' @export
 calcBoundaryData.SpatialPolygons <- function(x, tol = 0.001,

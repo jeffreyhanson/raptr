@@ -41,5 +41,5 @@ names(sim_rs)
 }
 \seealso{
 \code{\link{RapData}}, \code{\link{RapUnsolved}},
-  \code{\link{RapSolved}}.
+\code{\link{RapSolved}}.
 }

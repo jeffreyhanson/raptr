@@ -6,9 +6,15 @@
 \alias{sim_ru}
 \alias{sim_rs}
 \title{Simulated dataset for a conservation planning exercise}
-\format{\code{\link[sp]{SpatialPolygonsDataFrame}},
-  \code{\link[raster]{RasterStack-class}}, \code{list} of
-  \code{\link{DemandPoints}} objects.}
+\format{
+\code{\link[sp]{SpatialPolygonsDataFrame}},
+\code{\link[raster]{RasterStack-class}}, \code{list} of
+\code{\link{DemandPoints}} objects.
+
+An object of class \code{RapUnsolved} of length 1.
+
+An object of class \code{RapSolved} of length 1.
+}
 \usage{
 sim_ru
 

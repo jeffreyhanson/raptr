@@ -1,3 +1,8 @@
+# raptr 0.1.6.1
+
+- Fix "Non-file package-anchored link(s) in documentation object" notes in
+  R-devel checks.
+
 # raptr 0.1.6 (released)
 
 - fix errors in R-devel CRAN checks due changes in `is.finite` behaviour for
@@ -39,9 +44,9 @@
 # raptr 0.1.1 (released)
 
 - vignette size has been reduced.
-- updated DOI in readme.
+- updated DOI in README.
 
-# raptr 0.1.0 (unreleased)
+# raptr 0.1.0
 
 - unit tests now compatible with _testthat R_ package (version 1.0.2.9000).
 - _assertthat R_ package is now used for validating function arguments.
@@ -59,10 +64,10 @@
 # raptr 0.0.5 (released)
 
 - fix documentation in `make.DemandPoints`.
-- \donttest instead of \dontrun for examples.
+- `\donttest` instead of `\dontrun` for examples.
 - fix broken example code.
 
-# raptr 0.0.4 (unreleased)
+# raptr 0.0.4
 
 - find out which suggested packages are installed using `requireNamespace`.
 - add more links to package documentation.
@@ -72,18 +77,18 @@
 
 - reduce memory consumption using external pointers.
 - fix memory leaks.
-- fix bug in tests for calcSpeciesAverageInPus.
+- fix bug in tests for `calcSpeciesAverageInPus`.
 
-# raptr 0.0.2 (unreleased)
+# raptr 0.0.2
 
 - reduce installation size.
 - fix typo in README.
 
-# raptr 0.0.1.1 (unreleased)
+# raptr 0.0.1.1
 
 - fixed authorship typo.
-- updated README.md with instructions for installing from CRAN.
+- updated README with instructions for installing from CRAN.
 
-# raptr 0.0.1 (unreleased)
+# raptr 0.0.1
 
 - Initial package version.

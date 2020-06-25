@@ -368,10 +368,10 @@ RapData <- function(pu, species, targets, pu.species.probabilities,
 #'   projects of attribute space over geographic space. Use a \code{list} to
 #'   denote separate attribute spaces.
 #'
-#' @param amount.target \code{numeric} vector for area targets (\%) for each
+#' @param amount.target \code{numeric} vector for area targets (%) for each
 #'   species. Defaults to 0.2 for each attribute space for each species.
 #'
-#' @param space.target \code{numeric} vector for attribute space targets (\%)
+#' @param space.target \code{numeric} vector for attribute space targets (%)
 #'   for each species. Defaults to 0.2 for each attribute space for each
 #'   species and each space.
 #'
@@ -397,7 +397,7 @@ RapData <- function(pu, species, targets, pu.species.probabilities,
 #'
 #' @param n.species.points \code{numeric} vector specifying the number points
 #'   to sample the species distributions to use to generate demand points.
-#'   Defaults to 20\% of the distribution.
+#'   Defaults to 20% of the distribution.
 #'
 #' @param verbose \code{logical} print statements during processing?
 #'

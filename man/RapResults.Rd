@@ -4,8 +4,14 @@
 \alias{RapResults}
 \title{Create RapResults object}
 \usage{
-RapResults(summary, selections, amount.held, space.held, logging.file,
-  .cache = new.env())
+RapResults(
+  summary,
+  selections,
+  amount.held,
+  space.held,
+  logging.file,
+  .cache = new.env()
+)
 }
 \arguments{
 \item{summary}{\code{\link[base]{data.frame}} with summary information on
@@ -59,7 +65,7 @@ efficient.}
 }
 \note{
 slot \code{best} is automatically determined based on data in
-  \code{summary}.
+\code{summary}.
 }
 \seealso{
 \code{\link{RapResults-class}} \code{\link{read.RapResults}}.

@@ -4,8 +4,14 @@
 \alias{read.RapResults}
 \title{Read RAP results}
 \usage{
-read.RapResults(opts, data, model.list, logging.file, solution.list,
-  verbose = FALSE)
+read.RapResults(
+  opts,
+  data,
+  model.list,
+  logging.file,
+  solution.list,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{opts}{\code{RapReliableOpts} or \code{RapUnreliableOpts} object}
@@ -30,6 +36,6 @@ object.
 }
 \seealso{
 \code{\link{RapReliableOpts}}, \code{\link{RapUnreliableOpts}},
-  \code{\link{RapData}}, \code{\link{RapResults}}.
+\code{\link{RapData}}, \code{\link{RapResults}}.
 }
 \keyword{internal}

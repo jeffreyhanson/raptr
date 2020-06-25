@@ -1,7 +1,7 @@
 Package: raptr
 Type: Package
 Title: Representative and Adequate Prioritization Toolkit in R
-Version: 0.1.6
+Version: 0.1.6.1
 Authors@R: c(person(c("Jeffrey", "O"), "Hanson",
     email="jeffrey.hanson@uqconnect.edu.au", role = c("aut", "cre")),
     person(c("Jonathan", "R"), "Rhodes", role = c("aut")),
@@ -50,6 +50,7 @@ Depends:
 LinkingTo: Rcpp, RcppEigen, BH
 LazyData: true
 License: GPL-3
+Encoding: UTF-8
 URL: https://jeffrey-hanson.com/raptr, https://github.com/jeffreyhanson/raptr
 BugReports: https://github.com/jeffreyhanson/raptr/issues
 VignetteBuilder: knitr
@@ -93,5 +94,6 @@ Collate:
     'sim.species.R'
     'urap.proportion.held.R'
     'zzz.R'
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0.9000
 NeedsCompilation: yes
+Roxygen: list(markdown = TRUE)

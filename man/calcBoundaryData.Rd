@@ -8,11 +8,9 @@
 \usage{
 calcBoundaryData(x, tol, length.factor, edge.factor)
 
-\method{calcBoundaryData}{PolySet}(x, tol = 0.001, length.factor = 1,
-  edge.factor = 1)
+\method{calcBoundaryData}{PolySet}(x, tol = 0.001, length.factor = 1, edge.factor = 1)
 
-\method{calcBoundaryData}{SpatialPolygons}(x, tol = 0.001,
-  length.factor = 1, edge.factor = 1)
+\method{calcBoundaryData}{SpatialPolygons}(x, tol = 0.001, length.factor = 1, edge.factor = 1)
 }
 \arguments{
 \item{x}{\code{\link[PBSmapping]{PolySet}},
@@ -29,7 +27,7 @@ do not have any neighbors, such as those that occur along the margins.}
 }
 \value{
 \code{data.frame} with 'id1' (\code{integer}), 'id2'
-  (\code{integer}), and 'amount' (\code{numeric}) columns.
+(\code{integer}), and 'amount' (\code{numeric}) columns.
 }
 \description{
 This function calculates boundary length data for
@@ -55,6 +53,6 @@ summary(bound.dat)
 }
 \seealso{
 This function is based on the algorithm in QMARXAN
-  \url{https://github.com/tsw-apropos/qmarxan} for calculating boundary
-  length.
+\url{https://github.com/tsw-apropos/qmarxan} for calculating boundary
+length.
 }

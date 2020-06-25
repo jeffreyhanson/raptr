@@ -8,12 +8,20 @@
 \usage{
 sim.species(x, ...)
 
-\method{sim.species}{RasterLayer}(x, n = 1, model = list("uniform",
-  "normal", "bimodal", RandomFields::RPgauss())[[1]], ...)
+\method{sim.species}{RasterLayer}(
+  x,
+  n = 1,
+  model = list("uniform", "normal", "bimodal", RandomFields::RPgauss())[[1]],
+  ...
+)
 
-\method{sim.species}{SpatialPolygons}(x, res, n = 1,
-  model = list("normal", "uniform", "bimodal",
-  RandomFields::RPgauss())[[1]], ...)
+\method{sim.species}{SpatialPolygons}(
+  x,
+  res,
+  n = 1,
+  model = list("normal", "uniform", "bimodal", RandomFields::RPgauss())[[1]],
+  ...
+)
 }
 \arguments{
 \item{x}{\code{\link[raster]{RasterLayer-class}} or
@@ -38,8 +46,8 @@ This function simulates species distributions for RAP.
 }
 \details{
 Distributions are simulated by passing \code{model} to
-  \code{\link[RandomFields]{RFsimulate}} and converting to logistic values
-  using \code{\link[boot]{inv.logit}}.
+\code{\link[RandomFields]{RFsimulate}} and converting to logistic values
+using \code{\link[boot]{inv.logit}}.
 }
 \examples{
 # make polygons

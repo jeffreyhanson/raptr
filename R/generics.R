@@ -531,11 +531,11 @@ NULL
 #'
 #' @param name \code{character} to rename species.
 #'
-#' @param amount.target \code{numeric} vector for new area targets (\%) for the
+#' @param amount.target \code{numeric} vector for new area targets (%) for the
 #'   specified species.
 #'
 #' @param space.target \code{numeric} vector for new attribute space targets
-#'   (\%) for the specified species and attribute spaces.
+#'   (%) for the specified species and attribute spaces.
 #'
 #' @param pu \code{integer} planning unit indices that need to be updated.
 #'
@@ -816,16 +816,16 @@ logging.file <- function(x, y) UseMethod("logging.file")
 #' # load data
 #' data(sim_rs)
 #'
-#' # amount held (\%) in best solution for each species
+#' # amount held (%) in best solution for each species
 #' amount.held(sim_rs, 0)
 #'
-#' # amount held (\%) in best solution for species 1
+#' # amount held (%) in best solution for species 1
 #' amount.held(sim_rs, 0, 1)
 #'
-#' # amount held (\%) in second solution for each species
+#' # amount held (%) in second solution for each species
 #' amount.held(sim_rs, 2)
 #'
-#' # amount held (\%) in each solution for each species
+#' # amount held (%) in each solution for each species
 #' amount.held(sim_rs, NULL)
 #'
 #' @export
@@ -901,13 +901,13 @@ amount.target <- function(x, species) UseMethod("amount.target")
 #' # load data
 #' data(sim_rs)
 #'
-#' # space held (\%) for each species in best solution
+#' # space held (%) for each species in best solution
 #' space.held(sim_rs, 0)
 #'
-#' # space held (\%) for each species in second solution
+#' # space held (%) for each species in second solution
 #' space.held(sim_rs, 2)
 #'
-#' # space held (\%) for each species in each solution
+#' # space held (%) for each species in each solution
 #' space.held(sim_rs)
 #'
 #' @export

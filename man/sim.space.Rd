@@ -8,11 +8,9 @@
 \usage{
 sim.space(x, ...)
 
-\method{sim.space}{RasterLayer}(x, d = 2,
-  model = RandomFields::RMgauss(), ...)
+\method{sim.space}{RasterLayer}(x, d = 2, model = RandomFields::RMgauss(), ...)
 
-\method{sim.space}{SpatialPolygons}(x, res, d = 2,
-  model = RandomFields::RMgauss(), ...)
+\method{sim.space}{SpatialPolygons}(x, res, d = 2, model = RandomFields::RMgauss(), ...)
 }
 \arguments{
 \item{x}{\code{RasterLayer} or \code{\link[sp]{SpatialPolygons}} object
@@ -36,7 +34,7 @@ This function simulates attribute space data for RAP.
 }
 \details{
 Distributions are simulated by passing \code{model} to
-  \code{\link[RandomFields]{RFsimulate}}.
+\code{\link[RandomFields]{RFsimulate}}.
 }
 \examples{
 # simulate plannign units
