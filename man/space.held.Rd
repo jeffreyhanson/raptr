@@ -7,11 +7,10 @@
 \usage{
 space.held(x, y, species, space)
 
-\method{space.held}{RapSolved}(x, y = 0, species = NULL,
-  space = NULL)
+\method{space.held}{RapSolved}(x, y = 0, species = NULL, space = NULL)
 }
 \arguments{
-\item{x}{\code{\link{RapResults}} or \code{\link{RapSolved}} object.}
+\item{x}{\code{\link[=RapResults]{RapResults()}} or \code{\link[=RapSolved]{RapSolved()}} object.}
 
 \item{y}{Available inputs include: \code{NULL} to return all values,
 \code{integer} number specifying the solution for which the value should
@@ -34,16 +33,16 @@ solution.
 # load data
 data(sim_rs)
 
-# space held (\\\%) for each species in best solution
+# space held (\%) for each species in best solution
 space.held(sim_rs, 0)
 
-# space held (\\\%) for each species in second solution
+# space held (\%) for each species in second solution
 space.held(sim_rs, 2)
 
-# space held (\\\%) for each species in each solution
+# space held (\%) for each species in each solution
 space.held(sim_rs)
 
 }
 \seealso{
-\code{\link{RapResults}}, \code{\link{RapSolved}}.
+\code{\link[=RapResults]{RapResults()}}, \code{\link[=RapSolved]{RapSolved()}}.
 }

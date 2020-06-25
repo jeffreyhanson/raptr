@@ -6,9 +6,9 @@ NULL
 #'
 #' This class is used to store parameters.
 #'
-#' @slot NumberSolutions \code{integer} number of solutions.
+#' @slot NumberSolutions `integer` number of solutions.
 #'
-#' @seealso \code{\link{ManualOpts}}.
+#' @seealso [ManualOpts()].
 #'
 #' @name ManualOpts-class
 #'
@@ -31,12 +31,12 @@ methods::setClass("ManualOpts",
 #'
 #' This function creates a new ManualOpts object.
 #'
-#' @param NumberSolutions \code{integer} number of solutions to generate.
+#' @param NumberSolutions `integer` number of solutions to generate.
 #'   Defaults to 1L.
 #'
-#' @return \code{\link{ManualOpts}} object
+#' @return [ManualOpts()] object
 #'
-#' @seealso \code{\link{ManualOpts-class}}.
+#' @seealso [ManualOpts-class].
 #'
 #' @examples
 #' # create ManualOpts object

@@ -5,37 +5,37 @@ NULL
 #'
 #' This class is used to store RAP input data.
 #'
-#' @slot polygons \code{\link[PBSmapping]{PolySet}} planning unit spatial data
-#'   or \code{NULL} if data not available.
+#' @slot polygons [PBSmapping::PolySet()] planning unit spatial data
+#'   or `NULL` if data not available.
 #'
-#' @slot pu \code{\link[base]{data.frame}} planning unit data. Columns must be
-#'   "cost" (\code{numeric}), "area" (\code{numeric}), and "status"
-#'   (\code{integer}).
+#' @slot pu [base::data.frame()] planning unit data. Columns must be
+#'   "cost" (`numeric`), "area" (`numeric`), and "status"
+#'   (`integer`).
 #'
-#' @slot species \code{\link[base]{data.frame}} with species data. Columns must
-#'   be "name" (\code{character}.
+#' @slot species [base::data.frame()] with species data. Columns must
+#'   be "name" (`character`.
 #'
-#' @slot targets \code{\link[base]{data.frame}} with species data. Columns must
-#'   be "species" (\code{integer}), "target" (\code{integer}), "proportion"
-#'   (\code{numeric}).
+#' @slot targets [base::data.frame()] with species data. Columns must
+#'   be "species" (`integer`), "target" (`integer`), "proportion"
+#'   (`numeric`).
 #'
-#' @slot pu.species.probabilities \code{\link[base]{data.frame}} with data on
+#' @slot pu.species.probabilities [base::data.frame()] with data on
 #'   the probability of species in each planning unit. Columns must be "species"
-#'   (\code{integer}), "pu" (\code{integer}), and "value" (\code{numeric}).
+#'   (`integer`), "pu" (`integer`), and "value" (`numeric`).
 #'
-#' @slot attribute.spaces \code{list} of \code{AttributeSpaces} objects with
+#' @slot attribute.spaces `list` of `AttributeSpaces` objects with
 #'   the demand points and planning unit coordinates.
 #'
-#' @slot boundary \code{\link[base]{data.frame}} with data on the shared
-#'   boundary length of planning units. Columns must be "id1" (\code{integer}),
-#'   "id2" (\code{integer}), and "boundary" (\code{numeric}).
+#' @slot boundary [base::data.frame()] with data on the shared
+#'   boundary length of planning units. Columns must be "id1" (`integer`),
+#'   "id2" (`integer`), and "boundary" (`numeric`).
 #'
-#' @slot skipchecks \code{logical} Skip data integrity checks? May improve
+#' @slot skipchecks `logical` Skip data integrity checks? May improve
 #'   speed for big data sets.
 #'
-#' @slot .cache \code{\link[base]{environment}} used to cache calculations.
+#' @slot .cache [base::environment()] used to cache calculations.
 #'
-#' @seealso \code{\link[PBSmapping]{PolySet}}.
+#' @seealso [PBSmapping::PolySet()].
 #'
 #' @name RapData-class
 #'
@@ -237,45 +237,45 @@ methods::setClass("RapData",
 #'
 #' This function creates a "RapData" object using pre-processed data.
 #'
-#' @param polygons \code{\link[PBSmapping]{PolySet}} planning unit spatial data
-#'   or \code{NULL} if data not available.
+#' @param polygons [PBSmapping::PolySet()] planning unit spatial data
+#'   or `NULL` if data not available.
 #'
-#' @param pu \code{\link[base]{data.frame}} planning unit data. Columns must be
-#'   "cost" (\code{numeric}), "area" (\code{numeric}), and "status"
-#'   (\code{integer}).
+#' @param pu [base::data.frame()] planning unit data. Columns must be
+#'   "cost" (`numeric`), "area" (`numeric`), and "status"
+#'   (`integer`).
 #'
-#' @param species \code{\link[base]{data.frame}} with species data. Columns
-#'   must be "name" (\code{character}).
+#' @param species [base::data.frame()] with species data. Columns
+#'   must be "name" (`character`).
 #'
-#' @param targets \code{\link[base]{data.frame}} with species data.
-#'   Columns must be "species" (\code{integer}), "target" (\code{integer}),
-#'   "proportion" (\code{numeric}).
+#' @param targets [base::data.frame()] with species data.
+#'   Columns must be "species" (`integer`), "target" (`integer`),
+#'   "proportion" (`numeric`).
 #'
-#' @param pu.species.probabilities \code{\link[base]{data.frame}} with data on
+#' @param pu.species.probabilities [base::data.frame()] with data on
 #'   the probability of species in each planning unit. Columns must be
-#'   "species", (\code{integer}), "pu" (\code{integer}), and "value"
-#'   (\code{numeric}).
+#'   "species", (`integer`), "pu" (`integer`), and "value"
+#'   (`numeric`).
 #'
-#' @param attribute.spaces \code{list} of \code{\link{AttributeSpaces}} objects
+#' @param attribute.spaces `list` of [AttributeSpaces()] objects
 #'   with the demand points and planning unit coordinates.
 #'
-#' @param boundary \code{\link[base]{data.frame}} with data on the shared
+#' @param boundary [base::data.frame()] with data on the shared
 #'   boundary length of planning units. Columns must be "id1"
-#'   (\code{integer}), "id2" (\code{integer}), and "boundary" (\code{integer}).
+#'   (`integer`), "id2" (`integer`), and "boundary" (`integer`).
 #'
-#' @param skipchecks \code{logical} Skip data integrity checks? May improve
+#' @param skipchecks `logical` Skip data integrity checks? May improve
 #'   speed for big data sets.
 #'
-#' @param .cache \code{\link[base]{environment}} used to cache calculations.
+#' @param .cache [base::environment()] used to cache calculations.
 #'
 #' @note Generally, users are not encouraged to change arguments to
-#'   \code{.cache}.
+#'   `.cache`.
 #'
 #' @return RapData object
 #'
-#' @seealso \code{\link[PBSmapping]{PolySet}}, \code{\link[sp]{SpatialPoints}},
-#'   \code{\link[sp]{SpatialPointsDataFrame}}, \code{\link{make.RapData}},
-#'   \code{\link{RapData-class}}.
+#' @seealso [PBSmapping::PolySet()], [sp::SpatialPoints()],
+#'   [sp::SpatialPointsDataFrame()], [make.RapData()],
+#'   [RapData-class].
 #'
 #' @examples
 #' # load data
@@ -359,55 +359,55 @@ RapData <- function(pu, species, targets, pu.species.probabilities,
 #' This function prepares spatially explicit planning unit, species data, and
 #' landscape data layers for RAP processing.
 #'
-#' @param pus \code{\link[sp]{SpatialPolygons}} with planning unit data.
+#' @param pus [sp::SpatialPolygons()] with planning unit data.
 #'
-#' @param species \code{\link[raster]{raster}} with species probability
+#' @param species [raster::raster()] with species probability
 #'   distribution data.
 #'
-#' @param spaces \code{list} of/or \code{\link[raster]{raster}} representing
-#'   projects of attribute space over geographic space. Use a \code{list} to
+#' @param spaces `list` of/or [raster::raster()] representing
+#'   projects of attribute space over geographic space. Use a `list` to
 #'   denote separate attribute spaces.
 #'
-#' @param amount.target \code{numeric} vector for area targets (\%) for each
+#' @param amount.target `numeric` vector for area targets (%) for each
 #'   species. Defaults to 0.2 for each attribute space for each species.
 #'
-#' @param space.target \code{numeric} vector for attribute space targets (\%)
+#' @param space.target `numeric` vector for attribute space targets (%)
 #'   for each species. Defaults to 0.2 for each attribute space for each
 #'   species and each space.
 #'
-#' @param n.demand.points \code{integer} number of demand points to use for
+#' @param n.demand.points `integer` number of demand points to use for
 #'   each attribute space for each species. Defaults to 100L.
 #'
-#' @param kernel.method \code{character} name of kernel method to use to
-#'   generate demand points. Use either \code{"ks"} or \code{"hypervolume"}.
+#' @param kernel.method `character` name of kernel method to use to
+#'   generate demand points. Use either `"ks"` or `"hypervolume"`.
 #'
-#' @param quantile \code{numeric} quantile to generate demand points within. If
+#' @param quantile `numeric` quantile to generate demand points within. If
 #    0 then demand points are generated across the full range of values the
-#'   \code{species.points} intersect. Defaults to 0.5.
+#'   `species.points` intersect. Defaults to 0.5.
 #'
-#' @param include.geographic.space \code{logical} should the geographic space
+#' @param include.geographic.space `logical` should the geographic space
 #'   be considered an attribute space?
 #'
-#' @param species.points \code{list} of/or
-#'   \code{\link[sp]{SpatialPointsDataFrame}} or
-#'   \code{\link[sp]{SpatialPoints}} with species presence records. Use a
-#'   \code{list} of objects to represent different species. Must have the same
-#'   number of elements as \code{species}. If not supplied then use
-#'   \code{n.species.points} to sample points from the species distributions.
+#' @param species.points `list` of/or
+#'   [sp::SpatialPointsDataFrame()] or
+#'   [sp::SpatialPoints()] with species presence records. Use a
+#'   `list` of objects to represent different species. Must have the same
+#'   number of elements as `species`. If not supplied then use
+#'   `n.species.points` to sample points from the species distributions.
 #'
-#' @param n.species.points \code{numeric} vector specifying the number points
+#' @param n.species.points `numeric` vector specifying the number points
 #'   to sample the species distributions to use to generate demand points.
-#'   Defaults to 20\% of the distribution.
+#'   Defaults to 20% of the distribution.
 #'
-#' @param verbose \code{logical} print statements during processing?
+#' @param verbose `logical` print statements during processing?
 #'
-#' @param scale \code{logical} scale the attribute spaces to unit mean and
-#'   standard deviation? This prevents overflow. Defaults to \code{TRUE}.
+#' @param scale `logical` scale the attribute spaces to unit mean and
+#'   standard deviation? This prevents overflow. Defaults to `TRUE`.
 #'
-#' @param ... additional arguments to \code{\link{calcBoundaryData}} and
-#'   \code{\link{calcSpeciesAverageInPus}}.
+#' @param ... additional arguments to [calcBoundaryData()] and
+#'   [calcSpeciesAverageInPus()].
 #'
-#' @seealso \code{\link{RapData-class}}, \code{\link{RapData}}.
+#' @seealso [RapData-class], [RapData()].
 #'
 #' @examples
 #' # load data

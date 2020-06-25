@@ -4,22 +4,22 @@
 #' variation that one set of points captures in a another set of points using
 #' the reliable formulation.
 #'
-#' @param pu.coordinates \code{\link[base]{matrix}} of planning unit
+#' @param pu.coordinates [base::matrix()] of planning unit
 #'   coordinates.
 #'
-#' @param pu.probabilities \code{numeric} vector of planning unit probabilities.
+#' @param pu.probabilities `numeric` vector of planning unit probabilities.
 #'
-#' @param dp.coordinates \code{\link[base]{matrix}} of demand point coordinates.
+#' @param dp.coordinates [base::matrix()] of demand point coordinates.
 #'
-#' @param dp.weights \code{numeric} vector of demand point weights.
+#' @param dp.weights `numeric` vector of demand point weights.
 #'
-#' @param failure.distance \code{numeric} indicating the cost of the failure
+#' @param failure.distance `numeric` indicating the cost of the failure
 #'   planning unit.
 #'
-#' @param maximum.r.level \code{integer} maximum failure (R) level to use for
+#' @param maximum.r.level `integer` maximum failure (R) level to use for
 #'   calculations.
 #'
-#' @return \code{numeric} value indicating the proportion of variation that the
+#' @return `numeric` value indicating the proportion of variation that the
 #'   demand points explain in the planning units
 #'
 #' @examples

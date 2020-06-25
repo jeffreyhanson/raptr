@@ -10,7 +10,7 @@ amount.held(x, y, species)
 \method{amount.held}{RapSolved}(x, y = 0, species = NULL)
 }
 \arguments{
-\item{x}{\code{\link{RapResults}} or \code{\link{RapSolved}} object.}
+\item{x}{\code{\link[=RapResults]{RapResults()}} or \code{\link[=RapSolved]{RapSolved()}} object.}
 
 \item{y}{Available inputs include: \code{NULL} to return all values,
 \code{integer} number specifying the solution for which the value should
@@ -20,8 +20,8 @@ be returned, and \code{0} to return the value for the best solution.}
 species.}
 }
 \value{
-\code{\link[base]{matrix}} or \code{numeric} vector depending on
-  arguments.
+\code{\link[base:matrix]{base::matrix()}} or \code{numeric} vector depending on
+arguments.
 }
 \description{
 This function returns the amount held for each species in a solution.
@@ -30,19 +30,19 @@ This function returns the amount held for each species in a solution.
 # load data
 data(sim_rs)
 
-# amount held (\\\%) in best solution for each species
+# amount held (\%) in best solution for each species
 amount.held(sim_rs, 0)
 
-# amount held (\\\%) in best solution for species 1
+# amount held (\%) in best solution for species 1
 amount.held(sim_rs, 0, 1)
 
-# amount held (\\\%) in second solution for each species
+# amount held (\%) in second solution for each species
 amount.held(sim_rs, 2)
 
-# amount held (\\\%) in each solution for each species
+# amount held (\%) in each solution for each species
 amount.held(sim_rs, NULL)
 
 }
 \seealso{
-\code{\link{RapResults}}, \code{\link{RapSolved}}.
+\code{\link[=RapResults]{RapResults()}}, \code{\link[=RapSolved]{RapSolved()}}.
 }

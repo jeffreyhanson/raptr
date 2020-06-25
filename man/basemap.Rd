@@ -6,14 +6,11 @@
 \alias{basemap.RapSolved}
 \title{Basemap}
 \usage{
-basemap(x, basemap = "hybrid", grayscale = FALSE,
-  force.reset = FALSE)
+basemap(x, basemap = "hybrid", grayscale = FALSE, force.reset = FALSE)
 
-\method{basemap}{RapData}(x, basemap = "hybrid", grayscale = FALSE,
-  force.reset = FALSE)
+\method{basemap}{RapData}(x, basemap = "hybrid", grayscale = FALSE, force.reset = FALSE)
 
-\method{basemap}{RapSolved}(x, basemap = "none", grayscale = FALSE,
-  force.reset = FALSE)
+\method{basemap}{RapSolved}(x, basemap = "none", grayscale = FALSE, force.reset = FALSE)
 }
 \arguments{
 \item{x}{\code{RapData}, \code{RapUnsolved}, \code{RapSolved} object.}
@@ -35,6 +32,6 @@ This function retrieves google map data for planning units. The google map
 data is cached to provide fast plotting capabilities.
 }
 \seealso{
-\code{\link[RgoogleMaps]{GetMap.bbox}}, \code{\link{plot}}.
+\code{\link[RgoogleMaps:GetMap.bbox]{RgoogleMaps::GetMap.bbox()}}, \code{\link[=plot]{plot()}}.
 }
 \keyword{internal}

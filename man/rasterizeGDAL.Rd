@@ -7,14 +7,14 @@
 rasterizeGDAL(x, y, field = NULL)
 }
 \arguments{
-\item{x}{\code{\link[sp]{SpatialPolygonsDataFrame}} object.}
+\item{x}{\code{\link[sp:SpatialPolygons]{sp::SpatialPolygonsDataFrame()}} object.}
 
-\item{y}{\code{\link[raster]{raster}} with dimensions, extent, and
+\item{y}{\code{\link[raster:raster]{raster::raster()}} with dimensions, extent, and
 resolution to be used as a template for new raster.}
 
 \item{field}{\code{character} column name with values to burn into the
 output raster. If not supplied, default behaviour is to burn polygon
-indices into the \code{\link[raster]{raster}}.}
+indices into the \code{\link[raster:raster]{raster::raster()}}.}
 }
 \value{
 \code{RasterLayer} object.
@@ -22,7 +22,7 @@ indices into the \code{\link[raster]{raster}}.}
 \description{
 This function converts a \code{SpatialPolygonsDataFrame} to a
 \code{RasterLayer} using GDAL. It is expected to be faster than
-\code{\link[raster]{rasterize}} for large datasets. However, it will be
+\code{\link[raster:rasterize]{raster::rasterize()}} for large datasets. However, it will be
 significantly slower for small datasets because the data will need to be
 written and read from disk.
 }
@@ -42,5 +42,5 @@ plot(x, main = "rasterized data")
 
 }
 \seealso{
-\code{\link[raster]{rasterize}}, \code{\link{is.gdalInstalled}}.
+\code{\link[raster:rasterize]{raster::rasterize()}}, \code{\link[=is.gdalInstalled]{is.gdalInstalled()}}.
 }

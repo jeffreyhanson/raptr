@@ -13,7 +13,7 @@ score(x, y)
 \method{score}{RapSolved}(x, y = 0)
 }
 \arguments{
-\item{x}{\code{\link{RapResults}} or \code{\link{RapSolved}} object.}
+\item{x}{\code{\link[=RapResults]{RapResults()}} or \code{\link[=RapSolved]{RapSolved()}} object.}
 
 \item{y}{Available inputs include: \code{NULL} to return all scores,
 \code{integer} number specifying the solution for which the score should
@@ -21,11 +21,11 @@ be returned, and \code{0} to return score for the best solution.}
 }
 \value{
 \code{matrix} or \code{numeric} vector with solution score(s)
- depending on arguments.
+depending on arguments.
 }
 \description{
-Extract solution score from \code{\link{RapResults}} or
-\code{\link{RapSolved}} object.
+Extract solution score from \code{\link[=RapResults]{RapResults()}} or
+\code{\link[=RapSolved]{RapSolved()}} object.
 }
 \examples{
 # load data
@@ -42,5 +42,5 @@ score(sim_rs, NULL)
 
 }
 \seealso{
-\code{\link{RapResults}}, \code{\link{RapSolved}}.
+\code{\link[=RapResults]{RapResults()}}, \code{\link[=RapSolved]{RapSolved()}}.
 }

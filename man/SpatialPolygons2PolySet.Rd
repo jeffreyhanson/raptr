@@ -8,33 +8,31 @@
 \usage{
 SpatialPolygons2PolySet(x, n_preallocate)
 
-\method{SpatialPolygons2PolySet}{SpatialPolygonsDataFrame}(x,
-  n_preallocate = 10000L)
+\method{SpatialPolygons2PolySet}{SpatialPolygonsDataFrame}(x, n_preallocate = 10000L)
 
-\method{SpatialPolygons2PolySet}{SpatialPolygons}(x,
-  n_preallocate = 10000L)
+\method{SpatialPolygons2PolySet}{SpatialPolygons}(x, n_preallocate = 10000L)
 }
 \arguments{
-\item{x}{\code{\link[sp]{SpatialPolygons}} or
-\code{\link[sp]{SpatialPolygonsDataFrame}} object.}
+\item{x}{\code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} or
+\code{\link[sp:SpatialPolygons]{sp::SpatialPolygonsDataFrame()}} object.}
 
 \item{n_preallocate}{\code{integer} How much memory should be preallocated
 for processing? Ideally, this number should equal the number of vertices
-in the \code{\link[sp]{SpatialPolygons}} object. If data processing is
+in the \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} object. If data processing is
 taking too long consider increasing this value.}
 }
 \value{
-\code{\link[PBSmapping]{PolySet}} object.
+\code{\link[PBSmapping:PolySet]{PBSmapping::PolySet()}} object.
 }
 \description{
-This function converts spatial \code{\link[sp]{SpatialPolygons}} and
-\code{\link[sp]{SpatialPolygonsDataFrame}} objects to
-\code{\link[PBSmapping]{PolySet}} objects.
+This function converts spatial \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} and
+\code{\link[sp:SpatialPolygons]{sp::SpatialPolygonsDataFrame()}} objects to
+\code{\link[PBSmapping:PolySet]{PBSmapping::PolySet()}} objects.
 }
 \note{
 Be aware that this function is designed to be as fast as possible, but
-  as a result it depends on C++ code and if used inappropriately this
-  function will crash R.
+as a result it depends on C++ code and if used inappropriately this
+function will crash R.
 }
 \examples{
 # generate SpatialPolygons object
@@ -46,5 +44,5 @@ x <- SpatialPolygons2PolySet(sim_pus)
 }
 \seealso{
 For a slower, more stable equivalent see
-  \code{maptools::SpatialPolygons2PolySet}.
+\code{maptools::SpatialPolygons2PolySet}.
 }

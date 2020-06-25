@@ -17,8 +17,8 @@
 \method{names}{RapUnsolOrSol}(x)
 }
 \arguments{
-\item{x}{\code{\link{RapData}}, \code{\link{RapUnsolved}}, or
-\code{\link{RapSolved}} object.}
+\item{x}{\code{\link[=RapData]{RapData()}}, \code{\link[=RapUnsolved]{RapUnsolved()}}, or
+\code{\link[=RapSolved]{RapSolved()}} object.}
 
 \item{value}{new species names.}
 }
@@ -40,6 +40,6 @@ names(sim_rs)
 
 }
 \seealso{
-\code{\link{RapData}}, \code{\link{RapUnsolved}},
-  \code{\link{RapSolved}}.
+\code{\link[=RapData]{RapData()}}, \code{\link[=RapUnsolved]{RapUnsolved()}},
+\code{\link[=RapSolved]{RapSolved()}}.
 }

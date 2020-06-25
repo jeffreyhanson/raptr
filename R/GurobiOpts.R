@@ -5,42 +5,42 @@ NULL
 #'
 #' This class is used to store Gurobi input parameters.
 #'
-#' @slot Threads \code{integer} number of cores to use for processing. Defaults
+#' @slot Threads `integer` number of cores to use for processing. Defaults
 #'   to 1L.
 #'
-#' @slot MIPGap \code{numeric} MIP gap specifying minimum solution quality.
+#' @slot MIPGap `numeric` MIP gap specifying minimum solution quality.
 #'   Defaults to 0.1.
 #'
-#' @slot Method \code{integer} Algorithm to use for solving model. Defaults to
+#' @slot Method `integer` Algorithm to use for solving model. Defaults to
 #'   0L.
 #'
-#' @slot Presolve \code{integer} code for level of computation in presolve.
+#' @slot Presolve `integer` code for level of computation in presolve.
 #'  Defaults to 2.
 #'
-#' @slot TimeLimit \code{integer} number of seconds to allow for solving.
+#' @slot TimeLimit `integer` number of seconds to allow for solving.
 #'   Defaults to NA_integer_, and so a time limit is not imposed.
 #'
-#' @slot NumberSolutions \code{integer} number of solutions to generate.
+#' @slot NumberSolutions `integer` number of solutions to generate.
 #'   Defaults to 1L.
 #'
-#' @slot MultipleSolutionsMethod \code{integer} name of method to obtain
-#'   multiple solutions (used when \code{NumberSolutions} is greater than one).
-#'   Available options are \code{"benders.cuts"}, \code{"solution.pool.0"},
-#'   \code{"solution.pool.1"}, and \code{"solution.pool.2"}. The
-#'   \code{"benders.cuts"} method produces a set of distinct solutions that
-#'   are all within the optimality gap. The \code{"solution.pool.0"}
+#' @slot MultipleSolutionsMethod `integer` name of method to obtain
+#'   multiple solutions (used when `NumberSolutions` is greater than one).
+#'   Available options are `"benders.cuts"`, `"solution.pool.0"`,
+#'   `"solution.pool.1"`, and `"solution.pool.2"`. The
+#'   `"benders.cuts"` method produces a set of distinct solutions that
+#'   are all within the optimality gap. The `"solution.pool.0"`
 #'   method returns all solutions identified whilst trying to find
 #'   a solution that is within the specified optimality gap. The
-#'   \code{"solution.pool.1"} method finds one solution within the optimality
+#'   `"solution.pool.1"` method finds one solution within the optimality
 #'   gap and a number of additional solutions that are of any level of quality
 #'   (such that the total number of solutions is equal to
-#'   \code{number_solutions}). The \code{"solution.pool.2"} finds a
+#'   `number_solutions`). The `"solution.pool.2"` finds a
 #'   specified number of solutions that are nearest to optimality. The
 #'   search pool methods correspond to the parameters used by the Gurobi
-#'   software suite (see \url{http://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode}).
-#'   Defaults to \code{"benders.cuts"}.
+#'   software suite (see <http://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode>).
+#'   Defaults to `"benders.cuts"`.
 #'
-#' @seealso \code{\link{GurobiOpts}}.
+#' @seealso [GurobiOpts()].
 #'
 #' @name GurobiOpts-class
 #'
@@ -94,44 +94,44 @@ methods::setClass("GurobiOpts",
 #'
 #' This function creates a new GurobiOpts object.
 #'
-#' @param Threads \code{integer} number of cores to use for processing.
+#' @param Threads `integer` number of cores to use for processing.
 #'   Defaults to 1L.
 #'
-#' @param MIPGap \code{numeric} MIP gap specifying minimum solution quality.
+#' @param MIPGap `numeric` MIP gap specifying minimum solution quality.
 #'   Defaults to 0.1.
 #'
-#' @param Method \code{integer} Algorithm to use for solving model. Defaults to
+#' @param Method `integer` Algorithm to use for solving model. Defaults to
 #'   0L.
 #'
-#' @param Presolve \code{integer} code for level of computation in presolve
+#' @param Presolve `integer` code for level of computation in presolve
 #'   (lp_solve parameter). Defaults to 2.
 #'
-#' @param TimeLimit \code{integer} number of seconds to allow for solving.
-#'   Defaults to \code{NA_integer_}, and so a time limit is not imposed.
+#' @param TimeLimit `integer` number of seconds to allow for solving.
+#'   Defaults to `NA_integer_`, and so a time limit is not imposed.
 #'
-#' @param NumberSolutions \code{integer} number of solutions to generate.
+#' @param NumberSolutions `integer` number of solutions to generate.
 #'   Defaults to 1L.
 #'
-#' @param MultipleSolutionsMethod \code{integer} name of method to obtain
-#'   multiple solutions (used when \code{NumberSolutions} is greater than one).
-#'   Available options are \code{"benders.cuts"}, \code{"solution.pool.0"},
-#'   \code{"solution.pool.1"}, and \code{"solution.pool.2"}. The
-#'   \code{"benders.cuts"} method produces a set of distinct solutions that
-#'   are all within the optimality gap. The \code{"solution.pool.0"}
+#' @param MultipleSolutionsMethod `integer` name of method to obtain
+#'   multiple solutions (used when `NumberSolutions` is greater than one).
+#'   Available options are `"benders.cuts"`, `"solution.pool.0"`,
+#'   `"solution.pool.1"`, and `"solution.pool.2"`. The
+#'   `"benders.cuts"` method produces a set of distinct solutions that
+#'   are all within the optimality gap. The `"solution.pool.0"`
 #'   method returns all solutions identified whilst trying to find
 #'   a solution that is within the specified optimality gap. The
-#'   \code{"solution.pool.1"} method finds one solution within the optimality
+#'   `"solution.pool.1"` method finds one solution within the optimality
 #'   gap and a number of additional solutions that are of any level of quality
 #'   (such that the total number of solutions is equal to
-#'   \code{number_solutions}). The \code{"solution.pool.2"} finds a
+#'   `number_solutions`). The `"solution.pool.2"` finds a
 #'   specified number of solutions that are nearest to optimality. The
 #'   search pool methods correspond to the parameters used by the Gurobi
-#'   software suite (see \url{http://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode}).
-#'   Defaults to \code{"benders.cuts"}.
+#'   software suite (see <http://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode>).
+#'   Defaults to `"benders.cuts"`.
 #'
-#' @return \code{GurobiOpts} object
+#' @return `GurobiOpts` object
 #'
-#' @seealso \code{\link{GurobiOpts-class}}.
+#' @seealso [GurobiOpts-class].
 #'
 #' @examples
 #' # create GurobiOpts object using default parameters

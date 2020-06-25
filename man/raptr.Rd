@@ -3,7 +3,6 @@
 \docType{package}
 \name{raptr}
 \alias{raptr}
-\alias{raptr-package}
 \title{raptr: Representative and Adequate Prioritization Toolkit in R}
 \description{
 Biodiversity is in crisis. The overarching aim of conservation is to preserve
@@ -15,31 +14,31 @@ package contains tools to generate plans for protected areas
 optimization problem, which is then solved to yield prioritizations. To
 solve the optimization problems in a feasible amount of time, this package
 uses the commercial 'Gurobi' software package (obtained from
-<http://www.gurobi.com/>). For more information on using
-this package, see Hanson et al. (2018) <doi:10.1111/2041-210X.12862>.
+\url{http://www.gurobi.com/}). For more information on using
+this package, see Hanson et al. (2018) \url{doi:10.1111/2041-210X.12862}.
 }
 \details{
 The main classes used in this package are used to store input data and
 prioritizations:
 \describe{
-\item{\code{\link{GurobiOpts-class}}}{parameters for solving optimization
+\item{\linkS4class{GurobiOpts}}{parameters for solving optimization
 problems using Gurobi.}
-\item{\code{\link{RapReliableOpts-class}}}{parameters for the reliable
+\item{\linkS4class{RapReliableOpts}}{parameters for the reliable
 formulation of RAP.}
-\item{\code{\link{RapUnreliableOpts-class}}}{parameters for the unreliable
+\item{\linkS4class{RapUnreliableOpts}}{parameters for the unreliable
 formulation of RAP.}
-\item{\code{\link{RapData-class}}}{planning unit, species data, and demand
+\item{\linkS4class{RapData}}{planning unit, species data, and demand
 points for RAP.}
-\item{\code{\link{RapUnsolved-class}}}{contains all the data and input
+\item{\linkS4class{RapUnsolved}}{contains all the data and input
 parameters required to generate prioritizations using RAP. This class
-contains a \code{\link{GurobiOpts-class}} object, a
-\code{\link{RapReliableOpts-class}} or \code{\link{RapUnreliableOpts-class}}
-object, and a \code{\link{RapData-class}} object.}
-\item{\code{\link{RapResults-class}}}{prioritizations and summary
+contains a \linkS4class{GurobiOpts} object, a
+\linkS4class{RapReliableOpts} or \linkS4class{RapUnreliableOpts}
+object, and a \linkS4class{RapData} object.}
+\item{\linkS4class{RapResults}}{prioritizations and summary
 statistics on their performance.}
-\item{\code{\link{RapSolved-class}}}{contains all the input data,
+\item{\linkS4class{RapSolved}}{contains all the input data,
 parameters and output data. This class contains all the objects in a
-\code{\link{RapUnsolved}} object and also a \code{\link{RapResults-class}}
+\code{\link[=RapUnsolved]{RapUnsolved()}} object and also a \linkS4class{RapResults}
 object.}
 }
 

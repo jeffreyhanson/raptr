@@ -7,18 +7,18 @@
 RapUnsolved(opts, data)
 }
 \arguments{
-\item{opts}{\code{\link{RapReliableOpts}} or \code{\link{RapUnreliableOpts}}
+\item{opts}{\code{\link[=RapReliableOpts]{RapReliableOpts()}} or \code{\link[=RapUnreliableOpts]{RapUnreliableOpts()}}
 object.}
 
-\item{data}{\code{\link{RapData}} object.}
+\item{data}{\code{\link[=RapData]{RapData()}} object.}
 }
 \value{
-\code{\link{RapUnsolved}} object.
+\code{\link[=RapUnsolved]{RapUnsolved()}} object.
 }
 \description{
-This function creates a \code{\link{RapUnsolved}} object using a
-\code{\link{GurobiOpts}}, a \code{\link{RapReliableOpts}} or
-\code{\link{RapUnreliableOpts}} object, and a \code{\link{RapData}} object.
+This function creates a \code{\link[=RapUnsolved]{RapUnsolved()}} object using a
+\code{\link[=GurobiOpts]{GurobiOpts()}}, a \code{\link[=RapReliableOpts]{RapReliableOpts()}} or
+\code{\link[=RapUnreliableOpts]{RapUnreliableOpts()}} object, and a \code{\link[=RapData]{RapData()}} object.
 }
 \examples{
 \donttest{
@@ -41,6 +41,6 @@ print(ru)
 }
 }
 \seealso{
-\code{\link{RapReliableOpts-class}},
-  \code{\link{RapUnreliableOpts-class}}, \code{\link{RapData-class}}.
+\linkS4class{RapReliableOpts},
+\linkS4class{RapUnreliableOpts}, \linkS4class{RapData}.
 }

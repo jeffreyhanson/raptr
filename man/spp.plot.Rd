@@ -10,25 +10,49 @@
 \usage{
 spp.plot(x, species, ...)
 
-\method{spp.plot}{RapData}(x, species, prob.color.palette = "YlGnBu",
+\method{spp.plot}{RapData}(
+  x,
+  species,
+  prob.color.palette = "YlGnBu",
   pu.color.palette = c("#4D4D4D", "#00FF00", "#FFFF00", "#FF0000"),
-  basemap = "none", alpha = ifelse(basemap == "none", 1, 0.7),
-  grayscale = FALSE, main = NULL, force.reset = FALSE, ...)
+  basemap = "none",
+  alpha = ifelse(basemap == "none", 1, 0.7),
+  grayscale = FALSE,
+  main = NULL,
+  force.reset = FALSE,
+  ...
+)
 
-\method{spp.plot}{RapUnsolved}(x, species, prob.color.palette = "YlGnBu",
+\method{spp.plot}{RapUnsolved}(
+  x,
+  species,
+  prob.color.palette = "YlGnBu",
   pu.color.palette = c("#4D4D4D", "#00FF00", "#FFFF00", "#FF0000"),
-  basemap = "none", alpha = ifelse(basemap == "none", 1, 0.7),
-  grayscale = FALSE, main = NULL, force.reset = FALSE, ...)
+  basemap = "none",
+  alpha = ifelse(basemap == "none", 1, 0.7),
+  grayscale = FALSE,
+  main = NULL,
+  force.reset = FALSE,
+  ...
+)
 
-\method{spp.plot}{RapSolved}(x, species, y = 0,
-  prob.color.palette = "YlGnBu", pu.color.palette = c("#4D4D4D",
-  "#00FF00", "#FFFF00", "#FF0000"), basemap = "none",
-  alpha = ifelse(basemap == "none", 1, 0.7), grayscale = FALSE,
-  main = NULL, force.reset = FALSE, ...)
+\method{spp.plot}{RapSolved}(
+  x,
+  species,
+  y = 0,
+  prob.color.palette = "YlGnBu",
+  pu.color.palette = c("#4D4D4D", "#00FF00", "#FFFF00", "#FF0000"),
+  basemap = "none",
+  alpha = ifelse(basemap == "none", 1, 0.7),
+  grayscale = FALSE,
+  main = NULL,
+  force.reset = FALSE,
+  ...
+)
 }
 \arguments{
-\item{x}{\code{\link{RapData}}, \code{\link{RapUnsolved}}, or
-\code{\link{RapSolved}} object.}
+\item{x}{\code{\link[=RapData]{RapData()}}, \code{\link[=RapUnsolved]{RapUnsolved()}}, or
+\code{\link[=RapSolved]{RapSolved()}} object.}
 
 \item{species}{\code{character} name of species, or \code{integer} index for
 species.}
@@ -37,15 +61,15 @@ species.}
 
 \item{prob.color.palette}{\code{character} name of color palette to denote
 probability of occupancy of the species in planning units (see
-\code{\link[RColorBrewer]{brewer.pal}}). Defaults to \code{"YlGnBu"}.}
+\code{\link[RColorBrewer:ColorBrewer]{RColorBrewer::brewer.pal()}}). Defaults to \code{"YlGnBu"}.}
 
 \item{pu.color.palette}{\code{character} name of colors or color palette
-(\code{\link[RColorBrewer]{brewer.pal}}) to indicate planning unit
+(\code{\link[RColorBrewer:ColorBrewer]{RColorBrewer::brewer.pal()}}) to indicate planning unit
 statuses. Defaults to \code{c("grey30", "green", "black", "red")} which
 indicate non selected, selected, locked in, and locked out (respectively).}
 
 \item{basemap}{\code{character} object indicating the type of basemap to use
-(see \code{\link{basemap}}). Valid options include \code{"none"},
+(see \code{\link[=basemap]{basemap()}}). Valid options include \code{"none"},
 \code{"roadmap"}, \code{"mobile"}, \code{"satellite"}, \code{"terrain"},
 \code{"hybrid"}, \code{"mapmaker-roadmap"}, \code{"mapmaker-hybrid"}.
 Defaults to \code{"none"}.}

@@ -4,32 +4,32 @@ NULL
 #' Calculate boundary data for planning units
 #'
 #' This function calculates boundary length data for
-#' \code{\link[PBSmapping]{PolySet}}, \code{\link[sp]{SpatialPolygons}}, and
-#' \code{\link[sp]{SpatialPolygonsDataFrame}} objects. Be aware that this
+#' [PBSmapping::PolySet()], [sp::SpatialPolygons()], and
+#' [sp::SpatialPolygonsDataFrame()] objects. Be aware that this
 #' function is designed with performance in mind, and as a consequence, if this
 #' function is used improperly then it may crash R. Furthermore, multipart
 #' polygons with touching edges will likely result in inaccuracies.
-#' If argument set to \code{\link[sp]{SpatialPolygons}} or
-#' \code{\link[sp]{SpatialPolygonsDataFrame}}, this will be converted to
+#' If argument set to [sp::SpatialPolygons()] or
+#' [sp::SpatialPolygonsDataFrame()], this will be converted to
 #' PolySet before processing.
 #'
-#' @param x \code{\link[PBSmapping]{PolySet}},
-#'   \code{\link[sp]{SpatialPolygons}} or
-#'   \code{\link[sp]{SpatialPolygonsDataFrame}} object.
+#' @param x [PBSmapping::PolySet()],
+#'   [sp::SpatialPolygons()] or
+#'   [sp::SpatialPolygonsDataFrame()] object.
 #'
-#' @param tol \code{numeric} to specify precision of calculations. In other
+#' @param tol `numeric` to specify precision of calculations. In other
 #'   words, how far apart vertices have to be to be considered different?
 #'
-#' @param length.factor \code{numeric} to scale boundary lengths.
+#' @param length.factor `numeric` to scale boundary lengths.
 #'
-#' @param edge.factor \code{numeric} to scale boundary lengths for edges that
+#' @param edge.factor `numeric` to scale boundary lengths for edges that
 #'   do not have any neighbors, such as those that occur along the margins.
 #'
-#' @return \code{data.frame} with 'id1' (\code{integer}), 'id2'
-#'   (\code{integer}), and 'amount' (\code{numeric}) columns.
+#' @return `data.frame` with 'id1' (`integer`), 'id2'
+#'   (`integer`), and 'amount' (`numeric`) columns.
 #'
 #' @seealso This function is based on the algorithm in QMARXAN
-#'   \url{https://github.com/tsw-apropos/qmarxan} for calculating boundary
+#'   <https://github.com/tsw-apropos/qmarxan> for calculating boundary
 #'   length.
 #'
 #' @examples
@@ -50,8 +50,6 @@ calcBoundaryData <- function(x, tol, length.factor, edge.factor)
 #'
 #' @method calcBoundaryData PolySet
 #'
-#' @inheritParams calcBoundaryData
-#'
 #' @export
 calcBoundaryData.PolySet <- function(x, tol = 0.001, length.factor = 1.0,
                                      edge.factor = 1.0) {
@@ -71,8 +69,6 @@ calcBoundaryData.PolySet <- function(x, tol = 0.001, length.factor = 1.0,
 #' @rdname calcBoundaryData
 #'
 #' @method calcBoundaryData SpatialPolygons
-#'
-#' @inheritParams calcBoundaryData
 #'
 #' @export
 calcBoundaryData.SpatialPolygons <- function(x, tol = 0.001,

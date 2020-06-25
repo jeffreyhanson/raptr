@@ -7,19 +7,19 @@
 RapSolved(unsolved, solver, results)
 }
 \arguments{
-\item{unsolved}{\code{\link{RapUnsolved}} object.}
+\item{unsolved}{\code{\link[=RapUnsolved]{RapUnsolved()}} object.}
 
-\item{solver}{\code{\link{GurobiOpts}} or \code{\link{ManualOpts}} object.}
+\item{solver}{\code{\link[=GurobiOpts]{GurobiOpts()}} or \code{\link[=ManualOpts]{ManualOpts()}} object.}
 
-\item{results}{\code{\link{RapResults}} object.}
+\item{results}{\code{\link[=RapResults]{RapResults()}} object.}
 }
 \value{
-\code{\link{RapSolved}} object.
+\code{\link[=RapSolved]{RapSolved()}} object.
 }
 \description{
-This function creates a \code{\link{RapSolved}} object.
+This function creates a \code{\link[=RapSolved]{RapSolved()}} object.
 }
 \seealso{
-\code{\link{RapSolved-class}}, \code{\link{RapResults-class}},
-  \code{link{solve}}.
+\linkS4class{RapSolved}, \linkS4class{RapResults},
+\code{link{solve}}.
 }

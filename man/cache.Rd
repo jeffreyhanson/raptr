@@ -3,6 +3,17 @@
 \name{cache}
 \alias{cache}
 \title{Get and set cache methods}
+\usage{
+cache(x, name, y)
+
+\S4method{cache}{RapData,character,ANY}(x, name, y)
+
+\S4method{cache}{RapData,character,missing}(x, name, y)
+
+\S4method{cache}{RapResults,character,ANY}(x, name, y)
+
+\S4method{cache}{RapResults,character,missing}(x, name, y)
+}
 \arguments{
 \item{x}{\code{RapData} or \code{RapResults} object}
 
@@ -19,6 +30,6 @@ Getter and setter methods for caches in RapData and RapResults object.
 }
 \note{
 caches are implemented using environments, the hash is used as the
-  name of the object in the environment.
+name of the object in the environment.
 }
 \keyword{internal}

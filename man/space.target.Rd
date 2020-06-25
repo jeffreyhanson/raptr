@@ -15,17 +15,15 @@ space.target(x, species, space) <- value
 
 \method{space.target}{RapData}(x, species = NULL, space = NULL)
 
-\method{space.target}{RapData}(x, species = NULL,
-  space = NULL) <- value
+\method{space.target}{RapData}(x, species = NULL, space = NULL) <- value
 
 \method{space.target}{RapUnsolOrSol}(x, species = NULL, space = NULL)
 
-\method{space.target}{RapUnsolOrSol}(x, species = NULL,
-  space = NULL) <- value
+\method{space.target}{RapUnsolOrSol}(x, species = NULL, space = NULL) <- value
 }
 \arguments{
-\item{x}{\code{\link{RapData}}, \code{\link{RapUnsolved}}, or
-\code{\link{RapSolved}} object.}
+\item{x}{\code{\link[=RapData]{RapData()}}, \code{\link[=RapUnsolved]{RapUnsolved()}}, or
+\code{\link[=RapSolved]{RapSolved()}} object.}
 
 \item{species}{\code{NULL} for all species or \code{integer} indicating
 species.}
@@ -36,7 +34,7 @@ specific space.}
 \item{value}{\code{numeric} new target.}
 }
 \value{
-\code{numeric matrix}.
+\code{numeric} \code{matrix}.
 }
 \description{
 This function sets or returns the attribute space targets for each species.
@@ -59,6 +57,6 @@ space.target(sim_rs, 1, 1) <- 0.5
 
 }
 \seealso{
-\code{\link{RapData}}, \code{\link{RapResults}},
-  \code{\link{RapSolved}}.
+\code{\link[=RapData]{RapData()}}, \code{\link[=RapResults]{RapResults()}},
+\code{\link[=RapSolved]{RapSolved()}}.
 }

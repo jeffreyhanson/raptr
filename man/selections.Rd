@@ -13,19 +13,19 @@ selections(x, y)
 \method{selections}{RapSolved}(x, y = 0)
 }
 \arguments{
-\item{x}{\code{\link{RapResults}} or \code{\link{RapSolved}} object.}
+\item{x}{\code{\link[=RapResults]{RapResults()}} or \code{\link[=RapSolved]{RapSolved()}} object.}
 
 \item{y}{\code{NULL} to return all values, \code{integer} 0 to return values
 for the best solution, \code{integer} value greater than 0 for \code{y}'th
 solution value.}
 }
 \value{
-\code{\link[base]{matrix}} or \code{numeric} vector depending on
-  arguments.
+\code{\link[base:matrix]{base::matrix()}} or \code{numeric} vector depending on
+arguments.
 }
 \description{
-Extract selections for a given solution from a \code{\link{RapResults}} or
-\code{\link{RapSolved}} object.
+Extract selections for a given solution from a \code{\link[=RapResults]{RapResults()}} or
+\code{\link[=RapSolved]{RapSolved()}} object.
 }
 \examples{
 # load data
@@ -42,5 +42,5 @@ selections(sim_rs)
 
 }
 \seealso{
-\code{\link{RapResults}}, \code{\link{RapSolved}}.
+\code{\link[=RapResults]{RapResults()}}, \code{\link[=RapSolved]{RapSolved()}}.
 }

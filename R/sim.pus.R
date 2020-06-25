@@ -5,24 +5,24 @@ NULL
 #'
 #' This function simulates planning units for RAP.
 #'
-#' @param n \code{integer} number of planning units. \code{sqrt(n)} must yield
+#' @param n `integer` number of planning units. `sqrt(n)` must yield
 #'   a valid number.
 #'
-#' @param xmn \code{numeric} value for minimum x-coordinate.
+#' @param xmn `numeric` value for minimum x-coordinate.
 #'
-#' @param xmx \code{numeric} value for maximum x-coordinate.
+#' @param xmx `numeric` value for maximum x-coordinate.
 #'
-#' @param ymn \code{numeric} value for minimum y-coordinate.
+#' @param ymn `numeric` value for minimum y-coordinate.
 #'
-#' @param ymx \code{numeric} value for maximum y-coordinate.
+#' @param ymx `numeric` value for maximum y-coordinate.
 #'
-#' @return \code{\link[sp]{SpatialPolygons}} with planning units.
+#' @return [sp::SpatialPolygons()] with planning units.
 #'
 #' @details Square planning units are generated in the shape of a square.
 #'   Default coordinate arguments are such that the planning units will be
-#'   centered at origin. The data slot contains an "id" (\code{integer}),
-#'   "cost" (\code{numeric}), "status" (\code{integer}), and "area"
-#'   (\code{numeric}).
+#'   centered at origin. The data slot contains an "id" (`integer`),
+#'   "cost" (`numeric`), "status" (`integer`), and "area"
+#'   (`numeric`).
 #'
 #' @examples
 #' # generate 225 sqauare planning units arranged in a square

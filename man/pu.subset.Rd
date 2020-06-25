@@ -13,19 +13,19 @@ pu.subset(x, pu)
 \method{pu.subset}{RapUnsolOrSol}(x, pu)
 }
 \arguments{
-\item{x}{\code{\link{RapData}}, \code{\link{RapUnsolved}}, or
-\code{\link{RapSolved}} object.}
+\item{x}{\code{\link[=RapData]{RapData()}}, \code{\link[=RapUnsolved]{RapUnsolved()}}, or
+\code{\link[=RapSolved]{RapSolved()}} object.}
 
 \item{pu}{\code{integer} vector to specify the index of planning units to
 subset.}
 }
 \value{
-\code{\link{RapData}} or \code{\link{RapUnsolved}} object depending
-  on input object.
+\code{\link[=RapData]{RapData()}} or \code{\link[=RapUnsolved]{RapUnsolved()}} object depending
+on input object.
 }
 \description{
-Subset planning units from a \code{\link{RapData}},
-\code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.
+Subset planning units from a \code{\link[=RapData]{RapData()}},
+\code{\link[=RapUnsolved]{RapUnsolved()}}, or \code{\link[=RapSolved]{RapSolved()}} object.
 }
 \examples{
 # load data
@@ -36,6 +36,6 @@ sim_ru2 <- pu.subset(sim_ru, seq_len(10))
 
 }
 \seealso{
-\code{\link{RapData}}, \code{\link{RapUnsolved}},
-  \code{\link{RapSolved}}.
+\code{\link[=RapData]{RapData()}}, \code{\link[=RapUnsolved]{RapUnsolved()}},
+\code{\link[=RapSolved]{RapSolved()}}.
 }

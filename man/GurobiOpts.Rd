@@ -4,10 +4,16 @@
 \alias{GurobiOpts}
 \title{Create GurobiOpts object}
 \usage{
-GurobiOpts(Threads = 1L, MIPGap = 0.1, Method = 0L, Presolve = 2L,
-  TimeLimit = NA_integer_, NumberSolutions = 1L,
-  MultipleSolutionsMethod = c("benders.cuts", "solution.pool.0",
-  "solution.pool.1", "solution.pool.2")[1])
+GurobiOpts(
+  Threads = 1L,
+  MIPGap = 0.1,
+  Method = 0L,
+  Presolve = 2L,
+  TimeLimit = NA_integer_,
+  NumberSolutions = 1L,
+  MultipleSolutionsMethod = c("benders.cuts", "solution.pool.0", "solution.pool.1",
+    "solution.pool.2")[1]
+)
 }
 \arguments{
 \item{Threads}{\code{integer} number of cores to use for processing.
@@ -58,5 +64,5 @@ GurobiOpts(Threads = 1L, MIPGap = 0.1, Method = 0L, Presolve=2L,
 
 }
 \seealso{
-\code{\link{GurobiOpts-class}}.
+\linkS4class{GurobiOpts}.
 }

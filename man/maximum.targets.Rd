@@ -10,7 +10,7 @@ maximum.targets(x, verbose)
 \method{maximum.targets}{RapUnsolOrSol}(x, verbose = FALSE)
 }
 \arguments{
-\item{x}{\code{\link{RapUnsolved}} or \code{\link{RapSolved}} object.}
+\item{x}{\code{\link[=RapUnsolved]{RapUnsolved()}} or \code{\link[=RapSolved]{RapSolved()}} object.}
 
 \item{verbose}{\code{logical} should messages be printed during
 calculations? Defaults to \code{FALSE}.}
@@ -19,7 +19,7 @@ calculations? Defaults to \code{FALSE}.}
 \code{data.frame} object.
 }
 \description{
-This function accepts a \code{\link{RapUnsolved}} object and returns a
+This function accepts a \code{\link[=RapUnsolved]{RapUnsolved()}} object and returns a
 \code{data.frame} containing the amount-based and space-based targets for
 each species and attribute space. These are calculated using a
 prioritization that contains all the available planning units. Note that the

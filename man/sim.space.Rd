@@ -8,25 +8,23 @@
 \usage{
 sim.space(x, ...)
 
-\method{sim.space}{RasterLayer}(x, d = 2,
-  model = RandomFields::RMgauss(), ...)
+\method{sim.space}{RasterLayer}(x, d = 2, model = RandomFields::RMgauss(), ...)
 
-\method{sim.space}{SpatialPolygons}(x, res, d = 2,
-  model = RandomFields::RMgauss(), ...)
+\method{sim.space}{SpatialPolygons}(x, res, d = 2, model = RandomFields::RMgauss(), ...)
 }
 \arguments{
-\item{x}{\code{RasterLayer} or \code{\link[sp]{SpatialPolygons}} object
+\item{x}{\code{RasterLayer} or \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} object
 delineate the spatial extent to delineate study area.}
 
-\item{...}{parameters passed to \code{\link[RandomFields]{RandomFields}}.}
+\item{...}{parameters passed to \code{\link[RandomFields:RandomFields]{RandomFields::RandomFields()}}.}
 
 \item{d}{\code{integer} number of dimensions. Defaults to 2.}
 
-\item{model}{\code{\link[RandomFields]{RMmodel}} model to simulate species
-distributions with. Defaults \code{\link[RandomFields]{RPgauss}}.}
+\item{model}{\code{\link[RandomFields:RMmodel]{RandomFields::RMmodel()}} model to simulate species
+distributions with. Defaults \code{\link[RandomFields:RPgauss]{RandomFields::RPgauss()}}.}
 
 \item{res}{\code{numeric} resolution to simulate distributions. Only needed
-when \code{\link[sp]{SpatialPolygons}} supplied.}
+when \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} supplied.}
 }
 \value{
 \code{RasterStack} with layers for each dimension of the space.
@@ -36,7 +34,7 @@ This function simulates attribute space data for RAP.
 }
 \details{
 Distributions are simulated by passing \code{model} to
-  \code{\link[RandomFields]{RFsimulate}}.
+\code{\link[RandomFields:RFsimulate]{RandomFields::RFsimulate()}}.
 }
 \examples{
 # simulate plannign units
@@ -60,5 +58,5 @@ plot(s3[[2]], main = "s3: second dimension")
 
 }
 \seealso{
-\code{\link[RandomFields]{RFsimulate}}.
+\code{\link[RandomFields:RFsimulate]{RandomFields::RFsimulate()}}.
 }

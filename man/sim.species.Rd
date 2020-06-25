@@ -8,27 +8,35 @@
 \usage{
 sim.species(x, ...)
 
-\method{sim.species}{RasterLayer}(x, n = 1, model = list("uniform",
-  "normal", "bimodal", RandomFields::RPgauss())[[1]], ...)
+\method{sim.species}{RasterLayer}(
+  x,
+  n = 1,
+  model = list("uniform", "normal", "bimodal", RandomFields::RPgauss())[[1]],
+  ...
+)
 
-\method{sim.species}{SpatialPolygons}(x, res, n = 1,
-  model = list("normal", "uniform", "bimodal",
-  RandomFields::RPgauss())[[1]], ...)
+\method{sim.species}{SpatialPolygons}(
+  x,
+  res,
+  n = 1,
+  model = list("normal", "uniform", "bimodal", RandomFields::RPgauss())[[1]],
+  ...
+)
 }
 \arguments{
-\item{x}{\code{\link[raster]{RasterLayer-class}} or
-\code{\link[sp]{SpatialPolygons}} object delineate the spatial extent to
+\item{x}{\link[raster:Raster-classes]{raster::RasterLayer} or
+\code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} object delineate the spatial extent to
 delineate study area.}
 
-\item{...}{parameters passed to \code{\link[RandomFields]{RandomFields}}.}
+\item{...}{parameters passed to \code{\link[RandomFields:RandomFields]{RandomFields::RandomFields()}}.}
 
 \item{n}{\code{integer} number of species. Defaults to 1.}
 
-\item{model}{\code{\link[RandomFields]{RMmodel}} model to simulate species
-distributions with. Defaults \code{\link[RandomFields]{RPgauss}}.}
+\item{model}{\code{\link[RandomFields:RMmodel]{RandomFields::RMmodel()}} model to simulate species
+distributions with. Defaults \code{\link[RandomFields:RPgauss]{RandomFields::RPgauss()}}.}
 
 \item{res}{\code{numeric} resolution to simulate distributions. Only needed
-when \code{\link[sp]{SpatialPolygons}} supplied.}
+when \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} supplied.}
 }
 \value{
 \code{RasterStack} with layers for each species.
@@ -38,8 +46,8 @@ This function simulates species distributions for RAP.
 }
 \details{
 Distributions are simulated by passing \code{model} to
-  \code{\link[RandomFields]{RFsimulate}} and converting to logistic values
-  using \code{\link[boot]{inv.logit}}.
+\code{\link[RandomFields:RFsimulate]{RandomFields::RFsimulate()}} and converting to logistic values
+using \code{\link[boot:inv.logit]{boot::inv.logit()}}.
 }
 \examples{
 # make polygons
@@ -72,5 +80,5 @@ plot(s5, main = "RPgauss()")
 
 }
 \seealso{
-\code{\link[RandomFields]{RFsimulate}}.
+\code{\link[RandomFields:RFsimulate]{RandomFields::RFsimulate()}}.
 }

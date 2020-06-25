@@ -8,16 +8,14 @@
 \usage{
 calcBoundaryData(x, tol, length.factor, edge.factor)
 
-\method{calcBoundaryData}{PolySet}(x, tol = 0.001, length.factor = 1,
-  edge.factor = 1)
+\method{calcBoundaryData}{PolySet}(x, tol = 0.001, length.factor = 1, edge.factor = 1)
 
-\method{calcBoundaryData}{SpatialPolygons}(x, tol = 0.001,
-  length.factor = 1, edge.factor = 1)
+\method{calcBoundaryData}{SpatialPolygons}(x, tol = 0.001, length.factor = 1, edge.factor = 1)
 }
 \arguments{
-\item{x}{\code{\link[PBSmapping]{PolySet}},
-\code{\link[sp]{SpatialPolygons}} or
-\code{\link[sp]{SpatialPolygonsDataFrame}} object.}
+\item{x}{\code{\link[PBSmapping:PolySet]{PBSmapping::PolySet()}},
+\code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} or
+\code{\link[sp:SpatialPolygons]{sp::SpatialPolygonsDataFrame()}} object.}
 
 \item{tol}{\code{numeric} to specify precision of calculations. In other
 words, how far apart vertices have to be to be considered different?}
@@ -29,17 +27,17 @@ do not have any neighbors, such as those that occur along the margins.}
 }
 \value{
 \code{data.frame} with 'id1' (\code{integer}), 'id2'
-  (\code{integer}), and 'amount' (\code{numeric}) columns.
+(\code{integer}), and 'amount' (\code{numeric}) columns.
 }
 \description{
 This function calculates boundary length data for
-\code{\link[PBSmapping]{PolySet}}, \code{\link[sp]{SpatialPolygons}}, and
-\code{\link[sp]{SpatialPolygonsDataFrame}} objects. Be aware that this
+\code{\link[PBSmapping:PolySet]{PBSmapping::PolySet()}}, \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}}, and
+\code{\link[sp:SpatialPolygons]{sp::SpatialPolygonsDataFrame()}} objects. Be aware that this
 function is designed with performance in mind, and as a consequence, if this
 function is used improperly then it may crash R. Furthermore, multipart
 polygons with touching edges will likely result in inaccuracies.
-If argument set to \code{\link[sp]{SpatialPolygons}} or
-\code{\link[sp]{SpatialPolygonsDataFrame}}, this will be converted to
+If argument set to \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} or
+\code{\link[sp:SpatialPolygons]{sp::SpatialPolygonsDataFrame()}}, this will be converted to
 PolySet before processing.
 }
 \examples{
@@ -55,6 +53,6 @@ summary(bound.dat)
 }
 \seealso{
 This function is based on the algorithm in QMARXAN
-  \url{https://github.com/tsw-apropos/qmarxan} for calculating boundary
-  length.
+\url{https://github.com/tsw-apropos/qmarxan} for calculating boundary
+length.
 }

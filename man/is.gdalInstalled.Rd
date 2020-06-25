@@ -21,5 +21,5 @@ is.gdalInstalled()
 
 }
 \seealso{
-\code{\link[gdalUtils]{gdal_setInstallation}}.
+\code{\link[gdalUtils:gdal_setInstallation]{gdalUtils::gdal_setInstallation()}}.
 }

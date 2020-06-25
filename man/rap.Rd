@@ -4,17 +4,23 @@
 \alias{rap}
 \title{Generate prioritizations using RAP}
 \usage{
-rap(pus, species, spaces = NULL, formulation = c("unreliable",
-  "reliable")[1], solve = TRUE, ...)
+rap(
+  pus,
+  species,
+  spaces = NULL,
+  formulation = c("unreliable", "reliable")[1],
+  solve = TRUE,
+  ...
+)
 }
 \arguments{
-\item{pus}{\code{\link[sp]{SpatialPolygons}} object representing planning
+\item{pus}{\code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} object representing planning
 units.}
 
-\item{species}{\code{\link[raster]{raster}} object with species distribution
+\item{species}{\code{\link[raster:raster]{raster::raster()}} object with species distribution
 data.}
 
-\item{spaces}{\code{list} of \code{\link[raster]{raster}} objects. Each
+\item{spaces}{\code{list} of \code{\link[raster:raster]{raster::raster()}} objects. Each
 elements denotes the spatial distribution for each space. Defaults to
 \code{NULL}.}
 
@@ -24,13 +30,13 @@ Defaults to \code{"unreliable"}.}
 
 \item{solve}{\code{logical} should solutions be generated?}
 
-\item{...}{arguments are passed to \code{\link{GurobiOpts}},
-\code{\link{make.RapData}}, and \code{\link{RapReliableOpts}} or
-\code{\link{RapUnreliableOpts}} functions.}
+\item{...}{arguments are passed to \code{\link[=GurobiOpts]{GurobiOpts()}},
+\code{\link[=make.RapData]{make.RapData()}}, and \code{\link[=RapReliableOpts]{RapReliableOpts()}} or
+\code{\link[=RapUnreliableOpts]{RapUnreliableOpts()}} functions.}
 }
 \value{
-\code{\link{RapSolved}} object if \code{solve} is \code{TRUE},
- otherwise an \code{\link{RapUnsolved}} is returned.
+\code{\link[=RapSolved]{RapSolved()}} object if \code{solve} is \code{TRUE},
+otherwise an \code{\link[=RapUnsolved]{RapUnsolved()}} is returned.
 }
 \description{
 This is a general function to create Rap objects from scratch and solve them
@@ -38,11 +44,11 @@ to generate solutions.
 }
 \note{
 Type \code{vignette("raptr")} to see the package vignette for a
-  tutorial.
+tutorial.
 }
 \seealso{
-\code{\link{GurobiOpts}}, \code{\link{RapReliableOpts}},
-  \code{\link{RapUnreliableOpts}} \code{\link{RapData}},
-  \code{\link{RapResults}}, \code{\link{RapUnsolved}},
-  \code{\link{RapSolved}}.
+\code{\link[=GurobiOpts]{GurobiOpts()}}, \code{\link[=RapReliableOpts]{RapReliableOpts()}},
+\code{\link[=RapUnreliableOpts]{RapUnreliableOpts()}} \code{\link[=RapData]{RapData()}},
+\code{\link[=RapResults]{RapResults()}}, \code{\link[=RapUnsolved]{RapUnsolved()}},
+\code{\link[=RapSolved]{RapSolved()}}.
 }

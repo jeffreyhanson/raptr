@@ -7,7 +7,7 @@
 randomPoints(mask, n, prob = FALSE)
 }
 \arguments{
-\item{mask}{\code{\link[raster]{raster}} object}
+\item{mask}{\code{\link[raster:raster]{raster::raster()}} object}
 
 \item{n}{\code{integer} number of points to sample}
 
@@ -15,11 +15,11 @@ randomPoints(mask, n, prob = FALSE)
 Defaults to \code{FALSE}.}
 }
 \value{
-\code{\link[base]{matrix}} with x-coordinates, y-coordinates, and
-  cell values.
+\code{\link[base:matrix]{base::matrix()}} with x-coordinates, y-coordinates, and
+cell values.
 }
 \description{
-This function generates random points in a \code{\link[raster]{raster}}
+This function generates random points in a \code{\link[raster:raster]{raster::raster()}}
 object.
 }
 \examples{

@@ -8,22 +8,34 @@
 \usage{
 calcSpeciesAverageInPus(x, ...)
 
-\method{calcSpeciesAverageInPus}{SpatialPolygons}(x, y,
-  ids = seq_len(nlayers(y)), ncores = 1, gdal = FALSE, ...)
+\method{calcSpeciesAverageInPus}{SpatialPolygons}(
+  x,
+  y,
+  ids = seq_len(nlayers(y)),
+  ncores = 1,
+  gdal = FALSE,
+  ...
+)
 
-\method{calcSpeciesAverageInPus}{SpatialPolygonsDataFrame}(x, y,
-  ids = seq_len(nlayers(y)), ncores = 1, gdal = FALSE,
-  field = NULL, ...)
+\method{calcSpeciesAverageInPus}{SpatialPolygonsDataFrame}(
+  x,
+  y,
+  ids = seq_len(nlayers(y)),
+  ncores = 1,
+  gdal = FALSE,
+  field = NULL,
+  ...
+)
 }
 \arguments{
-\item{x}{\code{\link[sp]{SpatialPolygons}} or
-\code{\link[sp]{SpatialPolygonsDataFrame}} object.}
+\item{x}{\code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} or
+\code{\link[sp:SpatialPolygons]{sp::SpatialPolygonsDataFrame()}} object.}
 
 \item{...}{not used.}
 
-\item{y}{\code{\link[raster]{RasterLayer-class}},
-\code{\link[raster]{RasterStack-class}}, or
-\code{\link[raster]{RasterBrick-class}} object.}
+\item{y}{\link[raster:Raster-classes]{raster::RasterLayer},
+\link[raster:Raster-classes]{raster::RasterStack}, or
+\link[raster:Raster-classes]{raster::RasterBrick} object.}
 
 \item{ids}{\code{integer} vector of ids. Defaults to indices of layers in
 argument to \code{y}.}
@@ -36,12 +48,12 @@ libraries? Defaults to \code{FALSE}.}
 
 \item{field}{\code{integer} index or \code{character} name of column with
 planning unit ids. Valid only when \code{x} is a
-\code{\link[sp]{SpatialPolygonsDataFrame}} object. Default behavior is to
+\code{\link[sp:SpatialPolygons]{sp::SpatialPolygonsDataFrame()}} object. Default behavior is to
 treat each polygon as a different planning unit.}
 }
 \value{
-\code{\link[base]{data.frame}} with sum of raster values in each
-  polygon.
+\code{\link[base:data.frame]{base::data.frame()}} with sum of raster values in each
+polygon.
 }
 \description{
 This function calculates the average of species values in each planning unit.
@@ -62,6 +74,6 @@ puvspr2.dat <- calcSpeciesAverageInPus(sim_pus, stack(sim_spp))
 
 }
 \seealso{
-\code{\link{is.gdalInstalled}}, \url{http://www.gdal.org/},
-  \url{http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries}.
+\code{\link[=is.gdalInstalled]{is.gdalInstalled()}}, \url{http://www.gdal.org/},
+\url{http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries}.
 }

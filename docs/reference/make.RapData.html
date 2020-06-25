@@ -10,21 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -36,7 +42,6 @@
 <meta property="og:title" content="Make data for RAP using minimal inputs — make.RapData" />
 <meta property="og:description" content="This function prepares spatially explicit planning unit, species data, and
 landscape data layers for RAP processing." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -51,9 +56,10 @@ landscape data layers for RAP processing." />
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -67,7 +73,7 @@ landscape data layers for RAP processing." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6.1</span>
       </span>
     </div>
 
@@ -75,7 +81,7 @@ landscape data layers for RAP processing." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -91,8 +97,8 @@ landscape data layers for RAP processing." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/jeffreyhanson/raptr">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/jeffreyhanson/raptr/">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -103,6 +109,7 @@ landscape data layers for RAP processing." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -118,28 +125,38 @@ landscape data layers for RAP processing." />
 landscape data layers for RAP processing.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>make.RapData</span>(<span class='no'>pus</span>, <span class='no'>species</span>, <span class='kw'>spaces</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>amount.target</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
-  <span class='kw'>space.target</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>n.demand.points</span> <span class='kw'>=</span> <span class='fl'>100L</span>, <span class='kw'>kernel.method</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"ks"</span>,
-  <span class='st'>"hypervolume"</span>)[<span class='fl'>1</span>], <span class='kw'>quantile</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>species.points</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>n.species.points</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>ceiling</a></span>(<span class='fl'>0.2</span> * <span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/raster/topics/cellStats'>cellStats</a></span>(<span class='no'>species</span>, <span class='st'>"sum"</span>)),
-  <span class='kw'>include.geographic.space</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>make.RapData</span>(
+  <span class='no'>pus</span>,
+  <span class='no'>species</span>,
+  <span class='kw'>spaces</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>amount.target</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
+  <span class='kw'>space.target</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
+  <span class='kw'>n.demand.points</span> <span class='kw'>=</span> <span class='fl'>100L</span>,
+  <span class='kw'>kernel.method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ks"</span>, <span class='st'>"hypervolume"</span>)[<span class='fl'>1</span>],
+  <span class='kw'>quantile</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+  <span class='kw'>species.points</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>n.species.points</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>ceiling</a></span>(<span class='fl'>0.2</span> * <span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/cellStats.html'>cellStats</a></span>(<span class='no'>species</span>, <span class='st'>"sum"</span>)),
+  <span class='kw'>include.geographic.space</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>pus</th>
-      <td><p><code><a href='https://www.rdocumentation.org/packages/sp/topics/SpatialPolygons'>SpatialPolygons</a></code> with planning unit data.</p></td>
+      <td><p><code><a href='https://rdrr.io/pkg/sp/man/SpatialPolygons.html'>sp::SpatialPolygons()</a></code> with planning unit data.</p></td>
     </tr>
     <tr>
       <th>species</th>
-      <td><p><code><a href='https://www.rdocumentation.org/packages/raster/topics/raster'>raster</a></code> with species probability
+      <td><p><code><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster::raster()</a></code> with species probability
 distribution data.</p></td>
     </tr>
     <tr>
       <th>spaces</th>
-      <td><p><code>list</code> of/or <code><a href='https://www.rdocumentation.org/packages/raster/topics/raster'>raster</a></code> representing
+      <td><p><code>list</code> of/or <code><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster::raster()</a></code> representing
 projects of attribute space over geographic space. Use a <code>list</code> to
 denote separate attribute spaces.</p></td>
     </tr>
@@ -172,8 +189,8 @@ generate demand points. Use either <code>"ks"</code> or <code>"hypervolume"</cod
     <tr>
       <th>species.points</th>
       <td><p><code>list</code> of/or
-<code><a href='https://www.rdocumentation.org/packages/sp/topics/SpatialPoints'>SpatialPointsDataFrame</a></code> or
-<code><a href='https://www.rdocumentation.org/packages/sp/topics/SpatialPoints'>SpatialPoints</a></code> with species presence records. Use a
+<code><a href='https://rdrr.io/pkg/sp/man/SpatialPoints.html'>sp::SpatialPointsDataFrame()</a></code> or
+<code><a href='https://rdrr.io/pkg/sp/man/SpatialPoints.html'>sp::SpatialPoints()</a></code> with species presence records. Use a
 <code>list</code> of objects to represent different species. Must have the same
 number of elements as <code>species</code>. If not supplied then use
 <code>n.species.points</code> to sample points from the species distributions.</p></td>
@@ -200,34 +217,34 @@ standard deviation? This prevents overflow. Defaults to <code>TRUE</code>.</p></
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional arguments to <code><a href='calcBoundaryData.html'>calcBoundaryData</a></code> and
-<code><a href='calcSpeciesAverageInPus.html'>calcSpeciesAverageInPus</a></code>.</p></td>
+      <td><p>additional arguments to <code><a href='calcBoundaryData.html'>calcBoundaryData()</a></code> and
+<code><a href='calcSpeciesAverageInPus.html'>calcSpeciesAverageInPus()</a></code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='RapData-class.html'>RapData-class</a></code>, <code><a href='RapData.html'>RapData</a></code>.</p></div>
+    <div class='dont-index'><p><a href='RapData-class.html'>RapData</a>, <code><a href='RapData.html'>RapData()</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load data</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>cs_pus</span>, <span class='no'>cs_spp</span>, <span class='no'>cs_space</span>)</div><div class='input'><span class='co'># make RapData object using the first 10 planning units in the dat</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>cs_pus</span>, <span class='no'>cs_spp</span>, <span class='no'>cs_space</span>)
+<span class='co'># \donttest{</span>
+<span class='co'># make RapData object using the first 10 planning units in the dat</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>make.RapData</span>(<span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,], <span class='no'>cs_spp</span>, <span class='no'>cs_space</span>,
                   <span class='kw'>include.geographic.space</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='co'># print object</span>
-<span class='fu'><a href='print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='message'>RapData object.</span></div><div class='output co'>#&gt; <span class='message'>  Number of planning units: 10</span></div><div class='output co'>#&gt; <span class='message'>  Number of species: 4</span></div><div class='output co'>#&gt; <span class='message'>  Number of attribute spaces: 2</span></div><div class='input'>
+<span class='fu'><a href='print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='message'>RapData object.</span></div><div class='output co'>#&gt; <span class='message'>  Number of planning units: 10</span></div><div class='output co'>#&gt; <span class='message'>  Number of species: 4</span></div><div class='output co'>#&gt; <span class='message'>  Number of attribute spaces: 2</span></div><div class='input'># }
+
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -235,13 +252,16 @@ standard deviation? This prevents overflow. Defaults to <code>TRUE</code>.</p></
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

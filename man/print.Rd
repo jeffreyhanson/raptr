@@ -38,10 +38,10 @@
 \method{print}{RapSolved}(x, ...)
 }
 \arguments{
-\item{x}{\code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}},
-\code{\link{RapReliableOpts}}, \code{\link{RapData}},
-\code{\link{RapUnsolved}}, \code{\link{RapResults}}, or
-\code{\link{RapSolved}} object.}
+\item{x}{\code{\link[=GurobiOpts]{GurobiOpts()}}, \code{\link[=RapUnreliableOpts]{RapUnreliableOpts()}},
+\code{\link[=RapReliableOpts]{RapReliableOpts()}}, \code{\link[=RapData]{RapData()}},
+\code{\link[=RapUnsolved]{RapUnsolved()}}, \code{\link[=RapResults]{RapResults()}}, or
+\code{\link[=RapSolved]{RapSolved()}} object.}
 
 \item{...}{not used.}
 
@@ -76,8 +76,8 @@ print(sim_rs@results)
 print(sim_rs)
 }
 \seealso{
-\code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}},
-  \code{\link{RapReliableOpts}}, \code{\link{RapData}},
-  \code{\link{RapUnsolved}}, \code{\link{RapResults}},
-  \code{\link{RapSolved}}.
+\code{\link[=GurobiOpts]{GurobiOpts()}}, \code{\link[=RapUnreliableOpts]{RapUnreliableOpts()}},
+\code{\link[=RapReliableOpts]{RapReliableOpts()}}, \code{\link[=RapData]{RapData()}},
+\code{\link[=RapUnsolved]{RapUnsolved()}}, \code{\link[=RapResults]{RapResults()}},
+\code{\link[=RapSolved]{RapSolved()}}.
 }

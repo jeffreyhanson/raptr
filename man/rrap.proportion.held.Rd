@@ -4,17 +4,22 @@
 \alias{rrap.proportion.held}
 \title{Proportion held using reliable RAP formulation.}
 \usage{
-rrap.proportion.held(pu.coordinates, pu.probabilities, dp.coordinates,
-  dp.weights, failure.distance,
-  maximum.r.level = as.integer(length(pu.probabilities)))
+rrap.proportion.held(
+  pu.coordinates,
+  pu.probabilities,
+  dp.coordinates,
+  dp.weights,
+  failure.distance,
+  maximum.r.level = as.integer(length(pu.probabilities))
+)
 }
 \arguments{
-\item{pu.coordinates}{\code{\link[base]{matrix}} of planning unit
+\item{pu.coordinates}{\code{\link[base:matrix]{base::matrix()}} of planning unit
 coordinates.}
 
 \item{pu.probabilities}{\code{numeric} vector of planning unit probabilities.}
 
-\item{dp.coordinates}{\code{\link[base]{matrix}} of demand point coordinates.}
+\item{dp.coordinates}{\code{\link[base:matrix]{base::matrix()}} of demand point coordinates.}
 
 \item{dp.weights}{\code{numeric} vector of demand point weights.}
 
@@ -26,7 +31,7 @@ calculations.}
 }
 \value{
 \code{numeric} value indicating the proportion of variation that the
-  demand points explain in the planning units
+demand points explain in the planning units
 }
 \description{
 This is a convenience function to quickly calculate the proportion of

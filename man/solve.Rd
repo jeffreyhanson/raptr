@@ -20,30 +20,30 @@
 \S4method{solve}{RapUnsolOrSol,logical}(a, b, verbose = FALSE)
 }
 \arguments{
-\item{a}{\code{\link{RapUnsolved}} or \code{\link{RapSolved}} object.}
+\item{a}{\code{\link[=RapUnsolved]{RapUnsolved()}} or \code{\link[=RapSolved]{RapSolved()}} object.}
 
 \item{b}{\code{missing} to generate solutions using Gurobi. Prioritizations
 can be specified using  \code{logical}, \code{numeric}, or
-\code{\link[base]{matrix}} objects. This may be useful for evaluating the
+\code{\link[base:matrix]{base::matrix()}} objects. This may be useful for evaluating the
 performance of solutions obtained using other software.}
+
+\item{...}{not used.}
 
 \item{verbose}{\code{logical} should messages be printed during creation of
 the initial model matrix?.}
-
-\item{...}{not used.}
 }
 \value{
-\code{\link{RapSolved}} object
+\code{\link[=RapSolved]{RapSolved()}} object
 }
 \description{
 This function uses Gurobi to find prioritizations using the input parameter
-and data stored in a \code{\link{RapUnsolved}} object, and returns a
-\code{\link{RapSolved}} object with outputs in it.
+and data stored in a \code{\link[=RapUnsolved]{RapUnsolved()}} object, and returns a
+\code{\link[=RapSolved]{RapSolved()}} object with outputs in it.
 }
 \note{
-This function is used to solve a \code{\link{RapUnsolved}} object that
-  has all of its inputs generated. The rap function (without lower case 'r')
-  provides a more general interface for generating inputs and outputs.
+This function is used to solve a \code{\link[=RapUnsolved]{RapUnsolved()}} object that
+has all of its inputs generated. The rap function (without lower case 'r')
+provides a more general interface for generating inputs and outputs.
 }
 \examples{
 # load RapUnsolved object
@@ -65,5 +65,5 @@ sim_rs4 <- solve(sim_ru, matrix(sample(c(0, 1), size = 500, replace = TRUE),
 
 }
 \seealso{
-\code{\link{RapUnsolved}}, \code{\link{RapSolved}}.
+\code{\link[=RapUnsolved]{RapUnsolved()}}, \code{\link[=RapSolved]{RapSolved()}}.
 }

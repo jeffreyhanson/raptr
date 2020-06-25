@@ -13,7 +13,7 @@ logging.file(x, y)
 \method{logging.file}{RapSolved}(x, y = 0)
 }
 \arguments{
-\item{x}{\code{\link{RapResults}} or \code{\link{RapSolved}} object.}
+\item{x}{\code{\link[=RapResults]{RapResults()}} or \code{\link[=RapSolved]{RapSolved()}} object.}
 
 \item{y}{Available inputs include: \code{NULL} to return all values,
 \code{integer} number specifying the solution for which the log file should
@@ -25,7 +25,7 @@ an optimization problem.
 }
 \note{
 The term logging file was used due to collisions with the \code{log}
-  function.
+function.
 }
 \examples{
 # load data
@@ -42,5 +42,5 @@ cat(logging.file(sim_rs, NULL))
 
 }
 \seealso{
-\code{\link{RapResults}}, \code{\link{RapSolved}}.
+\code{\link[=RapResults]{RapResults()}}, \code{\link[=RapSolved]{RapSolved()}}.
 }

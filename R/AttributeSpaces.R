@@ -7,12 +7,12 @@ NULL
 #' This class is used to store a collection of attribute spaces for different
 #' species.
 #'
-#' @slot spaces \code{list} of \code{\link{AttributeSpace}} objects for
+#' @slot spaces `list` of [AttributeSpace()] objects for
 #'   different species.
 #'
-#' @slot name \code{character} name to identify the attribute space.
+#' @slot name `character` name to identify the attribute space.
 #'
-#' @seealso \code{\link{AttributeSpace-class}}.
+#' @seealso [AttributeSpace-class].
 #'
 #' @name AttributeSpaces-class
 #'
@@ -39,14 +39,14 @@ methods::setClass("AttributeSpaces",
 
 #' Create new AttributeSpaces object
 #'
-#' This function creates a new \code{AttributeSpaces} object.
+#' This function creates a new `AttributeSpaces` object.
 #'
-#' @param spaces \code{list} of \code{\link{AttributeSpace}} objects for
+#' @param spaces `list` of [AttributeSpace()] objects for
 #'   different species.
 #'
-#' @param name \code{character} name to identify the attribute space.
+#' @param name `character` name to identify the attribute space.
 #'
-#' @seealso \code{\link{AttributeSpace-class}}.
+#' @seealso [AttributeSpace-class].
 #'
 #' @examples
 #' space1 <- AttributeSpace(

@@ -4,8 +4,13 @@
 \alias{sim.pus}
 \title{Simulate planning units}
 \usage{
-sim.pus(n, xmn = -sqrt(n)/2, xmx = sqrt(n)/2, ymn = -sqrt(n)/2,
-  ymx = sqrt(n)/2)
+sim.pus(
+  n,
+  xmn = -sqrt(n)/2,
+  xmx = sqrt(n)/2,
+  ymn = -sqrt(n)/2,
+  ymx = sqrt(n)/2
+)
 }
 \arguments{
 \item{n}{\code{integer} number of planning units. \code{sqrt(n)} must yield
@@ -20,17 +25,17 @@ a valid number.}
 \item{ymx}{\code{numeric} value for maximum y-coordinate.}
 }
 \value{
-\code{\link[sp]{SpatialPolygons}} with planning units.
+\code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} with planning units.
 }
 \description{
 This function simulates planning units for RAP.
 }
 \details{
 Square planning units are generated in the shape of a square.
-  Default coordinate arguments are such that the planning units will be
-  centered at origin. The data slot contains an "id" (\code{integer}),
-  "cost" (\code{numeric}), "status" (\code{integer}), and "area"
-  (\code{numeric}).
+Default coordinate arguments are such that the planning units will be
+centered at origin. The data slot contains an "id" (\code{integer}),
+"cost" (\code{numeric}), "status" (\code{integer}), and "area"
+(\code{numeric}).
 }
 \examples{
 # generate 225 sqauare planning units arranged in a square
