@@ -6,19 +6,19 @@ NULL
 #' This class is used to store RAP input and output data in addition to input
 #' parameters.
 #'
-#' @slot opts \code{\link{RapReliableOpts}} or \code{\link{RapUnreliableOpts}}
+#' @slot opts [RapReliableOpts()] or [RapUnreliableOpts()]
 #'   object used to store input parameters.
 #'
-#' @slot solver \code{\link{GurobiOpts}} or \code{\link{ManualOpts}} object
+#' @slot solver [GurobiOpts()] or [ManualOpts()] object
 #'   used to store solver information/parameters.
 #'
-#' @slot data \code{\link{RapData}} object used to store input data.
+#' @slot data [RapData()] object used to store input data.
 #'
-#' @slot results \code{\link{RapResults}} object used to store results.
+#' @slot results [RapResults()] object used to store results.
 #'
-#' @seealso \code{\link{RapReliableOpts-class}},
-#'   \code{\link{RapUnreliableOpts-class}}, \code{\link{RapData-class}},
-#'   \code{\link{RapResults-class}}.
+#' @seealso [RapReliableOpts-class],
+#'   [RapUnreliableOpts-class], [RapData-class],
+#'   [RapResults-class].
 #'
 #' @name RapSolved-class
 #'
@@ -34,17 +34,17 @@ methods::setClassUnion("RapUnsolOrSol", c("RapSolved", "RapUnsolved"))
 
 #' Create new RapSolved object
 #'
-#' This function creates a \code{\link{RapSolved}} object.
+#' This function creates a [RapSolved()] object.
 #'
-#' @param unsolved \code{\link{RapUnsolved}} object.
+#' @param unsolved [RapUnsolved()] object.
 #'
-#' @param solver \code{\link{GurobiOpts}} or \code{\link{ManualOpts}} object.
+#' @param solver [GurobiOpts()] or [ManualOpts()] object.
 #'
-#' @param results \code{\link{RapResults}} object.
+#' @param results [RapResults()] object.
 #'
-#' @return \code{\link{RapSolved}} object.
+#' @return [RapSolved()] object.
 #'
-#' @seealso \code{\link{RapSolved-class}}, \code{\link{RapResults-class}},
+#' @seealso [RapSolved-class], [RapResults-class],
 #'   \code{link{solve}}.
 #'
 #' @export

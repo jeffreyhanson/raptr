@@ -22,5 +22,5 @@ Defaults to 5L.}
 }}
 
 \seealso{
-\code{\link{RapReliableOpts}}.
+\code{\link[=RapReliableOpts]{RapReliableOpts()}}.
 }

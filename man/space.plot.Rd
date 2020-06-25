@@ -39,8 +39,8 @@ space.plot(x, species, space, ...)
 )
 }
 \arguments{
-\item{x}{\code{\link{RapData}}, \code{\link{RapUnsolved}}, or
-\code{\link{RapSolved}} object.}
+\item{x}{\code{\link[=RapData]{RapData()}}, \code{\link[=RapUnsolved]{RapUnsolved()}}, or
+\code{\link[=RapSolved]{RapSolved()}} object.}
 
 \item{species}{\code{character} name of species, or \code{integer} index for
 species.}
@@ -50,7 +50,7 @@ species.}
 \item{...}{not used.}
 
 \item{pu.color.palette}{\code{character} name of colors or color palette
-(\code{\link[RColorBrewer]{brewer.pal}}) to indicate planning unit
+(\code{\link[RColorBrewer:ColorBrewer]{RColorBrewer::brewer.pal()}}) to indicate planning unit
 statuses. Defaults to \code{c("grey30", "green", "black", "red")} which
 indicate non selected, selected, locked in, and locked out (respectively).}
 

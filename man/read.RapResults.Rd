@@ -35,7 +35,7 @@ This function reads files output from Gurobi and returns a \code{RapResults}
 object.
 }
 \seealso{
-\code{\link{RapReliableOpts}}, \code{\link{RapUnreliableOpts}},
-\code{\link{RapData}}, \code{\link{RapResults}}.
+\code{\link[=RapReliableOpts]{RapReliableOpts()}}, \code{\link[=RapUnreliableOpts]{RapUnreliableOpts()}},
+\code{\link[=RapData]{RapData()}}, \code{\link[=RapResults]{RapResults()}}.
 }
 \keyword{internal}

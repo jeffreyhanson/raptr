@@ -6,6 +6,6 @@
 \alias{RapOpts}
 \title{RapOpts class}
 \description{
-Object is either \code{\link{RapReliableOpts}} or
-\code{\link{RapUnreliableOpts}}.
+Object is either \code{\link[=RapReliableOpts]{RapReliableOpts()}} or
+\code{\link[=RapUnreliableOpts]{RapUnreliableOpts()}}.
 }

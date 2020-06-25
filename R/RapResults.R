@@ -5,24 +5,24 @@ NULL
 #'
 #' This class is used to store RAP results.
 #'
-#' @slot summary \code{\link[base]{data.frame}} with summary information on
+#' @slot summary [base::data.frame()] with summary information on
 #'  solutions.
 #'
-#' @slot selections \code{\link[base]{matrix}} with binary selections. The cell
+#' @slot selections [base::matrix()] with binary selections. The cell
 #'   \eqn{x_{ij}} denotes if planning unit \eqn{j} is selected in the
 #'   \eqn{i}'th solution.
 #'
-#' @slot amount.held \code{\link[base]{matrix}} with the amount held for each
+#' @slot amount.held [base::matrix()] with the amount held for each
 #'   species in each solution.
 #'
-#' @slot space.held \code{\link[base]{matrix}} with the proportion of attribute
+#' @slot space.held [base::matrix()] with the proportion of attribute
 #'   space sampled for each species in each solution.
 #'
 #' @slot best `integer` with index of best solution.
 #'
 #' @slot logging.file `character` Gurobi log files.
 #'
-#' @slot .cache \code{\link[base]{environment}} used to store extra data.
+#' @slot .cache [base::environment()] used to store extra data.
 #'
 #' @details The `summary` table follows Marxan conventions ("summary.dat" in <http://marxan.net/downloads/uq_marxan_web_2/module5.html>). The columns
 #' are:
@@ -49,7 +49,7 @@ NULL
 #' efficient.}
 #' }
 #'
-#' @seealso \code{\link{RapResults}}, \code{\link{read.RapResults}}.
+#' @seealso [RapResults()], [read.RapResults()].
 #'
 #' @name RapResults-class
 #'
@@ -125,24 +125,24 @@ methods::setClass("RapResults",
 
 #' Create RapResults object
 #'
-#' This function creates a new \code{\link{RapResults}} object.
+#' This function creates a new [RapResults()] object.
 #'
-#' @param summary \code{\link[base]{data.frame}} with summary information on
+#' @param summary [base::data.frame()] with summary information on
 #'   solutions. See details below for more information.
 #'
-#' @param selections \code{\link[base]{matrix}} with binary selections. The
+#' @param selections [base::matrix()] with binary selections. The
 #'   cell \eqn{x_{ij}} denotes if planning unit \eqn{j} is selected in the
 #'   \eqn{i}'th solution.
 #'
-#' @param amount.held \code{\link[base]{matrix}} with the amount held for each
+#' @param amount.held [base::matrix()] with the amount held for each
 #'   species in each solution.
 #'
-#' @param space.held \code{\link[base]{matrix}} with the proportion of
+#' @param space.held [base::matrix()] with the proportion of
 #'   attribute space sampled for each species in each solution.
 #'
 #' @param logging.file `character` Gurobi log files.
 #'
-#' @param .cache \code{\link[base]{environment}} used to cache calculations.
+#' @param .cache [base::environment()] used to cache calculations.
 #'
 #' @details The `summary` table follows Marxan conventions (summary.dat in <http://marxan.net/downloads/uq_marxan_web_2/module5.html>). The columns
 #' are:
@@ -174,7 +174,7 @@ methods::setClass("RapResults",
 #'
 #' @return `RapResults` object
 #'
-#' @seealso \code{\link{RapResults-class}} \code{\link{read.RapResults}}.
+#' @seealso [RapResults-class] [read.RapResults()].
 #'
 #' @export
 RapResults <- function(summary, selections, amount.held, space.held,

@@ -16,7 +16,7 @@ NULL
 #'
 #' @param ymx `numeric` value for maximum y-coordinate.
 #'
-#' @return \code{\link[sp]{SpatialPolygons}} with planning units.
+#' @return [sp::SpatialPolygons()] with planning units.
 #'
 #' @details Square planning units are generated in the shape of a square.
 #'   Default coordinate arguments are such that the planning units will be

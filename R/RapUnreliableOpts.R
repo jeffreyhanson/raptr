@@ -32,9 +32,9 @@ methods::setClass("RapUnreliableOpts", contains = "RapOpts",
 #'
 #' @param BLM `numeric` boundary length modifier. Defaults to 0.
 #'
-#' @return \code{\link{RapUnreliableOpts}} object
+#' @return [RapUnreliableOpts()] object
 #'
-#' @seealso \code{\link{RapUnreliableOpts-class}}.
+#' @seealso [RapUnreliableOpts-class].
 #'
 #' @examples
 #' # create RapUnreliableOpts using defaults

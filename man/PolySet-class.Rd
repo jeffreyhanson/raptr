@@ -9,5 +9,5 @@
 Object contains PolySet data.
 }
 \seealso{
-\code{\link[PBSmapping]{PolySet}}.
+\code{\link[PBSmapping:PolySet]{PBSmapping::PolySet()}}.
 }

@@ -47,5 +47,5 @@ Defaults to \code{"benders.cuts"}.}
 }}
 
 \seealso{
-\code{\link{GurobiOpts}}.
+\code{\link[=GurobiOpts]{GurobiOpts()}}.
 }

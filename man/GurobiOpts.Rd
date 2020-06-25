@@ -64,5 +64,5 @@ GurobiOpts(Threads = 1L, MIPGap = 0.1, Method = 0L, Presolve=2L,
 
 }
 \seealso{
-\code{\link{GurobiOpts-class}}.
+\linkS4class{GurobiOpts}.
 }

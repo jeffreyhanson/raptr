@@ -30,7 +30,7 @@ is.comparable(x, y)
 This function checks objects to see if they share the same input data.
 }
 \seealso{
-\code{\link{RapData-class}}, \code{\link{RapUnsolved-class}},
-\code{\link{RapSolved-class}}.
+\linkS4class{RapData}, \linkS4class{RapUnsolved},
+\linkS4class{RapSolved}.
 }
 \keyword{internal}

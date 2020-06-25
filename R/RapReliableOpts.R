@@ -15,7 +15,7 @@ NULL
 #' @slot max.r.level `numeric` maximum R failure level for approximation.
 #'   Defaults to 5L.
 #'
-#' @seealso \code{\link{RapReliableOpts}}.
+#' @seealso [RapReliableOpts()].
 #'
 #' @name RapReliableOpts-class
 #'
@@ -67,7 +67,7 @@ methods::setClass("RapReliableOpts",
 #'
 #' @return `RapReliableOpts` object
 #'
-#' @seealso \code{\link{RapReliableOpts-class}}.
+#' @seealso [RapReliableOpts-class].
 #'
 #' @examples
 #' # create RapReliableOpts using defaults

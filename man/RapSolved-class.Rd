@@ -11,19 +11,19 @@ parameters.
 \section{Slots}{
 
 \describe{
-\item{\code{opts}}{\code{\link{RapReliableOpts}} or \code{\link{RapUnreliableOpts}}
+\item{\code{opts}}{\code{\link[=RapReliableOpts]{RapReliableOpts()}} or \code{\link[=RapUnreliableOpts]{RapUnreliableOpts()}}
 object used to store input parameters.}
 
-\item{\code{solver}}{\code{\link{GurobiOpts}} or \code{\link{ManualOpts}} object
+\item{\code{solver}}{\code{\link[=GurobiOpts]{GurobiOpts()}} or \code{\link[=ManualOpts]{ManualOpts()}} object
 used to store solver information/parameters.}
 
-\item{\code{data}}{\code{\link{RapData}} object used to store input data.}
+\item{\code{data}}{\code{\link[=RapData]{RapData()}} object used to store input data.}
 
-\item{\code{results}}{\code{\link{RapResults}} object used to store results.}
+\item{\code{results}}{\code{\link[=RapResults]{RapResults()}} object used to store results.}
 }}
 
 \seealso{
-\code{\link{RapReliableOpts-class}},
-\code{\link{RapUnreliableOpts-class}}, \code{\link{RapData-class}},
-\code{\link{RapResults-class}}.
+\linkS4class{RapReliableOpts},
+\linkS4class{RapUnreliableOpts}, \linkS4class{RapData},
+\linkS4class{RapResults}.
 }

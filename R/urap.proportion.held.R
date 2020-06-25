@@ -4,9 +4,9 @@
 #' variation that one set of points captures in a another set of points using
 #' the unreliable formulation.
 #'
-#' @param x \code{\link[base]{matrix}} of points
+#' @param x [base::matrix()] of points
 #'
-#' @param y \code{\link[base]{matrix}} of points
+#' @param y [base::matrix()] of points
 #'
 #' @param y.weights `numeric` vector of weights for each point in
 #'   `y`. Defaults to equal weights for all points in `y`.

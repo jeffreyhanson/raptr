@@ -7,7 +7,7 @@
 blank.raster(x, res)
 }
 \arguments{
-\item{x}{\code{\link[sp]{Spatial-class}} object.}
+\item{x}{\link[sp:Spatial-class]{sp::Spatial} object.}
 
 \item{res}{\code{numeric} \code{vector} specifying resolution of the output raster
 in the x and y dimensions. If \code{vector} is of length one, then the

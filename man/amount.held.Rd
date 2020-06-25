@@ -10,7 +10,7 @@ amount.held(x, y, species)
 \method{amount.held}{RapSolved}(x, y = 0, species = NULL)
 }
 \arguments{
-\item{x}{\code{\link{RapResults}} or \code{\link{RapSolved}} object.}
+\item{x}{\code{\link[=RapResults]{RapResults()}} or \code{\link[=RapSolved]{RapSolved()}} object.}
 
 \item{y}{Available inputs include: \code{NULL} to return all values,
 \code{integer} number specifying the solution for which the value should
@@ -20,7 +20,7 @@ be returned, and \code{0} to return the value for the best solution.}
 species.}
 }
 \value{
-\code{\link[base]{matrix}} or \code{numeric} vector depending on
+\code{\link[base:matrix]{base::matrix()}} or \code{numeric} vector depending on
 arguments.
 }
 \description{
@@ -44,5 +44,5 @@ amount.held(sim_rs, NULL)
 
 }
 \seealso{
-\code{\link{RapResults}}, \code{\link{RapSolved}}.
+\code{\link[=RapResults]{RapResults()}}, \code{\link[=RapSolved]{RapSolved()}}.
 }

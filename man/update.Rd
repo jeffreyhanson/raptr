@@ -45,9 +45,9 @@
 \method{update}{RapUnsolOrSol}(object, ..., formulation = NULL, solve = TRUE)
 }
 \arguments{
-\item{object}{\code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}},
-\code{\link{RapReliableOpts}}, \code{\link{RapData}},
-\code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.}
+\item{object}{\code{\link[=GurobiOpts]{GurobiOpts()}}, \code{\link[=RapUnreliableOpts]{RapUnreliableOpts()}},
+\code{\link[=RapReliableOpts]{RapReliableOpts()}}, \code{\link[=RapData]{RapData()}},
+\code{\link[=RapUnsolved]{RapUnsolved()}}, or \code{\link[=RapSolved]{RapSolved()}} object.}
 
 \item{Threads}{\code{integer} number of cores to use for processing.}
 
@@ -78,8 +78,8 @@ search pool methods correspond to the parameters used by the Gurobi
 software suite (see \url{http://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode}).
 Defaults to \code{"benders.cuts"}.}
 
-\item{...}{parameters passed to \code{\link{update.RapReliableOpts}},
-\code{\link{update.RapUnreliableOpts}}, or \code{\link{update.RapData}}.}
+\item{...}{parameters passed to \code{\link[=update.RapReliableOpts]{update.RapReliableOpts()}},
+\code{\link[=update.RapUnreliableOpts]{update.RapUnreliableOpts()}}, or \code{\link[=update.RapData]{update.RapData()}}.}
 
 \item{species}{\code{integer} or \code{character} denoting species for which
 targets or name should be updated.}
@@ -113,21 +113,21 @@ use. This can be either "unreliable" or "reliable". The default is
 \code{NULL} so that formulation in \code{object} is used.}
 
 \item{solve}{\code{logical} should the problem be solved? This argument is
-only valid for \code{\link{RapUnsolved}} and \code{\link{RapSolved}}
+only valid for \code{\link[=RapUnsolved]{RapUnsolved()}} and \code{\link[=RapSolved]{RapSolved()}}
 objects. Defaults to \code{TRUE}.}
 }
 \value{
-\code{\link{GurobiOpts-class}},
-\code{\link{RapUnreliableOpts-class}},
-\code{\link{RapReliableOpts-class}}, \code{\link{RapData-class}},
-\code{\link{RapUnsolved-class}}, or \code{\link{RapSolved-class}} object
+\linkS4class{GurobiOpts},
+\linkS4class{RapUnreliableOpts},
+\linkS4class{RapReliableOpts}, \linkS4class{RapData},
+\linkS4class{RapUnsolved}, or \linkS4class{RapSolved} object
 depending on argument to \code{x}.
 }
 \description{
 This function updates parameters or data stored in an existing
-\code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}},
-\code{\link{RapReliableOpts}}, \code{\link{RapData}},
-\code{\link{RapUnsolved}}, or \code{\link{RapSolved}} object.
+\code{\link[=GurobiOpts]{GurobiOpts()}}, \code{\link[=RapUnreliableOpts]{RapUnreliableOpts()}},
+\code{\link[=RapReliableOpts]{RapReliableOpts()}}, \code{\link[=RapData]{RapData()}},
+\code{\link[=RapUnsolved]{RapUnsolved()}}, or \code{\link[=RapSolved]{RapSolved()}} object.
 }
 \examples{
 # load data
@@ -171,8 +171,8 @@ print(x@opts@BLM); print(amount.target(x))
 print(y@opts@BLM); print(space.target(y))
 }
 \seealso{
-\code{\link{GurobiOpts-class}},
-\code{\link{RapUnreliableOpts-class}},
-\code{\link{RapReliableOpts-class}}, \code{\link{RapData-class}},
-\code{\link{RapUnsolved-class}}, \code{\link{RapSolved-class}}.
+\linkS4class{GurobiOpts},
+\linkS4class{RapUnreliableOpts},
+\linkS4class{RapReliableOpts}, \linkS4class{RapData},
+\linkS4class{RapUnsolved}, \linkS4class{RapSolved}.
 }

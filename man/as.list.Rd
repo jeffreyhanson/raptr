@@ -8,7 +8,7 @@
 \method{as.list}{GurobiOpts}(x, ...)
 }
 \arguments{
-\item{x}{\code{\link{GurobiOpts}} object.}
+\item{x}{\code{\link[=GurobiOpts]{GurobiOpts()}} object.}
 
 \item{...}{not used.}
 }
@@ -16,7 +16,7 @@
 \code{list}
 }
 \description{
-Convert \code{\link{GurobiOpts}} object to list.
+Convert \code{\link[=GurobiOpts]{GurobiOpts()}} object to list.
 }
 \note{
 This function will not include the \code{NumberSolutions} slot, the

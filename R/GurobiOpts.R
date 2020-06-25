@@ -40,7 +40,7 @@ NULL
 #'   software suite (see <http://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode>).
 #'   Defaults to `"benders.cuts"`.
 #'
-#' @seealso \code{\link{GurobiOpts}}.
+#' @seealso [GurobiOpts()].
 #'
 #' @name GurobiOpts-class
 #'
@@ -131,7 +131,7 @@ methods::setClass("GurobiOpts",
 #'
 #' @return `GurobiOpts` object
 #'
-#' @seealso \code{\link{GurobiOpts-class}}.
+#' @seealso [GurobiOpts-class].
 #'
 #' @examples
 #' # create GurobiOpts object using default parameters

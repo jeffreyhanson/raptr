@@ -22,12 +22,12 @@ make.RapData(
 )
 }
 \arguments{
-\item{pus}{\code{\link[sp]{SpatialPolygons}} with planning unit data.}
+\item{pus}{\code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} with planning unit data.}
 
-\item{species}{\code{\link[raster]{raster}} with species probability
+\item{species}{\code{\link[raster:raster]{raster::raster()}} with species probability
 distribution data.}
 
-\item{spaces}{\code{list} of/or \code{\link[raster]{raster}} representing
+\item{spaces}{\code{list} of/or \code{\link[raster:raster]{raster::raster()}} representing
 projects of attribute space over geographic space. Use a \code{list} to
 denote separate attribute spaces.}
 
@@ -48,8 +48,8 @@ generate demand points. Use either \code{"ks"} or \code{"hypervolume"}.}
 \code{species.points} intersect. Defaults to 0.5.}
 
 \item{species.points}{\code{list} of/or
-\code{\link[sp]{SpatialPointsDataFrame}} or
-\code{\link[sp]{SpatialPoints}} with species presence records. Use a
+\code{\link[sp:SpatialPoints]{sp::SpatialPointsDataFrame()}} or
+\code{\link[sp:SpatialPoints]{sp::SpatialPoints()}} with species presence records. Use a
 \code{list} of objects to represent different species. Must have the same
 number of elements as \code{species}. If not supplied then use
 \code{n.species.points} to sample points from the species distributions.}
@@ -66,8 +66,8 @@ standard deviation? This prevents overflow. Defaults to \code{TRUE}.}
 
 \item{verbose}{\code{logical} print statements during processing?}
 
-\item{...}{additional arguments to \code{\link{calcBoundaryData}} and
-\code{\link{calcSpeciesAverageInPus}}.}
+\item{...}{additional arguments to \code{\link[=calcBoundaryData]{calcBoundaryData()}} and
+\code{\link[=calcSpeciesAverageInPus]{calcSpeciesAverageInPus()}}.}
 }
 \description{
 This function prepares spatially explicit planning unit, species data, and
@@ -86,5 +86,5 @@ print(x)
 
 }
 \seealso{
-\code{\link{RapData-class}}, \code{\link{RapData}}.
+\linkS4class{RapData}, \code{\link[=RapData]{RapData()}}.
 }

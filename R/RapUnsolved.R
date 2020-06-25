@@ -5,14 +5,14 @@ NULL
 #'
 #' This class is used to store RAP input data and input parameters.
 #'
-#' @slot opts \code{\link{RapReliableOpts}} or \code{\link{RapUnreliableOpts}}
+#' @slot opts [RapReliableOpts()] or [RapUnreliableOpts()]
 #'   object used to store input parameters.
 #'
-#' @slot data \code{\link{RapData}} object used to store input data.
+#' @slot data [RapData()] object used to store input data.
 #'
 #'
-#' @seealso  \code{\link{RapReliableOpts-class}},
-#'   \code{\link{RapUnreliableOpts-class}}, \code{\link{RapData-class}}.
+#' @seealso  [RapReliableOpts-class],
+#'   [RapUnreliableOpts-class], [RapData-class].
 #'
 #' @name RapUnsolved-class
 #'
@@ -24,19 +24,19 @@ methods::setClass("RapUnsolved",
 
 #' Create a new RapUnsolved object
 #'
-#' This function creates a \code{\link{RapUnsolved}} object using a
-#' \code{\link{GurobiOpts}}, a \code{\link{RapReliableOpts}} or
-#' \code{\link{RapUnreliableOpts}} object, and a \code{\link{RapData}} object.
+#' This function creates a [RapUnsolved()] object using a
+#' [GurobiOpts()], a [RapReliableOpts()] or
+#' [RapUnreliableOpts()] object, and a [RapData()] object.
 #'
-#' @param opts \code{\link{RapReliableOpts}} or \code{\link{RapUnreliableOpts}}
+#' @param opts [RapReliableOpts()] or [RapUnreliableOpts()]
 #'   object.
 #'
-#' @param data \code{\link{RapData}} object.
+#' @param data [RapData()] object.
 #'
-#' @return \code{\link{RapUnsolved}} object.
+#' @return [RapUnsolved()] object.
 #'
-#' @seealso \code{\link{RapReliableOpts-class}},
-#'   \code{\link{RapUnreliableOpts-class}}, \code{\link{RapData-class}}.
+#' @seealso [RapReliableOpts-class],
+#'   [RapUnreliableOpts-class], [RapData-class].
 #'
 #' @examples
 #' \donttest{

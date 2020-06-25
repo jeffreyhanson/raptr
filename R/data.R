@@ -27,17 +27,17 @@ NULL
 #' The objects contained in this dataset are listed below.
 #'
 #' \describe{
-#' \item{sim_ru}{A \code{\link{RapUnsolved}} object with all the simulated
+#' \item{sim_ru}{A [RapUnsolved()] object with all the simulated
 #' data.}
-#' \item{sim_rs}{A \code{\link{RapSolved}} object with 5 near-optimal
+#' \item{sim_rs}{A [RapSolved()] object with 5 near-optimal
 #' solutions.}
 #' }
 #'
 #' @docType data
 #'
-#' @format \code{\link[sp]{SpatialPolygonsDataFrame}},
-#'   \code{\link[raster]{RasterStack-class}}, `list` of
-#'   \code{\link{DemandPoints}} objects.
+#' @format [sp::SpatialPolygonsDataFrame()],
+#'   [raster::RasterStack-class], `list` of
+#'   [DemandPoints()] objects.
 #'
 #' @aliases sim_ru sim_rs
 #'
@@ -74,7 +74,7 @@ NULL
 #'
 #' The objects in the dataset are listed below.
 #' \describe{
-#' \item{cs_pus}{\code{\link[sp]{SpatialPolygonsDataFrame}} planning units.
+#' \item{cs_pus}{[sp::SpatialPolygonsDataFrame()] planning units.
 #' The units were generated as \eqn{30km^2} squares across the
 #' species' range, and then clipped to the Queensland, Australia
 #' (using data obtained from the Australia Bureau of Statistics; <http://www.abs.gov.au/ausstats/abs@@.nsf/mf/1259.0.30.001?OpenDocument>).
@@ -86,11 +86,11 @@ NULL
 #' field is set to 1 for all units, and the `status` field
 #' indicates if 50% or more of the units' extent is covered by
 #' protected areas.}
-#' \item{cs_spp}{\code{\link[raster]{RasterLayer-class}} probability
+#' \item{cs_spp}{[raster::RasterLayer-class] probability
 #' distribution map for the *P. adscitus* clipped to
 #' Queensland, Australia. This map was derived from records
 #' obtained from The Atlas of Living Australia (<http://ala.org.au/>)}.
-#' \item{cs_space}{\code{\link[raster]{stack}} describing broad-scale climate
+#' \item{cs_space}{[raster::stack()] describing broad-scale climate
 #' variation across Queensland
 #' (obtained from <http://worldclim.org/>,
 #' and resampled to \eqn{10km^2} resolution).}
@@ -100,7 +100,7 @@ NULL
 #'
 #' @aliases cs_pus cs_spp cs_space
 #'
-#' @format cs_pus: \code{\link[sp]{SpatialPolygonsDataFrame}}, cs_spp: \code{\link[raster]{RasterLayer-class}}, cs_space: \code{\link[raster]{RasterStack-class}}.
+#' @format cs_pus: [sp::SpatialPolygonsDataFrame()], cs_spp: [raster::RasterLayer-class], cs_space: [raster::RasterStack-class].
 #'
 #' @keywords datasets
 #'

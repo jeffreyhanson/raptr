@@ -4,13 +4,13 @@ NULL
 #' Test if Gurobi is installed
 #'
 #' This function determines if the Gurobi R package is installed on the
-#' computer and that it can be used \code{\link[base]{options}}.
+#' computer and that it can be used [base::options()].
 #'
 #' @param verbose `logical` should messages be printed?
 #'
 #' @return `logical` Is it installed and ready to use?
 #'
-#' @seealso \code{\link[base]{options}}.
+#' @seealso [base::options()].
 #'
 #' @examples
 #' \donttest{
@@ -75,7 +75,7 @@ is.GurobiInstalled <- function(verbose = TRUE) {
 #'
 #' @return `logical` is GDAL installed?
 #'
-#' @seealso \code{\link[gdalUtils]{gdal_setInstallation}}.
+#' @seealso [gdalUtils::gdal_setInstallation()].
 #'
 #' @examples
 #' # check if gdal is installed on system
@@ -93,22 +93,22 @@ is.gdalInstalled <- function() {
 #'
 #' This function converts a `SpatialPolygonsDataFrame` to a
 #' `RasterLayer` using GDAL. It is expected to be faster than
-#' \code{\link[raster]{rasterize}} for large datasets. However, it will be
+#' [raster::rasterize()] for large datasets. However, it will be
 #' significantly slower for small datasets because the data will need to be
 #' written and read from disk.
 #'
-#' @param x \code{\link[sp]{SpatialPolygonsDataFrame}} object.
+#' @param x [sp::SpatialPolygonsDataFrame()] object.
 #'
-#' @param y \code{\link[raster]{raster}} with dimensions, extent, and
+#' @param y [raster::raster()] with dimensions, extent, and
 #'   resolution to be used as a template for new raster.
 #'
 #' @param field `character` column name with values to burn into the
 #'   output raster. If not supplied, default behaviour is to burn polygon
-#'   indices into the \code{\link[raster]{raster}}.
+#'   indices into the [raster::raster()].
 #'
 #' @return `RasterLayer` object.
 #'
-#' @seealso \code{\link[raster]{rasterize}}, \code{\link{is.gdalInstalled}}.
+#' @seealso [raster::rasterize()], [is.gdalInstalled()].
 #'
 #' @examples
 #' \donttest{
@@ -149,7 +149,7 @@ rasterizeGDAL <- function(x, y, field = NULL) {
 #' This functions creates a blank raster based on the spatial extent of a
 #' Spatial object.
 #'
-#' @param x \code{\link[sp]{Spatial-class}} object.
+#' @param x [sp::Spatial-class] object.
 #'
 #' @param res `numeric` `vector` specifying resolution of the output raster
 #'   in the x and y dimensions. If `vector` is of length one, then the
@@ -199,7 +199,7 @@ blank.raster <- function(x, res) {
 #'
 #' Object contains PolySet data.
 #'
-#' @seealso \code{\link[PBSmapping]{PolySet}}.
+#' @seealso [PBSmapping::PolySet()].
 #'
 #' @name PolySet-class
 #'
@@ -210,8 +210,8 @@ methods::setClass("PolySet")
 
 #' RapOpts class
 #'
-#' Object is either \code{\link{RapReliableOpts}} or
-#' \code{\link{RapUnreliableOpts}}.
+#' Object is either [RapReliableOpts()] or
+#' [RapUnreliableOpts()].
 #'
 #' @name RapOpts-class
 #'
@@ -228,7 +228,7 @@ methods::setClass("RapOpts",
 #'
 #' @name SolverOpts-class
 #'
-#' @seealso \code{\link{GurobiOpts}}.
+#' @seealso [GurobiOpts()].
 #'
 #' @aliases SolverOpts
 #'
@@ -237,17 +237,17 @@ methods::setClass("SolverOpts")
 
 #' Sample random points from a RasterLayer
 #'
-#' This function generates random points in a \code{\link[raster]{raster}}
+#' This function generates random points in a [raster::raster()]
 #' object.
 #'
-#' @param mask \code{\link[raster]{raster}} object
+#' @param mask [raster::raster()] object
 #'
 #' @param n `integer` number of points to sample
 #'
 #' @param prob `logical` should the raster values be used as weights?
 #'   Defaults to `FALSE`.
 #'
-#' @return \code{\link[base]{matrix}} with x-coordinates, y-coordinates, and
+#' @return [base::matrix()] with x-coordinates, y-coordinates, and
 #'   cell values.
 #'
 #' @seealso This function is similar to `dismo::randomPoints`.

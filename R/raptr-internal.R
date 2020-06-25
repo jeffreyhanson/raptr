@@ -711,8 +711,8 @@ mergeRapResults <- function(x) {
 #'
 #' @return `RapResults` object
 #'
-#' @seealso \code{\link{RapReliableOpts}}, \code{\link{RapUnreliableOpts}},
-#'   \code{\link{RapData}}, \code{\link{RapResults}}.
+#' @seealso [RapReliableOpts()], [RapUnreliableOpts()],
+#'   [RapData()], [RapResults()].
 read.RapResults <- function(opts, data, model.list, logging.file,
                             solution.list, verbose = FALSE) {
   x <- rcpp_extract_model_object(opts, inherits(opts, "RapUnreliableOpts"),
@@ -734,8 +734,8 @@ read.RapResults <- function(opts, data, model.list, logging.file,
 #'
 #' @keywords internal
 #'
-#' @seealso \code{\link{RapData-class}}, \code{\link{RapUnsolved-class}},
-#' \code{\link{RapSolved-class}}.
+#' @seealso [RapData-class], [RapUnsolved-class],
+#' [RapSolved-class].
 #'
 #' @name is.comparable
 methods::setGeneric("is.comparable",
@@ -761,7 +761,7 @@ methods::setGeneric("is.comparable",
 #'
 #' @keywords internal
 #'
-#' @seealso \code{\link[RgoogleMaps]{GetMap.bbox}}, \code{\link{plot}}.
+#' @seealso [RgoogleMaps::GetMap.bbox()], [plot()].
 basemap <- function(x, basemap = "hybrid", grayscale = FALSE,
                     force.reset = FALSE) UseMethod("basemap")
 

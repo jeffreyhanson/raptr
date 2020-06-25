@@ -6,13 +6,13 @@ NULL
 #' This is a general function to create Rap objects from scratch and solve them
 #' to generate solutions.
 #'
-#' @param pus \code{\link[sp]{SpatialPolygons}} object representing planning
+#' @param pus [sp::SpatialPolygons()] object representing planning
 #'   units.
 #'
-#' @param species \code{\link[raster]{raster}} object with species distribution
+#' @param species [raster::raster()] object with species distribution
 #'   data.
 #'
-#' @param spaces `list` of \code{\link[raster]{raster}} objects. Each
+#' @param spaces `list` of [raster::raster()] objects. Each
 #'   elements denotes the spatial distribution for each space. Defaults to
 #'   `NULL`.
 #'
@@ -22,20 +22,20 @@ NULL
 #'
 #' @param solve `logical` should solutions be generated?
 #'
-#' @param ... arguments are passed to \code{\link{GurobiOpts}},
-#'   \code{\link{make.RapData}}, and \code{\link{RapReliableOpts}} or
-#'   \code{\link{RapUnreliableOpts}} functions.
+#' @param ... arguments are passed to [GurobiOpts()],
+#'   [make.RapData()], and [RapReliableOpts()] or
+#'   [RapUnreliableOpts()] functions.
 #'
 #' @note Type `vignette("raptr")` to see the package vignette for a
 #'   tutorial.
 #'
-#' @return \code{\link{RapSolved}} object if `solve` is `TRUE`,
-#'  otherwise an \code{\link{RapUnsolved}} is returned.
+#' @return [RapSolved()] object if `solve` is `TRUE`,
+#'  otherwise an [RapUnsolved()] is returned.
 #'
-#' @seealso \code{\link{GurobiOpts}}, \code{\link{RapReliableOpts}},
-#'   \code{\link{RapUnreliableOpts}} \code{\link{RapData}},
-#'   \code{\link{RapResults}}, \code{\link{RapUnsolved}},
-#'   \code{\link{RapSolved}}.
+#' @seealso [GurobiOpts()], [RapReliableOpts()],
+#'   [RapUnreliableOpts()] [RapData()],
+#'   [RapResults()], [RapUnsolved()],
+#'   [RapSolved()].
 #'
 #' @export
 rap <- function(pus, species, spaces = NULL,

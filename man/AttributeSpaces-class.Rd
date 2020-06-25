@@ -12,12 +12,12 @@ species.
 \section{Slots}{
 
 \describe{
-\item{\code{spaces}}{\code{list} of \code{\link{AttributeSpace}} objects for
+\item{\code{spaces}}{\code{list} of \code{\link[=AttributeSpace]{AttributeSpace()}} objects for
 different species.}
 
 \item{\code{name}}{\code{character} name to identify the attribute space.}
 }}
 
 \seealso{
-\code{\link{AttributeSpace-class}}.
+\linkS4class{AttributeSpace}.
 }

@@ -15,5 +15,5 @@ This class is used to store parameters.
 }}
 
 \seealso{
-\code{\link{ManualOpts}}.
+\code{\link[=ManualOpts]{ManualOpts()}}.
 }

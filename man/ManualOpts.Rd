@@ -11,7 +11,7 @@ ManualOpts(NumberSolutions = 1L)
 Defaults to 1L.}
 }
 \value{
-\code{\link{ManualOpts}} object
+\code{\link[=ManualOpts]{ManualOpts()}} object
 }
 \description{
 This function creates a new ManualOpts object.
@@ -22,5 +22,5 @@ ManualOpts(NumberSolutions = 1L)
 
 }
 \seealso{
-\code{\link{ManualOpts-class}}.
+\linkS4class{ManualOpts}.
 }

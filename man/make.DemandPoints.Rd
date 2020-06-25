@@ -13,7 +13,7 @@ make.DemandPoints(
 )
 }
 \arguments{
-\item{points}{\code{\link[base]{matrix}} object containing points.}
+\item{points}{\code{\link[base:matrix]{base::matrix()}} object containing points.}
 
 \item{n}{\code{integer} number of demand points to use for each attribute
 space for each species. Defaults to \code{100L}.}
@@ -28,7 +28,7 @@ generate demand points. Defaults to \code{'ks'}.}
 \item{...}{arguments passed to kernel density estimating functions}
 }
 \value{
-\code{\link{DemandPoints}} object.
+\code{\link[=DemandPoints]{DemandPoints()}} object.
 }
 \description{
 This function generates demand points to characterize a distribution of
@@ -42,10 +42,10 @@ demand points are generated as random points inside the shape. The weights
 for each demand point are calculated the estimated density of input points
 at the demand point. By supplying 'ks' as an argument to \code{method} in
 \code{kernel.method}, the shape is defined using a minimum convex polygon
-\code{\link[adehabitatHR]{mcp}} and \code{\link[ks]{kde}} is used to fit
+\code{\link[adehabitatHR:mcp]{adehabitatHR::mcp()}} and \code{\link[ks:kde]{ks::kde()}} is used to fit
 the kernel. Note this can only be used when the data is low-dimensional (d
 < 3). By supplying \code{"hypervolume"} as an argument to \code{method},
-the \code{\link[hypervolume]{hypervolume}} function is used to create the
+the \code{\link[hypervolume:hypervolume]{hypervolume::hypervolume()}} function is used to create the
 demand points. This method can be used for hyper-dimensional data
 (\eqn{d << 3}).
 }
@@ -78,6 +78,6 @@ print(dps2)
 }
 }
 \seealso{
-\code{\link[hypervolume]{hypervolume}}, \code{\link[ks]{kde}},
-\code{\link[adehabitatHR]{mcp}}.
+\code{\link[hypervolume:hypervolume]{hypervolume::hypervolume()}}, \code{\link[ks:kde]{ks::kde()}},
+\code{\link[adehabitatHR:mcp]{adehabitatHR::mcp()}}.
 }

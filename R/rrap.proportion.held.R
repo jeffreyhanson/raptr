@@ -4,12 +4,12 @@
 #' variation that one set of points captures in a another set of points using
 #' the reliable formulation.
 #'
-#' @param pu.coordinates \code{\link[base]{matrix}} of planning unit
+#' @param pu.coordinates [base::matrix()] of planning unit
 #'   coordinates.
 #'
 #' @param pu.probabilities `numeric` vector of planning unit probabilities.
 #'
-#' @param dp.coordinates \code{\link[base]{matrix}} of demand point coordinates.
+#' @param dp.coordinates [base::matrix()] of demand point coordinates.
 #'
 #' @param dp.weights `numeric` vector of demand point weights.
 #'

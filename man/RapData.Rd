@@ -17,36 +17,36 @@ RapData(
 )
 }
 \arguments{
-\item{pu}{\code{\link[base]{data.frame}} planning unit data. Columns must be
+\item{pu}{\code{\link[base:data.frame]{base::data.frame()}} planning unit data. Columns must be
 "cost" (\code{numeric}), "area" (\code{numeric}), and "status"
 (\code{integer}).}
 
-\item{species}{\code{\link[base]{data.frame}} with species data. Columns
+\item{species}{\code{\link[base:data.frame]{base::data.frame()}} with species data. Columns
 must be "name" (\code{character}).}
 
-\item{targets}{\code{\link[base]{data.frame}} with species data.
+\item{targets}{\code{\link[base:data.frame]{base::data.frame()}} with species data.
 Columns must be "species" (\code{integer}), "target" (\code{integer}),
 "proportion" (\code{numeric}).}
 
-\item{pu.species.probabilities}{\code{\link[base]{data.frame}} with data on
+\item{pu.species.probabilities}{\code{\link[base:data.frame]{base::data.frame()}} with data on
 the probability of species in each planning unit. Columns must be
 "species", (\code{integer}), "pu" (\code{integer}), and "value"
 (\code{numeric}).}
 
-\item{attribute.spaces}{\code{list} of \code{\link{AttributeSpaces}} objects
+\item{attribute.spaces}{\code{list} of \code{\link[=AttributeSpaces]{AttributeSpaces()}} objects
 with the demand points and planning unit coordinates.}
 
-\item{boundary}{\code{\link[base]{data.frame}} with data on the shared
+\item{boundary}{\code{\link[base:data.frame]{base::data.frame()}} with data on the shared
 boundary length of planning units. Columns must be "id1"
 (\code{integer}), "id2" (\code{integer}), and "boundary" (\code{integer}).}
 
-\item{polygons}{\code{\link[PBSmapping]{PolySet}} planning unit spatial data
+\item{polygons}{\code{\link[PBSmapping:PolySet]{PBSmapping::PolySet()}} planning unit spatial data
 or \code{NULL} if data not available.}
 
 \item{skipchecks}{\code{logical} Skip data integrity checks? May improve
 speed for big data sets.}
 
-\item{.cache}{\code{\link[base]{environment}} used to cache calculations.}
+\item{.cache}{\code{\link[base:environment]{base::environment()}} used to cache calculations.}
 }
 \value{
 RapData object
@@ -97,7 +97,7 @@ print(x)
 
 }
 \seealso{
-\code{\link[PBSmapping]{PolySet}}, \code{\link[sp]{SpatialPoints}},
-\code{\link[sp]{SpatialPointsDataFrame}}, \code{\link{make.RapData}},
-\code{\link{RapData-class}}.
+\code{\link[PBSmapping:PolySet]{PBSmapping::PolySet()}}, \code{\link[sp:SpatialPoints]{sp::SpatialPoints()}},
+\code{\link[sp:SpatialPoints]{sp::SpatialPointsDataFrame()}}, \code{\link[=make.RapData]{make.RapData()}},
+\linkS4class{RapData}.
 }

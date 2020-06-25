@@ -25,7 +25,7 @@ a valid number.}
 \item{ymx}{\code{numeric} value for maximum y-coordinate.}
 }
 \value{
-\code{\link[sp]{SpatialPolygons}} with planning units.
+\code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} with planning units.
 }
 \description{
 This function simulates planning units for RAP.

@@ -4,7 +4,7 @@
 \alias{summary}
 \title{Summary of solutions}
 \arguments{
-\item{object}{\code{\link{RapResults}}, or \code{\link{RapSolved}} object.}
+\item{object}{\code{\link[=RapResults]{RapResults()}}, or \code{\link[=RapSolved]{RapSolved()}} object.}
 
 \item{...}{not used.}
 }
@@ -12,8 +12,8 @@
 \code{data.frame}
 }
 \description{
-Extracts summary of solutions in a \code{\link{RapResults}} or
-\code{\link{RapSolved}} object.
+Extracts summary of solutions in a \code{\link[=RapResults]{RapResults()}} or
+\code{\link[=RapSolved]{RapSolved()}} object.
 }
 \details{
 This table follows Marxan conventions ("summary.dat" in
@@ -50,5 +50,5 @@ data(sim_rs)
 summary(sim_rs)
 }
 \seealso{
-\code{\link{RapResults}}, \code{\link{RapSolved}}.
+\code{\link[=RapResults]{RapResults()}}, \code{\link[=RapSolved]{RapSolved()}}.
 }

@@ -14,12 +14,12 @@ rrap.proportion.held(
 )
 }
 \arguments{
-\item{pu.coordinates}{\code{\link[base]{matrix}} of planning unit
+\item{pu.coordinates}{\code{\link[base:matrix]{base::matrix()}} of planning unit
 coordinates.}
 
 \item{pu.probabilities}{\code{numeric} vector of planning unit probabilities.}
 
-\item{dp.coordinates}{\code{\link[base]{matrix}} of demand point coordinates.}
+\item{dp.coordinates}{\code{\link[base:matrix]{base::matrix()}} of demand point coordinates.}
 
 \item{dp.weights}{\code{numeric} vector of demand point weights.}
 

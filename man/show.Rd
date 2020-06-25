@@ -31,10 +31,10 @@
 \S4method{show}{RapSolved}(object)
 }
 \arguments{
-\item{object}{\code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}},
-\code{\link{RapReliableOpts}}, \code{\link{RapData}},
-\code{\link{RapUnsolved}}, \code{\link{RapResults}}, or
-\code{\link{RapSolved}} object.}
+\item{object}{\code{\link[=GurobiOpts]{GurobiOpts()}}, \code{\link[=RapUnreliableOpts]{RapUnreliableOpts()}},
+\code{\link[=RapReliableOpts]{RapReliableOpts()}}, \code{\link[=RapData]{RapData()}},
+\code{\link[=RapUnsolved]{RapUnsolved()}}, \code{\link[=RapResults]{RapResults()}}, or
+\code{\link[=RapSolved]{RapSolved()}} object.}
 }
 \description{
 Shows objects.
@@ -65,8 +65,8 @@ sim_rs@results
 sim_rs
 }
 \seealso{
-\code{\link{GurobiOpts}}, \code{\link{RapUnreliableOpts}},
-\code{\link{RapReliableOpts}}, \code{\link{RapData}},
-\code{\link{RapUnsolved}}, \code{\link{RapResults}},
-\code{\link{RapSolved}}.
+\code{\link[=GurobiOpts]{GurobiOpts()}}, \code{\link[=RapUnreliableOpts]{RapUnreliableOpts()}},
+\code{\link[=RapReliableOpts]{RapReliableOpts()}}, \code{\link[=RapData]{RapData()}},
+\code{\link[=RapUnsolved]{RapUnsolved()}}, \code{\link[=RapResults]{RapResults()}},
+\code{\link[=RapSolved]{RapSolved()}}.
 }

@@ -27,5 +27,5 @@ RapReliableOpts(BLM = 0, failure.multiplier = 1.1, max.r.level = 5L)
 
 }
 \seealso{
-\code{\link{RapReliableOpts-class}}.
+\linkS4class{RapReliableOpts}.
 }
