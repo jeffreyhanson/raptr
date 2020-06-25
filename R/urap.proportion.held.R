@@ -8,11 +8,11 @@
 #'
 #' @param y \code{\link[base]{matrix}} of points
 #'
-#' @param y.weights \code{numeric} vector of weights for each point in
-#'   \code{y}. Defaults to equal weights for all points in \code{y}.
+#' @param y.weights `numeric` vector of weights for each point in
+#'   `y`. Defaults to equal weights for all points in `y`.
 #'
-#' @return \code{numeric} value indicating the proportion of variation that
-#'   \code{x} explains in \code{y}
+#' @return `numeric` value indicating the proportion of variation that
+#'   `x` explains in `y`
 #'
 #' @examples
 #' urap.proportion.held(as.matrix(iris[1:2,-5]), as.matrix(iris[1:5,-5]))

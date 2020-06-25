@@ -11,7 +11,7 @@ NULL
 #'
 #' @slot demand.points \code{\link{DemandPoints}} object for the space.
 #'
-#' @slot species \code{integer} species id to indicate which species the space
+#' @slot species `integer` species id to indicate which species the space
 #'   is associated with.
 #'
 #' @seealso \code{\link{DemandPoints-class}},
@@ -44,14 +44,14 @@ methods::setClass("AttributeSpace",
 
 #' Create new AttributeSpace object
 #'
-#' This function creates a new \code{AttributeSpace} object.
+#' This function creates a new `AttributeSpace` object.
 #'
 #' @param planning.unit.points \code{\link{PlanningUnitPoints}} for planning
 #'   unit in the space.
 #'
 #' @param demand.points \code{\link{DemandPoints}} object for the space.
 #'
-#' @param species \code{integer} species id to indicate which species the space
+#' @param species `integer` species id to indicate which species the space
 #'   is associated with.
 #'
 #' @seealso \code{\link{DemandPoints-class}},

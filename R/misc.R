@@ -6,9 +6,9 @@ NULL
 #' This function determines if the Gurobi R package is installed on the
 #' computer and that it can be used \code{\link[base]{options}}.
 #'
-#' @param verbose \code{logical} should messages be printed?
+#' @param verbose `logical` should messages be printed?
 #'
-#' @return \code{logical} Is it installed and ready to use?
+#' @return `logical` Is it installed and ready to use?
 #'
 #' @seealso \code{\link[base]{options}}.
 #'
@@ -71,9 +71,9 @@ is.GurobiInstalled <- function(verbose = TRUE) {
 #' Test if GDAL is installed on computer
 #'
 #' This function tests if GDAL is installed on the computer.
-#' If not, download it here: \url{http://download.osgeo.org/gdal}.
+#' If not, download it here: <http://download.osgeo.org/gdal>.
 #'
-#' @return \code{logical} is GDAL installed?
+#' @return `logical` is GDAL installed?
 #'
 #' @seealso \code{\link[gdalUtils]{gdal_setInstallation}}.
 #'
@@ -91,8 +91,8 @@ is.gdalInstalled <- function() {
 
 #' Rasterize polygon data using GDAL
 #'
-#' This function converts a \code{SpatialPolygonsDataFrame} to a
-#' \code{RasterLayer} using GDAL. It is expected to be faster than
+#' This function converts a `SpatialPolygonsDataFrame` to a
+#' `RasterLayer` using GDAL. It is expected to be faster than
 #' \code{\link[raster]{rasterize}} for large datasets. However, it will be
 #' significantly slower for small datasets because the data will need to be
 #' written and read from disk.
@@ -102,11 +102,11 @@ is.gdalInstalled <- function() {
 #' @param y \code{\link[raster]{raster}} with dimensions, extent, and
 #'   resolution to be used as a template for new raster.
 #'
-#' @param field \code{character} column name with values to burn into the
+#' @param field `character` column name with values to burn into the
 #'   output raster. If not supplied, default behaviour is to burn polygon
 #'   indices into the \code{\link[raster]{raster}}.
 #'
-#' @return \code{RasterLayer} object.
+#' @return `RasterLayer` object.
 #'
 #' @seealso \code{\link[raster]{rasterize}}, \code{\link{is.gdalInstalled}}.
 #'
@@ -151,8 +151,8 @@ rasterizeGDAL <- function(x, y, field = NULL) {
 #'
 #' @param x \code{\link[sp]{Spatial-class}} object.
 #'
-#' @param res \code{numeric vector} specifying resolution of the output raster
-#'   in the x and y dimensions. If \code{vector} is of length one, then the
+#' @param res `numeric` `vector` specifying resolution of the output raster
+#'   in the x and y dimensions. If `vector` is of length one, then the
 #'   pixels are assumed to be square.
 #'
 #' @examples
@@ -242,15 +242,15 @@ methods::setClass("SolverOpts")
 #'
 #' @param mask \code{\link[raster]{raster}} object
 #'
-#' @param n \code{integer} number of points to sample
+#' @param n `integer` number of points to sample
 #'
-#' @param prob \code{logical} should the raster values be used as weights?
-#'   Defaults to \code{FALSE}.
+#' @param prob `logical` should the raster values be used as weights?
+#'   Defaults to `FALSE`.
 #'
 #' @return \code{\link[base]{matrix}} with x-coordinates, y-coordinates, and
 #'   cell values.
 #'
-#' @seealso This function is similar to \code{dismo::randomPoints}.
+#' @seealso This function is similar to `dismo::randomPoints`.
 #'
 #' @examples
 #' # simulate data

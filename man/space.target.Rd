@@ -34,7 +34,7 @@ specific space.}
 \item{value}{\code{numeric} new target.}
 }
 \value{
-\code{numeric matrix}.
+\code{numeric} \code{matrix}.
 }
 \description{
 This function sets or returns the attribute space targets for each species.

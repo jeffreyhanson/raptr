@@ -18,18 +18,18 @@ NULL
 #' @slot space.held \code{\link[base]{matrix}} with the proportion of attribute
 #'   space sampled for each species in each solution.
 #'
-#' @slot best \code{integer} with index of best solution.
+#' @slot best `integer` with index of best solution.
 #'
-#' @slot logging.file \code{character} Gurobi log files.
+#' @slot logging.file `character` Gurobi log files.
 #'
 #' @slot .cache \code{\link[base]{environment}} used to store extra data.
 #'
-#' @details The \code{summary} table follows Marxan conventions ("summary.dat" in \url{http://marxan.net/downloads/uq_marxan_web_2/module5.html}). The columns
+#' @details The `summary` table follows Marxan conventions ("summary.dat" in <http://marxan.net/downloads/uq_marxan_web_2/module5.html>). The columns
 #' are:
 #' \describe{
 #' \item{Run_Number}{The index of each solution in the object.}
 #' \item{Status}{The status of the solution. The values in this column
-#' correspond to outputs from the Gurobi software package (\url{http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html}).}
+#' correspond to outputs from the Gurobi software package (<http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html>).}
 #' \item{Score}{The objective function for the solution.}
 #' \item{Cost}{Total cost associated with a solution.}
 #' \item{Planning_Units}{Number of planning units selected in a solution.}
@@ -43,8 +43,8 @@ NULL
 #' \item{Connectivity_Out}{The number of shared boundary length among planning
 #' units not selected in the solution.}
 #' \item{Connectivity_Fraction}{The ratio of shared boundary length in the
-#' solution (\code{Connectivity_In}) to the total amount of boundary length
-#' (\code{Connectivity_Edge}). This ratio is an indicator of solution quality.
+#' solution (`Connectivity_In`) to the total amount of boundary length
+#' (`Connectivity_Edge`). This ratio is an indicator of solution quality.
 #' Solutions with a lower ratio will have less planning units and will be more
 #' efficient.}
 #' }
@@ -140,16 +140,16 @@ methods::setClass("RapResults",
 #' @param space.held \code{\link[base]{matrix}} with the proportion of
 #'   attribute space sampled for each species in each solution.
 #'
-#' @param logging.file \code{character} Gurobi log files.
+#' @param logging.file `character` Gurobi log files.
 #'
 #' @param .cache \code{\link[base]{environment}} used to cache calculations.
 #'
-#' @details The \code{summary} table follows Marxan conventions (summary.dat in \url{http://marxan.net/downloads/uq_marxan_web_2/module5.html}). The columns
+#' @details The `summary` table follows Marxan conventions (summary.dat in <http://marxan.net/downloads/uq_marxan_web_2/module5.html>). The columns
 #' are:
 #' \describe{
 #' \item{Run_Number}{The index of each solution in the object.}
 #' \item{Status}{The status of the solution. The values in this column
-#' correspond to outputs from the Gurobi software package (\url{http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html}).}
+#' correspond to outputs from the Gurobi software package (<http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html>).}
 #' \item{Score}{The objective function for the solution.}
 #' \item{Cost}{Total cost associated with a solution.}
 #' \item{Planning_Units}{Number of planning units selected in a solution.}
@@ -163,16 +163,16 @@ methods::setClass("RapResults",
 #' \item{Connectivity_Out}{The number of shared boundary length among planning
 #' units not selected in the solution.}
 #' \item{Connectivity_Fraction}{The ratio of shared boundary length in the
-#' solution (\code{Connectivity_In}) to the total amount of boundary length
-#' (\code{Connectivity_Edge}). This ratio is an indicator of solution quality.
+#' solution (`Connectivity_In`) to the total amount of boundary length
+#' (`Connectivity_Edge`). This ratio is an indicator of solution quality.
 #' Solutions with a lower ratio will have less planning units and will be more
 #' efficient.}
 #' }
 #'
-#' @note slot \code{best} is automatically determined based on data in
-#'   \code{summary}.
+#' @note slot `best` is automatically determined based on data in
+#'   `summary`.
 #'
-#' @return \code{RapResults} object
+#' @return `RapResults` object
 #'
 #' @seealso \code{\link{RapResults-class}} \code{\link{read.RapResults}}.
 #'

@@ -7,7 +7,7 @@ NULL
 #' This class is used to store input parameters for the unreliable RAP problem
 #' formulation.
 #'
-#' @slot BLM \code{numeric} boundary length modifier. Defaults to 0.
+#' @slot BLM `numeric` boundary length modifier. Defaults to 0.
 #'
 #' @name RapUnreliableOpts-class
 #'
@@ -30,7 +30,7 @@ methods::setClass("RapUnreliableOpts", contains = "RapOpts",
 #'
 #' This function creates a new RapUnreliableOpts object.
 #'
-#' @param BLM \code{numeric} boundary length modifier. Defaults to 0.
+#' @param BLM `numeric` boundary length modifier. Defaults to 0.
 #'
 #' @return \code{\link{RapUnreliableOpts}} object
 #'

@@ -8,7 +8,7 @@ NULL
 #'
 #' @slot coords \code{\link[base]{matrix}} coordinates for each point.
 #'
-#' @slot ids \code{integer} planning unit ids.
+#' @slot ids `integer` planning unit ids.
 #'
 #' @seealso \code{\link{AttributeSpace}}.
 #'
@@ -44,11 +44,11 @@ methods::setClass("PlanningUnitPoints",
 
 #' Create new PlanningUnitPoints object
 #'
-#' This function creates a new \code{PlanningUnitPoints} object.
+#' This function creates a new `PlanningUnitPoints` object.
 #'
 #' @param coords \code{\link[base]{matrix}} coordinates for each point.
 #'
-#' @param ids \code{integer} planning unit ids.
+#' @param ids `integer` planning unit ids.
 #'
 #' @seealso \code{\link{AttributeSpace-class}}.
 #'

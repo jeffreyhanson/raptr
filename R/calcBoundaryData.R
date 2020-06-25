@@ -17,19 +17,19 @@ NULL
 #'   \code{\link[sp]{SpatialPolygons}} or
 #'   \code{\link[sp]{SpatialPolygonsDataFrame}} object.
 #'
-#' @param tol \code{numeric} to specify precision of calculations. In other
+#' @param tol `numeric` to specify precision of calculations. In other
 #'   words, how far apart vertices have to be to be considered different?
 #'
-#' @param length.factor \code{numeric} to scale boundary lengths.
+#' @param length.factor `numeric` to scale boundary lengths.
 #'
-#' @param edge.factor \code{numeric} to scale boundary lengths for edges that
+#' @param edge.factor `numeric` to scale boundary lengths for edges that
 #'   do not have any neighbors, such as those that occur along the margins.
 #'
-#' @return \code{data.frame} with 'id1' (\code{integer}), 'id2'
-#'   (\code{integer}), and 'amount' (\code{numeric}) columns.
+#' @return `data.frame` with 'id1' (`integer`), 'id2'
+#'   (`integer`), and 'amount' (`numeric`) columns.
 #'
 #' @seealso This function is based on the algorithm in QMARXAN
-#'   \url{https://github.com/tsw-apropos/qmarxan} for calculating boundary
+#'   <https://github.com/tsw-apropos/qmarxan> for calculating boundary
 #'   length.
 #'
 #' @examples

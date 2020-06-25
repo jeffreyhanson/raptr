@@ -330,10 +330,10 @@ zonalMean.RasterLayerNotInMemory <- function(bs, polys, rast, speciesName,
 #' Find GDAL installation location.
 #'
 #' @details This function is basically the same as
-#'   \code{gdalUtils:::set_gdalInstallation}, it has addiitonal functionality to
+#'   `gdalUtils:::set_gdalInstallation`, it has addiitonal functionality to
 #'   be compatible with Ubuntu 14.04 Trusty
 #'
-#' @return \code{character} path.
+#' @return `character` path.
 #'
 #' @noRd
 findGdalInstallationPaths <- function(search_path = NULL, rescan = FALSE,
@@ -691,25 +691,25 @@ mergeRapResults <- function(x) {
 
 #' Read RAP results
 #'
-#' This function reads files output from Gurobi and returns a \code{RapResults}
+#' This function reads files output from Gurobi and returns a `RapResults`
 #' object.
 #'
-#' @param opts \code{RapReliableOpts} or \code{RapUnreliableOpts} object
+#' @param opts `RapReliableOpts` or `RapUnreliableOpts` object
 #'
-#' @param data \code{RapData} object
+#' @param data `RapData` object
 #'
-#' @param model.list \code{list} object containing Gurobi model data
+#' @param model.list `list` object containing Gurobi model data
 #'
-#' @param logging.file \code{character} Gurobi log files.
+#' @param logging.file `character` Gurobi log files.
 #'
-#' @param solution.list \code{list} object containing Gurobi solution data.
+#' @param solution.list `list` object containing Gurobi solution data.
 #'
-#' @param verbose \code{logical} print progress messages? Defaults to
-#'   \code{FALSE}.
+#' @param verbose `logical` print progress messages? Defaults to
+#'   `FALSE`.
 #'
 #' @keywords internal
 #'
-#' @return \code{RapResults} object
+#' @return `RapResults` object
 #'
 #' @seealso \code{\link{RapReliableOpts}}, \code{\link{RapUnreliableOpts}},
 #'   \code{\link{RapData}}, \code{\link{RapResults}}.
@@ -726,11 +726,11 @@ read.RapResults <- function(opts, data, model.list, logging.file,
 #'
 #' This function checks objects to see if they share the same input data.
 #'
-#' @param x \code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.
+#' @param x `RapData`, `RapUnsolved`, or `RapSolved` object.
 #'
-#' @param y \code{RapData}, \code{RapUnsolved}, or \code{RapSolved} object.
+#' @param y `RapData`, `RapUnsolved`, or `RapSolved` object.
 #'
-#' @return \code{logical} are the objects based on the same data?
+#' @return `logical` are the objects based on the same data?
 #'
 #' @keywords internal
 #'
@@ -746,18 +746,18 @@ methods::setGeneric("is.comparable",
 #' This function retrieves google map data for planning units. The google map
 #' data is cached to provide fast plotting capabilities.
 #'
-#' @param x \code{RapData}, \code{RapUnsolved}, \code{RapSolved} object.
+#' @param x `RapData`, `RapUnsolved`, `RapSolved` object.
 #'
-#' @param basemap \code{character} type of base map to display. Valid names are
-#'   \code{"roadmap"}, \code{"mobile"}, \code{"satellite"}, \code{"terrain"},
-#'   \code{"hybrid"}, \code{"mapmaker-roadmap"}, \code{"mapmaker-hybrid"}.
+#' @param basemap `character` type of base map to display. Valid names are
+#'   `"roadmap"`, `"mobile"`, `"satellite"`, `"terrain"`,
+#'   `"hybrid"`, `"mapmaker-roadmap"`, `"mapmaker-hybrid"`.
 #'
-#' @param grayscale \code{logical} should base map be gray scale?
+#' @param grayscale `logical` should base map be gray scale?
 #'
-#' @param force.reset \code{logical} ignore data in cache? Setting this as
+#' @param force.reset `logical` ignore data in cache? Setting this as
 #'   ignore will make function slower but may avoid bugs in cache system.
 #'
-#' @return \code{list} with google map data.
+#' @return `list` with google map data.
 #'
 #' @keywords internal
 #'
@@ -769,13 +769,13 @@ basemap <- function(x, basemap = "hybrid", grayscale = FALSE,
 #'
 #' Tests if hash is cached in Rap object.
 #'
-#' @param x \code{RapData} or \code{RapResults} object
+#' @param x `RapData` or `RapResults` object
 #'
-#' @param name \code{character} hash.
+#' @param name `character` hash.
 #'
 #' @note caches are implemented using environments, the hash is used as the
 #'   name of the object in the environment.
-#' @return \code{logical} Is it cached?
+#' @return `logical` Is it cached?
 #'
 #' @keywords internal
 #'
@@ -787,17 +787,17 @@ methods::setGeneric("is.cached",
 #'
 #' Getter and setter methods for caches in RapData and RapResults object.
 #'
-#' @param x \code{RapData} or \code{RapResults} object
+#' @param x `RapData` or `RapResults` object
 #'
-#' @param name \code{character} hash.
+#' @param name `character` hash.
 #'
-#' @param y if \code{ANY} this object gets cached with name, else if
-#'   \code{missing} the object hashed at name gets returned.
+#' @param y if `ANY` this object gets cached with name, else if
+#'   `missing` the object hashed at name gets returned.
 #'
 #' @note caches are implemented using environments, the hash is used as the
 #'   name of the object in the environment.
 #'
-#' @return \code{ANY} or \code{NULL} depends on \code{y} argument.
+#' @return `ANY` or `NULL` depends on `y` argument.
 #'
 #' @keywords internal
 #'

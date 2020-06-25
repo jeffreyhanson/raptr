@@ -42,8 +42,7 @@ Defaults to \code{"none"}.}
 
 \item{pu.color.palette}{\code{character} name of colors or color palette
 (\code{\link[RColorBrewer]{brewer.pal}}) to indicate planning unit
-statuses. Defaults to \code{c("grey30", "green", "yellow", "black",
-  "gray80", "red", "orange")}.}
+statuses. Defaults to \code{c("grey30", "green", "yellow", "black", "gray80", "red", "orange")}.}
 
 \item{alpha}{\code{numeric} value to indicating the transparency level for
 coloring the planning units.}

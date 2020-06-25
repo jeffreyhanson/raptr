@@ -36,7 +36,7 @@
 #' object.}
 #' }
 #'
-#' Type \code{vignette("raptr")} for a tutorial on how to use this package.
+#' Type `vignette("raptr")` for a tutorial on how to use this package.
 #'
 #' @docType package
 #' @name raptr
