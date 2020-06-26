@@ -24,20 +24,13 @@ NULL
 #' own core and marginal area.}
 #' }
 #'
-#' The objects contained in this dataset are listed below.
-#'
-#' \describe{
-#' \item{sim_ru}{A [RapUnsolved()] object with all the simulated
-#' data.}
-#' \item{sim_rs}{A [RapSolved()] object with 5 near-optimal
-#' solutions.}
-#' }
-#'
 #' @docType data
 #'
-#' @format [sp::SpatialPolygonsDataFrame()],
-#'   [raster::RasterStack-class], `list` of
-#'   [DemandPoints()] objects.
+#' @format
+#' \describe{
+#' \item{sim_ru}{[RapUnsolved()] object with all the simulated data.}
+#' \item{sim_rs}{[RapSolved()] object with 5 near-optimal solutions.}
+#' }
 #'
 #' @aliases sim_ru sim_rs
 #'
@@ -61,12 +54,6 @@ NULL
 #' plot(sim_rs, 0)
 NULL
 
-#' @rdname simulated_data
-"sim_ru"
-
-#' @rdname simulated_data
-"sim_rs"
-
 #' Case-study dataset for a conservation planning exercise
 #'
 #' This dataset contains data to generate example prioritizations for the
@@ -86,7 +73,7 @@ NULL
 #' field is set to 1 for all units, and the `status` field
 #' indicates if 50% or more of the units' extent is covered by
 #' protected areas.}
-#' \item{cs_spp}{[raster::RasterLayer-class] probability
+#' \item{cs_spp}{[raster::raster()] probability
 #' distribution map for the *P. adscitus* clipped to
 #' Queensland, Australia. This map was derived from records
 #' obtained from The Atlas of Living Australia (<http://ala.org.au/>)}.
@@ -100,7 +87,12 @@ NULL
 #'
 #' @aliases cs_pus cs_spp cs_space
 #'
-#' @format cs_pus: [sp::SpatialPolygonsDataFrame()], cs_spp: [raster::RasterLayer-class], cs_space: [raster::RasterStack-class].
+#' @format
+#' \describe{
+#' \item{cs_pus}{[sp::SpatialPolygonsDataFrame()] object.}
+#' \item{cs_spp}{[raster::raster()] object.}
+#' \item{cs_space}{[raster::stack()] object.}
+#' }
 #'
 #' @keywords datasets
 #'
@@ -117,12 +109,3 @@ NULL
 #' plot(cs_space)
 #' }
 NULL
-
-#' @rdname casestudy_data
-"cs_pus"
-
-#' @rdname casestudy_data
-"cs_space"
-
-#' @rdname casestudy_data
-"cs_spp"

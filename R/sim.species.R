@@ -25,7 +25,7 @@ sim.species.RasterLayer <- function(x, n = 1,
                                                args = list(x = x_coords[, 1],
                                                            y = x_coords[, 2])))
   }
-  # return RasterStack
+  # return RasterStack object
   return(raster::stack(ret))
 }
 

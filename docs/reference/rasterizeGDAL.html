@@ -41,7 +41,7 @@
 
 <meta property="og:title" content="Rasterize polygon data using GDAL — rasterizeGDAL" />
 <meta property="og:description" content="This function converts a SpatialPolygonsDataFrame to a
-RasterLayer using GDAL. It is expected to be faster than
+raster::raster() using GDAL. It is expected to be faster than
 raster::rasterize() for large datasets. However, it will be
 significantly slower for small datasets because the data will need to be
 written and read from disk." />
@@ -125,7 +125,7 @@ written and read from disk." />
 
     <div class="ref-description">
     <p>This function converts a <code>SpatialPolygonsDataFrame</code> to a
-<code>RasterLayer</code> using GDAL. It is expected to be faster than
+<code><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster::raster()</a></code> using GDAL. It is expected to be faster than
 <code><a href='https://rdrr.io/pkg/raster/man/rasterize.html'>raster::rasterize()</a></code> for large datasets. However, it will be
 significantly slower for small datasets because the data will need to be
 written and read from disk.</p>
@@ -155,7 +155,7 @@ indices into the <code><a href='https://rdrr.io/pkg/raster/man/raster.html'>rast
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>RasterLayer</code> object.</p>
+    <p><code><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster::raster()</a></code> object.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/raster/man/rasterize.html'>raster::rasterize()</a></code>, <code><a href='is.gdalInstalled.html'>is.gdalInstalled()</a></code>.</p></div>

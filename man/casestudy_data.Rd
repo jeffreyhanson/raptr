@@ -8,20 +8,11 @@
 \alias{cs_space}
 \title{Case-study dataset for a conservation planning exercise}
 \format{
-cs_pus: \code{\link[sp:SpatialPolygons]{sp::SpatialPolygonsDataFrame()}}, cs_spp: \link[raster:Raster-classes]{raster::RasterLayer}, cs_space: \link[raster:Raster-classes]{raster::RasterStack}.
-
-An object of class \code{SpatialPolygonsDataFrame} with 762 rows and 3 columns.
-
-An object of class \code{RasterBrick} of dimension 216 x 153 x 2.
-
-An object of class \code{RasterStack} of dimension 216 x 153 x 4.
+\describe{
+\item{cs_pus}{\code{\link[sp:SpatialPolygons]{sp::SpatialPolygonsDataFrame()}} object.}
+\item{cs_spp}{\code{\link[raster:raster]{raster::raster()}} object.}
+\item{cs_space}{\code{\link[raster:stack]{raster::stack()}} object.}
 }
-\usage{
-cs_pus
-
-cs_space
-
-cs_spp
 }
 \description{
 This dataset contains data to generate example prioritizations for the
@@ -42,7 +33,7 @@ the amount of land encompassed by each unit, the \code{cost}
 field is set to 1 for all units, and the \code{status} field
 indicates if 50\% or more of the units' extent is covered by
 protected areas.}
-\item{cs_spp}{\link[raster:Raster-classes]{raster::RasterLayer} probability
+\item{cs_spp}{\code{\link[raster:raster]{raster::raster()}} probability
 distribution map for the \emph{P. adscitus} clipped to
 Queensland, Australia. This map was derived from records
 obtained from The Atlas of Living Australia (\url{http://ala.org.au/})}.

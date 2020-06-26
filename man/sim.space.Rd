@@ -13,7 +13,7 @@ sim.space(x, ...)
 \method{sim.space}{SpatialPolygons}(x, res, d = 2, model = RandomFields::RMgauss(), ...)
 }
 \arguments{
-\item{x}{\code{RasterLayer} or \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} object
+\item{x}{\code{\link[raster:raster]{raster::raster()}} or \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} object
 delineate the spatial extent to delineate study area.}
 
 \item{...}{parameters passed to \code{\link[RandomFields:RandomFields]{RandomFields::RandomFields()}}.}
@@ -27,7 +27,7 @@ distributions with. Defaults \code{\link[RandomFields:RPgauss]{RandomFields::RPg
 when \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} supplied.}
 }
 \value{
-\code{RasterStack} with layers for each dimension of the space.
+\code{\link[raster:stack]{raster::stack()}} with layers for each dimension of the space.
 }
 \description{
 This function simulates attribute space data for RAP.

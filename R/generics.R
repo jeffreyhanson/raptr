@@ -10,9 +10,9 @@ NULL
 #' @param x [sp::SpatialPolygons()] or
 #'   [sp::SpatialPolygonsDataFrame()] object.
 #'
-#' @param y [raster::RasterLayer-class],
-#'   [raster::RasterStack-class], or
-#'   [raster::RasterBrick-class] object.
+#' @param y [raster::raster()],
+#'   [raster::stack()], or
+#'   [raster::brick()] object.
 #'
 #' @param ids `integer` vector of ids. Defaults to indices of layers in
 #'   argument to `y`.
@@ -55,7 +55,7 @@ calcSpeciesAverageInPus <- function(x, ...) UseMethod("calcSpeciesAverageInPus")
 #'
 #' This function simulates species distributions for RAP.
 #'
-#' @param x [raster::RasterLayer-class] or
+#' @param x [raster::raster()] or
 #'   [sp::SpatialPolygons()] object delineate the spatial extent to
 #'   delineate study area.
 #'
@@ -73,7 +73,7 @@ calcSpeciesAverageInPus <- function(x, ...) UseMethod("calcSpeciesAverageInPus")
 #'   [RandomFields::RFsimulate()] and converting to logistic values
 #'   using [boot::inv.logit()].
 #'
-#' @return `RasterStack` with layers for each species.
+#' @return [raster::stack()] with layers for each species.
 #'
 #' @seealso [RandomFields::RFsimulate()].
 #'
@@ -113,7 +113,7 @@ sim.species <- function(x, ...) UseMethod("sim.species")
 #'
 #' This function simulates attribute space data for RAP.
 #'
-#' @param x `RasterLayer` or [sp::SpatialPolygons()] object
+#' @param x [raster::raster()] or [sp::SpatialPolygons()] object
 #'   delineate the spatial extent to delineate study area.
 #'
 #' @param d `integer` number of dimensions. Defaults to 2.
@@ -129,7 +129,7 @@ sim.species <- function(x, ...) UseMethod("sim.species")
 #' @details Distributions are simulated by passing `model` to
 #'   [RandomFields::RFsimulate()].
 #'
-#' @return `RasterStack` with layers for each dimension of the space.
+#' @return [raster::stack()] with layers for each dimension of the space.
 #'
 #' @seealso [RandomFields::RFsimulate()].
 #'

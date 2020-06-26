@@ -91,8 +91,8 @@ is.gdalInstalled <- function() {
 
 #' Rasterize polygon data using GDAL
 #'
-#' This function converts a `SpatialPolygonsDataFrame` to a
-#' `RasterLayer` using GDAL. It is expected to be faster than
+#' This function converts a [sp::SpatialPolygonsDataFrame()] to a
+#' [raster::raster()] using GDAL. It is expected to be faster than
 #' [raster::rasterize()] for large datasets. However, it will be
 #' significantly slower for small datasets because the data will need to be
 #' written and read from disk.
@@ -106,7 +106,7 @@ is.gdalInstalled <- function() {
 #'   output raster. If not supplied, default behaviour is to burn polygon
 #'   indices into the [raster::raster()].
 #'
-#' @return `RasterLayer` object.
+#' @return [raster::raster()] object.
 #'
 #' @seealso [raster::rasterize()], [is.gdalInstalled()].
 #'

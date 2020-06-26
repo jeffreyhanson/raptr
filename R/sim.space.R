@@ -23,7 +23,7 @@ sim.space.RasterLayer <- function(x, d  =2, model = RandomFields::RMgauss(),
     r[raster::Which(!is.na(r))] <- valMTX[, i]
     r
   }))
-  # return RasterStack
+  # return RasterStack object
   raster::stack(stk)
 }
 

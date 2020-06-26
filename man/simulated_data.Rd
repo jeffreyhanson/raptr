@@ -7,18 +7,10 @@
 \alias{sim_rs}
 \title{Simulated dataset for a conservation planning exercise}
 \format{
-\code{\link[sp:SpatialPolygons]{sp::SpatialPolygonsDataFrame()}},
-\link[raster:Raster-classes]{raster::RasterStack}, \code{list} of
-\code{\link[=DemandPoints]{DemandPoints()}} objects.
-
-An object of class \code{RapUnsolved} of length 1.
-
-An object of class \code{RapSolved} of length 1.
+\describe{
+\item{sim_ru}{\code{\link[=RapUnsolved]{RapUnsolved()}} object with all the simulated data.}
+\item{sim_rs}{\code{\link[=RapSolved]{RapSolved()}} object with 5 near-optimal solutions.}
 }
-\usage{
-sim_ru
-
-sim_rs
 }
 \description{
 This dataset contains all the data needed to generate prioritizations for
@@ -41,15 +33,6 @@ to be found. It is less likely to be found in areas further
 away from the center of its range.}
 \item{bimodal}{This species has two distinct ecotypes. Each ecotype has its
 own core and marginal area.}
-}
-
-The objects contained in this dataset are listed below.
-
-\describe{
-\item{sim_ru}{A \code{\link[=RapUnsolved]{RapUnsolved()}} object with all the simulated
-data.}
-\item{sim_rs}{A \code{\link[=RapSolved]{RapSolved()}} object with 5 near-optimal
-solutions.}
 }
 }
 \examples{

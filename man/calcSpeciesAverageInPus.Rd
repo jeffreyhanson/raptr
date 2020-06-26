@@ -33,9 +33,9 @@ calcSpeciesAverageInPus(x, ...)
 
 \item{...}{not used.}
 
-\item{y}{\link[raster:Raster-classes]{raster::RasterLayer},
-\link[raster:Raster-classes]{raster::RasterStack}, or
-\link[raster:Raster-classes]{raster::RasterBrick} object.}
+\item{y}{\code{\link[raster:raster]{raster::raster()}},
+\code{\link[raster:stack]{raster::stack()}}, or
+\code{\link[raster:brick]{raster::brick()}} object.}
 
 \item{ids}{\code{integer} vector of ids. Defaults to indices of layers in
 argument to \code{y}.}

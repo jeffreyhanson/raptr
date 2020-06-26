@@ -24,7 +24,7 @@ sim.species(x, ...)
 )
 }
 \arguments{
-\item{x}{\link[raster:Raster-classes]{raster::RasterLayer} or
+\item{x}{\code{\link[raster:raster]{raster::raster()}} or
 \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} object delineate the spatial extent to
 delineate study area.}
 
@@ -39,7 +39,7 @@ distributions with. Defaults \code{\link[RandomFields:RPgauss]{RandomFields::RPg
 when \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} supplied.}
 }
 \value{
-\code{RasterStack} with layers for each species.
+\code{\link[raster:stack]{raster::stack()}} with layers for each species.
 }
 \description{
 This function simulates species distributions for RAP.

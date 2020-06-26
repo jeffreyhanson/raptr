@@ -125,19 +125,18 @@ pale-headed Rosella (Platycercus adscitus) in Queensland, Australia." />
 pale-headed Rosella (<em>Platycercus adscitus</em>) in Queensland, Australia.</p>
     </div>
 
-    <pre class="usage"><span class='no'>cs_pus</span>
-
-<span class='no'>cs_space</span>
-
-<span class='no'>cs_spp</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>cs_pus: <code><a href='https://rdrr.io/pkg/sp/man/SpatialPolygons.html'>sp::SpatialPolygonsDataFrame()</a></code>, cs_spp: raster::RasterLayer, cs_space: raster::RasterStack.</p>
-<p>An object of class <code>SpatialPolygonsDataFrame</code> with 762 rows and 3 columns.</p>
-<p>An object of class <code>RasterBrick</code> of dimension 216 x 153 x 2.</p>
-<p>An object of class <code>RasterStack</code> of dimension 216 x 153 x 4.</p>
+    
+<dl'>
+<dt>cs_pus</dt><dd><p><code><a href='https://rdrr.io/pkg/sp/man/SpatialPolygons.html'>sp::SpatialPolygonsDataFrame()</a></code> object.</p></dd>
+<dt>cs_spp</dt><dd><p><code><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster::raster()</a></code> object.</p></dd>
+<dt>cs_space</dt><dd><p><code><a href='https://rdrr.io/pkg/raster/man/stack.html'>raster::stack()</a></code> object.</p></dd>
+
+</dl>
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The objects in the dataset are listed below.</p><dl'>
@@ -153,7 +152,7 @@ the amount of land encompassed by each unit, the <code>cost</code>
 field is set to 1 for all units, and the <code>status</code> field
 indicates if 50% or more of the units' extent is covered by
 protected areas.</p></dd>
-<dt>cs_spp</dt><dd><p>raster::RasterLayer probability
+<dt>cs_spp</dt><dd><p><code><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster::raster()</a></code> probability
 distribution map for the <em>P. adscitus</em> clipped to
 Queensland, Australia. This map was derived from records
 obtained from The Atlas of Living Australia (<a href='http://ala.org.au/'>http://ala.org.au/</a>)</p></dd>.

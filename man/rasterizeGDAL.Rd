@@ -17,11 +17,11 @@ output raster. If not supplied, default behaviour is to burn polygon
 indices into the \code{\link[raster:raster]{raster::raster()}}.}
 }
 \value{
-\code{RasterLayer} object.
+\code{\link[raster:raster]{raster::raster()}} object.
 }
 \description{
 This function converts a \code{SpatialPolygonsDataFrame} to a
-\code{RasterLayer} using GDAL. It is expected to be faster than
+\code{\link[raster:raster]{raster::raster()}} using GDAL. It is expected to be faster than
 \code{\link[raster:rasterize]{raster::rasterize()}} for large datasets. However, it will be
 significantly slower for small datasets because the data will need to be
 written and read from disk.
