@@ -1,6 +1,6 @@
 # raptr 0.1.6.1
 
-- Fix "Non-file package-anchored link(s) in documentation object" warnings in
+- fix "Non-file package-anchored link(s) in documentation object" warnings in
   R-devel checks.
 
 # raptr 0.1.6 (released)

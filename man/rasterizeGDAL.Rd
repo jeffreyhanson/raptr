@@ -20,7 +20,7 @@ indices into the \code{\link[raster:raster]{raster::raster()}}.}
 \code{\link[raster:raster]{raster::raster()}} object.
 }
 \description{
-This function converts a \code{SpatialPolygonsDataFrame} to a
+This function converts a \code{\link[sp:SpatialPolygons]{sp::SpatialPolygonsDataFrame()}} to a
 \code{\link[raster:raster]{raster::raster()}} using GDAL. It is expected to be faster than
 \code{\link[raster:rasterize]{raster::rasterize()}} for large datasets. However, it will be
 significantly slower for small datasets because the data will need to be
