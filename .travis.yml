@@ -28,7 +28,6 @@ env:
     - R_LIBS="http://cran.rstudio.com"
     - RGL_USE_NULL=TRUE
     - _R_CHECK_FORCE_SUGGESTS_=FALSE
-    - _R_CHECK_DONTTEST_EXAMPLES_=TRUE
 
 before_install:
   - echo "TRAVIS_OS_NAME = $TRAVIS_OS_NAME"
@@ -39,7 +38,7 @@ before_install:
   - Rscript -e "install.packages('Rcpp')"
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get --yes --force-yes update -qq; fi;
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install -y; fi;
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then Rscript -e "install.packages(c('devtools'))"; fi;  
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then Rscript -e "install.packages(c('devtools'))"; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos','RandomFieldsUtils','RandomFields','adehabitatHR','BH','doParallel','gdalUtils','ggplot2', 'hypervolume','ks','mvtnorm','PBSmapping','plyr','raster','RColorBrewer','RcppEigen','RgoogleMaps','scales','shape', 'rgl'))"; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "setRepositories(ind=1:2);install.packages('digest', type = 'source')"; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo tlmgr update --self; fi;
