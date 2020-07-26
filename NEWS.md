@@ -1,3 +1,9 @@
+# raptr 0.1.7 (released)
+
+- remove support for processing data using GDAL.
+- remove `is.gdalInstalled` and `rasterizeGDAL` functions.
+- update Spatial-class objects with updated sp::CRS class definition
+
 # raptr 0.1.6.1
 
 - fix "Non-file package-anchored link(s) in documentation object" warnings in
@@ -7,7 +13,7 @@
 
 - fix errors in R-devel CRAN checks due changes in `is.finite` behaviour for
   `character` class objects.
-- Fix WorldClim URLs.
+- fix WorldClim URLs.
 
 # raptr 0.1.5 (released)
 

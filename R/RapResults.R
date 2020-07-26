@@ -24,7 +24,8 @@ NULL
 #'
 #' @slot .cache [base::environment()] used to store extra data.
 #'
-#' @details The `summary` table follows Marxan conventions ("summary.dat" in <http://marxan.net/downloads/uq_marxan_web_2/module5.html>). The columns
+#' @details The `summary` table follows Marxan conventions
+#' (<https://marxansolutions.org/>). The columns
 #' are:
 #' \describe{
 #' \item{Run_Number}{The index of each solution in the object.}
@@ -144,7 +145,8 @@ methods::setClass("RapResults",
 #'
 #' @param .cache [base::environment()] used to cache calculations.
 #'
-#' @details The `summary` table follows Marxan conventions (summary.dat in <http://marxan.net/downloads/uq_marxan_web_2/module5.html>). The columns
+#' @details The `summary` table follows Marxan conventions (
+#' <https://marxansolutions.org/>). The columns
 #' are:
 #' \describe{
 #' \item{Run_Number}{The index of each solution in the object.}

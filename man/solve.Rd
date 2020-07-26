@@ -48,7 +48,7 @@ provides a more general interface for generating inputs and outputs.
 \examples{
 # load RapUnsolved object
 data(sim_ru)
-\donttest{
+\dontrun{
 # solve it using Gurobi
 sim_rs <- solve(sim_ru)
 

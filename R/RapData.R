@@ -412,7 +412,7 @@ RapData <- function(pu, species, targets, pu.species.probabilities,
 #' @examples
 #' # load data
 #' data(cs_pus, cs_spp, cs_space)
-#' \donttest{
+#' \dontrun{
 #' # make RapData object using the first 10 planning units in the dat
 #' x <- make.RapData(cs_pus[1:10,], cs_spp, cs_space,
 #'                   include.geographic.space = TRUE)

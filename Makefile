@@ -26,10 +26,17 @@ vigns:
 	cp -R doc inst/
 	touch inst/doc/.gitkeep
 
+spellcheck:
+	R --slave -e "devtools::document();devtools::spell_check()"
+
+data:
+	Rscript --slave inst/extdata/data.R
+
 site:
 	R --slave -e "pkgdown::clean_site()"
 	R --slave -e "pkgdown::build_site(run_dont_run = TRUE, lazy = FALSE)"
 	cp -R doc inst/
+	touch inst/doc/.gitkeep
 
 quicksite:
 	R --slave -e "pkgdown::build_site(run_dont_run = TRUE, lazy = TRUE)"
@@ -68,4 +75,8 @@ build:
 install:
 	R --slave -e "devtools::install_local('../raptr')"
 
-.PHONY: initc clean docs readme contrib site test check checkwb solarischeck fedoracheck build install man
+examples:
+	R --slave -e "devtools::run_examples(test = TRUE);warnings()"  >> examples.log
+	rm -f Rplots.pdf
+
+.PHONY: initc clean docs readme contrib site test check checkwb solarischeck fedoracheck build install man data examples

@@ -1,7 +1,7 @@
 Package: raptr
 Type: Package
 Title: Representative and Adequate Prioritization Toolkit in R
-Version: 0.1.6.1
+Version: 0.1.7
 Authors@R: c(person(c("Jeffrey", "O"), "Hanson",
     email="jeffrey.hanson@uqconnect.edu.au", role = c("aut", "cre")),
     person(c("Jonathan", "R"), "Rhodes", role = c("aut")),
@@ -40,7 +40,6 @@ Imports:
     rgdal,
     hypervolume(>= 2.0.7),
     ks,
-    gdalUtils,
     mvtnorm,
     ggplot2
 Depends:
@@ -51,12 +50,14 @@ LinkingTo: Rcpp, RcppEigen, BH
 LazyData: true
 License: GPL-3
 Encoding: UTF-8
+Language: en-US
 URL: https://jeffrey-hanson.com/raptr, https://github.com/jeffreyhanson/raptr
 BugReports: https://github.com/jeffreyhanson/raptr/issues
 VignetteBuilder: knitr
 Suggests:
     knitr,
     roxygen2,
+    rmarkdown,
     dplyr,
     vegan,
     gurobi,
@@ -94,6 +95,6 @@ Collate:
     'sim.species.R'
     'urap.proportion.held.R'
     'zzz.R'
-RoxygenNote: 7.1.0.9000
+RoxygenNote: 7.1.1
 NeedsCompilation: yes
 Roxygen: list(markdown = TRUE)

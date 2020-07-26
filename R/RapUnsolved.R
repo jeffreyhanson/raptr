@@ -39,7 +39,7 @@ methods::setClass("RapUnsolved",
 #'   [RapUnreliableOpts-class], [RapData-class].
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # set random number generator seed
 #' set.seed(500)
 #'

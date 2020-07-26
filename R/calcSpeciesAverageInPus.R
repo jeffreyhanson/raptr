@@ -8,14 +8,13 @@ NULL
 #' @export
 calcSpeciesAverageInPus.SpatialPolygons <- function(x, y,
                                                     ids = seq_len(nlayers(y)),
-                                                    ncores = 1, gdal = FALSE,
+                                                    ncores = 1,
                                                     ...) {
   # check for invalid inputs
   assertthat::assert_that(inherits(x, "SpatialPolygons"), inherits(y, "Raster"),
                           raster::nlayers(y) == length(ids),
                           sum(duplicated(ids)) == 0,
-                          assertthat::is.count(ncores),
-                          assertthat::is.flag(gdal))
+                          assertthat::is.count(ncores))
   return(calcSpeciesAverageInPus.SpatialPolygonsDataFrame(
     x = SpatialPolygonsDataFrame(x@polygons,
                                  data = data.frame(id = seq_len(nrow(x@data)),
@@ -23,7 +22,7 @@ calcSpeciesAverageInPus.SpatialPolygons <- function(x, y,
                                                      sapply(x@polygons,
                                                             methods::slot,
                                                             name = "ID"))),
-    y = y, ids = ids, ncores = ncores, gdal = gdal, field = "id"))
+    y = y, ids = ids, ncores = ncores, field = "id"))
 }
 
 #' @method calcSpeciesAverageInPus SpatialPolygonsDataFrame
@@ -32,15 +31,13 @@ calcSpeciesAverageInPus.SpatialPolygons <- function(x, y,
 #'
 #' @export
 calcSpeciesAverageInPus.SpatialPolygonsDataFrame <- function(
-  x, y, ids = seq_len(nlayers(y)), ncores = 1, gdal = FALSE, field = NULL,
-  ...) {
+  x, y, ids = seq_len(nlayers(y)), ncores = 1, field = NULL, ...) {
   # check for invalid inputs
   assertthat::assert_that(inherits(x, "SpatialPolygonsDataFrame"),
                           inherits(y, "Raster"),
                           raster::nlayers(y) == length(ids),
                           sum(duplicated(ids)) == 0,
                           assertthat::is.count(ncores),
-                          assertthat::is.flag(gdal),
                           assertthat::is.string(field) || is.null(field))
   # prepare attribute table
   if (is.null(field)) {
@@ -50,14 +47,7 @@ calcSpeciesAverageInPus.SpatialPolygonsDataFrame <- function(
     x@data <- data.frame(id = x@data[[field]], row.names = row.names(x@data))
   }
   # generate raster layer with polygons
-  if (gdal && is.gdalInstalled()) {
-    x <- rasterizeGDAL(x, y[[1]], "id")
-  } else {
-    if (gdal && !is.gdalInstalled())
-      warning(paste0("GDAL is not installed on this computer, using ",
-                     "raster::rasterize for processing"))
-    x <- raster::rasterize(x, y[[1]], method = "ngb")
-  }
+  x <- raster::rasterize(x, y[[1]], method = "ngb")
   # main processing
   return(zonalMean(x, y, ids, ncores))
 }

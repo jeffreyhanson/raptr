@@ -16,8 +16,8 @@ Extracts summary of solutions in a \code{\link[=RapResults]{RapResults()}} or
 \code{\link[=RapSolved]{RapSolved()}} object.
 }
 \details{
-This table follows Marxan conventions ("summary.dat" in
-\url{http://marxan.net/downloads/uq_marxan_web_2/module5.html}). The
+This table follows Marxan conventions
+(\url{https://marxansolutions.org/}). The
 columns are:
 \describe{
 \item{Run_Number}{The index of each solution in the object.}

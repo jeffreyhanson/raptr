@@ -48,7 +48,7 @@ and resampled to \eqn{10km^2} resolution).}
 data(cs_pus, cs_spp, cs_space)
 
 # plot data
-\donttest{
+\dontrun{
 plot(cs_pus)
 plot(cs_spp)
 plot(cs_space)

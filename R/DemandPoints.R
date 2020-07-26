@@ -132,7 +132,7 @@ DemandPoints <- function(coords, weights) {
 #' # print object
 #' print(dps1)
 #'
-#' \donttest{
+#' \dontrun{
 #' # generate demand points for a 2d space using hypervolume
 #' dps2 <- make.DemandPoints(points = env.points,
 #'                           kernel.method = "hypervolume",

@@ -1,12 +1,5 @@
 context("02-misc")
 
-test_that("gdal installation checks", {
-  skip_on_cran()
-  skip_on_appveyor()
-  expect_equal(is.gdalInstalled(),
-               requireNamespace("rgdal", quietly = TRUE))
-})
-
 test_that("Gurobi installation checks", {
   expect_equal(is.GurobiInstalled(FALSE),
                requireNamespace("gurobi", quietly = TRUE))

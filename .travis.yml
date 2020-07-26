@@ -28,7 +28,7 @@ env:
     - R_LIBS="http://cran.rstudio.com"
     - RGL_USE_NULL=TRUE
     - _R_CHECK_FORCE_SUGGESTS_=FALSE
-    - _R_CHECK_DONTTEST_EXAMPLES_=FALSE
+    - _R_CHECK_DONTTEST_EXAMPLES_=TRUE
 
 before_install:
   - echo "TRAVIS_OS_NAME = $TRAVIS_OS_NAME"

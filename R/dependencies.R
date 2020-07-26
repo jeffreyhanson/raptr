@@ -2,5 +2,5 @@
 #' @import raster
 NULL
 
-#' @useDynLib raptr
+#' @useDynLib raptr, .registration = TRUE
 NULL

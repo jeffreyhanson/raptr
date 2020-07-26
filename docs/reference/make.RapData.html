@@ -73,7 +73,7 @@ landscape data layers for RAP processing." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
       </span>
     </div>
 
@@ -229,7 +229,7 @@ standard deviation? This prevents overflow. Defaults to <code>TRUE</code>.</p></
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load data</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>cs_pus</span>, <span class='no'>cs_spp</span>, <span class='no'>cs_space</span>)
-<span class='co'># \donttest{</span>
+<span class='co'># \dontrun{</span>
 <span class='co'># make RapData object using the first 10 planning units in the dat</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>make.RapData</span>(<span class='no'>cs_pus</span>[<span class='fl'>1</span>:<span class='fl'>10</span>,], <span class='no'>cs_spp</span>, <span class='no'>cs_space</span>,
                   <span class='kw'>include.geographic.space</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)

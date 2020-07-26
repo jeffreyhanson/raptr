@@ -5,6 +5,7 @@
 ^\.Rproj\.user$
 ^\.travis\.yml$
 ^gurobi\.log$
+^examples\.log$
 ^check\.log$
 ^test\.log$
 cran-comments.md
@@ -16,5 +17,7 @@ cran-comments.md
 .directory
 _pkgdown.yml
 README.Rmd
-inst/dictionary.txt
 spell.log
+^extdata*
+^inst/extdata*
+Rplots.pdf

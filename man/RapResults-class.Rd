@@ -8,7 +8,8 @@
 This class is used to store RAP results.
 }
 \details{
-The \code{summary} table follows Marxan conventions ("summary.dat" in \url{http://marxan.net/downloads/uq_marxan_web_2/module5.html}). The columns
+The \code{summary} table follows Marxan conventions
+(\url{https://marxansolutions.org/}). The columns
 are:
 \describe{
 \item{Run_Number}{The index of each solution in the object.}

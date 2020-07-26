@@ -41,7 +41,6 @@
 
 <meta property="og:title" content="Calculate average value for species data in planning units — calcSpeciesAverageInPus" />
 <meta property="og:description" content="This function calculates the average of species values in each planning unit.
-Be aware that using polygons with overlaps will result in inaccuracies.
 By default all polygons will be treated as having separate ids." />
 
 
@@ -74,7 +73,7 @@ By default all polygons will be treated as having separate ids." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
       </span>
     </div>
 
@@ -123,21 +122,13 @@ By default all polygons will be treated as having separate ids." />
 
     <div class="ref-description">
     <p>This function calculates the average of species values in each planning unit.
-Be aware that using polygons with overlaps will result in inaccuracies.
 By default all polygons will be treated as having separate ids.</p>
     </div>
 
     <pre class="usage"><span class='fu'>calcSpeciesAverageInPus</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for SpatialPolygons</span>
-<span class='fu'>calcSpeciesAverageInPus</span>(
-  <span class='no'>x</span>,
-  <span class='no'>y</span>,
-  <span class='kw'>ids</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='fu'>nlayers</span>(<span class='no'>y</span>)),
-  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>gdal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
-)
+<span class='fu'>calcSpeciesAverageInPus</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>ids</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='fu'>nlayers</span>(<span class='no'>y</span>)), <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for SpatialPolygonsDataFrame</span>
 <span class='fu'>calcSpeciesAverageInPus</span>(
@@ -145,7 +136,6 @@ By default all polygons will be treated as having separate ids.</p>
   <span class='no'>y</span>,
   <span class='kw'>ids</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='fu'>nlayers</span>(<span class='no'>y</span>)),
   <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>gdal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>field</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>
 )</pre>
@@ -179,11 +169,6 @@ argument to <code>y</code>.</p></td>
 to 1.</p></td>
     </tr>
     <tr>
-      <th>gdal</th>
-      <td><p><code>logical</code> Should raster processing be performed using GDAL
-libraries? Defaults to <code>FALSE</code>.</p></td>
-    </tr>
-    <tr>
       <th>field</th>
       <td><p><code>integer</code> index or <code>character</code> name of column with
 planning unit ids. Valid only when <code>x</code> is a
@@ -196,10 +181,6 @@ treat each polygon as a different planning unit.</p></td>
 
     <p><code><a href='https://rdrr.io/r/base/data.frame.html'>base::data.frame()</a></code> with sum of raster values in each
 polygon.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='is.gdalInstalled.html'>is.gdalInstalled()</a></code>, <a href='http://www.gdal.org/'>http://www.gdal.org/</a>,
-<a href='http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries'>http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries</a>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># simulate data</span>

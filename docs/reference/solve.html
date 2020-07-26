@@ -74,7 +74,7 @@ RapSolved() object with outputs in it." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
       </span>
     </div>
 
@@ -182,7 +182,7 @@ provides a more general interface for generating inputs and outputs.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load RapUnsolved object</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sim_ru</span>)
-<span class='co'># \donttest{</span>
+<span class='co'># \dontrun{</span>
 <span class='co'># solve it using Gurobi</span>
 <span class='no'>sim_rs</span> <span class='kw'>&lt;-</span> <span class='fu'>solve</span>(<span class='no'>sim_ru</span>)</div><div class='output co'>#&gt; Gurobi Optimizer version 9.0.1 build v9.0.1rc0 (linux64)
 #&gt; Optimize a model with 30306 rows, 30100 columns and 120000 nonzeros
@@ -194,9 +194,9 @@ provides a more general interface for generating inputs and outputs.</p>
 #&gt;   Bounds range     [1e+00, 1e+00]
 #&gt;   RHS range        [1e+00, 1e+02]
 #&gt; Found heuristic solution: objective 99.0000000
-#&gt; Presolve removed 329 rows and 15 columns (presolve time = 5s) ...
+#&gt; Presolve removed 360 rows and 15 columns (presolve time = 5s) ...
 #&gt; Presolve removed 360 rows and 15 columns
-#&gt; Presolve time: 7.01s
+#&gt; Presolve time: 5.46s
 #&gt; Presolved: 29946 rows, 30085 columns, 131504 nonzeros
 #&gt; Variable types: 0 continuous, 30085 integer (30085 binary)
 #&gt; Presolve removed 67 rows and 1 columns
@@ -206,19 +206,19 @@ provides a more general interface for generating inputs and outputs.</p>
 #&gt; Root simplex log...
 #&gt; 
 #&gt; Iteration    Objective       Primal Inf.    Dual Inf.      Time
-#&gt;        0    1.0000000e+02   0.000000e+00   1.000000e+02      8s
-#&gt;     5346    2.0000000e+01   0.000000e+00   0.000000e+00      9s
-#&gt;     5346    2.0000000e+01   0.000000e+00   0.000000e+00      9s
+#&gt;        0    1.0000000e+02   0.000000e+00   1.000000e+02      6s
+#&gt;     5346    2.0000000e+01   0.000000e+00   0.000000e+00      7s
+#&gt;     5346    2.0000000e+01   0.000000e+00   0.000000e+00      7s
 #&gt; 
-#&gt; Root relaxation: objective 2.000000e+01, 5346 iterations, 1.74 seconds
+#&gt; Root relaxation: objective 2.000000e+01, 5346 iterations, 1.37 seconds
 #&gt; 
 #&gt;     Nodes    |    Current Node    |     Objective Bounds      |     Work
 #&gt;  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 #&gt; 
-#&gt;      0     0   20.00000    0   21   99.00000   20.00000  79.8%     -    9s
-#&gt; H    0     0                      21.0000000   20.00000  4.76%     -    9s
+#&gt;      0     0   20.00000    0   21   99.00000   20.00000  79.8%     -    7s
+#&gt; H    0     0                      21.0000000   20.00000  4.76%     -    7s
 #&gt; 
-#&gt; Explored 1 nodes (10151 simplex iterations) in 9.43 seconds
+#&gt; Explored 1 nodes (10151 simplex iterations) in 7.29 seconds
 #&gt; Thread count was 1 (of 4 available processors)
 #&gt; 
 #&gt; Solution count 2: 21 99 

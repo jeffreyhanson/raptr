@@ -66,7 +66,7 @@ dps1 <- make.DemandPoints(points = env.points[, 1], kernel.method = "ks")
 # print object
 print(dps1)
 
-\donttest{
+\dontrun{
 # generate demand points for a 2d space using hypervolume
 dps2 <- make.DemandPoints(points = env.points,
                           kernel.method = "hypervolume",

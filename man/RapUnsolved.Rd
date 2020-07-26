@@ -21,7 +21,7 @@ This function creates a \code{\link[=RapUnsolved]{RapUnsolved()}} object using a
 \code{\link[=RapUnreliableOpts]{RapUnreliableOpts()}} object, and a \code{\link[=RapData]{RapData()}} object.
 }
 \examples{
-\donttest{
+\dontrun{
 # set random number generator seed
 set.seed(500)
 

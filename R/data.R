@@ -103,7 +103,7 @@ NULL
 #' data(cs_pus, cs_spp, cs_space)
 #'
 #' # plot data
-#' \donttest{
+#' \dontrun{
 #' plot(cs_pus)
 #' plot(cs_spp)
 #' plot(cs_space)

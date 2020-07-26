@@ -4,7 +4,6 @@ NULL
 #' Calculate average value for species data in planning units
 #'
 #' This function calculates the average of species values in each planning unit.
-#' Be aware that using polygons with overlaps will result in inaccuracies.
 #' By default all polygons will be treated as having separate ids.
 #'
 #' @param x [sp::SpatialPolygons()] or
@@ -20,9 +19,6 @@ NULL
 #' @param ncores `integer` number of cores to use for processing. Defaults
 #'   to 1.
 #'
-#' @param gdal `logical` Should raster processing be performed using GDAL
-#'   libraries? Defaults to `FALSE`.
-#'
 #' @param field `integer` index or `character` name of column with
 #'   planning unit ids. Valid only when `x` is a
 #'   [sp::SpatialPolygonsDataFrame()] object. Default behavior is to
@@ -32,9 +28,6 @@ NULL
 #'
 #' @return [base::data.frame()] with sum of raster values in each
 #'   polygon.
-#'
-#' @seealso [is.gdalInstalled()], <http://www.gdal.org/>,
-#'   <http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries>.
 #'
 #' @examples
 #' # simulate data
@@ -187,7 +180,7 @@ sim.space <- function(x, ...) UseMethod("sim.space")
 #' @examples
 #' # load RapUnsolved object
 #' data(sim_ru)
-#' \donttest{
+#' \dontrun{
 #' # solve it using Gurobi
 #' sim_rs <- solve(sim_ru)
 #'
@@ -432,8 +425,8 @@ NULL
 #'
 #' @param ... not used.
 #'
-#' @details This table follows Marxan conventions ("summary.dat" in
-#'   <http://marxan.net/downloads/uq_marxan_web_2/module5.html>). The
+#' @details This table follows Marxan conventions
+#'   (<https://marxansolutions.org/>). The
 #'   columns are:
 #' \describe{
 #' \item{Run_Number}{The index of each solution in the object.}

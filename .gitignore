@@ -8,13 +8,15 @@ doc
 # R profile files
 *.Rproj.user
 *.Rhistory
-# log files
-gurobi.log
+
 # system files
 .directory
-# vignette cache
+
 # logs
 check.log
 test.log
 spell.log
 !inst/doc
+Rplots.pdf
+gurobi.log
+examples.log
