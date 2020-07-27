@@ -24,7 +24,6 @@ contrib:
 vigns:
 	R --slave -e "devtools::build_vignettes()"
 	cp -R doc inst/
-	touch inst/doc/.gitkeep
 
 spellcheck:
 	R --slave -e "devtools::document();devtools::spell_check()"
@@ -36,12 +35,10 @@ site:
 	R --slave -e "pkgdown::clean_site()"
 	R --slave -e "pkgdown::build_site(run_dont_run = TRUE, lazy = FALSE)"
 	cp -R doc inst/
-	touch inst/doc/.gitkeep
 
 quicksite:
 	R --slave -e "pkgdown::build_site(run_dont_run = TRUE, lazy = TRUE)"
 	cp -R doc inst/
-	touch inst/doc/.gitkeep
 
 test:
 	R --slave -e "devtools::test()" > test.log 2>&1
@@ -51,13 +48,11 @@ quickcheck:
 	echo "\n===== R CMD CHECK =====\n" > check.log 2>&1
 	R --slave -e "devtools::check(build_args = '--no-build-vignettes', args = '--no-build-vignettes', run_dont_test = TRUE, vignettes = FALSE)" >> check.log 2>&1
 	cp -R doc inst/
-	touch inst/doc/.gitkeep
 
 check:
 	echo "\n===== R CMD CHECK =====\n" > check.log 2>&1
 	R --slave -e "devtools::check(build_args = '--no-build-vignettes', args = '--no-build-vignettes', run_dont_test = TRUE, vignettes = FALSE)" >> check.log 2>&1
 	cp -R doc inst/
-	touch inst/doc/.gitkeep
 
 wbcheck:
 	R --slave -e "devtools::check_win_devel()"
