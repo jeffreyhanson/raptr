@@ -41,7 +41,8 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then Rscript -e "install.packages(c('devtools'))"; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos','RandomFieldsUtils','RandomFields','adehabitatHR','BH','doParallel','gdalUtils','ggplot2', 'hypervolume','ks','mvtnorm','PBSmapping','plyr','raster','RColorBrewer','RcppEigen','RgoogleMaps','scales','shape', 'rgl'))"; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "setRepositories(ind=1:2);install.packages('digest', type = 'source')"; fi;
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo tlmgr update --self; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then travis_wait 120 sudo tlmgr update --self; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo tlmgr install titling framed inconsolata; fi;
 
 install:
   - R -e "install.packages('remotes'); suppressWarnings(remotes::install_deps(dependencies = TRUE))"

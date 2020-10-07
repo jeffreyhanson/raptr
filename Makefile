@@ -71,7 +71,7 @@ install:
 	R --slave -e "devtools::install_local('../raptr')"
 
 examples:
-	R --slave -e "devtools::run_examples(test = TRUE);warnings()"  >> examples.log
+	R --slave -e "devtools::run_examples(test = TRUE, run = TRUE);warnings()"  >> examples.log
 	rm -f Rplots.pdf
 
 .PHONY: initc clean docs readme contrib site test check checkwb solarischeck fedoracheck build install man data examples
