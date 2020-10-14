@@ -8,45 +8,45 @@ dist: xenial
 
 warnings_are_errors: true
 
-r:
-  - release
-  - devel
-
-os:
-  - linux
-  - osx
-
-matrix:
-  exclude:
-    - os: osx
-      r: devel
-
 r_build_args: --no-build-vignettes
+
+jobs:
+  include:
+    - os: osx
+      r: release
+      latex: false
+    - os: linux
+      r: release
+      latex: true
+    - os: linux
+      r: devel
+      latex: true
 
 env:
   global:
-    - R_LIBS="http://cran.rstudio.com"
     - RGL_USE_NULL=TRUE
     - _R_CHECK_FORCE_SUGGESTS_=FALSE
 
+r_packages:
+  - covr
+  - rmarkdown
+  - testthat
+  - devtools
+  - Rcpp
+
 before_install:
   - echo "TRAVIS_OS_NAME = $TRAVIS_OS_NAME"
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo add-apt-repository -y ppa:ubuntugis/ubuntugis-unstable; fi;
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get --yes --force-yes update -qq; fi;
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get -y install gdal-bin libgdal-dev libgeos-dev mesa-common-dev libproj-dev libgl1-mesa-glx libglu1-mesa-dev libglu1-mesa libpng12-0 libx11-6 curl qpdf gdal-abi-2-2-2 libgdal20 libspatialite-dev libgeos-c1v5; fi;
   - echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
-  - Rscript -e "install.packages('Rcpp')"
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get --yes --force-yes update -qq; fi;
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install -y; fi;
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then Rscript -e "install.packages(c('devtools'))"; fi;
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos','RandomFieldsUtils','RandomFields','adehabitatHR','BH','doParallel','gdalUtils','ggplot2', 'hypervolume','ks','mvtnorm','PBSmapping','plyr','raster','RColorBrewer','RcppEigen','RgoogleMaps','scales','shape', 'rgl'))"; fi;
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "setRepositories(ind=1:2);install.packages('digest', type = 'source')"; fi;
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then travis_wait 120 sudo tlmgr update --self; fi;
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo tlmgr install titling framed inconsolata; fi;
-
-install:
-  - R -e "install.packages('remotes'); suppressWarnings(remotes::install_deps(dependencies = TRUE))"
-  - R -e "install.packages(c('covr', 'rmarkdown', 'testthat'))"
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo add-apt-repository -y ppa:ubuntugis/ubuntugis-unstable; fi;
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get update; fi;
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get -y install gdal-bin libgdal-dev libgeos-dev mesa-common-dev libproj-dev libgl1-mesa-glx libglu1-mesa-dev libglu1-mesa libpng12-0 libx11-6 curl qpdf gdal-abi-2-2-2 libgdal20 libspatialite-dev libgeos-c1v5; fi;
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install -y; fi;
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get clean; fi;
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get autoremove --purge; fi;
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get --purge remove tex.\*-doc$; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo Rscript -e "install.packages('tinytex');tinytex::install_tinytex()"; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "setRepositories(ind=1:2);install.packages(c('rgdal','rgeos','RandomFieldsUtils','RandomFields','adehabitatHR','BH','doParallel','gdalUtils','ggplot2', 'hypervolume','ks','mvtnorm','PBSmapping','plyr','raster','RColorBrewer','RcppEigen','RgoogleMaps','scales','shape','rgl'))"; fi;
 
 after_success:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then Rscript -e 'covr::codecov()'; fi;
