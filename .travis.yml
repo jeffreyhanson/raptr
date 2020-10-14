@@ -46,10 +46,10 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get autoremove --purge; fi;
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get --purge remove tex.\*-doc$; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo Rscript -e "install.packages('tinytex');tinytex::install_tinytex()"; fi;
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install pkg-config || "fail"; fi;
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew upgrade pkg-config || "fail"; fi;
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install gdal || "fail"; fi;
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew upgrade gdal || "fail"; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install pkg-config || echo "fail"; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew upgrade pkg-config || echo "fail"; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install gdal || echo "fail"; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew upgrade gdal || echo "fail"; fi;
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then Rscript -e "install.packages(c('rgdal','rgeos','RandomFieldsUtils','RandomFields','adehabitatHR','BH','doParallel','gdalUtils','ggplot2', 'hypervolume','ks','mvtnorm','PBSmapping','plyr','raster','RColorBrewer','RcppEigen','RgoogleMaps','scales','shape','rgl'))"; fi;
 
 after_success:
