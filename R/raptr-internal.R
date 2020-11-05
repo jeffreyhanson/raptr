@@ -646,3 +646,7 @@ dump_object <- function(x, mode = c("numeric", "integer", "character")) {
     return(rcpp_dump_character_object(x))
   }
 }
+
+
+# define function to avoid CRAN check issue
+tmp.function <- rgdal::readOGR

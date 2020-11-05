@@ -21,3 +21,4 @@ spell.log
 ^extdata*
 ^inst/extdata*
 Rplots.pdf
+^\.github$

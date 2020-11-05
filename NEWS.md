@@ -1,3 +1,8 @@
+# raptr 0.1.7.1
+
+- Implement GitHub Actions continuous integration (i.e. update tests
+  and README).
+
 # raptr 0.1.7 (released)
 
 - remove support for processing data using GDAL.

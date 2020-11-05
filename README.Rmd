@@ -9,8 +9,9 @@ output:
 # raptr: Representative and Adequate Prioritization Toolkit in R
 
 [![lifecycle](https://img.shields.io/badge/Lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
-[![Travis Build Status](http://img.shields.io/travis/jeffreyhanson/raptr/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/jeffreyhanson/raptr)
-[![AppVeyor Build Status](http://img.shields.io/appveyor/ci/jeffreyhanson/raptr/master.svg?label=Windows)](https://ci.appveyor.com/project/jeffreyhanson/raptr)
+[![R-CMD-check-Ubuntu](https://github.com/jeffreyhanson/raptr/workflows/Ubuntu/badge.svg)](https://github.com/jeffreyhanson/raptr/actions)
+[![R-CMD-check-Windows](https://github.com/jeffreyhanson/raptr/workflows/Windows/badge.svg)](https://github.com/jeffreyhanson/raptr/actions)
+[![R-CMD-check-Mac-OSX](https://github.com/jeffreyhanson/raptr/workflows/Mac%20OSX/badge.svg)](https://github.com/jeffreyhanson/raptr/actions)
 [![Coverage Status](http://codecov.io/github/jeffreyhanson/raptr/coverage.svg?branch=master)](https://codecov.io/github/jeffreyhanson/raptr?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/raptr)](https://CRAN.R-project.org/package=raptr)
 

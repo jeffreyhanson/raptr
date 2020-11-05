@@ -147,9 +147,9 @@ test_that("spacePlot.2d", {
 })
 
 test_that("spacePlot.3d", {
-  # skip on cran and travis
+  # skip on cran and CI
   skip_on_cran()
-  skip_on_travis()
+  skip_on_ci()
   # make plot
   spacePlot.3d(pu = data.frame(X1 = rnorm(100), X2 = rnorm(100),
                                X3 = rnorm(100),

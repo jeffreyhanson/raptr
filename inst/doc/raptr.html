@@ -281,7 +281,7 @@ sim_ru_s1 &lt;-<span class="st"> </span><span class="kw">update</span>(sim_ru_s1
 
 <span class="co"># solve problem to identify prioritization</span>
 sim_rs_s1_amount &lt;-<span class="st"> </span><span class="kw">solve</span>(sim_ru_s1, <span class="dt">Threads =</span> threads)</code></pre></div>
-<pre><code>## Gurobi Optimizer version 9.0.1 build v9.0.1rc0 (linux64)
+<pre><code>## Gurobi Optimizer version 9.0.2 build v9.0.2rc0 (linux64)
 ## Optimize a model with 1 rows, 100 columns and 100 nonzeros
 ## Model fingerprint: 0xe910d3ec
 ## Variable types: 0 continuous, 100 integer (100 binary)
@@ -336,7 +336,7 @@ sim_ru_s2 &lt;-<span class="st"> </span><span class="kw">spp.subset</span>(sim_r
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># update amount targets to 20% and space targets to 0% and solve it</span>
 sim_rs_s2_amount &lt;-<span class="st"> </span><span class="kw">update</span>(sim_ru_s2, <span class="dt">amount.target =</span> <span class="fl">0.2</span>, <span class="dt">space.target =</span> <span class="ot">NA</span>,
                            <span class="dt">solve =</span> <span class="ot">TRUE</span>, <span class="dt">Threads =</span> threads)</code></pre></div>
-<pre><code>## Gurobi Optimizer version 9.0.1 build v9.0.1rc0 (linux64)
+<pre><code>## Gurobi Optimizer version 9.0.2 build v9.0.2rc0 (linux64)
 ## Optimize a model with 1 rows, 100 columns and 100 nonzeros
 ## Model fingerprint: 0x3d4ec257
 ## Variable types: 0 continuous, 100 integer (100 binary)
@@ -400,7 +400,7 @@ sim_ru_s3 &lt;-<span class="st"> </span><span class="kw">spp.subset</span>(sim_r
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># update amount targets to 20% and space targets to 0% and solve it</span>
 sim_rs_s3_amount &lt;-<span class="st"> </span><span class="kw">update</span>(sim_ru_s3, <span class="dt">amount.target =</span> <span class="fl">0.2</span>,
                            <span class="dt">space.target =</span> <span class="ot">NA</span>, <span class="dt">Threads =</span> threads)</code></pre></div>
-<pre><code>## Gurobi Optimizer version 9.0.1 build v9.0.1rc0 (linux64)
+<pre><code>## Gurobi Optimizer version 9.0.2 build v9.0.2rc0 (linux64)
 ## Optimize a model with 1 rows, 100 columns and 100 nonzeros
 ## Model fingerprint: 0x1ce55139
 ## Variable types: 0 continuous, 100 integer (100 binary)
@@ -465,7 +465,7 @@ sim_rs_s3_amount &lt;-<span class="st"> </span><span class="kw">update</span>(si
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make new prioritization</span>
 sim_rs_s1_space &lt;-<span class="st"> </span><span class="kw">update</span>(sim_rs_s1_amount, <span class="dt">amount.target =</span> <span class="fl">0.2</span>,
                           <span class="dt">space.target =</span> <span class="fl">0.85</span>, <span class="dt">Threads =</span> threads)</code></pre></div>
-<pre><code>## Gurobi Optimizer version 9.0.1 build v9.0.1rc0 (linux64)
+<pre><code>## Gurobi Optimizer version 9.0.2 build v9.0.2rc0 (linux64)
 ## Optimize a model with 10102 rows, 10100 columns and 40000 nonzeros
 ## Model fingerprint: 0x3f02f09a
 ## Variable types: 0 continuous, 10100 integer (10100 binary)
@@ -476,20 +476,20 @@ sim_rs_s1_space &lt;-<span class="st"> </span><span class="kw">update</span>(sim
 ##   RHS range        [1e+00, 1e+02]
 ## Found heuristic solution: objective 95.0000000
 ## Presolve removed 36 rows and 0 columns
-## Presolve time: 2.14s
+## Presolve time: 2.74s
 ## Presolved: 10066 rows, 10100 columns, 40104 nonzeros
 ## Variable types: 0 continuous, 10100 integer (10100 binary)
 ## Presolved: 10066 rows, 10100 columns, 40104 nonzeros
 ## 
 ## 
-## Root relaxation: objective 2.000000e+01, 621 iterations, 0.08 seconds
+## Root relaxation: objective 2.000000e+01, 621 iterations, 0.09 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
 ## *    0     0               0      20.0000000   20.00000  0.00%     -    2s
 ## 
-## Explored 0 nodes (1158 simplex iterations) in 2.31 seconds
+## Explored 0 nodes (1158 simplex iterations) in 2.95 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 20 95 
@@ -533,7 +533,7 @@ sim_rs_s1_space &lt;-<span class="st"> </span><span class="kw">update</span>(sim
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make new prioritization</span>
 sim_rs_s2_space &lt;-<span class="st"> </span><span class="kw">update</span>(sim_rs_s2_amount, <span class="dt">amount.target =</span> <span class="fl">0.2</span>,
                           <span class="dt">space.target =</span> <span class="fl">0.85</span>, <span class="dt">Threads =</span> threads)</code></pre></div>
-<pre><code>## Gurobi Optimizer version 9.0.1 build v9.0.1rc0 (linux64)
+<pre><code>## Gurobi Optimizer version 9.0.2 build v9.0.2rc0 (linux64)
 ## Optimize a model with 10102 rows, 10100 columns and 40000 nonzeros
 ## Model fingerprint: 0xa48af59a
 ## Variable types: 0 continuous, 10100 integer (10100 binary)
@@ -544,22 +544,22 @@ sim_rs_s2_space &lt;-<span class="st"> </span><span class="kw">update</span>(sim
 ##   RHS range        [1e+00, 6e+01]
 ## Found heuristic solution: objective 91.0000000
 ## Presolve removed 220 rows and 0 columns
-## Presolve time: 1.40s
+## Presolve time: 2.03s
 ## Presolved: 9882 rows, 10100 columns, 41664 nonzeros
 ## Variable types: 0 continuous, 10100 integer (10100 binary)
 ## Presolved: 9882 rows, 10100 columns, 41664 nonzeros
 ## 
 ## 
-## Root relaxation: objective 1.232570e+01, 4250 iterations, 0.30 seconds
+## Root relaxation: objective 1.232570e+01, 4250 iterations, 0.33 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0   12.32570    0  293   91.00000   12.32570  86.5%     -    1s
-## H    0     0                      13.0000000   12.32570  5.19%     -    1s
-##      0     0   12.32570    0  293   13.00000   12.32570  5.19%     -    1s
+##      0     0   12.32570    0  293   91.00000   12.32570  86.5%     -    2s
+## H    0     0                      13.0000000   12.32570  5.19%     -    2s
+##      0     0   12.32570    0  293   13.00000   12.32570  5.19%     -    2s
 ## 
-## Explored 1 nodes (4527 simplex iterations) in 1.87 seconds
+## Explored 1 nodes (4527 simplex iterations) in 2.55 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 13 91 
@@ -602,7 +602,7 @@ sim_rs_s2_space &lt;-<span class="st"> </span><span class="kw">update</span>(sim
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make new prioritization</span>
 sim_rs_s3_space &lt;-<span class="st"> </span><span class="kw">update</span>(sim_rs_s3_amount, <span class="dt">amount.target =</span> <span class="fl">0.2</span>,
                           <span class="dt">space.target =</span> <span class="fl">0.85</span>, <span class="dt">Threads =</span> threads)</code></pre></div>
-<pre><code>## Gurobi Optimizer version 9.0.1 build v9.0.1rc0 (linux64)
+<pre><code>## Gurobi Optimizer version 9.0.2 build v9.0.2rc0 (linux64)
 ## Optimize a model with 10102 rows, 10100 columns and 40000 nonzeros
 ## Model fingerprint: 0xd59e1e6d
 ## Variable types: 0 continuous, 10100 integer (10100 binary)
@@ -612,28 +612,36 @@ sim_rs_s3_space &lt;-<span class="st"> </span><span class="kw">update</span>(sim
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+00, 7e+01]
 ## Found heuristic solution: objective 87.0000000
+## Presolve removed 589 rows and 15 columns (presolve time = 5s) ...
 ## Presolve removed 589 rows and 15 columns
-## Presolve time: 2.82s
+## Presolve time: 6.81s
 ## Presolved: 9513 rows, 10085 columns, 51461 nonzeros
 ## Variable types: 0 continuous, 10085 integer (10085 binary)
 ## Presolved: 9513 rows, 10085 columns, 51461 nonzeros
 ## 
 ## 
-## Root relaxation: objective 8.980792e+00, 6104 iterations, 0.32 seconds
+## Root simplex log...
+## 
+## Iteration    Objective       Primal Inf.    Dual Inf.      Time
+##        0    1.0000000e+02   0.000000e+00   1.000000e+02      7s
+##     6104    8.9807917e+00   0.000000e+00   0.000000e+00      7s
+##     6104    8.9807917e+00   0.000000e+00   0.000000e+00      7s
+## 
+## Root relaxation: objective 8.980792e+00, 6104 iterations, 0.61 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0    8.98079    0   75   87.00000    8.98079  89.7%     -    3s
-## H    0     0                      10.0000000    8.98079  10.2%     -    3s
-##      0     0     cutoff    0        10.00000   10.00000  0.00%     -    3s
+##      0     0    8.98079    0   75   87.00000    8.98079  89.7%     -    7s
+## H    0     0                      10.0000000    8.98079  10.2%     -    7s
+##      0     0     cutoff    0        10.00000   10.00000  0.00%     -    7s
 ## 
 ## Cutting planes:
 ##   Gomory: 2
 ##   MIR: 1
 ##   Zero half: 2
 ## 
-## Explored 1 nodes (6445 simplex iterations) in 3.38 seconds
+## Explored 1 nodes (6445 simplex iterations) in 7.85 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 10 87 
@@ -683,7 +691,7 @@ sim_rs_s3_space &lt;-<span class="st"> </span><span class="kw">update</span>(sim
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make prioritizations</span>
 sim_mrs_amount &lt;-<span class="st"> </span><span class="kw">update</span>(sim_ru, <span class="dt">amount.target =</span> <span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>),
                          <span class="dt">space.target =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="dt">Threads =</span> threads)</code></pre></div>
-<pre><code>## Gurobi Optimizer version 9.0.1 build v9.0.1rc0 (linux64)
+<pre><code>## Gurobi Optimizer version 9.0.2 build v9.0.2rc0 (linux64)
 ## Optimize a model with 30306 rows, 30100 columns and 120000 nonzeros
 ## Model fingerprint: 0x5ebf0f26
 ## Variable types: 0 continuous, 30100 integer (30100 binary)
@@ -693,21 +701,22 @@ sim_mrs_amount &lt;-<span class="st"> </span><span class="kw">update</span>(sim_
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+00, 8e+02]
 ## Found heuristic solution: objective 98.0000000
-## Presolve time: 1.32s
+## Presolve time: 2.59s
 ## Presolved: 30306 rows, 30100 columns, 120000 nonzeros
 ## Variable types: 0 continuous, 30100 integer (30100 binary)
 ## Presolved: 30306 rows, 30100 columns, 120000 nonzeros
 ## 
 ## 
-## Root relaxation: objective 2.000000e+01, 2299 iterations, 0.85 seconds
+## Root relaxation: objective 2.000000e+01, 2299 iterations, 1.41 seconds
+## Total elapsed time = 5.53s
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-## H    0     0                      20.0000000    0.00000   100%     -    3s
-##      0     0          -    0        20.00000   20.00000  0.00%     -    3s
+## H    0     0                      20.0000000    0.00000   100%     -    5s
+##      0     0          -    0        20.00000   20.00000  0.00%     -    5s
 ## 
-## Explored 0 nodes (5871 simplex iterations) in 3.61 seconds
+## Explored 0 nodes (5871 simplex iterations) in 5.59 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 20 98 
@@ -717,7 +726,7 @@ sim_mrs_amount &lt;-<span class="st"> </span><span class="kw">update</span>(sim_
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_mrs_space &lt;-<span class="st"> </span><span class="kw">update</span>(sim_ru, <span class="dt">amount.target =</span> <span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>),
                         <span class="dt">space.target =</span> <span class="kw">c</span>(<span class="fl">0.85</span>, <span class="fl">0.85</span>, <span class="fl">0.85</span>),
                         <span class="dt">Threads =</span> threads)</code></pre></div>
-<pre><code>## Gurobi Optimizer version 9.0.1 build v9.0.1rc0 (linux64)
+<pre><code>## Gurobi Optimizer version 9.0.2 build v9.0.2rc0 (linux64)
 ## Optimize a model with 30306 rows, 30100 columns and 120000 nonzeros
 ## Model fingerprint: 0xba2fdd45
 ## Variable types: 0 continuous, 30100 integer (30100 binary)
@@ -727,9 +736,11 @@ sim_mrs_amount &lt;-<span class="st"> </span><span class="kw">update</span>(sim_
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+00, 1e+02]
 ## Found heuristic solution: objective 99.0000000
-## Presolve removed 329 rows and 15 columns (presolve time = 5s) ...
+## Presolve removed 264 rows and 15 columns (presolve time = 5s) ...
+## Presolve removed 268 rows and 15 columns (presolve time = 10s) ...
+## Presolve removed 360 rows and 15 columns (presolve time = 15s) ...
 ## Presolve removed 360 rows and 15 columns
-## Presolve time: 6.47s
+## Presolve time: 15.95s
 ## Presolved: 29946 rows, 30085 columns, 131504 nonzeros
 ## Variable types: 0 continuous, 30085 integer (30085 binary)
 ## Presolve removed 67 rows and 1 columns
@@ -739,19 +750,20 @@ sim_mrs_amount &lt;-<span class="st"> </span><span class="kw">update</span>(sim_
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    1.0000000e+02   0.000000e+00   1.000000e+02      7s
-##     5346    2.0000000e+01   0.000000e+00   0.000000e+00      8s
-##     5346    2.0000000e+01   0.000000e+00   0.000000e+00      8s
+##        0    1.0000000e+02   0.000000e+00   1.000000e+02     18s
+##     3823    2.3296241e+01   0.000000e+00   8.712320e+03     20s
+##     5346    2.0000000e+01   0.000000e+00   0.000000e+00     22s
+##     5346    2.0000000e+01   0.000000e+00   0.000000e+00     22s
 ## 
-## Root relaxation: objective 2.000000e+01, 5346 iterations, 1.51 seconds
+## Root relaxation: objective 2.000000e+01, 5346 iterations, 5.84 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0   20.00000    0   21   99.00000   20.00000  79.8%     -    8s
-## H    0     0                      21.0000000   20.00000  4.76%     -    8s
+##      0     0   20.00000    0   21   99.00000   20.00000  79.8%     -   23s
+## H    0     0                      21.0000000   20.00000  4.76%     -   23s
 ## 
-## Explored 1 nodes (10151 simplex iterations) in 8.47 seconds
+## Explored 1 nodes (10151 simplex iterations) in 23.56 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 21 99 
@@ -817,7 +829,7 @@ _Difference between two multi-species prioritizations. See Figure 7 caption for 
 sim_mrs_space2 &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">prob.subset</span>(sim_mrs_space, <span class="dt">species =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,
                                     <span class="dt">threshold =</span> <span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>)),
                         <span class="dt">Threads =</span> threads)</code></pre></div>
-<pre><code>## Gurobi Optimizer version 9.0.1 build v9.0.1rc0 (linux64)
+<pre><code>## Gurobi Optimizer version 9.0.2 build v9.0.2rc0 (linux64)
 ## Optimize a model with 30306 rows, 30100 columns and 119974 nonzeros
 ## Model fingerprint: 0xb1d3b678
 ## Variable types: 0 continuous, 30100 integer (30100 binary)
@@ -827,9 +839,9 @@ sim_mrs_space2 &lt;-<span class="st"> </span><span class="kw">solve</span>(<span
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+00, 1e+02]
 ## Found heuristic solution: objective 99.0000000
-## Presolve removed 360 rows and 15 columns (presolve time = 5s) ...
+## Presolve removed 285 rows and 15 columns (presolve time = 5s) ...
 ## Presolve removed 360 rows and 15 columns
-## Presolve time: 5.73s
+## Presolve time: 7.74s
 ## Presolved: 29946 rows, 30085 columns, 131478 nonzeros
 ## Variable types: 0 continuous, 30085 integer (30085 binary)
 ## Presolve removed 67 rows and 1 columns
@@ -839,19 +851,20 @@ sim_mrs_space2 &lt;-<span class="st"> </span><span class="kw">solve</span>(<span
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    1.0000000e+02   0.000000e+00   1.000000e+02      6s
-##     5257    2.0000000e+01   0.000000e+00   0.000000e+00      7s
-##     5257    2.0000000e+01   0.000000e+00   0.000000e+00      7s
+##        0    1.0000000e+02   0.000000e+00   1.000000e+02      9s
+##     5109    2.0326872e+01   0.000000e+00   5.943189e+03     10s
+##     5257    2.0000000e+01   0.000000e+00   0.000000e+00     10s
+##     5257    2.0000000e+01   0.000000e+00   0.000000e+00     10s
 ## 
-## Root relaxation: objective 2.000000e+01, 5257 iterations, 1.62 seconds
+## Root relaxation: objective 2.000000e+01, 5257 iterations, 2.30 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0   20.00000    0   22   99.00000   20.00000  79.8%     -    8s
-## H    0     0                      21.0000000   20.00000  4.76%     -    8s
+##      0     0   20.00000    0   22   99.00000   20.00000  79.8%     -   12s
+## H    0     0                      21.0000000   20.00000  4.76%     -   12s
 ## 
-## Explored 1 nodes (12431 simplex iterations) in 8.81 seconds
+## Explored 1 nodes (12431 simplex iterations) in 12.15 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 21 99 
@@ -884,7 +897,7 @@ sim_mrs_space2 &lt;-<span class="st"> </span><span class="kw">solve</span>(<span
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make new prioritization using reliable formulation</span>
 sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw">update</span>(sim_mrs_space, <span class="dt">formulation =</span> <span class="st">&quot;reliable&quot;</span>,
                              <span class="dt">max.r.level =</span> 1L, <span class="dt">Threads =</span> threads))</code></pre></div>
-<pre><code>## Gurobi Optimizer version 9.0.1 build v9.0.1rc0 (linux64)
+<pre><code>## Gurobi Optimizer version 9.0.2 build v9.0.2rc0 (linux64)
 ## Optimize a model with 364206 rows, 181900 columns and 3847200 nonzeros
 ## Model fingerprint: 0xf44c8001
 ## Variable types: 0 continuous, 60700 integer (60700 binary)
@@ -895,9 +908,9 @@ sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw">try</span>(<span c
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [7e-03, 1e+02]
 ## Presolve removed 338506 rows and 156703 columns
-## Presolve time: 2.99s
+## Presolve time: 4.58s
 ## 
-## Explored 0 nodes (0 simplex iterations) in 3.41 seconds
+## Explored 0 nodes (0 simplex iterations) in 5.17 seconds
 ## Thread count was 1 (of 4 available processors)
 ## 
 ## Solution count 0
@@ -911,7 +924,7 @@ sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw">try</span>(<span c
 sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw">update</span>(sim_mrs_space, <span class="dt">formulation =</span> <span class="st">&quot;reliable&quot;</span>,
                          <span class="dt">max.r.level =</span> 1L, <span class="dt">space.target =</span> <span class="op">-</span><span class="dv">1000</span>,
                          <span class="dt">Threads =</span> threads)</code></pre></div>
-<pre><code>## Gurobi Optimizer version 9.0.1 build v9.0.1rc0 (linux64)
+<pre><code>## Gurobi Optimizer version 9.0.2 build v9.0.2rc0 (linux64)
 ## Optimize a model with 364206 rows, 181900 columns and 3847200 nonzeros
 ## Model fingerprint: 0x197cd333
 ## Variable types: 0 continuous, 60700 integer (60700 binary)
@@ -921,9 +934,9 @@ sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw">update</span>(sim_
 ##   Objective range  [1e+00, 1e+00]
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [7e-03, 8e+05]
-## Presolve removed 333703 rows and 151800 columns (presolve time = 5s) ...
+## Presolve removed 333303 rows and 151500 columns (presolve time = 5s) ...
 ## Presolve removed 333903 rows and 151800 columns
-## Presolve time: 7.57s
+## Presolve time: 9.93s
 ## Presolved: 30303 rows, 30100 columns, 90300 nonzeros
 ## Variable types: 0 continuous, 30100 integer (30100 binary)
 ## Found heuristic solution: objective 27.0000000
@@ -933,20 +946,20 @@ sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw">update</span>(sim_
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    1.0000000e+02   0.000000e+00   1.000000e+02      8s
-##      129    2.0000000e+01   0.000000e+00   0.000000e+00      9s
-##      129    2.0000000e+01   0.000000e+00   0.000000e+00      9s
+##        0    1.0000000e+02   0.000000e+00   1.000000e+02     12s
+##      129    2.0000000e+01   0.000000e+00   0.000000e+00     12s
+##      129    2.0000000e+01   0.000000e+00   0.000000e+00     12s
 ## 
-## Root relaxation: objective 2.000000e+01, 129 iterations, 0.41 seconds
+## Root relaxation: objective 2.000000e+01, 129 iterations, 0.40 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0   20.00000    0    3   27.00000   20.00000  25.9%     -    8s
-## H    0     0                      20.0000000   20.00000  0.00%     -    8s
-##      0     0   20.00000    0    3   20.00000   20.00000  0.00%     -    8s
+##      0     0   20.00000    0    3   27.00000   20.00000  25.9%     -   11s
+## H    0     0                      20.0000000   20.00000  0.00%     -   11s
+##      0     0   20.00000    0    3   20.00000   20.00000  0.00%     -   11s
 ## 
-## Explored 1 nodes (129 simplex iterations) in 8.57 seconds
+## Explored 1 nodes (129 simplex iterations) in 11.67 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 20 27 
@@ -985,7 +998,7 @@ sim_mrs_space3 &lt;-<span class="st"> </span><span class="kw">update</span>(sim_
 <p>Let’s generate a new prioritization that heavily penalises fragmentation. Here, we will update the <code>sim_mrs_amount</code> object with <code>BLM</code> of 100.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># update prioritization</span>
 sim_mrs_amount_blm &lt;-<span class="st"> </span><span class="kw">update</span>(sim_mrs_amount, <span class="dt">BLM =</span> <span class="dv">100</span>, <span class="dt">Threads =</span> threads)</code></pre></div>
-<pre><code>## Gurobi Optimizer version 9.0.1 build v9.0.1rc0 (linux64)
+<pre><code>## Gurobi Optimizer version 9.0.2 build v9.0.2rc0 (linux64)
 ## Optimize a model with 30666 rows, 30280 columns and 120720 nonzeros
 ## Model fingerprint: 0x20b44ac4
 ## Variable types: 0 continuous, 30280 integer (30280 binary)
@@ -995,7 +1008,7 @@ sim_mrs_amount_blm &lt;-<span class="st"> </span><span class="kw">update</span>(
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+00, 8e+02]
 ## Found heuristic solution: objective 4498.0000000
-## Presolve time: 1.67s
+## Presolve time: 1.74s
 ## Presolved: 30666 rows, 30280 columns, 120720 nonzeros
 ## Variable types: 0 continuous, 30280 integer (30280 binary)
 ## Presolved: 30666 rows, 30280 columns, 120720 nonzeros
@@ -1004,49 +1017,57 @@ sim_mrs_amount_blm &lt;-<span class="st"> </span><span class="kw">update</span>(
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##     5293    5.0911262e+02   0.000000e+00   5.802141e+04      5s
+##     5523    4.7573800e+02   0.000000e+00   1.184732e+06      5s
 ##     6312    4.6444444e+02   0.000000e+00   0.000000e+00      6s
 ##     6312    4.6444444e+02   0.000000e+00   0.000000e+00      6s
 ## 
-## Root relaxation: objective 4.644444e+02, 6312 iterations, 4.40 seconds
+## Root relaxation: objective 4.644444e+02, 6312 iterations, 3.75 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
 ##      0     0  464.44444    0 1725 4498.00000  464.44444  89.7%     -    8s
-## H    0     0                    1759.0000000  464.44444  73.6%     -   22s
-##      0     0  532.32877    0 1403 1759.00000  532.32877  69.7%     -   24s
-## H    0     0                    1548.0000000  532.32877  65.6%     -   28s
-##      0     0  532.32877    0 1404 1548.00000  532.32877  65.6%     -   28s
-##      0     0  575.37975    0 1437 1548.00000  575.37975  62.8%     -   29s
-##      0     0  575.37975    0 1482 1548.00000  575.37975  62.8%     -   31s
-##      0     0  575.37975    0 1510 1548.00000  575.37975  62.8%     -   32s
-##      0     0  575.37975    0 1523 1548.00000  575.37975  62.8%     -   36s
-##      0     0  575.37975    0 1416 1548.00000  575.37975  62.8%     -   38s
-##      0     0  575.37975    0 1417 1548.00000  575.37975  62.8%     -   40s
-##      0     0  575.37975    0 1416 1548.00000  575.37975  62.8%     -   41s
-##      0     0  575.37975    0 1418 1548.00000  575.37975  62.8%     -   44s
-##      0     0  575.37975    0 1416 1548.00000  575.37975  62.8%     -   45s
-##      0     0  575.37975    0 1420 1548.00000  575.37975  62.8%     -   47s
-##      0     0  575.37975    0 1416 1548.00000  575.37975  62.8%     -   48s
-##      0     0  575.37975    0 1416 1548.00000  575.37975  62.8%     -   48s
-##      0     2  575.37975    0 1416 1548.00000  575.37975  62.8%     -   51s
-## H   13    16                    1130.0000000  615.76724  45.5%  1770   54s
-##     15    18  870.00000    8  608 1130.00000  615.76724  45.5%  1669   55s
-## H   17    20                    1129.0000000  615.76724  45.5%  1578   55s
-## H   24    28                     920.0000000  615.76724  33.1%  1241   56s
-##     47    33  903.33333    8  636  920.00000  658.91213  28.4%  1015   60s
-##     99    33  803.78378    4 1560  920.00000  713.61702  22.4%   930   65s
-##    149    35     cutoff    9       920.00000  761.68463  17.2%   913   70s
-##    220    40  853.33333   10  658  920.00000  787.88875  14.4%   860   75s
-##    312    29     cutoff   13       920.00000  820.00000  10.9%   794   80s
+## H    0     0                    1759.0000000  464.44444  73.6%     -   24s
+##      0     0  532.32877    0 1403 1759.00000  532.32877  69.7%     -   26s
+## H    0     0                    1548.0000000  532.32877  65.6%     -   30s
+##      0     0  532.32877    0 1404 1548.00000  532.32877  65.6%     -   30s
+##      0     0  575.37975    0 1437 1548.00000  575.37975  62.8%     -   32s
+##      0     0  575.37975    0 1482 1548.00000  575.37975  62.8%     -   34s
+##      0     0  575.37975    0 1510 1548.00000  575.37975  62.8%     -   35s
+##      0     0  575.37975    0 1523 1548.00000  575.37975  62.8%     -   40s
+##      0     0  575.37975    0 1416 1548.00000  575.37975  62.8%     -   43s
+##      0     0  575.37975    0 1417 1548.00000  575.37975  62.8%     -   48s
+##      0     0  575.37975    0 1416 1548.00000  575.37975  62.8%     -   50s
+##      0     0  575.37975    0 1418 1548.00000  575.37975  62.8%     -   61s
+##      0     0  575.37975    0 1416 1548.00000  575.37975  62.8%     -   66s
+##      0     0  575.37975    0 1420 1548.00000  575.37975  62.8%     -   74s
+##      0     0  575.37975    0 1416 1548.00000  575.37975  62.8%     -   81s
+##      0     0  575.37975    0 1416 1548.00000  575.37975  62.8%     -   82s
+##      0     2  575.37975    0 1416 1548.00000  575.37975  62.8%     -   94s
+##      1     4  604.35065    1 1409 1548.00000  582.03125  62.4%  4855   95s
+##      7    10  672.17391    4 1023 1548.00000  615.76724  60.2%  1866  101s
+##      9    12  722.38095    5 1012 1548.00000  615.76724  60.2%  2029  106s
+##     11    14  756.03505    6  823 1548.00000  615.76724  60.2%  1976  111s
+## H   13    16                    1130.0000000  615.76724  45.5%  1770  113s
+##     15    18  870.00000    8  608 1130.00000  615.76724  45.5%  1669  119s
+## H   17    20                    1129.0000000  615.76724  45.5%  1578  120s
+## H   24    28                     920.0000000  615.76724  33.1%  1241  122s
+##     35    26  763.75000    3 1358  920.00000  656.84211  28.6%  1047  125s
+##     40    32  851.21387    6 1240  920.00000  656.84211  28.6%  1048  131s
+##     47    33  903.33333    8  636  920.00000  658.91213  28.4%  1015  140s
+##     63    33     cutoff    8       920.00000  675.00000  26.6%  1061  145s
+##    106    31  907.50000    7  724  920.00000  713.61702  22.4%   954  150s
+##    176    37  845.66781    5  899  920.00000  768.33333  16.5%   866  155s
+##    227    41  875.17241   12  645  920.00000  787.88875  14.4%   849  160s
+##    279    38     cutoff    8       920.00000  807.32394  12.2%   813  167s
+##    296    34     cutoff    7       920.00000  811.03691  11.8%   797  170s
 ## 
 ## Cutting planes:
 ##   Gomory: 2
 ##   Zero half: 3
 ##   RLT: 1
 ## 
-## Explored 334 nodes (321782 simplex iterations) in 80.36 seconds
+## Explored 334 nodes (321782 simplex iterations) in 174.54 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 6: 920 1129 1130 ... 4498
@@ -1169,7 +1190,7 @@ cs_rs_amount &lt;-<span class="st"> </span><span class="kw">rap</span>(cs_pus[, 
 ## statuses to 0.</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># generate prioritization</span>
 cs_rs_amount &lt;-<span class="st"> </span><span class="kw">solve</span>(cs_rs_amount, <span class="dt">MIPGap =</span> <span class="fl">0.1</span>, <span class="dt">Threads =</span> threads)</code></pre></div>
-<pre><code>## Gurobi Optimizer version 9.0.1 build v9.0.1rc0 (linux64)
+<pre><code>## Gurobi Optimizer version 9.0.2 build v9.0.2rc0 (linux64)
 ## Optimize a model with 4 rows, 762 columns and 1336 nonzeros
 ## Model fingerprint: 0x99ffa403
 ## Variable types: 0 continuous, 762 integer (762 binary)
@@ -1179,13 +1200,13 @@ cs_rs_amount &lt;-<span class="st"> </span><span class="kw">solve</span>(cs_rs_a
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [1e+05, 3e+06]
 ## Found heuristic solution: objective 159.0000000
-## Presolve time: 0.00s
+## Presolve time: 0.01s
 ## Presolved: 4 rows, 762 columns, 1336 nonzeros
 ## Variable types: 0 continuous, 762 integer (762 binary)
 ## Presolved: 4 rows, 762 columns, 1336 nonzeros
 ## 
 ## 
-## Root relaxation: objective 1.354267e+02, 734 iterations, 0.00 seconds
+## Root relaxation: objective 1.354267e+02, 734 iterations, 0.01 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
@@ -1243,7 +1264,7 @@ gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(p1, p2, 
 <p>Next, let’s generate a prioritization using amount- and space-based targets. This prioritization will secure 70% of the species distribution in geographic and environmental space.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make amount- and space-based prioritization</span>
 cs_rs_space &lt;-<span class="st"> </span><span class="kw">update</span>(cs_rs_amount, <span class="dt">space.target =</span> <span class="fl">0.7</span>, <span class="dt">Threads =</span> threads)</code></pre></div>
-<pre><code>## Gurobi Optimizer version 9.0.1 build v9.0.1rc0 (linux64)
+<pre><code>## Gurobi Optimizer version 9.0.2 build v9.0.2rc0 (linux64)
 ## Optimize a model with 134012 rows, 134362 columns and 535736 nonzeros
 ## Model fingerprint: 0xafd53723
 ## Variable types: 0 continuous, 134362 integer (134362 binary)
@@ -1252,25 +1273,105 @@ cs_rs_space &lt;-<span class="st"> </span><span class="kw">update</span>(cs_rs_a
 ##   Objective range  [1e+00, 1e+00]
 ##   Bounds range     [1e+00, 1e+00]
 ##   RHS range        [3e-01, 3e+06]
-## Presolve removed 6790 rows and 5672 columns (presolve time = 5s) ...
-## Presolve removed 7005 rows and 5679 columns (presolve time = 10s) ...
-## Presolve removed 7407 rows and 5679 columns (presolve time = 15s) ...
-## Presolve removed 7563 rows and 5679 columns (presolve time = 20s) ...
-## Presolve removed 9234 rows and 5679 columns (presolve time = 25s) ...
-## Presolve removed 9903 rows and 5679 columns (presolve time = 30s) ...
-## Presolve removed 10093 rows and 5679 columns (presolve time = 35s) ...
-## Presolve removed 10180 rows and 5679 columns (presolve time = 40s) ...
-## Presolve removed 10267 rows and 5679 columns (presolve time = 45s) ...
-## Presolve removed 10962 rows and 5679 columns (presolve time = 50s) ...
-## Presolve removed 11029 rows and 5679 columns (presolve time = 55s) ...
-## Presolve removed 11588 rows and 5679 columns (presolve time = 60s) ...
-## Presolve removed 12087 rows and 5679 columns (presolve time = 65s) ...
-## Presolve removed 12110 rows and 5679 columns (presolve time = 70s) ...
-## Presolve removed 12116 rows and 5679 columns (presolve time = 75s) ...
-## Presolve removed 12116 rows and 5800 columns (presolve time = 91s) ...
-## Presolve removed 12143 rows and 5800 columns (presolve time = 97s) ...
+## Presolve removed 5526 rows and 5672 columns (presolve time = 5s) ...
+## Presolve removed 5526 rows and 5672 columns (presolve time = 10s) ...
+## Presolve removed 5526 rows and 5672 columns (presolve time = 15s) ...
+## Presolve removed 5686 rows and 5672 columns (presolve time = 20s) ...
+## Presolve removed 5822 rows and 5672 columns (presolve time = 25s) ...
+## Presolve removed 6008 rows and 5672 columns (presolve time = 30s) ...
+## Presolve removed 6421 rows and 5672 columns (presolve time = 35s) ...
+## Presolve removed 6502 rows and 5672 columns (presolve time = 40s) ...
+## Presolve removed 6671 rows and 5672 columns (presolve time = 45s) ...
+## Presolve removed 6775 rows and 5672 columns (presolve time = 50s) ...
+## Presolve removed 6802 rows and 5672 columns (presolve time = 55s) ...
+## Presolve removed 6811 rows and 5672 columns (presolve time = 60s) ...
+## Presolve removed 6875 rows and 5672 columns (presolve time = 65s) ...
+## Presolve removed 6908 rows and 5672 columns (presolve time = 70s) ...
+## Presolve removed 6950 rows and 5672 columns (presolve time = 75s) ...
+## Presolve removed 6967 rows and 5672 columns (presolve time = 80s) ...
+## Presolve removed 7005 rows and 5679 columns (presolve time = 85s) ...
+## Presolve removed 7005 rows and 5679 columns (presolve time = 90s) ...
+## Presolve removed 7156 rows and 5679 columns (presolve time = 95s) ...
+## Presolve removed 7157 rows and 5679 columns (presolve time = 100s) ...
+## Presolve removed 7157 rows and 5679 columns (presolve time = 105s) ...
+## Presolve removed 7161 rows and 5679 columns (presolve time = 110s) ...
+## Presolve removed 7161 rows and 5679 columns (presolve time = 115s) ...
+## Presolve removed 7180 rows and 5679 columns (presolve time = 120s) ...
+## Presolve removed 7196 rows and 5679 columns (presolve time = 125s) ...
+## Presolve removed 7309 rows and 5679 columns (presolve time = 130s) ...
+## Presolve removed 7407 rows and 5679 columns (presolve time = 135s) ...
+## Presolve removed 7409 rows and 5679 columns (presolve time = 140s) ...
+## Presolve removed 7413 rows and 5679 columns (presolve time = 145s) ...
+## Presolve removed 7430 rows and 5679 columns (presolve time = 150s) ...
+## Presolve removed 7434 rows and 5679 columns (presolve time = 155s) ...
+## Presolve removed 7440 rows and 5679 columns (presolve time = 160s) ...
+## Presolve removed 7443 rows and 5679 columns (presolve time = 165s) ...
+## Presolve removed 7443 rows and 5679 columns (presolve time = 170s) ...
+## Presolve removed 7658 rows and 5679 columns (presolve time = 175s) ...
+## Presolve removed 8102 rows and 5679 columns (presolve time = 180s) ...
+## Presolve removed 8521 rows and 5679 columns (presolve time = 185s) ...
+## Presolve removed 8780 rows and 5679 columns (presolve time = 190s) ...
+## Presolve removed 9035 rows and 5679 columns (presolve time = 195s) ...
+## Presolve removed 9215 rows and 5679 columns (presolve time = 200s) ...
+## Presolve removed 9305 rows and 5679 columns (presolve time = 205s) ...
+## Presolve removed 9388 rows and 5679 columns (presolve time = 210s) ...
+## Presolve removed 9512 rows and 5679 columns (presolve time = 215s) ...
+## Presolve removed 9535 rows and 5679 columns (presolve time = 220s) ...
+## Presolve removed 9673 rows and 5679 columns (presolve time = 225s) ...
+## Presolve removed 9815 rows and 5679 columns (presolve time = 230s) ...
+## Presolve removed 9903 rows and 5679 columns (presolve time = 235s) ...
+## Presolve removed 10008 rows and 5679 columns (presolve time = 240s) ...
+## Presolve removed 10050 rows and 5679 columns (presolve time = 245s) ...
+## Presolve removed 10072 rows and 5679 columns (presolve time = 250s) ...
+## Presolve removed 10084 rows and 5679 columns (presolve time = 255s) ...
+## Presolve removed 10093 rows and 5679 columns (presolve time = 260s) ...
+## Presolve removed 10093 rows and 5679 columns (presolve time = 265s) ...
+## Presolve removed 10093 rows and 5679 columns (presolve time = 270s) ...
+## Presolve removed 10093 rows and 5679 columns (presolve time = 275s) ...
+## Presolve removed 10093 rows and 5679 columns (presolve time = 280s) ...
+## Presolve removed 10154 rows and 5679 columns (presolve time = 285s) ...
+## Presolve removed 10180 rows and 5679 columns (presolve time = 290s) ...
+## Presolve removed 10180 rows and 5679 columns (presolve time = 295s) ...
+## Presolve removed 10265 rows and 5679 columns (presolve time = 300s) ...
+## Presolve removed 10265 rows and 5679 columns (presolve time = 305s) ...
+## Presolve removed 10267 rows and 5679 columns (presolve time = 310s) ...
+## Presolve removed 10267 rows and 5679 columns (presolve time = 315s) ...
+## Presolve removed 10267 rows and 5679 columns (presolve time = 320s) ...
+## Presolve removed 10309 rows and 5679 columns (presolve time = 325s) ...
+## Presolve removed 10443 rows and 5679 columns (presolve time = 330s) ...
+## Presolve removed 10680 rows and 5679 columns (presolve time = 335s) ...
+## Presolve removed 10849 rows and 5679 columns (presolve time = 340s) ...
+## Presolve removed 10979 rows and 5679 columns (presolve time = 345s) ...
+## Presolve removed 10979 rows and 5679 columns (presolve time = 350s) ...
+## Presolve removed 10979 rows and 5679 columns (presolve time = 355s) ...
+## Presolve removed 11016 rows and 5679 columns (presolve time = 360s) ...
+## Presolve removed 11016 rows and 5679 columns (presolve time = 365s) ...
+## Presolve removed 11022 rows and 5679 columns (presolve time = 370s) ...
+## Presolve removed 11026 rows and 5679 columns (presolve time = 375s) ...
+## Presolve removed 11029 rows and 5679 columns (presolve time = 380s) ...
+## Presolve removed 11029 rows and 5679 columns (presolve time = 385s) ...
+## Presolve removed 11029 rows and 5679 columns (presolve time = 390s) ...
+## Presolve removed 11138 rows and 5679 columns (presolve time = 395s) ...
+## Presolve removed 11361 rows and 5679 columns (presolve time = 400s) ...
+## Presolve removed 11773 rows and 5679 columns (presolve time = 405s) ...
+## Presolve removed 12079 rows and 5679 columns (presolve time = 410s) ...
+## Presolve removed 12087 rows and 5679 columns (presolve time = 415s) ...
+## Presolve removed 12087 rows and 5679 columns (presolve time = 420s) ...
+## Presolve removed 12087 rows and 5679 columns (presolve time = 425s) ...
+## Presolve removed 12087 rows and 5679 columns (presolve time = 430s) ...
+## Presolve removed 12091 rows and 5679 columns (presolve time = 435s) ...
+## Presolve removed 12098 rows and 5679 columns (presolve time = 440s) ...
+## Presolve removed 12116 rows and 5679 columns (presolve time = 445s) ...
+## Presolve removed 12116 rows and 5679 columns (presolve time = 450s) ...
+## Presolve removed 12116 rows and 5679 columns (presolve time = 455s) ...
+## Presolve removed 12116 rows and 5679 columns (presolve time = 460s) ...
+## Presolve removed 12116 rows and 5679 columns (presolve time = 465s) ...
+## Presolve removed 12116 rows and 5679 columns (presolve time = 470s) ...
+## Presolve removed 12116 rows and 5679 columns (presolve time = 478s) ...
+## Presolve removed 12116 rows and 5800 columns (presolve time = 497s) ...
+## Presolve removed 12143 rows and 5800 columns (presolve time = 506s) ...
 ## Presolve removed 12143 rows and 5800 columns
-## Presolve time: 97.11s
+## Presolve time: 506.30s
 ## Presolved: 121869 rows, 128562 columns, 563490 nonzeros
 ## Variable types: 0 continuous, 128562 integer (128562 binary)
 ## Found heuristic solution: objective 231.0000000
@@ -1281,24 +1382,25 @@ cs_rs_space &lt;-<span class="st"> </span><span class="kw">update</span>(cs_rs_a
 ## Root simplex log...
 ## 
 ## Iteration    Objective       Primal Inf.    Dual Inf.      Time
-##        0    0.0000000e+00   1.314298e+02   2.195094e+10    100s
-##     2045    7.6200000e+02   0.000000e+00   4.984375e+00    100s
-##    16960    1.3627124e+02   0.000000e+00   5.327875e+02    105s
-##    36265    1.3572144e+02   0.000000e+00   8.977989e+01    110s
-##    54790    1.3563005e+02   0.000000e+00   7.716217e+00    115s
-##    57794    1.3562314e+02   0.000000e+00   0.000000e+00    116s
-##    57794    1.3562314e+02   0.000000e+00   0.000000e+00    116s
+##        0    0.0000000e+00   1.314298e+02   2.195094e+10    510s
+##     2045    7.6200000e+02   0.000000e+00   4.984375e+00    510s
+##    23395    1.3601147e+02   0.000000e+00   4.212949e+02    515s
+##    36070    1.3572246e+02   0.000000e+00   1.087887e+02    520s
+##    45145    1.3566030e+02   0.000000e+00   2.672371e+01    525s
+##    54410    1.3563032e+02   0.000000e+00   1.545834e+01    530s
+##    57794    1.3562314e+02   0.000000e+00   0.000000e+00    531s
+##    57794    1.3562314e+02   0.000000e+00   0.000000e+00    531s
 ## 
-## Root relaxation: objective 1.356231e+02, 57794 iterations, 18.63 seconds
+## Root relaxation: objective 1.356231e+02, 57794 iterations, 24.21 seconds
 ## 
 ##     Nodes    |    Current Node    |     Objective Bounds      |     Work
 ##  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 ## 
-##      0     0  135.62314    0  350  231.00000  135.62314  41.3%     -  120s
-## H    0     0                     136.0000000  135.62314  0.28%     -  120s
-##      0     0  135.62314    0  350  136.00000  135.62314  0.28%     -  120s
+##      0     0  135.62314    0  350  231.00000  135.62314  41.3%     -  535s
+## H    0     0                     136.0000000  135.62314  0.28%     -  535s
+##      0     0  135.62314    0  350  136.00000  135.62314  0.28%     -  535s
 ## 
-## Explored 1 nodes (73505 simplex iterations) in 120.22 seconds
+## Explored 1 nodes (73505 simplex iterations) in 535.30 seconds
 ## Thread count was 2 (of 4 available processors)
 ## 
 ## Solution count 2: 136 231 

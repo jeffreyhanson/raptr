@@ -1,28 +1,29 @@
 Dear CRAN maintainers,
 
-This update fixes the failing checks on CRAN. Specifically, all examples will now run when checked with `--run-donttest`.
+This update addresses the NOTE:
+
+>    Namespace in Imports field not imported from: ‘rgdal’
+>     All declared Imports should be used.
 
 Cheers,
 
 Jeff
 
-## Test environments
 
-* [Ubuntu 16.04 (travis-ci)](https://travis-ci.org/jeffreyhanson/raptr/builds)
-  + release
-  + devel
-* [Mac OSX 10.9.5 (travis-ci](https://travis-ci.org/jeffreyhanson/raptr/builds)
-  + release
-* [Windows Server 2012 R2 (x64) (appveyor)](https://ci.appveyor.com/project/jeffreyhanson/raptr)
-  + release
-* [Win-Builder](https://win-builder.r-project.org/)
-  + devel
+# Test environments
 
-## R CMD check results
+* [Ubuntu 20.04, R-release](https://github.com/jeffreyhanson/raptr/actions?query=workflow%3AUbuntu)
+* [Ubuntu 20.04, R-devel](https://github.com/jeffreyhanson/raptr/actions?query=workflow%3AUbuntu)
+* [Mac OSX 10.15, R-release](https://github.com/jeffreyhanson/raptr/actions?query=workflow%3A%22Mac+OSX%22)
+* [Windows Server 2019, R-release](https://github.com/jeffreyhanson/raptr/actions?query=workflow%3AWindows)
+* [Windows Server 2019, R-devel](https://github.com/jeffreyhanson/raptr/actions?query=workflow%3AWindows)
+* Windows Server 2008 (x64), R-devel (win-builder)
 
-0 errors | 0 warnings | 2 notes
+# R CMD check results
 
-### Notes
+0 errors | 0 warnings | 0 note
+
+# Notes
 
 * checking package dependencies ... NOTE
   package suggested but not available for checking: 'gurobi'
@@ -40,6 +41,6 @@ Jeff
 
     **libs: The package makes extensive use of C++ code to reduce run time.**
 
-## Downstream dependencies
+# Downstream dependencies
 
 There are no existing packages that depend on this package.

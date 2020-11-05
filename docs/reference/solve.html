@@ -74,7 +74,7 @@ RapSolved() object with outputs in it." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.1</span>
       </span>
     </div>
 
@@ -184,7 +184,7 @@ provides a more general interface for generating inputs and outputs.</p>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sim_ru</span>)
 <span class='co'># \dontrun{</span>
 <span class='co'># solve it using Gurobi</span>
-<span class='no'>sim_rs</span> <span class='kw'>&lt;-</span> <span class='fu'>solve</span>(<span class='no'>sim_ru</span>)</div><div class='output co'>#&gt; Gurobi Optimizer version 9.0.1 build v9.0.1rc0 (linux64)
+<span class='no'>sim_rs</span> <span class='kw'>&lt;-</span> <span class='fu'>solve</span>(<span class='no'>sim_ru</span>)</div><div class='output co'>#&gt; Gurobi Optimizer version 9.0.2 build v9.0.2rc0 (linux64)
 #&gt; Optimize a model with 30306 rows, 30100 columns and 120000 nonzeros
 #&gt; Model fingerprint: 0xba2fdd45
 #&gt; Variable types: 0 continuous, 30100 integer (30100 binary)
@@ -194,9 +194,13 @@ provides a more general interface for generating inputs and outputs.</p>
 #&gt;   Bounds range     [1e+00, 1e+00]
 #&gt;   RHS range        [1e+00, 1e+02]
 #&gt; Found heuristic solution: objective 99.0000000
-#&gt; Presolve removed 360 rows and 15 columns (presolve time = 5s) ...
+#&gt; Presolve removed 63 rows and 15 columns (presolve time = 5s) ...
+#&gt; Presolve removed 267 rows and 15 columns (presolve time = 10s) ...
+#&gt; Presolve removed 271 rows and 15 columns (presolve time = 15s) ...
+#&gt; Presolve removed 360 rows and 15 columns (presolve time = 23s) ...
+#&gt; Presolve removed 360 rows and 15 columns (presolve time = 27s) ...
 #&gt; Presolve removed 360 rows and 15 columns
-#&gt; Presolve time: 5.46s
+#&gt; Presolve time: 26.65s
 #&gt; Presolved: 29946 rows, 30085 columns, 131504 nonzeros
 #&gt; Variable types: 0 continuous, 30085 integer (30085 binary)
 #&gt; Presolve removed 67 rows and 1 columns
@@ -206,19 +210,20 @@ provides a more general interface for generating inputs and outputs.</p>
 #&gt; Root simplex log...
 #&gt; 
 #&gt; Iteration    Objective       Primal Inf.    Dual Inf.      Time
-#&gt;        0    1.0000000e+02   0.000000e+00   1.000000e+02      6s
-#&gt;     5346    2.0000000e+01   0.000000e+00   0.000000e+00      7s
-#&gt;     5346    2.0000000e+01   0.000000e+00   0.000000e+00      7s
+#&gt;        0    1.0000000e+02   0.000000e+00   1.000000e+02     30s
+#&gt;     5101    2.0452274e+01   0.000000e+00   2.128077e+03     35s
+#&gt;     5346    2.0000000e+01   0.000000e+00   0.000000e+00     35s
+#&gt;     5346    2.0000000e+01   0.000000e+00   0.000000e+00     35s
 #&gt; 
-#&gt; Root relaxation: objective 2.000000e+01, 5346 iterations, 1.37 seconds
+#&gt; Root relaxation: objective 2.000000e+01, 5346 iterations, 8.61 seconds
 #&gt; 
 #&gt;     Nodes    |    Current Node    |     Objective Bounds      |     Work
 #&gt;  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 #&gt; 
-#&gt;      0     0   20.00000    0   21   99.00000   20.00000  79.8%     -    7s
-#&gt; H    0     0                      21.0000000   20.00000  4.76%     -    7s
+#&gt;      0     0   20.00000    0   21   99.00000   20.00000  79.8%     -   37s
+#&gt; H    0     0                      21.0000000   20.00000  4.76%     -   37s
 #&gt; 
-#&gt; Explored 1 nodes (10151 simplex iterations) in 7.29 seconds
+#&gt; Explored 1 nodes (10151 simplex iterations) in 37.05 seconds
 #&gt; Thread count was 1 (of 4 available processors)
 #&gt; 
 #&gt; Solution count 2: 21 99 

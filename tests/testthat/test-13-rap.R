@@ -73,8 +73,8 @@ test_that(paste0("rap (unreliable - default RapOpts and GurobiOpts and ",
 
 
 test_that("rap (unreliable - custom RapOpts and GurobiOpts - solve=TRUE)", {
-  if (!is.GurobiInstalled(FALSE))
-    skip("Gurobi not installed on system")
+  # skip if gurobi not installed
+  skip_if_not_installed("gurobi")
   # load data
   set.seed(500)
   data(cs_pus, cs_spp)
@@ -100,7 +100,7 @@ test_that("rap (unreliable - custom RapOpts and GurobiOpts - solve=TRUE)", {
 })
 
 test_that("rap (reliable - default RapOpts and GurobiOpts - solve=FALSE)", {
-  # laod data
+  # load data
   set.seed(500)
   data(cs_pus, cs_spp)
   cs_pus <- cs_pus[1:10, ]
@@ -136,8 +136,8 @@ test_that("rap (reliable - default RapOpts and GurobiOpts - solve=FALSE)", {
 })
 
 test_that("rap (reliable - custom RapOpts and GurobiOpts - solve=TRUE)", {
-  if (!is.GurobiInstalled(FALSE))
-    skip("Gurobi not installed on system")
+  # skip if gurobi not installed
+  skip_if_not_installed("gurobi")
   # load data
   set.seed(500)
   data(cs_pus, cs_spp)

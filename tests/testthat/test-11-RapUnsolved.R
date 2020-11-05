@@ -3,8 +3,7 @@ source("functions.R")
 
 test_that("Gurobi solver (unreliable)", {
   # skip if gurobi not installed
-  if (!is.GurobiInstalled(FALSE))
-    skip("Gurobi not installed on system")
+  skip_if_not_installed("gurobi")
   # load RapUnsolved object
   set.seed(500)
   data(sim_ru)
@@ -31,7 +30,7 @@ test_that("Gurobi solver (unreliable)", {
 
 test_that("Gurobi solver (reliable)", {
   # skip if gurobi not installed
-  if (!is.GurobiInstalled(FALSE)) skip("Gurobi not installed on system")
+  skip_if_not_installed("gurobi")
   # load RapUnsolved object
   set.seed(500)
   data(sim_ru)
@@ -87,8 +86,7 @@ test_that("maximum.targets (reliable)", {
 test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=1 - ",
                  "MultipleSolutionsMethod=benders.cuts)"), {
   # skip if gurobi not installed
-  if (!is.GurobiInstalled(FALSE))
-    skip("Gurobi not installed on system")
+  skip_if_not_installed("gurobi")
   # load RapUnsolved object
   set.seed(500)
   data(sim_ru)
@@ -106,8 +104,7 @@ test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=1 - ",
 test_that(paste0("solve.RapUnsolved (reliable - NumberSolutions=1 - ",
                  "MultipleSolutionsMethod=benders.cuts)"), {
   # skip if gurobi not installed
-  if (!is.GurobiInstalled(FALSE))
-    skip("Gurobi not installed on system")
+  skip_if_not_installed("gurobi")
   # load RapUnsolved object
   set.seed(500)
   data(sim_ru)
@@ -128,8 +125,7 @@ test_that(paste0("solve.RapUnsolved (reliable - NumberSolutions=1 - ",
 test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=1 - ",
                  "MultipleSolutionsMethod=solution.pool.2)"), {
   # skip if gurobi not installed
-  if (!is.GurobiInstalled(FALSE))
-    skip("Gurobi not installed on system")
+  skip_if_not_installed("gurobi")
   # load RapUnsolved object
   set.seed(500)
   data(sim_ru)
@@ -150,8 +146,7 @@ test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=1 - ",
 test_that(paste0("solve.RapUnsolved (reliable - NumberSolutions=1 - ",
                  "MultipleSolutionsMethod=solution.pool.1)"), {
   # skip if gurobi not installed
-  if (!is.GurobiInstalled(FALSE))
-    skip("Gurobi not installed on system")
+  skip_if_not_installed("gurobi")
   # load RapUnsolved object
   set.seed(500)
   data(sim_ru)
@@ -175,8 +170,7 @@ test_that(paste0("solve.RapUnsolved (reliable - NumberSolutions=1 - ",
 test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=1 -",
                  "sparse occupancy)"), {
   # skip if gurobi not installed
-  if (!is.GurobiInstalled(FALSE))
-    skip("Gurobi not installed on system")
+  skip_if_not_installed("gurobi")
   # load RapUnsolved object
   set.seed(500)
   data(sim_ru)
@@ -220,8 +214,7 @@ test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=1 -",
 test_that(paste0("solve.RapUnsolved (reliable - NumberSolutions=1 - sparse ",
                  "occupancy)"), {
   # skip if gurobi not installed
-  if (!is.GurobiInstalled(FALSE))
-    skip("Gurobi not installed on system")
+  skip_if_not_installed("gurobi")
   # load RapUnsolved object
   set.seed(500)
   data(sim_ru)
@@ -266,8 +259,7 @@ test_that(paste0("solve.RapUnsolved (reliable - NumberSolutions=1 - sparse ",
 test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=3 - ",
                  "MultipleSolutionsMethod=benders.cuts)"), {
   # skip if gurobi not installed
-  if (!is.GurobiInstalled(FALSE))
-    skip("Gurobi not installed on system")
+  skip_if_not_installed("gurobi")
   # load RapUnsolved object
   set.seed(500)
   data(sim_ru)
@@ -287,8 +279,7 @@ test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=3 - ",
 test_that(paste0("solve.RapUnsolved (reliable - NumberSolutions=3 - ",
                 "MultipleSolutionsMethod=benders.cuts)"), {
   # skip if gurobi not installed
-  if (!is.GurobiInstalled(FALSE))
-    skip("Gurobi not installed on system")
+  skip_if_not_installed("gurobi")
   # load RapUnsolved object
   set.seed(500)
   data(sim_ru)
@@ -310,7 +301,7 @@ test_that(paste0("solve.RapUnsolved (reliable - NumberSolutions=3 - ",
 test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=2 - ",
                  "MultipleSolutionsMethod=solution.pool.2)"), {
   # skip if gurobi not installed
-  if (!is.GurobiInstalled(FALSE)) skip("Gurobi not installed on system")
+  skip_if_not_installed("gurobi")
   # load RapUnsolved object
   set.seed(500)
   data(sim_ru)
@@ -331,8 +322,7 @@ test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=2 - ",
 
 test_that("solve.RapUnsolved (unreliable - STATUS test)", {
   # skip if gurobi not installed
-  if (!is.GurobiInstalled(FALSE))
-    skip("Gurobi not installed on system")
+  skip_if_not_installed("gurobi")
   # load RapUnsolved object
   set.seed(500)
   data(sim_ru)
@@ -355,8 +345,7 @@ test_that("solve.RapUnsolved (unreliable - STATUS test)", {
 
 test_that("solve.RapUnsolved (reliable - STATUS test)", {
   # skip if gurobi not installed
-  if (!is.GurobiInstalled(FALSE))
-    skip("Gurobi not installed on system")
+  skip_if_not_installed("gurobi")
   # load RapUnsolved object
   set.seed(500)
   data(sim_ru)
@@ -381,8 +370,7 @@ test_that("solve.RapUnsolved (reliable - STATUS test)", {
 
 test_that("solve.RapUnsolved (unreliable - BLM test)", {
   # skip if gurobi not installed
-  if (!is.GurobiInstalled(FALSE))
-    skip("Gurobi not installed on system")
+  skip_if_not_installed("gurobi")
   # load RapUnsolved object
   set.seed(500)
   data(sim_ru)
@@ -398,8 +386,7 @@ test_that("solve.RapUnsolved (unreliable - BLM test)", {
 
 test_that("solve.RapUnsolved (reliable - BLM test)", {
   # skip if gurobi not installed
-  if (!is.GurobiInstalled(FALSE))
-    skip("Gurobi not installed on system")
+  skip_if_not_installed("gurobi")
   # load RapUnsolved object
   set.seed(500)
   data(sim_ru)
@@ -438,8 +425,7 @@ test_that("solve.RapUnsolved (manual solution, omitting all attribute space plan
 
 test_that("solve.RapUnsolved (single demand point)", {
   # skip if gurobi not installed
-  if (!is.GurobiInstalled(FALSE))
-    skip("Gurobi not installed on system")
+  skip_if_not_installed("gurobi")
   # load RapUnsolved object
   set.seed(500)
   data(sim_ru)
@@ -517,8 +503,7 @@ test_that("space.target<-.RapUnsolved", {
 
 test_that("space.plot.RapUnsolved (sparse)", {
   # skip if gurobi not installed
-  if (!is.GurobiInstalled(FALSE))
-    skip("Gurobi not installed on system")
+  skip_if_not_installed("gurobi")
   # load RapUnsolved object
   set.seed(500)
   data(sim_ru)
