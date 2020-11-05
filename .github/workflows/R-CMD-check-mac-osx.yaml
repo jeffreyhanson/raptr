@@ -31,10 +31,12 @@ jobs:
       _R_CHECK_FORCE_SUGGESTS_: false
       _R_CHECK_TIMINGS_: 10
       _R_CHECK_CRAN_INCOMING_REMOTE_: false
-      RGL_USE_NULL: true
-      SDKROOT: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       CI: true
+      ## rgl R package environmental variables
+      RGL_USE_NULL: true
+      SDKROOT: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
+      DISPLAY: ":99"
 
     steps:
       - uses: actions/checkout@v2
