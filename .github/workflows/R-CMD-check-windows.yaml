@@ -32,11 +32,12 @@ jobs:
       _R_CHECK_FORCE_SUGGESTS_: false
       _R_CHECK_TIMINGS_: 10
       _R_CHECK_CRAN_INCOMING_REMOTE_: false
-      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-      RGL_USE_NULL: true # for rgl R package
-      DISPLAY: 99 # for rgl R package
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       CI: true
+      # for rgl R package
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      RGL_USE_NULL: true
+      DISPLAY: 99
 
     steps:
       - uses: actions/checkout@v2
