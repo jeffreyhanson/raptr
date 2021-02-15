@@ -35,7 +35,6 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       CI: true
       # for rgl R package
-      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       RGL_USE_NULL: true
       DISPLAY: 99
 
@@ -73,7 +72,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          remotes::install_deps(dependencies = TRUE)
+          remotes::install_deps(dependencies = TRUE, INSTALL_opts = "--force-biarch")
           remotes::install_cran("rcmdcheck")
           remotes::install_cran("covr")
         shell: Rscript {0}
