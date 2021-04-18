@@ -73,7 +73,7 @@ RapUnsolved(), or RapSolved() object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.2</span>
       </span>
     </div>
 
@@ -125,13 +125,13 @@ RapUnsolved(), or RapSolved() object." />
 <code><a href='RapUnsolved.html'>RapUnsolved()</a></code>, or <code><a href='RapSolved.html'>RapSolved()</a></code> object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>pu.subset</span>(<span class='no'>x</span>, <span class='no'>pu</span>)
+    <pre class="usage"><span class='fu'>pu.subset</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>pu</span><span class='op'>)</span>
 
 <span class='co'># S3 method for RapData</span>
-<span class='fu'>pu.subset</span>(<span class='no'>x</span>, <span class='no'>pu</span>)
+<span class='fu'>pu.subset</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>pu</span><span class='op'>)</span>
 
 <span class='co'># S3 method for RapUnsolOrSol</span>
-<span class='fu'>pu.subset</span>(<span class='no'>x</span>, <span class='no'>pu</span>)</pre>
+<span class='fu'>pu.subset</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>pu</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -159,10 +159,12 @@ on input object.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sim_ru</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>sim_ru</span><span class='op'>)</span>
 
 <span class='co'># generate new object with first 10 planning units</span>
-<span class='no'>sim_ru2</span> <span class='kw'>&lt;-</span> <span class='fu'>pu.subset</span>(<span class='no'>sim_ru</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='fl'>10</span>))</div></pre>
+<span class='va'>sim_ru2</span> <span class='op'>&lt;-</span> <span class='fu'>pu.subset</span><span class='op'>(</span><span class='va'>sim_ru</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -178,7 +180,7 @@ on input object.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

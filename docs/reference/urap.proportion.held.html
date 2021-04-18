@@ -74,7 +74,7 @@ the unreliable formulation." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.2</span>
       </span>
     </div>
 
@@ -127,7 +127,7 @@ variation that one set of points captures in a another set of points using
 the unreliable formulation.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>urap.proportion.held</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>y.weights</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>y</span>)))</pre>
+    <pre class="usage"><span class='fu'>urap.proportion.held</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, y.weights <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,7 +153,8 @@ the unreliable formulation.</p>
 <code>x</code> explains in <code>y</code></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>urap.proportion.held</span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='no'>iris</span>[<span class='fl'>1</span>:<span class='fl'>2</span>,-<span class='fl'>5</span>]), <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='no'>iris</span>[<span class='fl'>1</span>:<span class='fl'>5</span>,-<span class='fl'>5</span>]))</div><div class='output co'>#&gt; [1] 0.5217391</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>urap.proportion.held</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>,<span class='op'>-</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>,<span class='op'>-</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.5217391</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -170,7 +171,7 @@ the unreliable formulation.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

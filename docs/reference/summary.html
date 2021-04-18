@@ -73,7 +73,7 @@ RapSolved() object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.2</span>
       </span>
     </div>
 
@@ -146,7 +146,7 @@ RapSolved() object." />
 
     <p>This table follows Marxan conventions
 (<a href='https://marxansolutions.org/'>https://marxansolutions.org/</a>). The
-columns are:</p><dl'>
+columns are:</p><dl>
 <dt>Run_Number</dt><dd><p>The index of each solution in the object.</p></dd>
 <dt>Status</dt><dd><p>The status of the solution. The values in this column
 correspond to outputs from the Gurobi software package (<a href='http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html'>http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html</a>).</p></dd>
@@ -176,10 +176,11 @@ efficient.</p></dd>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sim_rs</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>sim_rs</span><span class='op'>)</span>
 
 <span class='co'># show summary</span>
-<span class='fu'>summary</span>(<span class='no'>sim_rs</span>)</div><div class='output co'>#&gt;   Run_Number  Status Score Cost Planning_Units Connectivity_Total
+<span class='fu'>summary</span><span class='op'>(</span><span class='va'>sim_rs</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   Run_Number  Status Score Cost Planning_Units Connectivity_Total
 #&gt; 1          1 OPTIMAL    20   20             20                220
 #&gt; 2          2 OPTIMAL    20   20             20                220
 #&gt; 3          3 OPTIMAL    20   20             20                220
@@ -202,7 +203,7 @@ efficient.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

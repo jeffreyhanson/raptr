@@ -78,7 +78,7 @@ conservation planning." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.2</span>
       </span>
     </div>
 
@@ -140,7 +140,7 @@ conservation planning.</p>
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
     
-<dl'>
+<dl>
 <dt>sim_ru</dt><dd><p><code><a href='RapUnsolved.html'>RapUnsolved()</a></code> object with all the simulated data.</p></dd>
 <dt>sim_rs</dt><dd><p><code><a href='RapSolved.html'>RapSolved()</a></code> object with 5 near-optimal solutions.</p></dd>
 
@@ -150,7 +150,7 @@ conservation planning.</p>
 
     <p>The species were simulated to represent various simplified species
 distributions.</p>
-<dl'>
+<dl>
 <dt>uniform</dt><dd><p>This species has an equal probability (0.5) of occurring in
 all planning units.</p></dd>
 <dt>normal</dt><dd><p>This species has a single range-core where it is most likely
@@ -164,14 +164,19 @@ own core and marginal area.</p></dd>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sim_ru</span>, <span class='no'>sim_rs</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>sim_ru</span>, <span class='va'>sim_rs</span><span class='op'>)</span>
 
 <span class='co'># plot species distributions</span>
-<span class='fu'><a href='spp.plot.html'>spp.plot</a></span>(<span class='no'>sim_ru</span>, <span class='fl'>1</span>)</div><div class='img'><img src='simulated_data-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='spp.plot.html'>spp.plot</a></span>(<span class='no'>sim_ru</span>, <span class='fl'>2</span>)</div><div class='img'><img src='simulated_data-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='spp.plot.html'>spp.plot</a></span>(<span class='no'>sim_ru</span>, <span class='fl'>3</span>)</div><div class='img'><img src='simulated_data-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='spp.plot.html'>spp.plot</a></span><span class='op'>(</span><span class='va'>sim_ru</span>, <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='img'><img src='simulated_data-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='spp.plot.html'>spp.plot</a></span><span class='op'>(</span><span class='va'>sim_ru</span>, <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='img'><img src='simulated_data-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='spp.plot.html'>spp.plot</a></span><span class='op'>(</span><span class='va'>sim_ru</span>, <span class='fl'>3</span><span class='op'>)</span>
+</div><div class='img'><img src='simulated_data-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># plot selection frequencies</span>
-<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>sim_rs</span>)</div><div class='img'><img src='simulated_data-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='plot.html'>plot</a></span><span class='op'>(</span><span class='va'>sim_rs</span><span class='op'>)</span>
+</div><div class='img'><img src='simulated_data-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># plot best solution</span>
-<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>sim_rs</span>, <span class='fl'>0</span>)</div><div class='img'><img src='simulated_data-5.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='plot.html'>plot</a></span><span class='op'>(</span><span class='va'>sim_rs</span>, <span class='fl'>0</span><span class='op'>)</span>
+</div><div class='img'><img src='simulated_data-5.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -187,7 +192,7 @@ own core and marginal area.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.2</span>
       </span>
     </div>
 
@@ -123,14 +123,14 @@
     <p>This function creates a new <code>RapResults()</code> object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>RapResults</span>(
-  <span class='no'>summary</span>,
-  <span class='no'>selections</span>,
-  <span class='no'>amount.held</span>,
-  <span class='no'>space.held</span>,
-  <span class='no'>logging.file</span>,
-  <span class='kw'>.cache</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/environment.html'>new.env</a></span>()
-)</pre>
+    <pre class="usage"><span class='fu'>RapResults</span><span class='op'>(</span>
+  <span class='va'>summary</span>,
+  <span class='va'>selections</span>,
+  <span class='va'>amount.held</span>,
+  <span class='va'>space.held</span>,
+  <span class='va'>logging.file</span>,
+  .cache <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/environment.html'>new.env</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -173,7 +173,7 @@ attribute space sampled for each species in each solution.</p></td>
 
     <p>The <code>summary</code> table follows Marxan conventions (
 <a href='https://marxansolutions.org/'>https://marxansolutions.org/</a>). The columns
-are:</p><dl'>
+are:</p><dl>
 <dt>Run_Number</dt><dd><p>The index of each solution in the object.</p></dd>
 <dt>Status</dt><dd><p>The status of the solution. The values in this column
 correspond to outputs from the Gurobi software package (<a href='http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html'>http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html</a>).</p></dd>
@@ -220,7 +220,7 @@ efficient.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

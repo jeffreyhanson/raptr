@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.2</span>
       </span>
     </div>
 
@@ -123,50 +123,50 @@
     <p>This function plots the distribution of species across the study area.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>spp.plot</span>(<span class='no'>x</span>, <span class='no'>species</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>spp.plot</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>species</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for RapData</span>
-<span class='fu'>spp.plot</span>(
-  <span class='no'>x</span>,
-  <span class='no'>species</span>,
-  <span class='kw'>prob.color.palette</span> <span class='kw'>=</span> <span class='st'>"YlGnBu"</span>,
-  <span class='kw'>pu.color.palette</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"#4D4D4D"</span>, <span class='st'>"#00FF00"</span>, <span class='st'>"#FFFF00"</span>, <span class='st'>"#FF0000"</span>),
-  <span class='kw'>basemap</span> <span class='kw'>=</span> <span class='st'>"none"</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>basemap</span> <span class='kw'>==</span> <span class='st'>"none"</span>, <span class='fl'>1</span>, <span class='fl'>0.7</span>),
-  <span class='kw'>grayscale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>force.reset</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
-)
+<span class='fu'>spp.plot</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>species</span>,
+  prob.color.palette <span class='op'>=</span> <span class='st'>"YlGnBu"</span>,
+  pu.color.palette <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#4D4D4D"</span>, <span class='st'>"#00FF00"</span>, <span class='st'>"#FFFF00"</span>, <span class='st'>"#FF0000"</span><span class='op'>)</span>,
+  basemap <span class='op'>=</span> <span class='st'>"none"</span>,
+  alpha <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>basemap</span> <span class='op'>==</span> <span class='st'>"none"</span>, <span class='fl'>1</span>, <span class='fl'>0.7</span><span class='op'>)</span>,
+  grayscale <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  main <span class='op'>=</span> <span class='cn'>NULL</span>,
+  force.reset <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for RapUnsolved</span>
-<span class='fu'>spp.plot</span>(
-  <span class='no'>x</span>,
-  <span class='no'>species</span>,
-  <span class='kw'>prob.color.palette</span> <span class='kw'>=</span> <span class='st'>"YlGnBu"</span>,
-  <span class='kw'>pu.color.palette</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"#4D4D4D"</span>, <span class='st'>"#00FF00"</span>, <span class='st'>"#FFFF00"</span>, <span class='st'>"#FF0000"</span>),
-  <span class='kw'>basemap</span> <span class='kw'>=</span> <span class='st'>"none"</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>basemap</span> <span class='kw'>==</span> <span class='st'>"none"</span>, <span class='fl'>1</span>, <span class='fl'>0.7</span>),
-  <span class='kw'>grayscale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>force.reset</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
-)
+<span class='fu'>spp.plot</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>species</span>,
+  prob.color.palette <span class='op'>=</span> <span class='st'>"YlGnBu"</span>,
+  pu.color.palette <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#4D4D4D"</span>, <span class='st'>"#00FF00"</span>, <span class='st'>"#FFFF00"</span>, <span class='st'>"#FF0000"</span><span class='op'>)</span>,
+  basemap <span class='op'>=</span> <span class='st'>"none"</span>,
+  alpha <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>basemap</span> <span class='op'>==</span> <span class='st'>"none"</span>, <span class='fl'>1</span>, <span class='fl'>0.7</span><span class='op'>)</span>,
+  grayscale <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  main <span class='op'>=</span> <span class='cn'>NULL</span>,
+  force.reset <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for RapSolved</span>
-<span class='fu'>spp.plot</span>(
-  <span class='no'>x</span>,
-  <span class='no'>species</span>,
-  <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>prob.color.palette</span> <span class='kw'>=</span> <span class='st'>"YlGnBu"</span>,
-  <span class='kw'>pu.color.palette</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"#4D4D4D"</span>, <span class='st'>"#00FF00"</span>, <span class='st'>"#FFFF00"</span>, <span class='st'>"#FF0000"</span>),
-  <span class='kw'>basemap</span> <span class='kw'>=</span> <span class='st'>"none"</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>basemap</span> <span class='kw'>==</span> <span class='st'>"none"</span>, <span class='fl'>1</span>, <span class='fl'>0.7</span>),
-  <span class='kw'>grayscale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>force.reset</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
-)</pre>
+<span class='fu'>spp.plot</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>species</span>,
+  y <span class='op'>=</span> <span class='fl'>0</span>,
+  prob.color.palette <span class='op'>=</span> <span class='st'>"YlGnBu"</span>,
+  pu.color.palette <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#4D4D4D"</span>, <span class='st'>"#00FF00"</span>, <span class='st'>"#FFFF00"</span>, <span class='st'>"#FF0000"</span><span class='op'>)</span>,
+  basemap <span class='op'>=</span> <span class='st'>"none"</span>,
+  alpha <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>basemap</span> <span class='op'>==</span> <span class='st'>"none"</span>, <span class='fl'>1</span>, <span class='fl'>0.7</span><span class='op'>)</span>,
+  grayscale <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  main <span class='op'>=</span> <span class='cn'>NULL</span>,
+  force.reset <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -236,12 +236,14 @@ value.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load RapSolved objects</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sim_ru</span>, <span class='no'>sim_rs</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>sim_ru</span>, <span class='va'>sim_rs</span><span class='op'>)</span>
 
 <span class='co'># plot first species in sim_ru</span>
-<span class='fu'>spp.plot</span>(<span class='no'>sim_ru</span>, <span class='kw'>species</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='spp.plot-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>spp.plot</span><span class='op'>(</span><span class='va'>sim_ru</span>, species <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='img'><img src='spp.plot-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># plot "bimodal" species in sim_rs</span>
-<span class='fu'>spp.plot</span>(<span class='no'>sim_rs</span>, <span class='kw'>species</span> <span class='kw'>=</span> <span class='st'>"bimodal"</span>)</div><div class='img'><img src='spp.plot-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>spp.plot</span><span class='op'>(</span><span class='va'>sim_rs</span>, species <span class='op'>=</span> <span class='st'>"bimodal"</span><span class='op'>)</span>
+</div><div class='img'><img src='spp.plot-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -258,7 +260,7 @@ value.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

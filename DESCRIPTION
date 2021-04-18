@@ -1,7 +1,7 @@
 Package: raptr
 Type: Package
 Title: Representative and Adequate Prioritization Toolkit in R
-Version: 0.1.7.1
+Version: 0.1.7.2
 Authors@R: c(person(c("Jeffrey", "O"), "Hanson",
     email="jeffrey.hanson@uqconnect.edu.au", role = c("aut", "cre")),
     person(c("Jonathan", "R"), "Rhodes", role = c("aut")),
@@ -41,7 +41,8 @@ Imports:
     hypervolume(>= 2.0.7),
     ks,
     mvtnorm,
-    ggplot2
+    ggplot2,
+    withr (>= 2.4.1),
 Depends:
     R(>= 3.5.0),
     sp,

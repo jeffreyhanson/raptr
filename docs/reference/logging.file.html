@@ -73,7 +73,7 @@ an optimization problem." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.2</span>
       </span>
     </div>
 
@@ -125,13 +125,13 @@ an optimization problem." />
 an optimization problem.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>logging.file</span>(<span class='no'>x</span>, <span class='no'>y</span>)
+    <pre class="usage"><span class='fu'>logging.file</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span>
 
 <span class='co'># S3 method for RapResults</span>
-<span class='fu'>logging.file</span>(<span class='no'>x</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>0</span>)
+<span class='fu'>logging.file</span><span class='op'>(</span><span class='va'>x</span>, y <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
 
 <span class='co'># S3 method for RapSolved</span>
-<span class='fu'>logging.file</span>(<span class='no'>x</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
+<span class='fu'>logging.file</span><span class='op'>(</span><span class='va'>x</span>, y <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -158,10 +158,11 @@ function.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sim_rs</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>sim_rs</span><span class='op'>)</span>
 
 <span class='co'># log file for the best solution</span>
-<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span>(<span class='fu'>logging.file</span>(<span class='no'>sim_rs</span>, <span class='fl'>0</span>))</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>logging.file</span><span class='op'>(</span><span class='va'>sim_rs</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Gurobi 6.5.1 (linux64) logging started Fri Jul 29 12:54:39 2016
 #&gt; 
 #&gt; Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored
@@ -206,7 +207,8 @@ function.</p>
 #&gt; Optimal solution found (tolerance 1.00e-01)
 #&gt; Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0%</div><div class='input'>
 <span class='co'># log file for the second solution</span>
-<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span>(<span class='fu'>logging.file</span>(<span class='no'>sim_rs</span>, <span class='fl'>2</span>))</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>logging.file</span><span class='op'>(</span><span class='va'>sim_rs</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Gurobi 6.5.1 (linux64) logging started Fri Jul 29 12:54:39 2016
 #&gt; 
 #&gt; Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored
@@ -294,7 +296,8 @@ function.</p>
 #&gt; Optimal solution found (tolerance 1.00e-01)
 #&gt; Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0%</div><div class='input'>
 <span class='co'># log files for all solutions</span>
-<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span>(<span class='fu'>logging.file</span>(<span class='no'>sim_rs</span>, <span class='kw'>NULL</span>))</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>logging.file</span><span class='op'>(</span><span class='va'>sim_rs</span>, <span class='cn'>NULL</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; Gurobi 6.5.1 (linux64) logging started Fri Jul 29 12:54:39 2016
 #&gt; 
 #&gt; Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored
@@ -569,7 +572,7 @@ function.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

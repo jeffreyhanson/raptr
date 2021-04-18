@@ -106,15 +106,17 @@ methods::setMethod("solve",
     log.pth <- tempfile(fileext = ".log")
     gparams <- append(as.list(b), list("LogFile" = log.pth))
     if (b@MultipleSolutionsMethod == "benders.cuts") {
-      solution <- gurobi::gurobi(model, gparams)
+      igparams <- gparams
     } else {
-      solution <- gurobi::gurobi(model,
-          append(gparams,
-                 list(PoolSolutions = b@NumberSolutions,
-                      PoolSearchMode = as.numeric(
-                        gsub("solution.pool.", "",  b@MultipleSolutionsMethod,
-                             fixed = TRUE)))))
+      pool_mode <- as.numeric(
+        gsub("solution.pool.", "",  b@MultipleSolutionsMethod,
+       fixed = TRUE))
+      igparams <- append(gparams, list(PoolSolutions = b@NumberSolutions,
+                                       PoolSearchMode = pool_mode))
     }
+    solution <- withr::with_locale(
+      c(LC_CTYPE = "C"),
+      gurobi::gurobi(model = model, params = igparams))
     if (file.exists("gurobi.log")) unlink("gurobi.log")
     # check solution object
     if (!is.null(solution$status))
@@ -147,7 +149,9 @@ methods::setMethod("solve",
                                         dims = c(max(model$Ar$row) + 1,
                                                  length(model$obj)))
         # run model
-        solution <- gurobi::gurobi(model, gparams)
+        solution <- withr::with_locale(
+          c(LC_CTYPE = "C"),
+          gurobi::gurobi(model = model, params = gparams))
         if (file.exists("gurobi.log")) unlink("gurobi.log")
         # load results
         if (!is.null(solution$status))

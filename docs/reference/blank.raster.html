@@ -73,7 +73,7 @@ Spatial object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.2</span>
       </span>
     </div>
 
@@ -125,7 +125,7 @@ Spatial object." />
 Spatial object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>blank.raster</span>(<span class='no'>x</span>, <span class='no'>res</span>)</pre>
+    <pre class="usage"><span class='fu'>blank.raster</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>res</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,10 +145,11 @@ pixels are assumed to be square.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># make SpatialPolygons</span>
-<span class='no'>polys</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sim.pus.html'>sim.pus</a></span>(<span class='fl'>225L</span>)
+<span class='va'>polys</span> <span class='op'>&lt;-</span> <span class='fu'><a href='sim.pus.html'>sim.pus</a></span><span class='op'>(</span><span class='fl'>225L</span><span class='op'>)</span>
 
 <span class='co'># make RasterLayer from SpatialPolygons</span>
-<span class='fu'>blank.raster</span>(<span class='no'>polys</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; class      : RasterLayer 
+<span class='fu'>blank.raster</span><span class='op'>(</span><span class='va'>polys</span>, <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; class      : RasterLayer 
 #&gt; dimensions : 15, 15, 225  (nrow, ncol, ncell)
 #&gt; resolution : 1, 1  (x, y)
 #&gt; extent     : -7.5, 7.5, -7.5, 7.5  (xmin, xmax, ymin, ymax)
@@ -173,7 +174,7 @@ pixels are assumed to be square.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
