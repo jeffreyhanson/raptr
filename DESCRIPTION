@@ -99,5 +99,3 @@ Collate:
 RoxygenNote: 7.1.1
 NeedsCompilation: yes
 Roxygen: list(markdown = TRUE)
-Remotes:
-    jeffreyhanson/rgl@no-conf-win
