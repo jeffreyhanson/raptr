@@ -1,7 +1,7 @@
 Package: raptr
 Type: Package
 Title: Representative and Adequate Prioritization Toolkit in R
-Version: 0.1.7.1
+Version: 0.1.7.2
 Authors@R: c(person(c("Jeffrey", "O"), "Hanson",
     email="jeffrey.hanson@uqconnect.edu.au", role = c("aut", "cre")),
     person(c("Jonathan", "R"), "Rhodes", role = c("aut")),
@@ -14,7 +14,7 @@ Description: Biodiversity is in crisis. The overarching aim of conservation
     This package contains tools to generate plans for protected areas
     (prioritizations), using spatially explicit targets for biodiversity
     patterns and processes. To obtain solutions in a feasible amount  of time,
-    this package uses the commercial 'Gurobi' software package (obtained from
+    this package uses the commercial 'Gurobi' software (obtained from
     <http://www.gurobi.com/>). For more information on using
     this package, see Hanson et al. (2018) <doi:10.1111/2041-210X.12862>.
 Imports:
@@ -41,7 +41,8 @@ Imports:
     hypervolume(>= 2.0.7),
     ks,
     mvtnorm,
-    ggplot2
+    ggplot2,
+    withr (>= 2.4.1),
 Depends:
     R(>= 3.5.0),
     sp,

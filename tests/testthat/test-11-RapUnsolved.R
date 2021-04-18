@@ -17,9 +17,12 @@ test_that("Gurobi solver (unreliable)", {
   model$A <- Matrix::sparseMatrix(i = model$Ar[[1]] + 1, j = model$Ar[[2]] + 1,
                                   x = model$Ar[[3]])
   # solve the model
-  result <- gurobi::gurobi(model, append(as.list(
-    GurobiOpts(MIPGap = 0, Presolve = 1L)),
-    list("LogFile" = tempfile(fileext = ".log"))))
+  result <-
+    withr::with_locale(
+      c(LC_CTYPE = "C"),
+      gurobi::gurobi(model, append(as.list(
+        GurobiOpts(MIPGap = 0, Presolve = 1L)),
+        list("LogFile" = tempfile(fileext = ".log")))))
   if (file.exists("gurobi.log")) unlink("gurobi.log")
   # check solution variables
   expect_true(all(result$x[grep("pu_",  dump_object(model$cache$variables,
@@ -42,9 +45,11 @@ test_that("Gurobi solver (reliable)", {
   model$A <- Matrix::sparseMatrix(i = model$Ar[[1]] + 1, j = model$Ar[[2]] + 1,
                                   x = model$Ar[[3]])
   # solve the model
-  result <- gurobi::gurobi(model, append(as.list(
-    GurobiOpts(MIPGap = 0, Presolve = 1L)),
-    list("LogFile" = tempfile(fileext = ".log"))))
+  result <- withr::with_locale(
+    c(LC_CTYPE = "C"),
+    gurobi::gurobi(model, append(as.list(
+      GurobiOpts(MIPGap = 0, Presolve = 1L)),
+      list("LogFile" = tempfile(fileext = ".log")))))
   if (file.exists("gurobi.log")) unlink("gurobi.log")
   # checks
   expect_true(all(result$x[grep("pu_", dump_object(model$cache$variables,

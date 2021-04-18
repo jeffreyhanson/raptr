@@ -73,7 +73,7 @@ pale-headed Rosella (Platycercus adscitus) in Queensland, Australia." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.2</span>
       </span>
     </div>
 
@@ -130,7 +130,7 @@ pale-headed Rosella (<em>Platycercus adscitus</em>) in Queensland, Australia.</p
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
     
-<dl'>
+<dl>
 <dt>cs_pus</dt><dd><p><code><a href='https://rdrr.io/pkg/sp/man/SpatialPolygons.html'>sp::SpatialPolygonsDataFrame()</a></code> object.</p></dd>
 <dt>cs_spp</dt><dd><p><code><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster::raster()</a></code> object.</p></dd>
 <dt>cs_space</dt><dd><p><code><a href='https://rdrr.io/pkg/raster/man/stack.html'>raster::stack()</a></code> object.</p></dd>
@@ -139,7 +139,7 @@ pale-headed Rosella (<em>Platycercus adscitus</em>) in Queensland, Australia.</p
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The objects in the dataset are listed below.</p><dl'>
+    <p>The objects in the dataset are listed below.</p><dl>
 <dt>cs_pus</dt><dd><p><code><a href='https://rdrr.io/pkg/sp/man/SpatialPolygons.html'>sp::SpatialPolygonsDataFrame()</a></code> planning units.
 The units were generated as \(30km^2\) squares across the
 species' range, and then clipped to the Queensland, Australia
@@ -166,11 +166,14 @@ and resampled to \(10km^2\) resolution).</p></dd>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>cs_pus</span>, <span class='no'>cs_spp</span>, <span class='no'>cs_space</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>cs_pus</span>, <span class='va'>cs_spp</span>, <span class='va'>cs_space</span><span class='op'>)</span>
 
 <span class='co'># plot data</span>
 <span class='co'># \dontrun{</span>
-<span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>cs_pus</span>)</div><div class='img'><img src='casestudy_data-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>cs_spp</span>)</div><div class='img'><img src='casestudy_data-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='plot.html'>plot</a></span>(<span class='no'>cs_space</span>)</div><div class='img'><img src='casestudy_data-3.png' alt='' width='700' height='433' /></div><div class='input'># }
+<span class='fu'><a href='plot.html'>plot</a></span><span class='op'>(</span><span class='va'>cs_pus</span><span class='op'>)</span>
+</div><div class='img'><img src='casestudy_data-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='plot.html'>plot</a></span><span class='op'>(</span><span class='va'>cs_spp</span><span class='op'>)</span>
+</div><div class='img'><img src='casestudy_data-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='plot.html'>plot</a></span><span class='op'>(</span><span class='va'>cs_space</span><span class='op'>)</span>
+</div><div class='img'><img src='casestudy_data-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -187,7 +190,7 @@ and resampled to \(10km^2\) resolution).</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -80,7 +80,7 @@ PolySet before processing." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.2</span>
       </span>
     </div>
 
@@ -139,13 +139,13 @@ If argument set to <code><a href='https://rdrr.io/pkg/sp/man/SpatialPolygons.htm
 PolySet before processing.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>calcBoundaryData</span>(<span class='no'>x</span>, <span class='no'>tol</span>, <span class='no'>length.factor</span>, <span class='no'>edge.factor</span>)
+    <pre class="usage"><span class='fu'>calcBoundaryData</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>tol</span>, <span class='va'>length.factor</span>, <span class='va'>edge.factor</span><span class='op'>)</span>
 
 <span class='co'># S3 method for PolySet</span>
-<span class='fu'>calcBoundaryData</span>(<span class='no'>x</span>, <span class='kw'>tol</span> <span class='kw'>=</span> <span class='fl'>0.001</span>, <span class='kw'>length.factor</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>edge.factor</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='fu'>calcBoundaryData</span><span class='op'>(</span><span class='va'>x</span>, tol <span class='op'>=</span> <span class='fl'>0.001</span>, length.factor <span class='op'>=</span> <span class='fl'>1</span>, edge.factor <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 
 <span class='co'># S3 method for SpatialPolygons</span>
-<span class='fu'>calcBoundaryData</span>(<span class='no'>x</span>, <span class='kw'>tol</span> <span class='kw'>=</span> <span class='fl'>0.001</span>, <span class='kw'>length.factor</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>edge.factor</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+<span class='fu'>calcBoundaryData</span><span class='op'>(</span><span class='va'>x</span>, tol <span class='op'>=</span> <span class='fl'>0.001</span>, length.factor <span class='op'>=</span> <span class='fl'>1</span>, edge.factor <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -184,13 +184,14 @@ length.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># simulate planning units</span>
-<span class='no'>sim_pus</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sim.pus.html'>sim.pus</a></span>(<span class='fl'>225L</span>)
+<span class='va'>sim_pus</span> <span class='op'>&lt;-</span> <span class='fu'><a href='sim.pus.html'>sim.pus</a></span><span class='op'>(</span><span class='fl'>225L</span><span class='op'>)</span>
 
 <span class='co'># calculate boundary data</span>
-<span class='no'>bound.dat</span> <span class='kw'>&lt;-</span> <span class='fu'>calcBoundaryData</span>(<span class='no'>sim_pus</span>)
+<span class='va'>bound.dat</span> <span class='op'>&lt;-</span> <span class='fu'>calcBoundaryData</span><span class='op'>(</span><span class='va'>sim_pus</span><span class='op'>)</span>
 
 <span class='co'># print summary of boundary data</span>
-<span class='fu'><a href='summary.html'>summary</a></span>(<span class='no'>bound.dat</span>)</div><div class='output co'>#&gt;       id1              id2            boundary    
+<span class='fu'><a href='summary.html'>summary</a></span><span class='op'>(</span><span class='va'>bound.dat</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;       id1              id2            boundary    
 #&gt;  Min.   :  1.00   Min.   :  1.00   Min.   :1.000  
 #&gt;  1st Qu.: 59.75   1st Qu.: 51.75   1st Qu.:1.000  
 #&gt;  Median :117.00   Median :109.00   Median :1.000  
@@ -213,7 +214,7 @@ length.</p></div>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -1,3 +1,8 @@
+# raptr 0.1.7.2
+
+- Fix compatibility issues between the _testthat_ R package and the _gurobi_ R
+  package in package tests.
+
 # raptr 0.1.7.1
 
 - Implement GitHub Actions continuous integration (i.e. update tests

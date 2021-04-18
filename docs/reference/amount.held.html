@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.2</span>
       </span>
     </div>
 
@@ -123,10 +123,10 @@
     <p>This function returns the amount held for each species in a solution.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>amount.held</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>species</span>)
+    <pre class="usage"><span class='fu'>amount.held</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>species</span><span class='op'>)</span>
 
 <span class='co'># S3 method for RapSolved</span>
-<span class='fu'>amount.held</span>(<span class='no'>x</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>species</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>amount.held</span><span class='op'>(</span><span class='va'>x</span>, y <span class='op'>=</span> <span class='fl'>0</span>, species <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -158,19 +158,23 @@ arguments.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sim_rs</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>sim_rs</span><span class='op'>)</span>
 
 <span class='co'># amount held (%) in best solution for each species</span>
-<span class='fu'>amount.held</span>(<span class='no'>sim_rs</span>, <span class='fl'>0</span>)</div><div class='output co'>#&gt;   uniform    normal   bimodal
+<span class='fu'>amount.held</span><span class='op'>(</span><span class='va'>sim_rs</span>, <span class='fl'>0</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   uniform    normal   bimodal
 #&gt; 1     0.2 0.2262132 0.2213291</div><div class='input'>
 <span class='co'># amount held (%) in best solution for species 1</span>
-<span class='fu'>amount.held</span>(<span class='no'>sim_rs</span>, <span class='fl'>0</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt;   uniform
+<span class='fu'>amount.held</span><span class='op'>(</span><span class='va'>sim_rs</span>, <span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   uniform
 #&gt; 1     0.2</div><div class='input'>
 <span class='co'># amount held (%) in second solution for each species</span>
-<span class='fu'>amount.held</span>(<span class='no'>sim_rs</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt;   uniform    normal  bimodal
+<span class='fu'>amount.held</span><span class='op'>(</span><span class='va'>sim_rs</span>, <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   uniform    normal  bimodal
 #&gt; 1     0.2 0.2253754 0.224115</div><div class='input'>
 <span class='co'># amount held (%) in each solution for each species</span>
-<span class='fu'>amount.held</span>(<span class='no'>sim_rs</span>, <span class='kw'>NULL</span>)</div><div class='output co'>#&gt;   uniform    normal   bimodal
+<span class='fu'>amount.held</span><span class='op'>(</span><span class='va'>sim_rs</span>, <span class='cn'>NULL</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   uniform    normal   bimodal
 #&gt; 1     0.2 0.2262132 0.2213291
 #&gt; 2     0.2 0.2253754 0.2241150
 #&gt; 3     0.2 0.2049503 0.2299639</div><div class='input'>
@@ -190,7 +194,7 @@ arguments.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

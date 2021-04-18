@@ -74,7 +74,7 @@ RapUnreliableOpts() object, and a RapData() object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.2</span>
       </span>
     </div>
 
@@ -127,7 +127,7 @@ RapUnreliableOpts() object, and a RapData() object." />
 <code><a href='RapUnreliableOpts.html'>RapUnreliableOpts()</a></code> object, and a <code><a href='RapData.html'>RapData()</a></code> object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>RapUnsolved</span>(<span class='no'>opts</span>, <span class='no'>data</span>)</pre>
+    <pre class="usage"><span class='fu'>RapUnsolved</span><span class='op'>(</span><span class='va'>opts</span>, <span class='va'>data</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -154,21 +154,22 @@ object.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \dontrun{</span>
 <span class='co'># set random number generator seed</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>500</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>500</span><span class='op'>)</span>
 
 <span class='co'># load data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>cs_pus</span>, <span class='no'>cs_spp</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>cs_pus</span>, <span class='va'>cs_spp</span><span class='op'>)</span>
 
 <span class='co'># create inputs for RapUnsolved</span>
-<span class='no'>ro</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RapUnreliableOpts.html'>RapUnreliableOpts</a></span>()
-<span class='no'>rd</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='make.RapData.html'>make.RapData</a></span>(<span class='no'>cs_pus</span>[<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='fl'>10</span>), ], <span class='no'>cs_spp</span>, <span class='kw'>NULL</span>,
-                   <span class='kw'>include.geographic.space</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,<span class='kw'>n.demand.points</span> <span class='kw'>=</span> <span class='fl'>5L</span>)
+<span class='va'>ro</span> <span class='op'>&lt;-</span> <span class='fu'><a href='RapUnreliableOpts.html'>RapUnreliableOpts</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>rd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='make.RapData.html'>make.RapData</a></span><span class='op'>(</span><span class='va'>cs_pus</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>, <span class='op'>]</span>, <span class='va'>cs_spp</span>, <span class='cn'>NULL</span>,
+                   include.geographic.space <span class='op'>=</span> <span class='cn'>TRUE</span>,n.demand.points <span class='op'>=</span> <span class='fl'>5L</span><span class='op'>)</span>
 
 <span class='co'># create RapUnsolved object</span>
-<span class='no'>ru</span> <span class='kw'>&lt;-</span> <span class='fu'>RapUnsolved</span>(<span class='no'>ro</span>, <span class='no'>rd</span>)
+<span class='va'>ru</span> <span class='op'>&lt;-</span> <span class='fu'>RapUnsolved</span><span class='op'>(</span><span class='va'>ro</span>, <span class='va'>rd</span><span class='op'>)</span>
 
 <span class='co'># print object</span>
-<span class='fu'><a href='print.html'>print</a></span>(<span class='no'>ru</span>)</div><div class='output co'>#&gt; <span class='message'>RapUnsolved object</span></div><div class='output co'>#&gt; <span class='message'>Parameters</span></div><div class='output co'>#&gt; <span class='message'>  BLM: 0</span></div><div class='output co'>#&gt; <span class='message'>Data</span></div><div class='output co'>#&gt; <span class='message'>  Number of planning units: 10</span></div><div class='output co'>#&gt; <span class='message'>  Number of species: 4</span></div><div class='output co'>#&gt; <span class='message'>  Number of attribute spaces: 1</span></div><div class='input'># }
+<span class='fu'><a href='print.html'>print</a></span><span class='op'>(</span><span class='va'>ru</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>RapUnsolved object</span></div><div class='output co'>#&gt; <span class='message'>Parameters</span></div><div class='output co'>#&gt; <span class='message'>  BLM: 0</span></div><div class='output co'>#&gt; <span class='message'>Data</span></div><div class='output co'>#&gt; <span class='message'>  Number of planning units: 10</span></div><div class='output co'>#&gt; <span class='message'>  Number of species: 4</span></div><div class='output co'>#&gt; <span class='message'>  Number of attribute spaces: 1</span></div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -185,7 +186,7 @@ object.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
