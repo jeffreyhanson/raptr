@@ -45,6 +45,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -56,9 +58,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -72,19 +80,13 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.3</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/raptr.html">Get started</a>
 </li>
 <li>
@@ -97,7 +99,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/jeffreyhanson/raptr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -123,7 +125,7 @@
     <p>This function creates a "RapData" object using pre-processed data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>RapData</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>RapData</span><span class='op'>(</span>
   <span class='va'>pu</span>,
   <span class='va'>species</span>,
   <span class='va'>targets</span>,
@@ -133,7 +135,7 @@
   polygons <span class='op'>=</span> <span class='cn'>NA</span>,
   skipchecks <span class='op'>=</span> <span class='cn'>FALSE</span>,
   .cache <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/environment.html'>new.env</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -203,46 +205,51 @@ speed for big data sets.</p></td>
 <a href='RapData-class.html'>RapData</a>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># load data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>cs_pus</span>, <span class='va'>cs_spp</span>, <span class='va'>cs_space</span><span class='op'>)</span>
-
-<span class='co'># create data for RapData object</span>
-<span class='va'>attribute.spaces</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-  <span class='fu'><a href='AttributeSpaces.html'>AttributeSpaces</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"geographic"</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-    <span class='fu'><a href='AttributeSpace.html'>AttributeSpace</a></span><span class='op'>(</span>
-      planning.unit.points <span class='op'>=</span> <span class='fu'><a href='PlanningUnitPoints.html'>PlanningUnitPoints</a></span><span class='op'>(</span>
-        <span class='fu'>rgeos</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rgeos/man/topo-unary-gCentroid.html'>gCentroid</a></span><span class='op'>(</span><span class='va'>cs_pus</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>,<span class='op'>]</span>, byid <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>@</span><span class='va'>coords</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>,
-      demand.points <span class='op'>=</span> <span class='fu'><a href='make.DemandPoints.html'>make.DemandPoints</a></span><span class='op'>(</span>
-        <span class='fu'><a href='randomPoints.html'>randomPoints</a></span><span class='op'>(</span><span class='va'>cs_spp</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, n <span class='op'>=</span> <span class='fl'>10</span>, prob <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>,
-      species <span class='op'>=</span> <span class='fl'>1L</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
-  <span class='fu'><a href='AttributeSpaces.html'>AttributeSpaces</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"environmental"</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-    <span class='fu'><a href='AttributeSpace.html'>AttributeSpace</a></span><span class='op'>(</span>
-      planning.unit.points <span class='op'>=</span> <span class='fu'><a href='PlanningUnitPoints.html'>PlanningUnitPoints</a></span><span class='op'>(</span>
-        <span class='fu'>raster</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/extract.html'>extract</a></span><span class='op'>(</span><span class='va'>cs_space</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, <span class='va'>cs_pus</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>,<span class='op'>]</span>, fun <span class='op'>=</span> <span class='va'>mean</span><span class='op'>)</span>,
-        <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>,
-      demand.points <span class='op'>=</span> <span class='fu'><a href='make.DemandPoints.html'>make.DemandPoints</a></span><span class='op'>(</span>
-        <span class='va'>cs_space</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>[</span><span class='fu'>raster</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/which.html'>Which</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>cs_space</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span>,
-        species <span class='op'>=</span> <span class='fl'>1L</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Registered S3 methods overwritten by 'adehabitatMA':</span>
-#&gt; <span class='message'>  method                       from</span>
-#&gt; <span class='message'>  print.SpatialPixelsDataFrame sp  </span>
-#&gt; <span class='message'>  print.SpatialPixels          sp  </span></div><div class='input'><span class='va'>pu.species.probabilities</span> <span class='op'>&lt;-</span> <span class='fu'><a href='calcSpeciesAverageInPus.html'>calcSpeciesAverageInPus</a></span><span class='op'>(</span><span class='va'>cs_pus</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>,<span class='op'>]</span>,
-                                                    <span class='va'>cs_spp</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
-<span class='va'>polygons</span> <span class='op'>&lt;-</span> <span class='fu'><a href='SpatialPolygons2PolySet.html'>SpatialPolygons2PolySet</a></span><span class='op'>(</span><span class='va'>cs_pus</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>,<span class='op'>]</span><span class='op'>)</span>
-<span class='va'>boundary</span> <span class='op'>&lt;-</span> <span class='fu'><a href='calcBoundaryData.html'>calcBoundaryData</a></span><span class='op'>(</span><span class='va'>cs_pus</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>,<span class='op'>]</span><span class='op'>)</span>
-
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>RapData</span><span class='op'>(</span>pu <span class='op'>=</span> <span class='va'>cs_pus</span><span class='op'>@</span><span class='va'>data</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>,<span class='op'>]</span>, species <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"test"</span><span class='op'>)</span>,
-             target <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>species <span class='op'>=</span> <span class='fl'>1L</span>, target <span class='op'>=</span> <span class='fl'>0</span><span class='op'>:</span><span class='fl'>2</span>,
-                                 proportion <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span>,
-             pu.species.probabilities <span class='op'>=</span> <span class='va'>pu.species.probabilities</span>,
-             attribute.spaces <span class='op'>=</span> <span class='va'>attribute.spaces</span>,
-             polygons <span class='op'>=</span> <span class='va'>polygons</span>,
-             boundary <span class='op'>=</span> <span class='va'>boundary</span><span class='op'>)</span>
-
-<span class='co'># print object</span>
-<span class='fu'><a href='print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>RapData object.</span></div><div class='output co'>#&gt; <span class='message'>  Number of planning units: 10</span></div><div class='output co'>#&gt; <span class='message'>  Number of species: 1</span></div><div class='output co'>#&gt; <span class='message'>  Number of attribute spaces: 2</span></div><div class='input'>
-</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># load data</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>cs_pus</span>, <span class='va'>cs_spp</span>, <span class='va'>cs_space</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># create data for RapData object</span></span>
+<span class='r-in'><span class='va'>attribute.spaces</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='fu'><a href='AttributeSpaces.html'>AttributeSpaces</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"geographic"</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='AttributeSpace.html'>AttributeSpace</a></span><span class='op'>(</span></span>
+<span class='r-in'>      planning.unit.points <span class='op'>=</span> <span class='fu'><a href='PlanningUnitPoints.html'>PlanningUnitPoints</a></span><span class='op'>(</span></span>
+<span class='r-in'>        <span class='fu'>rgeos</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rgeos/man/topo-unary-gCentroid.html'>gCentroid</a></span><span class='op'>(</span><span class='va'>cs_pus</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>,<span class='op'>]</span>, byid <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>@</span><span class='va'>coords</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>      demand.points <span class='op'>=</span> <span class='fu'><a href='make.DemandPoints.html'>make.DemandPoints</a></span><span class='op'>(</span></span>
+<span class='r-in'>        <span class='fu'><a href='randomPoints.html'>randomPoints</a></span><span class='op'>(</span><span class='va'>cs_spp</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, n <span class='op'>=</span> <span class='fl'>10</span>, prob <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>      species <span class='op'>=</span> <span class='fl'>1L</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='AttributeSpaces.html'>AttributeSpaces</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"environmental"</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='AttributeSpace.html'>AttributeSpace</a></span><span class='op'>(</span></span>
+<span class='r-in'>      planning.unit.points <span class='op'>=</span> <span class='fu'><a href='PlanningUnitPoints.html'>PlanningUnitPoints</a></span><span class='op'>(</span></span>
+<span class='r-in'>        <span class='fu'>raster</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/extract.html'>extract</a></span><span class='op'>(</span><span class='va'>cs_space</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, <span class='va'>cs_pus</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>,<span class='op'>]</span>, fun <span class='op'>=</span> <span class='va'>mean</span><span class='op'>)</span>,</span>
+<span class='r-in'>        <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>      demand.points <span class='op'>=</span> <span class='fu'><a href='make.DemandPoints.html'>make.DemandPoints</a></span><span class='op'>(</span></span>
+<span class='r-in'>        <span class='va'>cs_space</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>[</span><span class='fu'>raster</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/which.html'>Which</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>cs_space</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span>,</span>
+<span class='r-in'>        species <span class='op'>=</span> <span class='fl'>1L</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Registered S3 methods overwritten by 'adehabitatMA':</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   method                       from</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   print.SpatialPixelsDataFrame sp  </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   print.SpatialPixels          sp  </span>
+<span class='r-in'><span class='va'>pu.species.probabilities</span> <span class='op'>&lt;-</span> <span class='fu'><a href='calcSpeciesAverageInPus.html'>calcSpeciesAverageInPus</a></span><span class='op'>(</span><span class='va'>cs_pus</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>,<span class='op'>]</span>,</span>
+<span class='r-in'>                                                    <span class='va'>cs_spp</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>polygons</span> <span class='op'>&lt;-</span> <span class='fu'><a href='SpatialPolygons2PolySet.html'>SpatialPolygons2PolySet</a></span><span class='op'>(</span><span class='va'>cs_pus</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>,<span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>boundary</span> <span class='op'>&lt;-</span> <span class='fu'><a href='calcBoundaryData.html'>calcBoundaryData</a></span><span class='op'>(</span><span class='va'>cs_pus</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>,<span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>RapData</span><span class='op'>(</span>pu <span class='op'>=</span> <span class='va'>cs_pus</span><span class='op'>@</span><span class='va'>data</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>,<span class='op'>]</span>, species <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"test"</span><span class='op'>)</span>,</span>
+<span class='r-in'>             target <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>species <span class='op'>=</span> <span class='fl'>1L</span>, target <span class='op'>=</span> <span class='fl'>0</span><span class='op'>:</span><span class='fl'>2</span>,</span>
+<span class='r-in'>                                 proportion <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span>,</span>
+<span class='r-in'>             pu.species.probabilities <span class='op'>=</span> <span class='va'>pu.species.probabilities</span>,</span>
+<span class='r-in'>             attribute.spaces <span class='op'>=</span> <span class='va'>attribute.spaces</span>,</span>
+<span class='r-in'>             polygons <span class='op'>=</span> <span class='va'>polygons</span>,</span>
+<span class='r-in'>             boundary <span class='op'>=</span> <span class='va'>boundary</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># print object</span></span>
+<span class='r-in'><span class='fu'><a href='print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> RapData object.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   Number of planning units: 10</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   Number of species: 1</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   Number of attribute spaces: 2</span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -254,11 +261,11 @@ speed for big data sets.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
+  <p><p>Developed by <a href="http://jeffrey-hanson.com" class="external-link">Jeffrey O Hanson</a>, <a href="https://rhodesconservation.com/people/jonathan-rhodes/" class="external-link">Jonathan R Rhodes</a>, <a href="http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html" class="external-link">Hugh P Possingham</a>, <a href="https://www.fullerlab.org/drrichardfuller/" class="external-link">Richard A Fuller</a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -266,6 +273,8 @@ speed for big data sets.</p></td>
 
   
 
+
+  
 
   </body>
 </html>

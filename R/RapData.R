@@ -469,11 +469,11 @@ make.RapData <- function(pus, species, spaces = NULL, amount.target = 0.2,
   # set polygons
   geoPolygons <- pus
   if (!raster::compareCRS(geoPolygons@proj4string,
-                          sp::CRS("+init=epsg:4326")) &&
+                          sp::CRS("EPSG:4326")) &&
       !identical(geoPolygons@proj4string, sp::CRS())) {
     if (verbose)
       message("Projecting polygons to WGS1984 for rendering.")
-    geoPolygons <- sp::spTransform(geoPolygons, sp::CRS("+init=epsg:4326"))
+    geoPolygons <- sp::spTransform(geoPolygons, sp::CRS("EPSG:4326"))
   }
   geoPolygons <- rcpp_Polygons2PolySet(geoPolygons@polygons)
   ## set pu
@@ -498,7 +498,7 @@ make.RapData <- function(pus, species, spaces = NULL, amount.target = 0.2,
     pu$area <- rgeos::gArea(pus, byid = TRUE)
     warning(paste0("argument to pus does not have a \"area\" column, ",
                    "calcuating planning unit areas using polygons"))
-    if (raster::compareCRS(pus@proj4string, sp::CRS("+init=epsg:4326")))
+    if (raster::compareCRS(pus@proj4string, sp::CRS("EPSG:4326")))
       warning(paste0("Planning unit areas are being calculated in a ",
                      "geographic coordinate system"))
   }
@@ -645,7 +645,7 @@ make.RapData <- function(pus, species, spaces = NULL, amount.target = 0.2,
     )
   })
   ## set boundary
-  if (raster::compareCRS(pus@proj4string, sp::CRS("+init=epsg:4326")))
+  if (raster::compareCRS(pus@proj4string, sp::CRS("EPSG:4326")))
     warning(paste0("creating boundary length data from pus in WGS1984; ",
                    "consider supplying an object in a projected CRS."))
   if (verbose)

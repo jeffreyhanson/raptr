@@ -47,6 +47,8 @@ RapSolved() object with outputs in it." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -58,9 +60,15 @@ RapSolved() object with outputs in it." />
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -74,19 +82,13 @@ RapSolved() object with outputs in it." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.3</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/raptr.html">Get started</a>
 </li>
 <li>
@@ -99,7 +101,7 @@ RapSolved() object with outputs in it." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/jeffreyhanson/raptr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -127,7 +129,7 @@ and data stored in a <code><a href='RapUnsolved.html'>RapUnsolved()</a></code> o
 <code><a href='RapSolved.html'>RapSolved()</a></code> object with outputs in it.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S4 method for RapUnsolOrSol,missing</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='co'># S4 method for RapUnsolOrSol,missing</span>
 <span class='fu'>solve</span><span class='op'>(</span><span class='va'>a</span>, <span class='va'>b</span>, <span class='va'>...</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='co'># S4 method for RapUnsolOrSol,GurobiOpts</span>
@@ -140,7 +142,7 @@ and data stored in a <code><a href='RapUnsolved.html'>RapUnsolved()</a></code> o
 <span class='fu'>solve</span><span class='op'>(</span><span class='va'>a</span>, <span class='va'>b</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='co'># S4 method for RapUnsolOrSol,logical</span>
-<span class='fu'>solve</span><span class='op'>(</span><span class='va'>a</span>, <span class='va'>b</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+<span class='fu'>solve</span><span class='op'>(</span><span class='va'>a</span>, <span class='va'>b</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -180,67 +182,66 @@ provides a more general interface for generating inputs and outputs.</p>
     <div class='dont-index'><p><code><a href='RapUnsolved.html'>RapUnsolved()</a></code>, <code><a href='RapSolved.html'>RapSolved()</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># load RapUnsolved object</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>sim_ru</span><span class='op'>)</span>
-<span class='co'># \dontrun{</span>
-<span class='co'># solve it using Gurobi</span>
-<span class='va'>sim_rs</span> <span class='op'>&lt;-</span> <span class='fu'>solve</span><span class='op'>(</span><span class='va'>sim_ru</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Gurobi Optimizer version 9.1.1 build v9.1.1rc0 (linux64)
-#&gt; Thread count: 2 physical cores, 4 logical processors, using up to 1 threads
-#&gt; Optimize a model with 30306 rows, 30100 columns and 120000 nonzeros
-#&gt; Model fingerprint: 0xba2fdd45
-#&gt; Variable types: 0 continuous, 30100 integer (30100 binary)
-#&gt; Coefficient statistics:
-#&gt;   Matrix range     [7e-03, 9e+01]
-#&gt;   Objective range  [1e+00, 1e+00]
-#&gt;   Bounds range     [1e+00, 1e+00]
-#&gt;   RHS range        [1e+00, 1e+02]
-#&gt; Found heuristic solution: objective 99.0000000
-#&gt; Presolve removed 264 rows and 15 columns (presolve time = 5s) ...
-#&gt; Presolve removed 285 rows and 15 columns (presolve time = 10s) ...
-#&gt; Presolve removed 832 rows and 17 columns (presolve time = 15s) ...
-#&gt; Presolve removed 833 rows and 17 columns
-#&gt; Presolve time: 18.16s
-#&gt; Presolved: 29473 rows, 30083 columns, 123981 nonzeros
-#&gt; Variable types: 0 continuous, 30083 integer (30083 binary)
-#&gt; Presolved: 29473 rows, 30083 columns, 123981 nonzeros
-#&gt; 
-#&gt; 
-#&gt; Root simplex log...
-#&gt; 
-#&gt; Iteration    Objective       Primal Inf.    Dual Inf.      Time
-#&gt;        0    1.0000000e+02   0.000000e+00   1.000000e+02     19s
-#&gt;     4304    2.0000000e+01   0.000000e+00   0.000000e+00     20s
-#&gt;     4304    2.0000000e+01   0.000000e+00   0.000000e+00     20s
-#&gt; 
-#&gt; Root relaxation: objective 2.000000e+01, 4304 iterations, 1.69 seconds
-#&gt; Total elapsed time = 21.20s
-#&gt; 
-#&gt;     Nodes    |    Current Node    |     Objective Bounds      |     Work
-#&gt;  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
-#&gt; 
-#&gt; H    0     0                      20.0000000    0.00000   100%     -   21s
-#&gt;      0     0          -    0        20.00000   20.00000  0.00%     -   21s
-#&gt; 
-#&gt; Explored 0 nodes (7952 simplex iterations) in 21.27 seconds
-#&gt; Thread count was 1 (of 4 available processors)
-#&gt; 
-#&gt; Solution count 2: 20 99 
-#&gt; 
-#&gt; Optimal solution found (tolerance 1.00e-01)
-#&gt; Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%</div><div class='input'>
-<span class='co'># evaluate manually specified solution using planning unit indices</span>
-<span class='va'>sim_rs2</span> <span class='op'>&lt;-</span> <span class='fu'>solve</span><span class='op'>(</span><span class='va'>sim_ru</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: some species have space.held values less than 0, and thus are poorly represented</span></div><div class='input'>
-<span class='co'># evaluate manually specifed solution using binary selections</span>
-<span class='va'>sim_rs3</span> <span class='op'>&lt;-</span> <span class='fu'>solve</span><span class='op'>(</span><span class='va'>sim_ru</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='fl'>10</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>FALSE</span>, <span class='fl'>90</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: some species have space.held values less than 0, and thus are poorly represented</span></div><div class='input'>
-<span class='co'>#  evaluate multiple manually specified solutions</span>
-<span class='va'>sim_rs4</span> <span class='op'>&lt;-</span> <span class='fu'>solve</span><span class='op'>(</span><span class='va'>sim_ru</span>, <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>500</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
-                 ncol <span class='op'>=</span> <span class='fl'>100</span>, nrow <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
-<span class='co'># }</span>
-
-</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># load RapUnsolved object</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>sim_ru</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># \dontrun{</span></span>
+<span class='r-in'><span class='co'># solve it using Gurobi</span></span>
+<span class='r-in'><span class='va'>sim_rs</span> <span class='op'>&lt;-</span> <span class='fu'>solve</span><span class='op'>(</span><span class='va'>sim_ru</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Gurobi Optimizer version 9.1.2 build v9.1.2rc0 (linux64)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Thread count: 4 physical cores, 8 logical processors, using up to 1 threads</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Optimize a model with 30306 rows, 30100 columns and 120000 nonzeros</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Model fingerprint: 0xfe534681</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Variable types: 0 continuous, 30100 integer (30100 binary)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Coefficient statistics:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Matrix range     [7e-03, 9e+01]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Objective range  [1e+00, 1e+00]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Bounds range     [1e+00, 1e+00]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   RHS range        [1e+00, 1e+02]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Found heuristic solution: objective 99.0000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Presolve removed 833 rows and 17 columns</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Presolve time: 4.72s</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Presolved: 29473 rows, 30083 columns, 123981 nonzeros</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Variable types: 0 continuous, 30083 integer (30083 binary)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Presolved: 29473 rows, 30083 columns, 123981 nonzeros</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Root simplex log...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Iteration    Objective       Primal Inf.    Dual Inf.      Time</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     1384    3.7231999e+01   0.000000e+00   1.671467e+04      5s</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     4304    2.0000000e+01   0.000000e+00   0.000000e+00      5s</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     4304    2.0000000e+01   0.000000e+00   0.000000e+00      5s</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Root relaxation: objective 2.000000e+01, 4304 iterations, 0.50 seconds</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     Nodes    |    Current Node    |     Objective Bounds      |     Work</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> H    0     0                      20.0000000    0.00000   100%     -    5s</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      0     0          -    0        20.00000   20.00000  0.00%     -    5s</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Explored 0 nodes (7953 simplex iterations) in 5.83 seconds</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Thread count was 1 (of 8 available processors)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Solution count 2: 20 99 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Optimal solution found (tolerance 1.00e-01)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># evaluate manually specified solution using planning unit indices</span></span>
+<span class='r-in'><span class='va'>sim_rs2</span> <span class='op'>&lt;-</span> <span class='fu'>solve</span><span class='op'>(</span><span class='va'>sim_ru</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>some species have space.held values less than 0, and thus are poorly represented</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># evaluate manually specifed solution using binary selections</span></span>
+<span class='r-in'><span class='va'>sim_rs3</span> <span class='op'>&lt;-</span> <span class='fu'>solve</span><span class='op'>(</span><span class='va'>sim_ru</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='fl'>10</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>FALSE</span>, <span class='fl'>90</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>some species have space.held values less than 0, and thus are poorly represented</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>#  evaluate multiple manually specified solutions</span></span>
+<span class='r-in'><span class='va'>sim_rs4</span> <span class='op'>&lt;-</span> <span class='fu'>solve</span><span class='op'>(</span><span class='va'>sim_ru</span>, <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>500</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,</span>
+<span class='r-in'>                 ncol <span class='op'>=</span> <span class='fl'>100</span>, nrow <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># }</span></span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -252,11 +253,11 @@ provides a more general interface for generating inputs and outputs.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jeffrey-hanson.com'>Jeffrey O Hanson</a>, <a href='https://rhodesconservation.com/people/jonathan-rhodes/'>Jonathan R Rhodes</a>, <a href='http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html'>Hugh P Possingham</a>, <a href='https://www.fullerlab.org/drrichardfuller/'>Richard A Fuller</a>.</p>
+  <p><p>Developed by <a href="http://jeffrey-hanson.com" class="external-link">Jeffrey O Hanson</a>, <a href="https://rhodesconservation.com/people/jonathan-rhodes/" class="external-link">Jonathan R Rhodes</a>, <a href="http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html" class="external-link">Hugh P Possingham</a>, <a href="https://www.fullerlab.org/drrichardfuller/" class="external-link">Richard A Fuller</a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -264,6 +265,8 @@ provides a more general interface for generating inputs and outputs.</p>
 
   
 
+
+  
 
   </body>
 </html>

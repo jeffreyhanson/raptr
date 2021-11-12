@@ -8,7 +8,7 @@ output:
 fontsize: 11pt
 documentclass: article
 vignette: >
-  %\VignetteIndexEntry{raptr}
+  %\VignetteIndexEntry{raptr: Representative and Adequate Prioritization Toolkit in R}
   %\VignetteEngine{knitr::rmarkdown_notangle}
 ---
 

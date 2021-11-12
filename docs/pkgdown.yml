@@ -1,9 +1,9 @@
-pandoc: 1.19.2.1
-pkgdown: 1.6.1
-pkgdown_sha: ~
+pandoc: '2.13'
+pkgdown: 1.6.1.9001
+pkgdown_sha: 9ce6af43b55cd21e9563526e12a12d1243657bf6
 articles:
   raptr: raptr.html
-last_built: 2021-04-18T00:11Z
+last_built: 2021-11-12T01:14Z
 urls:
   reference: https://jeffrey-hanson.com/raptr/reference
   article: https://jeffrey-hanson.com/raptr/articles

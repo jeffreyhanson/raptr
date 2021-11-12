@@ -1,3 +1,11 @@
+# raptr 0.1.7.3
+
+- Update example datasets and `make.RapData` function to improve compatibility
+  with updates to coordinate reference system (`sp::CRS`) objects. These
+  updates simply mean that warning messages will no longer be displayed.
+  The compatibility issues that resulted in warnings did not affect the
+  correctness of any results.
+
 # raptr 0.1.7.2
 
 - Fix compatibility issues between the _testthat_ R package and the _gurobi_ R
@@ -8,7 +16,7 @@
 - Implement GitHub Actions continuous integration (i.e. update tests
   and README).
 
-# raptr 0.1.7 (released)
+# raptr 0.1.7
 
 - remove support for processing data using GDAL.
 - remove `is.gdalInstalled` and `rasterizeGDAL` functions.
@@ -19,22 +27,22 @@
 - fix "Non-file package-anchored link(s) in documentation object" warnings in
   R-devel checks.
 
-# raptr 0.1.6 (released)
+# raptr 0.1.6
 
 - fix errors in R-devel CRAN checks due changes in `is.finite` behaviour for
   `character` class objects.
 - fix WorldClim URLs.
 
-# raptr 0.1.5 (released)
+# raptr 0.1.5
 
 - fix warnings in R-devel CRAN checks related to documentation.
 - fix broken link in vignette.
 
-# raptr 0.1.4 (released)
+# raptr 0.1.4
 
 - retain debugging symbols to conform with CRAN policies.
 
-# raptr 0.1.3 (released)
+# raptr 0.1.3
 
 - fix bug that caused the R session to crash when none of the planning
   units associated with an attribute space were selected in a manually
@@ -42,7 +50,7 @@
   a negative infinity value in such cases.
 - permit attribute spaces to have a single demand point.
 
-# raptr 0.1.2 (released)
+# raptr 0.1.2
 
 - fix compatibility issues with demand point examples and _hypervolume_ R
   package (version 2.0.10).
@@ -57,7 +65,7 @@
 - the `raptr::solve` function now throws a warning if some species are poorly
   represented in the solution.
 
-# raptr 0.1.1 (released)
+# raptr 0.1.1
 
 - vignette size has been reduced.
 - updated DOI in README.
@@ -77,7 +85,7 @@
 - `is.GurobiInstalled` now does not run _gurobi_ to avoid spurious notes during
   CRAN checks on academic license.
 
-# raptr 0.0.5 (released)
+# raptr 0.0.5
 
 - fix documentation in `make.DemandPoints`.
 - `\donttest` instead of `\dontrun` for examples.
@@ -89,7 +97,7 @@
 - add more links to package documentation.
 - register Rcpp functions.
 
-# raptr 0.0.3 (released)
+# raptr 0.0.3
 
 - reduce memory consumption using external pointers.
 - fix memory leaks.
@@ -105,6 +113,6 @@
 - fixed authorship typo.
 - updated README with instructions for installing from CRAN.
 
-# raptr 0.0.1 (released)
+# raptr 0.0.1
 
 - Initial package version.

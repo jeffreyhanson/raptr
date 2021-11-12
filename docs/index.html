@@ -19,7 +19,7 @@
     This package contains tools to generate plans for protected areas
     (prioritizations), using spatially explicit targets for biodiversity
     patterns and processes. To obtain solutions in a feasible amount  of time,
-    this package uses the commercial Gurobi software package (obtained from
+    this package uses the commercial Gurobi software (obtained from
     &lt;http://www.gurobi.com/&gt;). For more information on using
     this package, see Hanson et al. (2018) &lt;doi:10.1111/2041-210X.12862&gt;.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -28,6 +28,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -40,18 +42,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.3</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="articles/raptr.html">Get started</a>
 </li>
@@ -65,7 +61,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/jeffreyhanson/raptr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -83,69 +79,69 @@
   <div class="contents col-md-9">
 <div id="raptr-representative-and-adequate-prioritization-toolkit-in-r" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#raptr-representative-and-adequate-prioritization-toolkit-in-r" class="anchor"></a>raptr: Representative and Adequate Prioritization Toolkit in R</h1></div>
+<a href="#raptr-representative-and-adequate-prioritization-toolkit-in-r" class="anchor" aria-hidden="true"></a>raptr: Representative and Adequate Prioritization Toolkit in R</h1></div>
 
-<p>Biodiversity is in crisis. The overarching aim of conservation is to preserve biodiversity patterns and processes. To this end, protected areas are established to buffer species and preserve biodiversity processes. But resources are limited and so protected areas must be cost-effective. This package contains tools to generate plans for protected areas (prioritizations), using spatially explicit targets for biodiversity patterns and processes. To obtain solutions in a feasible amount of time, this package uses the commercial ‘Gurobi’ software package (obtained from <a href="http://www.gurobi.com/" class="uri">http://www.gurobi.com/</a>). For more information on using this package, see our paper published in Methods in Ecology and Evolution (<a href="http://doi.org/10.1111/2041-210X.12862" class="uri">http://doi.org/10.1111/2041-210X.12862</a>).</p>
+<p>Biodiversity is in crisis. The overarching aim of conservation is to preserve biodiversity patterns and processes. To this end, protected areas are established to buffer species and preserve biodiversity processes. But resources are limited and so protected areas must be cost-effective. This package contains tools to generate plans for protected areas (prioritizations), using spatially explicit targets for biodiversity patterns and processes. To obtain solutions in a feasible amount of time, this package uses the commercial ‘Gurobi’ software package (obtained from <a href="http://www.gurobi.com/" class="external-link uri">http://www.gurobi.com/</a>). For more information on using this package, see our paper published in Methods in Ecology and Evolution (<a href="http://doi.org/10.1111/2041-210X.12862" class="external-link uri">http://doi.org/10.1111/2041-210X.12862</a>).</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<a href="#installation" class="anchor" aria-hidden="true"></a>Installation</h2>
 <p>This package depends on several packages which can be difficult to install under Linux and Mac operating systems.</p>
 <p>Linux (Ubuntu) users can install them typing the following code into the terminal:</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r">sudo apt<span class="op">-</span>get update
-sudo apt<span class="op">-</span>get install libgdal<span class="op">-</span>dev
-sudo apt<span class="op">-</span>get install libproj<span class="op">-</span>dev
-sudo apt<span class="op">-</span>get build<span class="op">-</span>dep r<span class="op">-</span>cran<span class="op">-</span>rgl</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>sudo apt<span class="sc">-</span>get update</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sudo apt<span class="sc">-</span>get install libgdal<span class="sc">-</span>dev</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>sudo apt<span class="sc">-</span>get install libproj<span class="sc">-</span>dev</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sudo apt<span class="sc">-</span>get build<span class="sc">-</span>dep r<span class="sc">-</span>cran<span class="sc">-</span>rgl</span></code></pre></div>
 <p>Mac OSX users can install them using the code below.</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r">brew install Caskroom<span class="op">/</span>cask<span class="op">/</span>xquartz
-brew install gdal
-Rscript <span class="op">-</span>e <span class="st">"setRepositories(ind = 1:2); install.packages(c('rgdal', 'rgeos'))"</span></code></pre></div>
-<p>To install the <a href="https://CRAN.R-project.org/package=raptr">latest official version on CRAN</a>, use the following R code.</p>
-<div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"raptr"</span><span class="op">)</span></code></pre></div>
-<p>To install the <a href="https://github.com/jeffreyhanson/raptr">development version on GitHub</a>, use the following R code.</p>
-<div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://devtools.r-lib.org/">"devtools"</a></span><span class="op">)</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
-<span class="fu">devtools</span><span class="fu">:::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"jeffreyhanson/raptr"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>brew install Caskroom<span class="sc">/</span>cask<span class="sc">/</span>xquartz</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>brew install gdal</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Rscript <span class="sc">-</span>e <span class="st">"setRepositories(ind = 1:2); install.packages(c('rgdal', 'rgeos'))"</span></span></code></pre></div>
+<p>To install the <a href="https://CRAN.R-project.org/package=raptr" class="external-link">latest official version on CRAN</a>, use the following R code.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"raptr"</span><span class="op">)</span></code></pre></div>
+<p>To install the <a href="https://github.com/jeffreyhanson/raptr" class="external-link">development version on GitHub</a>, use the following R code.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://devtools.r-lib.org/" class="external-link">"devtools"</a></span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
+<span class="fu">devtools</span><span class="fu">:::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"jeffreyhanson/raptr"</span><span class="op">)</span></code></pre></div>
 <p>Once this package has been installed, you can read through the vignette for a tutorial on how to use it.</p>
-<p><a href="http://jeffrey-hanson.com/raptr/articles/raptr.html">View it here</a>, or by running the R code below.</p>
-<div class="sourceCode"><pre class="downlit sourceCode r">
+<p><a href="http://jeffrey-hanson.com/raptr/articles/raptr.html" class="external-link">View it here</a>, or by running the R code below.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># open vignette in web browser</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span><span class="op">(</span><span class="st">"raptr"</span>, package <span class="op">=</span> <span class="st">"raptr"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"raptr"</span>, package <span class="op">=</span> <span class="st">"raptr"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="citation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#citation" class="anchor"></a>Citation</h2>
-<div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span><span class="op">(</span><span class="st">"raptr"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r">## 
-## To cite the raptr package in publications, use:
-## 
-##   Hanson JO, Rhodes JR, Possingham HP &amp; Fuller RA raptr: Representative
-##   and Adequate Prioritization Toolkit in R. Methods in Ecology &amp;
-##   Evolution, 9: 320--330. DOI: 10.1111/2041-210X.12862
-## 
-## A BibTeX entry for LaTeX users is
-## 
-##   @Article{,
-##     author = {Jeffrey O Hanson and Jonathan R Rhodes and Hugh P Possingham and Richard A Fuller},
-##     title = {raptr: Representative and adequate prioritization toolkit in R},
-##     journal = {Methods in Ecology and Evolution},
-##     year = {2018},
-##     volume = {9},
-##     pages = {320--330},
-##     url = {https://dx.doi.org/10.1111/2041-210X.12862},
-##   }
-## 
-## You may also want to cite the package version. Find it with
-## "help(package=raptr)".</code></pre></div>
+<a href="#citation" class="anchor" aria-hidden="true"></a>Citation</h2>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"raptr"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="do">## To cite the raptr package in publications, use:</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   Hanson JO, Rhodes JR, Possingham HP &amp; Fuller RA raptr: Representative</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   and Adequate Prioritization Toolkit in R. Methods in Ecology &amp;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   Evolution, 9: 320--330. DOI: 10.1111/2041-210X.12862</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="do">## A BibTeX entry for LaTeX users is</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   @Article{,</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="do">##     author = {Jeffrey O Hanson and Jonathan R Rhodes and Hugh P Possingham and Richard A Fuller},</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="do">##     title = {raptr: Representative and adequate prioritization toolkit in R},</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="do">##     journal = {Methods in Ecology and Evolution},</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="do">##     year = {2018},</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="do">##     volume = {9},</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="do">##     pages = {320--330},</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="do">##     url = {https://dx.doi.org/10.1111/2041-210X.12862},</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="do">##   }</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="do">## You may also want to cite the package version. Find it with</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="do">## "help(package=raptr)".</span></span></code></pre></div>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=raptr">https://​cloud.r-project.org/​package=raptr</a>
 </li>
@@ -155,20 +151,24 @@ Rscript <span class="op">-</span>e <span class="st">"setRepositories(ind = 1:2);
 </li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
 </ul>
 </div>
+
+
 <div class="citation">
-<h2>Citation</h2>
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
 <li><a href="authors.html">Citing raptr</a></li>
 </ul>
 </div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>
 <a href="http://jeffrey-hanson.com">Jeffrey O Hanson</a> <br><small class="roles"> Author, maintainer </small>  </li>
@@ -181,27 +181,30 @@ Rscript <span class="op">-</span>e <span class="st">"setRepositories(ind = 1:2);
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.tidyverse.org/lifecycle/#stable"><img src="https://img.shields.io/badge/Lifecycle-stable-brightgreen.svg" alt="lifecycle"></a></li>
-<li><a href="https://github.com/jeffreyhanson/raptr/actions"><img src="https://img.shields.io/github/workflow/status/jeffreyhanson/raptr/Ubuntu/master.svg?label=Ubuntu" alt="R-CMD-check-Ubuntu"></a></li>
-<li><a href="https://github.com/jeffreyhanson/raptr/actions"><img src="https://img.shields.io/github/workflow/status/jeffreyhanson/raptr/Windows/master.svg?label=Windows" alt="R-CMD-check-Windows"></a></li>
-<li><a href="https://github.com/jeffreyhanson/raptr/actions"><img src="https://img.shields.io/github/workflow/status/jeffreyhanson/raptr/Mac%20OSX/master.svg?label=Mac%20OSX" alt="R-CMD-check-Mac-OSX"></a></li>
-<li><a href="https://codecov.io/github/jeffreyhanson/raptr?branch=master"><img src="http://codecov.io/github/jeffreyhanson/raptr/coverage.svg?branch=master" alt="Coverage Status"></a></li>
-<li><a href="https://CRAN.R-project.org/package=raptr"><img src="http://www.r-pkg.org/badges/version/raptr" alt="CRAN_Status_Badge"></a></li>
+<li><a href="https://www.tidyverse.org/lifecycle/#stable" class="external-link"><img src="https://img.shields.io/badge/Lifecycle-stable-brightgreen.svg" alt="lifecycle"></a></li>
+<li><a href="https://github.com/jeffreyhanson/raptr/actions" class="external-link"><img src="https://img.shields.io/github/workflow/status/jeffreyhanson/raptr/Ubuntu/master.svg?label=Ubuntu" alt="R-CMD-check-Ubuntu"></a></li>
+<li><a href="https://github.com/jeffreyhanson/raptr/actions" class="external-link"><img src="https://img.shields.io/github/workflow/status/jeffreyhanson/raptr/Windows/master.svg?label=Windows" alt="R-CMD-check-Windows"></a></li>
+<li><a href="https://github.com/jeffreyhanson/raptr/actions" class="external-link"><img src="https://img.shields.io/github/workflow/status/jeffreyhanson/raptr/Mac%20OSX/master.svg?label=Mac%20OSX" alt="R-CMD-check-Mac-OSX"></a></li>
+<li><a href="https://codecov.io/github/jeffreyhanson/raptr?branch=master" class="external-link"><img src="http://codecov.io/github/jeffreyhanson/raptr/coverage.svg?branch=master" alt="Coverage Status"></a></li>
+<li><a href="https://CRAN.R-project.org/package=raptr" class="external-link"><img src="http://www.r-pkg.org/badges/version/raptr" alt="CRAN_Status_Badge"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="http://jeffrey-hanson.com">Jeffrey O Hanson</a>, <a href="https://rhodesconservation.com/people/jonathan-rhodes/">Jonathan R Rhodes</a>, <a href="http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html">Hugh P Possingham</a>, <a href="https://www.fullerlab.org/drrichardfuller/">Richard A Fuller</a>.</p>
+  <p></p>
+<p>Developed by <a href="http://jeffrey-hanson.com" class="external-link">Jeffrey O Hanson</a>, <a href="https://rhodesconservation.com/people/jonathan-rhodes/" class="external-link">Jonathan R Rhodes</a>, <a href="http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html" class="external-link">Hugh P Possingham</a>, <a href="https://www.fullerlab.org/drrichardfuller/" class="external-link">Richard A Fuller</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p>
 </div>
 
       </footer>
@@ -209,6 +212,8 @@ Rscript <span class="op">-</span>e <span class="st">"setRepositories(ind = 1:2);
 
   
 
+
+  
 
   </body>
 </html>
