@@ -9,7 +9,7 @@
 #' optimization problem, which is then solved to yield prioritizations. To
 #' solve the optimization problems in a feasible amount of time, this package
 #' uses the commercial 'Gurobi' software package (obtained from
-#' <http://www.gurobi.com/>). For more information on using
+#' <https://www.gurobi.com/>). For more information on using
 #' this package, see Hanson et al. (2018)
 #' (<https://doi.org/10.1111/2041-210X.12862>).
 #'

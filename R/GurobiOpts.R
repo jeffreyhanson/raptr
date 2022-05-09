@@ -37,7 +37,7 @@ NULL
 #'   `number_solutions`). The `"solution.pool.2"` finds a
 #'   specified number of solutions that are nearest to optimality. The
 #'   search pool methods correspond to the parameters used by the Gurobi
-#'   software suite (see <http://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode>).
+#'   software suite (see <https://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode>).
 #'   Defaults to `"benders.cuts"`.
 #'
 #' @seealso [GurobiOpts()].
@@ -126,7 +126,7 @@ methods::setClass("GurobiOpts",
 #'   `number_solutions`). The `"solution.pool.2"` finds a
 #'   specified number of solutions that are nearest to optimality. The
 #'   search pool methods correspond to the parameters used by the Gurobi
-#'   software suite (see <http://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode>).
+#'   software suite (see <https://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode>).
 #'   Defaults to `"benders.cuts"`.
 #'
 #' @return `GurobiOpts` object

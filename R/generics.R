@@ -434,7 +434,7 @@ NULL
 #' \describe{
 #' \item{Run_Number}{The index of each solution in the object.}
 #' \item{Status}{The status of the solution. The values in this column
-#' correspond to outputs from the Gurobi software package (<http://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html>).}
+#' correspond to outputs from the Gurobi software package (<https://www.gurobi.com/documentation/6.5/refman/optimization_status_codes.html>).}
 #' \item{Score}{The objective function for the solution.}
 #' \item{Cost}{Total cost associated with a solution.}
 #' \item{Planning_Units}{Number of planning units selected in a solution.}
@@ -505,7 +505,7 @@ NULL
 #'   `number_solutions`). The `"solution.pool.2"` finds a
 #'   specified number of solutions that are nearest to optimality. The
 #'   search pool methods correspond to the parameters used by the Gurobi
-#'   software suite (see <http://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode>).
+#'   software suite (see <https://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode>).
 #'   Defaults to `"benders.cuts"`.
 #'
 #' @param BLM `numeric` boundary length modifier.

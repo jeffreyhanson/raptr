@@ -15,7 +15,7 @@ Description: Biodiversity is in crisis. The overarching aim of conservation
     (prioritizations), using spatially explicit targets for biodiversity
     patterns and processes. To obtain solutions in a feasible amount  of time,
     this package uses the commercial 'Gurobi' software (obtained from
-    <http://www.gurobi.com/>). For more information on using
+    <https://www.gurobi.com/>). For more information on using
     this package, see Hanson et al. (2018) <doi:10.1111/2041-210X.12862>.
 Imports:
     utils,
@@ -50,7 +50,7 @@ LazyData: true
 License: GPL-3
 Encoding: UTF-8
 Language: en-US
-URL: https://jeffrey-hanson.com/raptr, https://github.com/jeffreyhanson/raptr
+URL: https://jeffrey-hanson.com/raptr/, https://github.com/jeffreyhanson/raptr
 BugReports: https://github.com/jeffreyhanson/raptr/issues
 VignetteBuilder: knitr
 Suggests:

@@ -3,7 +3,7 @@
 
 # raptr: Representative and Adequate Prioritization Toolkit in R
 
-[![lifecycle](https://img.shields.io/badge/Lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
+[![lifecycle](https://img.shields.io/badge/Lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![R-CMD-check-Ubuntu](https://img.shields.io/github/workflow/status/jeffreyhanson/raptr/Ubuntu/master.svg?label=Ubuntu)](https://github.com/jeffreyhanson/raptr/actions)
 [![R-CMD-check-Windows](https://img.shields.io/github/workflow/status/jeffreyhanson/raptr/Windows/master.svg?label=Windows)](https://github.com/jeffreyhanson/raptr/actions)
 [![R-CMD-check-Mac-OSX](https://img.shields.io/github/workflow/status/jeffreyhanson/raptr/Mac%20OSX/master.svg?label=Mac%20OSX)](https://github.com/jeffreyhanson/raptr/actions)
@@ -18,10 +18,10 @@ processes. But resources are limited and so protected areas must be
 cost-effective. This package contains tools to generate plans for
 protected areas (prioritizations), using spatially explicit targets for
 biodiversity patterns and processes. To obtain solutions in a feasible
-amount of time, this package uses the commercial ‘Gurobi’ software
-package (obtained from <http://www.gurobi.com/>). For more information
-on using this package, see our paper published in Methods in Ecology and
-Evolution (<http://doi.org/10.1111/2041-210X.12862>).
+amount of time, this package uses the commercial Gurobi software package
+(obtained from <https://www.gurobi.com/>). For more information on using
+this package, see our paper published in Methods in Ecology and
+Evolution (<https://doi.org/10.1111/2041-210X.12862>).
 
 ## Installation
 

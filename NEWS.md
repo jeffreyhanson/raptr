@@ -87,7 +87,7 @@
 - Vignette now uses `knitr::rmarkdown_notangle` engine to avoid running the
   code during package checks, and placeholder vignette file has been removed.
 - Code has been linted.
-- Gunctions from other packages are now called explicitly using `pkg::function`.
+- Functions from other packages are now called explicitly using `pkg::function`.
 - Messages are now displayed using `message` following best practices.
 - Updated readme.
 - Added citation for _Methods in Ecology and Evolution_ paper.
