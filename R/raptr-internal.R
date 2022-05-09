@@ -86,6 +86,10 @@ prettyGeoplot <- function(polygons, col, basemap, main, fun, beside = TRUE,
   fun()
   # make geoplot
   if (is.list(basemap)) {
+    assertthat::assert_that(
+      requireNamespace("RgoogleMaps", quietly = TRUE),
+      msg = "please install the \"RgoogleMaps\" package"
+    )
     RgoogleMaps::PlotOnStaticMap(basemap)
     for (i in seq_along(polygons)) {
       suppressWarnings(RgoogleMaps::PlotPolysOnStaticMap(
@@ -413,7 +417,7 @@ methods::setGeneric("is.comparable",
 #'
 #' @keywords internal
 #'
-#' @seealso [RgoogleMaps::GetMap.bbox()], [plot()].
+#' @seealso `RgoogleMaps::GetMap.bbox()`, [plot()].
 basemap <- function(x, basemap = "hybrid", grayscale = FALSE,
                     force.reset = FALSE) UseMethod("basemap")
 
@@ -486,7 +490,7 @@ spacePlot.1d <- function(pu, dp, pu.color.palette, main) {
                                            "Locked In" = pu.color.palette[3])) +
     ggplot2::scale_size_manual(values = c("Locked Out" = 2, "Not Selected" = 2,
                                           "Selected" = 4.5, "Locked In" = 4.5),
-                               guide = FALSE) +
+                               guide = "none") +
     ggplot2::theme_classic() + ggplot2::coord_equal() +
     ggplot2::theme(legend.position = "right",
                    axis.title.y = ggplot2::element_blank(),
@@ -521,7 +525,7 @@ spacePlot.2d <- function(pu, dp, pu.color.palette, main) {
                                          "Locked In" = pu.color.palette[3])) +
   ggplot2::scale_size_manual(values = c("Locked Out" = 2, "Not Selected" = 2,
                                         "Selected" = 4.5, "Locked In" = 4.5),
-                             guide = FALSE) +
+                             guide = "none") +
   ggplot2::theme_classic() + ggplot2::coord_equal() +
   ggplot2::theme(legend.position = "right",
                  axis.line.y = ggplot2::element_line(),
@@ -535,8 +539,10 @@ spacePlot.2d <- function(pu, dp, pu.color.palette, main) {
 #' @noRd
 spacePlot.3d <- function(pu, dp, pu.color.palette, main) {
   # check if rgl is installed
-  if (!requireNamespace("rgl", quietly = TRUE))
-    stop("The rgl R package must be installed to visualise 3d attribute spaces")
+  assertthat::assert_that(
+    requireNamespace("rgl", quietly = TRUE),
+    msg = "please install the \"rgl\" package"
+  )
   # create frame
   rgl::open3d()
   # add pu points
@@ -646,7 +652,3 @@ dump_object <- function(x, mode = c("numeric", "integer", "character")) {
     return(rcpp_dump_character_object(x))
   }
 }
-
-
-# define function to avoid CRAN check issue
-tmp.function <- rgdal::readOGR

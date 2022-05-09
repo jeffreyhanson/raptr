@@ -6,8 +6,16 @@ NULL
 #' @method sim.space RasterLayer
 #'
 #' @export
-sim.space.RasterLayer <- function(x, d  =2, model = RandomFields::RMgauss(),
-                                  ...) {
+sim.space.RasterLayer <- function(x, d = 2, model = NULL, ...) {
+  # check dependencies are available
+  assertthat::assert_that(
+    requireNamespace("RandomFields", quietly = TRUE),
+    msg = "please install the \"RandomFields\" package"
+  )
+  # update default argument
+  if (is.null(model)) {
+    model <- RandomFields::RMgauss()
+  }
   # generate values for rasters
   valMTX <- RandomFields::RFsimulate(model = model,
                                      methods::as(x, "SpatialPoints")@coords,
@@ -32,7 +40,15 @@ sim.space.RasterLayer <- function(x, d  =2, model = RandomFields::RMgauss(),
 #' @method sim.space SpatialPolygons
 #'
 #' @export
-sim.space.SpatialPolygons <- function(x, res, d = 2,
-                                      model = RandomFields::RMgauss(), ...) {
+sim.space.SpatialPolygons <- function(x, res, d = 2, model = NULL, ...) {
+  # check dependencies are available
+  assertthat::assert_that(
+    requireNamespace("RandomFields", quietly = TRUE),
+    msg = "please install the \"RandomFields\" package"
+  )
+  # update default argument
+  if (is.null(model)) {
+    model <- RandomFields::RMgauss()
+  }
   sim.space.RasterLayer(blank.raster(x, res), d = d, model = model, ...)
 }

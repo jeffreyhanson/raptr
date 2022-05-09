@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.8.0</span>
       </span>
     </div>
 
@@ -60,7 +60,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/jeffreyhanson/raptr/">
+  <a href="https://github.com/jeffreyhanson/raptr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -77,14 +77,14 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="raptr-representative-and-adequate-prioritization-toolkit-in-r" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#raptr-representative-and-adequate-prioritization-toolkit-in-r" class="anchor" aria-hidden="true"></a>raptr: Representative and Adequate Prioritization Toolkit in R</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="raptr-representative-and-adequate-prioritization-toolkit-in-r">raptr: Representative and Adequate Prioritization Toolkit in R<a class="anchor" aria-label="anchor" href="#raptr-representative-and-adequate-prioritization-toolkit-in-r"></a>
+</h1></div>
 
 <p>Biodiversity is in crisis. The overarching aim of conservation is to preserve biodiversity patterns and processes. To this end, protected areas are established to buffer species and preserve biodiversity processes. But resources are limited and so protected areas must be cost-effective. This package contains tools to generate plans for protected areas (prioritizations), using spatially explicit targets for biodiversity patterns and processes. To obtain solutions in a feasible amount of time, this package uses the commercial ‘Gurobi’ software package (obtained from <a href="http://www.gurobi.com/" class="external-link uri">http://www.gurobi.com/</a>). For more information on using this package, see our paper published in Methods in Ecology and Evolution (<a href="http://doi.org/10.1111/2041-210X.12862" class="external-link uri">http://doi.org/10.1111/2041-210X.12862</a>).</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor" aria-hidden="true"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>This package depends on several packages which can be difficult to install under Linux and Mac operating systems.</p>
 <p>Linux (Ubuntu) users can install them typing the following code into the terminal:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>sudo apt<span class="sc">-</span>get update</span>
@@ -102,16 +102,16 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://devtools.r-lib.org/" class="external-link">"devtools"</a></span><span class="op">)</span><span class="op">)</span>
   <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
-<span class="fu">devtools</span><span class="fu">:::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"jeffreyhanson/raptr"</span><span class="op">)</span></code></pre></div>
+<span class="fu">devtools</span><span class="fu">:::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"jeffreyhanson/raptr"</span><span class="op">)</span></code></pre></div>
 <p>Once this package has been installed, you can read through the vignette for a tutorial on how to use it.</p>
 <p><a href="http://jeffrey-hanson.com/raptr/articles/raptr.html" class="external-link">View it here</a>, or by running the R code below.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># open vignette in web browser</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"raptr"</span>, package <span class="op">=</span> <span class="st">"raptr"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="citation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#citation" class="anchor" aria-hidden="true"></a>Citation</h2>
+<div class="section level2">
+<h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h2>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"raptr"</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
@@ -143,19 +143,16 @@
     <div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=raptr">https://​cloud.r-project.org/​package=raptr</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/jeffreyhanson/raptr/">https://​github.com/​jeffreyhanson/​raptr/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/jeffreyhanson/raptr/issues">https://​github.com/​jeffreyhanson/​raptr/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=raptr" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/jeffreyhanson/raptr/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/jeffreyhanson/raptr/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
 <div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
+<li><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></li>
 </ul>
 </div>
 
@@ -163,7 +160,7 @@
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html">Citing raptr</a></li>
+<li><a href="authors.html#citation">Citing raptr</a></li>
 </ul>
 </div>
 
@@ -171,13 +168,13 @@
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="http://jeffrey-hanson.com">Jeffrey O Hanson</a> <br><small class="roles"> Author, maintainer </small>  </li>
+<a href="http://jeffrey-hanson.com" class="external-link">Jeffrey O Hanson</a> <br><small class="roles"> Author, maintainer </small>  </li>
 <li>
-<a href="https://rhodesconservation.com/people/jonathan-rhodes/">Jonathan R Rhodes</a> <br><small class="roles"> Author </small>  </li>
+<a href="https://rhodesconservation.com/people/jonathan-rhodes/" class="external-link">Jonathan R Rhodes</a> <br><small class="roles"> Author </small>  </li>
 <li>
-<a href="http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html">Hugh P Possingham</a> <br><small class="roles"> Author </small>  </li>
+<a href="http://www.possinghamlab.org/people-new/all-lab-members/570-hugh-possingham.html" class="external-link">Hugh P Possingham</a> <br><small class="roles"> Author </small>  </li>
 <li>
-<a href="https://www.fullerlab.org/drrichardfuller/">Richard A Fuller</a> <br><small class="roles"> Author </small>  </li>
+<a href="https://www.fullerlab.org/drrichardfuller/" class="external-link">Richard A Fuller</a> <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
 
@@ -204,7 +201,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>

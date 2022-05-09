@@ -8,20 +8,22 @@
 \usage{
 sim.space(x, ...)
 
-\method{sim.space}{RasterLayer}(x, d = 2, model = RandomFields::RMgauss(), ...)
+\method{sim.space}{RasterLayer}(x, d = 2, model = NULL, ...)
 
-\method{sim.space}{SpatialPolygons}(x, res, d = 2, model = RandomFields::RMgauss(), ...)
+\method{sim.space}{SpatialPolygons}(x, res, d = 2, model = NULL, ...)
 }
 \arguments{
-\item{x}{\code{\link[raster:raster]{raster::raster()}} or \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} object
-delineate the spatial extent to delineate study area.}
+\item{x}{\code{\link[raster:raster]{raster::raster()}} or
+\code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} object delineate the spatial extent to
+delineate study area.}
 
-\item{...}{parameters passed to \code{\link[RandomFields:RandomFields]{RandomFields::RandomFields()}}.}
+\item{...}{parameters passed to \code{RandomFields::RandomFields()}.}
 
 \item{d}{\code{integer} number of dimensions. Defaults to 2.}
 
-\item{model}{\code{\link[RandomFields:RMmodel]{RandomFields::RMmodel()}} model to simulate species
-distributions with. Defaults \code{\link[RandomFields:RPgauss]{RandomFields::RPgauss()}}.}
+\item{model}{\code{RandomFields::RMmodel()} model for simulating species
+distributions.
+Defaults to \code{NULL} such that \code{RandomFields::RMgauss()} is used.}
 
 \item{res}{\code{numeric} resolution to simulate distributions. Only needed
 when \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} supplied.}
@@ -33,11 +35,11 @@ when \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} supplied.}
 This function simulates attribute space data for RAP.
 }
 \details{
-Distributions are simulated by passing \code{model} to
-\code{\link[RandomFields:RFsimulate]{RandomFields::RFsimulate()}}.
+This function requires installation of the \pkg{RandomFields} package.
 }
 \examples{
-# simulate plannign units
+\dontshow{if (requireNamespace("RandomFields", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+# simulate planning units
 sim_pus <- sim.pus(225L)
 
 # simulate 1d space using RasterLayer
@@ -55,8 +57,5 @@ plot(s1, main = "s1")
 plot(s2, main = "s2")
 plot(s3[[1]], main = "s3: first dimension")
 plot(s3[[2]], main = "s3: second dimension")
-
-}
-\seealso{
-\code{\link[RandomFields:RFsimulate]{RandomFields::RFsimulate()}}.
+\dontshow{\}) # examplesIf}
 }

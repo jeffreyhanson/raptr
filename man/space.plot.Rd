@@ -49,10 +49,9 @@ species.}
 
 \item{...}{not used.}
 
-\item{pu.color.palette}{\code{character} name of colors or color palette
-(\code{\link[RColorBrewer:ColorBrewer]{RColorBrewer::brewer.pal()}}) to indicate planning unit
+\item{pu.color.palette}{\code{character} vector of colors indicate planning unit
 statuses. Defaults to \code{c("grey30", "green", "black", "red")} which
-indicate non selected, selected, locked in, and locked out (respectively).}
+indicate not selected, selected, locked in, and locked out (respectively).}
 
 \item{main}{\code{character} title for the plot. Defaults to \code{NULL} and
 a default title is used.}

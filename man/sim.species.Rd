@@ -8,32 +8,23 @@
 \usage{
 sim.species(x, ...)
 
-\method{sim.species}{RasterLayer}(
-  x,
-  n = 1,
-  model = list("uniform", "normal", "bimodal", RandomFields::RPgauss())[[1]],
-  ...
-)
+\method{sim.species}{RasterLayer}(x, n = 1, model = "normal", ...)
 
-\method{sim.species}{SpatialPolygons}(
-  x,
-  res,
-  n = 1,
-  model = list("normal", "uniform", "bimodal", RandomFields::RPgauss())[[1]],
-  ...
-)
+\method{sim.species}{SpatialPolygons}(x, res, n = 1, model = "normal", ...)
 }
 \arguments{
 \item{x}{\code{\link[raster:raster]{raster::raster()}} or
 \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} object delineate the spatial extent to
 delineate study area.}
 
-\item{...}{parameters passed to \code{\link[RandomFields:RandomFields]{RandomFields::RandomFields()}}.}
+\item{...}{parameters passed to \code{RandomFields::RandomFields()}.}
 
 \item{n}{\code{integer} number of species. Defaults to 1.}
 
-\item{model}{\code{\link[RandomFields:RMmodel]{RandomFields::RMmodel()}} model to simulate species
-distributions with. Defaults \code{\link[RandomFields:RPgauss]{RandomFields::RPgauss()}}.}
+\item{model}{\code{character} value or \code{RandomFields::RMmodel()} model for
+simulating species distributions.
+Available \code{character} values include \code{"uniform"}, \code{"normal"}, and
+\code{"bimodal"}. Defaults to \code{"normal"}.}
 
 \item{res}{\code{numeric} resolution to simulate distributions. Only needed
 when \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} supplied.}
@@ -45,11 +36,13 @@ when \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} supplied.}
 This function simulates species distributions for RAP.
 }
 \details{
+This function requires installation of the \pkg{RandomFields} package.
 Distributions are simulated by passing \code{model} to
-\code{\link[RandomFields:RFsimulate]{RandomFields::RFsimulate()}} and converting to logistic values
+\code{RandomFields::RFsimulate()} and converting to logistic values
 using \code{\link[boot:inv.logit]{boot::inv.logit()}}.
 }
 \examples{
+\dontshow{if (requireNamespace("RandomFields", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # make polygons
 sim_pus <- sim.pus(225L)
 
@@ -77,8 +70,5 @@ plot(s2, main = "constant")
 plot(s3, main = "normal")
 plot(s4, main = "bimodal")
 plot(s5, main = "RPgauss()")
-
-}
-\seealso{
-\code{\link[RandomFields:RFsimulate]{RandomFields::RFsimulate()}}.
+\dontshow{\}) # examplesIf}
 }

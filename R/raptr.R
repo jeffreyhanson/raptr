@@ -42,3 +42,7 @@
 #' @docType package
 #' @name raptr
 NULL
+
+# define function to avoid CRAN check issue
+#' @importFrom rgdal readOGR
+NULL

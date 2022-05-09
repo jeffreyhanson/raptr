@@ -13,6 +13,7 @@ test_that("simulate planning units functions", {
 })
 
 test_that("simulate space functions", {
+  skip_if_not_installed("RandomFields")
   # generate planning units
   pus <- sim.pus(n = 225L)
   # generate spaces

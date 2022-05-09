@@ -57,20 +57,22 @@ calcSpeciesAverageInPus <- function(x, ...) UseMethod("calcSpeciesAverageInPus")
 #' @param res `numeric` resolution to simulate distributions. Only needed
 #'   when [sp::SpatialPolygons()] supplied.
 #'
-#' @param model [RandomFields::RMmodel()] model to simulate species
-#'   distributions with. Defaults [RandomFields::RPgauss()].
+#' @param model `character` value or `RandomFields::RMmodel()` model for
+#'   simulating species distributions.
+#'   Available `character` values include `"uniform"`, `"normal"`, and
+#'   `"bimodal"`. Defaults to `"normal"`.
 #'
-#' @param ... parameters passed to [RandomFields::RandomFields()].
+#' @param ... parameters passed to `RandomFields::RandomFields()`.
 #'
-#' @details Distributions are simulated by passing `model` to
-#'   [RandomFields::RFsimulate()] and converting to logistic values
-#'   using [boot::inv.logit()].
+#' @details
+#' This function requires installation of the \pkg{RandomFields} package.
+#' Distributions are simulated by passing `model` to
+#' `RandomFields::RFsimulate()` and converting to logistic values
+#' using [boot::inv.logit()].
 #'
 #' @return [raster::stack()] with layers for each species.
 #'
-#' @seealso [RandomFields::RFsimulate()].
-#'
-#' @examples
+#' @examplesIf requireNamespace("RandomFields", quietly = TRUE)
 #' # make polygons
 #' sim_pus <- sim.pus(225L)
 #'
@@ -106,30 +108,23 @@ sim.species <- function(x, ...) UseMethod("sim.species")
 #'
 #' This function simulates attribute space data for RAP.
 #'
-#' @param x [raster::raster()] or [sp::SpatialPolygons()] object
-#'   delineate the spatial extent to delineate study area.
+#' @inheritParams sim.species
 #'
 #' @param d `integer` number of dimensions. Defaults to 2.
 #'
-#' @param res `numeric` resolution to simulate distributions. Only needed
-#'   when [sp::SpatialPolygons()] supplied.
+#' @param model `RandomFields::RMmodel()` model for simulating species
+#'   distributions.
+#'   Defaults to `NULL` such that `RandomFields::RMgauss()` is used.
 #'
-#' @param model [RandomFields::RMmodel()] model to simulate species
-#'   distributions with. Defaults [RandomFields::RPgauss()].
-#'
-#' @param ... parameters passed to [RandomFields::RandomFields()].
-#'
-#' @details Distributions are simulated by passing `model` to
-#'   [RandomFields::RFsimulate()].
+#' @details
+#' This function requires installation of the \pkg{RandomFields} package.
 #'
 #' @return [raster::stack()] with layers for each dimension of the space.
 #'
-#' @seealso [RandomFields::RFsimulate()].
-#'
 #' @name sim.space
 #'
-#' @examples
-#' # simulate plannign units
+#' @examplesIf requireNamespace("RandomFields", quietly = TRUE)
+#' # simulate planning units
 #' sim_pus <- sim.pus(225L)
 #'
 #' # simulate 1d space using RasterLayer
@@ -234,12 +229,17 @@ NULL
 #'   (see [basemap()]). Valid options include `"none"`,
 #'   `"roadmap"`, `"mobile"`, `"satellite"`, `"terrain"`,
 #'   `"hybrid"`, `"mapmaker-roadmap"`, `"mapmaker-hybrid"`.
-#'   Defaults to `"none"`.
+#'   Defaults to `"none"` such that no basemap is shown.
 #'
-#' @param pu.color.palette `character` name of colors or color palette
-#'   ([RColorBrewer::brewer.pal()]) to indicate planning unit
-#'   statuses. Defaults to `c("grey30", "green", "yellow", "black",
-#'   "gray80", "red", "orange")`.
+#' @param pu.color.palette `character` vector of colors to indicate
+#'   planning unit statuses.
+#'   If plotting selection frequencies (i.e., `j = NULL`), then
+#'   defaults to a `c("PuBu", "#FFFF00", "#FF0000")`.
+#'   Here, the first element corresponds to a color palette
+#'   (per [RColorBrewer::brewer.pal()]) and the last two elements
+#'   indicate the colors for locked in and locked out planning units.
+#'   Otherwise, the parameter defaults to a `character` vector of
+#'   `c("grey30", "green", "yellow", "black", "gray80", "red", "orange")`.
 #'
 #' @param alpha `numeric` value to indicating the transparency level for
 #'   coloring the planning units.
@@ -253,6 +253,10 @@ NULL
 #'   be re-downloaded?
 #'
 #' @name plot
+#'
+#' @details
+#' This function requires the \pkg{RgoogleMaps} package to be installed
+#' in order to create display a basemap.
 #'
 #' @seealso [RapSolved()].
 #'
@@ -299,7 +303,6 @@ NULL
 #'
 #' # show new names
 #' names(sim_rs)
-#'
 NULL
 
 #' Print objects
@@ -1023,6 +1026,8 @@ SpatialPolygons2PolySet <- function(x, n_preallocate)
 #'
 #' This function plots the distribution of species across the study area.
 #'
+#' @inheritParams plot
+#'
 #' @param x [RapData()], [RapUnsolved()], or
 #'   [RapSolved()] object.
 #'
@@ -1037,29 +1042,13 @@ SpatialPolygons2PolySet <- function(x, n_preallocate)
 #'   probability of occupancy of the species in planning units (see
 #'   [RColorBrewer::brewer.pal()]). Defaults to `"YlGnBu"`.
 #'
-#' @param pu.color.palette `character` name of colors or color palette
-#'   ([RColorBrewer::brewer.pal()]) to indicate planning unit
-#'   statuses. Defaults to `c("grey30", "green", "black", "red")` which
-#'   indicate non selected, selected, locked in, and locked out (respectively).
-#'
-#' @param basemap `character` object indicating the type of basemap to use
-#'   (see [basemap()]). Valid options include `"none"`,
-#'   `"roadmap"`, `"mobile"`, `"satellite"`, `"terrain"`,
-#'   `"hybrid"`, `"mapmaker-roadmap"`, `"mapmaker-hybrid"`.
-#'   Defaults to `"none"`.
-#'
-#' @param alpha `numeric` value to indicating the transparency level for
-#'   plotting the planning units.
-#'
-#' @param grayscale `logical` should the basemap be gray-scaled?
-#'
-#' @param main `character` title for the plot. Defaults to `NULL` and
-#'   a default title is used.
-#'
-#' @param force.reset `logical` if basemap data has been cached, should it
-#'   be re-downloaded?
+#' @param pu.color.palette `character` vector of colors to indicate planning
+#'   unit statuses. Defaults to `c("grey30", "green", "black", "red")` which
+#'   indicate not selected, selected, locked in, and locked out (respectively).
 #'
 #' @param ... not used.
+#'
+#' @inherit plot details
 #'
 #' @examples
 #' # load RapSolved objects
@@ -1092,10 +1081,9 @@ spp.plot <- function(x, species, ...) UseMethod("spp.plot")
 #' @param y `integer` number specifying the solution to be plotted. The
 #'   value `0` can be used to plot the best solution.
 #'
-#' @param pu.color.palette `character` name of colors or color palette
-#'   ([RColorBrewer::brewer.pal()]) to indicate planning unit
+#' @param pu.color.palette `character` vector of colors indicate planning unit
 #'   statuses. Defaults to `c("grey30", "green", "black", "red")` which
-#'   indicate non selected, selected, locked in, and locked out (respectively).
+#'   indicate not selected, selected, locked in, and locked out (respectively).
 #'
 #' @param main `character` title for the plot. Defaults to `NULL` and
 #'   a default title is used.

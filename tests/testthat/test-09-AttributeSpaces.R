@@ -21,6 +21,6 @@ test_that("AttributeSpaces generator function", {
     species = 2L)
   # checks are internal
   sps1 <- AttributeSpaces(list(sp1, sp2), "test")
-  print(sps1)
+  suppressMessages(print(sps1))
   expect_true(methods::validObject(sps1, test = FALSE))
 })

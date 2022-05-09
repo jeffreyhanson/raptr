@@ -11,6 +11,6 @@ test_that("AttributeSpace generator function", {
       points = randomPoints(cs_spp[[1]], n = 100, prob = TRUE)),
     species = 1L)
   # checks are internal
-  print(x)
+  suppressMessages(print(x))
   expect_true(methods::validObject(x, test = FALSE))
 })

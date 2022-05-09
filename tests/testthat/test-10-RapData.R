@@ -27,7 +27,7 @@ test_that("RapData", {
   # tests are implicit in the validity method when creating the object
   # execute basic methods
   x
-  print(x)
+  suppressMessages(print(x))
   expect_true(methods::validObject(x, test = FALSE))
 })
 

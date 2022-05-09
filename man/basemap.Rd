@@ -32,6 +32,6 @@ This function retrieves google map data for planning units. The google map
 data is cached to provide fast plotting capabilities.
 }
 \seealso{
-\code{\link[RgoogleMaps:GetMap.bbox]{RgoogleMaps::GetMap.bbox()}}, \code{\link[=plot]{plot()}}.
+\code{RgoogleMaps::GetMap.bbox()}, \code{\link[=plot]{plot()}}.
 }
 \keyword{internal}
