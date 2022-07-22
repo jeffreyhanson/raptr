@@ -10,8 +10,7 @@
 #' solve the optimization problems in a feasible amount of time, this package
 #' uses the commercial 'Gurobi' software package (obtained from
 #' <https://www.gurobi.com/>). For more information on using
-#' this package, see Hanson et al. (2018)
-#' (<https://doi.org/10.1111/2041-210X.12862>).
+#' this package, see Hanson et al. (2018).
 #'
 #' The main classes used in this package are used to store input data and
 #' prioritizations:
@@ -38,6 +37,12 @@
 #' }
 #'
 #' Type `vignette("raptr")` for a tutorial on how to use this package.
+#'
+#' @references
+#' Hanson JO, Rhodes JR, Possingham HP & Fuller RA (2018)
+#' raptr: Representative and Adequate Prioritization",
+#' Toolkit in R. _Methods in Ecology & Evolution_,",
+#' **9**: 320--330. DOI: 10.1111/2041-210X.12862.
 #'
 #' @docType package
 #' @name raptr
