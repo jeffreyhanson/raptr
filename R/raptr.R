@@ -45,4 +45,5 @@ NULL
 
 # define function to avoid CRAN check issue
 #' @importFrom rgdal readOGR
+#' @importFrom withr with_locale
 NULL

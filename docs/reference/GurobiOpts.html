@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.0</span>
       </span>
     </div>
 
@@ -56,16 +56,16 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">GurobiOpts</span><span class="op">(</span>
-  Threads <span class="op">=</span> <span class="fl">1L</span>,
-  MIPGap <span class="op">=</span> <span class="fl">0.1</span>,
-  Method <span class="op">=</span> <span class="fl">0L</span>,
-  Presolve <span class="op">=</span> <span class="fl">2L</span>,
-  TimeLimit <span class="op">=</span> <span class="cn">NA_integer_</span>,
-  NumberSolutions <span class="op">=</span> <span class="fl">1L</span>,
-  MultipleSolutionsMethod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"benders.cuts"</span>, <span class="st">"solution.pool.0"</span>, <span class="st">"solution.pool.1"</span>,
-    <span class="st">"solution.pool.2"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">GurobiOpts</span><span class="op">(</span></span>
+<span>  Threads <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>  MIPGap <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>  Method <span class="op">=</span> <span class="fl">0L</span>,</span>
+<span>  Presolve <span class="op">=</span> <span class="fl">2L</span>,</span>
+<span>  TimeLimit <span class="op">=</span> <span class="cn">NA_integer_</span>,</span>
+<span>  NumberSolutions <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>  MultipleSolutionsMethod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"benders.cuts"</span>, <span class="st">"solution.pool.0"</span>, <span class="st">"solution.pool.1"</span>,</span>
+<span>    <span class="st">"solution.pool.2"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -73,21 +73,33 @@
     <dl><dt>Threads</dt>
 <dd><p><code>integer</code> number of cores to use for processing.
 Defaults to 1L.</p></dd>
+
+
 <dt>MIPGap</dt>
 <dd><p><code>numeric</code> MIP gap specifying minimum solution quality.
 Defaults to 0.1.</p></dd>
+
+
 <dt>Method</dt>
 <dd><p><code>integer</code> Algorithm to use for solving model. Defaults to
 0L.</p></dd>
+
+
 <dt>Presolve</dt>
 <dd><p><code>integer</code> code for level of computation in presolve
 (lp_solve parameter). Defaults to 2.</p></dd>
+
+
 <dt>TimeLimit</dt>
 <dd><p><code>integer</code> number of seconds to allow for solving.
 Defaults to <code>NA_integer_</code>, and so a time limit is not imposed.</p></dd>
+
+
 <dt>NumberSolutions</dt>
 <dd><p><code>integer</code> number of solutions to generate.
 Defaults to 1L.</p></dd>
+
+
 <dt>MultipleSolutionsMethod</dt>
 <dd><p><code>integer</code> name of method to obtain
 multiple solutions (used when <code>NumberSolutions</code> is greater than one).
@@ -105,10 +117,13 @@ specified number of solutions that are nearest to optimality. The
 search pool methods correspond to the parameters used by the Gurobi
 software suite (see <a href="https://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode" class="external-link">https://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode</a>).
 Defaults to <code>"benders.cuts"</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>GurobiOpts</code> object</p>
+    
+
+<p><code>GurobiOpts</code> object</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -117,9 +132,9 @@ Defaults to <code>"benders.cuts"</code>.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># create GurobiOpts object using default parameters</span></span>
-<span class="r-in"><span class="fu">GurobiOpts</span><span class="op">(</span>Threads <span class="op">=</span> <span class="fl">1L</span>, MIPGap <span class="op">=</span> <span class="fl">0.1</span>, Method <span class="op">=</span> <span class="fl">0L</span>, Presolve<span class="op">=</span><span class="fl">2L</span>,</span>
-<span class="r-in">           TimeLimit <span class="op">=</span> <span class="cn">NA_integer_</span>, NumberSolutions <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># create GurobiOpts object using default parameters</span></span></span>
+<span class="r-in"><span><span class="fu">GurobiOpts</span><span class="op">(</span>Threads <span class="op">=</span> <span class="fl">1L</span>, MIPGap <span class="op">=</span> <span class="fl">0.1</span>, Method <span class="op">=</span> <span class="fl">0L</span>, Presolve<span class="op">=</span><span class="fl">2L</span>,</span></span>
+<span class="r-in"><span>           TimeLimit <span class="op">=</span> <span class="cn">NA_integer_</span>, NumberSolutions <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> GurobiOpts object.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Threads: 1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   MIPGap: 0.1</span>
@@ -128,7 +143,7 @@ Defaults to <code>"benders.cuts"</code>.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   TimeLimit: NA</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   NumberSolutions: 1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   MultipleSolutionsMethod: benders.cuts</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -143,7 +158,7 @@ Defaults to <code>"benders.cuts"</code>.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

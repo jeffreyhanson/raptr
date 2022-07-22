@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.0</span>
       </span>
     </div>
 
@@ -56,34 +56,41 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cache</span><span class="op">(</span><span class="va">x</span>, <span class="va">name</span>, <span class="va">y</span><span class="op">)</span>
-
-<span class="co"># S4 method for RapData,character,ANY</span>
-<span class="fu">cache</span><span class="op">(</span><span class="va">x</span>, <span class="va">name</span>, <span class="va">y</span><span class="op">)</span>
-
-<span class="co"># S4 method for RapData,character,missing</span>
-<span class="fu">cache</span><span class="op">(</span><span class="va">x</span>, <span class="va">name</span>, <span class="va">y</span><span class="op">)</span>
-
-<span class="co"># S4 method for RapResults,character,ANY</span>
-<span class="fu">cache</span><span class="op">(</span><span class="va">x</span>, <span class="va">name</span>, <span class="va">y</span><span class="op">)</span>
-
-<span class="co"># S4 method for RapResults,character,missing</span>
-<span class="fu">cache</span><span class="op">(</span><span class="va">x</span>, <span class="va">name</span>, <span class="va">y</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cache</span><span class="op">(</span><span class="va">x</span>, <span class="va">name</span>, <span class="va">y</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for RapData,character,ANY</span></span>
+<span><span class="fu">cache</span><span class="op">(</span><span class="va">x</span>, <span class="va">name</span>, <span class="va">y</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for RapData,character,missing</span></span>
+<span><span class="fu">cache</span><span class="op">(</span><span class="va">x</span>, <span class="va">name</span>, <span class="va">y</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for RapResults,character,ANY</span></span>
+<span><span class="fu">cache</span><span class="op">(</span><span class="va">x</span>, <span class="va">name</span>, <span class="va">y</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for RapResults,character,missing</span></span>
+<span><span class="fu">cache</span><span class="op">(</span><span class="va">x</span>, <span class="va">name</span>, <span class="va">y</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p><code>RapData</code> or <code>RapResults</code> object</p></dd>
+
+
 <dt>name</dt>
 <dd><p><code>character</code> hash.</p></dd>
+
+
 <dt>y</dt>
 <dd><p>if <code>ANY</code> this object gets cached with name, else if
 <code>missing</code> the object hashed at name gets returned.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>ANY</code> or <code>NULL</code> depends on <code>y</code> argument.</p>
+    
+
+<p><code>ANY</code> or <code>NULL</code> depends on <code>y</code> argument.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -103,7 +110,7 @@ name of the object in the environment.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

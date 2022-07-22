@@ -652,3 +652,49 @@ dump_object <- function(x, mode = c("numeric", "integer", "character")) {
     return(rcpp_dump_character_object(x))
   }
 }
+
+#' Simulate a Gaussian random field
+#'
+#' @param n `integer` Number of simulations to generate.
+#'
+#' @param coords `matrix` Matrix containing coordinates for simulating data.
+#'
+#' @param mu `numeric` Parameter for Gaussian simulations.
+#'
+#' @param scale `numeric` Parameter for Gaussian simulations.
+#'
+#' @details
+#' This function is largely inspired by: https://rpubs.com/jguelat/autocorr.
+#'
+#' @return `matrix` object with simulations.
+#'
+#' @noRd
+simulate_gaussian_random_field <- function(n, coords, mu, scale) {
+  # assert valid arguments
+  assertthat::assert_that(
+    assertthat::is.count(n),
+    assertthat::noNA(n),
+    is.matrix(coords),
+    assertthat::noNA(c(coords)),
+    nrow(coords) >= 1,
+    ncol(coords) == 2,
+    assertthat::is.number(mu),
+    assertthat::noNA(mu),
+    assertthat::is.number(scale),
+    assertthat::noNA(scale)
+  )
+  # main processing
+  mu <- rep(0, nrow(coords))
+  p <- nrow(coords)
+  chol_d <- chol(exp(-scale * as.matrix(stats::dist(coords))))
+  out <- t(
+    matrix(stats::rnorm(n * p), ncol = p) %*%
+    chol_d + rep(mu, rep(n, p))
+  )
+  # ensure matrix output
+  if (!is.matrix(out)) {
+    out <- matrix(out, ncol = 1)
+  }
+  # return result
+  out
+}

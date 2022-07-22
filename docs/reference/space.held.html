@@ -18,7 +18,7 @@ solution."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/m
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.0</span>
       </span>
     </div>
 
@@ -58,30 +58,39 @@ solution.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">space.held</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">species</span>, <span class="va">space</span><span class="op">)</span>
-
-<span class="co"># S3 method for RapSolved</span>
-<span class="fu">space.held</span><span class="op">(</span><span class="va">x</span>, y <span class="op">=</span> <span class="fl">0</span>, species <span class="op">=</span> <span class="cn">NULL</span>, space <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">space.held</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">species</span>, <span class="va">space</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for RapSolved</span></span>
+<span><span class="fu">space.held</span><span class="op">(</span><span class="va">x</span>, y <span class="op">=</span> <span class="fl">0</span>, species <span class="op">=</span> <span class="cn">NULL</span>, space <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p><code><a href="RapResults.html">RapResults()</a></code> or <code><a href="RapSolved.html">RapSolved()</a></code> object.</p></dd>
+
+
 <dt>y</dt>
 <dd><p>Available inputs include: <code>NULL</code> to return all values,
 <code>integer</code> number specifying the solution for which the value should
 be returned, and <code>0</code> to return the value for the best solution.</p></dd>
+
+
 <dt>species</dt>
 <dd><p><code>NULL</code> for all species or <code>integer</code> indicating
 species.</p></dd>
+
+
 <dt>space</dt>
 <dd><p><code>NULL</code> for all spaces or <code>integer</code> indicating a
 specific space.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>codematrix object.</p>
+    
+
+<p>codematrix object.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -90,24 +99,24 @@ specific space.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># load data</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sim_rs</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># space held (%) for each species in best solution</span></span>
-<span class="r-in"><span class="fu">space.held</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="fl">0</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># load data</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sim_rs</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># space held (%) for each species in best solution</span></span></span>
+<span class="r-in"><span><span class="fu">space.held</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   uniform (Space 1) normal (Space 1) bimodal (Space 1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1         0.9254545        0.9057832          0.927655</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># space held (%) for each species in second solution</span></span>
-<span class="r-in"><span class="fu">space.held</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># space held (%) for each species in second solution</span></span></span>
+<span class="r-in"><span><span class="fu">space.held</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   uniform (Space 1) normal (Space 1) bimodal (Space 1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1         0.9321212         0.912883         0.9336119</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># space held (%) for each species in each solution</span></span>
-<span class="r-in"><span class="fu">space.held</span><span class="op">(</span><span class="va">sim_rs</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># space held (%) for each species in each solution</span></span></span>
+<span class="r-in"><span><span class="fu">space.held</span><span class="op">(</span><span class="va">sim_rs</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   uniform (Space 1) normal (Space 1) bimodal (Space 1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1         0.9254545        0.9057832          0.927655</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -122,7 +131,7 @@ specific space.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

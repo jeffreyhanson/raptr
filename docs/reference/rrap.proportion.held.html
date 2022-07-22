@@ -19,7 +19,7 @@ the reliable formulation."><!-- mathjax --><script src="https://cdnjs.cloudflare
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.0</span>
       </span>
     </div>
 
@@ -60,14 +60,14 @@ the reliable formulation.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">rrap.proportion.held</span><span class="op">(</span>
-  <span class="va">pu.coordinates</span>,
-  <span class="va">pu.probabilities</span>,
-  <span class="va">dp.coordinates</span>,
-  <span class="va">dp.weights</span>,
-  <span class="va">failure.distance</span>,
-  maximum.r.level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">pu.probabilities</span><span class="op">)</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rrap.proportion.held</span><span class="op">(</span></span>
+<span>  <span class="va">pu.coordinates</span>,</span>
+<span>  <span class="va">pu.probabilities</span>,</span>
+<span>  <span class="va">dp.coordinates</span>,</span>
+<span>  <span class="va">dp.weights</span>,</span>
+<span>  <span class="va">failure.distance</span>,</span>
+<span>  maximum.r.level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">pu.probabilities</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -75,31 +75,44 @@ the reliable formulation.</p>
     <dl><dt>pu.coordinates</dt>
 <dd><p><code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">base::matrix()</a></code> of planning unit
 coordinates.</p></dd>
+
+
 <dt>pu.probabilities</dt>
 <dd><p><code>numeric</code> vector of planning unit probabilities.</p></dd>
+
+
 <dt>dp.coordinates</dt>
 <dd><p><code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">base::matrix()</a></code> of demand point coordinates.</p></dd>
+
+
 <dt>dp.weights</dt>
 <dd><p><code>numeric</code> vector of demand point weights.</p></dd>
+
+
 <dt>failure.distance</dt>
 <dd><p><code>numeric</code> indicating the cost of the failure
 planning unit.</p></dd>
+
+
 <dt>maximum.r.level</dt>
 <dd><p><code>integer</code> maximum failure (R) level to use for
 calculations.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>numeric</code> value indicating the proportion of variation that the
+    
+
+<p><code>numeric</code> value indicating the proportion of variation that the
 demand points explain in the planning units</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">rrap.proportion.held</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="op">-</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span>,</span>
-<span class="r-in">                     <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">-</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">rrap.proportion.held</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="op">-</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                     <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">-</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.2942336</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -114,7 +127,7 @@ demand points explain in the planning units</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

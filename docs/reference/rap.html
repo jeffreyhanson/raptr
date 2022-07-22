@@ -18,7 +18,7 @@ to generate solutions."><!-- mathjax --><script src="https://cdnjs.cloudflare.co
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.0</span>
       </span>
     </div>
 
@@ -58,14 +58,14 @@ to generate solutions.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">rap</span><span class="op">(</span>
-  <span class="va">pus</span>,
-  <span class="va">species</span>,
-  spaces <span class="op">=</span> <span class="cn">NULL</span>,
-  formulation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"unreliable"</span>, <span class="st">"reliable"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,
-  solve <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rap</span><span class="op">(</span></span>
+<span>  <span class="va">pus</span>,</span>
+<span>  <span class="va">species</span>,</span>
+<span>  spaces <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  formulation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"unreliable"</span>, <span class="st">"reliable"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
+<span>  solve <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -73,27 +73,40 @@ to generate solutions.</p>
     <dl><dt>pus</dt>
 <dd><p><code><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">sp::SpatialPolygons()</a></code> object representing planning
 units.</p></dd>
+
+
 <dt>species</dt>
 <dd><p><code><a href="https://rdrr.io/pkg/raster/man/raster.html" class="external-link">raster::raster()</a></code> object with species distribution
 data.</p></dd>
+
+
 <dt>spaces</dt>
 <dd><p><code>list</code> of <code><a href="https://rdrr.io/pkg/raster/man/raster.html" class="external-link">raster::raster()</a></code> objects. Each
 elements denotes the spatial distribution for each space. Defaults to
 <code>NULL</code>.</p></dd>
+
+
 <dt>formulation</dt>
 <dd><p><code>character</code> to indicate if the <code>"unreliable"</code> or
 <code>"reliable"</code> formulation should be used to generate prioritizations.
 Defaults to <code>"unreliable"</code>.</p></dd>
+
+
 <dt>solve</dt>
 <dd><p><code>logical</code> should solutions be generated?</p></dd>
+
+
 <dt>...</dt>
 <dd><p>arguments are passed to <code><a href="GurobiOpts.html">GurobiOpts()</a></code>,
 <code><a href="make.RapData.html">make.RapData()</a></code>, and <code><a href="RapReliableOpts.html">RapReliableOpts()</a></code> or
 <code><a href="RapUnreliableOpts.html">RapUnreliableOpts()</a></code> functions.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code><a href="RapSolved.html">RapSolved()</a></code> object if <code>solve</code> is <code>TRUE</code>,
+    
+
+<p><code><a href="RapSolved.html">RapSolved()</a></code> object if <code>solve</code> is <code>TRUE</code>,
 otherwise an <code><a href="RapUnsolved.html">RapUnsolved()</a></code> is returned.</p>
     </div>
     <div id="note">
@@ -121,7 +134,7 @@ tutorial.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

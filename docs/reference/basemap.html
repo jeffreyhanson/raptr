@@ -18,7 +18,7 @@ data is cached to provide fast plotting capabilities."><!-- mathjax --><script s
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.0</span>
       </span>
     </div>
 
@@ -58,32 +58,41 @@ data is cached to provide fast plotting capabilities.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">basemap</span><span class="op">(</span><span class="va">x</span>, basemap <span class="op">=</span> <span class="st">"hybrid"</span>, grayscale <span class="op">=</span> <span class="cn">FALSE</span>, force.reset <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="co"># S3 method for RapData</span>
-<span class="fu">basemap</span><span class="op">(</span><span class="va">x</span>, basemap <span class="op">=</span> <span class="st">"hybrid"</span>, grayscale <span class="op">=</span> <span class="cn">FALSE</span>, force.reset <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="co"># S3 method for RapSolved</span>
-<span class="fu">basemap</span><span class="op">(</span><span class="va">x</span>, basemap <span class="op">=</span> <span class="st">"none"</span>, grayscale <span class="op">=</span> <span class="cn">FALSE</span>, force.reset <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">basemap</span><span class="op">(</span><span class="va">x</span>, basemap <span class="op">=</span> <span class="st">"hybrid"</span>, grayscale <span class="op">=</span> <span class="cn">FALSE</span>, force.reset <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for RapData</span></span>
+<span><span class="fu">basemap</span><span class="op">(</span><span class="va">x</span>, basemap <span class="op">=</span> <span class="st">"hybrid"</span>, grayscale <span class="op">=</span> <span class="cn">FALSE</span>, force.reset <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for RapSolved</span></span>
+<span><span class="fu">basemap</span><span class="op">(</span><span class="va">x</span>, basemap <span class="op">=</span> <span class="st">"none"</span>, grayscale <span class="op">=</span> <span class="cn">FALSE</span>, force.reset <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p><code>RapData</code>, <code>RapUnsolved</code>, <code>RapSolved</code> object.</p></dd>
+
+
 <dt>basemap</dt>
 <dd><p><code>character</code> type of base map to display. Valid names are
 <code>"roadmap"</code>, <code>"mobile"</code>, <code>"satellite"</code>, <code>"terrain"</code>,
 <code>"hybrid"</code>, <code>"mapmaker-roadmap"</code>, <code>"mapmaker-hybrid"</code>.</p></dd>
+
+
 <dt>grayscale</dt>
 <dd><p><code>logical</code> should base map be gray scale?</p></dd>
+
+
 <dt>force.reset</dt>
 <dd><p><code>logical</code> ignore data in cache? Setting this as
 ignore will make function slower but may avoid bugs in cache system.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>list</code> with google map data.</p>
+    
+
+<p><code>list</code> with google map data.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -102,7 +111,7 @@ ignore will make function slower but may avoid bugs in cache system.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

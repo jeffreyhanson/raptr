@@ -7,17 +7,18 @@ NULL
 #'
 #' @export
 sim.species.RasterLayer <- function(x, n = 1, model = "normal", ...) {
+  assertthat::assert_that(
+    length(list(...)) == 0,
+    msg = c(
+      "additional arguments should not be supplied because they are not used."
+    )
+  )
   # initialize output
   ret <- list()
   # generate raster layers
-  if (inherits(model, "RMmodel")) {
-    ## check dependencies are available
-    assertthat::assert_that(
-      requireNamespace("RandomFields", quietly = TRUE),
-      msg = "please install the \"RandomFields\" package"
-    )
+  if (inherits(model, "numeric")) {
     ## simulate data
-    x <- sim.space(x, d = n, ...)
+    x <- sim.space(x, d = n, scale = model, ...)
     for (i in seq_len(raster::nlayers(x)))
       ret[[i]] <- raster::setValues(x[[i]],
                                     boot::inv.logit(raster::getValues(x[[i]])))

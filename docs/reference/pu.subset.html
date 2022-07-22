@@ -18,7 +18,7 @@ RapUnsolved(), or RapSolved() object."><!-- mathjax --><script src="https://cdnj
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.0</span>
       </span>
     </div>
 
@@ -58,13 +58,13 @@ RapUnsolved(), or RapSolved() object."><!-- mathjax --><script src="https://cdnj
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">pu.subset</span><span class="op">(</span><span class="va">x</span>, <span class="va">pu</span><span class="op">)</span>
-
-<span class="co"># S3 method for RapData</span>
-<span class="fu">pu.subset</span><span class="op">(</span><span class="va">x</span>, <span class="va">pu</span><span class="op">)</span>
-
-<span class="co"># S3 method for RapUnsolOrSol</span>
-<span class="fu">pu.subset</span><span class="op">(</span><span class="va">x</span>, <span class="va">pu</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pu.subset</span><span class="op">(</span><span class="va">x</span>, <span class="va">pu</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for RapData</span></span>
+<span><span class="fu">pu.subset</span><span class="op">(</span><span class="va">x</span>, <span class="va">pu</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for RapUnsolOrSol</span></span>
+<span><span class="fu">pu.subset</span><span class="op">(</span><span class="va">x</span>, <span class="va">pu</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -72,13 +72,18 @@ RapUnsolved(), or RapSolved() object."><!-- mathjax --><script src="https://cdnj
     <dl><dt>x</dt>
 <dd><p><code><a href="RapData.html">RapData()</a></code>, <code><a href="RapUnsolved.html">RapUnsolved()</a></code>, or
 <code><a href="RapSolved.html">RapSolved()</a></code> object.</p></dd>
+
+
 <dt>pu</dt>
 <dd><p><code>integer</code> vector to specify the index of planning units to
 subset.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code><a href="RapData.html">RapData()</a></code> or <code><a href="RapUnsolved.html">RapUnsolved()</a></code> object depending
+    
+
+<p><code><a href="RapData.html">RapData()</a></code> or <code><a href="RapUnsolved.html">RapUnsolved()</a></code> object depending
 on input object.</p>
     </div>
     <div id="see-also">
@@ -89,12 +94,12 @@ on input object.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># load data</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sim_ru</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># generate new object with first 10 planning units</span></span>
-<span class="r-in"><span class="va">sim_ru2</span> <span class="op">&lt;-</span> <span class="fu">pu.subset</span><span class="op">(</span><span class="va">sim_ru</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># load data</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sim_ru</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># generate new object with first 10 planning units</span></span></span>
+<span class="r-in"><span><span class="va">sim_ru2</span> <span class="op">&lt;-</span> <span class="fu">pu.subset</span><span class="op">(</span><span class="va">sim_ru</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -109,7 +114,7 @@ on input object.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

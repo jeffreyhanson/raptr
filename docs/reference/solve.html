@@ -19,7 +19,7 @@ RapSolved() object with outputs in it."><!-- mathjax --><script src="https://cdn
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.0</span>
       </span>
     </div>
 
@@ -60,40 +60,49 @@ and data stored in a <code><a href="RapUnsolved.html">RapUnsolved()</a></code> o
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S4 method for RapUnsolOrSol,missing</span>
-<span class="fu">solve</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">...</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="co"># S4 method for RapUnsolOrSol,GurobiOpts</span>
-<span class="fu">solve</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="co"># S4 method for RapUnsolOrSol,matrix</span>
-<span class="fu">solve</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="co"># S4 method for RapUnsolOrSol,numeric</span>
-<span class="fu">solve</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="co"># S4 method for RapUnsolOrSol,logical</span>
-<span class="fu">solve</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S4 method for RapUnsolOrSol,missing</span></span>
+<span><span class="fu">solve</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">...</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for RapUnsolOrSol,GurobiOpts</span></span>
+<span><span class="fu">solve</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for RapUnsolOrSol,matrix</span></span>
+<span><span class="fu">solve</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for RapUnsolOrSol,numeric</span></span>
+<span><span class="fu">solve</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for RapUnsolOrSol,logical</span></span>
+<span><span class="fu">solve</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>a</dt>
 <dd><p><code><a href="RapUnsolved.html">RapUnsolved()</a></code> or <code><a href="RapSolved.html">RapSolved()</a></code> object.</p></dd>
+
+
 <dt>b</dt>
 <dd><p><code>missing</code> to generate solutions using Gurobi. Prioritizations
 can be specified using  <code>logical</code>, <code>numeric</code>, or
 <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">base::matrix()</a></code> objects. This may be useful for evaluating the
 performance of solutions obtained using other software.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>not used.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p><code>logical</code> should messages be printed during creation of
 the initial model matrix?.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code><a href="RapSolved.html">RapSolved()</a></code> object</p>
+    
+
+<p><code><a href="RapSolved.html">RapSolved()</a></code> object</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -108,25 +117,25 @@ provides a more general interface for generating inputs and outputs.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># load RapUnsolved object</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sim_ru</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># \dontrun{</span></span>
-<span class="r-in"><span class="co"># solve it using Gurobi</span></span>
-<span class="r-in"><span class="va">sim_rs</span> <span class="op">&lt;-</span> <span class="fu">solve</span><span class="op">(</span><span class="va">sim_ru</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># evaluate manually specified solution using planning unit indices</span></span>
-<span class="r-in"><span class="va">sim_rs2</span> <span class="op">&lt;-</span> <span class="fu">solve</span><span class="op">(</span><span class="va">sim_ru</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># load RapUnsolved object</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sim_ru</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># solve it using Gurobi</span></span></span>
+<span class="r-in"><span><span class="va">sim_rs</span> <span class="op">&lt;-</span> <span class="fu">solve</span><span class="op">(</span><span class="va">sim_ru</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># evaluate manually specified solution using planning unit indices</span></span></span>
+<span class="r-in"><span><span class="va">sim_rs2</span> <span class="op">&lt;-</span> <span class="fu">solve</span><span class="op">(</span><span class="va">sim_ru</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>some species have space.held values less than 0, and thus are poorly represented</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># evaluate manually specifed solution using binary selections</span></span>
-<span class="r-in"><span class="va">sim_rs3</span> <span class="op">&lt;-</span> <span class="fu">solve</span><span class="op">(</span><span class="va">sim_ru</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">90</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># evaluate manually specifed solution using binary selections</span></span></span>
+<span class="r-in"><span><span class="va">sim_rs3</span> <span class="op">&lt;-</span> <span class="fu">solve</span><span class="op">(</span><span class="va">sim_ru</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">90</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>some species have space.held values less than 0, and thus are poorly represented</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#  evaluate multiple manually specified solutions</span></span>
-<span class="r-in"><span class="va">sim_rs4</span> <span class="op">&lt;-</span> <span class="fu">solve</span><span class="op">(</span><span class="va">sim_ru</span>, <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">500</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span class="r-in">                 ncol <span class="op">=</span> <span class="fl">100</span>, nrow <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#  evaluate multiple manually specified solutions</span></span></span>
+<span class="r-in"><span><span class="va">sim_rs4</span> <span class="op">&lt;-</span> <span class="fu">solve</span><span class="op">(</span><span class="va">sim_ru</span>, <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">500</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 ncol <span class="op">=</span> <span class="fl">100</span>, nrow <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -141,7 +150,7 @@ provides a more general interface for generating inputs and outputs.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

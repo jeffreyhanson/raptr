@@ -18,7 +18,7 @@ object."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mat
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.0</span>
       </span>
     </div>
 
@@ -58,22 +58,29 @@ object.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">randomPoints</span><span class="op">(</span><span class="va">mask</span>, <span class="va">n</span>, prob <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">randomPoints</span><span class="op">(</span><span class="va">mask</span>, <span class="va">n</span>, prob <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>mask</dt>
 <dd><p><code><a href="https://rdrr.io/pkg/raster/man/raster.html" class="external-link">raster::raster()</a></code> object</p></dd>
+
+
 <dt>n</dt>
 <dd><p><code>integer</code> number of points to sample</p></dd>
+
+
 <dt>prob</dt>
 <dd><p><code>logical</code> should the raster values be used as weights?
 Defaults to <code>FALSE</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">base::matrix()</a></code> with x-coordinates, y-coordinates, and
+    
+
+<p><code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">base::matrix()</a></code> with x-coordinates, y-coordinates, and
 cell values.</p>
     </div>
     <div id="see-also">
@@ -83,20 +90,20 @@ cell values.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># simulate data</span></span>
-<span class="r-in"><span class="va">sim_pus</span> <span class="op">&lt;-</span> <span class="fu"><a href="sim.pus.html">sim.pus</a></span><span class="op">(</span><span class="fl">225L</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sim_spp</span> <span class="op">&lt;-</span> <span class="fu"><a href="sim.species.html">sim.species</a></span><span class="op">(</span><span class="va">sim_pus</span>, model <span class="op">=</span> <span class="st">"normal"</span>, n <span class="op">=</span> <span class="fl">1</span>, res <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># generate points</span></span>
-<span class="r-in"><span class="va">pts1</span> <span class="op">&lt;-</span> <span class="fu">randomPoints</span><span class="op">(</span><span class="va">sim_spp</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pts2</span> <span class="op">&lt;-</span> <span class="fu">randomPoints</span><span class="op">(</span><span class="va">sim_spp</span>, n <span class="op">=</span> <span class="fl">5</span>, prob <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># plot points</span></span>
-<span class="r-in"><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">sim_spp</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">pts1</span>, col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">pts2</span>, col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># simulate data</span></span></span>
+<span class="r-in"><span><span class="va">sim_pus</span> <span class="op">&lt;-</span> <span class="fu"><a href="sim.pus.html">sim.pus</a></span><span class="op">(</span><span class="fl">225L</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sim_spp</span> <span class="op">&lt;-</span> <span class="fu"><a href="sim.species.html">sim.species</a></span><span class="op">(</span><span class="va">sim_pus</span>, model <span class="op">=</span> <span class="st">"normal"</span>, n <span class="op">=</span> <span class="fl">1</span>, res <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># generate points</span></span></span>
+<span class="r-in"><span><span class="va">pts1</span> <span class="op">&lt;-</span> <span class="fu">randomPoints</span><span class="op">(</span><span class="va">sim_spp</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pts2</span> <span class="op">&lt;-</span> <span class="fu">randomPoints</span><span class="op">(</span><span class="va">sim_spp</span>, n <span class="op">=</span> <span class="fl">5</span>, prob <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># plot points</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">sim_spp</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">pts1</span>, col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">pts2</span>, col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="randomPoints-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -111,7 +118,7 @@ cell values.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

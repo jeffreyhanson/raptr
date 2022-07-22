@@ -1,6 +1,6 @@
 Dear CRAN maintainers,
 
-Thank you very much for reviewing this submission. This package was formerly available on CRAN. It was archived because one of its dependencies was archived (i.e., the RandomFields package). Since the RandomFields package is back on CRAN, I now am re-submitting this package. Additionally, to help avoid this issue in the future, I have also updated the package so that the RandomFields package is now an optional dependency. I have also taken this opportunity to update the package to address issues identified by CRAN package checks. Specifically, these issue includes a note raised during package checks (i.e., `Namespace in Imports field not imported from: ‘rgdal’; All declared Imports should be used.`), and a compiler warning (i.e., `warning: use of bitwise '&' with boolean operands [-Wbitwise-instead-of-logical]`).
+Thank you very much for reviewing this submission. This package was formerly available on CRAN. It was archived because one of its dependencies was archived (i.e., the RandomFields package). To address this, I have updated the package so that the RandomFields package is no longer listed as a dependency. I have also taken this opportunity to update the package to address issues identified by CRAN package checks. Specifically, these issue includes a note raised during package checks (i.e., `Namespace in Imports field not imported from: ‘rgdal’; All declared Imports should be used.`), and a compiler warning (i.e., `warning: use of bitwise '&' with boolean operands [-Wbitwise-instead-of-logical]`).
 
 Cheers,
 

@@ -21,7 +21,7 @@ plot the differences between them."><!-- mathjax --><script src="https://cdnjs.c
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.0</span>
       </span>
     </div>
 
@@ -64,44 +64,50 @@ plot the differences between them.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S4 method for RapSolved,numeric</span>
-<span class="fu">plot</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, basemap <span class="op">=</span> <span class="st">"none"</span>,
- pu.color.palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#e5f5f9"</span>, <span class="st">"#00441b"</span>, <span class="st">"#FFFF00"</span>, <span class="st">"#FF0000"</span><span class="op">)</span>, alpha <span class="op">=</span>
- <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">basemap</span> <span class="op">==</span> <span class="st">"none"</span>, <span class="fl">1</span>, <span class="fl">0.7</span><span class="op">)</span>, grayscale <span class="op">=</span> <span class="cn">FALSE</span>, main <span class="op">=</span> <span class="cn">NULL</span>,
- force.reset <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="co"># S4 method for RapSolved,missing</span>
-<span class="fu">plot</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, basemap <span class="op">=</span> <span class="st">"none"</span>,
-pu.color.palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PuBu"</span>, <span class="st">"#FFFF00"</span>, <span class="st">"#FF0000"</span><span class="op">)</span>,
-alpha <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">basemap</span> <span class="op">==</span> <span class="st">"none"</span>, <span class="fl">1</span>, <span class="fl">0.7</span><span class="op">)</span>,
-grayscale <span class="op">=</span> <span class="cn">FALSE</span>, main <span class="op">=</span> <span class="cn">NULL</span>,
-force.reset <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="co"># S4 method for RapSolved,RapSolved</span>
-<span class="fu">plot</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, i <span class="op">=</span> <span class="cn">NULL</span>, j <span class="op">=</span> <span class="va">i</span>,
-basemap <span class="op">=</span> <span class="st">"none"</span>,
-pu.color.palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"RdYlBu"</span>, <span class="st">"#FFFF00"</span>,
-<span class="st">"#FF0000"</span><span class="op">)</span>, <span class="st">"Accent"</span><span class="op">)</span>,
-alpha <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">basemap</span> <span class="op">==</span> <span class="st">"none"</span>, <span class="fl">1</span>, <span class="fl">0.7</span><span class="op">)</span>,
-grayscale <span class="op">=</span> <span class="cn">FALSE</span>, main <span class="op">=</span> <span class="cn">NULL</span>, force.reset <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S4 method for RapSolved,numeric</span></span>
+<span><span class="fu">plot</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, basemap <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span> pu.color.palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#e5f5f9"</span>, <span class="st">"#00441b"</span>, <span class="st">"#FFFF00"</span>, <span class="st">"#FF0000"</span><span class="op">)</span>, alpha <span class="op">=</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">basemap</span> <span class="op">==</span> <span class="st">"none"</span>, <span class="fl">1</span>, <span class="fl">0.7</span><span class="op">)</span>, grayscale <span class="op">=</span> <span class="cn">FALSE</span>, main <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span> force.reset <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for RapSolved,missing</span></span>
+<span><span class="fu">plot</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, basemap <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>pu.color.palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PuBu"</span>, <span class="st">"#FFFF00"</span>, <span class="st">"#FF0000"</span><span class="op">)</span>,</span>
+<span>alpha <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">basemap</span> <span class="op">==</span> <span class="st">"none"</span>, <span class="fl">1</span>, <span class="fl">0.7</span><span class="op">)</span>,</span>
+<span>grayscale <span class="op">=</span> <span class="cn">FALSE</span>, main <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>force.reset <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for RapSolved,RapSolved</span></span>
+<span><span class="fu">plot</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, i <span class="op">=</span> <span class="cn">NULL</span>, j <span class="op">=</span> <span class="va">i</span>,</span>
+<span>basemap <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>pu.color.palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"RdYlBu"</span>, <span class="st">"#FFFF00"</span>,</span>
+<span><span class="st">"#FF0000"</span><span class="op">)</span>, <span class="st">"Accent"</span><span class="op">)</span>,</span>
+<span>alpha <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">basemap</span> <span class="op">==</span> <span class="st">"none"</span>, <span class="fl">1</span>, <span class="fl">0.7</span><span class="op">)</span>,</span>
+<span>grayscale <span class="op">=</span> <span class="cn">FALSE</span>, main <span class="op">=</span> <span class="cn">NULL</span>, force.reset <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p><code><a href="RapSolved.html">RapSolved()</a></code> object.</p></dd>
+
+
 <dt>y</dt>
 <dd><p>Available inputs are: <code>NULL</code> to plot selection frequencies,
 <code>numeric</code> number to plot a specific solution,
 <code>0</code> to plot the best solution, and a <code><a href="RapSolved.html">RapSolved()</a></code>
 object to plot differences in solutions between objects. Defaults to
 <code>NULL</code>.</p></dd>
+
+
 <dt>basemap</dt>
 <dd><p><code>character</code> object indicating the type of basemap to use
 (see <code><a href="basemap.html">basemap()</a></code>). Valid options include <code>"none"</code>,
 <code>"roadmap"</code>, <code>"mobile"</code>, <code>"satellite"</code>, <code>"terrain"</code>,
 <code>"hybrid"</code>, <code>"mapmaker-roadmap"</code>, <code>"mapmaker-hybrid"</code>.
 Defaults to <code>"none"</code> such that no basemap is shown.</p></dd>
+
+
 <dt>pu.color.palette</dt>
 <dd><p><code>character</code> vector of colors to indicate
 planning unit statuses.
@@ -112,27 +118,40 @@ Here, the first element corresponds to a color palette
 indicate the colors for locked in and locked out planning units.
 Otherwise, the parameter defaults to a <code>character</code> vector of
 <code>c("grey30", "green", "yellow", "black", "gray80", "red", "orange")</code>.</p></dd>
+
+
 <dt>alpha</dt>
 <dd><p><code>numeric</code> value to indicating the transparency level for
 coloring the planning units.</p></dd>
+
+
 <dt>grayscale</dt>
 <dd><p><code>logical</code> should the basemap be gray-scaled?</p></dd>
+
+
 <dt>main</dt>
 <dd><p><code>character</code> title for the plot. Defaults to <code>NULL</code> and
 a default title is used.</p></dd>
+
+
 <dt>force.reset</dt>
 <dd><p><code>logical</code> if basemap data has been cached, should it
 be re-downloaded?</p></dd>
+
+
 <dt>i</dt>
 <dd><p>Available inputs are: <code>NULL</code> to plot selection frequencies.
 <code>numeric</code> to plot a specific solution, <code>0</code> to plot the best
 solution. This argument is only used when <code>y</code> is a
 <code><a href="RapSolved.html">RapSolved()</a></code> object. Defaults to <code>NULL</code>.</p></dd>
+
+
 <dt>j</dt>
 <dd><p>Available inputs are: <code>NULL</code> to plot selection frequencies.
 <code>numeric</code> to plot a specific solution, <code>0</code> to plot the best
 solution. This argument is only used when <code>y</code> is a
 <code><a href="RapSolved.html">RapSolved()</a></code> object. Defaults to argument <code>j</code>.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -146,23 +165,23 @@ in order to create display a basemap.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># load example data set with solutions</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sim_rs</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># plot selection frequencies</span></span>
-<span class="r-in"><span class="fu">plot</span><span class="op">(</span><span class="va">sim_rs</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># load example data set with solutions</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sim_rs</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># plot selection frequencies</span></span></span>
+<span class="r-in"><span><span class="fu">plot</span><span class="op">(</span><span class="va">sim_rs</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># plot best solution</span></span>
-<span class="r-in"><span class="fu">plot</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="fl">0</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># plot best solution</span></span></span>
+<span class="r-in"><span><span class="fu">plot</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># plot second solution</span></span>
-<span class="r-in"><span class="fu">plot</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># plot second solution</span></span></span>
+<span class="r-in"><span><span class="fu">plot</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># plot different between best and second solutions</span></span>
-<span class="r-in"><span class="fu">plot</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="va">sim_rs</span>, <span class="fl">0</span> ,<span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># plot different between best and second solutions</span></span></span>
+<span class="r-in"><span><span class="fu">plot</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="va">sim_rs</span>, <span class="fl">0</span> ,<span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot-4.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
@@ -178,7 +197,7 @@ in order to create display a basemap.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

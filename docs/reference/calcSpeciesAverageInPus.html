@@ -18,7 +18,7 @@ By default all polygons will be treated as having separate ids."><!-- mathjax --
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.0</span>
       </span>
     </div>
 
@@ -58,20 +58,20 @@ By default all polygons will be treated as having separate ids.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">calcSpeciesAverageInPus</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for SpatialPolygons</span>
-<span class="fu">calcSpeciesAverageInPus</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, ids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu">nlayers</span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span>, ncores <span class="op">=</span> <span class="fl">1</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for SpatialPolygonsDataFrame</span>
-<span class="fu">calcSpeciesAverageInPus</span><span class="op">(</span>
-  <span class="va">x</span>,
-  <span class="va">y</span>,
-  ids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu">nlayers</span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span>,
-  ncores <span class="op">=</span> <span class="fl">1</span>,
-  field <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">calcSpeciesAverageInPus</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for SpatialPolygons</span></span>
+<span><span class="fu">calcSpeciesAverageInPus</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, ids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu">nlayers</span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span>, ncores <span class="op">=</span> <span class="fl">1</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for SpatialPolygonsDataFrame</span></span>
+<span><span class="fu">calcSpeciesAverageInPus</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">y</span>,</span>
+<span>  ids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu">nlayers</span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  ncores <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  field <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -79,43 +79,56 @@ By default all polygons will be treated as having separate ids.</p>
     <dl><dt>x</dt>
 <dd><p><code><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">sp::SpatialPolygons()</a></code> or
 <code><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">sp::SpatialPolygonsDataFrame()</a></code> object.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>not used.</p></dd>
+
+
 <dt>y</dt>
 <dd><p><code><a href="https://rdrr.io/pkg/raster/man/raster.html" class="external-link">raster::raster()</a></code>,
 <code><a href="https://rdrr.io/pkg/raster/man/stack.html" class="external-link">raster::stack()</a></code>, or
 <code><a href="https://rdrr.io/pkg/raster/man/brick.html" class="external-link">raster::brick()</a></code> object.</p></dd>
+
+
 <dt>ids</dt>
 <dd><p><code>integer</code> vector of ids. Defaults to indices of layers in
 argument to <code>y</code>.</p></dd>
+
+
 <dt>ncores</dt>
 <dd><p><code>integer</code> number of cores to use for processing. Defaults
 to 1.</p></dd>
+
+
 <dt>field</dt>
 <dd><p><code>integer</code> index or <code>character</code> name of column with
 planning unit ids. Valid only when <code>x</code> is a
 <code><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">sp::SpatialPolygonsDataFrame()</a></code> object. Default behavior is to
 treat each polygon as a different planning unit.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">base::data.frame()</a></code> with sum of raster values in each
+    
+
+<p><code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">base::data.frame()</a></code> with sum of raster values in each
 polygon.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># simulate data</span></span>
-<span class="r-in"><span class="va">sim_pus</span> <span class="op">&lt;-</span> <span class="fu"><a href="sim.pus.html">sim.pus</a></span><span class="op">(</span><span class="fl">225L</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sim_spp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"uniform"</span>, <span class="st">"normal"</span>, <span class="st">"bimodal"</span><span class="op">)</span>, <span class="va">sim.species</span>, n <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">                  res <span class="op">=</span> <span class="fl">1</span>, x <span class="op">=</span> <span class="va">sim_pus</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># calculate average for 1 species</span></span>
-<span class="r-in"><span class="va">puvspr1.dat</span> <span class="op">&lt;-</span> <span class="fu">calcSpeciesAverageInPus</span><span class="op">(</span><span class="va">sim_pus</span>, <span class="va">sim_spp</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># calculate average for multiple species</span></span>
-<span class="r-in"><span class="va">puvspr2.dat</span> <span class="op">&lt;-</span> <span class="fu">calcSpeciesAverageInPus</span><span class="op">(</span><span class="va">sim_pus</span>, <span class="fu"><a href="https://rdrr.io/r/utils/stack.html" class="external-link">stack</a></span><span class="op">(</span><span class="va">sim_spp</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># simulate data</span></span></span>
+<span class="r-in"><span><span class="va">sim_pus</span> <span class="op">&lt;-</span> <span class="fu"><a href="sim.pus.html">sim.pus</a></span><span class="op">(</span><span class="fl">225L</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sim_spp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"uniform"</span>, <span class="st">"normal"</span>, <span class="st">"bimodal"</span><span class="op">)</span>, <span class="va">sim.species</span>, n <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>                  res <span class="op">=</span> <span class="fl">1</span>, x <span class="op">=</span> <span class="va">sim_pus</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># calculate average for 1 species</span></span></span>
+<span class="r-in"><span><span class="va">puvspr1.dat</span> <span class="op">&lt;-</span> <span class="fu">calcSpeciesAverageInPus</span><span class="op">(</span><span class="va">sim_pus</span>, <span class="va">sim_spp</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># calculate average for multiple species</span></span></span>
+<span class="r-in"><span><span class="va">puvspr2.dat</span> <span class="op">&lt;-</span> <span class="fu">calcSpeciesAverageInPus</span><span class="op">(</span><span class="va">sim_pus</span>, <span class="fu"><a href="https://rdrr.io/r/utils/stack.html" class="external-link">stack</a></span><span class="op">(</span><span class="va">sim_spp</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -130,7 +143,7 @@ polygon.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

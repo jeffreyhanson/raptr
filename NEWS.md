@@ -1,3 +1,12 @@
+# raptr 0.2.0.0
+
+- The data simulation function has been updated such that the _RandomFileds_
+   package is no longer a dependency.
+- The `sim.space` and `sim.species` functions no longer accept _RandomFileds_
+  objects as arguments. To simulate spatially auto-correlated data using
+  random fields, a `numeric` value should be supplied to the `model` parameter.
+- Small tweaks to case study in vignette.
+
 # raptr 0.1.8.0
 
 - The _RandomFields_ and _RgoogleMaps_ R packages are now optional

@@ -55,24 +55,23 @@ calcSpeciesAverageInPus <- function(x, ...) UseMethod("calcSpeciesAverageInPus")
 #' @param n `integer` number of species. Defaults to 1.
 #'
 #' @param res `numeric` resolution to simulate distributions. Only needed
-#'   when [sp::SpatialPolygons()] supplied.
+#'   when [sp::SpatialPolygons()] are supplied.
 #'
-#' @param model `character` value or `RandomFields::RMmodel()` model for
-#'   simulating species distributions.
-#'   Available `character` values include `"uniform"`, `"normal"`, and
-#'   `"bimodal"`. Defaults to `"normal"`.
+#' @param model `character` or `numeric` for simulating data.
+#'   If a `character` value is supplied, then the following values can
+#'   can be used to simulate species distributions with particular
+#'   characteristics:
+#'   `"uniform"`, `"normal"`, and `"bimodal"`.
+#'   If a `numeric` value is supplied, then this is used to simulate
+#'   species distributions using a Gaussian random field, where the
+#'   `numeric` value is treated as the scale parameter.
+#'   Defaults to `"normal"`.
 #'
-#' @param ... parameters passed to `RandomFields::RandomFields()`.
-#'
-#' @details
-#' This function requires installation of the \pkg{RandomFields} package.
-#' Distributions are simulated by passing `model` to
-#' `RandomFields::RFsimulate()` and converting to logistic values
-#' using [boot::inv.logit()].
+#' @param ... not used.
 #'
 #' @return [raster::stack()] with layers for each species.
 #'
-#' @examplesIf requireNamespace("RandomFields", quietly = TRUE)
+#' @examples
 #' # make polygons
 #' sim_pus <- sim.pus(225L)
 #'
@@ -88,18 +87,15 @@ calcSpeciesAverageInPus <- function(x, ...) UseMethod("calcSpeciesAverageInPus")
 #' # simulate 1 bimodal species distribution
 #' s4 <- sim.species(sim_pus, res = 1, n = 1, model = "bimodal")
 #'
-#' # simulate 1 species distribution using a RModel object from RandomFields
-#' s5 <- sim.species(sim_pus, res = 1, n = 1, model = RandomFields::RPgauss())
-#'
-#' # simulate 5 species distribution using a RModel object from RandomFields
-#' s6 <- sim.species(sim_pus, res = 1, n = 5, model = RandomFields::RPgauss())
+#' # simulate 1 species distribution using a random field
+#' s5 <- sim.species(sim_pus, res = 1, n = 1, model = 0.2)
 #'
 #' # plot simulations
 #' par(mfrow = c(2,2))
 #' plot(s2, main = "constant")
 #' plot(s3, main = "normal")
 #' plot(s4, main = "bimodal")
-#' plot(s5, main = "RPgauss()")
+#' plot(s5, main = "random field")
 #'
 #' @export sim.species
 sim.species <- function(x, ...) UseMethod("sim.species")
@@ -112,18 +108,17 @@ sim.species <- function(x, ...) UseMethod("sim.species")
 #'
 #' @param d `integer` number of dimensions. Defaults to 2.
 #'
-#' @param model `RandomFields::RMmodel()` model for simulating species
-#'   distributions.
-#'   Defaults to `NULL` such that `RandomFields::RMgauss()` is used.
-#'
-#' @details
-#' This function requires installation of the \pkg{RandomFields} package.
+#' @param model `numeric` scale parameter for simulating spatially
+#'   auto-correlated data using Gaussian random fields.
+#'   Higher values produce patchier data with more well defined clusters,
+#'   and lower values produce more evenly distributed data.
+#'   Defaults to 0.2.
 #'
 #' @return [raster::stack()] with layers for each dimension of the space.
 #'
 #' @name sim.space
 #'
-#' @examplesIf requireNamespace("RandomFields", quietly = TRUE)
+#' @examples
 #' # simulate planning units
 #' sim_pus <- sim.pus(225L)
 #'

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.0</span>
       </span>
     </div>
 
@@ -56,27 +56,34 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">amount.held</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">species</span><span class="op">)</span>
-
-<span class="co"># S3 method for RapSolved</span>
-<span class="fu">amount.held</span><span class="op">(</span><span class="va">x</span>, y <span class="op">=</span> <span class="fl">0</span>, species <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">amount.held</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">species</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for RapSolved</span></span>
+<span><span class="fu">amount.held</span><span class="op">(</span><span class="va">x</span>, y <span class="op">=</span> <span class="fl">0</span>, species <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p><code><a href="RapResults.html">RapResults()</a></code> or <code><a href="RapSolved.html">RapSolved()</a></code> object.</p></dd>
+
+
 <dt>y</dt>
 <dd><p>Available inputs include: <code>NULL</code> to return all values,
 <code>integer</code> number specifying the solution for which the value should
 be returned, and <code>0</code> to return the value for the best solution.</p></dd>
+
+
 <dt>species</dt>
 <dd><p><code>NULL</code> for all species or <code>integer</code> indicating
 species.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">base::matrix()</a></code> or <code>numeric</code> vector depending on
+    
+
+<p><code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">base::matrix()</a></code> or <code>numeric</code> vector depending on
 arguments.</p>
     </div>
     <div id="see-also">
@@ -86,31 +93,31 @@ arguments.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># load data</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sim_rs</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># amount held (%) in best solution for each species</span></span>
-<span class="r-in"><span class="fu">amount.held</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="fl">0</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># load data</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sim_rs</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># amount held (%) in best solution for each species</span></span></span>
+<span class="r-in"><span><span class="fu">amount.held</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   uniform    normal   bimodal</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1     0.2 0.2262132 0.2213291</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># amount held (%) in best solution for species 1</span></span>
-<span class="r-in"><span class="fu">amount.held</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># amount held (%) in best solution for species 1</span></span></span>
+<span class="r-in"><span><span class="fu">amount.held</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   uniform</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1     0.2</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># amount held (%) in second solution for each species</span></span>
-<span class="r-in"><span class="fu">amount.held</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># amount held (%) in second solution for each species</span></span></span>
+<span class="r-in"><span><span class="fu">amount.held</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   uniform    normal  bimodal</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1     0.2 0.2253754 0.224115</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># amount held (%) in each solution for each species</span></span>
-<span class="r-in"><span class="fu">amount.held</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="cn">NULL</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># amount held (%) in each solution for each species</span></span></span>
+<span class="r-in"><span><span class="fu">amount.held</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="cn">NULL</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   uniform    normal   bimodal</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1     0.2 0.2262132 0.2213291</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2     0.2 0.2253754 0.2241150</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3     0.2 0.2049503 0.2299639</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -125,7 +132,7 @@ arguments.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

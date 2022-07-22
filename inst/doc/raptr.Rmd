@@ -65,7 +65,6 @@ library(parallel)
 library(plyr)
 library(dplyr)
 library(ggplot2)
-library(RandomFields)
 library(rgeos)
 
 # set seed for reproducibility
@@ -596,7 +595,7 @@ par(mar = c(0.1, 0.1, 4.1, 0.1))
 # plot polygons
 PBSmapping::plotPolys(cs_pus2, col = cs_pus_cols, border = "gray30",
                       xlab = "", ylab = "", axes = FALSE,
-                      main = "Case-study planning units", cex = 1.8)
+                      main = "Planning units", cex = 1.8)
 
 # reset plotting window
 par(mar = c(5.1, 4.1, 4.1, 2.1))
@@ -614,7 +613,7 @@ plot(cs_space, main = c("DC1", "DC2"), legend = FALSE, axes = FALSE)
 
 ## Analysis
 
-To simplify the process of formatting data and generating prioritizations, we can use the `rap` function. First, we will generate an amount-based prioritization that aims to capture 10% of the rosella's range. We will use 50 demand points to map the geographic and environmental spaces. **Be warned, the examples hereafter can take 5-10 minutes to run.**
+To simplify the process of formatting data and generating prioritizations, we can use the `rap` function. First, we will generate an amount-based prioritization that aims to capture 20% of the species' ranges. We will use 50 demand points to map the geographic and environmental spaces. **Be warned, the examples hereafter can take 5-10 minutes to run.**
 
 ```{r, message=FALSE}
 # make amount-based prioritization
@@ -659,11 +658,11 @@ p4 <- space.plot(cs_rs_amount, 4, 1, main = "Pale-headed\nrosella")
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
 ```
 
-Next, let's generate a prioritization using amount- and space-based targets. This prioritization will secure 70% of the species distribution in geographic and environmental space.
+Next, let's generate a prioritization using amount- and space-based targets. This prioritization will secure 85% of the species distribution in geographic and environmental space.
 
 ```{r}
 # make amount- and space-based prioritization
-cs_rs_space <- update(cs_rs_amount, space.target = 0.7, Threads = threads)
+cs_rs_space <- update(cs_rs_amount, space.target = 0.85, Threads = threads)
 ```
 
 ```{r, fig.height=3.5, fig.width=4.5, fig.align='center', fig.caption='_Prioritisation generated using amount, environmental, and geographic targets._'}
@@ -735,7 +734,7 @@ ggplot(aes(x = variable, y = mean, fill = name), data = cs_results) +
   geom_bar(position = position_dodge(0.9), stat = "identity") +
   geom_errorbar(aes(ymin = mean - se, ymax = mean + se),
                position = position_dodge(0.9),
-               width=0.2) +
+               width = 0.2) +
   xlab("Property of species") +
   ylab("Proportion held in\nselected planning units (%)") +
   scale_fill_discrete(name = "") +
@@ -757,4 +756,4 @@ if (exists("cs_rs_space")) {
 }
 ```
 
-We can see that a greater number of planning units is needed to satisfy the space-based targets. The prioritization generated using just amount-based targets has `r n_cs_rs_amount` planning units, and the prioritizations using amount-based and space-based targets has `r n_cs_rs_space` planning units. These results suggest only a few additional planning units can result in significant improvements in the effectiveness of a prioritization.
+We can see that a greater number of planning units is needed to satisfy the space-based targets. The prioritization generated using just amount-based targets has `r n_cs_rs_amount` planning units, and the prioritizations using amount-based and space-based targets has `r n_cs_rs_space` planning units. These results suggest that only a single additional planning unit can result in significant improvements in the effectiveness of a prioritization.

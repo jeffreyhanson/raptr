@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.0</span>
       </span>
     </div>
 
@@ -56,50 +56,50 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">spp.plot</span><span class="op">(</span><span class="va">x</span>, <span class="va">species</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for RapData</span>
-<span class="fu">spp.plot</span><span class="op">(</span>
-  <span class="va">x</span>,
-  <span class="va">species</span>,
-  prob.color.palette <span class="op">=</span> <span class="st">"YlGnBu"</span>,
-  pu.color.palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#4D4D4D"</span>, <span class="st">"#00FF00"</span>, <span class="st">"#FFFF00"</span>, <span class="st">"#FF0000"</span><span class="op">)</span>,
-  basemap <span class="op">=</span> <span class="st">"none"</span>,
-  alpha <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">basemap</span>, <span class="st">"none"</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">0.7</span><span class="op">)</span>,
-  grayscale <span class="op">=</span> <span class="cn">FALSE</span>,
-  main <span class="op">=</span> <span class="cn">NULL</span>,
-  force.reset <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for RapUnsolved</span>
-<span class="fu">spp.plot</span><span class="op">(</span>
-  <span class="va">x</span>,
-  <span class="va">species</span>,
-  prob.color.palette <span class="op">=</span> <span class="st">"YlGnBu"</span>,
-  pu.color.palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#4D4D4D"</span>, <span class="st">"#00FF00"</span>, <span class="st">"#FFFF00"</span>, <span class="st">"#FF0000"</span><span class="op">)</span>,
-  basemap <span class="op">=</span> <span class="st">"none"</span>,
-  alpha <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">basemap</span> <span class="op">==</span> <span class="st">"none"</span>, <span class="fl">1</span>, <span class="fl">0.7</span><span class="op">)</span>,
-  grayscale <span class="op">=</span> <span class="cn">FALSE</span>,
-  main <span class="op">=</span> <span class="cn">NULL</span>,
-  force.reset <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for RapSolved</span>
-<span class="fu">spp.plot</span><span class="op">(</span>
-  <span class="va">x</span>,
-  <span class="va">species</span>,
-  y <span class="op">=</span> <span class="fl">0</span>,
-  prob.color.palette <span class="op">=</span> <span class="st">"YlGnBu"</span>,
-  pu.color.palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#4D4D4D"</span>, <span class="st">"#00FF00"</span>, <span class="st">"#FFFF00"</span>, <span class="st">"#FF0000"</span><span class="op">)</span>,
-  basemap <span class="op">=</span> <span class="st">"none"</span>,
-  alpha <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">basemap</span> <span class="op">==</span> <span class="st">"none"</span>, <span class="fl">1</span>, <span class="fl">0.7</span><span class="op">)</span>,
-  grayscale <span class="op">=</span> <span class="cn">FALSE</span>,
-  main <span class="op">=</span> <span class="cn">NULL</span>,
-  force.reset <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">spp.plot</span><span class="op">(</span><span class="va">x</span>, <span class="va">species</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for RapData</span></span>
+<span><span class="fu">spp.plot</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">species</span>,</span>
+<span>  prob.color.palette <span class="op">=</span> <span class="st">"YlGnBu"</span>,</span>
+<span>  pu.color.palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#4D4D4D"</span>, <span class="st">"#00FF00"</span>, <span class="st">"#FFFF00"</span>, <span class="st">"#FF0000"</span><span class="op">)</span>,</span>
+<span>  basemap <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">basemap</span>, <span class="st">"none"</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">0.7</span><span class="op">)</span>,</span>
+<span>  grayscale <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  main <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  force.reset <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for RapUnsolved</span></span>
+<span><span class="fu">spp.plot</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">species</span>,</span>
+<span>  prob.color.palette <span class="op">=</span> <span class="st">"YlGnBu"</span>,</span>
+<span>  pu.color.palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#4D4D4D"</span>, <span class="st">"#00FF00"</span>, <span class="st">"#FFFF00"</span>, <span class="st">"#FF0000"</span><span class="op">)</span>,</span>
+<span>  basemap <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">basemap</span> <span class="op">==</span> <span class="st">"none"</span>, <span class="fl">1</span>, <span class="fl">0.7</span><span class="op">)</span>,</span>
+<span>  grayscale <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  main <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  force.reset <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for RapSolved</span></span>
+<span><span class="fu">spp.plot</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">species</span>,</span>
+<span>  y <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  prob.color.palette <span class="op">=</span> <span class="st">"YlGnBu"</span>,</span>
+<span>  pu.color.palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#4D4D4D"</span>, <span class="st">"#00FF00"</span>, <span class="st">"#FFFF00"</span>, <span class="st">"#FF0000"</span><span class="op">)</span>,</span>
+<span>  basemap <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">basemap</span> <span class="op">==</span> <span class="st">"none"</span>, <span class="fl">1</span>, <span class="fl">0.7</span><span class="op">)</span>,</span>
+<span>  grayscale <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  main <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  force.reset <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -107,40 +107,61 @@
     <dl><dt>x</dt>
 <dd><p><code><a href="RapData.html">RapData()</a></code>, <code><a href="RapUnsolved.html">RapUnsolved()</a></code>, or
 <code><a href="RapSolved.html">RapSolved()</a></code> object.</p></dd>
+
+
 <dt>species</dt>
 <dd><p><code>character</code> name of species, or <code>integer</code> index for
 species.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>not used.</p></dd>
+
+
 <dt>prob.color.palette</dt>
 <dd><p><code>character</code> name of color palette to denote
 probability of occupancy of the species in planning units (see
 <code><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html" class="external-link">RColorBrewer::brewer.pal()</a></code>). Defaults to <code>"YlGnBu"</code>.</p></dd>
+
+
 <dt>pu.color.palette</dt>
 <dd><p><code>character</code> vector of colors to indicate planning
 unit statuses. Defaults to <code>c("grey30", "green", "black", "red")</code> which
 indicate not selected, selected, locked in, and locked out (respectively).</p></dd>
+
+
 <dt>basemap</dt>
 <dd><p><code>character</code> object indicating the type of basemap to use
 (see <code><a href="basemap.html">basemap()</a></code>). Valid options include <code>"none"</code>,
 <code>"roadmap"</code>, <code>"mobile"</code>, <code>"satellite"</code>, <code>"terrain"</code>,
 <code>"hybrid"</code>, <code>"mapmaker-roadmap"</code>, <code>"mapmaker-hybrid"</code>.
 Defaults to <code>"none"</code> such that no basemap is shown.</p></dd>
+
+
 <dt>alpha</dt>
 <dd><p><code>numeric</code> value to indicating the transparency level for
 coloring the planning units.</p></dd>
+
+
 <dt>grayscale</dt>
 <dd><p><code>logical</code> should the basemap be gray-scaled?</p></dd>
+
+
 <dt>main</dt>
 <dd><p><code>character</code> title for the plot. Defaults to <code>NULL</code> and
 a default title is used.</p></dd>
+
+
 <dt>force.reset</dt>
 <dd><p><code>logical</code> if basemap data has been cached, should it
 be re-downloaded?</p></dd>
+
+
 <dt>y</dt>
 <dd><p><code>NULL</code> <code>integer</code> 0 to return values for the best
 solution, <code>integer</code> value greater than 0 for <code>y</code>'th solution
 value.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -150,17 +171,17 @@ in order to create display a basemap.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># load RapSolved objects</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sim_ru</span>, <span class="va">sim_rs</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># plot first species in sim_ru</span></span>
-<span class="r-in"><span class="fu">spp.plot</span><span class="op">(</span><span class="va">sim_ru</span>, species <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># load RapSolved objects</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sim_ru</span>, <span class="va">sim_rs</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># plot first species in sim_ru</span></span></span>
+<span class="r-in"><span><span class="fu">spp.plot</span><span class="op">(</span><span class="va">sim_ru</span>, species <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="spp.plot-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># plot "bimodal" species in sim_rs</span></span>
-<span class="r-in"><span class="fu">spp.plot</span><span class="op">(</span><span class="va">sim_rs</span>, species <span class="op">=</span> <span class="st">"bimodal"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># plot "bimodal" species in sim_rs</span></span></span>
+<span class="r-in"><span><span class="fu">spp.plot</span><span class="op">(</span><span class="va">sim_rs</span>, species <span class="op">=</span> <span class="st">"bimodal"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="spp.plot-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -175,7 +196,7 @@ in order to create display a basemap.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

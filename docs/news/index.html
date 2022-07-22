@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.0</span>
       </span>
     </div>
 
@@ -51,6 +51,12 @@
     </div>
 
     <div class="section level2">
+<h2 class="page-header" data-toc-text="0.2.0.0" id="raptr-0200">raptr 0.2.0.0<a class="anchor" aria-label="anchor" href="#raptr-0200"></a></h2>
+<ul><li>The data simulation function has been updated such that the <em>RandomFileds</em> package is no longer a dependency.</li>
+<li>The <code>sim.space</code> and <code>sim.species</code> functions no longer accept <em>RandomFileds</em> objects as arguments. To simulate spatially auto-correlated data using random fields, a <code>numeric</code> value should be supplied to the <code>model</code> parameter.</li>
+<li>Small tweaks to case study in vignette.</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.8.0" id="raptr-0180">raptr 0.1.8.0<a class="anchor" aria-label="anchor" href="#raptr-0180"></a></h2>
 <ul><li>The <em>RandomFields</em> and <em>RgoogleMaps</em> R packages are now optional dependencies.</li>
 <li>Minimum supported versions are now specified for most dependencies.</li>
@@ -60,16 +66,13 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.7.3" id="raptr-0173">raptr 0.1.7.3<a class="anchor" aria-label="anchor" href="#raptr-0173"></a></h2>
-<ul><li>Update example datasets and <code>make.RapData</code> function to improve compatibility with updates to coordinate reference system (<code><a href="https://rdrr.io/pkg/sp/man/CRS-class.html" class="external-link">sp::CRS</a></code>) objects. These updates simply mean that warning messages will no longer be displayed. The compatibility issues that resulted in warnings did not affect the correctness of any results.</li>
-</ul></div>
+<ul><li>Update example datasets and <code>make.RapData</code> function to improve compatibility with updates to coordinate reference system (<code><a href="https://rdrr.io/pkg/sp/man/CRS-class.html" class="external-link">sp::CRS</a></code>) objects. These updates simply mean that warning messages will no longer be displayed. The compatibility issues that resulted in warnings did not affect the correctness of any results.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.7.2" id="raptr-0172">raptr 0.1.7.2<a class="anchor" aria-label="anchor" href="#raptr-0172"></a></h2>
-<ul><li>Fix compatibility issues between the <em>testthat</em> R package and the <em>gurobi</em> R package in package tests.</li>
-</ul></div>
+<ul><li>Fix compatibility issues between the <em>testthat</em> R package and the <em>gurobi</em> R package in package tests.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.7.1" id="raptr-0171">raptr 0.1.7.1<a class="anchor" aria-label="anchor" href="#raptr-0171"></a></h2>
-<ul><li>Implement GitHub Actions continuous integration (i.e. update tests and README).</li>
-</ul></div>
+<ul><li>Implement GitHub Actions continuous integration (i.e. update tests and README).</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.7" id="raptr-017">raptr 0.1.7<small>2020-07-31</small><a class="anchor" aria-label="anchor" href="#raptr-017"></a></h2>
 <ul><li>Remove support for processing data using GDAL.</li>
@@ -78,8 +81,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.6.1" id="raptr-0161">raptr 0.1.6.1<a class="anchor" aria-label="anchor" href="#raptr-0161"></a></h2>
-<ul><li>Fix “Non-file package-anchored link(s) in documentation object” warnings in R-devel checks.</li>
-</ul></div>
+<ul><li>Fix “Non-file package-anchored link(s) in documentation object” warnings in R-devel checks.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.6" id="raptr-016">raptr 0.1.6<small>2020-03-11</small><a class="anchor" aria-label="anchor" href="#raptr-016"></a></h2>
 <ul><li>Fix errors in R-devel CRAN checks due changes in <code>is.finite</code> behaviour for <code>character</code> class objects.</li>
@@ -92,8 +94,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.4" id="raptr-014">raptr 0.1.4<small>2019-04-11</small><a class="anchor" aria-label="anchor" href="#raptr-014"></a></h2>
-<ul><li>Retain debugging symbols to conform with CRAN policies.</li>
-</ul></div>
+<ul><li>Retain debugging symbols to conform with CRAN policies.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.3" id="raptr-013">raptr 0.1.3<small>2018-11-26</small><a class="anchor" aria-label="anchor" href="#raptr-013"></a></h2>
 <ul><li>Fix bug that caused the R session to crash when none of the planning units associated with an attribute space were selected in a manually specified solution. Now the space-held calculations will return a negative infinity value in such cases.</li>
@@ -157,8 +158,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.0.1" id="raptr-001">raptr 0.0.1<small>2016-10-28</small><a class="anchor" aria-label="anchor" href="#raptr-001"></a></h2>
-<ul><li>Initial package version.</li>
-</ul></div>
+<ul><li>Initial package version.</li></ul></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -173,7 +173,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

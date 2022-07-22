@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.0</span>
       </span>
     </div>
 
@@ -56,13 +56,13 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">sim.space</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for RasterLayer</span>
-<span class="fu">sim.space</span><span class="op">(</span><span class="va">x</span>, d <span class="op">=</span> <span class="fl">2</span>, model <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for SpatialPolygons</span>
-<span class="fu">sim.space</span><span class="op">(</span><span class="va">x</span>, <span class="va">res</span>, d <span class="op">=</span> <span class="fl">2</span>, model <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sim.space</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for RasterLayer</span></span>
+<span><span class="fu">sim.space</span><span class="op">(</span><span class="va">x</span>, d <span class="op">=</span> <span class="fl">2</span>, model <span class="op">=</span> <span class="fl">0.2</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for SpatialPolygons</span></span>
+<span><span class="fu">sim.space</span><span class="op">(</span><span class="va">x</span>, <span class="va">res</span>, d <span class="op">=</span> <span class="fl">2</span>, model <span class="op">=</span> <span class="fl">0.2</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -71,49 +71,58 @@
 <dd><p><code><a href="https://rdrr.io/pkg/raster/man/raster.html" class="external-link">raster::raster()</a></code> or
 <code><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">sp::SpatialPolygons()</a></code> object delineate the spatial extent to
 delineate study area.</p></dd>
+
+
 <dt>...</dt>
-<dd><p>parameters passed to <code><a href="https://rdrr.io/pkg/RandomFields/man/RandomFields.html" class="external-link">RandomFields::RandomFields()</a></code>.</p></dd>
+<dd><p>not used.</p></dd>
+
+
 <dt>d</dt>
 <dd><p><code>integer</code> number of dimensions. Defaults to 2.</p></dd>
+
+
 <dt>model</dt>
-<dd><p><code><a href="https://rdrr.io/pkg/RandomFields/man/RMmodel.html" class="external-link">RandomFields::RMmodel()</a></code> model for simulating species
-distributions.
-Defaults to <code>NULL</code> such that <code><a href="https://rdrr.io/pkg/RandomFields/man/RMgauss.html" class="external-link">RandomFields::RMgauss()</a></code> is used.</p></dd>
+<dd><p><code>numeric</code> scale parameter for simulating spatially
+auto-correlated data using Gaussian random fields.
+Higher values produce patchier data with more well defined clusters,
+and lower values produce more evenly distributed data.
+Defaults to 0.2.</p></dd>
+
+
 <dt>res</dt>
 <dd><p><code>numeric</code> resolution to simulate distributions. Only needed
-when <code><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">sp::SpatialPolygons()</a></code> supplied.</p></dd>
+when <code><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">sp::SpatialPolygons()</a></code> are supplied.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code><a href="https://rdrr.io/pkg/raster/man/stack.html" class="external-link">raster::stack()</a></code> with layers for each dimension of the space.</p>
-    </div>
-    <div id="details">
-    <h2>Details</h2>
-    <p>This function requires installation of the <span class="pkg">RandomFields</span> package.</p>
+    
+
+<p><code><a href="https://rdrr.io/pkg/raster/man/stack.html" class="external-link">raster::stack()</a></code> with layers for each dimension of the space.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># simulate planning units</span></span>
-<span class="r-in"><span class="va">sim_pus</span> <span class="op">&lt;-</span> <span class="fu"><a href="sim.pus.html">sim.pus</a></span><span class="op">(</span><span class="fl">225L</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># simulate 1d space using RasterLayer</span></span>
-<span class="r-in"><span class="va">s1</span> <span class="op">&lt;-</span> <span class="fu">sim.space</span><span class="op">(</span><span class="fu"><a href="blank.raster.html">blank.raster</a></span><span class="op">(</span><span class="va">sim_pus</span>, <span class="fl">1</span><span class="op">)</span>, d <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># simulate 1d space using SpatialPolygons</span></span>
-<span class="r-in"><span class="va">s2</span> <span class="op">&lt;-</span> <span class="fu">sim.space</span><span class="op">(</span><span class="va">sim_pus</span>, res <span class="op">=</span> <span class="fl">1</span>, d <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># simulate 2d space using SpatialPolygons</span></span>
-<span class="r-in"><span class="va">s3</span> <span class="op">&lt;-</span> <span class="fu">sim.space</span><span class="op">(</span><span class="va">sim_pus</span>, res <span class="op">=</span> <span class="fl">1</span>, d <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ..</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># plot simulated spaces</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">s1</span>, main <span class="op">=</span> <span class="st">"s1"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">s2</span>, main <span class="op">=</span> <span class="st">"s2"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">s3</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, main <span class="op">=</span> <span class="st">"s3: first dimension"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">s3</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, main <span class="op">=</span> <span class="st">"s3: second dimension"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># simulate planning units</span></span></span>
+<span class="r-in"><span><span class="va">sim_pus</span> <span class="op">&lt;-</span> <span class="fu"><a href="sim.pus.html">sim.pus</a></span><span class="op">(</span><span class="fl">225L</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># simulate 1d space using RasterLayer</span></span></span>
+<span class="r-in"><span><span class="va">s1</span> <span class="op">&lt;-</span> <span class="fu">sim.space</span><span class="op">(</span><span class="fu"><a href="blank.raster.html">blank.raster</a></span><span class="op">(</span><span class="va">sim_pus</span>, <span class="fl">1</span><span class="op">)</span>, d <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># simulate 1d space using SpatialPolygons</span></span></span>
+<span class="r-in"><span><span class="va">s2</span> <span class="op">&lt;-</span> <span class="fu">sim.space</span><span class="op">(</span><span class="va">sim_pus</span>, res <span class="op">=</span> <span class="fl">1</span>, d <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># simulate 2d space using SpatialPolygons</span></span></span>
+<span class="r-in"><span><span class="va">s3</span> <span class="op">&lt;-</span> <span class="fu">sim.space</span><span class="op">(</span><span class="va">sim_pus</span>, res <span class="op">=</span> <span class="fl">1</span>, d <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># plot simulated spaces</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">s1</span>, main <span class="op">=</span> <span class="st">"s1"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">s2</span>, main <span class="op">=</span> <span class="st">"s2"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">s3</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, main <span class="op">=</span> <span class="st">"s3: first dimension"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">s3</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, main <span class="op">=</span> <span class="st">"s3: second dimension"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="sim.space-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -128,7 +137,7 @@ when <code><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="exte
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

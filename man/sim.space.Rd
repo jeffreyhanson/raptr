@@ -8,25 +8,27 @@
 \usage{
 sim.space(x, ...)
 
-\method{sim.space}{RasterLayer}(x, d = 2, model = NULL, ...)
+\method{sim.space}{RasterLayer}(x, d = 2, model = 0.2, ...)
 
-\method{sim.space}{SpatialPolygons}(x, res, d = 2, model = NULL, ...)
+\method{sim.space}{SpatialPolygons}(x, res, d = 2, model = 0.2, ...)
 }
 \arguments{
 \item{x}{\code{\link[raster:raster]{raster::raster()}} or
 \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} object delineate the spatial extent to
 delineate study area.}
 
-\item{...}{parameters passed to \code{RandomFields::RandomFields()}.}
+\item{...}{not used.}
 
 \item{d}{\code{integer} number of dimensions. Defaults to 2.}
 
-\item{model}{\code{RandomFields::RMmodel()} model for simulating species
-distributions.
-Defaults to \code{NULL} such that \code{RandomFields::RMgauss()} is used.}
+\item{model}{\code{numeric} scale parameter for simulating spatially
+auto-correlated data using Gaussian random fields.
+Higher values produce patchier data with more well defined clusters,
+and lower values produce more evenly distributed data.
+Defaults to 0.2.}
 
 \item{res}{\code{numeric} resolution to simulate distributions. Only needed
-when \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} supplied.}
+when \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} are supplied.}
 }
 \value{
 \code{\link[raster:stack]{raster::stack()}} with layers for each dimension of the space.
@@ -34,11 +36,7 @@ when \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} supplied.}
 \description{
 This function simulates attribute space data for RAP.
 }
-\details{
-This function requires installation of the \pkg{RandomFields} package.
-}
 \examples{
-\dontshow{if (requireNamespace("RandomFields", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # simulate planning units
 sim_pus <- sim.pus(225L)
 
@@ -57,5 +55,5 @@ plot(s1, main = "s1")
 plot(s2, main = "s2")
 plot(s3[[1]], main = "s3: first dimension")
 plot(s3[[2]], main = "s3: second dimension")
-\dontshow{\}) # examplesIf}
+
 }

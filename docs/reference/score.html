@@ -18,7 +18,7 @@ RapSolved() object."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/a
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.0</span>
       </span>
     </div>
 
@@ -58,27 +58,32 @@ RapSolved() object."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/a
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">score</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>
-
-<span class="co"># S3 method for RapResults</span>
-<span class="fu">score</span><span class="op">(</span><span class="va">x</span>, y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
-
-<span class="co"># S3 method for RapSolved</span>
-<span class="fu">score</span><span class="op">(</span><span class="va">x</span>, y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">score</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for RapResults</span></span>
+<span><span class="fu">score</span><span class="op">(</span><span class="va">x</span>, y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for RapSolved</span></span>
+<span><span class="fu">score</span><span class="op">(</span><span class="va">x</span>, y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p><code><a href="RapResults.html">RapResults()</a></code> or <code><a href="RapSolved.html">RapSolved()</a></code> object.</p></dd>
+
+
 <dt>y</dt>
 <dd><p>Available inputs include: <code>NULL</code> to return all scores,
 <code>integer</code> number specifying the solution for which the score should
 be returned, and <code>0</code> to return score for the best solution.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>matrix</code> or <code>numeric</code> vector with solution score(s)
+    
+
+<p><code>matrix</code> or <code>numeric</code> vector with solution score(s)
 depending on arguments.</p>
     </div>
     <div id="see-also">
@@ -88,21 +93,21 @@ depending on arguments.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># load data</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sim_rs</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># score for the best solution</span></span>
-<span class="r-in"><span class="fu">score</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="fl">0</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># load data</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sim_rs</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># score for the best solution</span></span></span>
+<span class="r-in"><span><span class="fu">score</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 20</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># score for the second solution</span></span>
-<span class="r-in"><span class="fu">score</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># score for the second solution</span></span></span>
+<span class="r-in"><span><span class="fu">score</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 20</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># score for all solutions</span></span>
-<span class="r-in"><span class="fu">score</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="cn">NULL</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># score for all solutions</span></span></span>
+<span class="r-in"><span><span class="fu">score</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="cn">NULL</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 20 20 20</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -117,7 +122,7 @@ depending on arguments.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

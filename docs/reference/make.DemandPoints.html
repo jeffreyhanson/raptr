@@ -18,7 +18,7 @@ points."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mat
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.0</span>
       </span>
     </div>
 
@@ -58,35 +58,46 @@ points.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">make.DemandPoints</span><span class="op">(</span>
-  <span class="va">points</span>,
-  n <span class="op">=</span> <span class="fl">100L</span>,
-  quantile <span class="op">=</span> <span class="fl">0.5</span>,
-  kernel.method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ks"</span>, <span class="st">"hypervolume"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">make.DemandPoints</span><span class="op">(</span></span>
+<span>  <span class="va">points</span>,</span>
+<span>  n <span class="op">=</span> <span class="fl">100L</span>,</span>
+<span>  quantile <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  kernel.method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ks"</span>, <span class="st">"hypervolume"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>points</dt>
 <dd><p><code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">base::matrix()</a></code> object containing points.</p></dd>
+
+
 <dt>n</dt>
 <dd><p><code>integer</code> number of demand points to use for each attribute
 space for each species. Defaults to <code>100L</code>.</p></dd>
+
+
 <dt>quantile</dt>
 <dd><p><code>numeric</code> quantile to generate demand points within. If
 0 then demand points are generated across the full range of values the
 <code>points</code> intersect. Defaults to <code>0.5</code>.</p></dd>
+
+
 <dt>kernel.method</dt>
 <dd><p><code>character</code> name of kernel method to use to
 generate demand points. Defaults to <code>'ks'</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>arguments passed to kernel density estimating functions</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code><a href="DemandPoints.html">DemandPoints()</a></code> object.</p>
+    
+
+<p><code><a href="DemandPoints.html">DemandPoints()</a></code> object.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -112,21 +123,21 @@ demand points. This method can be used for hyper-dimensional data
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># set random number generator seed</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">500</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># load data</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">cs_spp</span>, <span class="va">cs_space</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># generate species points</span></span>
-<span class="r-in"><span class="va">species.points</span> <span class="op">&lt;-</span> <span class="fu"><a href="randomPoints.html">randomPoints</a></span><span class="op">(</span><span class="va">cs_spp</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">100</span>, prob <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">env.points</span> <span class="op">&lt;-</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/extract.html" class="external-link">extract</a></span><span class="op">(</span><span class="va">cs_space</span>, <span class="va">species.points</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># generate demand points for a 1d space using ks</span></span>
-<span class="r-in"><span class="va">dps1</span> <span class="op">&lt;-</span> <span class="fu">make.DemandPoints</span><span class="op">(</span>points <span class="op">=</span> <span class="va">env.points</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, kernel.method <span class="op">=</span> <span class="st">"ks"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># print object</span></span>
-<span class="r-in"><span class="fu"><a href="print.html">print</a></span><span class="op">(</span><span class="va">dps1</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># set random number generator seed</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">500</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># load data</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">cs_spp</span>, <span class="va">cs_space</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># generate species points</span></span></span>
+<span class="r-in"><span><span class="va">species.points</span> <span class="op">&lt;-</span> <span class="fu"><a href="randomPoints.html">randomPoints</a></span><span class="op">(</span><span class="va">cs_spp</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">100</span>, prob <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">env.points</span> <span class="op">&lt;-</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/extract.html" class="external-link">extract</a></span><span class="op">(</span><span class="va">cs_space</span>, <span class="va">species.points</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># generate demand points for a 1d space using ks</span></span></span>
+<span class="r-in"><span><span class="va">dps1</span> <span class="op">&lt;-</span> <span class="fu">make.DemandPoints</span><span class="op">(</span>points <span class="op">=</span> <span class="va">env.points</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, kernel.method <span class="op">=</span> <span class="st">"ks"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># print object</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="print.html">print</a></span><span class="op">(</span><span class="va">dps1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> An object of class "DemandPoints"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Slot "coords":</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 [,1]</span>
@@ -248,18 +259,18 @@ demand points. This method can be used for hyper-dimensional data
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [92] 0.3263876 0.2931186 0.3885737 0.3836134 0.3911561 0.3943711 0.3918831</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [99] 0.3725805 0.3958686</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># \dontrun{</span></span>
-<span class="r-in"><span class="co"># generate demand points for a 2d space using hypervolume</span></span>
-<span class="r-in"><span class="va">dps2</span> <span class="op">&lt;-</span> <span class="fu">make.DemandPoints</span><span class="op">(</span>points <span class="op">=</span> <span class="va">env.points</span>,</span>
-<span class="r-in">                          kernel.method <span class="op">=</span> <span class="st">"hypervolume"</span>,</span>
-<span class="r-in">                          samples.per.point <span class="op">=</span> <span class="fl">50</span>,</span>
-<span class="r-in">                          verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># generate demand points for a 2d space using hypervolume</span></span></span>
+<span class="r-in"><span><span class="va">dps2</span> <span class="op">&lt;-</span> <span class="fu">make.DemandPoints</span><span class="op">(</span>points <span class="op">=</span> <span class="va">env.points</span>,</span></span>
+<span class="r-in"><span>                          kernel.method <span class="op">=</span> <span class="st">"hypervolume"</span>,</span></span>
+<span class="r-in"><span>                          samples.per.point <span class="op">=</span> <span class="fl">50</span>,</span></span>
+<span class="r-in"><span>                          verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Note that the formula used for the Silverman estimator differs in version 3 compared to prior versions of this package.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Use method='silverman-1d' to replicate prior behavior.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># print object</span></span>
-<span class="r-in"><span class="fu"><a href="print.html">print</a></span><span class="op">(</span><span class="va">dps2</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># print object</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="print.html">print</a></span><span class="op">(</span><span class="va">dps2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> An object of class "DemandPoints"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Slot "coords":</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  dc1         dc2</span>
@@ -386,7 +397,7 @@ demand points. This method can be used for hyper-dimensional data
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [91] 0.0008472724 0.0011611705 0.0012111331 0.0007903584 0.0012044375</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [96] 0.0013310071 0.0008049925 0.0012675725 0.0007824858 0.0013724906</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -401,7 +412,7 @@ demand points. This method can be used for hyper-dimensional data
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

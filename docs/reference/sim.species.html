@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.0</span>
       </span>
     </div>
 
@@ -56,13 +56,13 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">sim.species</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for RasterLayer</span>
-<span class="fu">sim.species</span><span class="op">(</span><span class="va">x</span>, n <span class="op">=</span> <span class="fl">1</span>, model <span class="op">=</span> <span class="st">"normal"</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for SpatialPolygons</span>
-<span class="fu">sim.species</span><span class="op">(</span><span class="va">x</span>, <span class="va">res</span>, n <span class="op">=</span> <span class="fl">1</span>, model <span class="op">=</span> <span class="st">"normal"</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sim.species</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for RasterLayer</span></span>
+<span><span class="fu">sim.species</span><span class="op">(</span><span class="va">x</span>, n <span class="op">=</span> <span class="fl">1</span>, model <span class="op">=</span> <span class="st">"normal"</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for SpatialPolygons</span></span>
+<span><span class="fu">sim.species</span><span class="op">(</span><span class="va">x</span>, <span class="va">res</span>, n <span class="op">=</span> <span class="fl">1</span>, model <span class="op">=</span> <span class="st">"normal"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -71,62 +71,68 @@
 <dd><p><code><a href="https://rdrr.io/pkg/raster/man/raster.html" class="external-link">raster::raster()</a></code> or
 <code><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">sp::SpatialPolygons()</a></code> object delineate the spatial extent to
 delineate study area.</p></dd>
+
+
 <dt>...</dt>
-<dd><p>parameters passed to <code><a href="https://rdrr.io/pkg/RandomFields/man/RandomFields.html" class="external-link">RandomFields::RandomFields()</a></code>.</p></dd>
+<dd><p>not used.</p></dd>
+
+
 <dt>n</dt>
 <dd><p><code>integer</code> number of species. Defaults to 1.</p></dd>
+
+
 <dt>model</dt>
-<dd><p><code>character</code> value or <code><a href="https://rdrr.io/pkg/RandomFields/man/RMmodel.html" class="external-link">RandomFields::RMmodel()</a></code> model for
-simulating species distributions.
-Available <code>character</code> values include <code>"uniform"</code>, <code>"normal"</code>, and
-<code>"bimodal"</code>. Defaults to <code>"normal"</code>.</p></dd>
+<dd><p><code>character</code> or <code>numeric</code> for simulating data.
+If a <code>character</code> value is supplied, then the following values can
+can be used to simulate species distributions with particular
+characteristics:
+<code>"uniform"</code>, <code>"normal"</code>, and <code>"bimodal"</code>.
+If a <code>numeric</code> value is supplied, then this is used to simulate
+species distributions using a Gaussian random field, where the
+<code>numeric</code> value is treated as the scale parameter.
+Defaults to <code>"normal"</code>.</p></dd>
+
+
 <dt>res</dt>
 <dd><p><code>numeric</code> resolution to simulate distributions. Only needed
-when <code><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">sp::SpatialPolygons()</a></code> supplied.</p></dd>
+when <code><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">sp::SpatialPolygons()</a></code> are supplied.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code><a href="https://rdrr.io/pkg/raster/man/stack.html" class="external-link">raster::stack()</a></code> with layers for each species.</p>
-    </div>
-    <div id="details">
-    <h2>Details</h2>
-    <p>This function requires installation of the <span class="pkg">RandomFields</span> package.
-Distributions are simulated by passing <code>model</code> to
-<code><a href="https://rdrr.io/pkg/RandomFields/man/RFsimulate.html" class="external-link">RandomFields::RFsimulate()</a></code> and converting to logistic values
-using <code><a href="https://rdrr.io/pkg/boot/man/inv.logit.html" class="external-link">boot::inv.logit()</a></code>.</p>
+    
+
+<p><code><a href="https://rdrr.io/pkg/raster/man/stack.html" class="external-link">raster::stack()</a></code> with layers for each species.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># make polygons</span></span>
-<span class="r-in"><span class="va">sim_pus</span> <span class="op">&lt;-</span> <span class="fu"><a href="sim.pus.html">sim.pus</a></span><span class="op">(</span><span class="fl">225L</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># simulate 1 uniform species distribution using RasterLayer</span></span>
-<span class="r-in"><span class="va">s1</span> <span class="op">&lt;-</span> <span class="fu">sim.species</span><span class="op">(</span><span class="fu"><a href="blank.raster.html">blank.raster</a></span><span class="op">(</span><span class="va">sim_pus</span>, <span class="fl">1</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">1</span>, model <span class="op">=</span> <span class="st">"uniform"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># simulate 1 uniform species distribution based on SpatialPolygons</span></span>
-<span class="r-in"><span class="va">s2</span> <span class="op">&lt;-</span> <span class="fu">sim.species</span><span class="op">(</span><span class="va">sim_pus</span>, res <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">1</span>, model <span class="op">=</span> <span class="st">"uniform"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># simulate 1 normal species distributions</span></span>
-<span class="r-in"><span class="va">s3</span> <span class="op">&lt;-</span> <span class="fu">sim.species</span><span class="op">(</span><span class="va">sim_pus</span>, res <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">1</span>, model <span class="op">=</span> <span class="st">"normal"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># simulate 1 bimodal species distribution</span></span>
-<span class="r-in"><span class="va">s4</span> <span class="op">&lt;-</span> <span class="fu">sim.species</span><span class="op">(</span><span class="va">sim_pus</span>, res <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">1</span>, model <span class="op">=</span> <span class="st">"bimodal"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># simulate 1 species distribution using a RModel object from RandomFields</span></span>
-<span class="r-in"><span class="va">s5</span> <span class="op">&lt;-</span> <span class="fu">sim.species</span><span class="op">(</span><span class="va">sim_pus</span>, res <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">1</span>, model <span class="op">=</span> <span class="fu">RandomFields</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RandomFields/man/RPgauss.html" class="external-link">RPgauss</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># simulate 5 species distribution using a RModel object from RandomFields</span></span>
-<span class="r-in"><span class="va">s6</span> <span class="op">&lt;-</span> <span class="fu">sim.species</span><span class="op">(</span><span class="va">sim_pus</span>, res <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">5</span>, model <span class="op">=</span> <span class="fu">RandomFields</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RandomFields/man/RPgauss.html" class="external-link">RPgauss</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> .....</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># plot simulations</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">s2</span>, main <span class="op">=</span> <span class="st">"constant"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">s3</span>, main <span class="op">=</span> <span class="st">"normal"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">s4</span>, main <span class="op">=</span> <span class="st">"bimodal"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">s5</span>, main <span class="op">=</span> <span class="st">"RPgauss()"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># make polygons</span></span></span>
+<span class="r-in"><span><span class="va">sim_pus</span> <span class="op">&lt;-</span> <span class="fu"><a href="sim.pus.html">sim.pus</a></span><span class="op">(</span><span class="fl">225L</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># simulate 1 uniform species distribution using RasterLayer</span></span></span>
+<span class="r-in"><span><span class="va">s1</span> <span class="op">&lt;-</span> <span class="fu">sim.species</span><span class="op">(</span><span class="fu"><a href="blank.raster.html">blank.raster</a></span><span class="op">(</span><span class="va">sim_pus</span>, <span class="fl">1</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">1</span>, model <span class="op">=</span> <span class="st">"uniform"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># simulate 1 uniform species distribution based on SpatialPolygons</span></span></span>
+<span class="r-in"><span><span class="va">s2</span> <span class="op">&lt;-</span> <span class="fu">sim.species</span><span class="op">(</span><span class="va">sim_pus</span>, res <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">1</span>, model <span class="op">=</span> <span class="st">"uniform"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># simulate 1 normal species distributions</span></span></span>
+<span class="r-in"><span><span class="va">s3</span> <span class="op">&lt;-</span> <span class="fu">sim.species</span><span class="op">(</span><span class="va">sim_pus</span>, res <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">1</span>, model <span class="op">=</span> <span class="st">"normal"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># simulate 1 bimodal species distribution</span></span></span>
+<span class="r-in"><span><span class="va">s4</span> <span class="op">&lt;-</span> <span class="fu">sim.species</span><span class="op">(</span><span class="va">sim_pus</span>, res <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">1</span>, model <span class="op">=</span> <span class="st">"bimodal"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># simulate 1 species distribution using a random field</span></span></span>
+<span class="r-in"><span><span class="va">s5</span> <span class="op">&lt;-</span> <span class="fu">sim.species</span><span class="op">(</span><span class="va">sim_pus</span>, res <span class="op">=</span> <span class="fl">1</span>, n <span class="op">=</span> <span class="fl">1</span>, model <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># plot simulations</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">s2</span>, main <span class="op">=</span> <span class="st">"constant"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">s3</span>, main <span class="op">=</span> <span class="st">"normal"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">s4</span>, main <span class="op">=</span> <span class="st">"bimodal"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">s5</span>, main <span class="op">=</span> <span class="st">"random field"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="sim.species-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -141,7 +147,7 @@ using <code><a href="https://rdrr.io/pkg/boot/man/inv.logit.html" class="externa
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

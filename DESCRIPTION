@@ -1,7 +1,7 @@
 Package: raptr
 Type: Package
 Title: Representative and Adequate Prioritization Toolkit in R
-Version: 0.1.8.0
+Version: 0.2.0.0
 Authors@R: c(person(c("Jeffrey", "O"), "Hanson",
     email="jeffrey.hanson@uqconnect.edu.au", role = c("aut", "cre")),
     person(c("Jonathan", "R"), "Rhodes", role = c("aut")),
@@ -58,7 +58,6 @@ Suggests:
     roxygen2,
     rmarkdown,
     testthat,
-    RandomFields (>= 3.3.14),
     RgoogleMaps (>= 1.4.5.3),
     dplyr (>= 1.0.8),
     vegan (>= 2.6.2),
@@ -96,6 +95,6 @@ Collate:
     'sim.species.R'
     'urap.proportion.held.R'
     'zzz.R'
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 NeedsCompilation: yes
 Roxygen: list(markdown = TRUE)

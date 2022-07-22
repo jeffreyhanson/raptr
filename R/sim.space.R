@@ -6,21 +6,14 @@ NULL
 #' @method sim.space RasterLayer
 #'
 #' @export
-sim.space.RasterLayer <- function(x, d = 2, model = NULL, ...) {
-  # check dependencies are available
-  assertthat::assert_that(
-    requireNamespace("RandomFields", quietly = TRUE),
-    msg = "please install the \"RandomFields\" package"
-  )
-  # update default argument
-  if (is.null(model)) {
-    model <- RandomFields::RMgauss()
-  }
+sim.space.RasterLayer <- function(x, d = 2, model = 0.2, ...) {
   # generate values for rasters
-  valMTX <- RandomFields::RFsimulate(model = model,
-                                     methods::as(x, "SpatialPoints")@coords,
-                                     n = d,
-                                     spConform = FALSE, ...)
+  valMTX <- simulate_gaussian_random_field(
+    n = d,
+    coords = methods::as(x, "SpatialPoints")@coords,
+    mu = 0,
+    scale = model
+  )
   # convert to matrix if not a matrix
   if (!inherits(valMTX, "matrix"))
     valMTX <- matrix(valMTX, ncol = 1)
@@ -40,15 +33,7 @@ sim.space.RasterLayer <- function(x, d = 2, model = NULL, ...) {
 #' @method sim.space SpatialPolygons
 #'
 #' @export
-sim.space.SpatialPolygons <- function(x, res, d = 2, model = NULL, ...) {
+sim.space.SpatialPolygons <- function(x, res, d = 2, model = 0.2, ...) {
   # check dependencies are available
-  assertthat::assert_that(
-    requireNamespace("RandomFields", quietly = TRUE),
-    msg = "please install the \"RandomFields\" package"
-  )
-  # update default argument
-  if (is.null(model)) {
-    model <- RandomFields::RMgauss()
-  }
   sim.space.RasterLayer(blank.raster(x, res), d = d, model = model, ...)
 }

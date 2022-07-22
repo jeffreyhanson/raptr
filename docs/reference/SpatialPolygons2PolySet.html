@@ -19,7 +19,7 @@ PBSmapping::PolySet() objects."><!-- mathjax --><script src="https://cdnjs.cloud
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.0</span>
       </span>
     </div>
 
@@ -60,13 +60,13 @@ PBSmapping::PolySet() objects."><!-- mathjax --><script src="https://cdnjs.cloud
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">SpatialPolygons2PolySet</span><span class="op">(</span><span class="va">x</span>, <span class="va">n_preallocate</span><span class="op">)</span>
-
-<span class="co"># S3 method for SpatialPolygonsDataFrame</span>
-<span class="fu">SpatialPolygons2PolySet</span><span class="op">(</span><span class="va">x</span>, n_preallocate <span class="op">=</span> <span class="fl">10000L</span><span class="op">)</span>
-
-<span class="co"># S3 method for SpatialPolygons</span>
-<span class="fu">SpatialPolygons2PolySet</span><span class="op">(</span><span class="va">x</span>, n_preallocate <span class="op">=</span> <span class="fl">10000L</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">SpatialPolygons2PolySet</span><span class="op">(</span><span class="va">x</span>, <span class="va">n_preallocate</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for SpatialPolygonsDataFrame</span></span>
+<span><span class="fu">SpatialPolygons2PolySet</span><span class="op">(</span><span class="va">x</span>, n_preallocate <span class="op">=</span> <span class="fl">10000L</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for SpatialPolygons</span></span>
+<span><span class="fu">SpatialPolygons2PolySet</span><span class="op">(</span><span class="va">x</span>, n_preallocate <span class="op">=</span> <span class="fl">10000L</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -74,15 +74,20 @@ PBSmapping::PolySet() objects."><!-- mathjax --><script src="https://cdnjs.cloud
     <dl><dt>x</dt>
 <dd><p><code><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">sp::SpatialPolygons()</a></code> or
 <code><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">sp::SpatialPolygonsDataFrame()</a></code> object.</p></dd>
+
+
 <dt>n_preallocate</dt>
 <dd><p><code>integer</code> How much memory should be preallocated
 for processing? Ideally, this number should equal the number of vertices
 in the <code><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">sp::SpatialPolygons()</a></code> object. If data processing is
 taking too long consider increasing this value.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code><a href="https://rdrr.io/pkg/PBSmapping/man/PolySet.html" class="external-link">PBSmapping::PolySet()</a></code> object.</p>
+    
+
+<p><code><a href="https://rdrr.io/pkg/PBSmapping/man/PolySet.html" class="external-link">PBSmapping::PolySet()</a></code> object.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -98,12 +103,12 @@ function will crash R.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># generate SpatialPolygons object</span></span>
-<span class="r-in"><span class="va">sim_pus</span> <span class="op">&lt;-</span> <span class="fu"><a href="sim.pus.html">sim.pus</a></span><span class="op">(</span><span class="fl">225L</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># convert to PolySet</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">SpatialPolygons2PolySet</span><span class="op">(</span><span class="va">sim_pus</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># generate SpatialPolygons object</span></span></span>
+<span class="r-in"><span><span class="va">sim_pus</span> <span class="op">&lt;-</span> <span class="fu"><a href="sim.pus.html">sim.pus</a></span><span class="op">(</span><span class="fl">225L</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># convert to PolySet</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">SpatialPolygons2PolySet</span><span class="op">(</span><span class="va">sim_pus</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -118,7 +123,7 @@ function will crash R.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

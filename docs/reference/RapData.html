@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.0</span>
       </span>
     </div>
 
@@ -56,17 +56,17 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">RapData</span><span class="op">(</span>
-  <span class="va">pu</span>,
-  <span class="va">species</span>,
-  <span class="va">targets</span>,
-  <span class="va">pu.species.probabilities</span>,
-  <span class="va">attribute.spaces</span>,
-  <span class="va">boundary</span>,
-  polygons <span class="op">=</span> <span class="cn">NA</span>,
-  skipchecks <span class="op">=</span> <span class="cn">FALSE</span>,
-  .cache <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html" class="external-link">new.env</a></span><span class="op">(</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">RapData</span><span class="op">(</span></span>
+<span>  <span class="va">pu</span>,</span>
+<span>  <span class="va">species</span>,</span>
+<span>  <span class="va">targets</span>,</span>
+<span>  <span class="va">pu.species.probabilities</span>,</span>
+<span>  <span class="va">attribute.spaces</span>,</span>
+<span>  <span class="va">boundary</span>,</span>
+<span>  polygons <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  skipchecks <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  .cache <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html" class="external-link">new.env</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -75,37 +75,56 @@
 <dd><p><code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">base::data.frame()</a></code> planning unit data. Columns must be
 "cost" (<code>numeric</code>), "area" (<code>numeric</code>), and "status"
 (<code>integer</code>).</p></dd>
+
+
 <dt>species</dt>
 <dd><p><code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">base::data.frame()</a></code> with species data. Columns
 must be "name" (<code>character</code>).</p></dd>
+
+
 <dt>targets</dt>
 <dd><p><code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">base::data.frame()</a></code> with species data.
 Columns must be "species" (<code>integer</code>), "target" (<code>integer</code>),
 "proportion" (<code>numeric</code>).</p></dd>
+
+
 <dt>pu.species.probabilities</dt>
 <dd><p><code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">base::data.frame()</a></code> with data on
 the probability of species in each planning unit. Columns must be
 "species", (<code>integer</code>), "pu" (<code>integer</code>), and "value"
 (<code>numeric</code>).</p></dd>
+
+
 <dt>attribute.spaces</dt>
 <dd><p><code>list</code> of <code><a href="AttributeSpaces.html">AttributeSpaces()</a></code> objects
 with the demand points and planning unit coordinates.</p></dd>
+
+
 <dt>boundary</dt>
 <dd><p><code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">base::data.frame()</a></code> with data on the shared
 boundary length of planning units. Columns must be "id1"
 (<code>integer</code>), "id2" (<code>integer</code>), and "boundary" (<code>integer</code>).</p></dd>
+
+
 <dt>polygons</dt>
 <dd><p><code><a href="https://rdrr.io/pkg/PBSmapping/man/PolySet.html" class="external-link">PBSmapping::PolySet()</a></code> planning unit spatial data
 or <code>NULL</code> if data not available.</p></dd>
+
+
 <dt>skipchecks</dt>
 <dd><p><code>logical</code> Skip data integrity checks? May improve
 speed for big data sets.</p></dd>
+
+
 <dt>.cache</dt>
 <dd><p><code><a href="https://rdrr.io/r/base/environment.html" class="external-link">base::environment()</a></code> used to cache calculations.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>RapData object</p>
+    
+
+<p>RapData object</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -121,50 +140,50 @@ speed for big data sets.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># load data</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">cs_pus</span>, <span class="va">cs_spp</span>, <span class="va">cs_space</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># create data for RapData object</span></span>
-<span class="r-in"><span class="va">attribute.spaces</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="fu"><a href="AttributeSpaces.html">AttributeSpaces</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"geographic"</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="AttributeSpace.html">AttributeSpace</a></span><span class="op">(</span></span>
-<span class="r-in">      planning.unit.points <span class="op">=</span> <span class="fu"><a href="PlanningUnitPoints.html">PlanningUnitPoints</a></span><span class="op">(</span></span>
-<span class="r-in">        <span class="fu">rgeos</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rgeos/man/topo-unary-gCentroid.html" class="external-link">gCentroid</a></span><span class="op">(</span><span class="va">cs_pus</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span>, byid <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">@</span><span class="va">coords</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">      demand.points <span class="op">=</span> <span class="fu"><a href="make.DemandPoints.html">make.DemandPoints</a></span><span class="op">(</span></span>
-<span class="r-in">        <span class="fu"><a href="randomPoints.html">randomPoints</a></span><span class="op">(</span><span class="va">cs_spp</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">10</span>, prob <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">      species <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">  <span class="fu"><a href="AttributeSpaces.html">AttributeSpaces</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"environmental"</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="AttributeSpace.html">AttributeSpace</a></span><span class="op">(</span></span>
-<span class="r-in">      planning.unit.points <span class="op">=</span> <span class="fu"><a href="PlanningUnitPoints.html">PlanningUnitPoints</a></span><span class="op">(</span></span>
-<span class="r-in">        <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/extract.html" class="external-link">extract</a></span><span class="op">(</span><span class="va">cs_space</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="va">cs_pus</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span>, fun <span class="op">=</span> <span class="va">mean</span><span class="op">)</span>,</span>
-<span class="r-in">        <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">      demand.points <span class="op">=</span> <span class="fu"><a href="make.DemandPoints.html">make.DemandPoints</a></span><span class="op">(</span></span>
-<span class="r-in">        <span class="va">cs_space</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/which.html" class="external-link">Which</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">cs_space</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>,</span>
-<span class="r-in">        species <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># load data</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">cs_pus</span>, <span class="va">cs_spp</span>, <span class="va">cs_space</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create data for RapData object</span></span></span>
+<span class="r-in"><span><span class="va">attribute.spaces</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="AttributeSpaces.html">AttributeSpaces</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"geographic"</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="AttributeSpace.html">AttributeSpace</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      planning.unit.points <span class="op">=</span> <span class="fu"><a href="PlanningUnitPoints.html">PlanningUnitPoints</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="fu">rgeos</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rgeos/man/topo-unary-gCentroid.html" class="external-link">gCentroid</a></span><span class="op">(</span><span class="va">cs_pus</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span>, byid <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">@</span><span class="va">coords</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      demand.points <span class="op">=</span> <span class="fu"><a href="make.DemandPoints.html">make.DemandPoints</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="fu"><a href="randomPoints.html">randomPoints</a></span><span class="op">(</span><span class="va">cs_spp</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">10</span>, prob <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      species <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="AttributeSpaces.html">AttributeSpaces</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"environmental"</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="AttributeSpace.html">AttributeSpace</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      planning.unit.points <span class="op">=</span> <span class="fu"><a href="PlanningUnitPoints.html">PlanningUnitPoints</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/extract.html" class="external-link">extract</a></span><span class="op">(</span><span class="va">cs_space</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="va">cs_pus</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span>, fun <span class="op">=</span> <span class="va">mean</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      demand.points <span class="op">=</span> <span class="fu"><a href="make.DemandPoints.html">make.DemandPoints</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="va">cs_space</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/which.html" class="external-link">Which</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">cs_space</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        species <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Registered S3 methods overwritten by 'adehabitatMA':</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   method                       from</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   print.SpatialPixelsDataFrame sp  </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   print.SpatialPixels          sp  </span>
-<span class="r-in"><span class="va">pu.species.probabilities</span> <span class="op">&lt;-</span> <span class="fu"><a href="calcSpeciesAverageInPus.html">calcSpeciesAverageInPus</a></span><span class="op">(</span><span class="va">cs_pus</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span>,</span>
-<span class="r-in">                                                    <span class="va">cs_spp</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">polygons</span> <span class="op">&lt;-</span> <span class="fu"><a href="SpatialPolygons2PolySet.html">SpatialPolygons2PolySet</a></span><span class="op">(</span><span class="va">cs_pus</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">boundary</span> <span class="op">&lt;-</span> <span class="fu"><a href="calcBoundaryData.html">calcBoundaryData</a></span><span class="op">(</span><span class="va">cs_pus</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">RapData</span><span class="op">(</span>pu <span class="op">=</span> <span class="va">cs_pus</span><span class="op">@</span><span class="va">data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span>, species <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"test"</span><span class="op">)</span>,</span>
-<span class="r-in">             target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>species <span class="op">=</span> <span class="fl">1L</span>, target <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">2</span>,</span>
-<span class="r-in">                                 proportion <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>,</span>
-<span class="r-in">             pu.species.probabilities <span class="op">=</span> <span class="va">pu.species.probabilities</span>,</span>
-<span class="r-in">             attribute.spaces <span class="op">=</span> <span class="va">attribute.spaces</span>,</span>
-<span class="r-in">             polygons <span class="op">=</span> <span class="va">polygons</span>,</span>
-<span class="r-in">             boundary <span class="op">=</span> <span class="va">boundary</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># print object</span></span>
-<span class="r-in"><span class="fu"><a href="print.html">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">pu.species.probabilities</span> <span class="op">&lt;-</span> <span class="fu"><a href="calcSpeciesAverageInPus.html">calcSpeciesAverageInPus</a></span><span class="op">(</span><span class="va">cs_pus</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span>,</span></span>
+<span class="r-in"><span>                                                    <span class="va">cs_spp</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">polygons</span> <span class="op">&lt;-</span> <span class="fu"><a href="SpatialPolygons2PolySet.html">SpatialPolygons2PolySet</a></span><span class="op">(</span><span class="va">cs_pus</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">boundary</span> <span class="op">&lt;-</span> <span class="fu"><a href="calcBoundaryData.html">calcBoundaryData</a></span><span class="op">(</span><span class="va">cs_pus</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">RapData</span><span class="op">(</span>pu <span class="op">=</span> <span class="va">cs_pus</span><span class="op">@</span><span class="va">data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span>, species <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"test"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>             target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>species <span class="op">=</span> <span class="fl">1L</span>, target <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">2</span>,</span></span>
+<span class="r-in"><span>                                 proportion <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>             pu.species.probabilities <span class="op">=</span> <span class="va">pu.species.probabilities</span>,</span></span>
+<span class="r-in"><span>             attribute.spaces <span class="op">=</span> <span class="va">attribute.spaces</span>,</span></span>
+<span class="r-in"><span>             polygons <span class="op">=</span> <span class="va">polygons</span>,</span></span>
+<span class="r-in"><span>             boundary <span class="op">=</span> <span class="va">boundary</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># print object</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="print.html">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> RapData object.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Number of planning units: 10</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Number of species: 1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Number of attribute spaces: 2</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -179,7 +198,7 @@ speed for big data sets.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

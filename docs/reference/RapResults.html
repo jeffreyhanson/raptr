@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0.0</span>
       </span>
     </div>
 
@@ -56,14 +56,14 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">RapResults</span><span class="op">(</span>
-  <span class="va">summary</span>,
-  <span class="va">selections</span>,
-  <span class="va">amount.held</span>,
-  <span class="va">space.held</span>,
-  <span class="va">logging.file</span>,
-  .cache <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html" class="external-link">new.env</a></span><span class="op">(</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">RapResults</span><span class="op">(</span></span>
+<span>  <span class="va">summary</span>,</span>
+<span>  <span class="va">selections</span>,</span>
+<span>  <span class="va">amount.held</span>,</span>
+<span>  <span class="va">space.held</span>,</span>
+<span>  <span class="va">logging.file</span>,</span>
+<span>  .cache <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html" class="external-link">new.env</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -71,24 +71,37 @@
     <dl><dt>summary</dt>
 <dd><p><code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">base::data.frame()</a></code> with summary information on
 solutions. See details below for more information.</p></dd>
+
+
 <dt>selections</dt>
 <dd><p><code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">base::matrix()</a></code> with binary selections. The
 cell \(x_{ij}\) denotes if planning unit \(j\) is selected in the
 \(i\)'th solution.</p></dd>
+
+
 <dt>amount.held</dt>
 <dd><p><code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">base::matrix()</a></code> with the amount held for each
 species in each solution.</p></dd>
+
+
 <dt>space.held</dt>
 <dd><p><code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">base::matrix()</a></code> with the proportion of
 attribute space sampled for each species in each solution.</p></dd>
+
+
 <dt>logging.file</dt>
 <dd><p><code>character</code> Gurobi log files.</p></dd>
+
+
 <dt>.cache</dt>
 <dd><p><code><a href="https://rdrr.io/r/base/environment.html" class="external-link">base::environment()</a></code> used to cache calculations.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>RapResults</code> object</p>
+    
+
+<p><code>RapResults</code> object</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -158,7 +171,7 @@ efficient.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

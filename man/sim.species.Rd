@@ -17,17 +17,22 @@ sim.species(x, ...)
 \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} object delineate the spatial extent to
 delineate study area.}
 
-\item{...}{parameters passed to \code{RandomFields::RandomFields()}.}
+\item{...}{not used.}
 
 \item{n}{\code{integer} number of species. Defaults to 1.}
 
-\item{model}{\code{character} value or \code{RandomFields::RMmodel()} model for
-simulating species distributions.
-Available \code{character} values include \code{"uniform"}, \code{"normal"}, and
-\code{"bimodal"}. Defaults to \code{"normal"}.}
+\item{model}{\code{character} or \code{numeric} for simulating data.
+If a \code{character} value is supplied, then the following values can
+can be used to simulate species distributions with particular
+characteristics:
+\code{"uniform"}, \code{"normal"}, and \code{"bimodal"}.
+If a \code{numeric} value is supplied, then this is used to simulate
+species distributions using a Gaussian random field, where the
+\code{numeric} value is treated as the scale parameter.
+Defaults to \code{"normal"}.}
 
 \item{res}{\code{numeric} resolution to simulate distributions. Only needed
-when \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} supplied.}
+when \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} are supplied.}
 }
 \value{
 \code{\link[raster:stack]{raster::stack()}} with layers for each species.
@@ -35,14 +40,7 @@ when \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} supplied.}
 \description{
 This function simulates species distributions for RAP.
 }
-\details{
-This function requires installation of the \pkg{RandomFields} package.
-Distributions are simulated by passing \code{model} to
-\code{RandomFields::RFsimulate()} and converting to logistic values
-using \code{\link[boot:inv.logit]{boot::inv.logit()}}.
-}
 \examples{
-\dontshow{if (requireNamespace("RandomFields", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # make polygons
 sim_pus <- sim.pus(225L)
 
@@ -58,17 +56,14 @@ s3 <- sim.species(sim_pus, res = 1, n = 1, model = "normal")
 # simulate 1 bimodal species distribution
 s4 <- sim.species(sim_pus, res = 1, n = 1, model = "bimodal")
 
-# simulate 1 species distribution using a RModel object from RandomFields
-s5 <- sim.species(sim_pus, res = 1, n = 1, model = RandomFields::RPgauss())
-
-# simulate 5 species distribution using a RModel object from RandomFields
-s6 <- sim.species(sim_pus, res = 1, n = 5, model = RandomFields::RPgauss())
+# simulate 1 species distribution using a random field
+s5 <- sim.species(sim_pus, res = 1, n = 1, model = 0.2)
 
 # plot simulations
 par(mfrow = c(2,2))
 plot(s2, main = "constant")
 plot(s3, main = "normal")
 plot(s4, main = "bimodal")
-plot(s5, main = "RPgauss()")
-\dontshow{\}) # examplesIf}
+plot(s5, main = "random field")
+
 }
