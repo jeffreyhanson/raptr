@@ -21,7 +21,7 @@ biodiversity patterns and processes. To obtain solutions in a feasible
 amount of time, this package uses the commercial Gurobi software package
 (obtained from <https://www.gurobi.com/>). For more information on using
 this package, see our paper published in Methods in Ecology and
-Evolution (<DOI:10.1111/2041-210X.12862>).
+Evolution (DOI: 10.1111/2041-210X.12862).
 
 ## Installation
 
