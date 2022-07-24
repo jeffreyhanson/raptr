@@ -80,9 +80,9 @@ citation("raptr")
     ## 
     ## To cite the raptr package in publications, use:
     ## 
-    ##   Hanson JO, Rhodes JR, Possingham HP & Fuller RA raptr: Representative
-    ##   and Adequate Prioritization Toolkit in R. Methods in Ecology &
-    ##   Evolution, 9: 320--330. DOI: 10.1111/2041-210X.12862
+    ##   Hanson JO, Rhodes JR, Possingham HP & Fuller RA (2018) raptr:
+    ##   Representative and Adequate Prioritization Toolkit in R. Methods in
+    ##   Ecology & Evolution, 9: 320--330. DOI: 10.1111/2041-210X.12862
     ## 
     ## A BibTeX entry for LaTeX users is
     ## 
@@ -93,7 +93,7 @@ citation("raptr")
     ##     year = {2018},
     ##     volume = {9},
     ##     pages = {320--330},
-    ##     url = {https://dx.doi.org/10.1111/2041-210X.12862},
+    ##     doi = {10.1111/2041-210X.12862},
     ##   }
     ## 
     ## You may also want to cite the package version. Find it with
