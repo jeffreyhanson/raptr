@@ -1,3 +1,7 @@
+# raptr 0.2.1
+
+- CRAN release.
+
 # raptr 0.2.0.0
 
 - The data simulation function has been updated such that the _RandomFileds_

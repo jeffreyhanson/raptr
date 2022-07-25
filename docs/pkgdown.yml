@@ -3,7 +3,7 @@ pkgdown: 2.0.5
 pkgdown_sha: ~
 articles:
   raptr: raptr.html
-last_built: 2022-07-24T23:40Z
+last_built: 2022-07-25T01:36Z
 urls:
   reference: https://jeffrey-hanson.com/raptr/reference
   article: https://jeffrey-hanson.com/raptr/articles
