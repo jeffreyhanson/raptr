@@ -1,5 +1,4 @@
 context("01-internal-tests")
-source("functions.R")
 
 test_that("space calculations (unreliable)", {
   ## create artificial space that is a kmeans problem

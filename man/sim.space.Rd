@@ -8,23 +8,27 @@
 \usage{
 sim.space(x, ...)
 
-\method{sim.space}{RasterLayer}(x, d = 2, model = RandomFields::RMgauss(), ...)
+\method{sim.space}{RasterLayer}(x, d = 2, model = 0.2, ...)
 
-\method{sim.space}{SpatialPolygons}(x, res, d = 2, model = RandomFields::RMgauss(), ...)
+\method{sim.space}{SpatialPolygons}(x, res, d = 2, model = 0.2, ...)
 }
 \arguments{
-\item{x}{\code{\link[raster:raster]{raster::raster()}} or \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} object
-delineate the spatial extent to delineate study area.}
+\item{x}{\code{\link[raster:raster]{raster::raster()}} or
+\code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} object delineate the spatial extent to
+delineate study area.}
 
-\item{...}{parameters passed to \code{\link[RandomFields:RandomFields]{RandomFields::RandomFields()}}.}
+\item{...}{not used.}
 
 \item{d}{\code{integer} number of dimensions. Defaults to 2.}
 
-\item{model}{\code{\link[RandomFields:RMmodel]{RandomFields::RMmodel()}} model to simulate species
-distributions with. Defaults \code{\link[RandomFields:RPgauss]{RandomFields::RPgauss()}}.}
+\item{model}{\code{numeric} scale parameter for simulating spatially
+auto-correlated data using Gaussian random fields.
+Higher values produce patchier data with more well defined clusters,
+and lower values produce more evenly distributed data.
+Defaults to 0.2.}
 
 \item{res}{\code{numeric} resolution to simulate distributions. Only needed
-when \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} supplied.}
+when \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} are supplied.}
 }
 \value{
 \code{\link[raster:stack]{raster::stack()}} with layers for each dimension of the space.
@@ -32,12 +36,8 @@ when \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} supplied.}
 \description{
 This function simulates attribute space data for RAP.
 }
-\details{
-Distributions are simulated by passing \code{model} to
-\code{\link[RandomFields:RFsimulate]{RandomFields::RFsimulate()}}.
-}
 \examples{
-# simulate plannign units
+# simulate planning units
 sim_pus <- sim.pus(225L)
 
 # simulate 1d space using RasterLayer
@@ -56,7 +56,4 @@ plot(s2, main = "s2")
 plot(s3[[1]], main = "s3: first dimension")
 plot(s3[[2]], main = "s3: second dimension")
 
-}
-\seealso{
-\code{\link[RandomFields:RFsimulate]{RandomFields::RFsimulate()}}.
 }

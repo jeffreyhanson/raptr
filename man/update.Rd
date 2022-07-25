@@ -75,7 +75,7 @@ gap and a number of additional solutions that are of any level of quality
 \code{number_solutions}). The \code{"solution.pool.2"} finds a
 specified number of solutions that are nearest to optimality. The
 search pool methods correspond to the parameters used by the Gurobi
-software suite (see \url{http://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode}).
+software suite (see \url{https://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode}).
 Defaults to \code{"benders.cuts"}.}
 
 \item{...}{parameters passed to \code{\link[=update.RapReliableOpts]{update.RapReliableOpts()}},

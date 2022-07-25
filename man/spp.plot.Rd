@@ -16,7 +16,7 @@ spp.plot(x, species, ...)
   prob.color.palette = "YlGnBu",
   pu.color.palette = c("#4D4D4D", "#00FF00", "#FFFF00", "#FF0000"),
   basemap = "none",
-  alpha = ifelse(basemap == "none", 1, 0.7),
+  alpha = ifelse(identical(basemap, "none"), 1, 0.7),
   grayscale = FALSE,
   main = NULL,
   force.reset = FALSE,
@@ -63,19 +63,18 @@ species.}
 probability of occupancy of the species in planning units (see
 \code{\link[RColorBrewer:ColorBrewer]{RColorBrewer::brewer.pal()}}). Defaults to \code{"YlGnBu"}.}
 
-\item{pu.color.palette}{\code{character} name of colors or color palette
-(\code{\link[RColorBrewer:ColorBrewer]{RColorBrewer::brewer.pal()}}) to indicate planning unit
-statuses. Defaults to \code{c("grey30", "green", "black", "red")} which
-indicate non selected, selected, locked in, and locked out (respectively).}
+\item{pu.color.palette}{\code{character} vector of colors to indicate planning
+unit statuses. Defaults to \code{c("grey30", "green", "black", "red")} which
+indicate not selected, selected, locked in, and locked out (respectively).}
 
 \item{basemap}{\code{character} object indicating the type of basemap to use
 (see \code{\link[=basemap]{basemap()}}). Valid options include \code{"none"},
 \code{"roadmap"}, \code{"mobile"}, \code{"satellite"}, \code{"terrain"},
 \code{"hybrid"}, \code{"mapmaker-roadmap"}, \code{"mapmaker-hybrid"}.
-Defaults to \code{"none"}.}
+Defaults to \code{"none"} such that no basemap is shown.}
 
 \item{alpha}{\code{numeric} value to indicating the transparency level for
-plotting the planning units.}
+coloring the planning units.}
 
 \item{grayscale}{\code{logical} should the basemap be gray-scaled?}
 
@@ -91,6 +90,10 @@ value.}
 }
 \description{
 This function plots the distribution of species across the study area.
+}
+\details{
+This function requires the \pkg{RgoogleMaps} package to be installed
+in order to create display a basemap.
 }
 \examples{
 # load RapSolved objects

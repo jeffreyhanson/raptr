@@ -38,11 +38,17 @@ object to plot differences in solutions between objects. Defaults to
 (see \code{\link[=basemap]{basemap()}}). Valid options include \code{"none"},
 \code{"roadmap"}, \code{"mobile"}, \code{"satellite"}, \code{"terrain"},
 \code{"hybrid"}, \code{"mapmaker-roadmap"}, \code{"mapmaker-hybrid"}.
-Defaults to \code{"none"}.}
+Defaults to \code{"none"} such that no basemap is shown.}
 
-\item{pu.color.palette}{\code{character} name of colors or color palette
-(\code{\link[RColorBrewer:ColorBrewer]{RColorBrewer::brewer.pal()}}) to indicate planning unit
-statuses. Defaults to \code{c("grey30", "green", "yellow", "black", "gray80", "red", "orange")}.}
+\item{pu.color.palette}{\code{character} vector of colors to indicate
+planning unit statuses.
+If plotting selection frequencies (i.e., \code{j = NULL}), then
+defaults to a \code{c("PuBu", "#FFFF00", "#FF0000")}.
+Here, the first element corresponds to a color palette
+(per \code{\link[RColorBrewer:ColorBrewer]{RColorBrewer::brewer.pal()}}) and the last two elements
+indicate the colors for locked in and locked out planning units.
+Otherwise, the parameter defaults to a \code{character} vector of
+\code{c("grey30", "green", "yellow", "black", "gray80", "red", "orange")}.}
 
 \item{alpha}{\code{numeric} value to indicating the transparency level for
 coloring the planning units.}
@@ -71,6 +77,10 @@ objects. It can be used to show a single solution, or the the selection
 frequencies of planning units contained in a single \code{\link[=RapSolved]{RapSolved()}}
 object. Additionally, two \code{\link[=RapSolved]{RapSolved()}} objects can be supplied to
 plot the differences between them.
+}
+\details{
+This function requires the \pkg{RgoogleMaps} package to be installed
+in order to create display a basemap.
 }
 \examples{
 # load example data set with solutions

@@ -25,9 +25,6 @@ vigns:
 	R --slave -e "devtools::build_vignettes()"
 	cp -R doc inst/
 
-spellcheck:
-	R --slave -e "devtools::document();devtools::spell_check()"
-
 data:
 	Rscript --slave inst/extdata/data.R
 
@@ -58,6 +55,12 @@ wbcheck:
 	R --slave -e "devtools::check_win_devel()"
 	cp -R doc inst/
 
+urlcheck:
+	R --slave -e "devtools::document();urlchecker::url_check()"
+
+spellcheck:
+	R --slave -e "devtools::document();devtools::spell_check()"
+
 solarischeck:
 	R --slave -e "rhub::check(platform = 'solaris-x86-patched', email = 'jeffrey.hanson@uqconnect.edu.au', show_status = FALSE)"
 
@@ -74,4 +77,4 @@ examples:
 	R --slave -e "devtools::run_examples(test = TRUE, run = TRUE);warnings()"  >> examples.log
 	rm -f Rplots.pdf
 
-.PHONY: initc clean docs readme contrib site test check checkwb solarischeck fedoracheck build install man data examples
+.PHONY: initc clean docs readme contrib site test check checkwb solarischeck fedoracheck build install man data examples spellcheck urlcheck

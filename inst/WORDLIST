@@ -80,3 +80,8 @@ testthat
 treedepth
 warmup
 WorldClim
+CMD
+ggplot
+RandomFields
+rgdal
+RgoogleMaps

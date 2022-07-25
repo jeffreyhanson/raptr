@@ -669,15 +669,20 @@ make.RapData <- function(pus, species, spaces = NULL, amount.target = 0.2,
 #' @rdname basemap
 basemap.RapData <- function(x, basemap = "hybrid", grayscale = FALSE,
                             force.reset = FALSE) {
+  assertthat::assert_that(
+    requireNamespace("RgoogleMaps", quietly = TRUE),
+    msg = "please install the \"RgoogleMaps\" package"
+  )
   assertthat::assert_that(assertthat::is.string(basemap),
                           assertthat::is.flag(grayscale),
                           assertthat::is.flag(force.reset))
   callchar <- hashCall(match.call(), 1)
   match.arg(basemap, c("roadmap", "mobile", "satellite", "terrain", "hybrid",
                        "mapmaker-roadmap", "mapmaker-hybrid"))
-  if (is.null(x@polygons))
-  stop(paste0("Rap object is not associated with spatially explicit data ",
-              "for the planning units."))
+  if (is.null(x@polygons)) {
+    stop(paste0("Rap object is not associated with spatially explicit data ",
+                "for the planning units."))
+  }
   # fetch data from google or cache
   if (force.reset || !is.cached(x, callchar)) {
     cache(x, callchar,
@@ -972,7 +977,7 @@ spp.plot.RapData <- function(x, species, prob.color.palette = "YlGnBu",
                              pu.color.palette = c("#4D4D4D", "#00FF00",
                                                   "#FFFF00", "#FF0000"),
                              basemap = "none",
-                             alpha = ifelse(basemap == "none", 1, 0.7),
+                             alpha = ifelse(identical(basemap, "none"), 1, 0.7),
                              grayscale = FALSE, main = NULL,
                              force.reset = FALSE,
   ...
@@ -1135,8 +1140,9 @@ amount.target.RapData <- function(x, species = NULL) {
   } else {
     if (is.character(species))
       species <- match(species, x@species$name)
-    if (!all(species %in% seq_len(nrow(x@species))))
+    if (!all(species %in% seq_len(nrow(x@species)))) {
       stop("species not present in argument to x")
+    }
     pos <- which(x@targets$target == 0 & x@targets$species %in% species)
     x@targets$proportion[pos] <- value
   }
@@ -1180,7 +1186,7 @@ space.target.RapData <- function(x, species = NULL, space = NULL) {
 #' @rdname space.target
 #'
 #' @export
-`space.target<-.RapData` <- function(x, species=NULL, space=NULL, value) {
+`space.target<-.RapData` <- function(x, species = NULL, space = NULL, value) {
   assertthat::assert_that(is.null(species) || is.character(species) ||
                           is.numeric(species),
                           is.null(space) || is.numeric(space),

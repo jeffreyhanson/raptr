@@ -37,7 +37,6 @@ names(sim_rs) <- c('spp1', 'spp2', 'spp3')
 
 # show new names
 names(sim_rs)
-
 }
 \seealso{
 \code{\link[=RapData]{RapData()}}, \code{\link[=RapUnsolved]{RapUnsolved()}},

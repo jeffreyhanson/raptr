@@ -1,14 +1,10 @@
 Dear CRAN maintainers,
 
-This update addresses the NOTE:
-
->    Namespace in Imports field not imported from: ‘rgdal’
->     All declared Imports should be used.
+Thank you very much for reviewing this submission. This package was formerly available on CRAN. It was archived because one of its dependencies was archived (i.e., the RandomFields package). To address this, I have updated the package so that the RandomFields package is no longer a dependency. I have also taken this opportunity to update the package to address issues identified by CRAN package checks. Specifically, these issue includes a note raised during package checks (i.e., `Namespace in Imports field not imported from: ‘rgdal’; All declared Imports should be used.`), and a compiler warning (i.e., `warning: use of bitwise '&' with boolean operands [-Wbitwise-instead-of-logical]`).
 
 Cheers,
 
 Jeff
-
 
 # Test environments
 
@@ -16,12 +12,11 @@ Jeff
 * [Ubuntu 20.04, R-devel](https://github.com/jeffreyhanson/raptr/actions?query=workflow%3AUbuntu)
 * [Mac OSX 10.15, R-release](https://github.com/jeffreyhanson/raptr/actions?query=workflow%3A%22Mac+OSX%22)
 * [Windows Server 2019, R-release](https://github.com/jeffreyhanson/raptr/actions?query=workflow%3AWindows)
-* [Windows Server 2019, R-devel](https://github.com/jeffreyhanson/raptr/actions?query=workflow%3AWindows)
-* Windows Server 2008 (x64), R-devel (win-builder)
+* [Windows Server 2008 (x64), R-devel (win-builder)](https://win-builder.r-project.org/)
 
 # R CMD check results
 
-0 errors | 0 warnings | 0 note
+0 errors | 0 warnings | 2 note
 
 # Notes
 

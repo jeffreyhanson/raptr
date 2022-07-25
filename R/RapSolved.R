@@ -105,6 +105,7 @@ methods::setMethod("solve",
     # run model
     log.pth <- tempfile(fileext = ".log")
     gparams <- append(as.list(b), list("LogFile" = log.pth))
+    gparams$LogToConsole <- as.integer(verbose)
     if (b@MultipleSolutionsMethod == "benders.cuts") {
       igparams <- gparams
     } else {

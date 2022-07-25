@@ -24,10 +24,10 @@ The objects in the dataset are listed below.
 \item{cs_pus}{\code{\link[sp:SpatialPolygons]{sp::SpatialPolygonsDataFrame()}} planning units.
 The units were generated as \eqn{30km^2} squares across the
 species' range, and then clipped to the Queensland, Australia
-(using data obtained from the Australia Bureau of Statistics; \url{http://www.abs.gov.au/ausstats/abs@.nsf/mf/1259.0.30.001?OpenDocument}).
+(using data obtained from the Australia Bureau of Statistics; \url{https://www.abs.gov.au/ausstats/abs@.nsf/mf/1259.0.30.001?OpenDocument}).
 They were then overlaid with Australia's protected area
 network (obtained from the World Database on Protected Areas
-(WDPA) at \url{http://www.protectedplanet.net/}). This
+(WDPA) at \url{https://www.protectedplanet.net/en}). This
 attribute table has 3 fields. The \code{area} field denotes
 the amount of land encompassed by each unit, the \code{cost}
 field is set to 1 for all units, and the \code{status} field
@@ -36,10 +36,10 @@ protected areas.}
 \item{cs_spp}{\code{\link[raster:raster]{raster::raster()}} probability
 distribution map for the \emph{P. adscitus} clipped to
 Queensland, Australia. This map was derived from records
-obtained from The Atlas of Living Australia (\url{http://ala.org.au/})}.
+obtained from The Atlas of Living Australia (\url{https://ala.org.au/})}.
 \item{cs_space}{\code{\link[raster:stack]{raster::stack()}} describing broad-scale climate
 variation across Queensland
-(obtained from \url{http://worldclim.org/},
+(obtained from \url{https://worldclim.org/},
 and resampled to \eqn{10km^2} resolution).}
 }
 }

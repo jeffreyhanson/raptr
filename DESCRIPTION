@@ -1,7 +1,7 @@
 Package: raptr
 Type: Package
 Title: Representative and Adequate Prioritization Toolkit in R
-Version: 0.1.7.3
+Version: 0.2.0.0
 Authors@R: c(person(c("Jeffrey", "O"), "Hanson",
     email="jeffrey.hanson@uqconnect.edu.au", role = c("aut", "cre")),
     person(c("Jonathan", "R"), "Rhodes", role = c("aut")),
@@ -15,56 +15,55 @@ Description: Biodiversity is in crisis. The overarching aim of conservation
     (prioritizations), using spatially explicit targets for biodiversity
     patterns and processes. To obtain solutions in a feasible amount  of time,
     this package uses the commercial 'Gurobi' software (obtained from
-    <http://www.gurobi.com/>). For more information on using
+    <https://www.gurobi.com/>). For more information on using
     this package, see Hanson et al. (2018) <doi:10.1111/2041-210X.12862>.
 Imports:
     utils,
     methods,
-    assertthat,
-    Matrix,
-    boot,
-    grDevices,
-    PBSmapping,
-    graphics,
     stats,
-    scales,
-    shape,
-    adehabitatHR,
-    RgoogleMaps,
-    RandomFields,
-    RColorBrewer,
-    plyr,
+    graphics,
+    grDevices,
     parallel,
-    doParallel,
-    rgeos,
-    rgdal,
-    hypervolume(>= 2.0.7),
-    ks,
-    mvtnorm,
-    ggplot2,
-    withr (>= 2.4.1),
+    Matrix (>= 1.4.1),
+    assertthat (>= 0.2.1),
+    boot (>= 1.3.28),
+    PBSmapping (>= 2.73.0),
+    scales (>= 1.2.0),
+    shape (>= 1.4.6),
+    adehabitatHR (>= 0.4.19),
+    RColorBrewer (>= 1.1.3),
+    ggplot2 (>= 3.3.5),
+    plyr (>= 1.8.7),
+    doParallel (>= 1.0.17),
+    rgeos (>= 0.5.9),
+    rgdal (>= 1.5.30),
+    hypervolume (>= 2.0.7),
+    ks (>= 1.13.5),
+    mvtnorm (>= 1.1.3),
+    withr (>= 2.5.0),
 Depends:
-    R(>= 3.5.0),
-    sp,
-    raster
+    R (>= 3.5.0),
+    sp (>= 1.4.6),
+    raster (>= 3.5.15)
 LinkingTo: Rcpp, RcppEigen, BH
 LazyData: true
 License: GPL-3
 Encoding: UTF-8
 Language: en-US
-URL: https://jeffrey-hanson.com/raptr, https://github.com/jeffreyhanson/raptr
+URL: https://jeffrey-hanson.com/raptr/, https://github.com/jeffreyhanson/raptr
 BugReports: https://github.com/jeffreyhanson/raptr/issues
 VignetteBuilder: knitr
 Suggests:
     knitr,
     roxygen2,
     rmarkdown,
-    dplyr,
-    vegan,
-    gurobi,
-    gridExtra,
-    rgl,
-    testthat
+    testthat,
+    RgoogleMaps (>= 1.4.5.3),
+    dplyr (>= 1.0.8),
+    vegan (>= 2.6.2),
+    gurobi (>= 8.0.0),
+    gridExtra (>= 2.3),
+    rgl (>= 0.108.3),
 SystemRequirements: C++11
 Collate:
     'dependencies.R'
@@ -96,6 +95,6 @@ Collate:
     'sim.species.R'
     'urap.proportion.held.R'
     'zzz.R'
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 NeedsCompilation: yes
 Roxygen: list(markdown = TRUE)

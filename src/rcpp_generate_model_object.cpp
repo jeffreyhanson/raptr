@@ -102,7 +102,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   if (verbose) Rcpp::Rcout << "\tattribute space data" << std::endl;
   Rcpp::List attributespaces_LST=Rcpp::as<Rcpp::List>(data.slot("attribute.spaces"));
   std::size_t n_attribute_spaces_INT=attributespaces_LST.size();
-  
+
   /// extract objects from S4 AttributeSpaces objects
   if (verbose) Rcpp::Rcout << "\tAttributeSpaces data" << std::endl;
   // important variables
@@ -114,7 +114,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   std::vector<std::size_t> species_space_npu_INT;
   std::vector<std::size_t> species_attributespace_species_INT;
   std::vector<std::size_t> species_attributespace_space_INT;
-  
+
   std::size_t preallocate_INT=n_species_INT*n_attribute_spaces_INT;
   species_space_dpcoords_MTX.reserve(preallocate_INT);
   species_space_pucoords_MTX.reserve(preallocate_INT);
@@ -137,7 +137,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
     Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> tmp1_MTX;
     Rcpp::NumericMatrix tmp2_MTX;
     double *pcv;
-    
+
     for (std::size_t i=0; i<n_attribute_spaces_INT; ++i) {
       if (verbose) Rcpp::Rcout << "\t\tstarting AttributeSpaces " << i << std::endl;
       // init
@@ -165,25 +165,25 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
 
         if (verbose) Rcpp::Rcout << "\t\t\tnumber of planning units" << std::endl;
         species_space_npu_INT.push_back(tmpvec.size());
-        
+
         // demand points
         if (verbose) Rcpp::Rcout << "\t\t\tdemand point coordinates" << std::endl;
         tmp2_MTX=Rcpp::as<Rcpp::NumericMatrix>(tmp_dp_S4.slot("coords"));
         pcv = &tmp2_MTX(0,0);
         Eigen::Map<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor>> tmp3_MTX(pcv, tmp2_MTX.nrow(), tmp2_MTX.ncol());
         species_space_dpcoords_MTX.push_back(tmp3_MTX);
-        
+
         if (verbose) Rcpp::Rcout << "\t\t\tdemand point weights" << std::endl;
         Eigen::Map<Eigen::VectorXd> tmpvec2(Rcpp::as<Eigen::Map<Eigen::VectorXd>>(tmp_dp_S4.slot("weights")));
         species_space_dpweights_VXD.push_back(tmpvec2);
-        
+
         if (verbose) Rcpp::Rcout << "\t\t\tnumber of demand points" << std::endl;
         species_space_ndp_INT.push_back(tmpvec2.size());
-        
+
       }
     }
   }
-  
+
   species_space_dpcoords_MTX.shrink_to_fit();
   species_space_pucoords_MTX.shrink_to_fit();
   species_space_dpweights_VXD.shrink_to_fit();
@@ -193,7 +193,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   species_attributespace_species_INT.shrink_to_fit();
   species_attributespace_space_INT.shrink_to_fit();
   std::size_t n_species_attributespace_INT=species_attributespace_species_INT.size();
-  
+
   // target data
   if (verbose) Rcpp::Rcout << "\ttarget data" << std::endl;
   Rcpp::DataFrame target_DF=Rcpp::as<Rcpp::DataFrame>(data.slot("targets"));
@@ -208,7 +208,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
     } else {
       if (!std::isnan(target_DF_value[i])) {
         for (std::size_t a=0, ii=species_attributespace_species_INT[a], jj=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a, ii=species_attributespace_species_INT[a], jj=species_attributespace_space_INT[a]) {
-          if ((ii==(target_DF_species[i]-1)) & (jj==(target_DF_target[i]-1))) {
+          if ((ii==(target_DF_species[i]-1)) && (jj==(target_DF_target[i]-1))) {
             species_space_proptargets_DBL[a]=target_DF_value[i];
             break;
           }
@@ -216,7 +216,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
       }
     }
   }
-  
+
   /// preprocessing for area targets
   if (verbose) Rcpp::Rcout << "\tpre-process area targets" << std::endl;
   // ini
@@ -246,7 +246,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   for (std::size_t i=0; i<n_species_INT; ++i) {
     species_pu_probs_DBL[i].shrink_to_fit();
   }
-  
+
   /// create centroid variables
   if (verbose) Rcpp::Rcout << "\tcentroid positions" << std::endl;
   std::vector<Eigen::RowVectorXd> species_space_centroid_VXD(n_species_attributespace_INT);
@@ -279,7 +279,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
           species_space_weightdist_MTX[a](k,l) = tmp_AXD.square().sum() * species_space_dpweights_VXD[a][k];
         }
       }
-      species_space_weightdist_MTX[a].array()+=zero_adjust; 
+      species_space_weightdist_MTX[a].array()+=zero_adjust;
       // calculate distances for centroid
       species_space_tss_DBL[a]=zero_adjust;
       for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
@@ -304,7 +304,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
       species_space_rlevel_INT[a]=std::min(maxrlevel_INT, species_space_npu_INT[a]-1);
     }
   }
-  
+
   /// species space probs and transitional probabilities
   if (verbose) Rcpp::Rcout << "\ttransitional probs" << std::endl;
   std::vector<Rcpp::NumericVector> species_space_pu_probs_RDV(n_species_attributespace_INT);
@@ -323,13 +323,13 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
       species_space_pu_probs_RDV[a].push_back(1.0);
     }
   }
-  
+
   // calculate targets
   if (verbose) Rcpp::Rcout << "\tspace targets" << std::endl;
   std::vector<double> species_space_rawtargets_DBL(n_species_attributespace_INT);
   for (std::size_t a=0; a<n_species_attributespace_INT; ++a)
     species_space_rawtargets_DBL[a] = (species_space_proptargets_DBL[a] - 1.0) * species_space_tss_DBL[a] * -1.0;
-  
+
   /// create unordered map with variable names
   if (verbose) Rcout << "\tcreating undordered_maps with variable names" << std::endl;
   std::unordered_map<std::size_t, std::size_t> pu_MAP;
@@ -340,7 +340,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   std::unordered_map<std::array<std::size_t, 5>, std::size_t, boost::hash<std::array<std::size_t,5>>> rY_MAP;
   std::unordered_map<std::array<std::size_t, 5>, std::size_t, boost::hash<std::array<std::size_t,5>>> rP_MAP;
   std::unordered_map<std::array<std::size_t, 5>, std::size_t, boost::hash<std::array<std::size_t,5>>> rW_MAP;
-  
+
   // pu vars
   for (std::size_t i=0; i<n_pu_INT; ++i) {
     pu_MAP[i] = counter;
@@ -354,7 +354,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
       ++counter;
     }
   }
-  
+
   // space vars
   if (unreliable_formulation) {
     for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a) {
@@ -379,7 +379,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
             for (std::size_t r=0; r<(species_space_rlevel_INT[a]+1); ++r) {
               // create array
               curr_rARRAY = {{i , j, k, l, r}};
-              
+
               // Y_var
               rY_MAP[curr_rARRAY] = counter;
               ++counter;
@@ -397,7 +397,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
       }
     }
   }
-  
+
   //// Main processing
   if (verbose) Rcpp::Rcout << "Main processing" << std::endl;
   Rcpp::checkUserInterrupt();
@@ -438,7 +438,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   counter=0;
 
   // preallocate variables storing model matrix
-  preallocate_INT=n_pu_INT * n_species_INT * n_attribute_spaces_INT * 
+  preallocate_INT=n_pu_INT * n_species_INT * n_attribute_spaces_INT *
     static_cast<std::size_t>(std::accumulate(species_space_ndp_INT.cbegin(), species_space_ndp_INT.cend(), 0));
   if (!unreliable_formulation) {
     preallocate_INT*=maxrlevel_INT;
@@ -503,7 +503,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
       }
     }
   }
-  
+
   // pu status constraints
   if (verbose) Rcpp::Rcout << "\t\tpu status constraints" << std::endl;
   for (std::size_t i=0; i<n_pu_INT; ++i) {
@@ -557,7 +557,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
       // model+=boundary_DF_idpair_STR[i] + " - " +
         // pu_DF_id_STR[boundary_DF_id1[i]] + " - " +
         // pu_DF_id_STR[boundary_DF_id2[i]] + " >= -1\n";
-      
+
       // constraints not strictly needed since decision variables are binary
 //       model_rows_INT.push_back(counter);
 //       model_rows_INT.push_back(counter);
@@ -626,7 +626,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
       if (!std::isnan(species_space_proptargets_DBL[a])) {
         for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
           for (std::size_t r=0; r<(species_space_rlevel_INT[a]+1); ++r) {
-            
+
             // original formulation
 //               for (std::size_t l=0; l<(species_space_npu_INT(i,j)+1); ++l) {
 //                 curr_STR="Y_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[l]+"_"+int_STR[r];
@@ -660,7 +660,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
       }
     }
     if (verbose) Rcpp::Rcout << counter << ")" << std::endl;
-    
+
     // 1b extra - force each pu to be assigned to only 1 r-level
     if (verbose) Rcpp::Rcout << "\t\teqn. 1b (extra) constraints (rows " << counter << ", ";
     for (std::size_t a=0, i=species_attributespace_species_INT[a], j=species_attributespace_space_INT[a]; a<n_species_attributespace_INT; ++a) {
@@ -682,7 +682,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
       }
     }
     if (verbose) Rcpp::Rcout << counter << ")" << std::endl;
-    
+
     // 1c
     Rcpp::checkUserInterrupt();
     if (verbose) Rcpp::Rcout << "\t\teqn. 1c constraints (rows " << counter << ", ";
@@ -708,7 +708,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
       }
     }
     if (verbose) Rcpp::Rcout << counter << ")" << std::endl;
-    
+
     // 1d
     Rcpp::checkUserInterrupt();
     if (verbose) Rcpp::Rcout << "\t\teqn. 1d constraints (rows " << counter << ", ";
@@ -716,7 +716,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
       i=species_attributespace_species_INT[a]; j=species_attributespace_space_INT[a];
       if (!std::isnan(species_space_proptargets_DBL[a])) {
         for (std::size_t k=0; k<species_space_ndp_INT[a]; ++k) {
-            
+
             // original formulation
   //             for (std::size_t r=0; r<(species_space_rlevel_INT(i,j)+1); ++r) {
   //               curr_STR="Y_"+int_STR[i]+"_"+int_STR[j]+"_"+int_STR[k]+"_"+int_STR[species_space_npu_INT(i,j)]+"_"+int_STR[r];
@@ -727,7 +727,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   //             sense_STR.push_back("=");
   //             rhs_DBL.push_back(1.0);
   //             ++counter;
-            
+
           // ensure that failure planning unit is assigned to last r-level
           curr_rARRAY = {{i, j, k, species_space_npu_INT[a], species_space_rlevel_INT[a]}};
           model_rows_INT.push_back(counter);
@@ -868,7 +868,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
     }
     if (verbose) Rcpp::Rcout << counter << ")" << std::endl;
   }
-  
+
   ////// variable types and bounds
   Rcpp::checkUserInterrupt();
   if (verbose) Rcpp::Rcout << "\tvariable types" << std::endl;
@@ -923,7 +923,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
         }
       }
     }
-    
+
     ///// semi-continuous
     Rcpp::checkUserInterrupt();
     if (verbose) Rcpp::Rcout << "\t\tsemi-continuous vars" << std::endl;
@@ -944,7 +944,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
       }
     }
   }
-  
+
   // calculate best space proportions
   if (verbose) Rcpp::Rcout << "\tcalculating best possible space targets" << std::endl;
   std::vector<double> species_space_best_DBL(n_species_attributespace_INT);
@@ -956,7 +956,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
     for (std::size_t a=0; a<n_species_attributespace_INT; ++a)
       species_space_best_DBL[a]=1.0-(reliable_space_value(species_space_weightdist_MTX[a],species_space_pu_probs_RDV[a],species_space_rlevel_INT[a]) / species_space_tss_DBL[a]);
   }
-  
+
   // dump all variables to string
   std::vector<std::string> variables_STR(problem_size_INT);
   for (auto i : pu_MAP)
@@ -974,7 +974,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
     for (auto i : rW_MAP)
       variables_STR[i.second] = "W_" + num2str<std::size_t>(i.first[0]) + "_" + num2str<std::size_t>(i.first[1]) + "_" + num2str<std::size_t>(i.first[2]) + "_" + num2str<std::size_t>(i.first[3]) + "_" + num2str<std::size_t>(i.first[4]);
   }
-  
+
   // create pointers to store cache
   std::vector<std::size_t>* species_attributespace_species_INT_PTR = new std::vector<std::size_t>;
   std::vector<std::size_t>* species_attributespace_space_INT_PTR = new std::vector<std::size_t>;
@@ -990,7 +990,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   std::vector<std::size_t>* species_space_rlevel_INT_PTR = new std::vector<std::size_t>;
   std::vector<std::string>* variables_STR_PTR = new std::vector<std::string>;
   std::vector<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>>* species_space_weightdist_MTX_PTR  = new std::vector<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>>;
-  
+
   // copy data for preservation
   *species_attributespace_species_INT_PTR = species_attributespace_species_INT;
   *species_attributespace_space_INT_PTR = species_attributespace_space_INT;
@@ -1006,7 +1006,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   *species_space_rlevel_INT_PTR = species_space_rlevel_INT;
   *variables_STR_PTR = variables_STR;
   *species_space_weightdist_MTX_PTR = species_space_weightdist_MTX;
-  
+
   // convert pointers to Rcpp::XPters
   Rcpp::XPtr<std::vector<std::size_t>> species_attributespace_species_INT_XPTR(species_attributespace_species_INT_PTR);
   Rcpp::XPtr<std::vector<std::size_t>> species_attributespace_space_INT_XPTR(species_attributespace_space_INT_PTR);
@@ -1022,7 +1022,7 @@ Rcpp::List rcpp_generate_model_object(Rcpp::S4 opts, bool unreliable_formulation
   Rcpp::XPtr<std::vector<std::size_t>> species_space_rlevel_INT_XPTR(species_space_rlevel_INT_PTR);
   Rcpp::XPtr<std::vector<std::string>> variables_STR_XPTR(variables_STR_PTR);
   Rcpp::XPtr<std::vector<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>>> species_space_weightdist_MTX_XPTR(species_space_weightdist_MTX_PTR);
-  
+
   //// Exports
   Rcpp::checkUserInterrupt();
   if (verbose) Rcpp::Rcout << "Sending data to R" << std::endl;
