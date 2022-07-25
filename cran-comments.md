@@ -20,6 +20,12 @@ Jeff
 
 # Notes
 
+* CRAN repository db overrides:
+  X-CRAN-Comment: Archived on 2022-05-04 as requires archived package
+    'RandomFields'.
+
+  **This package has been updated so that it no longer depends on the RandomFields package.**
+
 * checking package dependencies ... NOTE
   package suggested but not available for checking: 'gurobi'
 

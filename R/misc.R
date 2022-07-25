@@ -26,18 +26,24 @@ is.GurobiInstalled <- function(verbose = TRUE) {
   # define installation instructions
   gurobiInstallationInstructions <- paste(
     "Follow these instructions to download the Gurobi software suite:\n  ",
-    c("Linux" = "http://bit.ly/1ksXUaQ", "Windows" = "http://bit.ly/1MrjXWc",
-      "Darwin" = "http://bit.ly/1N0AlT0")[Sys.info()[["sysname"]]])
+    c(
+      "Linux" = "https://www.gurobi.com/documentation/9.5/quickstart_linux/software_installation_guid.html",
+      "Windows" = "https://www.gurobi.com/documentation/9.5/quickstart_windows/software_installation_guid.html",
+      "Darwin" = "https://www.gurobi.com/documentation/9.5/quickstart_mac/software_installation_guid.html"
+    )[Sys.info()[["sysname"]]])
 
   rInstallationInstructions1 <- paste(
     "Follow these instructions to install the \"gurobi\" R package:\n  ",
-    c("Linux" = "http://bit.ly/1HLCRoE", "Windows" = "http://bit.ly/1MMSZaH",
-      "Darwin" = "http://bit.ly/1Pr2WRG")[Sys.info()[["sysname"]]])
+    c(
+      "Linux" = "https://www.gurobi.com/documentation/6.5/quickstart_linux/r_installing_the_r_package.html",
+      "Windows" = "https://www.gurobi.com/documentation/6.5/quickstart_windows/r_installing_the_r_package.html",
+      "Darwin" = "https://www.gurobi.com/documentation/6.5/quickstart_mac/r_installing_the_r_package.html"
+    )[Sys.info()[["sysname"]]])
 
   licenseInstructions <- paste0("The Gurobi R package requires a Gurobi ",
-    "license to work:\n  visit this web-page for an overview: ",
-    "http://bit.ly/1OHEQCm\n  academics can obtain a license at no cost ",
-    "here: http://bit.ly/1iYg3LX")
+    "license to work:\n  visit this web-page for an overview: \n    ",
+    "https://www.gurobi.com/products/licensing-options/\n  academics can obtain a license at no cost ",
+    "here:\n    https://www.gurobi.com/downloads/end-user-license-agreement-academic/")
 
   # check if gurobi installed
   result <- suppressWarnings(system2("gurobi_cl", "-v", stdout = FALSE,

@@ -1,6 +1,7 @@
 # raptr 0.2.1
 
 - CRAN release.
+- Update Gurobi documentation URLs.
 
 # raptr 0.2.0.0
 
