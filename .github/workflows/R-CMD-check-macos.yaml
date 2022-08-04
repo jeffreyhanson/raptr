@@ -58,6 +58,7 @@ jobs:
           cache-version: 4
           extra-packages: |
             any::rcmdcheck
+            gurobi=?ignore
           needs: |
             check
 

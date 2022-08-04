@@ -52,6 +52,7 @@ jobs:
           extra-packages: |
             any::covr
             any::rcmdcheck
+            gurobi=?ignore
           needs: |
             check
             coverage
