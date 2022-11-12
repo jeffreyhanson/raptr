@@ -52,3 +52,6 @@ NULL
 #' @importFrom rgdal readOGR
 #' @importFrom withr with_locale
 NULL
+
+# define lazy eval variables to avoid CRAN check issues
+utils::globalVariables(".data")

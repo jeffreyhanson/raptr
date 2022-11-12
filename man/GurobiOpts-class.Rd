@@ -44,6 +44,10 @@ specified number of solutions that are nearest to optimality. The
 search pool methods correspond to the parameters used by the Gurobi
 software suite (see \url{https://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode}).
 Defaults to \code{"benders.cuts"}.}
+
+\item{\code{NumericFocus}}{\code{integer} how much effort should Gurobi focus on
+addressing numerical issues? Defaults to \code{0L} such that minimal effort
+is spent to reduce run time.}
 }}
 
 \seealso{

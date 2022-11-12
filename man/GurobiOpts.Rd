@@ -12,7 +12,8 @@ GurobiOpts(
   TimeLimit = NA_integer_,
   NumberSolutions = 1L,
   MultipleSolutionsMethod = c("benders.cuts", "solution.pool.0", "solution.pool.1",
-    "solution.pool.2")[1]
+    "solution.pool.2")[1],
+  NumericFocus = 0L
 )
 }
 \arguments{
@@ -50,6 +51,10 @@ specified number of solutions that are nearest to optimality. The
 search pool methods correspond to the parameters used by the Gurobi
 software suite (see \url{https://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode}).
 Defaults to \code{"benders.cuts"}.}
+
+\item{NumericFocus}{\code{integer} how much effort should Gurobi focus on
+addressing numerical issues? Defaults to \code{0L} such that minimal effort
+is spent to reduce run time.}
 }
 \value{
 \code{GurobiOpts} object
@@ -60,7 +65,7 @@ This function creates a new GurobiOpts object.
 \examples{
 # create GurobiOpts object using default parameters
 GurobiOpts(Threads = 1L, MIPGap = 0.1, Method = 0L, Presolve=2L,
-           TimeLimit = NA_integer_, NumberSolutions = 1L)
+           TimeLimit = NA_integer_, NumberSolutions = 1L, NumericFocus = 0L)
 
 }
 \seealso{

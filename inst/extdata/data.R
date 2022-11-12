@@ -1,5 +1,6 @@
 # Initialization
 ## load packages
+devtools::load_all()
 library(sp)
 library(raster)
 
@@ -15,6 +16,17 @@ load("inst/extdata/sim_ru.rda")
 cs_pus@proj4string <- sp::CRS("EPSG:3577")
 crs(cs_space) <- sp::CRS("EPSG:3577")
 crs(cs_spp) <- sp::CRS("EPSG:3577")
+
+## update Gurobi Opts
+sim_rs@solver <-  GurobiOpts(
+  Threads = 1L,
+  MIPGap = 0.1,
+  Method = 0L,
+  Presolve = 2L,
+  TimeLimit = NA_integer_,
+  NumberSolutions = 3L,
+  MultipleSolutionsMethod = "benders.cuts"
+)
 
 # Exports
 save(cs_pus, file = "data/cs_pus.rda", compress = "xz")
