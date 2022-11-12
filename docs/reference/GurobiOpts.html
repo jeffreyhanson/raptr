@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2</span>
       </span>
     </div>
 
@@ -64,7 +64,8 @@
 <span>  TimeLimit <span class="op">=</span> <span class="cn">NA_integer_</span>,</span>
 <span>  NumberSolutions <span class="op">=</span> <span class="fl">1L</span>,</span>
 <span>  MultipleSolutionsMethod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"benders.cuts"</span>, <span class="st">"solution.pool.0"</span>, <span class="st">"solution.pool.1"</span>,</span>
-<span>    <span class="st">"solution.pool.2"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span>    <span class="st">"solution.pool.2"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
+<span>  NumericFocus <span class="op">=</span> <span class="fl">0L</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -118,6 +119,12 @@ search pool methods correspond to the parameters used by the Gurobi
 software suite (see <a href="https://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode" class="external-link">https://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode</a>).
 Defaults to <code>"benders.cuts"</code>.</p></dd>
 
+
+<dt>NumericFocus</dt>
+<dd><p><code>integer</code> how much effort should Gurobi focus on
+addressing numerical issues? Defaults to <code>0L</code> such that minimal effort
+is spent to reduce run time.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -134,7 +141,7 @@ Defaults to <code>"benders.cuts"</code>.</p></dd>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># create GurobiOpts object using default parameters</span></span></span>
 <span class="r-in"><span><span class="fu">GurobiOpts</span><span class="op">(</span>Threads <span class="op">=</span> <span class="fl">1L</span>, MIPGap <span class="op">=</span> <span class="fl">0.1</span>, Method <span class="op">=</span> <span class="fl">0L</span>, Presolve<span class="op">=</span><span class="fl">2L</span>,</span></span>
-<span class="r-in"><span>           TimeLimit <span class="op">=</span> <span class="cn">NA_integer_</span>, NumberSolutions <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></span></span>
+<span class="r-in"><span>           TimeLimit <span class="op">=</span> <span class="cn">NA_integer_</span>, NumberSolutions <span class="op">=</span> <span class="fl">1L</span>, NumericFocus <span class="op">=</span> <span class="fl">0L</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> GurobiOpts object.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Threads: 1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   MIPGap: 0.1</span>
@@ -143,6 +150,7 @@ Defaults to <code>"benders.cuts"</code>.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   TimeLimit: NA</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   NumberSolutions: 1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   MultipleSolutionsMethod: benders.cuts</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   NumericFocus: 0</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -158,7 +166,7 @@ Defaults to <code>"benders.cuts"</code>.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

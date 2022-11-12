@@ -503,6 +503,10 @@ NULL
 #'   software suite (see <https://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode>).
 #'   Defaults to `"benders.cuts"`.
 #'
+#' @param NumericFocus `integer` how much effort should Gurobi focus on
+#'   addressing numerical issues? Defaults to `0L` such that minimal effort
+#'   is spent to reduce run time.
+#'
 #' @param BLM `numeric` boundary length modifier.
 #'
 #' @param failure.multiplier `numeric` multiplier for failure planning

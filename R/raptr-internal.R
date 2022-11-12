@@ -473,16 +473,17 @@ spacePlot.1d <- function(pu, dp, pu.color.palette, main) {
     pu.color.palette <- brewerCols(seq(0, 1, 0.25), pu.color.palette, 4)
   # make plot
   ggplot2::ggplot() +
-    ggplot2::geom_point(ggplot2::aes_string(x = "X1", y = "X2",
-                        alpha = "weights"), data = dp, color = "darkblue",
-                        size = 5,
-                        position = ggplot2::position_jitter(width = 0,
-                                                            height = 5)) +
+    ggplot2::geom_point(
+      ggplot2::aes(
+        x = .data[["X1"]], y = .data[["X2"]], alpha = .data[["weights"]]),
+      data = dp, color = "darkblue", size = 5,
+      position = ggplot2::position_jitter(width = 0, height = 5)) +
     ggplot2::scale_alpha_continuous(name = "Demand point weight") +
-    ggplot2::geom_point(ggplot2::aes_string(x = "X1", y = "X2",
-                        color = "status", size = "status"), data = pu,
-                        position = ggplot2::position_jitter(width = 0,
-                                                            height = 5)) +
+    ggplot2::geom_point(
+      ggplot2::aes(x = .data[["X1"]], y = .data[["X2"]],
+                   color = .data[["status"]], size = .data[["status"]]),
+      data = pu,
+      position = ggplot2::position_jitter(width = 0, height = 5)) +
     ggplot2::scale_color_manual(name = "Planning unit status",
                                 values = c("Locked Out" = pu.color.palette[4],
                                            "Not Selected" = pu.color.palette[1],
@@ -511,13 +512,15 @@ spacePlot.2d <- function(pu, dp, pu.color.palette, main) {
     pu.color.palette <- brewerCols(seq(0, 1, 0.25), pu.color.palette, 4)
   # make plot
   ggplot2::ggplot() +
-  ggplot2::geom_point(ggplot2::aes_string(x = "X1", y = "X2",
-                                          alpha = "weights"),
-                      data = dp, color = "darkblue", size = 5) +
+  ggplot2::geom_point(
+    ggplot2::aes(x = .data[["X1"]], y = .data[["X2"]],
+                 alpha = .data[["weights"]]),
+    data = dp, color = "darkblue", size = 5) +
   ggplot2::scale_alpha_continuous(name = "Demand point weight") +
-  ggplot2::geom_point(ggplot2::aes_string(x = "X1", y = "X2", color = "status",
-                                          size = "status"),
-                      data = pu) +
+  ggplot2::geom_point(
+    ggplot2::aes(x = .data[["X1"]], y = .data[["X2"]],
+                 color = .data[["status"]], size = .data[["status"]]),
+    data = pu) +
   ggplot2::scale_color_manual(name = "Planning unit status",
                               values = c("Locked Out" = pu.color.palette[4],
                                          "Not Selected" = pu.color.palette[1],

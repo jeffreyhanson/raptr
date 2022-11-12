@@ -102,9 +102,9 @@ test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=1 - ",
   sim_ru <- pu.subset(sim_ru, 1:10)
   sim_ru <- dp.subset(sim_ru, species = 1:3, space = 1, points = 1:5)
   sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, 0.1, 0.1, 0.1)
+  gp <- GurobiOpts(MIPGap = 0, Presolve = 2L, NumericFocus = 2L)
   # solve it
-  sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0, Presolve = 2L),
-                         verbose = FALSE)
+  sim_rs <- raptr::solve(sim_ru, gp, verbose = FALSE)
   # run checks
   expect_equal(nrow(summary(sim_rs)), 1L)
   runUnreliableChecks(sim_rs)

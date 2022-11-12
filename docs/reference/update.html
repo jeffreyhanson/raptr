@@ -20,7 +20,7 @@ RapUnsolved(), or RapSolved() object."><!-- mathjax --><script src="https://cdnj
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2</span>
       </span>
     </div>
 
@@ -72,6 +72,7 @@ RapUnsolved(), or RapSolved() object."><!-- mathjax --><script src="https://cdnj
 <span>  TimeLimit <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  NumberSolutions <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  MultipleSolutionsMethod <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  NumericFocus <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -151,6 +152,12 @@ specified number of solutions that are nearest to optimality. The
 search pool methods correspond to the parameters used by the Gurobi
 software suite (see <a href="https://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode" class="external-link">https://www.gurobi.com/documentation/8.0/refman/poolsearchmode.html#parameter:PoolSearchMode</a>).
 Defaults to <code>"benders.cuts"</code>.</p></dd>
+
+
+<dt>NumericFocus</dt>
+<dd><p><code>integer</code> how much effort should Gurobi focus on
+addressing numerical issues? Defaults to <code>0L</code> such that minimal effort
+is spent to reduce run time.</p></dd>
 
 
 <dt>...</dt>
@@ -254,6 +261,7 @@ depending on argument to <code>x</code>.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   TimeLimit: NA</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   NumberSolutions: 1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   MultipleSolutionsMethod: benders.cuts</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   NumericFocus: 0</span>
 <span class="r-in"><span><span class="fu"><a href="print.html">print</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> GurobiOpts object.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Threads: 1</span>
@@ -263,6 +271,7 @@ depending on argument to <code>x</code>.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   TimeLimit: NA</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   NumberSolutions: 1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   MultipleSolutionsMethod: benders.cuts</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   NumericFocus: 0</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># RapUnreliableOpts</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="RapUnreliableOpts.html">RapUnreliableOpts</a></span><span class="op">(</span>BLM <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
@@ -344,7 +353,7 @@ depending on argument to <code>x</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

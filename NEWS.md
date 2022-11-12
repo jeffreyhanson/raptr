@@ -1,3 +1,8 @@
+# raptr 0.2.2
+
+- Add `NumericFocus` parameter to `GurobiOpts` to handle numerical issues.
+- Update `spacePlot` to avoid throwing a _ggplot2_ deprecation warning.
+
 # raptr 0.2.1
 
 - CRAN release.
