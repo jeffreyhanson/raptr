@@ -1,146 +1,6 @@
 #' @include RcppExports.R raptr-internal.R
 NULL
 
-#' Calculate average value for species data in planning units
-#'
-#' This function calculates the average of species values in each planning unit.
-#' By default all polygons will be treated as having separate ids.
-#'
-#' @param x [sp::SpatialPolygons()] or
-#'   [sp::SpatialPolygonsDataFrame()] object.
-#'
-#' @param y [raster::raster()],
-#'   [raster::stack()], or
-#'   [raster::brick()] object.
-#'
-#' @param ids `integer` vector of ids. Defaults to indices of layers in
-#'   argument to `y`.
-#'
-#' @param ncores `integer` number of cores to use for processing. Defaults
-#'   to 1.
-#'
-#' @param field `integer` index or `character` name of column with
-#'   planning unit ids. Valid only when `x` is a
-#'   [sp::SpatialPolygonsDataFrame()] object. Default behavior is to
-#'   treat each polygon as a different planning unit.
-#'
-#' @param ... not used.
-#'
-#' @return [base::data.frame()] with sum of raster values in each
-#'   polygon.
-#'
-#' @examples
-#' # simulate data
-#' sim_pus <- sim.pus(225L)
-#' sim_spp <- lapply(c("uniform", "normal", "bimodal"), sim.species, n = 1,
-#'                   res = 1, x = sim_pus)
-#'
-#' # calculate average for 1 species
-#' puvspr1.dat <- calcSpeciesAverageInPus(sim_pus, sim_spp[[1]])
-#'
-#' # calculate average for multiple species
-#' puvspr2.dat <- calcSpeciesAverageInPus(sim_pus, stack(sim_spp))
-#'
-#' @export
-calcSpeciesAverageInPus <- function(x, ...) UseMethod("calcSpeciesAverageInPus")
-
-#' Simulate species distribution data for RAP
-#'
-#' This function simulates species distributions for RAP.
-#'
-#' @param x [raster::raster()] or
-#'   [sp::SpatialPolygons()] object delineate the spatial extent to
-#'   delineate study area.
-#'
-#' @param n `integer` number of species. Defaults to 1.
-#'
-#' @param res `numeric` resolution to simulate distributions. Only needed
-#'   when [sp::SpatialPolygons()] are supplied.
-#'
-#' @param model `character` or `numeric` for simulating data.
-#'   If a `character` value is supplied, then the following values can
-#'   can be used to simulate species distributions with particular
-#'   characteristics:
-#'   `"uniform"`, `"normal"`, and `"bimodal"`.
-#'   If a `numeric` value is supplied, then this is used to simulate
-#'   species distributions using a Gaussian random field, where the
-#'   `numeric` value is treated as the scale parameter.
-#'   Defaults to `"normal"`.
-#'
-#' @param ... not used.
-#'
-#' @return [raster::stack()] with layers for each species.
-#'
-#' @examples
-#' # make polygons
-#' sim_pus <- sim.pus(225L)
-#'
-#' # simulate 1 uniform species distribution using RasterLayer
-#' s1 <- sim.species(blank.raster(sim_pus, 1), n = 1, model = "uniform")
-#'
-#' # simulate 1 uniform species distribution based on SpatialPolygons
-#' s2 <- sim.species(sim_pus, res = 1, n = 1, model = "uniform")
-#'
-#' # simulate 1 normal species distributions
-#' s3 <- sim.species(sim_pus, res = 1, n = 1, model = "normal")
-#'
-#' # simulate 1 bimodal species distribution
-#' s4 <- sim.species(sim_pus, res = 1, n = 1, model = "bimodal")
-#'
-#' # simulate 1 species distribution using a random field
-#' s5 <- sim.species(sim_pus, res = 1, n = 1, model = 0.2)
-#'
-#' # plot simulations
-#' par(mfrow = c(2,2))
-#' plot(s2, main = "constant")
-#' plot(s3, main = "normal")
-#' plot(s4, main = "bimodal")
-#' plot(s5, main = "random field")
-#'
-#' @export sim.species
-sim.species <- function(x, ...) UseMethod("sim.species")
-
-#' Simulate attribute space data for RAP
-#'
-#' This function simulates attribute space data for RAP.
-#'
-#' @inheritParams sim.species
-#'
-#' @param d `integer` number of dimensions. Defaults to 2.
-#'
-#' @param model `numeric` scale parameter for simulating spatially
-#'   auto-correlated data using Gaussian random fields.
-#'   Higher values produce patchier data with more well defined clusters,
-#'   and lower values produce more evenly distributed data.
-#'   Defaults to 0.2.
-#'
-#' @return [raster::stack()] with layers for each dimension of the space.
-#'
-#' @name sim.space
-#'
-#' @examples
-#' # simulate planning units
-#' sim_pus <- sim.pus(225L)
-#'
-#' # simulate 1d space using RasterLayer
-#' s1 <- sim.space(blank.raster(sim_pus, 1), d = 1)
-#'
-#' # simulate 1d space using SpatialPolygons
-#' s2 <- sim.space(sim_pus, res = 1, d = 1)
-#'
-#' # simulate 2d space using SpatialPolygons
-#' s3 <- sim.space(sim_pus, res = 1, d = 2)
-#'
-#' # plot simulated spaces
-#' par(mfrow = c(2,2))
-#' plot(s1, main = "s1")
-#' plot(s2, main = "s2")
-#' plot(s3[[1]], main = "s3: first dimension")
-#' plot(s3[[2]], main = "s3: second dimension")
-#'
-#' @export sim.space
-sim.space <- function(x, ...) UseMethod("sim.space")
-
 #' Solve RAP object
 #'
 #' This function uses Gurobi to find prioritizations using the input parameter
@@ -912,21 +772,17 @@ space.held <- function(x, y, species, space) UseMethod("space.held")
 #'
 #' This function sets or returns the attribute space targets for each species.
 #'
-#' @param x [RapData()], [RapUnsolved()], or
-#'   [RapSolved()] object.
+#' @param x [RapData()], [RapUnsolved()], or [RapSolved()] object.
 #'
-#' @param species `NULL` for all species or `integer` indicating
-#'   species.
+#' @param species `NULL` for all species or `integer` indicating species.
 #'
-#' @param space `NULL` for all spaces or `integer` indicating a
-#'   specific space.
+#' @param space `NULL` for all spaces or `integer` indicating a space.
 #'
 #' @param value `numeric` new target.
 #'
-#' @return `numeric` `matrix`.
+#' @return A `numeric` or `matrix` objects.
 #'
-#' @seealso [RapData()], [RapResults()],
-#'   [RapSolved()].
+#' @seealso [RapData()], [RapResults()], [RapSolved()].
 #'
 #' @name space.target
 #'
@@ -987,40 +843,6 @@ space.target <- function(x, species, space) UseMethod("space.target")
 #' @export
 selections <- function(x, y) UseMethod("selections")
 
-#' Convert SpatialPolygons to PolySet data
-#'
-#' This function converts spatial [sp::SpatialPolygons()] and
-#' [sp::SpatialPolygonsDataFrame()] objects to
-#' [PBSmapping::PolySet()] objects.
-#'
-#' @param x [sp::SpatialPolygons()] or
-#'   [sp::SpatialPolygonsDataFrame()] object.
-#'
-#' @param n_preallocate `integer` How much memory should be preallocated
-#'   for processing? Ideally, this number should equal the number of vertices
-#'   in the [sp::SpatialPolygons()] object. If data processing is
-#'   taking too long consider increasing this value.
-#'
-#' @return [PBSmapping::PolySet()] object.
-#'
-#' @note Be aware that this function is designed to be as fast as possible, but
-#'   as a result it depends on C++ code and if used inappropriately this
-#'   function will crash R.
-#'
-#' @seealso For a slower, more stable equivalent see
-#'   `maptools::SpatialPolygons2PolySet`.
-#'
-#' @examples
-#' # generate SpatialPolygons object
-#' sim_pus <- sim.pus(225L)
-#'
-#' # convert to PolySet
-#' x <- SpatialPolygons2PolySet(sim_pus)
-#'
-#' @export
-SpatialPolygons2PolySet <- function(x, n_preallocate)
-  UseMethod("SpatialPolygons2PolySet")
-
 #' Plot species
 #'
 #' This function plots the distribution of species across the study area.
@@ -1069,8 +891,7 @@ spp.plot <- function(x, species, ...) UseMethod("spp.plot")
 #' Note that this function only works for attribute spaces with one, two, or
 #' three dimensions.
 #'
-#' @param x [RapData()], [RapUnsolved()], or
-#'   [RapSolved()] object.
+#' @param x [RapData()], [RapUnsolved()], or [RapSolved()] object.
 #'
 #' @param species `character` name of species, or `integer` index for
 #'   species.

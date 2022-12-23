@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0.0</span>
       </span>
     </div>
 
@@ -51,7 +51,15 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.2.2" id="raptr-022">raptr 0.2.2<a class="anchor" aria-label="anchor" href="#raptr-022"></a></h2>
+<h2 class="page-header" data-toc-text="1.0.0.0" id="raptr-1000">raptr 1.0.0.0<a class="anchor" aria-label="anchor" href="#raptr-1000"></a></h2>
+<ul><li>The package has been overhauled to support modern spatial data structures. Specifically, <em>sf</em> (<code><a href="https://r-spatial.github.io/sf/reference/sf.html" class="external-link">sf::st_sf()</a></code>) objects are now used for vector data and <em>terra</em> (<code><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">terra::rast()</a></code>) for raster data. These updates impact many of the user-facing functions.</li>
+<li>The <code>cs_pus</code>, <code>cs_spp</code>, and <code>cs_spaces</code> built-in datasets have been removed. This is because <code><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">terra::rast()</a></code> objects cannot be distributed as built-in datasets for packages. These datasets can now be manually imported from external files distributed with the package (see <code><a href="../reference/casestudy_data.html">?cs_pus</a></code> for more details).</li>
+<li>Remove <em>rgdal</em> and <em>rgeos</em> packages as dependencies (<a href="https://github.com/jeffreyhanson/raptr/issues/13" class="external-link">#13</a>).</li>
+<li>Support for the <em>raster</em> package has been deprecated.</li>
+<li>The <code>SpatialPolygons2PolySet</code> function has been renamed to <code>convert2PolySet</code>.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.2.2.0" id="raptr-0220">raptr 0.2.2.0<a class="anchor" aria-label="anchor" href="#raptr-0220"></a></h2>
 <ul><li>Add <code>NumericFocus</code> parameter to <code>GurobiOpts</code> to handle numerical issues.</li>
 <li>Update <code>spacePlot</code> to avoid throwing a <em>ggplot2</em> deprecation warning.</li>
 </ul></div>
@@ -183,7 +191,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

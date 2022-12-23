@@ -39,8 +39,7 @@ space.plot(x, species, space, ...)
 )
 }
 \arguments{
-\item{x}{\code{\link[=RapData]{RapData()}}, \code{\link[=RapUnsolved]{RapUnsolved()}}, or
-\code{\link[=RapSolved]{RapSolved()}} object.}
+\item{x}{\code{\link[=RapData]{RapData()}}, \code{\link[=RapUnsolved]{RapUnsolved()}}, or \code{\link[=RapSolved]{RapSolved()}} object.}
 
 \item{species}{\code{character} name of species, or \code{integer} index for
 species.}

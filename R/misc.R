@@ -76,53 +76,68 @@ is.GurobiInstalled <- function(verbose = TRUE) {
 
 #' Blank raster
 #'
-#' This functions creates a blank raster based on the spatial extent of a
-#' Spatial object.
+#' This functions creates a blank `SpatRaster` based on the spatial extent of a
+#' `sf` object.
 #'
-#' @param x [sp::Spatial-class] object.
+#' @param x [sf::st_sf()] object.
 #'
 #' @param res `numeric` `vector` specifying resolution of the output raster
 #'   in the x and y dimensions. If `vector` is of length one, then the
 #'   pixels are assumed to be square.
 #'
 #' @examples
-#' # make SpatialPolygons
+#' # make sf data
 #' polys <- sim.pus(225L)
 #'
-#' # make RasterLayer from SpatialPolygons
+#' # make raster from sf
 #' blank.raster(polys, 1)
 #'
 #' @rdname blank.raster
 #'
 #' @export
 blank.raster <- function(x, res) {
-  assertthat::assert_that(inherits(x, "Spatial"), is.numeric(res),
-                          all(is.finite(res)), length(res) %in% c(1, 2))
+  assertthat::assert_that(
+    inherits(x, "sf"),
+    is.numeric(res),
+    assertthat::noNA(res),
+    length(res) %in% c(1, 2)
+  )
   # initialize resolution inputs
   if (length(res) == 1)
     res <- c(res, res)
+  # get bounding box data
+  bb <- sf::st_bbox(x)
   # extract coordinates
-  if ((raster::xmax(x) - raster::xmin(x)) <= res[1]) {
-    xpos <- c(raster::xmin(x), res[1])
+  if ((bb[["xmax"]] - bb[["xmin"]]) <= res[1]) {
+    xpos <- c(bb[["xmin"]], res[1])
   } else {
-    xpos <- seq(raster::xmin(x),
-                raster::xmax(x) + (res[1] * (((raster::xmax(x) -
-                  raster::xmin(x)) %% res[1]) != 0)),
-                res[1])
+    xpos <- seq(
+      bb[["xmin"]],
+      bb[["xmax"]] +
+        (res[1] * (((bb[["xmax"]] - bb[["xmin"]]) %% res[1]) != 0)),
+      res[1]
+    )
   }
-  if ((raster::ymax(x) - raster::ymin(x)) <= res[2]) {
-    ypos <- c(raster::ymin(x), res[2])
+  if ((bb[["ymax"]] - bb[["ymin"]]) <= res[2]) {
+    ypos <- c(bb[["ymin"]], res[2])
   } else {
-    ypos <- seq(raster::ymin(x),
-                raster::ymax(x) + (res[2] * (((raster::ymax(x) -
-                  raster::ymin(x)) %% res[2]) != 0)),
-                res[2])
+    ypos <- seq(
+      bb[["ymin"]],
+      bb[["ymax"]] +
+        (res[2] * (((bb[["ymax"]] - bb[["ymin"]]) %% res[2]) != 0)),
+      res[2]
+    )
   }
-  # generate raster from sp
-  rast <- raster::raster(xmn = min(xpos), xmx = max(xpos), ymn = min(ypos),
-                         ymx = max(ypos), nrow = length(ypos) - 1,
-                         ncol = length(xpos) - 1)
-  return(raster::setValues(rast, 1))
+  # generate raster
+  rast <- terra::rast(
+    xmin = min(xpos),
+    xmax = max(xpos),
+    ymin = min(ypos),
+    ymax = max(ypos),
+    nrow = length(ypos) - 1,
+    ncol = length(xpos) - 1
+  )
+  return(terra::setValues(rast, 1))
 }
 
 #' PolySet
@@ -165,12 +180,11 @@ methods::setClass("RapOpts",
 #' @exportClass SolverOpts
 methods::setClass("SolverOpts")
 
-#' Sample random points from a RasterLayer
+#' Sample random points from a SpatRaster
 #'
-#' This function generates random points in a [raster::raster()]
-#' object.
+#' This function generates random points in a [terra::rast()] object.
 #'
-#' @param mask [raster::raster()] object
+#' @param mask [terra::rast()] object
 #'
 #' @param n `integer` number of points to sample
 #'
@@ -198,17 +212,27 @@ methods::setClass("SolverOpts")
 #'
 #' @export
 randomPoints <- function(mask, n, prob = FALSE) {
-  # check that data can be processed in memory
-  stopifnot(raster::canProcessInMemory(mask, n = 3))
+  # assert valid arguments
+  assertthat::assert_that(
+    inherits(mask, "SpatRaster"),
+    assertthat::is.count(n),
+    assertthat::noNA(n),
+    assertthat::is.flag(prob),
+    assertthat::noNA(prob)
+  )
   # extract cells
-  validPos <- which(is.finite(mask[]))
-  if (length(validPos) < n)
+  d <- terra::as.data.frame(sum(mask), cells = TRUE)
+  d <- d[is.finite(d[[2]]), , drop = FALSE]
+  if (nrow(d) < n) {
     stop("argument to n is greater than the number of cells with finite values")
+  }
   if (prob) {
-    randomCells <- sample(validPos, n, prob = mask[validPos], replace = FALSE)
+    randomCells <- sample(
+      d[[1]], n, prob = d[[2]], replace = FALSE
+    )
   } else {
-    randomCells <- sample(validPos, n, replace = FALSE)
+    randomCells <- sample(d[[1]], n, replace = FALSE)
   }
   # get coordinates of the cell centres
-  return(raster::xyFromCell(mask, randomCells))
+  terra::xyFromCell(mask, randomCells)
 }

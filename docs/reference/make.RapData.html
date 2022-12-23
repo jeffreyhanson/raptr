@@ -18,7 +18,7 @@ landscape data layers for RAP processing."><!-- mathjax --><script src="https://
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0.0</span>
       </span>
     </div>
 
@@ -68,7 +68,7 @@ landscape data layers for RAP processing.</p>
 <span>  kernel.method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ks"</span>, <span class="st">"hypervolume"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
 <span>  quantile <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  species.points <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  n.species.points <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="fl">0.2</span> <span class="op">*</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/cellStats.html" class="external-link">cellStats</a></span><span class="op">(</span><span class="va">species</span>, <span class="st">"sum"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  n.species.points <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="fl">0.2</span> <span class="op">*</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/global.html" class="external-link">global</a></span><span class="op">(</span><span class="va">species</span>, <span class="st">"sum"</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>  include.geographic.space <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  scale <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -79,16 +79,16 @@ landscape data layers for RAP processing.</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>pus</dt>
-<dd><p><code><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">sp::SpatialPolygons()</a></code> with planning unit data.</p></dd>
+<dd><p><code><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">sf::st_as_sf()</a></code> with planning unit data.</p></dd>
 
 
 <dt>species</dt>
-<dd><p><code><a href="https://rdrr.io/pkg/raster/man/raster.html" class="external-link">raster::raster()</a></code> with species probability
+<dd><p><code><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">terra::rast()</a></code> with species probability
 distribution data.</p></dd>
 
 
 <dt>spaces</dt>
-<dd><p><code>list</code> of/or <code><a href="https://rdrr.io/pkg/raster/man/raster.html" class="external-link">raster::raster()</a></code> representing
+<dd><p><code>list</code> of/or <code><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">terra::rast()</a></code> representing
 projects of attribute space over geographic space. Use a <code>list</code> to
 denote separate attribute spaces.</p></dd>
 
@@ -120,9 +120,8 @@ generate demand points. Use either <code>"ks"</code> or <code>"hypervolume"</cod
 
 
 <dt>species.points</dt>
-<dd><p><code>list</code> of/or
-<code><a href="https://rdrr.io/pkg/sp/man/SpatialPoints.html" class="external-link">sp::SpatialPointsDataFrame()</a></code> or
-<code><a href="https://rdrr.io/pkg/sp/man/SpatialPoints.html" class="external-link">sp::SpatialPoints()</a></code> with species presence records. Use a
+<dd><p><code>list</code> of/or <code><a href="https://r-spatial.github.io/sf/reference/sf.html" class="external-link">sf::st_sf()</a></code> object species presence
+records. Use a
 <code>list</code> of objects to represent different species. Must have the same
 number of elements as <code>species</code>. If not supplied then use
 <code>n.species.points</code> to sample points from the species distributions.</p></dd>
@@ -153,6 +152,12 @@ standard deviation? This prevents overflow. Defaults to <code>TRUE</code>.</p></
 <code><a href="calcSpeciesAverageInPus.html">calcSpeciesAverageInPus()</a></code>.</p></dd>
 
 </dl></div>
+    <div id="value">
+    <h2>Value</h2>
+    
+
+<p>A new <code>RapData</code> object.</p>
+    </div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p><a href="RapData-class.html">RapData</a>, <code><a href="RapData.html">RapData()</a></code>.</p></div>
@@ -161,7 +166,15 @@ standard deviation? This prevents overflow. Defaults to <code>TRUE</code>.</p></
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># load data</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">cs_pus</span>, <span class="va">cs_spp</span>, <span class="va">cs_space</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">cs_pus</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"cs_pus.gpkg"</span>, package <span class="op">=</span> <span class="st">"raptr"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">cs_spp</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"cs_spp.tif"</span>, package <span class="op">=</span> <span class="st">"raptr"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">cs_space</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"cs_space.tif"</span>, package <span class="op">=</span> <span class="st">"raptr"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="co"># make RapData object using the first 10 planning units in the dat</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">make.RapData</span><span class="op">(</span><span class="va">cs_pus</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span>, <span class="va">cs_spp</span>, <span class="va">cs_space</span>,</span></span>
@@ -188,7 +201,7 @@ standard deviation? This prevents overflow. Defaults to <code>TRUE</code>.</p></
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

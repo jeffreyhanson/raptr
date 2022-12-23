@@ -9,13 +9,13 @@ test_that("blank.raster function", {
   #  generate planning units
   rst <- blank.raster(sim.pus(n = 225L), 1)
   # check simulated dataset
-  expect_true(inherits(rst, "RasterLayer"))
-  expect_equal(ncell(rst), 225L)
-  expect_equal(xmin(rst), -7.5)
-  expect_equal(ymin(rst), -7.5)
-  expect_equal(xmax(rst), 7.5)
-  expect_equal(xmax(rst), 7.5)
-  expect_equal(sum(is.na(rst[])), 0)
+  expect_true(inherits(rst, "SpatRaster"))
+  expect_equal(terra::ncell(rst), 225L)
+  expect_equal(terra::xmin(rst), -7.5)
+  expect_equal(terra::ymin(rst), -7.5)
+  expect_equal(terra::xmax(rst), 7.5)
+  expect_equal(terra::xmax(rst), 7.5)
+  expect_equal(terra::global(is.na(rst), "sum")[[1]], 0)
 })
 
 test_that("randomPoints function", {

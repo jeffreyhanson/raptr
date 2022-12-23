@@ -18,7 +18,7 @@ an optimization problem."><!-- mathjax --><script src="https://cdnjs.cloudflare.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0.0</span>
       </span>
     </div>
 
@@ -97,401 +97,585 @@ function.</p>
 <span class="r-in"><span><span class="co"># log file for the best solution</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">logging.file</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi 6.5.1 (linux64) logging started Fri Jul 29 12:54:39 2016</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi 10.0.0 (linux64, R) logging started Fri 23 Dec 2022 02:41:38 PM NZDT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Username</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter MIPGap to value 0.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Method to value 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter LogFile to value "/tmp/RtmpJ30SOp/file57617b549888.log"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Presolve to value 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Threads to value 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Academic license - for non-commercial use only - expires 2023-12-18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi Optimizer version 10.0.0 build v10.0.0rc2 (linux64)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CPU model: 11th Gen Intel(R) Core(TM) i7-1185G7 @ 3.00GHz, instruction set [SSE2|AVX|AVX2|AVX512]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count: 4 physical cores, 8 logical processors, using up to 1 threads</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Optimize a model with 30306 rows, 30100 columns and 120000 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model fingerprint: 0xfe534681</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30100 integer (30100 binary)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficient statistics:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Matrix range    [7e-03, 9e+01]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Objective range [1e+00, 1e+00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Bounds range    [1e+00, 1e+00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   RHS range       [1e+00, 1e+02]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Found heuristic solution: objective 100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 264 rows and 15 columns (presolve time = 5s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 305 rows and 15 columns (presolve time = 10s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 360 rows and 15 columns (presolve time = 15s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 360 rows and 15 columns</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve time: 16.70s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29946 rows, 30085 columns, 131504 nonzeros</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30085 integer (30085 binary)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 67 rows and 1 columns</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29879 rows, 30084 columns, 127194 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Matrix range     [7e-03, 9e+01]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Objective range  [1e+00, 1e+00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Bounds range     [1e+00, 1e+00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   RHS range        [1e+00, 1e+02]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Found heuristic solution: objective 99.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 827 rows and 15 columns (presolve time = 5s) ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 845 rows and 15 columns (presolve time = 10s) ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 845 rows and 17 columns</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve time: 13.37s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29461 rows, 30083 columns, 125589 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30083 integer (30083 binary)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation presolved: 29461 rows, 30083 columns, 125589 nonzeros</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 29879 rows and 30084 columns</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Root simplex log...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Iteration    Objective       Primal Inf.    Dual Inf.      Time</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        0    1.0000000e+02   0.000000e+00   1.000000e+02     19s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2041    2.8872983e+01   0.000000e+00   2.680992e+03     20s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3691    2.0000000e+01   0.000000e+00   0.000000e+00     21s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3691    2.0000000e+01   0.000000e+00   0.000000e+00     21s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        0    1.0000000e+02   0.000000e+00   1.000000e+02     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1950    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1950    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation: objective 2.000000e+01, 3691 iterations, 4.10 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Use crossover to convert LP symmetric solution to basic solution...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root crossover log...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      511 PPushes remaining with PInf 0.0000000e+00                14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        0 PPushes remaining with PInf 0.0000000e+00                14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Push phase complete: Pinf 0.0000000e+00, Dinf 0.0000000e+00     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root simplex log...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration    Objective       Primal Inf.    Dual Inf.      Time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2464    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2464    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation: objective 2.000000e+01, 2464 iterations, 0.98 seconds (0.64 work units)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Nodes    |    Current Node    |     Objective Bounds      |     Work</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      0     0   20.00000    0    4  100.00000   20.00000  80.0%     -   21s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> H    0     0                      20.0000000   20.00000  0.00%     -   21s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H    0     0                      20.0000000    0.00000   100%     -   14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      0     0          -    0        20.00000   20.00000  0.00%     -   15s</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Explored 0 nodes (4876 simplex iterations) in 21.36 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count was 1 (of 2 available processors)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Explored 1 nodes (5366 simplex iterations) in 15.01 seconds (9.00 work units)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count was 1 (of 8 available processors)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Solution count 2: 20 99 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Optimal solution found (tolerance 1.00e-01)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># log file for the second solution</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">logging.file</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi 6.5.1 (linux64) logging started Fri Jul 29 12:54:39 2016</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi 10.0.0 (linux64, R) logging started Fri 23 Dec 2022 02:41:38 PM NZDT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Username</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter MIPGap to value 0.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Method to value 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter LogFile to value "/tmp/RtmpJ30SOp/file57617b549888.log"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Presolve to value 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Threads to value 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Academic license - for non-commercial use only - expires 2023-12-18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi Optimizer version 10.0.0 build v10.0.0rc2 (linux64)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CPU model: 11th Gen Intel(R) Core(TM) i7-1185G7 @ 3.00GHz, instruction set [SSE2|AVX|AVX2|AVX512]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count: 4 physical cores, 8 logical processors, using up to 1 threads</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Optimize a model with 30306 rows, 30100 columns and 120000 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model fingerprint: 0xfe534681</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30100 integer (30100 binary)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficient statistics:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Matrix range    [7e-03, 9e+01]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Objective range [1e+00, 1e+00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Bounds range    [1e+00, 1e+00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   RHS range       [1e+00, 1e+02]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Found heuristic solution: objective 100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 264 rows and 15 columns (presolve time = 5s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 305 rows and 15 columns (presolve time = 10s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 360 rows and 15 columns (presolve time = 15s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 360 rows and 15 columns</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve time: 16.70s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29946 rows, 30085 columns, 131504 nonzeros</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30085 integer (30085 binary)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 67 rows and 1 columns</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29879 rows, 30084 columns, 127194 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Matrix range     [7e-03, 9e+01]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Objective range  [1e+00, 1e+00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Bounds range     [1e+00, 1e+00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   RHS range        [1e+00, 1e+02]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Found heuristic solution: objective 99.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 827 rows and 15 columns (presolve time = 5s) ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 845 rows and 15 columns (presolve time = 10s) ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 845 rows and 17 columns</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve time: 13.37s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29461 rows, 30083 columns, 125589 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30083 integer (30083 binary)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation presolved: 29461 rows, 30083 columns, 125589 nonzeros</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 29879 rows and 30084 columns</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Root simplex log...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Iteration    Objective       Primal Inf.    Dual Inf.      Time</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        0    1.0000000e+02   0.000000e+00   1.000000e+02     19s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2041    2.8872983e+01   0.000000e+00   2.680992e+03     20s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3691    2.0000000e+01   0.000000e+00   0.000000e+00     21s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3691    2.0000000e+01   0.000000e+00   0.000000e+00     21s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        0    1.0000000e+02   0.000000e+00   1.000000e+02     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1950    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1950    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation: objective 2.000000e+01, 3691 iterations, 4.10 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Use crossover to convert LP symmetric solution to basic solution...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root crossover log...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      511 PPushes remaining with PInf 0.0000000e+00                14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        0 PPushes remaining with PInf 0.0000000e+00                14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Push phase complete: Pinf 0.0000000e+00, Dinf 0.0000000e+00     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root simplex log...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration    Objective       Primal Inf.    Dual Inf.      Time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2464    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2464    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation: objective 2.000000e+01, 2464 iterations, 0.98 seconds (0.64 work units)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Nodes    |    Current Node    |     Objective Bounds      |     Work</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      0     0   20.00000    0    4  100.00000   20.00000  80.0%     -   21s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> H    0     0                      20.0000000   20.00000  0.00%     -   21s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H    0     0                      20.0000000    0.00000   100%     -   14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      0     0          -    0        20.00000   20.00000  0.00%     -   15s</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Explored 0 nodes (4876 simplex iterations) in 21.36 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count was 1 (of 2 available processors)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Explored 1 nodes (5366 simplex iterations) in 15.01 seconds (9.00 work units)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count was 1 (of 8 available processors)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Solution count 2: 20 99 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Optimal solution found (tolerance 1.00e-01)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi 6.5.1 (linux64) logging started Fri Jul 29 12:55:01 2016</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi 10.0.0 (linux64, R) logging started Fri 23 Dec 2022 02:41:54 PM NZDT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Username</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter MIPGap to value 0.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Method to value 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter LogFile to value "/tmp/RtmpJ30SOp/file57617b549888.log"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Presolve to value 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Threads to value 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Academic license - for non-commercial use only - expires 2023-12-18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi Optimizer version 10.0.0 build v10.0.0rc2 (linux64)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CPU model: 11th Gen Intel(R) Core(TM) i7-1185G7 @ 3.00GHz, instruction set [SSE2|AVX|AVX2|AVX512]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count: 4 physical cores, 8 logical processors, using up to 1 threads</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Optimize a model with 30307 rows, 30100 columns and 120100 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model fingerprint: 0x7b9a1818</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30100 integer (30100 binary)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficient statistics:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Matrix range    [7e-03, 9e+01]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Objective range [1e+00, 1e+00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Bounds range    [1e+00, 1e+00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   RHS range       [1e+00, 1e+02]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Found heuristic solution: objective 100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 265 rows and 15 columns (presolve time = 5s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 329 rows and 15 columns (presolve time = 10s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 360 rows and 15 columns (presolve time = 15s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 360 rows and 15 columns</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve time: 16.02s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29947 rows, 30085 columns, 131606 nonzeros</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30085 integer (30085 binary)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 67 rows and 1 columns</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29880 rows, 30084 columns, 127295 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Matrix range     [7e-03, 9e+01]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Objective range  [1e+00, 1e+00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Bounds range     [1e+00, 1e+00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   RHS range        [1e+00, 1e+02]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Found heuristic solution: objective 99.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 829 rows and 15 columns (presolve time = 5s) ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 845 rows and 15 columns (presolve time = 10s) ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 845 rows and 17 columns</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve time: 12.13s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29462 rows, 30083 columns, 125689 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30083 integer (30083 binary)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation presolved: 29462 rows, 30083 columns, 125689 nonzeros</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 29880 rows and 30084 columns</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Root simplex log...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Iteration    Objective       Primal Inf.    Dual Inf.      Time</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        0    1.0000000e+02   0.000000e+00   1.000000e+02     18s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2022    3.1353711e+01   0.000000e+00   4.457908e+03     20s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     4508    2.0000000e+01   0.000000e+00   0.000000e+00     23s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     4508    2.0000000e+01   0.000000e+00   0.000000e+00     23s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        0    1.0000000e+02   0.000000e+00   1.000000e+02     13s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     4020    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     4020    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation: objective 2.000000e+01, 4508 iterations, 6.43 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation: objective 2.000000e+01, 4020 iterations, 1.60 seconds (1.94 work units)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Nodes    |    Current Node    |     Objective Bounds      |     Work</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> *    0     0               0      20.0000000   20.00000  0.00%     -   22s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H    0     0                      20.0000000    0.00000   100%     -   14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      0     0          -    0        20.00000   20.00000  0.00%     -   14s</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Explored 0 nodes (4509 simplex iterations) in 22.61 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count was 1 (of 2 available processors)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Explored 1 nodes (7363 simplex iterations) in 14.62 seconds (10.43 work units)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count was 1 (of 8 available processors)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Solution count 2: 20 99 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Optimal solution found (tolerance 1.00e-01)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># log files for all solutions</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">logging.file</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="cn">NULL</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi 6.5.1 (linux64) logging started Fri Jul 29 12:54:39 2016</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi 10.0.0 (linux64, R) logging started Fri 23 Dec 2022 02:41:38 PM NZDT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Username</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter MIPGap to value 0.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Method to value 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter LogFile to value "/tmp/RtmpJ30SOp/file57617b549888.log"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Presolve to value 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Threads to value 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Academic license - for non-commercial use only - expires 2023-12-18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi Optimizer version 10.0.0 build v10.0.0rc2 (linux64)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CPU model: 11th Gen Intel(R) Core(TM) i7-1185G7 @ 3.00GHz, instruction set [SSE2|AVX|AVX2|AVX512]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count: 4 physical cores, 8 logical processors, using up to 1 threads</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Optimize a model with 30306 rows, 30100 columns and 120000 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model fingerprint: 0xfe534681</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30100 integer (30100 binary)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficient statistics:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Matrix range    [7e-03, 9e+01]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Objective range [1e+00, 1e+00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Bounds range    [1e+00, 1e+00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   RHS range       [1e+00, 1e+02]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Found heuristic solution: objective 100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 264 rows and 15 columns (presolve time = 5s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 305 rows and 15 columns (presolve time = 10s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 360 rows and 15 columns (presolve time = 15s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 360 rows and 15 columns</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve time: 16.70s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29946 rows, 30085 columns, 131504 nonzeros</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30085 integer (30085 binary)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 67 rows and 1 columns</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29879 rows, 30084 columns, 127194 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Matrix range     [7e-03, 9e+01]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Objective range  [1e+00, 1e+00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Bounds range     [1e+00, 1e+00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   RHS range        [1e+00, 1e+02]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Found heuristic solution: objective 99.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 827 rows and 15 columns (presolve time = 5s) ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 845 rows and 15 columns (presolve time = 10s) ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 845 rows and 17 columns</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve time: 13.37s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29461 rows, 30083 columns, 125589 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30083 integer (30083 binary)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation presolved: 29461 rows, 30083 columns, 125589 nonzeros</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 29879 rows and 30084 columns</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Root simplex log...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Iteration    Objective       Primal Inf.    Dual Inf.      Time</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        0    1.0000000e+02   0.000000e+00   1.000000e+02     19s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2041    2.8872983e+01   0.000000e+00   2.680992e+03     20s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3691    2.0000000e+01   0.000000e+00   0.000000e+00     21s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3691    2.0000000e+01   0.000000e+00   0.000000e+00     21s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        0    1.0000000e+02   0.000000e+00   1.000000e+02     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1950    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1950    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation: objective 2.000000e+01, 3691 iterations, 4.10 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Use crossover to convert LP symmetric solution to basic solution...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Nodes    |    Current Node    |     Objective Bounds      |     Work</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root crossover log...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      0     0   20.00000    0    4  100.00000   20.00000  80.0%     -   21s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> H    0     0                      20.0000000   20.00000  0.00%     -   21s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      511 PPushes remaining with PInf 0.0000000e+00                14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        0 PPushes remaining with PInf 0.0000000e+00                14s</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Explored 0 nodes (4876 simplex iterations) in 21.36 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count was 1 (of 2 available processors)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Push phase complete: Pinf 0.0000000e+00, Dinf 0.0000000e+00     14s</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Optimal solution found (tolerance 1.00e-01)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0% </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi 6.5.1 (linux64) logging started Fri Jul 29 12:54:39 2016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Optimize a model with 30306 rows, 30100 columns and 120000 nonzeros</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficient statistics:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Matrix range    [7e-03, 9e+01]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Objective range [1e+00, 1e+00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Bounds range    [1e+00, 1e+00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   RHS range       [1e+00, 1e+02]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Found heuristic solution: objective 100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 264 rows and 15 columns (presolve time = 5s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 305 rows and 15 columns (presolve time = 10s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 360 rows and 15 columns (presolve time = 15s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 360 rows and 15 columns</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve time: 16.70s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29946 rows, 30085 columns, 131504 nonzeros</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30085 integer (30085 binary)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 67 rows and 1 columns</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29879 rows, 30084 columns, 127194 nonzeros</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 29879 rows and 30084 columns</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Root simplex log...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Iteration    Objective       Primal Inf.    Dual Inf.      Time</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        0    1.0000000e+02   0.000000e+00   1.000000e+02     19s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2041    2.8872983e+01   0.000000e+00   2.680992e+03     20s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3691    2.0000000e+01   0.000000e+00   0.000000e+00     21s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3691    2.0000000e+01   0.000000e+00   0.000000e+00     21s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2464    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2464    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation: objective 2.000000e+01, 3691 iterations, 4.10 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation: objective 2.000000e+01, 2464 iterations, 0.98 seconds (0.64 work units)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Nodes    |    Current Node    |     Objective Bounds      |     Work</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      0     0   20.00000    0    4  100.00000   20.00000  80.0%     -   21s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> H    0     0                      20.0000000   20.00000  0.00%     -   21s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H    0     0                      20.0000000    0.00000   100%     -   14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      0     0          -    0        20.00000   20.00000  0.00%     -   15s</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Explored 0 nodes (4876 simplex iterations) in 21.36 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count was 1 (of 2 available processors)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Explored 1 nodes (5366 simplex iterations) in 15.01 seconds (9.00 work units)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count was 1 (of 8 available processors)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Solution count 2: 20 99 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Optimal solution found (tolerance 1.00e-01)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000% </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi 10.0.0 (linux64, R) logging started Fri 23 Dec 2022 02:41:38 PM NZDT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi 6.5.1 (linux64) logging started Fri Jul 29 12:55:01 2016</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Username</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter MIPGap to value 0.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Method to value 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter LogFile to value "/tmp/RtmpJ30SOp/file57617b549888.log"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Presolve to value 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Threads to value 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Academic license - for non-commercial use only - expires 2023-12-18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi Optimizer version 10.0.0 build v10.0.0rc2 (linux64)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CPU model: 11th Gen Intel(R) Core(TM) i7-1185G7 @ 3.00GHz, instruction set [SSE2|AVX|AVX2|AVX512]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count: 4 physical cores, 8 logical processors, using up to 1 threads</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Optimize a model with 30306 rows, 30100 columns and 120000 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model fingerprint: 0xfe534681</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30100 integer (30100 binary)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficient statistics:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Matrix range     [7e-03, 9e+01]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Objective range  [1e+00, 1e+00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Bounds range     [1e+00, 1e+00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   RHS range        [1e+00, 1e+02]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Found heuristic solution: objective 99.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 827 rows and 15 columns (presolve time = 5s) ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 845 rows and 15 columns (presolve time = 10s) ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 845 rows and 17 columns</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve time: 13.37s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29461 rows, 30083 columns, 125589 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30083 integer (30083 binary)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation presolved: 29461 rows, 30083 columns, 125589 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root simplex log...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration    Objective       Primal Inf.    Dual Inf.      Time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        0    1.0000000e+02   0.000000e+00   1.000000e+02     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1950    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1950    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Use crossover to convert LP symmetric solution to basic solution...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root crossover log...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      511 PPushes remaining with PInf 0.0000000e+00                14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        0 PPushes remaining with PInf 0.0000000e+00                14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Push phase complete: Pinf 0.0000000e+00, Dinf 0.0000000e+00     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root simplex log...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration    Objective       Primal Inf.    Dual Inf.      Time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2464    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2464    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation: objective 2.000000e+01, 2464 iterations, 0.98 seconds (0.64 work units)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Nodes    |    Current Node    |     Objective Bounds      |     Work</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H    0     0                      20.0000000    0.00000   100%     -   14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      0     0          -    0        20.00000   20.00000  0.00%     -   15s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Explored 1 nodes (5366 simplex iterations) in 15.01 seconds (9.00 work units)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count was 1 (of 8 available processors)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Solution count 2: 20 99 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Optimal solution found (tolerance 1.00e-01)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi 10.0.0 (linux64, R) logging started Fri 23 Dec 2022 02:41:54 PM NZDT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Username</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter MIPGap to value 0.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Method to value 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter LogFile to value "/tmp/RtmpJ30SOp/file57617b549888.log"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Presolve to value 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Threads to value 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Academic license - for non-commercial use only - expires 2023-12-18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi Optimizer version 10.0.0 build v10.0.0rc2 (linux64)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CPU model: 11th Gen Intel(R) Core(TM) i7-1185G7 @ 3.00GHz, instruction set [SSE2|AVX|AVX2|AVX512]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count: 4 physical cores, 8 logical processors, using up to 1 threads</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Optimize a model with 30307 rows, 30100 columns and 120100 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model fingerprint: 0x7b9a1818</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30100 integer (30100 binary)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficient statistics:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Matrix range    [7e-03, 9e+01]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Objective range [1e+00, 1e+00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Bounds range    [1e+00, 1e+00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   RHS range       [1e+00, 1e+02]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Found heuristic solution: objective 100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 265 rows and 15 columns (presolve time = 5s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 329 rows and 15 columns (presolve time = 10s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 360 rows and 15 columns (presolve time = 15s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 360 rows and 15 columns</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve time: 16.02s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29947 rows, 30085 columns, 131606 nonzeros</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30085 integer (30085 binary)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 67 rows and 1 columns</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29880 rows, 30084 columns, 127295 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Matrix range     [7e-03, 9e+01]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Objective range  [1e+00, 1e+00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Bounds range     [1e+00, 1e+00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   RHS range        [1e+00, 1e+02]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Found heuristic solution: objective 99.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 829 rows and 15 columns (presolve time = 5s) ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 845 rows and 15 columns (presolve time = 10s) ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 845 rows and 17 columns</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve time: 12.13s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29462 rows, 30083 columns, 125689 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30083 integer (30083 binary)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation presolved: 29462 rows, 30083 columns, 125689 nonzeros</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 29880 rows and 30084 columns</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Root simplex log...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Iteration    Objective       Primal Inf.    Dual Inf.      Time</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        0    1.0000000e+02   0.000000e+00   1.000000e+02     18s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2022    3.1353711e+01   0.000000e+00   4.457908e+03     20s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     4508    2.0000000e+01   0.000000e+00   0.000000e+00     23s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     4508    2.0000000e+01   0.000000e+00   0.000000e+00     23s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        0    1.0000000e+02   0.000000e+00   1.000000e+02     13s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     4020    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     4020    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation: objective 2.000000e+01, 4508 iterations, 6.43 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation: objective 2.000000e+01, 4020 iterations, 1.60 seconds (1.94 work units)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Nodes    |    Current Node    |     Objective Bounds      |     Work</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> *    0     0               0      20.0000000   20.00000  0.00%     -   22s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H    0     0                      20.0000000    0.00000   100%     -   14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      0     0          -    0        20.00000   20.00000  0.00%     -   14s</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Explored 0 nodes (4509 simplex iterations) in 22.61 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count was 1 (of 2 available processors)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Explored 1 nodes (7363 simplex iterations) in 14.62 seconds (10.43 work units)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count was 1 (of 8 available processors)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Solution count 2: 20 99 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Optimal solution found (tolerance 1.00e-01)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0% </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi 6.5.1 (linux64) logging started Fri Jul 29 12:54:39 2016</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000% </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi 10.0.0 (linux64, R) logging started Fri 23 Dec 2022 02:41:38 PM NZDT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Username</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter MIPGap to value 0.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Method to value 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter LogFile to value "/tmp/RtmpJ30SOp/file57617b549888.log"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Presolve to value 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Threads to value 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Academic license - for non-commercial use only - expires 2023-12-18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi Optimizer version 10.0.0 build v10.0.0rc2 (linux64)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CPU model: 11th Gen Intel(R) Core(TM) i7-1185G7 @ 3.00GHz, instruction set [SSE2|AVX|AVX2|AVX512]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count: 4 physical cores, 8 logical processors, using up to 1 threads</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Optimize a model with 30306 rows, 30100 columns and 120000 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model fingerprint: 0xfe534681</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30100 integer (30100 binary)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficient statistics:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Matrix range    [7e-03, 9e+01]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Objective range [1e+00, 1e+00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Bounds range    [1e+00, 1e+00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   RHS range       [1e+00, 1e+02]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Found heuristic solution: objective 100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 264 rows and 15 columns (presolve time = 5s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 305 rows and 15 columns (presolve time = 10s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 360 rows and 15 columns (presolve time = 15s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 360 rows and 15 columns</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve time: 16.70s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29946 rows, 30085 columns, 131504 nonzeros</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30085 integer (30085 binary)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 67 rows and 1 columns</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29879 rows, 30084 columns, 127194 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Matrix range     [7e-03, 9e+01]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Objective range  [1e+00, 1e+00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Bounds range     [1e+00, 1e+00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   RHS range        [1e+00, 1e+02]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Found heuristic solution: objective 99.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 827 rows and 15 columns (presolve time = 5s) ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 845 rows and 15 columns (presolve time = 10s) ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 845 rows and 17 columns</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve time: 13.37s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29461 rows, 30083 columns, 125589 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30083 integer (30083 binary)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation presolved: 29461 rows, 30083 columns, 125589 nonzeros</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 29879 rows and 30084 columns</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Root simplex log...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Iteration    Objective       Primal Inf.    Dual Inf.      Time</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        0    1.0000000e+02   0.000000e+00   1.000000e+02     19s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2041    2.8872983e+01   0.000000e+00   2.680992e+03     20s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3691    2.0000000e+01   0.000000e+00   0.000000e+00     21s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3691    2.0000000e+01   0.000000e+00   0.000000e+00     21s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        0    1.0000000e+02   0.000000e+00   1.000000e+02     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1950    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1950    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation: objective 2.000000e+01, 3691 iterations, 4.10 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Use crossover to convert LP symmetric solution to basic solution...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root crossover log...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      511 PPushes remaining with PInf 0.0000000e+00                14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        0 PPushes remaining with PInf 0.0000000e+00                14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Push phase complete: Pinf 0.0000000e+00, Dinf 0.0000000e+00     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root simplex log...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration    Objective       Primal Inf.    Dual Inf.      Time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2464    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2464    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation: objective 2.000000e+01, 2464 iterations, 0.98 seconds (0.64 work units)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Nodes    |    Current Node    |     Objective Bounds      |     Work</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      0     0   20.00000    0    4  100.00000   20.00000  80.0%     -   21s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> H    0     0                      20.0000000   20.00000  0.00%     -   21s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H    0     0                      20.0000000    0.00000   100%     -   14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      0     0          -    0        20.00000   20.00000  0.00%     -   15s</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Explored 0 nodes (4876 simplex iterations) in 21.36 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count was 1 (of 2 available processors)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Explored 1 nodes (5366 simplex iterations) in 15.01 seconds (9.00 work units)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count was 1 (of 8 available processors)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Solution count 2: 20 99 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Optimal solution found (tolerance 1.00e-01)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi 6.5.1 (linux64) logging started Fri Jul 29 12:55:01 2016</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi 10.0.0 (linux64, R) logging started Fri 23 Dec 2022 02:41:54 PM NZDT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Username</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter MIPGap to value 0.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Method to value 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter LogFile to value "/tmp/RtmpJ30SOp/file57617b549888.log"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Presolve to value 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Threads to value 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Academic license - for non-commercial use only - expires 2023-12-18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi Optimizer version 10.0.0 build v10.0.0rc2 (linux64)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CPU model: 11th Gen Intel(R) Core(TM) i7-1185G7 @ 3.00GHz, instruction set [SSE2|AVX|AVX2|AVX512]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count: 4 physical cores, 8 logical processors, using up to 1 threads</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Optimize a model with 30307 rows, 30100 columns and 120100 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model fingerprint: 0x7b9a1818</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30100 integer (30100 binary)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficient statistics:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Matrix range    [7e-03, 9e+01]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Objective range [1e+00, 1e+00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Bounds range    [1e+00, 1e+00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   RHS range       [1e+00, 1e+02]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Found heuristic solution: objective 100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 265 rows and 15 columns (presolve time = 5s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 329 rows and 15 columns (presolve time = 10s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 360 rows and 15 columns (presolve time = 15s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 360 rows and 15 columns</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve time: 16.02s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29947 rows, 30085 columns, 131606 nonzeros</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30085 integer (30085 binary)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 67 rows and 1 columns</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29880 rows, 30084 columns, 127295 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Matrix range     [7e-03, 9e+01]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Objective range  [1e+00, 1e+00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Bounds range     [1e+00, 1e+00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   RHS range        [1e+00, 1e+02]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Found heuristic solution: objective 99.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 829 rows and 15 columns (presolve time = 5s) ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 845 rows and 15 columns (presolve time = 10s) ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 845 rows and 17 columns</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve time: 12.13s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29462 rows, 30083 columns, 125689 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30083 integer (30083 binary)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation presolved: 29462 rows, 30083 columns, 125689 nonzeros</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 29880 rows and 30084 columns</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Root simplex log...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Iteration    Objective       Primal Inf.    Dual Inf.      Time</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        0    1.0000000e+02   0.000000e+00   1.000000e+02     18s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2022    3.1353711e+01   0.000000e+00   4.457908e+03     20s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     4508    2.0000000e+01   0.000000e+00   0.000000e+00     23s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     4508    2.0000000e+01   0.000000e+00   0.000000e+00     23s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        0    1.0000000e+02   0.000000e+00   1.000000e+02     13s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     4020    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     4020    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation: objective 2.000000e+01, 4508 iterations, 6.43 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation: objective 2.000000e+01, 4020 iterations, 1.60 seconds (1.94 work units)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Nodes    |    Current Node    |     Objective Bounds      |     Work</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> *    0     0               0      20.0000000   20.00000  0.00%     -   22s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H    0     0                      20.0000000    0.00000   100%     -   14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      0     0          -    0        20.00000   20.00000  0.00%     -   14s</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Explored 0 nodes (4509 simplex iterations) in 22.61 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count was 1 (of 2 available processors)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Explored 1 nodes (7363 simplex iterations) in 14.62 seconds (10.43 work units)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count was 1 (of 8 available processors)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Solution count 2: 20 99 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Optimal solution found (tolerance 1.00e-01)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi 6.5.1 (linux64) logging started Fri Jul 29 12:55:24 2016</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi 10.0.0 (linux64, R) logging started Fri 23 Dec 2022 02:42:08 PM NZDT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Warning for adding variables: zero or small (&lt; 1e-13) coefficients, ignored</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Username</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter MIPGap to value 0.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Method to value 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter LogFile to value "/tmp/RtmpJ30SOp/file57617b549888.log"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Presolve to value 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Set parameter Threads to value 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Academic license - for non-commercial use only - expires 2023-12-18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Gurobi Optimizer version 10.0.0 build v10.0.0rc2 (linux64)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CPU model: 11th Gen Intel(R) Core(TM) i7-1185G7 @ 3.00GHz, instruction set [SSE2|AVX|AVX2|AVX512]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count: 4 physical cores, 8 logical processors, using up to 1 threads</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Optimize a model with 30308 rows, 30100 columns and 120200 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model fingerprint: 0x8e215663</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30100 integer (30100 binary)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficient statistics:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Matrix range    [7e-03, 9e+01]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Objective range [1e+00, 1e+00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Bounds range    [1e+00, 1e+00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   RHS range       [1e+00, 1e+02]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Found heuristic solution: objective 100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 265 rows and 15 columns (presolve time = 5s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 329 rows and 15 columns (presolve time = 10s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 360 rows and 15 columns (presolve time = 15s) ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 360 rows and 15 columns</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve time: 15.91s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29948 rows, 30085 columns, 131708 nonzeros</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30085 integer (30085 binary)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 67 rows and 1 columns</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29881 rows, 30084 columns, 127396 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Matrix range     [7e-03, 9e+01]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Objective range  [1e+00, 1e+00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Bounds range     [1e+00, 1e+00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   RHS range        [1e+00, 1e+02]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Found heuristic solution: objective 99.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 829 rows and 15 columns (presolve time = 5s) ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 845 rows and 15 columns (presolve time = 10s) ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 845 rows and 17 columns</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve time: 12.02s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Presolved: 29463 rows, 30083 columns, 125789 nonzeros</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable types: 0 continuous, 30083 integer (30083 binary)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation presolved: 29463 rows, 30083 columns, 125789 nonzeros</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Presolve removed 29881 rows and 30084 columns</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Root simplex log...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Iteration    Objective       Primal Inf.    Dual Inf.      Time</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        0    1.0000000e+02   0.000000e+00   1.000000e+02     18s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2854    2.4255096e+01   0.000000e+00   2.385716e+03     20s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     4679    2.0000000e+01   0.000000e+00   0.000000e+00     22s</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     4679    2.0000000e+01   0.000000e+00   0.000000e+00     22s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        0    1.0000000e+02   0.000000e+00   1.000000e+02     13s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     5394    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     5394    2.0000000e+01   0.000000e+00   0.000000e+00     14s</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation: objective 2.000000e+01, 4679 iterations, 6.10 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Root relaxation: objective 2.000000e+01, 5394 iterations, 2.14 seconds (2.93 work units)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total elapsed time = 16.39s</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Nodes    |    Current Node    |     Objective Bounds      |     Work</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> *    0     0               0      20.0000000   20.00000  0.00%     -   23s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H    0     0                      20.0000000    0.00000   100%     -   16s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      0     0          -    0        20.00000   20.00000  0.00%     -   16s</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Explored 0 nodes (7085 simplex iterations) in 23.13 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count was 1 (of 2 available processors)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Explored 1 nodes (12421 simplex iterations) in 16.51 seconds (13.25 work units)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Thread count was 1 (of 8 available processors)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Solution count 2: 20 99 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Optimal solution found (tolerance 1.00e-01)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Best objective 2.000000000000e+01, best bound 2.000000000000e+01, gap 0.0000%</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -507,7 +691,7 @@ function.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

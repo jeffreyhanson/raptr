@@ -12,8 +12,11 @@ unit in the space.}
 
 \item{demand.points}{\code{\link[=DemandPoints]{DemandPoints()}} object for the space.}
 
-\item{species}{\code{integer} species id to indicate which species the space
-is associated with.}
+\item{species}{\code{integer} species identifier to indicate which species the
+space is associated with.}
+}
+\value{
+A new \code{AttributeSpace} object.
 }
 \description{
 This function creates a new \code{AttributeSpace} object.
@@ -22,14 +25,16 @@ This function creates a new \code{AttributeSpace} object.
 space <- AttributeSpace(
  PlanningUnitPoints(
    matrix(rnorm(100), ncol = 2),
-   seq_len(50)),
+   seq_len(50)
+ ),
  DemandPoints(
    matrix(rnorm(100), ncol = 2),
-   runif(50)),
- species = 1L)
+   runif(50)
+  ),
+ species = 1L
+)
 
 }
 \seealso{
-\linkS4class{DemandPoints},
-\linkS4class{PlanningUnitPoints}.
+\linkS4class{DemandPoints}, \linkS4class{PlanningUnitPoints}.
 }

@@ -12,6 +12,9 @@ different species.}
 
 \item{name}{\code{character} name to identify the attribute space.}
 }
+\value{
+A new \code{AttributeSpaces} object.
+}
 \description{
 This function creates a new \code{AttributeSpaces} object.
 }
@@ -19,20 +22,26 @@ This function creates a new \code{AttributeSpaces} object.
 space1 <- AttributeSpace(
   PlanningUnitPoints(
     matrix(rnorm(100), ncol = 2),
-    seq_len(50)),
+    seq_len(50)
+  ),
   DemandPoints(
     matrix(rnorm(100), ncol = 2),
-    runif(50)),
-  species = 1L)
+    runif(50)
+  ),
+  species = 1L
+)
 
 space2 <- AttributeSpace(
   PlanningUnitPoints(
     matrix(rnorm(100), ncol = 2),
-    seq_len(50)),
+    seq_len(50)
+  ),
   DemandPoints(
     matrix(rnorm(100), ncol = 2),
-    runif(50)),
-  species = 2L)
+    runif(50)
+  ),
+  species = 2L
+)
 
 spaces <- AttributeSpaces(list(space1, space2), "spaces")
 

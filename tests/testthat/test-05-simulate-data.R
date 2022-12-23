@@ -4,12 +4,12 @@ test_that("simulate planning units functions", {
   # generate planning units
   pus <- sim.pus(n = 225L)
   # check simulated dataset
-  expect_true(inherits(pus, "SpatialPolygonsDataFrame"))
-  expect_equal(nrow(pus@data), 225L)
-  expect_equal(xmin(pus), -7.5)
-  expect_equal(ymin(pus), -7.5)
-  expect_equal(xmax(pus), 7.5)
-  expect_equal(xmax(pus), 7.5)
+  expect_true(inherits(pus, "sf"))
+  expect_equal(nrow(pus), 225L)
+  expect_equal(sf::st_bbox(pus)$xmin[[1]], -7.5)
+  expect_equal(sf::st_bbox(pus)$ymin[[1]], -7.5)
+  expect_equal(sf::st_bbox(pus)$xmax[[1]], 7.5)
+  expect_equal(sf::st_bbox(pus)$ymax[[1]], 7.5)
 })
 
 test_that("simulate space functions", {
@@ -18,13 +18,13 @@ test_that("simulate space functions", {
   # generate spaces
   spaces <- sim.space(pus, res = 1, d = 5)
   # check simulated dataset
-  expect_true(inherits(spaces, "RasterStack"))
-  expect_equal(nlayers(spaces), 5)
-  expect_equal(xmin(spaces), -7.5)
-  expect_equal(ymin(spaces), -7.5)
-  expect_equal(xmax(spaces), 7.5)
-  expect_equal(ymax(spaces), 7.5)
-  expect_equal(sum(is.na(spaces[[1]][])), 0)
+  expect_true(inherits(spaces, "SpatRaster"))
+  expect_equal(terra::nlyr(spaces), 5)
+  expect_equal(terra::xmin(spaces), -7.5)
+  expect_equal(terra::ymin(spaces), -7.5)
+  expect_equal(terra::xmax(spaces), 7.5)
+  expect_equal(terra::ymax(spaces), 7.5)
+  expect_equal(terra::global(is.na(spaces[[1]]), "sum")[[1]], 0)
 })
 
 test_that("simulate species functions", {
@@ -33,11 +33,11 @@ test_that("simulate species functions", {
   # generate spaces
   species <- sim.species(pus, res = 1, n = 5)
   # check simulated dataset
-  expect_true(inherits(species, "RasterStack"))
-  expect_equal(nlayers(species), 5)
-  expect_equal(xmin(species), -7.5)
-  expect_equal(ymin(species), -7.5)
-  expect_equal(xmax(species), 7.5)
-  expect_equal(ymax(species), 7.5)
-  expect_equal(sum(is.na(species[[1]][])), 0)
+  expect_true(inherits(species, "SpatRaster"))
+  expect_equal(terra::nlyr(species), 5)
+  expect_equal(terra::xmin(species), -7.5)
+  expect_equal(terra::ymin(species), -7.5)
+  expect_equal(terra::xmax(species), 7.5)
+  expect_equal(terra::ymax(species), 7.5)
+  expect_equal(terra::global(is.na(species[[1]]), "sum")[[1]], 0)
 })

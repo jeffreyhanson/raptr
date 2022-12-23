@@ -11,6 +11,9 @@ PlanningUnitPoints(coords, ids)
 
 \item{ids}{\code{integer} planning unit ids.}
 }
+\value{
+A new \code{PlanningUnitPoints} object.
+}
 \description{
 This function creates a new \code{PlanningUnitPoints} object.
 }

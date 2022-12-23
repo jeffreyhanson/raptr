@@ -6,13 +6,15 @@ test_that("Gurobi solver (unreliable)", {
   # load RapUnsolved object
   set.seed(500)
   data(sim_ru)
-  sim_ru <- sim_ru %>%
-            spp.subset(1:2) %>%
-            pu.subset(1:10) %>%
-            dp.subset(1, 1:2, 1:10)
+  sim_ru <-
+    sim_ru %>%
+    spp.subset(1:2) %>%
+    pu.subset(1:10) %>%
+    dp.subset(1, 1:2, 1:10)
   # generate model matrix
-  model <- rcpp_generate_model_object(RapUnreliableOpts(), TRUE, sim_ru@data,
-                                      FALSE)
+  model <- rcpp_generate_model_object(
+    RapUnreliableOpts(), TRUE, sim_ru@data, FALSE
+  )
   model$A <- Matrix::sparseMatrix(i = model$Ar[[1]] + 1, j = model$Ar[[2]] + 1,
                                   x = model$Ar[[3]])
   # solve the model
@@ -26,10 +28,14 @@ test_that("Gurobi solver (unreliable)", {
     )
   if (file.exists("gurobi.log")) unlink("gurobi.log")
   # check solution variables
-  expect_true(all(result$x[grep("pu_",  dump_object(model$cache$variables,
-                                "character"), fixed = TRUE)] %in% c(0, 1)))
-  expect_true(all(result$x[grep("Y_", dump_object(model$cache$variables,
-                                "character"), fixed = TRUE)] %in% c(0, 1)))
+  x_idx <- grep(
+    "pu_", dump_object(model$cache$variables, "character"), fixed = TRUE
+  )
+  y_idx <- grep(
+    "Y_", dump_object(model$cache$variables, "character"), fixed = TRUE
+  )
+  expect_true(all(result$x[x_idx] %in% c(0, 1)))
+  expect_true(all(result$x[y_idx] %in% c(0, 1)))
 })
 
 test_that("Gurobi solver (reliable)", {
@@ -56,21 +62,28 @@ test_that("Gurobi solver (reliable)", {
   )
   if (file.exists("gurobi.log")) unlink("gurobi.log")
   # checks
-  expect_true(all(result$x[grep("pu_", dump_object(model$cache$variables,
-                                "character"), fixed = TRUE)] %in% c(0, 1)))
-  expect_true(all(result$x[grep("Y_", dump_object(model$cache$variables,
-                                "character"), fixed = TRUE)] %in% c(0, 1)))
-  expect_true(all(round(result$x[grep("P_", dump_object(model$cache$variables,
-                                      "character"), fixed = TRUE)], 5) >= 0))
-  expect_true(all(round(result$x[grep("P_", dump_object(model$cache$variables,
-                                      "character"), fixed = TRUE)], 5) <= 1))
-  expect_true(all(
-    round(result$x[grep("W_", dump_object(model$cache$variables,
-                        "character"), fixed = TRUE)], 5) ==
-    round(result$x[grep("Y_", dump_object(model$cache$variables,
-                        "character"), fixed = TRUE)] *
-          result$x[grep("P_", dump_object(model$cache$variables, "character"),
-                        fixed = TRUE)], 5)))
+  pu_idx <- grep(
+    "pu_", dump_object(model$cache$variables, "character"), fixed = TRUE
+  )
+  y_idx <- grep(
+    "Y_", dump_object(model$cache$variables, "character"), fixed = TRUE
+  )
+  p_idx <- grep(
+    "P_", dump_object(model$cache$variables, "character"), fixed = TRUE
+  )
+  w_idx <- grep(
+    "W_", dump_object(model$cache$variables, "character"), fixed = TRUE
+  )
+  expect_true(all(result$x[pu_idx] %in% c(0, 1)))
+  expect_true(all(result$x[y_idx] %in% c(0, 1)))
+  expect_true(all(round(result$x[p_idx], 5) >= 0))
+  expect_true(all(round(result$x[p_idx], 5) <= 1))
+  expect_true(
+    all(
+      round(result$x[w_idx], 5) ==
+      round(result$x[y_idx] * result$x[p_idx], 5)
+    )
+  )
 })
 
 test_that("maximum.targets (unreliable)", {
@@ -87,9 +100,11 @@ test_that("maximum.targets (reliable)", {
   x <- maximum.targets(sim_ru)
   expect_equal(x$species, 1:3)
   expect_equal(x$target, rep(1, 3))
-  expect_equal(round(x$proportion, 5),
-               round(c(-4.40000000000001, -7.09745468326174,
-                       -13.281376623266), 5))
+  expect_equal(
+    x$proportion,
+    c(-4.40000000000001, -7.09745468326174, -13.281376623266),
+    tolerance = 1e-5
+  )
 })
 
 test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=1 - ",
@@ -123,8 +138,9 @@ test_that(paste0("solve.RapUnsolved (reliable - NumberSolutions=1 - ",
   sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, -10000, -10000, -10000)
   # solve it
   expect_warning({
-    sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0, Presolve = 2L),
-                           verbose = FALSE)
+    sim_rs <- raptr::solve(
+      sim_ru, GurobiOpts(MIPGap = 0, Presolve = 2L), verbose = FALSE
+    )
   })
   # run checks
   expect_equal(nrow(summary(sim_rs)), 1L)
@@ -142,11 +158,15 @@ test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=1 - ",
   sim_ru <- dp.subset(sim_ru, species = 1:3, space = 1, points = 1:5)
   sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, 0.1, 0.1, 0.1)
   # solve it
-  sim_rs <- raptr::solve(sim_ru,
-                         GurobiOpts(MIPGap = 0, Presolve = 2L,
-                                    MultipleSolutionsMethod =
-                                      "solution.pool.2"),
-                         verbose = FALSE)
+  sim_rs <- raptr::solve(
+    sim_ru,
+    GurobiOpts(
+      MIPGap = 0,
+      Presolve = 2L,
+      MultipleSolutionsMethod = "solution.pool.2"
+    ),
+    verbose = FALSE
+  )
   # run checks
   expect_equal(nrow(summary(sim_rs)), 1L)
   runUnreliableChecks(sim_rs)
@@ -165,18 +185,22 @@ test_that(paste0("solve.RapUnsolved (reliable - NumberSolutions=1 - ",
   sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, -10000, -10000, -10000)
   # solve it
   expect_warning({
-    sim_rs <- raptr::solve(sim_ru,
-                           GurobiOpts(MIPGap = 0, Presolve = 2L,
-                                      MultipleSolutionsMethod =
-                                        "solution.pool.1"),
-                           verbose = FALSE)
+    sim_rs <- raptr::solve(
+      sim_ru,
+      GurobiOpts(
+        MIPGap = 0,
+        Presolve = 2L,
+        MultipleSolutionsMethod = "solution.pool.1"
+      ),
+      verbose = FALSE
+    )
   })
   # run checks
   expect_equal(nrow(summary(sim_rs)), 1L)
   runReliableChecks(sim_rs)
 })
 
-test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=1 -",
+test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=1 - ",
                  "sparse occupancy)"), {
   # skip if gurobi not installed
   skip_if_not_installed("gurobi")
@@ -187,10 +211,12 @@ test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=1 -",
   sim_ru <- dp.subset(sim_ru, species = 1:3, space = 1, points = 1:30)
   sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, 0.1, 0.1, 0.1)
   sim_ru@opts <- RapUnreliableOpts()
+  probs_idx <- sample(
+    seq_len(nrow(sim_ru@data@pu.species.probabilities)),
+    size = ceiling(nrow(sim_ru@data@pu.species.probabilities) * 0.7)
+  )
   sim_ru@data@pu.species.probabilities <-
-    sim_ru@data@pu.species.probabilities[sample(
-      seq_len(nrow(sim_ru@data@pu.species.probabilities)),
-      size = ceiling(nrow(sim_ru@data@pu.species.probabilities) * 0.7)), ]
+    sim_ru@data@pu.species.probabilities[probs_idx, ]
   sim_ru@data@attribute.spaces <- lapply(
     seq_along(sim_ru@data@attribute.spaces),
     function(i) {
@@ -198,24 +224,28 @@ test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=1 -",
         spaces = lapply(
           seq_along(sim_ru@data@attribute.spaces[[i]]@spaces),
           function(j) {
-            curr.pu <- sim_ru@data@pu.species.probabilities$pu[
-                         which(sim_ru@data@pu.species.probabilities$species ==
-                               j)]
+            idx <- which(sim_ru@data@pu.species.probabilities$species == j)
+            curr.pu <- sim_ru@data@pu.species.probabilities$pu[idx]
             AttributeSpace(
               species = sim_ru@data@attribute.spaces[[i]]@spaces[[j]]@species,
-              demand.points = sim_ru@data@attribute.spaces[[i]]@spaces[[j]]@
-                                demand.points,
+              demand.points =
+                sim_ru@data@attribute.spaces[[i]]@spaces[[j]]@demand.points,
               planning.unit.points = PlanningUnitPoints(
                 coords = sim_ru@data@attribute.spaces[[i]]@spaces[[j]]@
-                           planning.unit.points@coords[curr.pu, ],
-                ids = curr.pu))
-          }),
+                  planning.unit.points@coords[curr.pu, ],
+                ids = curr.pu
+              )
+            )
+          }
+        ),
         name = sim_ru@data@attribute.spaces[[i]]@name
       )
-  })
+    }
+  )
   # solve it
-  sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0, Presolve = 2L),
-                         verbose = FALSE)
+  sim_rs <- raptr::solve(
+    sim_ru, GurobiOpts(MIPGap = 0, Presolve = 2L), verbose = FALSE
+  )
   # run checks
   expect_equal(nrow(summary(sim_rs)), 1L)
   runUnreliableChecks(sim_rs)
@@ -231,9 +261,12 @@ test_that(paste0("solve.RapUnsolved (reliable - NumberSolutions=1 - sparse ",
   data(sim_ru)
   sim_ru <- pu.subset(sim_ru, 1:10)
   sim_ru <- dp.subset(sim_ru, species = 1:3, space = 1, points = 1:30)
-  sim_ru@data@pu.species.probabilities <- sim_ru@data@pu.species.probabilities[
-    sample(seq_len(nrow(sim_ru@data@pu.species.probabilities)),
-           ceiling(nrow(sim_ru@data@pu.species.probabilities) * 0.7)), ]
+  probs_idx <- sample(
+    seq_len(nrow(sim_ru@data@pu.species.probabilities)),
+    ceiling(nrow(sim_ru@data@pu.species.probabilities) * 0.7)
+  )
+  sim_ru@data@pu.species.probabilities <-
+    sim_ru@data@pu.species.probabilities[probs_idx, ]
   sim_ru@data@attribute.spaces <- lapply(
     seq_along(sim_ru@data@attribute.spaces),
     function(i) {
@@ -241,26 +274,31 @@ test_that(paste0("solve.RapUnsolved (reliable - NumberSolutions=1 - sparse ",
         spaces = lapply(
           seq_along(sim_ru@data@attribute.spaces[[i]]@spaces),
           function(j) {
-            curr.pu <- sim_ru@data@pu.species.probabilities$pu[
-                         which(sim_ru@data@pu.species.probabilities$species ==
-                               j)]
+            pu.idx <- which(sim_ru@data@pu.species.probabilities$species == j)
+            curr.pu <- sim_ru@data@pu.species.probabilities$pu[pu.idx]
             AttributeSpace(
               species = sim_ru@data@attribute.spaces[[i]]@spaces[[j]]@species,
-              demand.points = sim_ru@data@attribute.spaces[[i]]@spaces[[j]]@
-                                demand.points,
-            planning.unit.points = PlanningUnitPoints(
-              coords = sim_ru@data@attribute.spaces[[i]]@spaces[[j]]@
-                         planning.unit.points@coords[curr.pu, ],
-              ids = curr.pu))
-          }),
-      name = sim_ru@data@attribute.spaces[[i]]@name)
-  })
+              demand.points =
+                sim_ru@data@attribute.spaces[[i]]@spaces[[j]]@demand.points,
+              planning.unit.points = PlanningUnitPoints(
+                coords = sim_ru@data@attribute.spaces[[i]]@spaces[[j]]@
+                   planning.unit.points@coords[curr.pu, ],
+                ids = curr.pu
+              )
+            )
+          }
+        ),
+      name = sim_ru@data@attribute.spaces[[i]]@name
+      )
+    }
+  )
   sim_ru@opts <- RapReliableOpts()
   sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, -1000000, -1000000, -1000000)
   # solve it
   expect_warning({
-    sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0.5, Presolve = 2L),
-                           verbose = FALSE)
+    sim_rs <- raptr::solve(
+      sim_ru, GurobiOpts(MIPGap = 0.5, Presolve = 2L), verbose = FALSE
+    )
   })
   # run checks
   expect_equal(nrow(summary(sim_rs)), 1L)
@@ -279,10 +317,11 @@ test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=3 - ",
   sim_ru@opts <- RapUnreliableOpts()
   sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, 0.1, 0.1, 0.1)
   # solve it
-  sim_rs <- raptr::solve(sim_ru,
-                         GurobiOpts(MIPGap = 0, Presolve = 2L,
-                                    NumberSolutions = 3L),
-                         verbose = FALSE)
+  sim_rs <- raptr::solve(
+    sim_ru,
+    GurobiOpts(MIPGap = 0, Presolve = 2L, NumberSolutions = 3L),
+    verbose = FALSE
+  )
   # run checks
   expect_equal(nrow(summary(sim_rs)), 3L)
   runUnreliableChecks(sim_rs)
@@ -301,10 +340,11 @@ test_that(paste0("solve.RapUnsolved (reliable - NumberSolutions=3 - ",
   sim_ru@opts <- RapReliableOpts()
   # solve it
   expect_warning({
-    sim_rs <- raptr::solve(sim_ru,
-                           GurobiOpts(MIPGap = 0, Presolve = 2L,
-                                      NumberSolutions = 3L),
-                           verbose = FALSE)
+    sim_rs <- raptr::solve(
+      sim_ru,
+      GurobiOpts(MIPGap = 0, Presolve = 2L, NumberSolutions = 3L),
+      verbose = FALSE
+    )
   })
   # check number of selections is 1
   expect_equal(nrow(summary(sim_rs)), 3L)
@@ -323,12 +363,15 @@ test_that(paste0("solve.RapUnsolved (unreliable - NumberSolutions=2 - ",
   sim_ru@opts <- RapUnreliableOpts()
   sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, 0.1, 0.1, 0.1)
   # solve it
-  sim_rs <- raptr::solve(sim_ru,
-                         GurobiOpts(MIPGap = 0, Presolve = 2L,
-                                    NumberSolutions = 2L,
-                                    MultipleSolutionsMethod =
-                                      "solution.pool.2"),
-                         verbose = FALSE)
+  sim_rs <- raptr::solve(
+    sim_ru,
+    GurobiOpts(
+      MIPGap = 0,
+      Presolve = 2L,
+      NumberSolutions = 2L,
+      MultipleSolutionsMethod = "solution.pool.2"),
+    verbose = FALSE
+  )
   # run checks
   expect_equal(nrow(summary(sim_rs)), 2L)
   runUnreliableChecks(sim_rs)
@@ -349,8 +392,9 @@ test_that("solve.RapUnsolved (unreliable - STATUS test)", {
   sim_ru@data@pu$status[2] <- 2L
   sim_ru@data@pu$status[3] <- 3L
   # solve it
-  sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0, Presolve = 2L),
-                         verbose = FALSE)
+  sim_rs <- raptr::solve(
+    sim_ru, GurobiOpts(MIPGap = 0, Presolve = 2L), verbose = FALSE
+  )
   # run checks
   expect_equal(nrow(summary(sim_rs)), 1L)
   expect_identical(selections(sim_rs)[2], 1L)
@@ -374,8 +418,9 @@ test_that("solve.RapUnsolved (reliable - STATUS test)", {
   sim_ru@data@pu$status[3] <- 3L
   # solve it
   expect_warning({
-    sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0, Presolve = 2L),
-                           verbose = FALSE)
+    sim_rs <- raptr::solve(
+      sim_ru, GurobiOpts(MIPGap = 0, Presolve = 2L), verbose = FALSE
+    )
   })
   # run checks
   expect_equal(nrow(summary(sim_rs)), 1L)
@@ -395,8 +440,9 @@ test_that("solve.RapUnsolved (unreliable - BLM test)", {
   sim_ru <- dp.subset(sim_ru, species = 1:3, space = 1, points = 1:30)
   sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, 0.1, 0.1, 0.1)
   # solve it
-  sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0, Presolve = 2L),
-                         verbose = FALSE)
+  sim_rs <- raptr::solve(
+    sim_ru, GurobiOpts(MIPGap = 0, Presolve = 2L), verbose = FALSE
+  )
   # run checks
   runUnreliableChecks(sim_rs)
 })
@@ -413,8 +459,9 @@ test_that("solve.RapUnsolved (reliable - BLM test)", {
   sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, -10000, -10000, -10000)
   # solve it
   expect_warning({
-    sim_rs <- raptr::solve(sim_ru, GurobiOpts(MIPGap = 0, Presolve = 2L),
-                           verbose = FALSE)
+    sim_rs <- raptr::solve(
+      sim_ru, GurobiOpts(MIPGap = 0, Presolve = 2L), verbose = FALSE
+    )
   })
   # run checks
   runReliableChecks(sim_rs)
@@ -509,8 +556,10 @@ test_that("space.target.RapData", {
   expect_equal(unname(space.target(sim_ru@data)[, 1]), rep(0.85, 3))
   expect_equal(unname(space.target(sim_ru@data, species = 1)[, 1]), 0.85)
   expect_equal(unname(space.target(sim_ru@data, space = 1)[, 1]), rep(0.85, 3))
-  expect_equal(unname(space.target(sim_ru@data, species = 1, space = 1)[, 1]),
-               0.85)
+  expect_equal(
+    unname(space.target(sim_ru@data, species = 1, space = 1)[, 1]),
+    0.85
+  )
 })
 
 test_that("space.target<-.RapUnsolved", {
@@ -529,9 +578,12 @@ test_that("space.plot.RapUnsolved (sparse)", {
   sim_ru <- dp.subset(sim_ru, species = 1:3, space = 1, points = 1:30)
   sim_ru@data@targets[[3]] <- c(0.5, 0.5, 0.5, -1000000, -1000000, -1000000)
   sim_ru@opts <- RapUnreliableOpts()
-  sim_ru@data@pu.species.probabilities <- sim_ru@data@pu.species.probabilities[
-    sample(seq_len(nrow(sim_ru@data@pu.species.probabilities)),
-           size = ceiling(nrow(sim_ru@data@pu.species.probabilities) * 0.7)), ]
+  pu_idx <- sample(
+    seq_len(nrow(sim_ru@data@pu.species.probabilities)),
+    size = ceiling(nrow(sim_ru@data@pu.species.probabilities) * 0.7)
+  )
+  sim_ru@data@pu.species.probabilities <-
+    sim_ru@data@pu.species.probabilities[pu_idx, ]
   sim_ru@data@attribute.spaces <- lapply(
     seq_along(sim_ru@data@attribute.spaces),
     function(i) {
@@ -539,8 +591,8 @@ test_that("space.plot.RapUnsolved (sparse)", {
         spaces = lapply(
           seq_along(sim_ru@data@attribute.spaces[[i]]@spaces),
           function(j) {
-            curr.pu <- sim_ru@data@pu.species.probabilities$pu[which(
-                           sim_ru@data@pu.species.probabilities$species == j)]
+            pu.idx <- which(sim_ru@data@pu.species.probabilities$species == j)
+            curr.pu <- sim_ru@data@pu.species.probabilities$pu[pu.idx]
             AttributeSpace(
               species = sim_ru@data@attribute.spaces[[i]]@spaces[[j]]@species,
               demand.points = sim_ru@data@attribute.spaces[[i]]@
@@ -548,10 +600,15 @@ test_that("space.plot.RapUnsolved (sparse)", {
               planning.unit.points = PlanningUnitPoints(
                 coords = sim_ru@data@attribute.spaces[[i]]@spaces[[j]]@
                            planning.unit.points@coords[curr.pu, ],
-                ids = curr.pu))
-        }),
-        name = sim_ru@data@attribute.spaces[[i]]@name)
-  })
+                ids = curr.pu
+              )
+            )
+          }
+        ),
+        name = sim_ru@data@attribute.spaces[[i]]@name
+      )
+    }
+  )
   # try plotting space data
   space.plot(sim_rs, 1, 1, main = "spp1")
   space.plot(sim_rs, 2, 1, main = "spp2")

@@ -1,23 +1,25 @@
-#' @include RcppExports.R dependencies.R
+#' @include RcppExports.R
 NULL
 
 #' Affine transformation
 #'
 #' @noRd
 affineTrans <- function(OldValue, OldMax, OldMin, NewMax, NewMin) {
-    OldRange <- (OldMax - OldMin)
-    NewRange <- (NewMax - NewMin)
-    NewValue <- (((OldValue - OldMin) * NewRange) / OldRange) + NewMin
-    return(NewValue)
+  OldRange <- (OldMax - OldMin)
+  NewRange <- (NewMax - NewMin)
+  NewValue <- (((OldValue - OldMin) * NewRange) / OldRange) + NewMin
+  NewValue
 }
 
 #' Normal niche simulation function
 #'
 #' @noRd
 normal_niche <- function(x, y) {
-  mvtnorm::dmvnorm(x = matrix(c(x, y), ncol = 2),
-                   mean = c(0, 0),
-                   sigma = matrix(c(8.5, 0, 0, 8.5), ncol = 2)) * 40
+  40 * mvtnorm::dmvnorm(
+    x = matrix(c(x, y), ncol = 2),
+    mean = c(0, 0),
+    sigma = matrix(c(8.5, 0, 0, 8.5), ncol = 2)
+  )
 }
 
 #' Uniform niche simulation function
@@ -31,15 +33,24 @@ uniform_niche <- function(x, y) {
 #'
 #' @noRd
 bimodal_niche <- function(x, y) {
-  apply(matrix(c(mvtnorm::dmvnorm(x = matrix(c(x, y), ncol = 2),
-                                  mean = c(-2, -2),
-                                  sigma = matrix(c(5, 0, 0, 5), ncol = 2)) * 30,
-                 mvtnorm::dmvnorm(x = matrix(c(x, y), ncol = 2),
-                                  mean = c(3, 3),
-                                  sigma = matrix(c(3, 0, 0, 3),
-                                                 ncol = 2)) * 12),
-              ncol = 2),
-         1, max)
+  apply(
+    matrix(
+      c(
+        mvtnorm::dmvnorm(
+          x = matrix(c(x, y), ncol = 2),
+          mean = c(-2, -2),
+          sigma = matrix(c(5, 0, 0, 5), ncol = 2)
+        ) * 30,
+        mvtnorm::dmvnorm(
+          x = matrix(c(x, y), ncol = 2),
+          mean = c(3, 3),
+          sigma = matrix(c(3, 0, 0, 3), ncol = 2)
+        ) * 12
+      ),
+      ncol = 2),
+    1,
+    max
+  )
 }
 
 #' Function to hash function call
@@ -62,11 +73,17 @@ prettyGeoplot <- function(polygons, col, basemap, main, fun, beside = TRUE,
   defpar <- graphics::par(no.readonly = TRUE)
   graphics::par(mar = c(1, 1, 1, 1), oma = c(0, 0, 0, 0))
   if (beside) {
-    graphics::layout(matrix(c(1, 1, 3, 2), ncol = 2, byrow = TRUE),
-                     widths = c(0.8, 0.2), heights = c(0.1, 0.9))
+    graphics::layout(
+      matrix(c(1, 1, 3, 2), ncol = 2, byrow = TRUE),
+      widths = c(0.8, 0.2),
+      heights = c(0.1, 0.9)
+    )
   } else {
-    graphics::layout(matrix(c(1, 3, 2), ncol = 1, byrow = TRUE),
-                     widths = c(1), heights = c(0.1, 0.8, 0.1))
+    graphics::layout(
+      matrix(c(1, 3, 2), ncol = 1, byrow = TRUE),
+      widths = c(1),
+      heights = c(0.1, 0.8, 0.1)
+    )
   }
   # convert to list if not
   if (!inherits(polygons, "list")) {
@@ -77,12 +94,16 @@ prettyGeoplot <- function(polygons, col, basemap, main, fun, beside = TRUE,
   }
 
   # make title
-  graphics::plot(1, 1, type = "n", xlim = c(-1, 1), ylim = c(-1, 1),
-                 axes = FALSE, xlab = "", ylab = "")
+  graphics::plot(
+    1, 1, type = "n", xlim = c(-1, 1), ylim = c(-1, 1),
+    axes = FALSE, xlab = "", ylab = ""
+  )
   graphics::mtext(side = 1, line = -0.5, main, cex = 1.5)
   # make legend
-  graphics::plot(1, 1, type = "n", xlim = c(-1, 1), ylim = c(-1, 1),
-                 axes = FALSE, xlab = "", ylab = "")
+  graphics::plot(
+    1, 1, type = "n", xlim = c(-1, 1), ylim = c(-1, 1),
+    axes = FALSE, xlab = "", ylab = ""
+  )
   fun()
   # make geoplot
   if (is.list(basemap)) {
@@ -98,16 +119,21 @@ prettyGeoplot <- function(polygons, col, basemap, main, fun, beside = TRUE,
     }
   } else {
     allpolygons <- do.call(rbind, polygons)
-    PBSmapping::plotPolys(polygons[[1]], col = col[[1]], axes = FALSE,
-                           xlab = "", ylab = "", border = border[[1]],
-                           lwd = lwd[[1]], xlim = range(allpolygons$X),
-                           ylim = range(allpolygons$Y))
+    PBSmapping::plotPolys(
+      polygons[[1]], col = col[[1]], axes = FALSE,
+      xlab = "", ylab = "", border = border[[1]],
+      lwd = lwd[[1]], xlim = range(allpolygons$X),
+      ylim = range(allpolygons$Y)
+    )
     for (i in seq_along(polygons)[-1]) {
-      if (nrow(polygons[[i]]) > 0)
-        suppressWarnings(PBSmapping::addPolys(polygons[[i]], col = col[[i]],
-                                              xlab = "", ylab = "",
-                                              border = border[[i]],
-                                              lwd = lwd[[i]]))
+      if (nrow(polygons[[i]]) > 0) {
+        suppressWarnings(
+          PBSmapping::addPolys(
+            polygons[[i]], col = col[[i]], xlab = "", ylab = "",
+            border = border[[i]], lwd = lwd[[i]]
+          )
+        )
+      }
     }
   }
   graphics::par(defpar)
@@ -119,19 +145,24 @@ prettyGeoplot <- function(polygons, col, basemap, main, fun, beside = TRUE,
 #' @noRd
 brewerCols <- function(values, pal, alpha = 1, n = NULL) {
   if (is.null(n) & length(pal) == 1) {
-    n <- RColorBrewer::brewer.pal.info$maxcolors[which(
-           rownames(RColorBrewer::brewer.pal.info) == pal)]
+    idx <- which(rownames(RColorBrewer::brewer.pal.info) == pal)
+    n <- RColorBrewer::brewer.pal.info$maxcolors[idx]
   } else {
     n <- length(values)
   }
   if (length(pal) == 1) {
-    suppressWarnings(r <- grDevices::colorRamp(
-                      RColorBrewer::brewer.pal(n, pal))(values))
+    suppressWarnings({
+      r <- grDevices::colorRamp(RColorBrewer::brewer.pal(n, pal))(values)
+    })
   } else{
-    suppressWarnings(r <- grDevices::colorRamp(pal)(values))
+    suppressWarnings({
+      r <- grDevices::colorRamp(pal)(values)
+    })
   }
-  grDevices::rgb(r, maxColorValue = 255,
-                 alpha = scales::rescale(alpha, from = c(0, 1), to = c(0, 255)))
+  grDevices::rgb(
+    r, maxColorValue = 255,
+    alpha = scales::rescale(alpha, from = c(0, 1), to = c(0, 255))
+  )
 }
 
 #' Add continuous legend to plot
@@ -153,17 +184,23 @@ continuousLegend <- function(values, pal, posx, posy, center = FALSE,
     } else {
       digit <- 1
     }
-    shape::colorlegend(zlim = range(values), digit = digit,
-                       col = brewerCols(seq(0, 1, length.out = 100), pal),
-                       zval = zvals, posx = posx, posy = posy, xpd = TRUE)
+    shape::colorlegend(
+      zlim = range(values), digit = digit,
+      col = brewerCols(seq(0, 1, length.out = 100), pal),
+      zval = zvals, posx = posx, posy = posy, xpd = TRUE
+    )
     if (!is.null(endlabs)) {
-      xcoord <- graphics::par()$usr[1] +
-                mean(graphics::par()$usr[2:1] * posx * 2.2)
-      ycoords <- (graphics::par()$usr[3] +
-                diff(graphics::par()$usr[3:4]) * posy) +
-                (diff(graphics::par()$usr[3:4]) * c(-0.02, 0.02))
-      graphics::text(x = rep(xcoord, 2), y = ycoords, rev(endlabs), cex = 1.2,
-           ad = c(0.5, 0.5))
+      xcoord <-
+        graphics::par()$usr[1] +
+        mean(graphics::par()$usr[2:1] * posx * 2.2)
+      ycoords <-
+        (graphics::par()$usr[3] +
+        diff(graphics::par()$usr[3:4]) * posy) +
+        (diff(graphics::par()$usr[3:4]) * c(-0.02, 0.02))
+      graphics::text(
+        x = rep(xcoord, 2), y = ycoords, rev(endlabs), cex = 1.2,
+        ad = c(0.5, 0.5)
+      )
     }
   }
 }
@@ -174,16 +211,18 @@ continuousLegend <- function(values, pal, posx, posy, center = FALSE,
 categoricalLegend <- function(col, labels, ncol = 1) {
   function() {
     if (ncol == 1) {
-      graphics::legend("top", bg = "white", legend = labels, fill = col,
-                       bty = "n", horiz = TRUE, cex = 1.5)
+      graphics::legend(
+        "top", bg = "white", legend = labels, fill = col,
+        bty = "n", horiz = TRUE, cex = 1.5
+      )
     } else {
-      graphics::legend(y = graphics::par()$usr[3] +
-                           (diff(graphics::par()$usr[3:4]) * 0.6),
-                       x = graphics::par()$usr[1] +
-                           (diff(graphics::par()$usr[1:2]) * 0.5),
-                       bg = "white", legend = labels, fill = col, bty = "n",
-                       ncol = ncol, cex = 1.5, xjust = 0.5, yjust = 0.5,
-                       xpd = TRUE)
+      graphics::legend(
+        y = graphics::par()$usr[3] + (diff(graphics::par()$usr[3:4]) * 0.6),
+        x = graphics::par()$usr[1] + (diff(graphics::par()$usr[1:2]) * 0.5),
+        bg = "white", legend = labels, fill = col, bty = "n",
+        ncol = ncol, cex = 1.5, xjust = 0.5, yjust = 0.5,
+        xpd = TRUE
+      )
     }
   }
 }
@@ -197,9 +236,9 @@ demand.points.density1d <- function(pts, n, quantile = 0.95, ...) {
   curr.sd <- stats::sd(pts[, 1])
   pts[, 1] <- (pts[, 1] - curr.mean) / curr.sd
   # generate points
-  quants <- stats::quantile(pts[, 1],
-                             c( (1 - quantile) / 2,
-                             quantile + (1 - quantile) / 2))
+  quants <- stats::quantile(
+    pts[, 1], c( (1 - quantile) / 2, quantile + (1 - quantile) / 2)
+  )
   dp <- stats::runif(n, quants[[1]], quants[[2]])
   # density kernel
   est <- ks::kde(pts[, 1], eval.points = dp, ...)
@@ -219,10 +258,10 @@ demand.points.density2d <- function(pts, n, quantile = 0.95, ...) {
   pts <- sweep(pts, MARGIN = 2, FUN = "-", curr.mean)
   pts <- sweep(pts, MARGIN = 2, FUN = "/", curr.sd)
   # generate points
-  dp <- sp::spsample(adehabitatHR::mcp(sp::SpatialPoints(coords = pts),
-                                       percent = quantile * 100, unin = c("m"),
-                                       unout = c("m2")),
-                     n * 1.1, type = "random")@coords[seq_len(n), ]
+  dp <- sp::spsample(
+    adehabitatHR::mcp(sp::SpatialPoints(coords = pts),
+    percent = quantile * 100, unin = c("m"), unout = c("m2")),
+    n * 1.1, type = "random")@coords[seq_len(n), ]
   # fit density kernel
   est <- ks::kde(pts, eval.points = dp, ...)
   # back-transform dps
@@ -246,17 +285,22 @@ demand.points.hypervolume <- function(pts, n, quantile = 0.95, ...) {
   if (!"samples.per.point" %in% names(args))
     args$samples.per.point <- 500 * ncol(pts)
   if (args$samples.per.point * nrow(pts) < n) {
-    stop(paste0("argument to n.demand.points is too high. Set a higher value ",
-                "in the argument to samples.per.point (defaults to ",
-                "500 * dimensions in attribute space)."))
+    stop(paste0(
+      "argument to n.demand.points is too high. Set a higher value ",
+      "in the argument to samples.per.point (defaults to ",
+      "500 * dimensions in attribute space)."
+      )
+    )
   }
   # estimate bandwidth for kernel
   if (!"kde.bandwidth" %in% names(args)) {
     args$kde.bandwidth <- hypervolume::estimate_bandwidth(pts)
   }
   # fit kernel
-  hv <- do.call(hypervolume::hypervolume,
-                append(list(data = pts, quantile.requested=quantile), args))
+  hv <- do.call(
+    hypervolume::hypervolume,
+    append(list(data = pts, quantile.requested = quantile), args)
+  )
   # extract random points
   rndpos <- sample.int(nrow(hv@RandomPoints), n)
   # extract coordinates and back-transform
@@ -270,79 +314,58 @@ demand.points.hypervolume <- function(pts, n, quantile = 0.95, ...) {
 #' Calculate zonal-means
 #'
 #' @noRd
-zonalMean <- function(x, y, ids = names(y), ncores = 1) {
-  assertthat::assert_that(sum(is.na(ids)) == 0,
-                          assertthat::is.count(ncores),
-                          ncores <= parallel::detectCores(logical = TRUE))
-  if (raster::canProcessInMemory(x, 2)) {
-    x <- plyr::rbind.fill(plyr::llply(seq_len(nlayers(y)), function(l) {
-      zonalMean.RasterLayerInMemory(x, y[[l]], ids[l])
-    }))
-  } else {
-    bs <- raster::blockSize(x)
-    if (ncores > 1) {
-      clust <- parallel::makeCluster(ncores, type = "SOCK")
-      parallel::clusterEvalQ(clust, {library(raster); library(Rcpp)})
-      parallel::clusterExport(clust, c("bs", "x", "rcpp_groupmean"),
-                              envir = environment())
-      doParallel::registerDoParallel(clust)
-    }
-    x <- plyr::rbind.fill(plyr::llply(seq_len(nlayers(y)), function(l) {
-     zonalMean.RasterLayerNotInMemory(bs, x, y[[l]], ids[l],
-                                      registered = isTRUE(ncores > 1), clust)
-    }))
-    if (ncores > 1)
-      clust <- parallel::stopCluster(clust)
+zonalMean <- function(x, y, ids = names(y)) {
+  assertthat::assert_that(
+    inherits(x, "SpatRaster"),
+    inherits(y, "SpatRaster"),
+    is.character(ids) || is.numeric(ids),
+    assertthat::noNA(ids)
+  )
+  # rename layers for consistency
+  names(y) <- ids
+  names(x) <- "pu"
+  # compute zonal stats
+  d <- terra::zonal(y, x, fun = "mean")
+  # convert wide data frame to long format and exclude zeros
+  d <- do.call(
+    rbind,
+    lapply(ids, function(x) {
+      d$species <- x
+      r <- d[, c("species", "pu", x), drop = FALSE]
+      names(r)[3] <- "value"
+      # remove zeros
+      r[r$value > 0, , drop = FALSE]
+    })
+  )
+  # coerce integers
+  if (is.numeric(ids)) {
+    d$species <- as.integer(d$species)
   }
-  # return data
-  x
-}
-
-#' Calculate zonal-means for rasters where all data can be stored in RAM
-#'
-#' @noRd
-zonalMean.RasterLayerInMemory <- function(polys, rast, speciesName) {
-  tmp <- rcpp_groupmean(raster::getValues(polys), raster::getValues(rast))
-  tmp <- data.frame(species = speciesName,
-                    pu = attr(tmp, "ids"), value = c(tmp))
-  return(tmp[which(tmp$value > 0),, drop = FALSE])
-}
-
-#' Calculate zonal-means by processing data in chunks
-#'
-#' @noRd
-zonalMean.RasterLayerNotInMemory <- function(bs, polys, rast, speciesName,
-                                             ncores, registered, clust) {
-  if (registered & .Platform$OS.type == "windows")
-    parallel::clusterExport(clust, c("bs", "polys", "rast", "rcpp_groupmean"),
-                            envir = environment())
-  tmp <- rcpp_groupcombine(plyr::llply(seq_len(bs$n),
-                         .parallel = registered,
-                         function(i) {
-                           rcpp_groupmean(
-                             raster::getValues(polys, bs$row[i], bs$nrows[i]),
-                             raster::getValues(rast, bs$row[i], bs$nrows[i]))
-  }))
-  tmp <- data.frame(species = speciesName, pu = attr(tmp, "ids"),
-                    value = c(tmp))
-  tmp[which(tmp$value > 0),, drop = FALSE]
+  d$pu <- as.integer(d$pu)
+  # exclude missing values
+  d <- d[is.finite(d$value), , drop = FALSE]
+  # return result
+  d
 }
 
 #' Merge list of RapResults into a single object
 #'
 #' @noRd
 mergeRapResults <- function(x) {
-  x <- RapResults(summary = plyr::ldply(x, methods::slot, name = "summary"),
-                  selections = do.call(rbind, lapply(x, methods::slot,
-                                                     name = "selections")),
-                  amount.held = do.call(rbind, lapply(x, methods::slot,
-                                                      name = "amount.held")),
-                  space.held = do.call(rbind, lapply(x, methods::slot,
-                                                     name = "space.held")),
-                  logging.file = sapply(x, methods::slot,
-                                        name = "logging.file"))
+  x <- RapResults(
+    summary = plyr::ldply(x, methods::slot, name = "summary"),
+    selections = do.call(rbind, lapply(x, methods::slot, name = "selections")),
+    amount.held = do.call(
+      rbind,
+      lapply(x, methods::slot, name = "amount.held")
+    ),
+    space.held = do.call(
+      rbind,
+      lapply(x, methods::slot, name = "space.held")
+    ),
+    logging.file = sapply(x, methods::slot, name = "logging.file"))
   x@summary$Run_Number <- seq_len(nrow(x@summary))
-  return(x)
+  x
 }
 
 #' Read RAP results
@@ -371,11 +394,12 @@ mergeRapResults <- function(x) {
 #'   [RapData()], [RapResults()].
 read.RapResults <- function(opts, data, model.list, logging.file,
                             solution.list, verbose = FALSE) {
-  x <- rcpp_extract_model_object(opts, inherits(opts, "RapUnreliableOpts"),
-                                 data, model.list, logging.file, solution.list,
-                                 verbose)
+  x <- rcpp_extract_model_object(
+    opts, inherits(opts, "RapUnreliableOpts"), data, model.list, logging.file,
+    solution.list, verbose
+  )
   x@.cache <- new.env()
-  return(x)
+  x
 }
 
 #' Compare Rap objects
@@ -473,34 +497,54 @@ spacePlot.1d <- function(pu, dp, pu.color.palette, main) {
     pu.color.palette <- brewerCols(seq(0, 1, 0.25), pu.color.palette, 4)
   # make plot
   ggplot2::ggplot() +
-    ggplot2::geom_point(
-      ggplot2::aes(
-        x = .data[["X1"]], y = .data[["X2"]], alpha = .data[["weights"]]),
-      data = dp, color = "darkblue", size = 5,
-      position = ggplot2::position_jitter(width = 0, height = 5)) +
-    ggplot2::scale_alpha_continuous(name = "Demand point weight") +
-    ggplot2::geom_point(
-      ggplot2::aes(x = .data[["X1"]], y = .data[["X2"]],
-                   color = .data[["status"]], size = .data[["status"]]),
-      data = pu,
-      position = ggplot2::position_jitter(width = 0, height = 5)) +
-    ggplot2::scale_color_manual(name = "Planning unit status",
-                                values = c("Locked Out" = pu.color.palette[4],
-                                           "Not Selected" = pu.color.palette[1],
-                                           "Selected" = pu.color.palette[2],
-                                           "Locked In" = pu.color.palette[3])) +
-    ggplot2::scale_size_manual(values = c("Locked Out" = 2, "Not Selected" = 2,
-                                          "Selected" = 4.5, "Locked In" = 4.5),
-                               guide = "none") +
-    ggplot2::theme_classic() + ggplot2::coord_equal() +
-    ggplot2::theme(legend.position = "right",
-                   axis.title.y = ggplot2::element_blank(),
-                   axis.ticks.y = ggplot2::element_blank(),
-                   axis.text.y = ggplot2::element_blank(),
-                   axis.line.y = ggplot2::element_line(),
-                   axis.line.x = ggplot2::element_line()) +
-    ggplot2::ggtitle(main) + ggplot2::xlab("Dimension 1") +
-    ggplot2::ylab("")
+  ggplot2::geom_point(
+    ggplot2::aes(
+      x = .data[["X1"]], y = .data[["X2"]], alpha = .data[["weights"]]
+    ),
+    data = dp, color = "darkblue", size = 5,
+    position = ggplot2::position_jitter(width = 0, height = 5)
+  ) +
+  ggplot2::scale_alpha_continuous(name = "Demand point weight") +
+  ggplot2::geom_point(
+    ggplot2::aes(
+      x = .data[["X1"]], y = .data[["X2"]],
+      color = .data[["status"]], size = .data[["status"]]
+    ),
+    data = pu,
+    position = ggplot2::position_jitter(width = 0, height = 5)) +
+  ggplot2::scale_color_manual(
+    name = "Planning unit status",
+    values = c(
+      "Locked Out" = pu.color.palette[4],
+      "Not Selected" = pu.color.palette[1],
+      "Selected" = pu.color.palette[2],
+      "Locked In" = pu.color.palette[3]
+    )
+  ) +
+  ggplot2::scale_size_manual(
+    values = c(
+      "Locked Out" = 2, "Not Selected" = 2,
+      "Selected" = 4.5, "Locked In" = 4.5
+    ),
+    guide = "none"
+  ) +
+  ggplot2::guides(
+    alpha = ggplot2::guide_legend(order = 1),
+    color = ggplot2::guide_legend(order = 2)
+  ) +
+  ggplot2::theme_classic() +
+  ggplot2::coord_equal() +
+  ggplot2::theme(
+    legend.position = "right",
+    axis.title.y = ggplot2::element_blank(),
+    axis.ticks.y = ggplot2::element_blank(),
+    axis.text.y = ggplot2::element_blank(),
+    axis.line.y = ggplot2::element_line(),
+    axis.line.x = ggplot2::element_line()
+  ) +
+  ggplot2::ggtitle(main) +
+  ggplot2::xlab("Dimension 1") +
+  ggplot2::ylab("")
 }
 
 #' Plot a 2-d attribute space
@@ -513,27 +557,48 @@ spacePlot.2d <- function(pu, dp, pu.color.palette, main) {
   # make plot
   ggplot2::ggplot() +
   ggplot2::geom_point(
-    ggplot2::aes(x = .data[["X1"]], y = .data[["X2"]],
-                 alpha = .data[["weights"]]),
-    data = dp, color = "darkblue", size = 5) +
+    ggplot2::aes(
+      x = .data[["X1"]], y = .data[["X2"]], alpha = .data[["weights"]]
+    ),
+    data = dp, color = "darkblue", size = 5
+  ) +
   ggplot2::scale_alpha_continuous(name = "Demand point weight") +
   ggplot2::geom_point(
-    ggplot2::aes(x = .data[["X1"]], y = .data[["X2"]],
-                 color = .data[["status"]], size = .data[["status"]]),
-    data = pu) +
-  ggplot2::scale_color_manual(name = "Planning unit status",
-                              values = c("Locked Out" = pu.color.palette[4],
-                                         "Not Selected" = pu.color.palette[1],
-                                         "Selected" = pu.color.palette[2],
-                                         "Locked In" = pu.color.palette[3])) +
-  ggplot2::scale_size_manual(values = c("Locked Out" = 2, "Not Selected" = 2,
-                                        "Selected" = 4.5, "Locked In" = 4.5),
-                             guide = "none") +
-  ggplot2::theme_classic() + ggplot2::coord_equal() +
-  ggplot2::theme(legend.position = "right",
-                 axis.line.y = ggplot2::element_line(),
-                 axis.line.x = ggplot2::element_line()) +
-  ggplot2::ggtitle(main) + ggplot2::xlab("Dimension 1") +
+    ggplot2::aes(
+      x = .data[["X1"]], y = .data[["X2"]],
+      color = .data[["status"]], size = .data[["status"]]
+    ),
+    data = pu
+  ) +
+  ggplot2::scale_color_manual(
+    name = "Planning unit status",
+    values = c(
+      "Locked Out" = pu.color.palette[4],
+      "Not Selected" = pu.color.palette[1],
+      "Selected" = pu.color.palette[2],
+      "Locked In" = pu.color.palette[3]
+    )
+  ) +
+  ggplot2::scale_size_manual(
+    values = c(
+      "Locked Out" = 2, "Not Selected" = 2,
+      "Selected" = 4.5, "Locked In" = 4.5
+    ),
+    guide = "none"
+  ) +
+  ggplot2::guides(
+    alpha = ggplot2::guide_legend(order = 1),
+    color = ggplot2::guide_legend(order = 2)
+  ) +
+  ggplot2::theme_classic() +
+  ggplot2::coord_equal() +
+  ggplot2::theme(
+    legend.position = "right",
+    axis.line.y = ggplot2::element_line(),
+    axis.line.x = ggplot2::element_line()
+  ) +
+  ggplot2::ggtitle(main) +
+  ggplot2::xlab("Dimension 1") +
   ggplot2::ylab("Dimension 2")
 }
 
@@ -558,9 +623,10 @@ spacePlot.3d <- function(pu, dp, pu.color.palette, main) {
   pu.cols[which(pu$status == "Locked Out")] <- pu.color.palette[4]
   rgl::points3d(as.matrix(pu[, seq_len(3)]), col = pu.cols)
   # add dp points
-  dp.cols <- ggplot2::alpha(rep("darkblue", nrow(dp)),
-                            affineTrans(dp$weights, min(dp$weights),
-                                        max(dp$weights), 0.1, 1))
+  dp.cols <- ggplot2::alpha(
+    rep("darkblue", nrow(dp)),
+    affineTrans(dp$weights, min(dp$weights), max(dp$weights), 0.1, 1)
+  )
   rgl::points3d(as.matrix(dp[, seq_len(3)]), col = dp.cols)
   rgl::title3d(main)
 }
@@ -589,21 +655,33 @@ parseArgs2 <- function(args, ...) {
 #' Create an empty PolySet object
 #' @noRd
 emptyPolySet <- function() {
-  structure(list(PID = integer(0), SID = integer(0), POS = integer(0),
-                 X = numeric(0), Y = numeric(0)),
-            .Names = c("PID", "SID", "POS", "X", "Y"),
-            row.names = integer(0),
-            class = c("PolySet", "data.frame"))
+  structure(
+    list(
+      PID = integer(0),
+      SID = integer(0),
+      POS = integer(0),
+      X = numeric(0),
+      Y = numeric(0)
+    ),
+    .Names = c("PID", "SID", "POS", "X", "Y"),
+    row.names = integer(0),
+    class = c("PolySet", "data.frame")
+  )
 }
 
 #' Calculate distances between points using URAP
 #'
 #' @noRd
 urap.squared.distance <- function(x, y, y.weights = rep(1, nrow(y))) {
-  assertthat::assert_that(inherits(x, "matrix"), inherits(y, "matrix"),
-                          is.numeric(y.weights), nrow(y) == length(y.weights),
-                          all(is.finite(c(x))),  all(is.finite(c(y))),
-                          all(is.finite(c(y.weights))), all(y.weights >= 0))
+  assertthat::assert_that(
+    inherits(x, "matrix"),
+    inherits(y, "matrix"),
+    is.numeric(y.weights),
+    nrow(y) == length(y.weights),
+    all(is.finite(c(x))),
+    all(is.finite(c(y))),
+    all(is.finite(c(y.weights))), all(y.weights >= 0)
+  )
   rcpp_squared_distance(x, y, y.weights)
 }
 
@@ -615,28 +693,36 @@ rrap.squared.distance <- function(pu.coordinates, pu.probabilities,
                                   maximum.r.level =
                                     as.integer(length(pu.probabilities))) {
   # data integreity checks
-  assertthat::assert_that(inherits(pu.coordinates, "matrix"),
-                          inherits(dp.coordinates, "matrix"),
-                          inherits(pu.probabilities, "numeric"),
-                          is.numeric(dp.weights),
-                          assertthat::is.scalar(failure.distance),
-                          assertthat::is.count(maximum.r.level),
-                          nrow(pu.coordinates) == length(pu.probabilities),
-                          nrow(dp.coordinates) == length(dp.weights),
-                          ncol(dp.coordinates) == ncol(pu.coordinates),
-                          all(is.finite(c(dp.weights))),
-                          all(is.finite(c(pu.probabilities))),
-                          all(is.finite(c(pu.coordinates))),
-                          all(is.finite(c(dp.coordinates))),
-                          all(is.finite(c(failure.distance))),
-                          all(is.finite(c(maximum.r.level))),
-                          maximum.r.level <= nrow(pu.coordinates),
-                          failure.distance >=  0,
-                          nrow(pu.coordinates) >= 1,
-                          nrow(dp.coordinates) >= 1)
+  assertthat::assert_that(
+    inherits(pu.coordinates, "matrix"),
+    inherits(dp.coordinates, "matrix"),
+    inherits(pu.probabilities, "numeric"),
+    is.numeric(dp.weights),
+    assertthat::is.scalar(failure.distance),
+    assertthat::is.count(maximum.r.level),
+    nrow(pu.coordinates) == length(pu.probabilities),
+    nrow(dp.coordinates) == length(dp.weights),
+    ncol(dp.coordinates) == ncol(pu.coordinates),
+    all(is.finite(c(dp.weights))),
+    all(is.finite(c(pu.probabilities))),
+    all(is.finite(c(pu.coordinates))),
+    all(is.finite(c(dp.coordinates))),
+    all(is.finite(c(failure.distance))),
+    all(is.finite(c(maximum.r.level))),
+    maximum.r.level <= nrow(pu.coordinates),
+    failure.distance >= 0,
+    nrow(pu.coordinates) >= 1,
+    nrow(dp.coordinates) >= 1
+  )
   # main processing
-  rcpp_rrap_squared_distance(pu.coordinates, pu.probabilities, dp.coordinates,
-                             dp.weights, failure.distance, maximum.r.level)
+  rcpp_rrap_squared_distance(
+    pu.coordinates,
+    pu.probabilities,
+    dp.coordinates,
+    dp.weights,
+    failure.distance,
+    maximum.r.level
+  )
 }
 
 #' Dump object from model cache

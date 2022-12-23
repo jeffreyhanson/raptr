@@ -100,9 +100,6 @@
     <loc>https://jeffrey-hanson.com/raptr/reference/SolverOpts-class.html</loc>
   </url>
   <url>
-    <loc>https://jeffrey-hanson.com/raptr/reference/SpatialPolygons2PolySet.html</loc>
-  </url>
-  <url>
     <loc>https://jeffrey-hanson.com/raptr/reference/amount.held.html</loc>
   </url>
   <url>
@@ -128,6 +125,9 @@
   </url>
   <url>
     <loc>https://jeffrey-hanson.com/raptr/reference/casestudy_data.html</loc>
+  </url>
+  <url>
+    <loc>https://jeffrey-hanson.com/raptr/reference/convert2PolySet.html</loc>
   </url>
   <url>
     <loc>https://jeffrey-hanson.com/raptr/reference/dp.subset.html</loc>

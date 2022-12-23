@@ -21,23 +21,27 @@ methods::setClass("PlanningUnitPoints",
   methods::representation(coords = "matrix", ids = "integer"),
   validity = function(object) {
     # coords
-    assertthat::assert_that(all(is.finite(object@coords)),
-                            msg = paste0("argument to coords contains NA or ",
-                                         "non-finite values"))
-    assertthat::assert_that(nrow(object@coords) > 0,
-                            msg = paste0("argument to coords must contain at ",
-                                         "least one row"))
+    assertthat::assert_that(
+      all(is.finite(object@coords)),
+      msg = "argument to coords contains NA or non-finite values"
+    )
+    assertthat::assert_that(
+      nrow(object@coords) > 0,
+      msg = "argument to coords must contain at least one row"
+    )
     # ids
-    assertthat::assert_that(all(is.finite(object@ids)),
-                            msg = paste0("argument to ids contains NA of ",
-                                         "non-finite values"))
-    assertthat::assert_that(length(object@ids) > 0,
-                            msg = paste0("argument to ids must contain at ",
-                                         "least one element"))
+    assertthat::assert_that(
+      assertthat::noNA(object@ids)
+    )
+    assertthat::assert_that(
+      length(object@ids) > 0,
+      msg = "argument to ids must contain at least one element"
+    )
     # cross checks
-    assertthat::assert_that(length(object@ids) == nrow(object@coords),
-                            msg = paste0("length of ids is not equal to ",
-                                         "number of rows in coordinates"))
+    assertthat::assert_that(
+      identical(length(object@ids), nrow(object@coords)),
+      msg = "length of ids is not equal to number of rows in coordinates"
+    )
     return(TRUE)
   }
 )
@@ -49,6 +53,8 @@ methods::setClass("PlanningUnitPoints",
 #' @param coords [base::matrix()] coordinates for each point.
 #'
 #' @param ids `integer` planning unit ids.
+#'
+#' @return A new `PlanningUnitPoints` object.
 #'
 #' @seealso [AttributeSpace-class].
 #'

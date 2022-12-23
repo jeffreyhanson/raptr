@@ -65,7 +65,6 @@ library(parallel)
 library(plyr)
 library(dplyr)
 library(ggplot2)
-library(rgeos)
 
 # set seed for reproducibility
 set.seed(500)
@@ -91,31 +90,34 @@ To investigate the behavior of the problem, we will generate prioritizations for
 sim_pus <- sim.pus(100L)
 
 # simulate species distributions
-sim_spp <- lapply(c("uniform", "normal", "bimodal"), sim.species, n = 1,
-                  x = sim_pus, res = 1)
+sim_spp <- lapply(
+  c("uniform", "normal", "bimodal"), sim.species, n = 1, x = sim_pus, res = 1
+)
 ```
 
 Let's see what these species' distributions look like.
 
-```{r, fig.width=7, fig.height=2.5, fig.cap="_Distribution of three simulated species. Each square represents a planning unit. The color of each square denotes the probability that individuals from each species occupy it._"}
+```{r, fig.width=7, fig.height=4.5, fig.cap="_Distribution of three simulated species. Each square represents a planning unit. The color of each square denotes the probability that individuals from each species occupy it._"}
 # plot species
-plot(stack(sim_spp),
-     main = c("Uniform species", "Normal species", "Bimodal species"),
-     addfun = function() lines(sim_pus), nc = 3)
+plot(
+  terra::rast(sim_spp), axes = FALSE,
+  main = c("Uniform species", "Normal species", "Bimodal species")
+)
 ```
 
 Next, we will generate a set of demand points. To understand the effects of probabilities and weights on the demand points, we will generate the demand points in geographic space. These demand points will be the centroids of the planning units. Additionally, we will use the same set of demand points for each species and only vary the weights of the demand points between species. **Note that we are only using the same distribution of demand points for different species for teaching purposes. It is strongly recommended to use different demand points for different species in real-world conservation planning exercises.** See the case-study section of this tutorial for examples on how to generate suitable demand points.
 
 ```{r}
 # generate coordinates for pus/demand points
-pu_coords <- gCentroid(sim_pus, byid = TRUE)
-
-# calculate weights
-sim_dps <- lapply(sim_spp, function(x) extract(x, pu_coords))
+pu_coords <- sf::st_coordinates(suppressWarnings(sf::st_centroid(sim_pus)))
 
 # create demand point objects
-sim_dps <- lapply(sim_dps, function(x) DemandPoints(pu_coords@coords,
-                                                    weights = c(x)))
+sim_dps <- lapply(sim_spp, function(x) {
+  DemandPoints(
+    pu_coords,
+    weights = terra::extract(x, pu_coords)[[1]]
+  )
+})
 ```
 
 Now, we will construct a `RapUnsolved` object to store our input data and parameters. This contains all the information to generate prioritizations.
@@ -135,33 +137,46 @@ species <- data.frame(name = c("uniform", "normal", "bimodal"))
 targets <- expand.grid(species = 1:3, target = 0:1, proportion = 0.2)
 
 # calculate probability of each species in each pu
-pu_probabilities <- calcSpeciesAverageInPus(sim_pus, stack(sim_spp))
+pu_probabilities <- calcSpeciesAverageInPus(sim_pus, terra::rast(sim_spp))
 
 ## create AttributeSpace object
 # this stores the coordinates of the planning units in an attribute space
 # and the coordinates and weights of demand points in the space
-pu_points <- PlanningUnitPoints(coords = pu_coords@coords,
-                                ids = seq_len(nrow(sim_pus@data)))
+pu_points <- PlanningUnitPoints(
+  coords = pu_coords,
+  ids = seq_len(nrow(sim_pus))
+)
 
 attr_spaces <- AttributeSpaces(
-  list(AttributeSpace(planning.unit.points = pu_points,
-                      demand.points = sim_dps[[1]],
-                      species = 1L),
-       AttributeSpace(planning.unit.points = pu_points,
-                      demand.points = sim_dps[[2]],
-                      species = 2L),
-       AttributeSpace(planning.unit.points = pu_points,
-                      demand.points = sim_dps[[3]],
-                      species = 3L)),
-  name = "geographic")
+  list(
+    AttributeSpace(
+      planning.unit.points = pu_points,
+      demand.points = sim_dps[[1]],
+      species = 1L
+    ),
+    AttributeSpace(
+      planning.unit.points = pu_points,
+      demand.points = sim_dps[[2]],
+      species = 2L
+    ),
+    AttributeSpace(
+      planning.unit.points = pu_points,
+      demand.points = sim_dps[[3]],
+      species = 3L
+    )
+  ),
+  name = "geographic"
+)
 
 # generate boundary data information
 boundary <- calcBoundaryData(sim_pus)
 
 ## create RapData object
 # this stores all the input data for the prioritization
-sim_rd <- RapData(sim_pus@data, species, targets, pu_probabilities,
-                  list(attr_spaces), boundary, SpatialPolygons2PolySet(sim_pus))
+sim_rd <- RapData(
+  sim_pus, species, targets, pu_probabilities,
+  list(attr_spaces), boundary, convert2PolySet(sim_pus)
+)
 
 ## create RapUnsolved object
 # this stores all the input data and parameters needed to generate
@@ -180,15 +195,9 @@ To investigate the effects of space-based targets, we will generate a prioritiza
 sim_ru_s1 <- spp.subset(sim_ru, "uniform")
 
 # update amount targets to 20% and space targets to 0%
-sim_ru_s1 <- update(sim_ru_s1, amount.target = 0.2, space.target = NA,
-                    solve = FALSE)
-```
-
-```{r}
-options(error = function() {
-    traceback()
-    q("no", 1, FALSE)
-})
+sim_ru_s1 <- update(
+  sim_ru_s1, amount.target = 0.2, space.target = NA, solve = FALSE
+)
 
 # solve problem to identify prioritization
 sim_rs_s1_amount <- solve(sim_ru_s1, Threads = threads)
@@ -225,8 +234,10 @@ sim_ru_s2 <- spp.subset(sim_ru, "normal")
 
 ```{r}
 # update amount targets to 20% and space targets to 0% and solve it
-sim_rs_s2_amount <- update(sim_ru_s2, amount.target = 0.2, space.target = NA,
-                           solve = TRUE, Threads = threads)
+sim_rs_s2_amount <- update(
+  sim_ru_s2, amount.target = 0.2, space.target = NA,
+  solve = TRUE, Threads = threads
+)
 ```
 
 ```{r}
@@ -258,8 +269,9 @@ sim_ru_s3 <- spp.subset(sim_ru, "bimodal")
 
 ```{r}
 # update amount targets to 20% and space targets to 0% and solve it
-sim_rs_s3_amount <- update(sim_ru_s3, amount.target = 0.2,
-                           space.target = NA, Threads = threads)
+sim_rs_s3_amount <- update(
+  sim_ru_s3, amount.target = 0.2, space.target = NA, Threads = threads
+)
 ```
 
 ```{r, fig.height=3.5, fig.width=4.5, fig.align="center", fig.cap="_A prioritization for the bimodally distributed species generated using amount-based targets (20\\%). See Figure 3 caption for conventions._"}
@@ -288,8 +300,9 @@ First, let's do this for the uniform species.
 
 ```{r}
 # make new prioritization
-sim_rs_s1_space <- update(sim_rs_s1_amount, amount.target = 0.2,
-                          space.target = 0.85, Threads = threads)
+sim_rs_s1_space <- update(
+  sim_rs_s1_amount, amount.target = 0.2, space.target = 0.85, Threads = threads
+)
 ```
 
 ```{r}
@@ -322,8 +335,9 @@ Now, let's generate a prioritization for the normally distributed species that c
 
 ```{r}
 # make new prioritization
-sim_rs_s2_space <- update(sim_rs_s2_amount, amount.target = 0.2,
-                          space.target = 0.85, Threads = threads)
+sim_rs_s2_space <- update(
+  sim_rs_s2_amount, amount.target = 0.2, space.target = 0.85, Threads = threads
+)
 ```
 
 ```{r}
@@ -345,8 +359,10 @@ spp.plot(sim_rs_s2_space, "normal", main = "Normal species")
 
 ```{r, fig.height=3.5, fig.width=6.0, fig.align="center", fig.cap="_Difference between two prioritizations for the normally distributed species. See Figure 7 caption for conventions._"}
 # plot the difference between old and new prioritizations
-plot(sim_rs_s2_amount, sim_rs_s2_space, 1, 1,
-     main = "Difference between solutions")
+plot(
+  sim_rs_s2_amount, sim_rs_s2_space, 1, 1,
+  main = "Difference between solutions"
+)
 ```
 
 We can see by using both amount-based and space-based targets we can obtain a prioritization that secures both the species' range core and parts of its range margin. As a consequence, it may capture any novel adaptations found along the species' range margin--unlike the amount-based prioritization.
@@ -355,8 +371,9 @@ Finally, let's generate a prioritization for the bimodal species using amount-ba
 
 ```{r}
 # make new prioritization
-sim_rs_s3_space <- update(sim_rs_s3_amount, amount.target = 0.2,
-                          space.target = 0.85, Threads = threads)
+sim_rs_s3_space <- update(
+  sim_rs_s3_amount, amount.target = 0.2,space.target = 0.85, Threads = threads
+)
 ```
 
 ```{r}
@@ -377,8 +394,10 @@ spp.plot(sim_rs_s3_space, 'bimodal', main='Bimodal species')
 
 ```{r, fig.height=3.5, fig.width=6.0, fig.align="center", fig.cap="_Difference between two prioritizations for the bimodally distributed species. See Figure 7 caption for conventions._"}
 # plot the difference between old and new prioritizations
-plot(sim_rs_s3_amount, sim_rs_s3_space, 1, 1,
-     main = "Difference between solutions")
+plot(
+  sim_rs_s3_amount, sim_rs_s3_space, 1, 1,
+  main = "Difference between solutions"
+)
 ```
 
 Earlier we found that the amount-based prioritization only preserved individuals from a single ecotype, and would have failed to adequately preserve the intra-specific variation for this species. However, here we can see that by including space-based targets, we can develop prioritizations that secure individuals belonging to both ecotypes. This new prioritization is much more effective at sampling the intra-specific variation for this species.
@@ -393,12 +412,16 @@ So far we have generated prioritizations using only a single species at a time. 
 
 ```{r}
 # make prioritizations
-sim_mrs_amount <- update(sim_ru, amount.target = c(0.2, 0.2, 0.2),
-                         space.target = c(0, 0, 0), Threads = threads)
+sim_mrs_amount <- update(
+  sim_ru, amount.target = c(0.2, 0.2, 0.2),
+  space.target = c(0, 0, 0), Threads = threads
+)
 
-sim_mrs_space <- update(sim_ru, amount.target = c(0.2, 0.2, 0.2),
-                        space.target = c(0.85, 0.85, 0.85),
-                        Threads = threads)
+sim_mrs_space <- update(
+  sim_ru, amount.target = c(0.2, 0.2, 0.2),
+  space.target = c(0.85, 0.85, 0.85),
+  Threads = threads
+)
 ```
 
 ```{r}
@@ -453,9 +476,10 @@ A simple solution to this issue would be to ensure that planning units cannot be
 
 ```{r}
 # make new prioritization with probability threshold of 0.1 for each species
-sim_mrs_space2 <- solve(prob.subset(sim_mrs_space, species = 1:3,
-                                    threshold = c(0.1, 0.1, 0.1)),
-                        Threads = threads)
+sim_mrs_space2 <- solve(
+  prob.subset(sim_mrs_space, species = 1:3, threshold = c(0.1, 0.1, 0.1)),
+  Threads = threads
+)
 ```
 
 ```{r}
@@ -477,17 +501,21 @@ But this method requires setting somewhat arbitrary thresholds. A more robust so
 
 ```{r}
 # make new prioritization using reliable formulation
-sim_mrs_space3 <- try(update(sim_mrs_space, formulation = "reliable",
-                             max.r.level = 1L, Threads = threads))
+sim_mrs_space3 <- try(update(
+  sim_mrs_space, formulation = "reliable",
+  max.r.level = 1L, Threads = threads
+))
 ```
 
 However, this fails. The reason why we cannot generate a prioritization that fulfills these targets is because even the solution that contains all the planning units is still insufficient when we consider probabilities. The negative maximum targets printed in the error message indicate that planning units have low probabilities of occupancy. To fulfill the targets, we must obtain more planning units with higher probabilities of occupancy. We also could attempt resolving the problem using a higher $R$-level. Instead, we will set lower targets and generate solution.
 
 ```{r}
 # make new prioritization using reliable formulation and reduced targets
-sim_mrs_space3 <- update(sim_mrs_space, formulation = "reliable",
-                         max.r.level = 1L, space.target = -1000,
-                         Threads = threads)
+sim_mrs_space3 <- update(
+  sim_mrs_space, formulation = "reliable",
+  max.r.level = 1L, space.target = -1000,
+  Threads = threads
+)
 ```
 
 ```{r}
@@ -545,8 +573,10 @@ plot(sim_mrs_amount_blm, 1)
 
 ```{r, fig.height=3.5, fig.width=6.0, fig.align="center", fig.cap="_Difference between two multi-species prioritizations. See Figure 7 caption for conventions._"}
 # difference between the two prioritizations
-plot(sim_mrs_amount_blm, sim_mrs_amount, 1, 1,
-     main = "Difference between solutions")
+plot(
+  sim_mrs_amount_blm, sim_mrs_amount, 1, 1,
+  main = "Difference between solutions"
+)
 ```
 
 Here we can see that the prioritization generated using a `BLM` parameter of 100 is much more clustered than the prioritization generated using a `BLM` of 0. In practice, conservation planners will need to try a variety of `BLM` parameters to find a suitable prioritization.
@@ -562,40 +592,51 @@ Here we will investigate how space-based targets can affect prioritizations usin
 Survey data for the species were obtained from BirdLife Australia. The survey data was rarefied using a 100 km$^2$ grid, wherein the survey with the greatest number of repeat visits in each grid cell was chosen. To model the distribution of each species, environmental data were obtained at survey location (site). Specifically, climatic data (bio1, bio4, bio15, bio16, bio17) and classifications of the vegetation at the site were used. Occupancy-detection models were fit using Stan using manually tuned parameters (adapt delta=0.9, maximum treedepth=20, chains=4 , warmup iterations=1000, total iterations=1500) with five-fold cross-validation. In each replicate, data were partitioned into training and test sites. A full model was fit using quadratic terms for environmental variables in the site-component, and an intercept in the detection-component of the model. The full model was then subject to a step-wise backwards term deletion routine. Terms were retained when their inclusion resulted in a model with a greater area under the curve (AUC) value as calculated using the test data. Maps were generated for each species as an average of the predictions from the best model in each best replicate. To further improve the accuracy of these maps, areas well outside of the species' known distributions were set to 0. For each species, this was achieved by masking out biogeographic regions where the species was not observed, and regions that did not have a neighboring planning unit where the species was observed. The maps were then resampled (10 km$^2$ resolution) and cropped to the study area. The resulting maps are stored in the `cs_spp` object.
 
 ```{r, fig.height=4, fig.width=5, fig.align="center", fig.cap="_Distribution map for four Australian bird species. Pixel colours denote probability of occupancy._"}
-# load data
-data(cs_spp)
+# import data
+cs_spp <- terra::rast(
+  system.file("extdata", "cs_spp.tif", package = "raptr")
+)
 
 # remove areas with low occupancy (prob < 0.6)
-cs_spp[cs_spp < 0.6] <- NA
+cs_spp <- terra::clamp(cs_spp, lower = 0.6, values = FALSE)
 
 # plot species' distributions
-plot(cs_spp, main = c("Blue-winged kookaburra", "Brown-backed honeyeater",
-                      "Brown falcon", "Pale-headed rosella"))
+plot(
+  cs_spp,
+  main = c(
+    "Blue-winged kookaburra", "Brown-backed honeyeater",
+    "Brown falcon", "Pale-headed rosella"
+  )
+)
 ```
 
 Planning units (50km$^2$ resolution) were generated across Australia, and then clipped to the [Queensland state borders and coastline](https://www.abs.gov.au/ausstats/abs@.nsf/mf/1259.0.30.001?OpenDocument). **Note that we are using excessively coarse planning units so that our examples will complete relatively quickly. In a real-world planning exercise, we would use much finer planning units.** To compare our prioritizations to [Queensland's existing protected area network](https://www.protectedplanet.net/country/AUS), this network was intersected with the planning units. Planning units with more than 50% of their area inside a protected area had their status set to 2 ([following conventions in _Marxan_](https://marxansolutions.org/)). Since we do not have cost data, the prioritizations will aim to select the minimum number of planning units required to meet the targets. The planning units are stored in the `cs_pu` object.
 
 ```{r, fig.height=3.5, fig.width=4.5, fig.align='center', fig.cap="_Planning units for the case-study examples. Polygons denote planning units. Yellow units have more than 50\\% of their area already in a reserve.)"}
-# load data
-data(cs_pus)
+# import data
+cs_pus <- sf::read_sf(
+  system.file("extdata", "cs_pus.gpkg", package = "raptr")
+)
 
 ## plot planning units
-# convert SpatialPolygons to PolySet for quick plotting
-cs_pus2 <- SpatialPolygons2PolySet(cs_pus)
+# convert sf to PolySet for quick plotting
+cs_pus2 <- convert2PolySet(cs_pus)
 
 # create vector of colours for planning units
 # + light green: units not already inside reserve
 # + yellow: units already inside reserve
-cs_pus_cols <- rep("#c7e9c0", nrow(cs_pus@data))
+cs_pus_cols <- rep("#c7e9c0", nrow(cs_pus))
 cs_pus_cols[which(cs_pus$status == 2)] <- "yellow"
 
 # set plotting window
 par(mar = c(0.1, 0.1, 4.1, 0.1))
 
 # plot polygons
-PBSmapping::plotPolys(cs_pus2, col = cs_pus_cols, border = "gray30",
-                      xlab = "", ylab = "", axes = FALSE,
-                      main = "Planning units", cex = 1.8)
+PBSmapping::plotPolys(
+  cs_pus2, col = cs_pus_cols, border = "gray30",
+  xlab = "", ylab = "", axes = FALSE,
+  main = "Planning units", cex = 1.8
+)
 
 # reset plotting window
 par(mar = c(5.1, 4.1, 4.1, 2.1))
@@ -604,8 +645,10 @@ par(mar = c(5.1, 4.1, 4.1, 2.1))
 To map the distribution of environmental conditions across the species' range, 21 [bioclimatic layers](https://worldclim.org) were obtained. These layers were cropped to Australia and subject to [detrended correspondence analysis](https://www.rdocumentation.org/packages/vegan/versions/2.4-2/topics/decorana) to produce two new variables. These layers are stored in the `cs_space` object.
 
 ```{r, fig.height=2.5, fig.width=7, fig.align='center', fig.cap="_Broad-scale environmental variation across Australia. The variable DC1 describes the transition from wet and cool to dry and hot conditions. The variable DC2 describes the transition from wet and hot to dry and cool conditions._"}
-# load data
-data(cs_space)
+# import data
+cs_space <- terra::rast(
+  system.file("extdata", "cs_space.tif", package = "raptr")
+)
 
 # plot variables
 plot(cs_space, main = c("DC1", "DC2"), legend = FALSE, axes = FALSE)
@@ -619,10 +662,12 @@ To simplify the process of formatting data and generating prioritizations, we ca
 # make amount-based prioritization
 # and ignore existing protected areas by discarding values in the
 # status (third) column of the attribute table
-cs_rs_amount <- rap(cs_pus[, -2], cs_spp, cs_space, amount.target = 0.2,
-                    space.target = NA, n.demand.points = 50L,
-                    include.geographic.space = TRUE, formulation = "unreliable",
-                    kernel.method = "ks", quantile = 0.7, solve = FALSE)
+cs_rs_amount <- rap(
+  cs_pus[, -2], cs_spp, cs_space, amount.target = 0.2,
+  space.target = NA, n.demand.points = 50L,
+  include.geographic.space = TRUE, formulation = "unreliable",
+  kernel.method = "ks", quantile = 0.7, solve = FALSE
+)
 ```
 
 ```{r}
@@ -640,7 +685,7 @@ plot(cs_rs_amount, 1)
 
 We can also see how well the prioritization secures the species' distributions in the geographic and environmental attribute spaces.
 
-```{r, fig.height=4.5, fig.width=10, fig.align='center', fig.cap="_Distribution of amount-based prioritization in the geographic attribute space. Points denote combinations of environmental conditions. Green and grey points represent planning unit selected for and not selected for prioritization (respectively). Blue points denote demand points, and their size indicates their weighting._"}
+```{r, fig.height=6.0, fig.width=10, fig.align='center', fig.cap="_Distribution of amount-based prioritization in the geographic attribute space. Points denote combinations of environmental conditions. Green and grey points represent planning unit selected for and not selected for prioritization (respectively). Blue points denote demand points, and their size indicates their weighting._"}
 # plot prioritization in geographic attribute space
 p1 <- space.plot(cs_rs_amount, 1, 2, main = "Blue-winged\nkookaburra")
 p2 <- space.plot(cs_rs_amount, 2, 2, main = "Brown-backed\nhoneyeater")
@@ -649,7 +694,7 @@ p4 <- space.plot(cs_rs_amount, 4, 2, main = "Pale-headed\nrosella")
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
 ```
 
-```{r, fig.height=4.5, fig.width=10,  fig.align='center', fig.cap="_Distribution of amount-based prioritization in the environmental attribute space. See Figure 28 caption for conventions._"}
+```{r, fig.height=6.0, fig.width=10, fig.align='center', fig.cap="_Distribution of amount-based prioritization in the environmental attribute space. See Figure 28 caption for conventions._"}
 # plot prioritization in environmental attribute space
 p1 <- space.plot(cs_rs_amount, 1, 1, main = "Blue-winged\nkookaburra")
 p2 <- space.plot(cs_rs_amount, 2, 1, main = "Brown-backed\nhoneyeater")
@@ -658,11 +703,11 @@ p4 <- space.plot(cs_rs_amount, 4, 1, main = "Pale-headed\nrosella")
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
 ```
 
-Next, let's generate a prioritization using amount- and space-based targets. This prioritization will secure 85% of the species distribution in geographic and environmental space.
+Next, let's generate a prioritization using amount- and space-based targets. This prioritization will secure 75% of the species distribution in geographic and environmental space.
 
 ```{r}
 # make amount- and space-based prioritization
-cs_rs_space <- update(cs_rs_amount, space.target = 0.85, Threads = threads)
+cs_rs_space <- update(cs_rs_amount, space.target = 0.75, Threads = threads)
 ```
 
 ```{r, fig.height=3.5, fig.width=4.5, fig.align='center', fig.caption='_Prioritisation generated using amount, environmental, and geographic targets._'}
@@ -673,7 +718,7 @@ summary(cs_rs_space)
 plot(cs_rs_space, 1)
 ```
 
-```{r, fig.height=4.5, fig.width=10, fig.cap="_Distribution of the amount- and space-based prioritization in the geographic attribute space. See Figure 28 caption for conventions._"}
+```{r, fig.height=6.0, fig.width=10, fig.cap="_Distribution of the amount- and space-based prioritization in the geographic attribute space. See Figure 28 caption for conventions._"}
 # plot prioritization in geographic attribute space
 p1 <- space.plot(cs_rs_space, 1, 2, main = "Blue-winged\nkookaburra")
 p2 <- space.plot(cs_rs_space, 2, 2, main = "Brown-backed\nhoneyeater")
@@ -682,7 +727,7 @@ p4 <- space.plot(cs_rs_space, 4, 2, main = "Pale-headed\nrosella")
 gridExtra::grid.arrange(p1, p2, p3, p4, ncol = 2)
 ```
 
-```{r, fig.height=4.5, fig.width=10, fig.align='center', fig.cap="_Distribution of the amount- and space-based prioritization in the environmental attribute space. See Figure 28 caption for conventions._"}
+```{r, fig.height=6.0, fig.width=10, fig.align='center', fig.cap="_Distribution of the amount- and space-based prioritization in the environmental attribute space. See Figure 28 caption for conventions._"}
 # plot prioritization in environmental attribute space
 p1 <- space.plot(cs_rs_space, 1, 1, main = "Blue-winged\nkookaburra")
 p2 <- space.plot(cs_rs_space, 2, 1, main = "Brown-backed\nhoneyeater")
@@ -709,38 +754,52 @@ se <- function(x) sd(x, na.rm = TRUE) / sqrt(sum(!is.na(x)))
 
 # create a table to store the values for the 3 prioritizations
 cs_results <- data.frame(
-  name = factor(rep(rep(c("Amount-based\nprioritization",
-                          "Amount & space-based\nprioritization",
-                          "Queensland reserve\nnetwork"), each = 4), 3),
-                levels = c(c("Amount-based\nprioritization",
-                             "Amount & space-based\nprioritization",
-                              "Queensland reserve\nnetwork"))),
-  variable = rep(c("Amount", "Geographic space", "Environmental space"),
-                 each = 12),
+  name = factor(
+    rep(rep(c(
+      "Amount-based\nprioritization",
+      "Amount & space-based\nprioritization",
+      "Queensland reserve\nnetwork"), each = 4), 3),
+    levels = c(
+      "Amount-based\nprioritization",
+      "Amount & space-based\nprioritization",
+      "Queensland reserve\nnetwork"
+    )
+  ),
+  variable = rep(
+    c("Amount", "Geographic space", "Environmental space"),
+    each = 12
+  ),
   species = colnames(amount.held(cs_rs_amount)),
-  value = c(amount.held(cs_rs_amount)[1,] , amount.held(cs_rs_space)[1, ],
-            amount.held(cs_rs_aus)[1, ],
-            space.held(cs_rs_amount, space = 2)[1, ],
-            space.held(cs_rs_space, space = 2)[1, ],
-            space.held(cs_rs_aus, space = 2)[1, ],
-            space.held(cs_rs_amount, space = 1)[1, ],
-            space.held(cs_rs_space, space = 1)[1, ],
-            space.held(cs_rs_aus, space = 1)[1, ])) %>%
+  value = c(
+    amount.held(cs_rs_amount)[1, ],
+    amount.held(cs_rs_space)[1, ],
+    amount.held(cs_rs_aus)[1, ],
+    space.held(cs_rs_amount, space = 2)[1, ],
+    space.held(cs_rs_space, space = 2)[1, ],
+    space.held(cs_rs_aus, space = 2)[1, ],
+    space.held(cs_rs_amount, space = 1)[1, ],
+    space.held(cs_rs_space, space = 1)[1, ],
+    space.held(cs_rs_aus, space = 1)[1, ])
+  ) %>%
   group_by(name, variable) %>%
   summarise(mean = mean(value), se = se(value))
 
 # plot the performance metrics
 ggplot(aes(x = variable, y = mean, fill = name), data = cs_results) +
   geom_bar(position = position_dodge(0.9), stat = "identity") +
-  geom_errorbar(aes(ymin = mean - se, ymax = mean + se),
-               position = position_dodge(0.9),
-               width = 0.2) +
+  geom_errorbar(
+    aes(ymin = mean - se, ymax = mean + se),
+    position = position_dodge(0.9),
+    width = 0.2
+  ) +
   xlab("Property of species") +
   ylab("Proportion held in\nselected planning units (%)") +
   scale_fill_discrete(name = "") +
   theme_classic() +
-  theme(legend.position = "bottom", legend.direction = "horizontal",
-        axis.line.x = element_line(), axis.line.y = element_line())
+  theme(
+    legend.position = "bottom", legend.direction = "horizontal",
+    axis.line.x = element_line(), axis.line.y = element_line()
+  )
 ```
 
 ```{r, eval = TRUE, include = FALSE}

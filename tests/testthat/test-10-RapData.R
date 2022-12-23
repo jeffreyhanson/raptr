@@ -1,29 +1,33 @@
 context("10-RapData")
 
 test_that("RapData", {
-  # load data
-  data(cs_pus, cs_spp, cs_space)
   # preliminary processing
+  pu_coords <- suppressWarnings(sf::st_coordinates(sf::st_centroid(cs_pus)))
   attribute.spaces <- AttributeSpaces(list(
     AttributeSpace(
-      planning.unit.points = PlanningUnitPoints(
-        rgeos::gCentroid(cs_pus[1:10, ], byid = TRUE)@coords, 1:10),
-      demand.points = make.DemandPoints(sp::SpatialPoints(
-        coords = randomPoints(cs_spp[[1]], n = 100, prob = TRUE))@coords),
-      species = 1L)),
-    name = "test_space")
-  pu.species.probabilities <- calcSpeciesAverageInPus(cs_pus[1:10, ],
-                                                      cs_spp[[1]])
-  polygons <- SpatialPolygons2PolySet(cs_pus[1:10, ])
+      planning.unit.points = PlanningUnitPoints(pu_coords[1:10, ], 1:10),
+      demand.points = make.DemandPoints(
+        randomPoints(cs_spp[[1]], n = 100, prob = TRUE)
+      ),
+      species = 1L
+    )),
+    name = "test_space"
+  )
+  pu.species.probabilities <- calcSpeciesAverageInPus(
+    cs_pus[1:10, ], cs_spp[[1]]
+  )
+  polygons <- convert2PolySet(cs_pus[1:10, ])
   boundary <- calcBoundaryData(cs_pus[1:10, ])
   # create object
-  x <- RapData(pu = cs_pus@data[1:10, ],
-               species = data.frame(name = "spp1"),
-               targets = data.frame(species = 1L, target = c(0L, 1L),
-                                    proportion = 0.2),
-               pu.species.probabilities = pu.species.probabilities,
-               attribute.spaces = list(attribute.spaces),
-               polygons = polygons, boundary = boundary)
+  x <- RapData(
+    pu = cs_pus[1:10, ],
+    species = data.frame(name = "spp1"),
+    targets = data.frame(species = 1L, target = c(0L, 1L), proportion = 0.2),
+    pu.species.probabilities = pu.species.probabilities,
+    attribute.spaces = list(attribute.spaces),
+    polygons = polygons,
+    boundary = boundary
+  )
   # tests are implicit in the validity method when creating the object
   # execute basic methods
   x
@@ -32,21 +36,23 @@ test_that("RapData", {
 })
 
 test_that("make.RapData (single species)", {
-  # load data
-  data(cs_pus, cs_spp, cs_space)
   # create object
-  x <- make.RapData(cs_pus[1:10, ], cs_spp[[1]], cs_space,
-                    include.geographic.space = TRUE)
+  x <- make.RapData(
+    cs_pus[1:10, ], cs_spp[[1]], cs_space, include.geographic.space = TRUE
+  )
   # check correct data is generated
   expect_equal(length(x@attribute.spaces), 2)
   expect_equal(x@attribute.spaces[[2]]@name, "geographic")
   expect_equal(length(x@attribute.spaces[[1]]@spaces), 1)
   for (i in seq_along(x@attribute.spaces[[1]]@spaces)) {
-    expect_equal(nrow(x@attribute.spaces[[1]]@spaces[[i]]@demand.points@coords),
-                 100)
-    expect_equal(nrow(x@attribute.spaces[[1]]@spaces[[i]]@
-                        planning.unit.points@coords),
-                 10)
+    expect_equal(
+      nrow(x@attribute.spaces[[1]]@spaces[[i]]@demand.points@coords),
+      100
+    )
+    expect_equal(
+      nrow(x@attribute.spaces[[1]]@spaces[[i]]@planning.unit.points@coords),
+      10
+    )
   }
   expect_equal(nrow(x@targets), 3)
   expect_equal(x@targets$species, c(1L, 1L, 1L))
@@ -58,12 +64,16 @@ test_that("make.RapData (multiple species)", {
   # create RapUnsolved object
   set.seed(500)
   pus <- sim.pus(225L)
-  spp <- lapply(c("uniform", "normal", "bimodal"), sim.species, n = 1, res = 1,
-                x = pus)
+  spp <- lapply(
+    c("uniform", "normal", "bimodal"),
+    sim.species, n = 1, res = 1, x = pus
+  )
   expect_warning({
-    x <- make.RapData(pus, raster::stack(spp), NULL,
-                      include.geographic.space = TRUE, n.demand.points = 200L,
-                      amount.target = 0.1, space.target = -10)
+    x <- make.RapData(
+      pus, terra::rast(spp), NULL,
+      include.geographic.space = TRUE, n.demand.points = 200L,
+      amount.target = 0.1, space.target = -10
+    )
   })
   # check correct data is generated
   expect_equal(length(x@attribute.spaces), 1)
@@ -95,11 +105,14 @@ test_that("pu.subset.RapData", {
   expect_true(all(rd2@boundary$id1 %in% 1:10))
   expect_true(all(rd2@boundary$id2 %in% 1:10))
   expect_true(all(rd2@polygons$PID %in% 1:10))
-  expect_equal(nrow(rd2@attribute.spaces[[1]]@spaces[[1]]@
-                      planning.unit.points@coords),
-               10)
-  expect_equal(rd2@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points@ids,
-               1:10)
+  expect_equal(
+    nrow(rd2@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points@coords),
+    10
+  )
+  expect_equal(
+    rd2@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points@ids,
+    1:10
+  )
 })
 
 test_that("spp.subset.RapData", {
@@ -116,32 +129,42 @@ test_that("spp.subset.RapData", {
   expect_equal(length(rd2@attribute.spaces[[1]]@spaces), 1)
   expect_true(all(rd2@targets$species == 1L))
   expect_equal(nrow(rd2@targets), 2)
-  expect_equal(rd@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points,
-               rd2@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points)
-  expect_equal(rd@attribute.spaces[[1]]@spaces[[1]]@demand.points,
-               rd2@attribute.spaces[[1]]@spaces[[1]]@demand.points)
-
+  expect_equal(
+    rd@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points,
+    rd2@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points
+  )
+  expect_equal(
+    rd@attribute.spaces[[1]]@spaces[[1]]@demand.points,
+    rd2@attribute.spaces[[1]]@spaces[[1]]@demand.points
+  )
   expect_true(validObject(rd3, test = FALSE))
   expect_equal(nrow(rd3@species), 1)
   expect_true(all(rd3@pu.species.probabilities$species == 1L))
   expect_equal(length(rd3@attribute.spaces[[1]]@spaces), 1)
   expect_true(all(rd3@targets$species == 1L))
   expect_equal(nrow(rd3@targets), 2)
-  expect_equal(rd@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points,
-               rd3@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points)
-  expect_equal(rd@attribute.spaces[[1]]@spaces[[1]]@demand.points,
-               rd3@attribute.spaces[[1]]@spaces[[1]]@demand.points)
-
+  expect_equal(
+    rd@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points,
+    rd3@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points
+  )
+  expect_equal(
+    rd@attribute.spaces[[1]]@spaces[[1]]@demand.points,
+    rd3@attribute.spaces[[1]]@spaces[[1]]@demand.points
+  )
   expect_true(validObject(rd4, test = FALSE))
   expect_equal(nrow(rd4@species), 1)
   expect_true(all(rd4@pu.species.probabilities$species == 1L))
   expect_equal(length(rd4@attribute.spaces[[1]]@spaces), 1)
   expect_true(all(rd4@targets$species == 1L))
   expect_equal(nrow(rd4@targets), 2)
-  expect_equal(rd@attribute.spaces[[1]]@spaces[[3]]@planning.unit.points,
-               rd4@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points)
-  expect_equal(rd@attribute.spaces[[1]]@spaces[[3]]@demand.points,
-               rd4@attribute.spaces[[1]]@spaces[[1]]@demand.points)
+  expect_equal(
+    rd@attribute.spaces[[1]]@spaces[[3]]@planning.unit.points,
+    rd4@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points
+  )
+  expect_equal(
+    rd@attribute.spaces[[1]]@spaces[[3]]@demand.points,
+    rd4@attribute.spaces[[1]]@spaces[[1]]@demand.points
+  )
 })
 
 test_that("spp.subset.RapData (sparse occupancy)", {
@@ -154,11 +177,12 @@ test_that("spp.subset.RapData (sparse occupancy)", {
       coords = rd@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points@
                  coords[curr_pos,, drop = FALSE],
       ids = rd@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points@
-              ids[curr_pos]),
+              ids[curr_pos]
+    ),
     demand.points = rd@attribute.spaces[[1]]@spaces[[1]]@demand.points,
-    species = rd@attribute.spaces[[1]]@spaces[[1]]@species)
+    species = rd@attribute.spaces[[1]]@spaces[[1]]@species
+  )
   rd2 <- spp.subset(rd, 2)
-
   # tests
   expect_true(validObject(rd2, test = FALSE))
   expect_equal(nrow(rd2@species), 1)
@@ -166,12 +190,15 @@ test_that("spp.subset.RapData (sparse occupancy)", {
   expect_equal(length(rd2@attribute.spaces[[1]]@spaces), 1)
   expect_true(all(rd2@targets$species == 1L))
   expect_equal(nrow(rd2@targets), 2)
-  expect_equal(rd@attribute.spaces[[1]]@spaces[[2]]@planning.unit.points,
-               rd2@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points)
-  expect_equal(rd@attribute.spaces[[1]]@spaces[[2]]@demand.points,
-               rd2@attribute.spaces[[1]]@spaces[[1]]@demand.points)
+  expect_equal(
+    rd@attribute.spaces[[1]]@spaces[[2]]@planning.unit.points,
+    rd2@attribute.spaces[[1]]@spaces[[1]]@planning.unit.points
+  )
+  expect_equal(
+    rd@attribute.spaces[[1]]@spaces[[2]]@demand.points,
+    rd2@attribute.spaces[[1]]@spaces[[1]]@demand.points
+  )
 })
-
 
 test_that("dp.subset.RapData", {
   # create RapUnsolved object
@@ -179,11 +206,14 @@ test_that("dp.subset.RapData", {
   rd <- sim_ru@data
   rd2 <- dp.subset(rd, 1, 1, 1:10)
   # tests
-  expect_equal(rd@attribute.spaces[[1]]@spaces[[1]]@demand.points@
-                 coords[1:10, ],
-               rd2@attribute.spaces[[1]]@spaces[[1]]@demand.points@coords)
-  expect_equal(rd@attribute.spaces[[1]]@spaces[[1]]@demand.points@weights[1:10],
-               rd2@attribute.spaces[[1]]@spaces[[1]]@demand.points@weights)
+  expect_equal(
+    rd@attribute.spaces[[1]]@spaces[[1]]@demand.points@coords[1:10, ],
+    rd2@attribute.spaces[[1]]@spaces[[1]]@demand.points@coords
+  )
+  expect_equal(
+    rd@attribute.spaces[[1]]@spaces[[1]]@demand.points@weights[1:10],
+    rd2@attribute.spaces[[1]]@spaces[[1]]@demand.points@weights
+  )
 })
 
 test_that("prob.subset.RapData", {
@@ -193,46 +223,62 @@ test_that("prob.subset.RapData", {
   rd2 <- prob.subset(rd, 1:3, c(0.1, 0.2, 0.7))
   # tests
   expect_true(all(rd2@pu.species.probabilities[[3]][
-                    which(rd2@pu.species.probabilities[[1]] == 1)] > 0.1))
+    which(rd2@pu.species.probabilities[[1]] == 1)] > 0.1)
+  )
   expect_true(sum(rd2@pu.species.probabilities[[3]][
-                    which(rd2@pu.species.probabilities[[1]] == 1)] < 0.7) > 1)
+    which(rd2@pu.species.probabilities[[1]] == 1)] < 0.7) > 1
+  )
   expect_true(all(rd2@pu.species.probabilities[[3]][
-                    which(rd2@pu.species.probabilities[[1]] == 2)] > 0.2))
+    which(rd2@pu.species.probabilities[[1]] == 2)] > 0.2)
+  )
   expect_true(sum(rd2@pu.species.probabilities[[3]][
-                    which(rd2@pu.species.probabilities[[1]] == 2)] < 0.7) > 1)
+    which(rd2@pu.species.probabilities[[1]] == 2)] < 0.7) > 1
+  )
   expect_true(all(rd2@pu.species.probabilities[[3]][
-                    which(rd2@pu.species.probabilities[[1]] == 3)] > 0.7))
+    which(rd2@pu.species.probabilities[[1]] == 3)] > 0.7)
+  )
 })
 
 test_that("update.RapData", {
   # generate objects
   data(sim_ru)
   x <- sim_ru@data
-  y <- update(x, name = c("a", "b", "c"), amount.target = c(0.1, 0.2, 0.3),
-              space.target = c(0.4, 0.5, 0.6))
-  z <- update(y, species = 1, name = "a1", amount.target = 0.9,
-              space.target = 0.8)
+  y <- update(
+    x,
+    name = c("a", "b", "c"),
+    amount.target = c(0.1, 0.2, 0.3),
+    space.target = c(0.4, 0.5, 0.6)
+  )
+  z <- update(
+    y, species = 1, name = "a1", amount.target = 0.9, space.target = 0.8
+  )
   # y tests
   expect_equal(y@species$name, c("a", "b", "c"))
-  expect_equal(y@targets$proportion[which(y@targets$target == 0)],
-               c(0.1, 0.2, 0.3))
-  expect_equal(y@targets$proportion[which(y@targets$target == 1)],
-               c(0.4, 0.5, 0.6))
+  expect_equal(
+    y@targets$proportion[which(y@targets$target == 0)],
+    c(0.1, 0.2, 0.3)
+  )
+  expect_equal(
+    y@targets$proportion[which(y@targets$target == 1)],
+    c(0.4, 0.5, 0.6)
+  )
   # z tests
   expect_equal(z@species$name, c("a1", "b", "c"))
-  expect_equal(z@targets$proportion[which(z@targets$target == 0)],
-               c(0.9, 0.2, 0.3))
-  expect_equal(z@targets$proportion[which(z@targets$target == 1)],
-               c(0.8, 0.5, 0.6))
+  expect_equal(
+    z@targets$proportion[which(z@targets$target == 0)],
+    c(0.9, 0.2, 0.3)
+  )
+  expect_equal(
+    z@targets$proportion[which(z@targets$target == 1)],
+    c(0.8, 0.5, 0.6)
+  )
 })
 
 
 test_that("amount.target.RapData", {
   data(sim_ru)
-  expect_equal(unname(amount.target(sim_ru@data)),
-               rep(0.2, 3))
-  expect_equal(unname(amount.target(sim_ru@data, 1)),
-               0.2)
+  expect_equal(unname(amount.target(sim_ru@data)), rep(0.2, 3))
+  expect_equal(unname(amount.target(sim_ru@data, 1)), 0.2)
 })
 
 test_that("amount.target<-.RapData", {
@@ -246,14 +292,13 @@ test_that("amount.target<-.RapData", {
 
 test_that("space.target.RapData", {
   data(sim_ru)
-    expect_equal(unname(space.target(sim_ru@data)[, 1]),
-                 rep(0.85, 3))
-  expect_equal(unname(space.target(sim_ru@data, species = 1)[, 1]),
-               0.85)
-  expect_equal(unname(space.target(sim_ru@data, space = 1)[, 1]),
-               rep(0.85, 3))
-  expect_equal(unname(space.target(sim_ru@data, species = 1, space = 1)[, 1]),
-               0.85)
+  expect_equal(unname(space.target(sim_ru@data)[, 1]), rep(0.85, 3))
+  expect_equal(unname(space.target(sim_ru@data, species = 1)[, 1]), 0.85)
+  expect_equal(unname(space.target(sim_ru@data, space = 1)[, 1]), rep(0.85, 3))
+  expect_equal(
+    unname(space.target(sim_ru@data, species = 1, space = 1)[, 1]),
+    0.85
+  )
 })
 
 test_that("space.target<-.RapData", {

@@ -52,27 +52,40 @@ NULL
 #'
 #' @exportClass GurobiOpts
 methods::setClass("GurobiOpts",
-  methods::representation(Threads = "integer", MIPGap = "numeric",
-                          Method = "integer", Presolve = "integer",
-                          TimeLimit = "integer", NumberSolutions = "integer",
-                          MultipleSolutionsMethod = "character",
-                          NumericFocus = "integer"),
-  prototype = list(Threads = 1L, MIPGap = 0.1, Method = 0L, Presolve = 2L,
-                   TimeLimit = NA_integer_, NumberSolutions = 1L,
-                   MultipleSolutionsMethod = "benders.cuts",
-                   NumericFocus = 0L),
+  methods::representation(
+    Threads = "integer",
+    MIPGap = "numeric",
+    Method = "integer",
+    Presolve = "integer",
+    TimeLimit = "integer",
+    NumberSolutions = "integer",
+    MultipleSolutionsMethod = "character",
+    NumericFocus = "integer"
+  ),
+  prototype = list(
+    Threads = 1L,
+    MIPGap = 0.1,
+    Method = 0L,
+    Presolve = 2L,
+    TimeLimit = NA_integer_,
+    NumberSolutions = 1L,
+    MultipleSolutionsMethod = "benders.cuts",
+    NumericFocus = 0L
+  ),
   contains = "SolverOpts",
   validity = function(object) {
     # NumberSolutions
-    assertthat::assert_that(assertthat::is.count(object@NumberSolutions),
-                            is.finite(object@NumberSolutions))
+    assertthat::assert_that(
+      assertthat::is.count(object@NumberSolutions),
+      is.finite(object@NumberSolutions)
+    )
     # TimeLimit
     assertthat::assert_that(is.integer(object@NumberSolutions))
     # Threads
-    assertthat::assert_that(assertthat::is.count(object@Threads),
-                            is.finite(object@Threads),
-                            object@Threads <= parallel::detectCores(logical =
-                                                                      TRUE))
+    assertthat::assert_that(
+      assertthat::is.count(object@Threads),
+      assertthat::noNA(object@Threads)
+    )
     # MultipleSolutionsMethod
     assertthat::assert_that(
       assertthat::is.string(object@MultipleSolutionsMethod),
