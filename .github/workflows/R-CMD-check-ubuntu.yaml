@@ -65,6 +65,7 @@ jobs:
             any::remotes
             cran/XML
             cran/dotCall64
+            gurobi=?ignore
           needs: |
             check
             coverage
