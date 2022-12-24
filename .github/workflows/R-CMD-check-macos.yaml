@@ -53,6 +53,7 @@ jobs:
         with:
           cache-version: 1
           extra-packages: |
+            any::rcmdcheck
             gurobi=?ignore
           needs: |
             check
