@@ -1,6 +1,6 @@
 Dear CRAN maintainers,
 
-Thank you very much for reviewing this submission. This submission contains an update for the raptr package that is currently available on CRAN. Specifically, the update removes the raster package as an update,
+Thank you very much for reviewing this submission. This submission contains an update for the raptr package that is currently available on CRAN. Specifically, the update removes dependencies for raster and rgeos packages in anticipation of their retirement later this year. These dependencies have been replaced with the sf and terra packages.
 
 Cheers,
 
