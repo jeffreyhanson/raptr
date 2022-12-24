@@ -1,15 +1,19 @@
 # raptr 1.0.0.0
 
 - The package has been overhauled to support modern spatial data structures.
-  Specifically, _sf_ (`sf::st_sf()`) objects are now used for vector data and
-  _terra_ (`terra::rast()`) for raster data. These updates impact many of the
-  user-facing functions.
+  Specifically, _sf_ package objects (`sf::st_sf()`) are now use for vector
+  data and _terra_  package objects (`terra::rast()`) for raster data.
+  These updates impact many of the user-facing functions (e.g.,
+  `calcBoundaryData()`, `sim.species()`, `sim.space()`,
+  `calcSpeciesAverageInPus()`, `rap()`), so users will likely need to update
+  their code.
 - The `cs_pus`, `cs_spp`, and `cs_spaces` built-in datasets have been removed.
   This is because `terra::rast()` objects cannot be distributed as built-in
   datasets for packages. These datasets can now be manually imported from
   external files distributed with the package (see `?cs_pus` for more details).
 - Remove _rgdal_ and _rgeos_ packages as dependencies (#13).
-- Support for the _raster_ package has been deprecated.
+- Support for the _raster_ package has been deprecated, in favour of the
+  _terra_ package.
 - The `SpatialPolygons2PolySet` function has been renamed to `convert2PolySet`.
 
 # raptr 0.2.2.0

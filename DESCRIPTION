@@ -83,6 +83,7 @@ Collate:
     'RapSolved.R'
     'convert2PolySet.R'
     'data.R'
+    'deprecated.R'
     'package.R'
     'rap.R'
     'rrap.proportion.held.R'

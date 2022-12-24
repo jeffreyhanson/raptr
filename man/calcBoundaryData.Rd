@@ -16,8 +16,7 @@ calcBoundaryData(x, tol, length.factor, edge.factor)
 \method{calcBoundaryData}{sf}(x, tol = 0.001, length.factor = 1, edge.factor = 1)
 }
 \arguments{
-\item{x}{\code{\link[sf:sf]{sf::st_sf()}}, \code{PBSMapping::PolySet}, or \code{sp::SpatialPolygons}
-object.}
+\item{x}{\code{\link[sf:sf]{sf::st_sf()}} or \code{PBSMapping::PolySet} object.}
 
 \item{tol}{\code{numeric} to specify precision of calculations. In other
 words, how far apart vertices have to be to be considered different?}

@@ -6,8 +6,7 @@ NULL
 #' This function calculates the average of species values in each planning unit.
 #' By default all polygons will be treated as having separate ids.
 #'
-#' @param x [sf::st_as_sf()], [sp::SpatialPolygons()] or
-#'   [sp::SpatialPolygonsDataFrame()] object.
+#' @param x [sf::st_as_sf()] object.
 #'
 #' @param y [terra::rast()] object.
 #'
@@ -51,25 +50,11 @@ calcSpeciesAverageInPus <- function(x, ...) UseMethod("calcSpeciesAverageInPus")
 #' @export
 calcSpeciesAverageInPus.SpatialPolygons <- function(
   x, y, ids = seq_len(terra::nlyr(y)), ...) {
-  # check for invalid inputs
-  assertthat::assert_that(
-    inherits(x, "SpatialPolygons"),
-    inherits(y, "SpatRaster"),
-    terra::nlyr(y) == length(ids),
-    sum(duplicated(ids)) == 0
-  )
-  # run calculations
-  calcSpeciesAverageInPus.SpatialPolygonsDataFrame(
-    x = sp::SpatialPolygonsDataFrame(
-      x@polygons,
-      data = data.frame(
-        id = seq_len(nrow(x@data)),
-        row.names = sapply(x@polygons, methods::slot, name = "ID")
-      )
-    ),
-    y = y,
-    ids = ids,
-    field = "id"
+  .Defunct(
+    msg = paste(
+      "support for sp::SpatialPolygons data has been deprecated,",
+      "use sf::st_as_sf() to convert to an sf::st_sf() object and try again"
+    )
   )
 }
 
@@ -80,11 +65,11 @@ calcSpeciesAverageInPus.SpatialPolygons <- function(
 #' @export
 calcSpeciesAverageInPus.SpatialPolygonsDataFrame <- function(
   x, y, ids = seq_len(terra::nlyr(y)), field = NULL, ...) {
-  calcSpeciesAverageInPus.sf(
-    x = sf::st_as_sf(x),
-    y = y,
-    ids = ids,
-    field = "id"
+  .Defunct(
+    msg = paste(
+      "support for sp::SpatialPolygonsDataFrame data has been deprecated,",
+      "use sf::st_as_sf() to convert to an sf::st_sf() object and try again"
+    )
   )
 }
 

@@ -16,8 +16,7 @@ calcSpeciesAverageInPus(x, ...)
 \method{calcSpeciesAverageInPus}{sf}(x, y, ids = seq_len(terra::nlyr(y)), field = NULL, ...)
 }
 \arguments{
-\item{x}{\code{\link[sf:st_as_sf]{sf::st_as_sf()}}, \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} or
-\code{\link[sp:SpatialPolygons]{sp::SpatialPolygonsDataFrame()}} object.}
+\item{x}{\code{\link[sf:st_as_sf]{sf::st_as_sf()}} object.}
 
 \item{...}{not used.}
 

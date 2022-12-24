@@ -52,10 +52,10 @@
 
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.0.0" id="raptr-1000">raptr 1.0.0.0<a class="anchor" aria-label="anchor" href="#raptr-1000"></a></h2>
-<ul><li>The package has been overhauled to support modern spatial data structures. Specifically, <em>sf</em> (<code><a href="https://r-spatial.github.io/sf/reference/sf.html" class="external-link">sf::st_sf()</a></code>) objects are now used for vector data and <em>terra</em> (<code><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">terra::rast()</a></code>) for raster data. These updates impact many of the user-facing functions.</li>
+<ul><li>The package has been overhauled to support modern spatial data structures. Specifically, <em>sf</em> package objects (<code><a href="https://r-spatial.github.io/sf/reference/sf.html" class="external-link">sf::st_sf()</a></code>) are now use for vector data and <em>terra</em> package objects (<code><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">terra::rast()</a></code>) for raster data. These updates impact many of the user-facing functions (e.g., <code><a href="../reference/calcBoundaryData.html">calcBoundaryData()</a></code>, <code><a href="../reference/sim.species.html">sim.species()</a></code>, <code><a href="../reference/sim.space.html">sim.space()</a></code>, <code><a href="../reference/calcSpeciesAverageInPus.html">calcSpeciesAverageInPus()</a></code>, <code><a href="../reference/rap.html">rap()</a></code>), so users will likely need to update their code.</li>
 <li>The <code>cs_pus</code>, <code>cs_spp</code>, and <code>cs_spaces</code> built-in datasets have been removed. This is because <code><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">terra::rast()</a></code> objects cannot be distributed as built-in datasets for packages. These datasets can now be manually imported from external files distributed with the package (see <code><a href="../reference/casestudy_data.html">?cs_pus</a></code> for more details).</li>
 <li>Remove <em>rgdal</em> and <em>rgeos</em> packages as dependencies (<a href="https://github.com/jeffreyhanson/raptr/issues/13" class="external-link">#13</a>).</li>
-<li>Support for the <em>raster</em> package has been deprecated.</li>
+<li>Support for the <em>raster</em> package has been deprecated, in favour of the <em>terra</em> package.</li>
 <li>The <code>SpatialPolygons2PolySet</code> function has been renamed to <code>convert2PolySet</code>.</li>
 </ul></div>
     <div class="section level2">

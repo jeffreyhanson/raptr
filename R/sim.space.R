@@ -78,7 +78,12 @@ sim.space.SpatRaster <- function(x, d = 2, model = 0.2, ...) {
 #'
 #' @export
 sim.space.SpatialPolygons <- function(x, res, d = 2, model = 0.2, ...) {
-  sim.space.sf(sf::st_as_sf(x), res = res, d = d, model = model, ...)
+  .Defunct(
+    msg = paste(
+      "support for sp::SpatialPolygons data has been deprecated,",
+      "use sf::st_as_sf() to convert to an sf::st_sf() object and try again"
+    )
+  )
 }
 
 #' @rdname sim.space

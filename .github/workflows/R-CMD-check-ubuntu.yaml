@@ -58,13 +58,8 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          cache-version: 4
+          cache-version: 1
           extra-packages: |
-            any::covr
-            any::rcmdcheck
-            any::remotes
-            cran/XML
-            cran/dotCall64
             gurobi=?ignore
           needs: |
             check

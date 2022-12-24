@@ -106,6 +106,20 @@ sim.species.SpatRaster <- function(x, n = 1, model = "normal", ...) {
 
 #' @rdname sim.species
 #'
+#' @method sim.species SpatialPolygons
+#'
+#' @export
+sim.species.SpatialPolygons <- function(x, res, n = 1, model = "normal", ...) {
+  .Defunct(
+    msg = paste(
+      "support for sp::SpatialPolygons data has been deprecated,",
+      "use sf::st_as_sf() to convert to an sf::st_sf() object and try again"
+    )
+  )
+}
+
+#' @rdname sim.species
+#'
 #' @method sim.species sf
 #'
 #' @export

@@ -3,12 +3,15 @@
 \name{sim.species}
 \alias{sim.species}
 \alias{sim.species.SpatRaster}
+\alias{sim.species.SpatialPolygons}
 \alias{sim.species.sf}
 \title{Simulate species distribution data for RAP}
 \usage{
 sim.species(x, ...)
 
 \method{sim.species}{SpatRaster}(x, n = 1, model = "normal", ...)
+
+\method{sim.species}{SpatialPolygons}(x, res, n = 1, model = "normal", ...)
 
 \method{sim.species}{sf}(x, res, n = 1, model = "normal", ...)
 }

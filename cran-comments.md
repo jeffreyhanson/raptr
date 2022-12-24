@@ -1,6 +1,6 @@
 Dear CRAN maintainers,
 
-Thank you very much for reviewing this submission. This package was formerly available on CRAN. It was archived because one of its dependencies was archived (i.e., the RandomFields package). To address this, I have updated the package so that the RandomFields package is no longer a dependency. I have also taken this opportunity to update the package to address issues identified by CRAN package checks. Specifically, these issue includes a note raised during package checks (i.e., `Namespace in Imports field not imported from: ‘rgdal’; All declared Imports should be used.`), and a compiler warning (i.e., `warning: use of bitwise '&' with boolean operands [-Wbitwise-instead-of-logical]`).
+Thank you very much for reviewing this submission. This submission contains an update for the raptr package that is currently available on CRAN. Specifically, the update removes the raster package as an update,
 
 Cheers,
 
@@ -19,12 +19,6 @@ Jeff
 0 errors | 0 warnings | 2 note
 
 # Notes
-
-* CRAN repository db overrides:
-  X-CRAN-Comment: Archived on 2022-05-04 as requires archived package
-    'RandomFields'.
-
-  **This package has been updated so that it no longer depends on the RandomFields package.**
 
 * checking package dependencies ... NOTE
   package suggested but not available for checking: 'gurobi'

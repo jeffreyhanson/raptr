@@ -8,8 +8,7 @@ NULL
 #' function is used improperly then it may crash R. Furthermore, multipart
 #' polygons with touching edges will likely result in inaccuracies.
 #'
-#' @param x [sf::st_sf()], `PBSMapping::PolySet`, or `sp::SpatialPolygons`
-#'   object.
+#' @param x [sf::st_sf()] or `PBSMapping::PolySet` object.
 #'
 #' @param tol `numeric` to specify precision of calculations. In other
 #'   words, how far apart vertices have to be to be considered different?
@@ -79,8 +78,11 @@ calcBoundaryData.SpatialPolygons <- function(x,
                                              tol = 0.001,
                                              length.factor = 1.0,
                                              edge.factor = 1.0) {
-  calcBoundaryData(
-    rcpp_Polygons2PolySet(x@polygons), tol, length.factor, edge.factor
+  .Defunct(
+    msg = paste(
+      "support for sp::SpatialPolygons data has been deprecated,",
+      "use sf::st_as_sf() to convert to an sf::st_sf() object and try again"
+    )
   )
 }
 
@@ -93,5 +95,8 @@ calcBoundaryData.sf <- function(x,
                                 tol = 0.001,
                                 length.factor = 1.0,
                                 edge.factor = 1.0) {
-  calcBoundaryData(sf::as_Spatial(x), tol, length.factor, edge.factor)
+  calcBoundaryData(
+    rcpp_Polygons2PolySet(sf::as_Spatial(x)@polygons),
+    tol, length.factor, edge.factor
+  )
 }
