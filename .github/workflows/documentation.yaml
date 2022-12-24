@@ -56,8 +56,6 @@ jobs:
         with:
           cache-version: 1
           extra-packages: |
-            cran/XML
-            cran/dotCall64
             gurobi=?ignore
           needs: |
             check
