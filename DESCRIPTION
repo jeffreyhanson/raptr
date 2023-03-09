@@ -52,7 +52,7 @@ Suggests:
     vegan (>= 2.6.2),
     gurobi (>= 8.0.0),
     gridExtra (>= 2.3),
-    rgl (>= 0.108.3),
+    rgl (>= 1.0.1)
 LinkingTo: Rcpp, RcppEigen, BH
 LazyData: true
 License: GPL-3
@@ -61,7 +61,7 @@ Language: en-US
 URL: https://jeffrey-hanson.com/raptr/, https://github.com/jeffreyhanson/raptr
 BugReports: https://github.com/jeffreyhanson/raptr/issues
 VignetteBuilder: knitr
-SystemRequirements: C++11
+SystemRequirements: C++17
 Collate:
     'RcppExports.R'
     'raptr-internal.R'

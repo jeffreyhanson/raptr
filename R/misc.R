@@ -40,7 +40,7 @@ is.GurobiInstalled <- function(verbose = TRUE) {
       "Darwin" = "https://www.gurobi.com/documentation/6.5/quickstart_mac/r_installing_the_r_package.html"
     )[Sys.info()[["sysname"]]])
 
-  licenseInstructions <- paste0("The Gurobi R package requires a Gurobi ",
+  licenseInstructions <- paste0("The gurobi R package requires a Gurobi ",
     "license to work:\n  visit this web-page for an overview: \n    ",
     "https://www.gurobi.com/products/licensing-options/\n  academics can obtain a license at no cost ",
     "here:\n    https://www.gurobi.com/downloads/end-user-license-agreement-academic/")
@@ -50,7 +50,7 @@ is.GurobiInstalled <- function(verbose = TRUE) {
                                      stderr = FALSE))
   if (result != 0) {
     if (verbose) {
-      message("The gorubi software is not installed")
+      message("The gurobi software is not installed")
       message(gurobiInstallationInstructions, "\n\n", licenseInstructions,
               "\n\n", rInstallationInstructions1)
     }
@@ -64,7 +64,7 @@ is.GurobiInstalled <- function(verbose = TRUE) {
     utils::packageVersion("gurobi") >= as.package_version("8.0.0"))
   if (!pkgs.installed[[1]]) {
     if (verbose) {
-      message("The gorubi R package (version 8.0.0+) is not installed\n")
+      message("The gurobi R package (version 8.0.0+) is not installed\n")
       message(rInstallationInstructions1, "\n")
     }
   }

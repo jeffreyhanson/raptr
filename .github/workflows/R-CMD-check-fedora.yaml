@@ -1,0 +1,95 @@
+# For help debugging build failures open an issue on the RStudio community with the 'github-actions' tag.
+# https://community.rstudio.com/new-topic?category=Package%20development&tags=github-actions
+on:
+  schedule:
+    - cron: 0 0 * * 1 # schedule to run at midnight on Monday each week
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+name: Fedora
+
+jobs:
+  R-CMD-check:
+    name: Fedora (devel)
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: docker://rhub/fedora-clang-devel:latest
+      options: --user root
+      env:
+        _R_REMOTES_NO_ERRORS_FROM_WARNINGS_: true
+        _R_CHECK_FORCE_SUGGESTS_: false
+        _R_CHECK_TIMINGS_: 10
+        _R_CHECK_CRAN_INCOMING_REMOTE_: false
+        _R_CHECK_LIMIT_CORES_: true
+        _R_CHECK_LICENSE_: true
+        OMP_THREAD_LIMIT: 2
+        KMP_DEVICE_THREAD_LIMIT: 2
+        KMP_TEAMS_THREAD_LIMIT: 2
+        KMP_ALL_THREADS: 2
+        NOT_CRAN: true
+        GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+        CI: true
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup path
+        run: |
+          echo "/opt/R-devel/bin" >> $GITHUB_PATH
+
+      - name: Install system dependencies
+        run: |
+          echo $PATH
+          dnf install -y \
+            mpfr-devel \
+            automake \
+            fftw-devel \
+            gmp-devel \
+            openssl-devel \
+            zlib-devel \
+            pandoc \
+            geos-devel \
+            make \
+            gdal \
+            libxml2-devel \
+            cmake \
+            proj-devel \
+            sqlite-devel \
+            gdal-devel \
+            libicu-devel \
+            udunits2-devel \
+            coin-or-SYMPHONY-devel \
+            git-all
+
+      - name: Install dependencies
+        run: |
+          options(repos = "https://cloud.r-project.org/")
+          install.packages("remotes")
+          remotes::install_deps(dependencies = TRUE)
+          remotes::install_cran("rcmdcheck")
+        shell: Rscript {0}
+
+      - name: Session information
+        run: |
+          options(width = 100)
+          pkgs <- installed.packages()[, "Package"]
+          sessioninfo::session_info(pkgs, include_base = TRUE)
+        shell: Rscript {0}
+
+      - name: Check
+        run: |
+          rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran", "--no-build-vignettes"), error_on = "warning", check_dir = "check")
+        shell: Rscript {0}
+
+      - name: Show testthat output
+        if: always()
+        run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
+        shell: bash

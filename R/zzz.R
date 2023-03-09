@@ -1,6 +1,6 @@
 .onAttach <- function(libname, pkgname) {
   # check gurobi package installed
-  msg <- utils::capture.output({
+  msg <- utils::capture.output(type = "message", {
     gurobi.installed <- is.GurobiInstalled(verbose = TRUE)
   })
   if (!gurobi.installed) {

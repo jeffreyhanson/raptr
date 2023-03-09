@@ -162,7 +162,7 @@ test_that("spacePlot.3d", {
               pu.color.palette = c("grey30", "green", "black", "red"),
               main = "test 3d")
   # close rgl device
-  rgl::rgl.close()
+  rgl::close3d()
   expect_true(TRUE)
 })
 
