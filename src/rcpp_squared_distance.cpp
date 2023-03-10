@@ -1,5 +1,5 @@
 #include <Rcpp.h>
-// [[Rcpp::plugins(cpp11)]]
+// [[Rcpp::plugins(cpp17)]]
 // [[Rcpp::depends(RcppEigen)]]
 
 using namespace Rcpp;

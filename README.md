@@ -7,6 +7,7 @@
 [![R-CMD-check-Ubuntu](https://img.shields.io/github/actions/workflow/status/jeffreyhanson/raptr/R-CMD-check-ubuntu.yaml?branch=master&label=Ubuntu)](https://github.com/jeffreyhanson/raptr/actions)
 [![R-CMD-check-Windows](https://img.shields.io/github/actions/workflow/status/jeffreyhanson/raptr/R-CMD-check-windows.yaml?branch=master&label=Windows)](https://github.com/jeffreyhanson/raptr/actions)
 [![R-CMD-check-macOS](https://img.shields.io/github/actions/workflow/status/jeffreyhanson/raptr/R-CMD-check-macos.yaml?branch=master&label=macOS)](https://github.com/jeffreyhanson/raptr/actions)
+[![R-CMD-check-Fedora](https://img.shields.io/github/actions/workflow/status/jeffreyhanson/raptr/R-CMD-check-fedora.yaml?branch=master&label=Fedora)](https://github.com/jeffreyhanson/raptr/actions)
 [![Documentation](https://img.shields.io/github/actions/workflow/status/jeffreyhanson/raptr/documentation.yaml?branch=master&label=Documentation)](https://github.com/jeffreyhanson/raptr/actions)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/raptr)](https://CRAN.R-project.org/package=raptr)
 
@@ -74,15 +75,15 @@ vignette("raptr", package = "raptr")
 citation("raptr")
 ```
 
-    ## 
+    ##
     ## To cite the raptr package in publications, use:
-    ## 
+    ##
     ##   Hanson JO, Rhodes JR, Possingham HP & Fuller RA (2018) raptr:
     ##   Representative and Adequate Prioritization Toolkit in R. Methods in
     ##   Ecology & Evolution, 9: 320--330. DOI: 10.1111/2041-210X.12862
-    ## 
+    ##
     ## A BibTeX entry for LaTeX users is
-    ## 
+    ##
     ##   @Article{,
     ##     author = {Jeffrey O Hanson and Jonathan R Rhodes and Hugh P Possingham and Richard A Fuller},
     ##     title = {raptr: Representative and adequate prioritization toolkit in R},
@@ -92,6 +93,6 @@ citation("raptr")
     ##     pages = {320--330},
     ##     doi = {10.1111/2041-210X.12862},
     ##   }
-    ## 
+    ##
     ## You may also want to cite the package version. Find it with
     ## "help(package=raptr)".

@@ -12,7 +12,7 @@ output:
 [![R-CMD-check-Ubuntu](https://img.shields.io/github/actions/workflow/status/jeffreyhanson/raptr/R-CMD-check-ubuntu.yaml?branch=master&label=Ubuntu)](https://github.com/jeffreyhanson/raptr/actions)
 [![R-CMD-check-Windows](https://img.shields.io/github/actions/workflow/status/jeffreyhanson/raptr/R-CMD-check-windows.yaml?branch=master&label=Windows)](https://github.com/jeffreyhanson/raptr/actions)
 [![R-CMD-check-macOS](https://img.shields.io/github/actions/workflow/status/jeffreyhanson/raptr/R-CMD-check-macos.yaml?branch=master&label=macOS)](https://github.com/jeffreyhanson/raptr/actions)
-[![R-CMD-check-Fedora](https://img.shields.io/github/actions/workflow/status/jeffreyhanson/raptr/R-CMD-check-fedora.yaml?branch=master&label=macOS)](https://github.com/jeffreyhanson/raptr/actions)
+[![R-CMD-check-Fedora](https://img.shields.io/github/actions/workflow/status/jeffreyhanson/raptr/R-CMD-check-fedora.yaml?branch=master&label=Fedora)](https://github.com/jeffreyhanson/raptr/actions)
 [![Documentation](https://img.shields.io/github/actions/workflow/status/jeffreyhanson/raptr/documentation.yaml?branch=master&label=Documentation)](https://github.com/jeffreyhanson/raptr/actions)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/raptr)](https://CRAN.R-project.org/package=raptr)
 

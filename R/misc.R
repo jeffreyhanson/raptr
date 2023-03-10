@@ -23,6 +23,38 @@ NULL
 #'
 #' @export
 is.GurobiInstalled <- function(verbose = TRUE) {
+  # check if gurobi installed
+  software_installed <- suppressWarnings(
+    system2("gurobi_cl", "-v", stdout = FALSE, stderr = FALSE)
+  ) == 0
+  pkg_installed <-
+    requireNamespace("gurobi", quietly = TRUE) &&
+    utils::packageVersion("gurobi") >= as.package_version("8.0.0")
+  # store result
+  if (!isTRUE(software_installed) || !isTRUE(pkg_installed)){
+    options(GurobiInstalled = list(gurobi = FALSE))
+  }
+  # display messages if needed
+  if (verbose) {
+    if (!isTRUE(software_installed)) {
+      message(paste(gurobi_installation_message(), collapse = "\n\n"))
+    }
+    if (!isTRUE(pkg_installed)) {
+      message(paste(package_installation_message(), collapse = "\n\n"))
+    }
+  }
+  # return result
+  software_installed && pkg_installed
+}
+
+#' Gurobi installation message
+#'
+#' Create a message to display when the Gurobi suite is not available.
+#'
+#' @return A `character` value.
+#'
+#' @noRd
+gurobi_installation_message <- function() {
   # define installation instructions
   gurobiInstallationInstructions <- paste(
     "Follow these instructions to download the Gurobi software suite:\n  ",
@@ -31,7 +63,6 @@ is.GurobiInstalled <- function(verbose = TRUE) {
       "Windows" = "https://www.gurobi.com/documentation/9.5/quickstart_windows/software_installation_guid.html",
       "Darwin" = "https://www.gurobi.com/documentation/9.5/quickstart_mac/software_installation_guid.html"
     )[Sys.info()[["sysname"]]])
-
   rInstallationInstructions1 <- paste(
     "Follow these instructions to install the \"gurobi\" R package:\n  ",
     c(
@@ -39,39 +70,37 @@ is.GurobiInstalled <- function(verbose = TRUE) {
       "Windows" = "https://www.gurobi.com/documentation/6.5/quickstart_windows/r_installing_the_r_package.html",
       "Darwin" = "https://www.gurobi.com/documentation/6.5/quickstart_mac/r_installing_the_r_package.html"
     )[Sys.info()[["sysname"]]])
-
   licenseInstructions <- paste0("The gurobi R package requires a Gurobi ",
     "license to work:\n  visit this web-page for an overview: \n    ",
     "https://www.gurobi.com/products/licensing-options/\n  academics can obtain a license at no cost ",
     "here:\n    https://www.gurobi.com/downloads/end-user-license-agreement-academic/")
+  c(
+    "The gurobi software is not installed",
+    gurobiInstallationInstructions,
+    licenseInstructions,
+    rInstallationInstructions1
+  )
+}
 
-  # check if gurobi installed
-  result <- suppressWarnings(system2("gurobi_cl", "-v", stdout = FALSE,
-                                     stderr = FALSE))
-  if (result != 0) {
-    if (verbose) {
-      message("The gurobi software is not installed")
-      message(gurobiInstallationInstructions, "\n\n", licenseInstructions,
-              "\n\n", rInstallationInstructions1)
-    }
-    options(GurobiInstalled = list(gurobi = FALSE))
-    return(FALSE)
-  }
-
-  # check if R packages installed
-  pkgs.installed <- list(gurobi =
-    requireNamespace("gurobi", quietly = TRUE) &&
-    utils::packageVersion("gurobi") >= as.package_version("8.0.0"))
-  if (!pkgs.installed[[1]]) {
-    if (verbose) {
-      message("The gurobi R package (version 8.0.0+) is not installed\n")
-      message(rInstallationInstructions1, "\n")
-    }
-  }
-  options(GurobiInstalled = pkgs.installed)
-  if (!pkgs.installed[[1]])
-    return(FALSE)
-  return(TRUE)
+#' Gurobi package installation message
+#'
+#' Create a message to display when the Gurobi package is not available.
+#'
+#' @return A `character` value.
+#'
+#' @noRd
+package_installation_message <- function() {
+  rInstallationInstructions1 <- paste(
+    "Follow these instructions to install the \"gurobi\" R package:\n  ",
+    c(
+      "Linux" = "https://www.gurobi.com/documentation/6.5/quickstart_linux/r_installing_the_r_package.html",
+      "Windows" = "https://www.gurobi.com/documentation/6.5/quickstart_windows/r_installing_the_r_package.html",
+      "Darwin" = "https://www.gurobi.com/documentation/6.5/quickstart_mac/r_installing_the_r_package.html"
+    )[Sys.info()[["sysname"]]])
+  c(
+    "The gurobi R package (version 8.0.0+) is not installed",
+    rInstallationInstructions1
+  )
 }
 
 #' Blank raster
