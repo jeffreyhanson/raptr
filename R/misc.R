@@ -31,9 +31,11 @@ is.GurobiInstalled <- function(verbose = TRUE) {
     requireNamespace("gurobi", quietly = TRUE) &&
     utils::packageVersion("gurobi") >= as.package_version("8.0.0")
   # store result
-  if (!isTRUE(software_installed) || !isTRUE(pkg_installed)){
-    options(GurobiInstalled = list(gurobi = FALSE))
-  }
+  options(
+    GurobiInstalled = list(
+      gurobi = isTRUE(software_installed) && isTRUE(pkg_installed)
+    )
+  )
   # display messages if needed
   if (verbose) {
     if (!isTRUE(software_installed)) {

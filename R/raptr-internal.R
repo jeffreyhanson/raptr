@@ -353,7 +353,7 @@ zonalMean <- function(x, y, ids = names(y)) {
 #' @noRd
 mergeRapResults <- function(x) {
   x <- RapResults(
-    summary = plyr::ldply(x, methods::slot, name = "summary"),
+    summary = do.call(rbind, lapply(x, methods::slot, name = "summary")),
     selections = do.call(rbind, lapply(x, methods::slot, name = "selections")),
     amount.held = do.call(
       rbind,
