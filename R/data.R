@@ -39,6 +39,7 @@ NULL
 #' @name simulated_data
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_ru, sim_rs)
 #'
@@ -52,6 +53,7 @@ NULL
 #'
 #' # plot best solution
 #' plot(sim_rs, 0)
+#' }
 NULL
 
 #' Case-study dataset for a conservation planning exercise
@@ -99,6 +101,7 @@ NULL
 #' @name casestudy_data
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' cs_pus <- sf::read_sf(
 #'  system.file("extdata", "cs_pus.gpkg", package = "raptr")
@@ -111,7 +114,6 @@ NULL
 #' )
 #'
 #' # plot data
-#' \dontrun{
 #' plot(cs_pus)
 #' plot(cs_spp)
 #' plot(cs_space)

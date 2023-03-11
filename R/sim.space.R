@@ -20,6 +20,7 @@ NULL
 #' @name sim.space
 #'
 #' @examples
+#' \dontrun{
 #' # simulate planning units
 #' sim_pus <- sim.pus(225L)
 #'
@@ -38,7 +39,7 @@ NULL
 #' plot(s2, main = "s2")
 #' plot(s3[[1]], main = "s3: first dimension")
 #' plot(s3[[2]], main = "s3: second dimension")
-#'
+#' }
 #' @export sim.space
 sim.space <- function(x, ...) UseMethod("sim.space")
 

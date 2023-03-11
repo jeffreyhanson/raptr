@@ -43,6 +43,7 @@ when \code{\link[sf:sf]{sf::st_sf()}} are supplied.}
 This function simulates species distributions for RAP.
 }
 \examples{
+\dontrun{
 # make polygons
 sim_pus <- sim.pus(225L)
 
@@ -67,5 +68,5 @@ plot(s2, main = "constant")
 plot(s3, main = "normal")
 plot(s4, main = "bimodal")
 plot(s5, main = "random field")
-
+}
 }

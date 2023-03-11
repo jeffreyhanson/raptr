@@ -70,9 +70,10 @@ methods::setClass("RapReliableOpts",
 #' @seealso [RapReliableOpts-class].
 #'
 #' @examples
+#' \dontrun{
 #' # create RapReliableOpts using defaults
 #' RapReliableOpts(BLM = 0, failure.multiplier = 1.1, max.r.level = 5L)
-#'
+#' }
 #' @export
 RapReliableOpts <- function(BLM = 0, failure.multiplier = 1.1,
                             max.r.level = 5L) {

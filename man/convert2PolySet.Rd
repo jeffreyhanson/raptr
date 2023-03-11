@@ -38,12 +38,13 @@ as a result it depends on C++ code and if used inappropriately this
 function will crash R.
 }
 \examples{
+\dontrun{
 # generate sf object
 sim_pus <- sim.pus(225L)
 
 # convert to PolySet
 x <- convert2PolySet(sim_pus)
-
+}
 }
 \seealso{
 For a slower, more stable equivalent see

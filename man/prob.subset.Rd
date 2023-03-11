@@ -31,12 +31,13 @@ threshold. It effectively sets the probability that species inhabit planning
 units to zero if they are below the threshold.
 }
 \examples{
+\dontrun{
 # load data
 data(sim_ru)
 
 # generate new object with first 10 planning units
 sim_ru2 <- prob.subset(sim_ru, seq_len(3), c(0.1, 0.2, 0.3))
-
+}
 }
 \seealso{
 \code{\link[=RapData]{RapData()}}, \code{\link[=RapUnsolved]{RapUnsolved()}},

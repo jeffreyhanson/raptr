@@ -20,7 +20,6 @@ NULL
 #' # print cached status of installation
 #' options()$GurobiInstalled
 #' }
-#'
 #' @export
 is.GurobiInstalled <- function(verbose = TRUE) {
   # check if gurobi installed
@@ -117,12 +116,13 @@ package_installation_message <- function() {
 #'   pixels are assumed to be square.
 #'
 #' @examples
+#' \dontrun{
 #' # make sf data
 #' polys <- sim.pus(225L)
 #'
 #' # make raster from sf
 #' blank.raster(polys, 1)
-#'
+#' }
 #' @rdname blank.raster
 #'
 #' @export
@@ -228,6 +228,7 @@ methods::setClass("SolverOpts")
 #' @seealso This function is similar to `dismo::randomPoints`.
 #'
 #' @examples
+#' \dontrun{
 #' # simulate data
 #' sim_pus <- sim.pus(225L)
 #' sim_spp <- sim.species(sim_pus, model = "normal", n = 1, res = 0.25)
@@ -240,7 +241,7 @@ methods::setClass("SolverOpts")
 #' plot(sim_spp)
 #' points(pts1, col = "red")
 #' points(pts2, col = "black")
-#'
+#' }
 #' @export
 randomPoints <- function(mask, n, prob = FALSE) {
   # assert valid arguments

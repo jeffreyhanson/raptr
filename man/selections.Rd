@@ -28,6 +28,7 @@ Extract selections for a given solution from a \code{\link[=RapResults]{RapResul
 \code{\link[=RapSolved]{RapSolved()}} object.
 }
 \examples{
+\dontrun{
 # load data
 data(sim_rs)
 
@@ -39,7 +40,7 @@ selections(sim_rs, 2)
 
 # selections for each solution
 selections(sim_rs)
-
+}
 }
 \seealso{
 \code{\link[=RapResults]{RapResults()}}, \code{\link[=RapSolved]{RapSolved()}}.

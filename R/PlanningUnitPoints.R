@@ -59,12 +59,13 @@ methods::setClass("PlanningUnitPoints",
 #' @seealso [AttributeSpace-class].
 #'
 #' @examples
+#' \dontrun{
 #' # create PlanningUnitPoints object
 #' x <- PlanningUnitPoints(matrix(rnorm(150), ncol = 1), seq_len(150))
 #'
 #' # print object
 #' print(x)
-#'
+#' }
 #' @export
 PlanningUnitPoints <- function(coords, ids) {
   sp <- methods::new("PlanningUnitPoints", coords = coords, ids = ids)

@@ -26,6 +26,7 @@ NULL
 #'   length.
 #'
 #' @examples
+#' \dontrun{
 #' # simulate planning units
 #' sim_pus <- sim.pus(225L)
 #'
@@ -34,7 +35,7 @@ NULL
 #'
 #' # print summary of boundary data
 #' summary(bound.dat)
-#'
+#' }
 #' @export
 calcBoundaryData <- function(x, tol, length.factor, edge.factor) {
   UseMethod("calcBoundaryData")

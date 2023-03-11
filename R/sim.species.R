@@ -28,6 +28,7 @@ NULL
 #' @return [terra::rast()] with layers for each species.
 #'
 #' @examples
+#' \dontrun{
 #' # make polygons
 #' sim_pus <- sim.pus(225L)
 #'
@@ -52,7 +53,7 @@ NULL
 #' plot(s3, main = "normal")
 #' plot(s4, main = "bimodal")
 #' plot(s5, main = "random field")
-#'
+#' }
 #' @export sim.species
 sim.species <- function(x, ...) UseMethod("sim.species")
 

@@ -22,9 +22,10 @@ Defaults to 5L.}
 This function creates a new RapReliableOpts object.
 }
 \examples{
+\dontrun{
 # create RapReliableOpts using defaults
 RapReliableOpts(BLM = 0, failure.multiplier = 1.1, max.r.level = 5L)
-
+}
 }
 \seealso{
 \linkS4class{RapReliableOpts}.

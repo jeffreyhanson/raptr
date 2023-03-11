@@ -19,6 +19,7 @@ A new \code{AttributeSpaces} object.
 This function creates a new \code{AttributeSpaces} object.
 }
 \examples{
+\dontrun{
 space1 <- AttributeSpace(
   PlanningUnitPoints(
     matrix(rnorm(100), ncol = 2),
@@ -44,7 +45,7 @@ space2 <- AttributeSpace(
 )
 
 spaces <- AttributeSpaces(list(space1, space2), "spaces")
-
+}
 }
 \seealso{
 \linkS4class{AttributeSpace}.

@@ -28,12 +28,13 @@ Subset planning units from a \code{\link[=RapData]{RapData()}},
 \code{\link[=RapUnsolved]{RapUnsolved()}}, or \code{\link[=RapSolved]{RapSolved()}} object.
 }
 \examples{
+\dontrun{
 # load data
 data(sim_ru)
 
 # generate new object with first 10 planning units
 sim_ru2 <- pu.subset(sim_ru, seq_len(10))
-
+}
 }
 \seealso{
 \code{\link[=RapData]{RapData()}}, \code{\link[=RapUnsolved]{RapUnsolved()}},

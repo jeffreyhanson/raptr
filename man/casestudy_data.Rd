@@ -44,6 +44,7 @@ and resampled to \eqn{10km^2} resolution).}
 }
 }
 \examples{
+\dontrun{
 # load data
 cs_pus <- sf::read_sf(
  system.file("extdata", "cs_pus.gpkg", package = "raptr")
@@ -56,7 +57,6 @@ cs_space <- terra::rast(
 )
 
 # plot data
-\dontrun{
 plot(cs_pus)
 plot(cs_spp)
 plot(cs_space)

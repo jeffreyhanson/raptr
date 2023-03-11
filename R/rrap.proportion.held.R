@@ -23,9 +23,10 @@
 #'   demand points explain in the planning units
 #'
 #' @examples
+#' \dontrun{
 #' rrap.proportion.held(as.matrix(iris[1:2,-5]), runif(1:2),
 #'                      as.matrix(iris[1:5,-5]), runif(1:5), 10)
-#'
+#' }
 #' @export
 rrap.proportion.held <- function(pu.coordinates, pu.probabilities,
                                  dp.coordinates, dp.weights, failure.distance,

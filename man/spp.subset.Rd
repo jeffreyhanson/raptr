@@ -28,12 +28,13 @@ Subset species from a \code{\link[=RapData]{RapData()}}, \code{\link[=RapUnsolve
 \code{\link[=RapSolved]{RapSolved()}} object.
 }
 \examples{
+\dontrun{
 # load data
 data(sim_ru)
 
 # generate new object with only species 1
 sim_ru2 <- spp.subset(sim_ru, 1)
-
+}
 }
 \seealso{
 \code{\link[=RapData]{RapData()}}, \code{\link[=RapUnsolved]{RapUnsolved()}},

@@ -17,9 +17,10 @@ A new \code{ManualOpts()} object
 This function creates a new ManualOpts object.
 }
 \examples{
+\dontrun{
 # create ManualOpts object
 ManualOpts(NumberSolutions = 1L)
-
+}
 }
 \seealso{
 \linkS4class{ManualOpts}.

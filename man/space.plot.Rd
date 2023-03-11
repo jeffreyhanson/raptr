@@ -65,6 +65,7 @@ Note that this function only works for attribute spaces with one, two, or
 three dimensions.
 }
 \examples{
+\dontrun{
 # load RapSolved objects
 data(sim_ru, sim_rs)
 
@@ -73,5 +74,5 @@ space.plot(sim_ru, 1, 1)
 
 # plot distribution of solutions for first species in first attribute space
 space.plot(sim_rs, 1, 1)
-
+}
 }

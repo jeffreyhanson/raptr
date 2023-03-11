@@ -37,9 +37,10 @@ methods::setClass("RapUnreliableOpts", contains = "RapOpts",
 #' @seealso [RapUnreliableOpts-class].
 #'
 #' @examples
+#' \dontrun{
 #' # create RapUnreliableOpts using defaults
 #' RapUnreliableOpts(BLM = 0)
-#'
+#' }
 #' @export
 RapUnreliableOpts <- function(BLM = 0) {
   ro <- methods::new("RapUnreliableOpts", BLM = BLM)

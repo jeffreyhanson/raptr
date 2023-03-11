@@ -37,6 +37,7 @@ code{numeric} vector.
 This function sets or returns the target amounts for each species.
 }
 \examples{
+\dontrun{
 # load data
 data(sim_rs)
 
@@ -51,7 +52,7 @@ amount.target(sim_rs, 1)
 
 # set amount targets for for first species
 amount.target(sim_rs, 1) <- 0.5
-
+}
 }
 \seealso{
 \code{\link[=RapData]{RapData()}}, \code{\link[=RapResults]{RapResults()}},

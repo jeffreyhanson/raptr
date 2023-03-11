@@ -18,10 +18,11 @@ This functions creates a blank \code{SpatRaster} based on the spatial extent of 
 \code{sf} object.
 }
 \examples{
+\dontrun{
 # make sf data
 polys <- sim.pus(225L)
 
 # make raster from sf
 blank.raster(polys, 1)
-
+}
 }

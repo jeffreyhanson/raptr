@@ -37,6 +37,7 @@ A \code{numeric} or \code{matrix} objects.
 This function sets or returns the attribute space targets for each species.
 }
 \examples{
+\dontrun{
 # load data
 data(sim_rs)
 
@@ -51,7 +52,7 @@ space.target(sim_rs, 1, 1)
 
 # set space targets for first species for first space
 space.target(sim_rs, 1, 1) <- 0.5
-
+}
 }
 \seealso{
 \code{\link[=RapData]{RapData()}}, \code{\link[=RapResults]{RapResults()}}, \code{\link[=RapSolved]{RapSolved()}}.

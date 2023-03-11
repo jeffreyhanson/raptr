@@ -72,6 +72,7 @@ methods::setClass("DemandPoints",
 #' @seealso [DemandPoints-class].
 #'
 #' @examples
+#' \dontrun{
 #' # make demand points
 #' dps <- DemandPoints(
 #'  matrix(rnorm(100), ncol=2),
@@ -80,7 +81,7 @@ methods::setClass("DemandPoints",
 #'
 #' # print object
 #' print(dps)
-#'
+#' }
 #' @export
 DemandPoints <- function(coords, weights) {
   dp <- methods::new("DemandPoints", coords = coords, weights = weights)
@@ -127,6 +128,7 @@ DemandPoints <- function(coords, weights) {
 #'   [adehabitatHR::mcp()].
 #'
 #' @examples
+#' \dontrun{
 #' # set random number generator seed
 #' set.seed(500)
 #'
@@ -148,7 +150,6 @@ DemandPoints <- function(coords, weights) {
 #' # print object
 #' print(dps1)
 #'
-#' \dontrun{
 #' # generate demand points for a 2d space using hypervolume
 #' dps2 <- make.DemandPoints(
 #'   points = env.points,

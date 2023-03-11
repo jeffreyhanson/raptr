@@ -84,7 +84,7 @@ install:
 	R --slave -e "devtools::install_local()"
 
 examples:
-	R --slave -e "devtools::run_examples(run_donttest = TRUE, run_dontrun = TRUE);warnings()"  >> examples.log
+	R --slave -e "devtools::run_examples(run_donttest = TRUE, run_dontrun = TRUE);warnings()" >> examples.log 2>&1
 	rm -f Rplots.pdf
 
 .PHONY: initc clean docs readme contrib site test check checkwb solarischeck fedoracheck build install man data examples spellcheck urlcheck

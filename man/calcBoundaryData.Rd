@@ -37,6 +37,7 @@ function is used improperly then it may crash R. Furthermore, multipart
 polygons with touching edges will likely result in inaccuracies.
 }
 \examples{
+\dontrun{
 # simulate planning units
 sim_pus <- sim.pus(225L)
 
@@ -45,7 +46,7 @@ bound.dat <- calcBoundaryData(sim_pus)
 
 # print summary of boundary data
 summary(bound.dat)
-
+}
 }
 \seealso{
 This function is based on the algorithm in QMARXAN

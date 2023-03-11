@@ -50,6 +50,7 @@ demand points. This method can be used for hyper-dimensional data
 (\eqn{d << 3}).
 }
 \examples{
+\dontrun{
 # set random number generator seed
 set.seed(500)
 
@@ -71,7 +72,6 @@ dps1 <- make.DemandPoints(points = env.points[, 1], kernel.method = "ks")
 # print object
 print(dps1)
 
-\dontrun{
 # generate demand points for a 2d space using hypervolume
 dps2 <- make.DemandPoints(
   points = env.points,

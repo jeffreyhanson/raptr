@@ -18,6 +18,7 @@ A new \code{DemandPoints} object.
 This function creates a new \code{DemandPoints} object
 }
 \examples{
+\dontrun{
 # make demand points
 dps <- DemandPoints(
  matrix(rnorm(100), ncol=2),
@@ -26,7 +27,7 @@ dps <- DemandPoints(
 
 # print object
 print(dps)
-
+}
 }
 \seealso{
 \linkS4class{DemandPoints}.

@@ -59,6 +59,7 @@ Generally, users are not encouraged to change arguments to
 \code{.cache}.
 }
 \examples{
+\dontrun{
 # load data
 cs_pus <- sf::read_sf(
  system.file("extdata", "cs_pus.gpkg", package = "raptr")
@@ -121,7 +122,7 @@ x <- RapData(
 
 # print object
 print(x)
-
+}
 }
 \seealso{
 \code{\link[PBSmapping:PolySet]{PBSmapping::PolySet()}}, \code{\link[sp:SpatialPoints]{sp::SpatialPoints()}},

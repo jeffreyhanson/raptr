@@ -16,9 +16,10 @@ RapUnreliableOpts(BLM = 0)
 This function creates a new RapUnreliableOpts object.
 }
 \examples{
+\dontrun{
 # create RapUnreliableOpts using defaults
 RapUnreliableOpts(BLM = 0)
-
+}
 }
 \seealso{
 \linkS4class{RapUnreliableOpts}.

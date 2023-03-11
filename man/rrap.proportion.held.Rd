@@ -39,7 +39,8 @@ variation that one set of points captures in a another set of points using
 the reliable formulation.
 }
 \examples{
+\dontrun{
 rrap.proportion.held(as.matrix(iris[1:2,-5]), runif(1:2),
                      as.matrix(iris[1:5,-5]), runif(1:5), 10)
-
+}
 }

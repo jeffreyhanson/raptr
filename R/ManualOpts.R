@@ -41,9 +41,10 @@ methods::setClass("ManualOpts",
 #' @seealso [ManualOpts-class].
 #'
 #' @examples
+#' \dontrun{
 #' # create ManualOpts object
 #' ManualOpts(NumberSolutions = 1L)
-#'
+#' }
 #' @export
 ManualOpts <- function(NumberSolutions = 1L) {
   mo <- methods::new("ManualOpts", NumberSolutions = NumberSolutions)

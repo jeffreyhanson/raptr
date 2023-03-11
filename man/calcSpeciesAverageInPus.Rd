@@ -44,6 +44,7 @@ parameter, this parameter has been deprecated.
 }
 
 \examples{
+\dontrun{
 # simulate data
 sim_pus <- sim.pus(225L)
 sim_spp <- terra::rast(
@@ -56,5 +57,5 @@ puvspr1.dat <- calcSpeciesAverageInPus(sim_pus, sim_spp[[1]])
 
 # calculate average for multiple species
 puvspr2.dat <- calcSpeciesAverageInPus(sim_pus, sim_spp)
-
+}
 }

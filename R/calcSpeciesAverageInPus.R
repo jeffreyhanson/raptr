@@ -27,6 +27,7 @@ NULL
 #' @return A [base::data.frame()] object.
 #'
 #' @examples
+#' \dontrun{
 #' # simulate data
 #' sim_pus <- sim.pus(225L)
 #' sim_spp <- terra::rast(
@@ -39,7 +40,7 @@ NULL
 #'
 #' # calculate average for multiple species
 #' puvspr2.dat <- calcSpeciesAverageInPus(sim_pus, sim_spp)
-#'
+#' }
 #' @export
 calcSpeciesAverageInPus <- function(x, ...) UseMethod("calcSpeciesAverageInPus")
 

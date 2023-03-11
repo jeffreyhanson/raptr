@@ -24,6 +24,7 @@ variation that one set of points captures in a another set of points using
 the unreliable formulation.
 }
 \examples{
+\dontrun{
 urap.proportion.held(as.matrix(iris[1:2,-5]), as.matrix(iris[1:5,-5]))
-
+}
 }

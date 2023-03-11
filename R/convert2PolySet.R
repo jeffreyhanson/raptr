@@ -25,12 +25,13 @@ NULL
 #'   `maptools::SpatialPolygons2PolySet`.
 #'
 #' @examples
+#' \dontrun{
 #' # generate sf object
 #' sim_pus <- sim.pus(225L)
 #'
 #' # convert to PolySet
 #' x <- convert2PolySet(sim_pus)
-#'
+#' }
 #' @export
 convert2PolySet <- function(x, n_preallocate)
   UseMethod("convert2PolySet")

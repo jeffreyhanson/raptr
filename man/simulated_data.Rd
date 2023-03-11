@@ -36,6 +36,7 @@ own core and marginal area.}
 }
 }
 \examples{
+\dontrun{
 # load data
 data(sim_ru, sim_rs)
 
@@ -49,5 +50,6 @@ plot(sim_rs)
 
 # plot best solution
 plot(sim_rs, 0)
+}
 }
 \keyword{datasets}

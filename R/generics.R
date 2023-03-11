@@ -28,9 +28,9 @@ NULL
 #' @seealso [RapUnsolved()], [RapSolved()].
 #'
 #' @examples
+#' \dontrun{
 #' # load RapUnsolved object
 #' data(sim_ru)
-#' \dontrun{
 #' # solve it using Gurobi
 #' sim_rs <- solve(sim_ru)
 #'
@@ -44,7 +44,6 @@ NULL
 #' sim_rs4 <- solve(sim_ru, matrix(sample(c(0, 1), size = 500, replace = TRUE),
 #'                  ncol = 100, nrow = 5))
 #' }
-#'
 #' @name solve
 #'
 #' @rdname solve
@@ -116,6 +115,7 @@ NULL
 #' @seealso [RapSolved()].
 #'
 #' @examples
+#' \dontrun{
 #' # load example data set with solutions
 #' data(sim_rs)
 #'
@@ -130,6 +130,7 @@ NULL
 #'
 #' # plot different between best and second solutions
 #' plot(sim_rs, sim_rs, 0 ,2)
+#' }
 NULL
 
 #' Names
@@ -147,6 +148,7 @@ NULL
 #'   [RapSolved()].
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_rs)
 #'
@@ -158,6 +160,7 @@ NULL
 #'
 #' # show new names
 #' names(sim_rs)
+#' }
 NULL
 
 #' Print objects
@@ -181,6 +184,7 @@ NULL
 #'   [RapSolved()].
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_ru, sim_rs)
 #'
@@ -204,6 +208,7 @@ NULL
 #'
 #' # print RapSolved object
 #' print(sim_rs)
+#' }
 NULL
 
 #' Show objects
@@ -223,6 +228,7 @@ NULL
 #'   [RapSolved()].
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_ru, sim_rs)
 #'
@@ -246,6 +252,7 @@ NULL
 #'
 #' # show RapSolved object
 #' sim_rs
+#' }
 NULL
 
 #' Convert object to list
@@ -267,11 +274,13 @@ NULL
 #' @seealso `GurobiOpts`.
 #'
 #' @examples
+#' \dontrun{
 #' # make GuboriOpts object
 #' x <- GurobiOpts()
 #'
 #' # convert to list
 #' as.list(x)
+#' }
 NULL
 
 #' Summary of solutions
@@ -316,11 +325,13 @@ NULL
 #' @seealso [RapResults()], [RapSolved()].
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_rs)
 #'
 #' # show summary
 #' summary(sim_rs)
+#' }
 NULL
 
 #' Update object
@@ -419,6 +430,7 @@ NULL
 #'   [RapUnsolved-class], [RapSolved-class].
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_ru, sim_rs)
 #'
@@ -458,6 +470,7 @@ NULL
 #'             solve = FALSE)
 #' print(x@@opts@@BLM); print(amount.target(x))
 #' print(y@@opts@@BLM); print(space.target(y))
+#' }
 NULL
 
 #' Subset species
@@ -480,12 +493,13 @@ NULL
 #' @rdname spp.subset
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_ru)
 #'
 #' # generate new object with only species 1
 #' sim_ru2 <- spp.subset(sim_ru, 1)
-#'
+#' }
 #' @export
 spp.subset <- function(x, species) UseMethod("spp.subset")
 
@@ -509,12 +523,13 @@ spp.subset <- function(x, species) UseMethod("spp.subset")
 #' @rdname pu.subset
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_ru)
 #'
 #' # generate new object with first 10 planning units
 #' sim_ru2 <- pu.subset(sim_ru, seq_len(10))
-#'
+#' }
 #' @export
 pu.subset <- function(x, pu) UseMethod("pu.subset")
 
@@ -544,12 +559,13 @@ pu.subset <- function(x, pu) UseMethod("pu.subset")
 #' @rdname dp.subset
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_ru)
 #'
 #' # generate new object with first 10 planning units
 #' sim_ru2 <- dp.subset(sim_ru, 1, 1, seq_len(10))
-#'
+#' }
 #' @export
 dp.subset <- function(x, space, species, points) UseMethod("dp.subset")
 
@@ -576,12 +592,13 @@ dp.subset <- function(x, space, species, points) UseMethod("dp.subset")
 #' @rdname prob.subset
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_ru)
 #'
 #' # generate new object with first 10 planning units
 #' sim_ru2 <- prob.subset(sim_ru, seq_len(3), c(0.1, 0.2, 0.3))
-#'
+#' }
 #' @export
 prob.subset <- function(x, species, threshold) UseMethod("prob.subset")
 
@@ -602,6 +619,7 @@ prob.subset <- function(x, species, threshold) UseMethod("prob.subset")
 #' @seealso [RapResults()], [RapSolved()].
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_rs)
 #'
@@ -613,7 +631,7 @@ prob.subset <- function(x, species, threshold) UseMethod("prob.subset")
 #'
 #' # score for all solutions
 #' score(sim_rs, NULL)
-#'
+#' }
 #' @export
 score <- function(x, y) UseMethod("score")
 
@@ -634,6 +652,7 @@ score <- function(x, y) UseMethod("score")
 #' @seealso [RapResults()], [RapSolved()].
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_rs)
 #'
@@ -645,7 +664,7 @@ score <- function(x, y) UseMethod("score")
 #'
 #' # log files for all solutions
 #' cat(logging.file(sim_rs, NULL))
-#'
+#' }
 #' @export
 logging.file <- function(x, y) UseMethod("logging.file")
 
@@ -668,6 +687,7 @@ logging.file <- function(x, y) UseMethod("logging.file")
 #' @seealso [RapResults()], [RapSolved()].
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_rs)
 #'
@@ -682,7 +702,7 @@ logging.file <- function(x, y) UseMethod("logging.file")
 #'
 #' # amount held (%) in each solution for each species
 #' amount.held(sim_rs, NULL)
-#'
+#' }
 #' @export
 amount.held <- function(x, y, species) UseMethod("amount.held")
 
@@ -708,6 +728,7 @@ amount.held <- function(x, y, species) UseMethod("amount.held")
 #' @name amount.target
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_rs)
 #'
@@ -722,7 +743,7 @@ amount.held <- function(x, y, species) UseMethod("amount.held")
 #'
 #' # set amount targets for for first species
 #' amount.target(sim_rs, 1) <- 0.5
-#'
+#' }
 #' @export
 amount.target <- function(x, species) UseMethod("amount.target")
 
@@ -753,6 +774,7 @@ amount.target <- function(x, species) UseMethod("amount.target")
 #' @seealso [RapResults()], [RapSolved()].
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_rs)
 #'
@@ -764,7 +786,7 @@ amount.target <- function(x, species) UseMethod("amount.target")
 #'
 #' # space held (%) for each species in each solution
 #' space.held(sim_rs)
-#'
+#' }
 #' @export
 space.held <- function(x, y, species, space) UseMethod("space.held")
 
@@ -787,6 +809,7 @@ space.held <- function(x, y, species, space) UseMethod("space.held")
 #' @name space.target
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_rs)
 #'
@@ -801,7 +824,7 @@ space.held <- function(x, y, species, space) UseMethod("space.held")
 #'
 #' # set space targets for first species for first space
 #' space.target(sim_rs, 1, 1) <- 0.5
-#'
+#' }
 #' @export
 space.target <- function(x, species, space) UseMethod("space.target")
 
@@ -828,6 +851,7 @@ space.target <- function(x, species, space) UseMethod("space.target")
 #' @seealso [RapResults()], [RapSolved()].
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_rs)
 #'
@@ -839,7 +863,7 @@ space.target <- function(x, species, space) UseMethod("space.target")
 #'
 #' # selections for each solution
 #' selections(sim_rs)
-#'
+#' }
 #' @export
 selections <- function(x, y) UseMethod("selections")
 
@@ -872,6 +896,7 @@ selections <- function(x, y) UseMethod("selections")
 #' @inherit plot details
 #'
 #' @examples
+#' \dontrun{
 #' # load RapSolved objects
 #' data(sim_ru, sim_rs)
 #'
@@ -880,7 +905,7 @@ selections <- function(x, y) UseMethod("selections")
 #'
 #' # plot "bimodal" species in sim_rs
 #' spp.plot(sim_rs, species = "bimodal")
-#'
+#' }
 #' @export
 spp.plot <- function(x, species, ...) UseMethod("spp.plot")
 
@@ -911,6 +936,7 @@ spp.plot <- function(x, species, ...) UseMethod("spp.plot")
 #' @param ... not used.
 #'
 #' @examples
+#' \dontrun{
 #' # load RapSolved objects
 #' data(sim_ru, sim_rs)
 #'
@@ -919,7 +945,7 @@ spp.plot <- function(x, species, ...) UseMethod("spp.plot")
 #'
 #' # plot distribution of solutions for first species in first attribute space
 #' space.plot(sim_rs, 1, 1)
-#'
+#' }
 #' @export
 space.plot <- function(x, species, space, ...) UseMethod("space.plot")
 
@@ -939,11 +965,12 @@ space.plot <- function(x, species, space, ...) UseMethod("space.plot")
 #' @return `data.frame` object.
 #'
 #' @examples
+#' \dontrun{
 #' # load RapSolved objects
 #' data(sim_ru)
 #'
 #' # calculate maximum metrics
 #' maximum.targets(sim_ru)
-#'
+#' }
 #' @export
 maximum.targets <- function(x, verbose) UseMethod("maximum.targets")

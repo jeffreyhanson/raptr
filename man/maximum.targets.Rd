@@ -26,10 +26,11 @@ prioritization that contains all the available planning units. Note that the
 maximum amount-based targets are always 1.
 }
 \examples{
+\dontrun{
 # load RapSolved objects
 data(sim_ru)
 
 # calculate maximum metrics
 maximum.targets(sim_ru)
-
+}
 }

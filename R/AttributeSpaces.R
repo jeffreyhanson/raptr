@@ -53,6 +53,7 @@ methods::setClass("AttributeSpaces",
 #' @seealso [AttributeSpace-class].
 #'
 #' @examples
+#' \dontrun{
 #' space1 <- AttributeSpace(
 #'   PlanningUnitPoints(
 #'     matrix(rnorm(100), ncol = 2),
@@ -78,7 +79,7 @@ methods::setClass("AttributeSpaces",
 #' )
 #'
 #' spaces <- AttributeSpaces(list(space1, space2), "spaces")
-#'
+#' }
 #' @export
 AttributeSpaces <- function(spaces, name) {
   asp <- methods::new("AttributeSpaces", spaces = spaces,

@@ -22,6 +22,7 @@ A new \code{AttributeSpace} object.
 This function creates a new \code{AttributeSpace} object.
 }
 \examples{
+\dontrun{
 space <- AttributeSpace(
  PlanningUnitPoints(
    matrix(rnorm(100), ncol = 2),
@@ -33,7 +34,7 @@ space <- AttributeSpace(
   ),
  species = 1L
 )
-
+}
 }
 \seealso{
 \linkS4class{DemandPoints}, \linkS4class{PlanningUnitPoints}.

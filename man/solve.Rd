@@ -46,9 +46,9 @@ has all of its inputs generated. The rap function (without lower case 'r')
 provides a more general interface for generating inputs and outputs.
 }
 \examples{
+\dontrun{
 # load RapUnsolved object
 data(sim_ru)
-\dontrun{
 # solve it using Gurobi
 sim_rs <- solve(sim_ru)
 
@@ -62,7 +62,6 @@ sim_rs3 <- solve(sim_ru, c(rep(TRUE, 10), rep(FALSE, 90)))
 sim_rs4 <- solve(sim_ru, matrix(sample(c(0, 1), size = 500, replace = TRUE),
                  ncol = 100, nrow = 5))
 }
-
 }
 \seealso{
 \code{\link[=RapUnsolved]{RapUnsolved()}}, \code{\link[=RapSolved]{RapSolved()}}.

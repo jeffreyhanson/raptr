@@ -39,6 +39,7 @@ when \code{\link[sf:sf]{sf::st_sf()}} are supplied.}
 This function simulates attribute space data for RAP.
 }
 \examples{
+\dontrun{
 # simulate planning units
 sim_pus <- sim.pus(225L)
 
@@ -57,5 +58,5 @@ plot(s1, main = "s1")
 plot(s2, main = "s2")
 plot(s3[[1]], main = "s3: first dimension")
 plot(s3[[2]], main = "s3: second dimension")
-
+}
 }

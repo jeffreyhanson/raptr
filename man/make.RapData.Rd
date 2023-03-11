@@ -76,6 +76,7 @@ This function prepares spatially explicit planning unit, species data, and
 landscape data layers for RAP processing.
 }
 \examples{
+\dontrun{
 # load data
 cs_pus <- sf::read_sf(
  system.file("extdata", "cs_pus.gpkg", package = "raptr")
@@ -86,7 +87,6 @@ cs_spp <- terra::rast(
 cs_space <- terra::rast(
   system.file("extdata", "cs_space.tif", package = "raptr")
 )
-\dontrun{
 # make RapData object using the first 10 planning units in the dat
 x <- make.RapData(cs_pus[1:10,], cs_spp, cs_space,
                   include.geographic.space = TRUE)

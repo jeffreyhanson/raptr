@@ -347,6 +347,7 @@ methods::setClass("RapData",
 #'   [RapData-class].
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' cs_pus <- sf::read_sf(
 #'  system.file("extdata", "cs_pus.gpkg", package = "raptr")
@@ -409,7 +410,7 @@ methods::setClass("RapData",
 #'
 #' # print object
 #' print(x)
-#'
+#' }
 #' @export
 RapData <- function(pu, species, targets, pu.species.probabilities,
                     attribute.spaces, boundary, polygons = NA,
@@ -518,6 +519,7 @@ RapData <- function(pu, species, targets, pu.species.probabilities,
 #' @seealso [RapData-class], [RapData()].
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' cs_pus <- sf::read_sf(
 #'  system.file("extdata", "cs_pus.gpkg", package = "raptr")
@@ -528,7 +530,6 @@ RapData <- function(pu, species, targets, pu.species.probabilities,
 #' cs_space <- terra::rast(
 #'   system.file("extdata", "cs_space.tif", package = "raptr")
 #' )
-#' \dontrun{
 #' # make RapData object using the first 10 planning units in the dat
 #' x <- make.RapData(cs_pus[1:10,], cs_spp, cs_space,
 #'                   include.geographic.space = TRUE)

@@ -68,6 +68,7 @@ methods::setClass("AttributeSpace",
 #' @seealso [DemandPoints-class], [PlanningUnitPoints-class].
 #'
 #' @examples
+#' \dontrun{
 #' space <- AttributeSpace(
 #'  PlanningUnitPoints(
 #'    matrix(rnorm(100), ncol = 2),
@@ -79,7 +80,7 @@ methods::setClass("AttributeSpace",
 #'   ),
 #'  species = 1L
 #' )
-#'
+#' }
 #' @export
 AttributeSpace <- function(planning.unit.points, demand.points, species) {
   asp <- methods::new(

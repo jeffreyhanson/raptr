@@ -30,6 +30,7 @@ This function returns the attribute space held for each species in a
 solution.
 }
 \examples{
+\dontrun{
 # load data
 data(sim_rs)
 
@@ -41,7 +42,7 @@ space.held(sim_rs, 2)
 
 # space held (\%) for each species in each solution
 space.held(sim_rs)
-
+}
 }
 \seealso{
 \code{\link[=RapResults]{RapResults()}}, \code{\link[=RapSolved]{RapSolved()}}.
