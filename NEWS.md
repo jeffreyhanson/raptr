@@ -1,4 +1,4 @@
-# raptr 1.0.0.0
+# raptr 1.0.0
 
 - The package has been overhauled to support modern spatial data structures.
   Specifically, _sf_ package objects (`sf::st_sf()`) are now use for vector
