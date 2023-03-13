@@ -12,9 +12,12 @@
   datasets for packages. These datasets can now be manually imported from
   external files distributed with the package (see `?cs_pus` for more details).
 - Remove _rgdal_ and _rgeos_ packages as dependencies (#13).
-- Support for the _raster_ package has been deprecated, in favour of the
-  _terra_ package.
+- Support for the _raster_ package has been deprecated.
 - The `SpatialPolygons2PolySet` function has been renamed to `convert2PolySet`.
+- Update citation format.
+- Update package startup message.
+- Update C++ specification to C++14.
+- Update examples and unit tests.
 
 # raptr 0.2.2.0
 
