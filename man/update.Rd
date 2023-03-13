@@ -135,6 +135,7 @@ This function updates parameters or data stored in an existing
 \code{\link[=RapUnsolved]{RapUnsolved()}}, or \code{\link[=RapSolved]{RapSolved()}} object.
 }
 \examples{
+\dontrun{
 # load data
 data(sim_ru, sim_rs)
 
@@ -174,6 +175,7 @@ y <- update(x, space.target = c(0.4, 0.6, 0.9), BLM = 100, Presolve = 1L,
             solve = FALSE)
 print(x@opts@BLM); print(amount.target(x))
 print(y@opts@BLM); print(space.target(y))
+}
 }
 \seealso{
 \linkS4class{GurobiOpts},

@@ -21,8 +21,10 @@ methods::setClass("ManualOpts",
   contains = "SolverOpts",
   validity = function(object) {
     # NumberSolutions
-    assertthat::assert_that(assertthat::is.count(object@NumberSolutions),
-                            is.finite(object@NumberSolutions))
+    assertthat::assert_that(
+      assertthat::is.count(object@NumberSolutions),
+      assertthat::noNA(object@NumberSolutions)
+    )
     return(TRUE)
   }
 )
@@ -34,14 +36,15 @@ methods::setClass("ManualOpts",
 #' @param NumberSolutions `integer` number of solutions to generate.
 #'   Defaults to 1L.
 #'
-#' @return [ManualOpts()] object
+#' @return A new `ManualOpts()` object
 #'
 #' @seealso [ManualOpts-class].
 #'
 #' @examples
+#' \dontrun{
 #' # create ManualOpts object
 #' ManualOpts(NumberSolutions = 1L)
-#'
+#' }
 #' @export
 ManualOpts <- function(NumberSolutions = 1L) {
   mo <- methods::new("ManualOpts", NumberSolutions = NumberSolutions)

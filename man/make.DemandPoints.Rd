@@ -28,7 +28,7 @@ generate demand points. Defaults to \code{'ks'}.}
 \item{...}{arguments passed to kernel density estimating functions}
 }
 \value{
-\code{\link[=DemandPoints]{DemandPoints()}} object.
+A new \code{\link[=DemandPoints]{DemandPoints()}} object.
 }
 \description{
 This function generates demand points to characterize a distribution of
@@ -50,15 +50,21 @@ demand points. This method can be used for hyper-dimensional data
 (\eqn{d << 3}).
 }
 \examples{
+\dontrun{
 # set random number generator seed
 set.seed(500)
 
 # load data
-data(cs_spp, cs_space)
+cs_spp <- terra::rast(
+  system.file("extdata", "cs_spp.tif", package = "raptr")
+)
+cs_space <- terra::rast(
+  system.file("extdata", "cs_space.tif", package = "raptr")
+)
 
 # generate species points
 species.points <- randomPoints(cs_spp[[1]], n = 100, prob = TRUE)
-env.points <- raster::extract(cs_space, species.points)
+env.points <- as.matrix(terra::extract(cs_space, species.points))
 
 # generate demand points for a 1d space using ks
 dps1 <- make.DemandPoints(points = env.points[, 1], kernel.method = "ks")
@@ -66,12 +72,13 @@ dps1 <- make.DemandPoints(points = env.points[, 1], kernel.method = "ks")
 # print object
 print(dps1)
 
-\dontrun{
 # generate demand points for a 2d space using hypervolume
-dps2 <- make.DemandPoints(points = env.points,
-                          kernel.method = "hypervolume",
-                          samples.per.point = 50,
-                          verbose = FALSE)
+dps2 <- make.DemandPoints(
+  points = env.points,
+  kernel.method = "hypervolume",
+  samples.per.point = 50,
+  verbose = FALSE
+)
 
 # print object
 print(dps2)

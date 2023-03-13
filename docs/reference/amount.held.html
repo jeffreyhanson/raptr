@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0.0</span>
       </span>
     </div>
 
@@ -93,13 +93,14 @@ arguments.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># load data</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># load data</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sim_rs</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># amount held (%) in best solution for each species</span></span></span>
 <span class="r-in"><span><span class="fu">amount.held</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   uniform    normal   bimodal</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     0.2 0.2262132 0.2213291</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     0.2 0.2068042 0.2258136</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># amount held (%) in best solution for species 1</span></span></span>
 <span class="r-in"><span><span class="fu">amount.held</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></span>
@@ -108,16 +109,16 @@ arguments.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># amount held (%) in second solution for each species</span></span></span>
 <span class="r-in"><span><span class="fu">amount.held</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   uniform    normal  bimodal</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     0.2 0.2253754 0.224115</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   uniform    normal   bimodal</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     0.2 0.2105088 0.2422478</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># amount held (%) in each solution for each species</span></span></span>
 <span class="r-in"><span><span class="fu">amount.held</span><span class="op">(</span><span class="va">sim_rs</span>, <span class="cn">NULL</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   uniform    normal   bimodal</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     0.2 0.2262132 0.2213291</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     0.2 0.2253754 0.2241150</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     0.2 0.2049503 0.2299639</span>
-<span class="r-in"><span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     0.2 0.2068042 0.2258136</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     0.2 0.2105088 0.2422478</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     0.2 0.2090607 0.2503469</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -132,7 +133,7 @@ arguments.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

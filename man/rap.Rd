@@ -14,15 +14,15 @@ rap(
 )
 }
 \arguments{
-\item{pus}{\code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} object representing planning
+\item{pus}{\code{\link[sf:st_as_sf]{sf::st_as_sf()}} object representing planning
 units.}
 
-\item{species}{\code{\link[raster:raster]{raster::raster()}} object with species distribution
+\item{species}{\code{\link[terra:rast]{terra::rast()}} object with species distribution
 data.}
 
-\item{spaces}{\code{list} of \code{\link[raster:raster]{raster::raster()}} objects. Each
+\item{spaces}{\code{\link[terra:rast]{terra::rast()}} or \code{list} of \code{\link[terra:rast]{terra::rast()}} objects. Each
 elements denotes the spatial distribution for each space. Defaults to
-\code{NULL}.}
+\code{NULL} such that spaces are generated automatically.}
 
 \item{formulation}{\code{character} to indicate if the \code{"unreliable"} or
 \code{"reliable"} formulation should be used to generate prioritizations.
@@ -35,7 +35,7 @@ Defaults to \code{"unreliable"}.}
 \code{\link[=RapUnreliableOpts]{RapUnreliableOpts()}} functions.}
 }
 \value{
-\code{\link[=RapSolved]{RapSolved()}} object if \code{solve} is \code{TRUE},
+A new \code{\link[=RapSolved]{RapSolved()}} object if \code{solve} is \code{TRUE},
 otherwise an \code{\link[=RapUnsolved]{RapUnsolved()}} is returned.
 }
 \description{

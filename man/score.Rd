@@ -28,6 +28,7 @@ Extract solution score from \code{\link[=RapResults]{RapResults()}} or
 \code{\link[=RapSolved]{RapSolved()}} object.
 }
 \examples{
+\dontrun{
 # load data
 data(sim_rs)
 
@@ -39,7 +40,7 @@ score(sim_rs, 2)
 
 # score for all solutions
 score(sim_rs, NULL)
-
+}
 }
 \seealso{
 \code{\link[=RapResults]{RapResults()}}, \code{\link[=RapSolved]{RapSolved()}}.

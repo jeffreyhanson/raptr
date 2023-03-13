@@ -1,3 +1,10 @@
+#' @import sf
+#' @import terra
+NULL
+
+#' @useDynLib raptr, .registration = TRUE
+NULL
+
 #' raptr: Representative and Adequate Prioritization Toolkit in R
 #'
 #' Biodiversity is in crisis. The overarching aim of conservation is to preserve
@@ -49,7 +56,6 @@
 NULL
 
 # define function to avoid CRAN check issue
-#' @importFrom rgdal readOGR
 #' @importFrom withr with_locale
 NULL
 

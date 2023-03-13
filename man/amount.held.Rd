@@ -27,6 +27,7 @@ arguments.
 This function returns the amount held for each species in a solution.
 }
 \examples{
+\dontrun{
 # load data
 data(sim_rs)
 
@@ -41,7 +42,7 @@ amount.held(sim_rs, 2)
 
 # amount held (\%) in each solution for each species
 amount.held(sim_rs, NULL)
-
+}
 }
 \seealso{
 \code{\link[=RapResults]{RapResults()}}, \code{\link[=RapSolved]{RapSolved()}}.

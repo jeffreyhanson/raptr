@@ -7,21 +7,22 @@
 blank.raster(x, res)
 }
 \arguments{
-\item{x}{\link[sp:Spatial-class]{sp::Spatial} object.}
+\item{x}{\code{\link[sf:sf]{sf::st_sf()}} object.}
 
 \item{res}{\code{numeric} \code{vector} specifying resolution of the output raster
 in the x and y dimensions. If \code{vector} is of length one, then the
 pixels are assumed to be square.}
 }
 \description{
-This functions creates a blank raster based on the spatial extent of a
-Spatial object.
+This functions creates a blank \code{SpatRaster} based on the spatial extent of a
+\code{sf} object.
 }
 \examples{
-# make SpatialPolygons
+\dontrun{
+# make sf data
 polys <- sim.pus(225L)
 
-# make RasterLayer from SpatialPolygons
+# make raster from sf
 blank.raster(polys, 1)
-
+}
 }

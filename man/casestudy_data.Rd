@@ -9,9 +9,9 @@
 \title{Case-study dataset for a conservation planning exercise}
 \format{
 \describe{
-\item{cs_pus}{\code{\link[sp:SpatialPolygons]{sp::SpatialPolygonsDataFrame()}} object.}
-\item{cs_spp}{\code{\link[raster:raster]{raster::raster()}} object.}
-\item{cs_space}{\code{\link[raster:stack]{raster::stack()}} object.}
+\item{\code{"cs_pus.gpkg"}}{Geopackage file}
+\item{\code{"cs_species.tif"}}{GeoTIFF file.}
+\item{\code{"cs_space.tif"}}{GeoTIFF file.}
 }
 }
 \description{
@@ -21,7 +21,7 @@ pale-headed Rosella (\emph{Platycercus adscitus}) in Queensland, Australia.
 \details{
 The objects in the dataset are listed below.
 \describe{
-\item{cs_pus}{\code{\link[sp:SpatialPolygons]{sp::SpatialPolygonsDataFrame()}} planning units.
+\item{\code{"cs_pus.gpkg"}}{Geopackage file containing planning units.
 The units were generated as \eqn{30km^2} squares across the
 species' range, and then clipped to the Queensland, Australia
 (using data obtained from the Australia Bureau of Statistics; \url{https://www.abs.gov.au/ausstats/abs@.nsf/mf/1259.0.30.001?OpenDocument}).
@@ -33,22 +33,30 @@ the amount of land encompassed by each unit, the \code{cost}
 field is set to 1 for all units, and the \code{status} field
 indicates if 50\% or more of the units' extent is covered by
 protected areas.}
-\item{cs_spp}{\code{\link[raster:raster]{raster::raster()}} probability
+\item{\code{"cs_spp.tif"}}{GeoTIFF file containing probability
 distribution map for the \emph{P. adscitus} clipped to
 Queensland, Australia. This map was derived from records
-obtained from The Atlas of Living Australia (\url{https://ala.org.au/})}.
-\item{cs_space}{\code{\link[raster:stack]{raster::stack()}} describing broad-scale climate
+obtained from The Atlas of Living Australia.}
+\item{\code{"cs_space.tif"}}{GeoTIFF file describing broad-scale climate
 variation across Queensland
 (obtained from \url{https://worldclim.org/},
 and resampled to \eqn{10km^2} resolution).}
 }
 }
 \examples{
+\dontrun{
 # load data
-data(cs_pus, cs_spp, cs_space)
+cs_pus <- sf::read_sf(
+ system.file("extdata", "cs_pus.gpkg", package = "raptr")
+)
+cs_spp <- terra::rast(
+  system.file("extdata", "cs_spp.tif", package = "raptr")
+)
+cs_space <- terra::rast(
+  system.file("extdata", "cs_space.tif", package = "raptr")
+)
 
 # plot data
-\dontrun{
 plot(cs_pus)
 plot(cs_spp)
 plot(cs_space)

@@ -18,7 +18,7 @@ to generate solutions."><!-- mathjax --><script src="https://cdnjs.cloudflare.co
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">raptr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0.0</span>
       </span>
     </div>
 
@@ -71,19 +71,19 @@ to generate solutions.</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>pus</dt>
-<dd><p><code><a href="https://rdrr.io/pkg/sp/man/SpatialPolygons.html" class="external-link">sp::SpatialPolygons()</a></code> object representing planning
+<dd><p><code><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">sf::st_as_sf()</a></code> object representing planning
 units.</p></dd>
 
 
 <dt>species</dt>
-<dd><p><code><a href="https://rdrr.io/pkg/raster/man/raster.html" class="external-link">raster::raster()</a></code> object with species distribution
+<dd><p><code><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">terra::rast()</a></code> object with species distribution
 data.</p></dd>
 
 
 <dt>spaces</dt>
-<dd><p><code>list</code> of <code><a href="https://rdrr.io/pkg/raster/man/raster.html" class="external-link">raster::raster()</a></code> objects. Each
+<dd><p><code><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">terra::rast()</a></code> or <code>list</code> of <code><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">terra::rast()</a></code> objects. Each
 elements denotes the spatial distribution for each space. Defaults to
-<code>NULL</code>.</p></dd>
+<code>NULL</code> such that spaces are generated automatically.</p></dd>
 
 
 <dt>formulation</dt>
@@ -106,7 +106,7 @@ Defaults to <code>"unreliable"</code>.</p></dd>
     <h2>Value</h2>
     
 
-<p><code><a href="RapSolved.html">RapSolved()</a></code> object if <code>solve</code> is <code>TRUE</code>,
+<p>A new <code><a href="RapSolved.html">RapSolved()</a></code> object if <code>solve</code> is <code>TRUE</code>,
 otherwise an <code><a href="RapUnsolved.html">RapUnsolved()</a></code> is returned.</p>
     </div>
     <div id="note">
@@ -134,7 +134,7 @@ tutorial.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

@@ -49,7 +49,7 @@ speed for big data sets.}
 \item{.cache}{\code{\link[base:environment]{base::environment()}} used to cache calculations.}
 }
 \value{
-RapData object
+A new \code{RapData} object.
 }
 \description{
 This function creates a "RapData" object using pre-processed data.
@@ -59,42 +59,70 @@ Generally, users are not encouraged to change arguments to
 \code{.cache}.
 }
 \examples{
+\dontrun{
 # load data
-data(cs_pus, cs_spp, cs_space)
+cs_pus <- sf::read_sf(
+ system.file("extdata", "cs_pus.gpkg", package = "raptr")
+)
+cs_spp <- terra::rast(
+  system.file("extdata", "cs_spp.tif", package = "raptr")
+)
+cs_space <- terra::rast(
+  system.file("extdata", "cs_space.tif", package = "raptr")
+)
 
 # create data for RapData object
 attribute.spaces <- list(
   AttributeSpaces(name = "geographic", list(
     AttributeSpace(
       planning.unit.points = PlanningUnitPoints(
-        rgeos::gCentroid(cs_pus[1:10,], byid = TRUE)@coords, seq_len(10)),
+        suppressWarnings(
+          sf::st_coordinates(sf::st_centroid(cs_pus[1:10, ]))
+        ),
+        seq_len(10)
+      ),
       demand.points = make.DemandPoints(
-        randomPoints(cs_spp[[1]], n = 10, prob = TRUE)),
-      species = 1L))),
+        randomPoints(cs_spp[[1]], n = 10, prob = TRUE)
+      ),
+      species = 1L
+    ))
+  ),
   AttributeSpaces(name = "environmental", list(
     AttributeSpace(
       planning.unit.points = PlanningUnitPoints(
-        raster::extract(cs_space[[1]], cs_pus[1:10,], fun = mean),
-        seq_len(10)),
+        as.matrix(terra::extract(
+          cs_space[[1]], as(cs_pus[1:10, ], "SpatVector"),
+          fun = "mean",
+          ID = FALSE
+        )),
+        seq_len(10)
+      ),
       demand.points = make.DemandPoints(
-        cs_space[[1]][raster::Which(!is.na(cs_space[[1]]))]),
-        species = 1L))))
-pu.species.probabilities <- calcSpeciesAverageInPus(cs_pus[1:10,],
-                                                    cs_spp[[1]])
-polygons <- SpatialPolygons2PolySet(cs_pus[1:10,])
-boundary <- calcBoundaryData(cs_pus[1:10,])
+        as.matrix(terra::as.data.frame(cs_space[[1]], na.rm = TRUE))
+      ),
+      species = 1L
+    )
+ ))
+)
+pu.species.probabilities <- calcSpeciesAverageInPus(
+  cs_pus[1:10,], cs_spp[[1]]
+)
+polygons <- convert2PolySet(cs_pus[1:10, ])
+boundary <- calcBoundaryData(cs_pus[1:10, ])
 
-x <- RapData(pu = cs_pus@data[1:10,], species = data.frame(name = "test"),
-             target = data.frame(species = 1L, target = 0:2,
-                                 proportion = 0.2),
-             pu.species.probabilities = pu.species.probabilities,
-             attribute.spaces = attribute.spaces,
-             polygons = polygons,
-             boundary = boundary)
+# create RapData object
+x <- RapData(
+  pu = cs_pus[1:10, ], species = data.frame(name = "test"),
+  target = data.frame(species = 1L, target = 0:2, proportion = 0.2),
+  pu.species.probabilities = pu.species.probabilities,
+  attribute.spaces = attribute.spaces,
+  polygons = polygons,
+  boundary = boundary
+)
 
 # print object
 print(x)
-
+}
 }
 \seealso{
 \code{\link[PBSmapping:PolySet]{PBSmapping::PolySet()}}, \code{\link[sp:SpatialPoints]{sp::SpatialPoints()}},

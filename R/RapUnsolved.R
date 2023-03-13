@@ -44,7 +44,12 @@ methods::setClass("RapUnsolved",
 #' set.seed(500)
 #'
 #' # load data
-#' data(cs_pus, cs_spp)
+#' cs_pus <- sf::read_sf(
+#'  system.file("extdata", "cs_pus.gpkg", package = "raptr")
+#' )
+#' cs_spp <- terra::rast(
+#'   system.file("extdata", "cs_spp.tif", package = "raptr")
+#' )
 #'
 #' # create inputs for RapUnsolved
 #' ro <- RapUnreliableOpts()

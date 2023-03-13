@@ -14,7 +14,7 @@ make.RapData(
   kernel.method = c("ks", "hypervolume")[1],
   quantile = 0.5,
   species.points = NULL,
-  n.species.points = ceiling(0.2 * raster::cellStats(species, "sum")),
+  n.species.points = ceiling(0.2 * terra::global(species, "sum", na.rm = TRUE)[[1]]),
   include.geographic.space = TRUE,
   scale = TRUE,
   verbose = FALSE,
@@ -22,12 +22,12 @@ make.RapData(
 )
 }
 \arguments{
-\item{pus}{\code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} with planning unit data.}
+\item{pus}{\code{\link[sf:st_as_sf]{sf::st_as_sf()}} with planning unit data.}
 
-\item{species}{\code{\link[raster:raster]{raster::raster()}} with species probability
+\item{species}{\code{\link[terra:rast]{terra::rast()}} with species probability
 distribution data.}
 
-\item{spaces}{\code{list} of/or \code{\link[raster:raster]{raster::raster()}} representing
+\item{spaces}{\code{list} of/or \code{\link[terra:rast]{terra::rast()}} representing
 projects of attribute space over geographic space. Use a \code{list} to
 denote separate attribute spaces.}
 
@@ -47,9 +47,8 @@ generate demand points. Use either \code{"ks"} or \code{"hypervolume"}.}
 \item{quantile}{\code{numeric} quantile to generate demand points within. If
 \code{species.points} intersect. Defaults to 0.5.}
 
-\item{species.points}{\code{list} of/or
-\code{\link[sp:SpatialPoints]{sp::SpatialPointsDataFrame()}} or
-\code{\link[sp:SpatialPoints]{sp::SpatialPoints()}} with species presence records. Use a
+\item{species.points}{\code{list} of/or \code{\link[sf:sf]{sf::st_sf()}} object species presence
+records. Use a
 \code{list} of objects to represent different species. Must have the same
 number of elements as \code{species}. If not supplied then use
 \code{n.species.points} to sample points from the species distributions.}
@@ -69,14 +68,25 @@ standard deviation? This prevents overflow. Defaults to \code{TRUE}.}
 \item{...}{additional arguments to \code{\link[=calcBoundaryData]{calcBoundaryData()}} and
 \code{\link[=calcSpeciesAverageInPus]{calcSpeciesAverageInPus()}}.}
 }
+\value{
+A new \code{RapData} object.
+}
 \description{
 This function prepares spatially explicit planning unit, species data, and
 landscape data layers for RAP processing.
 }
 \examples{
-# load data
-data(cs_pus, cs_spp, cs_space)
 \dontrun{
+# load data
+cs_pus <- sf::read_sf(
+ system.file("extdata", "cs_pus.gpkg", package = "raptr")
+)
+cs_spp <- terra::rast(
+  system.file("extdata", "cs_spp.tif", package = "raptr")
+)
+cs_space <- terra::rast(
+  system.file("extdata", "cs_space.tif", package = "raptr")
+)
 # make RapData object using the first 10 planning units in the dat
 x <- make.RapData(cs_pus[1:10,], cs_spp, cs_space,
                   include.geographic.space = TRUE)

@@ -2,12 +2,12 @@
 % Please edit documentation in R/misc.R
 \name{randomPoints}
 \alias{randomPoints}
-\title{Sample random points from a RasterLayer}
+\title{Sample random points from a SpatRaster}
 \usage{
 randomPoints(mask, n, prob = FALSE)
 }
 \arguments{
-\item{mask}{\code{\link[raster:raster]{raster::raster()}} object}
+\item{mask}{\code{\link[terra:rast]{terra::rast()}} object}
 
 \item{n}{\code{integer} number of points to sample}
 
@@ -19,10 +19,10 @@ Defaults to \code{FALSE}.}
 cell values.
 }
 \description{
-This function generates random points in a \code{\link[raster:raster]{raster::raster()}}
-object.
+This function generates random points in a \code{\link[terra:rast]{terra::rast()}} object.
 }
 \examples{
+\dontrun{
 # simulate data
 sim_pus <- sim.pus(225L)
 sim_spp <- sim.species(sim_pus, model = "normal", n = 1, res = 0.25)
@@ -35,7 +35,7 @@ pts2 <- randomPoints(sim_spp, n = 5, prob = TRUE)
 plot(sim_spp)
 points(pts1, col = "red")
 points(pts2, col = "black")
-
+}
 }
 \seealso{
 This function is similar to \code{dismo::randomPoints}.

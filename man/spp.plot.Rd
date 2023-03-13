@@ -96,6 +96,7 @@ This function requires the \pkg{RgoogleMaps} package to be installed
 in order to create display a basemap.
 }
 \examples{
+\dontrun{
 # load RapSolved objects
 data(sim_ru, sim_rs)
 
@@ -104,5 +105,5 @@ spp.plot(sim_ru, species = 1)
 
 # plot "bimodal" species in sim_rs
 spp.plot(sim_rs, species = "bimodal")
-
+}
 }

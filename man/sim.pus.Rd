@@ -13,7 +13,7 @@ sim.pus(
 )
 }
 \arguments{
-\item{n}{\code{integer} number of planning units. \code{sqrt(n)} must yield
+\item{n}{\code{integer} number of planning units. Note \code{sqrt(n)} must yield
 a valid number.}
 
 \item{xmn}{\code{numeric} value for minimum x-coordinate.}
@@ -25,7 +25,7 @@ a valid number.}
 \item{ymx}{\code{numeric} value for maximum y-coordinate.}
 }
 \value{
-\code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} with planning units.
+\code{\link[sf:st_as_sf]{sf::st_as_sf()}} with planning units.
 }
 \description{
 This function simulates planning units for RAP.
@@ -38,17 +38,16 @@ centered at origin. The data slot contains an "id" (\code{integer}),
 (\code{numeric}).
 }
 \examples{
-# generate 225 sqauare planning units arranged in a square
+\dontrun{
+# generate 225 square planning units arranged in a square
 # with 1 unit height / width
 x <- sim.pus(225)
 
 # generate 225 rectangular pus arranged in a square
 y <- sim.pus(225, xmn = -5, xmx = 10, ymn = -5, ymx = 5)
-\dontrun{
 par(mfrow = c(1, 2))
 plot(x, main = "x")
 plot(y, main = "y")
 par(mfrow = c(1, 1))
 }
-
 }

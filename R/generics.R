@@ -1,146 +1,6 @@
 #' @include RcppExports.R raptr-internal.R
 NULL
 
-#' Calculate average value for species data in planning units
-#'
-#' This function calculates the average of species values in each planning unit.
-#' By default all polygons will be treated as having separate ids.
-#'
-#' @param x [sp::SpatialPolygons()] or
-#'   [sp::SpatialPolygonsDataFrame()] object.
-#'
-#' @param y [raster::raster()],
-#'   [raster::stack()], or
-#'   [raster::brick()] object.
-#'
-#' @param ids `integer` vector of ids. Defaults to indices of layers in
-#'   argument to `y`.
-#'
-#' @param ncores `integer` number of cores to use for processing. Defaults
-#'   to 1.
-#'
-#' @param field `integer` index or `character` name of column with
-#'   planning unit ids. Valid only when `x` is a
-#'   [sp::SpatialPolygonsDataFrame()] object. Default behavior is to
-#'   treat each polygon as a different planning unit.
-#'
-#' @param ... not used.
-#'
-#' @return [base::data.frame()] with sum of raster values in each
-#'   polygon.
-#'
-#' @examples
-#' # simulate data
-#' sim_pus <- sim.pus(225L)
-#' sim_spp <- lapply(c("uniform", "normal", "bimodal"), sim.species, n = 1,
-#'                   res = 1, x = sim_pus)
-#'
-#' # calculate average for 1 species
-#' puvspr1.dat <- calcSpeciesAverageInPus(sim_pus, sim_spp[[1]])
-#'
-#' # calculate average for multiple species
-#' puvspr2.dat <- calcSpeciesAverageInPus(sim_pus, stack(sim_spp))
-#'
-#' @export
-calcSpeciesAverageInPus <- function(x, ...) UseMethod("calcSpeciesAverageInPus")
-
-#' Simulate species distribution data for RAP
-#'
-#' This function simulates species distributions for RAP.
-#'
-#' @param x [raster::raster()] or
-#'   [sp::SpatialPolygons()] object delineate the spatial extent to
-#'   delineate study area.
-#'
-#' @param n `integer` number of species. Defaults to 1.
-#'
-#' @param res `numeric` resolution to simulate distributions. Only needed
-#'   when [sp::SpatialPolygons()] are supplied.
-#'
-#' @param model `character` or `numeric` for simulating data.
-#'   If a `character` value is supplied, then the following values can
-#'   can be used to simulate species distributions with particular
-#'   characteristics:
-#'   `"uniform"`, `"normal"`, and `"bimodal"`.
-#'   If a `numeric` value is supplied, then this is used to simulate
-#'   species distributions using a Gaussian random field, where the
-#'   `numeric` value is treated as the scale parameter.
-#'   Defaults to `"normal"`.
-#'
-#' @param ... not used.
-#'
-#' @return [raster::stack()] with layers for each species.
-#'
-#' @examples
-#' # make polygons
-#' sim_pus <- sim.pus(225L)
-#'
-#' # simulate 1 uniform species distribution using RasterLayer
-#' s1 <- sim.species(blank.raster(sim_pus, 1), n = 1, model = "uniform")
-#'
-#' # simulate 1 uniform species distribution based on SpatialPolygons
-#' s2 <- sim.species(sim_pus, res = 1, n = 1, model = "uniform")
-#'
-#' # simulate 1 normal species distributions
-#' s3 <- sim.species(sim_pus, res = 1, n = 1, model = "normal")
-#'
-#' # simulate 1 bimodal species distribution
-#' s4 <- sim.species(sim_pus, res = 1, n = 1, model = "bimodal")
-#'
-#' # simulate 1 species distribution using a random field
-#' s5 <- sim.species(sim_pus, res = 1, n = 1, model = 0.2)
-#'
-#' # plot simulations
-#' par(mfrow = c(2,2))
-#' plot(s2, main = "constant")
-#' plot(s3, main = "normal")
-#' plot(s4, main = "bimodal")
-#' plot(s5, main = "random field")
-#'
-#' @export sim.species
-sim.species <- function(x, ...) UseMethod("sim.species")
-
-#' Simulate attribute space data for RAP
-#'
-#' This function simulates attribute space data for RAP.
-#'
-#' @inheritParams sim.species
-#'
-#' @param d `integer` number of dimensions. Defaults to 2.
-#'
-#' @param model `numeric` scale parameter for simulating spatially
-#'   auto-correlated data using Gaussian random fields.
-#'   Higher values produce patchier data with more well defined clusters,
-#'   and lower values produce more evenly distributed data.
-#'   Defaults to 0.2.
-#'
-#' @return [raster::stack()] with layers for each dimension of the space.
-#'
-#' @name sim.space
-#'
-#' @examples
-#' # simulate planning units
-#' sim_pus <- sim.pus(225L)
-#'
-#' # simulate 1d space using RasterLayer
-#' s1 <- sim.space(blank.raster(sim_pus, 1), d = 1)
-#'
-#' # simulate 1d space using SpatialPolygons
-#' s2 <- sim.space(sim_pus, res = 1, d = 1)
-#'
-#' # simulate 2d space using SpatialPolygons
-#' s3 <- sim.space(sim_pus, res = 1, d = 2)
-#'
-#' # plot simulated spaces
-#' par(mfrow = c(2,2))
-#' plot(s1, main = "s1")
-#' plot(s2, main = "s2")
-#' plot(s3[[1]], main = "s3: first dimension")
-#' plot(s3[[2]], main = "s3: second dimension")
-#'
-#' @export sim.space
-sim.space <- function(x, ...) UseMethod("sim.space")
-
 #' Solve RAP object
 #'
 #' This function uses Gurobi to find prioritizations using the input parameter
@@ -168,9 +28,9 @@ sim.space <- function(x, ...) UseMethod("sim.space")
 #' @seealso [RapUnsolved()], [RapSolved()].
 #'
 #' @examples
+#' \dontrun{
 #' # load RapUnsolved object
 #' data(sim_ru)
-#' \dontrun{
 #' # solve it using Gurobi
 #' sim_rs <- solve(sim_ru)
 #'
@@ -184,7 +44,6 @@ sim.space <- function(x, ...) UseMethod("sim.space")
 #' sim_rs4 <- solve(sim_ru, matrix(sample(c(0, 1), size = 500, replace = TRUE),
 #'                  ncol = 100, nrow = 5))
 #' }
-#'
 #' @name solve
 #'
 #' @rdname solve
@@ -256,6 +115,7 @@ NULL
 #' @seealso [RapSolved()].
 #'
 #' @examples
+#' \dontrun{
 #' # load example data set with solutions
 #' data(sim_rs)
 #'
@@ -270,6 +130,7 @@ NULL
 #'
 #' # plot different between best and second solutions
 #' plot(sim_rs, sim_rs, 0 ,2)
+#' }
 NULL
 
 #' Names
@@ -287,6 +148,7 @@ NULL
 #'   [RapSolved()].
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_rs)
 #'
@@ -298,6 +160,7 @@ NULL
 #'
 #' # show new names
 #' names(sim_rs)
+#' }
 NULL
 
 #' Print objects
@@ -321,6 +184,7 @@ NULL
 #'   [RapSolved()].
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_ru, sim_rs)
 #'
@@ -344,6 +208,7 @@ NULL
 #'
 #' # print RapSolved object
 #' print(sim_rs)
+#' }
 NULL
 
 #' Show objects
@@ -363,6 +228,7 @@ NULL
 #'   [RapSolved()].
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_ru, sim_rs)
 #'
@@ -386,6 +252,7 @@ NULL
 #'
 #' # show RapSolved object
 #' sim_rs
+#' }
 NULL
 
 #' Convert object to list
@@ -407,11 +274,13 @@ NULL
 #' @seealso `GurobiOpts`.
 #'
 #' @examples
+#' \dontrun{
 #' # make GuboriOpts object
 #' x <- GurobiOpts()
 #'
 #' # convert to list
 #' as.list(x)
+#' }
 NULL
 
 #' Summary of solutions
@@ -456,11 +325,13 @@ NULL
 #' @seealso [RapResults()], [RapSolved()].
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_rs)
 #'
 #' # show summary
 #' summary(sim_rs)
+#' }
 NULL
 
 #' Update object
@@ -559,6 +430,7 @@ NULL
 #'   [RapUnsolved-class], [RapSolved-class].
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_ru, sim_rs)
 #'
@@ -598,6 +470,7 @@ NULL
 #'             solve = FALSE)
 #' print(x@@opts@@BLM); print(amount.target(x))
 #' print(y@@opts@@BLM); print(space.target(y))
+#' }
 NULL
 
 #' Subset species
@@ -620,12 +493,13 @@ NULL
 #' @rdname spp.subset
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_ru)
 #'
 #' # generate new object with only species 1
 #' sim_ru2 <- spp.subset(sim_ru, 1)
-#'
+#' }
 #' @export
 spp.subset <- function(x, species) UseMethod("spp.subset")
 
@@ -649,12 +523,13 @@ spp.subset <- function(x, species) UseMethod("spp.subset")
 #' @rdname pu.subset
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_ru)
 #'
 #' # generate new object with first 10 planning units
 #' sim_ru2 <- pu.subset(sim_ru, seq_len(10))
-#'
+#' }
 #' @export
 pu.subset <- function(x, pu) UseMethod("pu.subset")
 
@@ -684,12 +559,13 @@ pu.subset <- function(x, pu) UseMethod("pu.subset")
 #' @rdname dp.subset
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_ru)
 #'
 #' # generate new object with first 10 planning units
 #' sim_ru2 <- dp.subset(sim_ru, 1, 1, seq_len(10))
-#'
+#' }
 #' @export
 dp.subset <- function(x, space, species, points) UseMethod("dp.subset")
 
@@ -716,12 +592,13 @@ dp.subset <- function(x, space, species, points) UseMethod("dp.subset")
 #' @rdname prob.subset
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_ru)
 #'
 #' # generate new object with first 10 planning units
 #' sim_ru2 <- prob.subset(sim_ru, seq_len(3), c(0.1, 0.2, 0.3))
-#'
+#' }
 #' @export
 prob.subset <- function(x, species, threshold) UseMethod("prob.subset")
 
@@ -742,6 +619,7 @@ prob.subset <- function(x, species, threshold) UseMethod("prob.subset")
 #' @seealso [RapResults()], [RapSolved()].
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_rs)
 #'
@@ -753,7 +631,7 @@ prob.subset <- function(x, species, threshold) UseMethod("prob.subset")
 #'
 #' # score for all solutions
 #' score(sim_rs, NULL)
-#'
+#' }
 #' @export
 score <- function(x, y) UseMethod("score")
 
@@ -774,6 +652,7 @@ score <- function(x, y) UseMethod("score")
 #' @seealso [RapResults()], [RapSolved()].
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_rs)
 #'
@@ -785,7 +664,7 @@ score <- function(x, y) UseMethod("score")
 #'
 #' # log files for all solutions
 #' cat(logging.file(sim_rs, NULL))
-#'
+#' }
 #' @export
 logging.file <- function(x, y) UseMethod("logging.file")
 
@@ -808,6 +687,7 @@ logging.file <- function(x, y) UseMethod("logging.file")
 #' @seealso [RapResults()], [RapSolved()].
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_rs)
 #'
@@ -822,7 +702,7 @@ logging.file <- function(x, y) UseMethod("logging.file")
 #'
 #' # amount held (%) in each solution for each species
 #' amount.held(sim_rs, NULL)
-#'
+#' }
 #' @export
 amount.held <- function(x, y, species) UseMethod("amount.held")
 
@@ -848,6 +728,7 @@ amount.held <- function(x, y, species) UseMethod("amount.held")
 #' @name amount.target
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_rs)
 #'
@@ -862,7 +743,7 @@ amount.held <- function(x, y, species) UseMethod("amount.held")
 #'
 #' # set amount targets for for first species
 #' amount.target(sim_rs, 1) <- 0.5
-#'
+#' }
 #' @export
 amount.target <- function(x, species) UseMethod("amount.target")
 
@@ -893,6 +774,7 @@ amount.target <- function(x, species) UseMethod("amount.target")
 #' @seealso [RapResults()], [RapSolved()].
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_rs)
 #'
@@ -904,7 +786,7 @@ amount.target <- function(x, species) UseMethod("amount.target")
 #'
 #' # space held (%) for each species in each solution
 #' space.held(sim_rs)
-#'
+#' }
 #' @export
 space.held <- function(x, y, species, space) UseMethod("space.held")
 
@@ -912,25 +794,22 @@ space.held <- function(x, y, species, space) UseMethod("space.held")
 #'
 #' This function sets or returns the attribute space targets for each species.
 #'
-#' @param x [RapData()], [RapUnsolved()], or
-#'   [RapSolved()] object.
+#' @param x [RapData()], [RapUnsolved()], or [RapSolved()] object.
 #'
-#' @param species `NULL` for all species or `integer` indicating
-#'   species.
+#' @param species `NULL` for all species or `integer` indicating species.
 #'
-#' @param space `NULL` for all spaces or `integer` indicating a
-#'   specific space.
+#' @param space `NULL` for all spaces or `integer` indicating a space.
 #'
 #' @param value `numeric` new target.
 #'
-#' @return `numeric` `matrix`.
+#' @return A `numeric` or `matrix` objects.
 #'
-#' @seealso [RapData()], [RapResults()],
-#'   [RapSolved()].
+#' @seealso [RapData()], [RapResults()], [RapSolved()].
 #'
 #' @name space.target
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_rs)
 #'
@@ -945,7 +824,7 @@ space.held <- function(x, y, species, space) UseMethod("space.held")
 #'
 #' # set space targets for first species for first space
 #' space.target(sim_rs, 1, 1) <- 0.5
-#'
+#' }
 #' @export
 space.target <- function(x, species, space) UseMethod("space.target")
 
@@ -972,6 +851,7 @@ space.target <- function(x, species, space) UseMethod("space.target")
 #' @seealso [RapResults()], [RapSolved()].
 #'
 #' @examples
+#' \dontrun{
 #' # load data
 #' data(sim_rs)
 #'
@@ -983,43 +863,9 @@ space.target <- function(x, species, space) UseMethod("space.target")
 #'
 #' # selections for each solution
 #' selections(sim_rs)
-#'
+#' }
 #' @export
 selections <- function(x, y) UseMethod("selections")
-
-#' Convert SpatialPolygons to PolySet data
-#'
-#' This function converts spatial [sp::SpatialPolygons()] and
-#' [sp::SpatialPolygonsDataFrame()] objects to
-#' [PBSmapping::PolySet()] objects.
-#'
-#' @param x [sp::SpatialPolygons()] or
-#'   [sp::SpatialPolygonsDataFrame()] object.
-#'
-#' @param n_preallocate `integer` How much memory should be preallocated
-#'   for processing? Ideally, this number should equal the number of vertices
-#'   in the [sp::SpatialPolygons()] object. If data processing is
-#'   taking too long consider increasing this value.
-#'
-#' @return [PBSmapping::PolySet()] object.
-#'
-#' @note Be aware that this function is designed to be as fast as possible, but
-#'   as a result it depends on C++ code and if used inappropriately this
-#'   function will crash R.
-#'
-#' @seealso For a slower, more stable equivalent see
-#'   `maptools::SpatialPolygons2PolySet`.
-#'
-#' @examples
-#' # generate SpatialPolygons object
-#' sim_pus <- sim.pus(225L)
-#'
-#' # convert to PolySet
-#' x <- SpatialPolygons2PolySet(sim_pus)
-#'
-#' @export
-SpatialPolygons2PolySet <- function(x, n_preallocate)
-  UseMethod("SpatialPolygons2PolySet")
 
 #' Plot species
 #'
@@ -1050,6 +896,7 @@ SpatialPolygons2PolySet <- function(x, n_preallocate)
 #' @inherit plot details
 #'
 #' @examples
+#' \dontrun{
 #' # load RapSolved objects
 #' data(sim_ru, sim_rs)
 #'
@@ -1058,7 +905,7 @@ SpatialPolygons2PolySet <- function(x, n_preallocate)
 #'
 #' # plot "bimodal" species in sim_rs
 #' spp.plot(sim_rs, species = "bimodal")
-#'
+#' }
 #' @export
 spp.plot <- function(x, species, ...) UseMethod("spp.plot")
 
@@ -1069,8 +916,7 @@ spp.plot <- function(x, species, ...) UseMethod("spp.plot")
 #' Note that this function only works for attribute spaces with one, two, or
 #' three dimensions.
 #'
-#' @param x [RapData()], [RapUnsolved()], or
-#'   [RapSolved()] object.
+#' @param x [RapData()], [RapUnsolved()], or [RapSolved()] object.
 #'
 #' @param species `character` name of species, or `integer` index for
 #'   species.
@@ -1090,6 +936,7 @@ spp.plot <- function(x, species, ...) UseMethod("spp.plot")
 #' @param ... not used.
 #'
 #' @examples
+#' \dontrun{
 #' # load RapSolved objects
 #' data(sim_ru, sim_rs)
 #'
@@ -1098,7 +945,7 @@ spp.plot <- function(x, species, ...) UseMethod("spp.plot")
 #'
 #' # plot distribution of solutions for first species in first attribute space
 #' space.plot(sim_rs, 1, 1)
-#'
+#' }
 #' @export
 space.plot <- function(x, species, space, ...) UseMethod("space.plot")
 
@@ -1118,11 +965,12 @@ space.plot <- function(x, species, space, ...) UseMethod("space.plot")
 #' @return `data.frame` object.
 #'
 #' @examples
+#' \dontrun{
 #' # load RapSolved objects
 #' data(sim_ru)
 #'
 #' # calculate maximum metrics
 #' maximum.targets(sim_ru)
-#'
+#' }
 #' @export
 maximum.targets <- function(x, verbose) UseMethod("maximum.targets")

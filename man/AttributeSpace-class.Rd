@@ -11,7 +11,7 @@ single species in an attribute space.
 \section{Slots}{
 
 \describe{
-\item{\code{planning.unit.points}}{\code{\link[=PlanningUnitPoints]{PlanningUnitPoints()}} for planning
+\item{\code{planning.unit.points}}{\code{\link[=PlanningUnitPoints]{PlanningUnitPoints()}} object for planning
 unit in the space.}
 
 \item{\code{demand.points}}{\code{\link[=DemandPoints]{DemandPoints()}} object for the space.}

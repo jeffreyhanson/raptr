@@ -43,11 +43,17 @@ NULL
 #'
 #' @exportClass RapData
 methods::setClass("RapData",
-  methods::representation(polygons = "PolySet", pu = "data.frame",
-                          species = "data.frame", targets = "data.frame",
-                          pu.species.probabilities = "data.frame",
-                          attribute.spaces = "list", boundary = "data.frame",
-                          skipchecks = "logical", .cache = "environment"),
+  methods::representation(
+    polygons = "PolySet",
+    pu = "data.frame",
+    species = "data.frame",
+    targets = "data.frame",
+    pu.species.probabilities = "data.frame",
+    attribute.spaces = "list",
+    boundary = "data.frame",
+    skipchecks = "logical",
+    .cache = "environment"
+  ),
   validity = function(object) {
     if (!object@skipchecks) {
       ### check column names of inputs
@@ -56,125 +62,166 @@ methods::setClass("RapData",
         length(setdiff(names(object@pu), c("cost", "area", "status"))) == 0,
         msg = paste0("argument to pu is missing one of these columns: ",
                      "\"cost\", \"area\", or \"status\""))
-      assertthat::assert_that(is.numeric(object@pu$cost),
-                              msg = "argument to pu$cost is not numeric")
-      assertthat::assert_that(all(is.finite(object@pu$cost)),
-                              msg = paste0("argument to pu$cost contains NA ",
-                                           "or non-finite values"))
-      assertthat::assert_that(is.numeric(object@pu$area),
-                              msg = "argument to pu$area is not numeric")
-      assertthat::assert_that(all(is.finite(object@pu$area)),
-                              msg = paste0("argument to pu$cost contains NA ",
-                                           "or non-finite values"))
-      assertthat::assert_that(is.integer(object@pu$status),
-                              msg = "argument to pu$status is not integer")
-      assertthat::assert_that(all(is.finite(object@pu$status)),
-                              msg = paste0("argument to pu$status contains ",
-                                           "NA or non-finite values"))
-      assertthat::assert_that(all(object@pu$status %in% 0L:3L),
-                              msg = paste0("argument to pu$status must not ",
-                                           "contain values other than 0L, 1L, ",
-                                           "2L, 3L"))
+      assertthat::assert_that(
+        is.numeric(object@pu$cost),
+        msg = "argument to pu$cost is not numeric")
+      assertthat::assert_that(
+        all(is.finite(object@pu$cost)),
+        msg = "argument to pu$cost contains NA or non-finite values"
+      )
+      assertthat::assert_that(
+        is.numeric(object@pu$area),
+        msg = "argument to pu$area is not numeric"
+      )
+      assertthat::assert_that(
+        all(is.finite(object@pu$area)),
+        msg = c(
+          "argument to pu$cost contains NA or non-finite values"
+        )
+      )
+      assertthat::assert_that(
+        is.integer(object@pu$status),
+        msg = "argument to pu$status is not integer"
+      )
+      assertthat::assert_that(
+        all(is.finite(object@pu$status)),
+        msg = c(
+          "argument to pu$status contains NA or non-finite values"
+        )
+      )
+      assertthat::assert_that(
+        all(object@pu$status %in% 0L:3L),
+        msg = paste0(
+          "argument to pu$status must not ",
+          "contain values other than 0L, 1L, 2L, 3L"
+         )
+       )
       # species
       if (!is.null(object@species$name)) {
         if (is.factor(object@species$name))
           object@species$name <- as.character(object@species$name)
         object@species$name <- gsub("[[:punct:]]", "", object@species$name)
-        assertthat::assert_that(is.character(object@species$name),
-                                msg = paste0("argument to species$name is not ",
-                                             "character"))
-        assertthat::assert_that(all(!is.na(object@species$name)),
-                                msg = paste0("argument to species$name ",
-                                             "contains NA values"))
+        assertthat::assert_that(
+          is.character(object@species$name),
+          msg = paste0("argument to species$name is not character"))
+        assertthat::assert_that(
+          all(!is.na(object@species$name)),
+          msg = paste0("argument to species$name contains NA values")
+        )
       }
       # targets
       assertthat::assert_that(
         identical(names(object@targets), c("species", "target", "proportion")),
         msg = paste0("argument to targets is missing one of these columns: ",
                      "\"species\", \"target\", or \"proportion\""))
-      assertthat::assert_that(is.integer(object@targets$species),
-                              msg = paste0("argument to targets$species is ",
-                                           "not integer"))
-      assertthat::assert_that(all(!is.na(object@targets$species)),
-                              msg = paste0("argument to targets$species ",
-                                           "contains NA or non-finite values"))
-      assertthat::assert_that(is.integer(object@targets$target),
-                              msg = paste0("argument to targets$target is ",
-                                           "not integer"))
-      assertthat::assert_that(all(!is.na(object@targets$target)),
-                              msg = paste0("argument to targets$target ",
-                                           "contains NA or non-finite values"))
-      assertthat::assert_that(is.numeric(object@targets$proportion),
-                              msg = paste0("argument to targets$proportion ",
-                                           "is not numeric"))
-      assertthat::assert_that(all(object@targets$proportion <= 1,
-                                  na.rm = TRUE),
-                              msg = paste0("argument to targets$proportion ",
-                                           "contains values > 1"))
+      assertthat::assert_that(
+        is.integer(object@targets$species),
+        msg = paste0("argument to targets$species is not integer"))
+      assertthat::assert_that(
+        all(!is.na(object@targets$species)),
+        msg = paste0(
+          "argument to targets$species contains NA or non-finite values"
+        )
+      )
+      assertthat::assert_that(
+        is.integer(object@targets$target),
+        msg = "argument to targets$target is not integer"
+      )
+      assertthat::assert_that(
+        all(!is.na(object@targets$target)),
+        msg = c(
+          "argument to targets$target contains NA or non-finite values"
+        )
+      )
+      assertthat::assert_that(
+        is.numeric(object@targets$proportion),
+        msg = "argument to targets$proportion is not numeric"
+      )
+      assertthat::assert_that(
+        all(object@targets$proportion <= 1, na.rm = TRUE),
+        msg = paste0("argument to targets$proportion contains values > 1")
+      )
       # pu.species.probabilities
       assertthat::assert_that(
-        identical(names(object@pu.species.probabilities),
-                  c("species", "pu", "value")),
-        msg = paste0("argument to pu.species.probabilities is missing one of ",
-                     "these columns: \"species\", \"pu\", or \"value\""))
+        identical(
+          names(object@pu.species.probabilities),
+          c("species", "pu", "value")
+        ),
+        msg = paste0("argument to pu.species.probabilities must have ",
+                     "these columns: \"species\", \"pu\", or \"value\"")
+      )
       assertthat::assert_that(
         is.integer(object@pu.species.probabilities$pu),
-        msg = "argument to pu.species.probabilities$pu is not integer")
+        msg = "argument to pu.species.probabilities$pu is not integer"
+      )
       assertthat::assert_that(
         is.integer(object@pu.species.probabilities$species),
-        msg = "argument to pu.species.probabilities$species is not integer")
+        msg = "argument to pu.species.probabilities$species is not integer"
+      )
       assertthat::assert_that(
         all(!is.na(object@pu.species.probabilities$value)),
         msg = paste0("argument to pu.species.probabilities$value contains NA ",
-                     "or non-finite values"))
+                     "or non-finite values")
+      )
       assertthat::assert_that(
         all(object@pu.species.probabilities$value >= 0 &
             object@pu.species.probabilities$value <= 1),
         msg = paste0("argument to pu.species.probabilities$value contains ",
-                     "values greater than 1 or less than 0"))
+                     "values greater than 1 or less than 0")
+      )
       # attribute.space
       ## check that each attribute spaces object has different name
       assertthat::assert_that(
         sum(duplicated(sapply(object@attribute.spaces, slot, "name"))) == 0,
-        msg = "AttributeSpaces should have unique names")
-
+        msg = "AttributeSpaces should have unique names"
+      )
       # boundary
       assertthat::assert_that(
         identical(names(object@boundary), c("id1", "id2", "boundary")),
         msg = paste0("argument to boundary is missing one of these columns: ",
-                     "\"id1\", \"id2\", or \"boundary\""))
+                     "\"id1\", \"id2\", or \"boundary\"")
+      )
       assertthat::assert_that(
         is.integer(object@boundary$id1),
-        msg = "argument to boundary$id1 is not integer")
+        msg = "argument to boundary$id1 is not integer"
+      )
       assertthat::assert_that(
         all(is.finite(object@boundary$id1)),
-        msg = "argument to boundary$id1 contains NA or non-finite values")
+        msg = "argument to boundary$id1 contains NA or non-finite values"
+      )
       assertthat::assert_that(
         is.integer(object@boundary$id2),
-        msg = "argument to boundary$id2 is not integer")
+        msg = "argument to boundary$id2 is not integer"
+      )
       assertthat::assert_that(
         all(is.finite(object@boundary$id2)),
-        msg = "argument to boundary$id2 contains NA or non-finite values")
+        msg = "argument to boundary$id2 contains NA or non-finite values"
+      )
       assertthat::assert_that(
         is.numeric(object@boundary$boundary),
-        msg = "argument to boundary$boundary is not numeric")
+        msg = "argument to boundary$boundary is not numeric"
+      )
       assertthat::assert_that(
         all(is.finite(object@boundary$boundary)),
-        msg = "argument to boundary$boundary contains NA or non-finite values")
+        msg = "argument to boundary$boundary contains NA or non-finite values"
+      )
       ## cross table dependencies
       # check all planning units match
       assertthat::assert_that(
         all(object@boundary$id1 %in% seq_len(nrow(object@pu))),
         msg = paste0("argument to boundary$id1 must have values that ",
-                     "correspond to rows in argument to pu"))
+                     "correspond to rows in argument to pu")
+      )
       assertthat::assert_that(
         all(object@boundary$id2 %in% seq_len(nrow(object@pu))),
         msg = paste0("argument to boundary$id2 must have values that ",
-                     "correspond to rows in argument to pu"))
+                     "correspond to rows in argument to pu")
+      )
       assertthat::assert_that(
         all(object@pu.species.probabilities$pu %in% seq_len(nrow(object@pu))),
         msg = paste0("argument to pu.species.probabilities$pu must have ",
-                     "values that correspond to rows in argument to pu"))
+                     "values that correspond to rows in argument to pu")
+      )
       for (i in seq_along(object@attribute.spaces)) {
         for (j in seq_along(object@attribute.spaces[[i]])) {
           currIds <- object@attribute.spaces[[i]]@spaces[[j]]
@@ -184,50 +231,72 @@ methods::setClass("RapData",
           currPuIds <- object@pu.species.probabilities$pu[pos]
           assertthat::assert_that(
             all(currIds %in% seq_along(object@pu[[1]])),
-            msg = paste0("attribute.spaces[[", i, "]]@spaces[[", j,
-                         "]] is contains planning units not in argument to pu"))
+            msg = paste0(
+              "attribute.spaces[[", i, "]]@spaces[[", j,
+              "]] contains planning units not in argument to pu"
+            )
+          )
           assertthat::assert_that(
             all(currIds %in% currPuIds),
-            msg = paste0("attribute.spaces[[", i, "]]@spaces[[", j,
-                         "]] contains planning units associated with ",
-                         "the species ",
-                         object@attribute.spaces[[i]]@spaces[[j]]@species,
-                         " not in argument to pu.species.probabilities"))
+            msg = paste0(
+              "attribute.spaces[[", i, "]]@spaces[[", j,
+              "]] contains planning units associated with ",
+              "the species ",
+              object@attribute.spaces[[i]]@spaces[[j]]@species,
+              " not in argument to pu.species.probabilities"
+            )
+          )
         }
       }
       # check all species match
       assertthat::assert_that(
         all(object@pu.species.probabilities$species %in%
-            seq_len(nrow(object@species))),
-        msg = paste0("argument to pu.species.probabilities$species must ",
-                     "have values that correspond to rows in argument to ",
-                     "species"))
+          seq_len(nrow(object@species))),
+        msg = paste0(
+          "argument to pu.species.probabilities$species must ",
+          "have values that correspond to rows in argument to species"
+        )
+      )
       assertthat::assert_that(
         all(seq_len(nrow(object@species)) %in%
-            object@pu.species.probabilities$species),
-        msg = paste0("argument to species has species that do not occur at ",
-                     "least once in pu.species.probabilities$species"))
+          object@pu.species.probabilities$species),
+        msg = paste0(
+          "argument to species has species that do not occur at ",
+          "least once in pu.species.probabilities$species"
+        )
+      )
       for (i in seq_along(object@attribute.spaces)) {
         for (j in seq_along(object@attribute.spaces[[i]])) {
           currSpp <- object@attribute.spaces[[i]]@spaces[[j]]@species
           assertthat::assert_that(
             currSpp %in% seq_along(object@species[[1]]),
-            msg = paste0("attribute.spaces[[", i, "]]@spaces[[", j,
-                         "]] is associated with a species not in argument to ",
-                         "species"))
+            msg = paste0(
+              "attribute.spaces[[", i, "]]@spaces[[", j,
+              "]] is associated with a species not in argument to ",
+              "species"
+            )
+          )
         }
       }
       assertthat::assert_that(
         all(object@targets$species %in% seq_len(nrow(object@species))),
-        msg = paste0("arguments to targets must have species present in ",
-                     "argument to species"))
+        msg = paste0(
+          "arguments to targets must have species present in ",
+          "argument to species"
+        )
+      )
       # check that attribute spaces match
       assertthat::assert_that(
-        all(object@targets$target %in%
-            seq(0, length(object@attribute.spaces))),
-        msg = paste0("argument to targets must have values in values that ",
-                     "are zero or correspond to elements in argument to ",
-                     "attribute.spaces"))
+        all(
+          object@targets$target %in%
+          seq(0, length(object@attribute.spaces))
+        ),
+        msg = paste0(
+          "argument to targets must have values in values that ",
+          "are zero or correspond to elements in argument to ",
+          "attribute.spaces"
+        )
+      )
     }
     return(TRUE)
   }
@@ -271,64 +340,97 @@ methods::setClass("RapData",
 #' @note Generally, users are not encouraged to change arguments to
 #'   `.cache`.
 #'
-#' @return RapData object
+#' @return A new `RapData` object.
 #'
 #' @seealso [PBSmapping::PolySet()], [sp::SpatialPoints()],
 #'   [sp::SpatialPointsDataFrame()], [make.RapData()],
 #'   [RapData-class].
 #'
 #' @examples
+#' \dontrun{
 #' # load data
-#' data(cs_pus, cs_spp, cs_space)
+#' cs_pus <- sf::read_sf(
+#'  system.file("extdata", "cs_pus.gpkg", package = "raptr")
+#' )
+#' cs_spp <- terra::rast(
+#'   system.file("extdata", "cs_spp.tif", package = "raptr")
+#' )
+#' cs_space <- terra::rast(
+#'   system.file("extdata", "cs_space.tif", package = "raptr")
+#' )
 #'
 #' # create data for RapData object
 #' attribute.spaces <- list(
 #'   AttributeSpaces(name = "geographic", list(
 #'     AttributeSpace(
 #'       planning.unit.points = PlanningUnitPoints(
-#'         rgeos::gCentroid(cs_pus[1:10,], byid = TRUE)@@coords, seq_len(10)),
+#'         suppressWarnings(
+#'           sf::st_coordinates(sf::st_centroid(cs_pus[1:10, ]))
+#'         ),
+#'         seq_len(10)
+#'       ),
 #'       demand.points = make.DemandPoints(
-#'         randomPoints(cs_spp[[1]], n = 10, prob = TRUE)),
-#'       species = 1L))),
+#'         randomPoints(cs_spp[[1]], n = 10, prob = TRUE)
+#'       ),
+#'       species = 1L
+#'     ))
+#'   ),
 #'   AttributeSpaces(name = "environmental", list(
 #'     AttributeSpace(
 #'       planning.unit.points = PlanningUnitPoints(
-#'         raster::extract(cs_space[[1]], cs_pus[1:10,], fun = mean),
-#'         seq_len(10)),
+#'         as.matrix(terra::extract(
+#'           cs_space[[1]], as(cs_pus[1:10, ], "SpatVector"),
+#'           fun = "mean",
+#'           ID = FALSE
+#'         )),
+#'         seq_len(10)
+#'       ),
 #'       demand.points = make.DemandPoints(
-#'         cs_space[[1]][raster::Which(!is.na(cs_space[[1]]))]),
-#'         species = 1L))))
-#' pu.species.probabilities <- calcSpeciesAverageInPus(cs_pus[1:10,],
-#'                                                     cs_spp[[1]])
-#' polygons <- SpatialPolygons2PolySet(cs_pus[1:10,])
-#' boundary <- calcBoundaryData(cs_pus[1:10,])
+#'         as.matrix(terra::as.data.frame(cs_space[[1]], na.rm = TRUE))
+#'       ),
+#'       species = 1L
+#'     )
+#'  ))
+#' )
+#' pu.species.probabilities <- calcSpeciesAverageInPus(
+#'   cs_pus[1:10,], cs_spp[[1]]
+#' )
+#' polygons <- convert2PolySet(cs_pus[1:10, ])
+#' boundary <- calcBoundaryData(cs_pus[1:10, ])
 #'
-# # create RapData object
-#' x <- RapData(pu = cs_pus@@data[1:10,], species = data.frame(name = "test"),
-#'              target = data.frame(species = 1L, target = 0:2,
-#'                                  proportion = 0.2),
-#'              pu.species.probabilities = pu.species.probabilities,
-#'              attribute.spaces = attribute.spaces,
-#'              polygons = polygons,
-#'              boundary = boundary)
+#' # create RapData object
+#' x <- RapData(
+#'   pu = cs_pus[1:10, ], species = data.frame(name = "test"),
+#'   target = data.frame(species = 1L, target = 0:2, proportion = 0.2),
+#'   pu.species.probabilities = pu.species.probabilities,
+#'   attribute.spaces = attribute.spaces,
+#'   polygons = polygons,
+#'   boundary = boundary
+#' )
 #'
 #' # print object
 #' print(x)
-#'
+#' }
 #' @export
 RapData <- function(pu, species, targets, pu.species.probabilities,
                     attribute.spaces, boundary, polygons = NA,
                     skipchecks = FALSE, .cache = new.env()) {
   # validate data
-  assertthat::assert_that(inherits(pu, "data.frame"),
-                          inherits(species, "data.frame"),
-                          inherits(targets, "data.frame"),
-                          inherits(pu.species.probabilities, "data.frame"),
-                          inherits(attribute.spaces, "list"),
-                          inherits(boundary, "data.frame"),
-                          inherits(polygons, "PolySet"),
-                          assertthat::is.flag(skipchecks),
-                          inherits(.cache, "environment"))
+  assertthat::assert_that(
+    inherits(pu, c("sf", "data.frame")),
+    inherits(species, "data.frame"),
+    inherits(targets, "data.frame"),
+    inherits(pu.species.probabilities, "data.frame"),
+    inherits(attribute.spaces, "list"),
+    inherits(boundary, "data.frame"),
+    inherits(polygons, "PolySet"),
+    assertthat::is.flag(skipchecks),
+    inherits(.cache, "environment")
+  )
+  # convert pu to data.frame if needed
+  if (inherits(pu, "sf")) {
+    pu <- sf::st_drop_geometry(pu)
+  }
   # convert factors to characters
   if (inherits(species$name, "factor"))
     species$name <- as.character(species$name)
@@ -338,17 +440,23 @@ RapData <- function(pu, species, targets, pu.species.probabilities,
   targets <- targets[, names(targets) %in% c("species", "target", "proportion",
                                              "name"), drop = FALSE]
   pu.species.probabilities <- pu.species.probabilities[,
-    names(pu.species.probabilities) %in% c("pu", "species", "value"),
+    names(pu.species.probabilities) %in% c("species", "pu", "value"),
     drop = FALSE]
   boundary <- boundary[, names(boundary) %in% c("id1", "id2", "boundary"),
                        drop = FALSE]
   # make object
-  rd <- methods::new("RapData", polygons = polygons, pu = pu,
-                     species = species, targets = targets,
-                     pu.species.probabilities = pu.species.probabilities,
-                     attribute.spaces = attribute.spaces,
-                     skipchecks = skipchecks, boundary = boundary,
-                     .cache = .cache)
+  rd <- methods::new(
+    "RapData",
+    polygons = polygons,
+    pu = pu,
+    species = species,
+    targets = targets,
+    pu.species.probabilities = pu.species.probabilities,
+    attribute.spaces = attribute.spaces,
+    skipchecks = skipchecks,
+    boundary = boundary,
+    .cache = .cache
+  )
   # test for validity
   methods::validObject(rd, test = FALSE)
   return(rd)
@@ -359,12 +467,12 @@ RapData <- function(pu, species, targets, pu.species.probabilities,
 #' This function prepares spatially explicit planning unit, species data, and
 #' landscape data layers for RAP processing.
 #'
-#' @param pus [sp::SpatialPolygons()] with planning unit data.
+#' @param pus [sf::st_as_sf()] with planning unit data.
 #'
-#' @param species [raster::raster()] with species probability
+#' @param species [terra::rast()] with species probability
 #'   distribution data.
 #'
-#' @param spaces `list` of/or [raster::raster()] representing
+#' @param spaces `list` of/or [terra::rast()] representing
 #'   projects of attribute space over geographic space. Use a `list` to
 #'   denote separate attribute spaces.
 #'
@@ -388,9 +496,8 @@ RapData <- function(pu, species, targets, pu.species.probabilities,
 #' @param include.geographic.space `logical` should the geographic space
 #'   be considered an attribute space?
 #'
-#' @param species.points `list` of/or
-#'   [sp::SpatialPointsDataFrame()] or
-#'   [sp::SpatialPoints()] with species presence records. Use a
+#' @param species.points `list` of/or [sf::st_sf()] object species presence
+#'   records. Use a
 #'   `list` of objects to represent different species. Must have the same
 #'   number of elements as `species`. If not supplied then use
 #'   `n.species.points` to sample points from the species distributions.
@@ -407,12 +514,22 @@ RapData <- function(pu, species, targets, pu.species.probabilities,
 #' @param ... additional arguments to [calcBoundaryData()] and
 #'   [calcSpeciesAverageInPus()].
 #'
+#' @return A new `RapData` object.
+#'
 #' @seealso [RapData-class], [RapData()].
 #'
 #' @examples
-#' # load data
-#' data(cs_pus, cs_spp, cs_space)
 #' \dontrun{
+#' # load data
+#' cs_pus <- sf::read_sf(
+#'  system.file("extdata", "cs_pus.gpkg", package = "raptr")
+#' )
+#' cs_spp <- terra::rast(
+#'   system.file("extdata", "cs_spp.tif", package = "raptr")
+#' )
+#' cs_space <- terra::rast(
+#'   system.file("extdata", "cs_space.tif", package = "raptr")
+#' )
 #' # make RapData object using the first 10 planning units in the dat
 #' x <- make.RapData(cs_pus[1:10,], cs_spp, cs_space,
 #'                   include.geographic.space = TRUE)
@@ -426,40 +543,48 @@ make.RapData <- function(pus, species, spaces = NULL, amount.target = 0.2,
                          kernel.method = c("ks", "hypervolume")[1],
                          quantile = 0.5, species.points = NULL,
                          n.species.points = ceiling(0.2 *
-                                                    raster::cellStats(species,
-                                                                      "sum")),
+                            terra::global(species, "sum", na.rm = TRUE)[[1]]
+                         ),
                          include.geographic.space = TRUE, scale = TRUE,
                          verbose = FALSE, ...) {
   ## init
   # check inputs for validity
-  assertthat::assert_that(inherits(species.points, c("SpatialPoints",
-                                                     "SpatialPointsDataFrame",
-                                                     "NULL")),
-                          inherits(pus, "SpatialPolygons"),
-                          inherits(species, c("RasterStack", "RasterLayer",
-                                              "RasterBrick")),
-                          inherits(spaces, c("NULL", "RasterStack",
-                                             "RasterBrick", "RasterLayer",
-                                             "list")),
-                          assertthat::is.flag(scale))
+  assertthat::assert_that(
+    inherits(species.points, c("sf", "NULL", "list")),
+    inherits(pus, "sf"),
+    inherits(species, "SpatRaster"),
+    inherits(spaces, c("NULL", "SpatRaster", "list")),
+    assertthat::is.flag(scale),
+    assertthat::noNA(scale)
+  )
   .cache <- new.env()
+
   # coerce non-list items to list
-  if (!inherits(spaces, "list"))
+  if (!inherits(spaces, "list")) {
     spaces <- list(spaces)
+  }
+
   # create species.points from species
   if (is.null(species.points)) {
-    species.points <- lapply(seq_len(nlayers(species)),
-      function(i) sp::SpatialPoints(coords = randomPoints(species[[i]],
-                                    n = n.species.points[[i]]),
-                                    proj4string = species[[i]]@crs))
+    species.points <- lapply(
+      seq_len(terra::nlyr(species)),
+      function(i) {
+        d <- randomPoints(species[[i]], n = n.species.points[[i]])
+        sf::st_as_sf(
+          stats::setNames(as.data.frame(d), c("x", "y")),
+          coords = c("x", "y"),
+          crs = sf::st_crs(terra::crs(species[[i]]))
+        )
+      }
+    )
   } else {
     if (!inherits(species.points, "list")) {
-      if (inherits(species.points, "SpatialDataFrame")) {
-        if ("id" %in% names(species.points@data)) {
-          species.points <- lapply(sort(unique(species@data$id)),
+      if (inherits(species.points, "sf")) {
+        if ("id" %in% names(species.points)) {
+          species.points <- lapply(sort(unique(species$id)),
             function(x) species.points[which(species.points$id == x), ])
         } else {
-          species.points <- list(sp::SpatialPoints(species.points))
+          species.points <- list(species.points)
         }
       } else {
         species.points <- list(species.points)
@@ -467,48 +592,65 @@ make.RapData <- function(pus, species, spaces = NULL, amount.target = 0.2,
     }
   }
   # set polygons
-  geoPolygons <- pus
-  if (!raster::compareCRS(geoPolygons@proj4string,
-                          sp::CRS("EPSG:4326")) &&
-      !identical(geoPolygons@proj4string, sp::CRS())) {
-    if (verbose)
-      message("Projecting polygons to WGS1984 for rendering.")
-    geoPolygons <- sp::spTransform(geoPolygons, sp::CRS("EPSG:4326"))
+  if (verbose) {
+    message("Projecting polygons to WGS1984 for rendering.")
   }
+  geoPolygons <- sf::as_Spatial(sf::st_transform(pus, 4326))
   geoPolygons <- rcpp_Polygons2PolySet(geoPolygons@polygons)
   ## set pu
   validNames <- c("cost", "status", "area")
-  if (inherits(pus, "SpatialPolygonsDataFrame") &
-      any(c("cost", "status", "area") %in% names(pus))) {
-    pu <- pus@data[, intersect(validNames, names(pus@data)), drop = FALSE]
+  if (inherits(pus, "sf") & any(c("cost", "status", "area") %in% names(pus))) {
+    nms <- intersect(validNames, names(pus))
+    pu <- sf::st_drop_geometry(pus)[, nms, drop = FALSE]
   } else {
-    pu <- data.frame(x = rep(1, length(pus@polygons)))[, -1, drop = FALSE]
+    pu <- data.frame(x = rep(1, nrow(pus)))[, -1, drop = FALSE]
   }
   if (!"cost" %in% names(pu)) {
-    pu$cost <- rep(1, length(pus@polygons))
-    warning(paste0("argument to pus does not have a \"cost\" column, ",
-                   "setting all costs to 1"))
+    pu$cost <- rep(1, nrow(pus))
+    warning(
+      paste0(
+        "argument to pus does not have a \"cost\" column, ",
+        "setting all costs to 1"
+      ),
+      immediate. = TRUE
+    )
   }
   if (!"status" %in% names(pu)) {
-    pu$status <- rep(0L, length(pus@polygons))
-    warning(paste0("argument to pus does not have a \"status\" column, ",
-                   "setting all planning unit statuses to 0."))
+    pu$status <- rep(0L, nrow(pus))
+    warning(
+      paste0(
+        "argument to pus does not have a \"status\" column, ",
+        "setting all planning unit statuses to 0."
+      ),
+      immediate. = TRUE
+    )
   }
   if (!"area" %in% names(pu)) {
-    pu$area <- rgeos::gArea(pus, byid = TRUE)
-    warning(paste0("argument to pus does not have a \"area\" column, ",
-                   "calcuating planning unit areas using polygons"))
-    if (raster::compareCRS(pus@proj4string, sp::CRS("EPSG:4326")))
-      warning(paste0("Planning unit areas are being calculated in a ",
-                     "geographic coordinate system"))
+    pu$area <- as.numeric(sf::st_area(pus))
+    warning(
+      paste0(
+        "argument to pus does not have a \"area\" column, ",
+        "calculating planning unit areas using polygons"
+      ),
+      immediate. = TRUE
+    )
+    if (sf::st_is_longlat(pus)) {
+      warning(
+        paste0(
+          "Planning unit areas are being calculated in a ",
+          "geographic coordinate system"
+        ),
+        immediate. = TRUE
+      )
+    }
   }
   #### Attribute space data
   ## rescale spaces
   if (scale & !is.null(spaces[[1]])) {
     # calculate statistics
     for (i in seq_along(spaces)) {
-      spaces.mean <- raster::cellStats(spaces[[i]], "mean")
-      spaces.sd <- raster::cellStats(spaces[[i]], "sd")
+      spaces.mean <- terra::global(spaces[[i]], "mean", na.rm = TRUE)[[1]]
+      spaces.sd <- terra::global(spaces[[i]], "sd", na.rm = TRUE)[[1]]
       # replace NA values with 1 to account for bug in raster
       spaces.sd <- replace(spaces.sd, which(is.na(spaces.sd)), 1)
       spaces[[i]] <- (spaces[[i]] - spaces.mean) / spaces.sd
@@ -521,30 +663,35 @@ make.RapData <- function(pus, species, spaces = NULL, amount.target = 0.2,
   # if spaces is not NULL
   if (!is.null(spaces[[1]])) {
     # create initial rasterized version of the pus
-    pus@data$id <- seq_len(nrow(pus@data))
-    pu.rast <- raster::rasterize(pus, spaces[[1]][[1]], field = "id")
+    pus$id <- seq_len(nrow(pus))
+    pu.rast <- terra::rasterize(
+      methods::as(pus, "SpatVector"), spaces[[1]][[1]], field = "id"
+    )
     # extract means
     pu.points <- lapply(spaces, function(x) {
       # generate new raster if needed
-      if (!raster::compareRaster(pu.rast, x, tolerance = 1e-5,
-                                 stopiffalse = FALSE))
-        pu.rast <- raster::rasterize(pus, x)
+      if (!terra::compareGeom(pu.rast, x, stopOnError = FALSE)) {
+        pu.rast <- terra::rasterize(methods::as(pus, "SpatVector"), x)
+      }
       # extract points
-      coordMTX <- matrix(NA, nrow = nrow(pus@data), ncol = raster::nlayers(x))
+      coordMTX <- matrix(NA, nrow = nrow(pus), ncol = terra::nlyr(x))
       for (i in seq_len(ncol(coordMTX))) {
-        vals <- rcpp_groupmean(raster::getValues(pu.rast),
-                               raster::getValues(x[[i]]))
+        vals <- rcpp_groupmean(
+          c(terra::values(pu.rast)),
+          c(terra::values(x[[i]]))
+        )
         coordMTX[attr(vals, "ids"), i] <- c(vals)
       }
       ids <- which(rowSums(is.na(coordMTX)) == 0)
-      return(PlanningUnitPoints(coords = coordMTX[ids, ], ids = ids))
-    }
-  )
+      PlanningUnitPoints(coords = coordMTX[ids, ], ids = ids)
+    })
   }
   # calculate positions in geographic space
   if (isTRUE(include.geographic.space)) {
     # get pu centroids
-    pu.coords <- rgeos::gCentroid(pus, byid = TRUE)@coords
+    pu.coords <- suppressWarnings(
+      as.matrix(sf::st_coordinates(sf::st_centroid(pus)))
+    )
     if (scale) {
       # zscore pu coords
       pu.means <- apply(pu.coords, 2, mean, na.rm = TRUE)
@@ -552,30 +699,37 @@ make.RapData <- function(pus, species, spaces = NULL, amount.target = 0.2,
       pu.coords <- sweep(pu.coords, MARGIN = 2, FUN = "-", pu.means)
       pu.coords <- sweep(pu.coords, MARGIN = 2, FUN = "/", pu.sds)
     }
-    pu.points <- append(pu.points, list(
-                   PlanningUnitPoints(coords = pu.coords,
-                                      ids = seq_len(nrow(pu.coords)))))
+    pu.points <- append(
+      pu.points,
+      list(
+        PlanningUnitPoints(coords = pu.coords, ids = seq_len(nrow(pu.coords)))
+      )
+    )
   }
   if (length(pu.points) == 0) {
     stop(paste0("Attribute spaces must be specified. Either ",
                 "include.geographic.space=TRUE or spaces must contain at ",
-                "least one Raster* object"))
+                "least one terra::rast() object"))
   }
   ## set pu.species.probabilities
   projPolygons <- pus
-  if (!identical(projPolygons@proj4string, species@crs)) {
-    if (verbose)
+  if (!isTRUE(sf::st_crs(projPolygons) == sf::st_crs(species))) {
+    if (verbose) {
       message("Projecting polygons to rasters' CRS.")
-      projPolygons <- sp::spTransform(projPolygons, species@crs)
+    }
+    projPolygons <- sf::st_transform(projPolygons, sf::st_crs(species))
   }
-  if (verbose)
+  if (verbose) {
     message("Calculating average species probability in planning units.")
-  pu.species.probabilities <- calcSpeciesAverageInPus(projPolygons, species,
-                                                      ...)
+  }
+  pu.species.probabilities <- calcSpeciesAverageInPus(
+    projPolygons, species, ...
+  )
   ## set demand.points
   # include geographic space if set
-  if (!is.null(spaces[[1]]) & include.geographic.space)
+  if (!is.null(spaces[[1]]) & include.geographic.space) {
     spaces <- append(spaces, list(NULL))
+  }
   # generate demand points
   demand.points <- list()
   for (i in seq_along(spaces)) {
@@ -585,25 +739,26 @@ make.RapData <- function(pus, species, spaces = NULL, amount.target = 0.2,
       if (is.null(spaces[[i]])) {
         # save name
         # get species coords
-        curr.species.points <- species.points[[j]]@coords
+        curr.species.points <-
+          as.matrix(sf::st_coordinates(species.points[[j]]))
         # zscore species coords
         if (scale) {
-          curr.species.points <- sweep(curr.species.points, MARGIN = 2,
-                                       FUN = "-", pu.means)
-          curr.species.points <- sweep(curr.species.points, MARGIN = 2,
-                                       FUN = "/", pu.sds)
+          curr.species.points <- sweep(
+            curr.species.points, MARGIN = 2, FUN = "-", pu.means
+          )
+          curr.species.points <- sweep(
+            curr.species.points, MARGIN = 2, FUN = "/", pu.sds
+          )
         }
         # save species points in the space
         space.points <- curr.species.points
       } else {
-        space.points <- raster::extract(spaces[[i]], species.points[[j]])
-        if (inherits(space.points, "matrix")) {
-          space.points <- space.points[is.finite(rowSums(space.points,
-                                                         na.rm = FALSE)),,
-                                       drop = FALSE]
-        } else {
-          space.points <- space.points[which(!is.finite(space.points))]
-        }
+        space.points <- as.matrix(
+          terra::extract(spaces[[i]], species.points[[j]], ID = FALSE)
+        )
+        space.points <- space.points[
+          is.finite(rowSums(space.points, na.rm = FALSE)), , drop = FALSE
+        ]
       }
       # generate demand points
       dpLST[[j]] <- make.DemandPoints(points = space.points,
@@ -619,8 +774,9 @@ make.RapData <- function(pus, species, spaces = NULL, amount.target = 0.2,
       space.names[i] <- "geographic"
     } else if (!is.null(names(spaces)[i]) && (nchar(names(spaces)[i]) > 0)) {
       space.names[i] <- names(spaces)[i]
-    } else if (inherits(spaces[[i]], "Raster") &&
-               (nchar(spaces[[i]]@file@name) > 0)) {
+    } else if (
+        inherits(spaces[[i]], "Raster") && (nchar(spaces[[i]]@file@name) > 0)
+      ) {
       space.names[i] <- basename(spaces[[i]]@file@name)
     } else {
       space.names[i] <- paste0("space_", i)
@@ -638,32 +794,55 @@ make.RapData <- function(pus, species, spaces = NULL, amount.target = 0.2,
           ids = pu.points[[i]]@ids[curr.pos]
         )
         # create AttributeSpace object
-        AttributeSpace(planning.unit.points = curr.pu.points,
-                       demand.points = demand.points[[i]][[d]], species = d)
+        AttributeSpace(
+          planning.unit.points = curr.pu.points,
+          demand.points = demand.points[[i]][[d]],
+          species = d
+        )
       }),
       name = space.names[i]
     )
   })
   ## set boundary
-  if (raster::compareCRS(pus@proj4string, sp::CRS("EPSG:4326")))
-    warning(paste0("creating boundary length data from pus in WGS1984; ",
-                   "consider supplying an object in a projected CRS."))
-  if (verbose)
+  if (sf::st_is_longlat(pus)) {
+    warning(
+      paste0(
+        "creating boundary length data from pus in WGS1984; ",
+        "consider supplying an object in a projected CRS."
+      ),
+      immediate. = TRUE
+    )
+  }
+  if (verbose) {
     message("Calculating boundary data.")
-  boundary <- calcBoundaryData(rcpp_Polygons2PolySet(pus@polygons), ...)
+  }
+  boundary <- calcBoundaryData(pus, ...)
   ## set species
   species <- data.frame(name = names(species), stringsAsFactors = FALSE)
   ## set targets
-  targets <- rbind(expand.grid(species = seq_len(nrow(species)), target = 0L,
-                             proportion = amount.target),
-                 expand.grid(species = seq_len(nrow(species)),
-                             target = seq(1L, length(attribute.spaces)),
-                             proportion = space.target))
+  targets <- rbind(
+    expand.grid(
+      species = seq_len(nrow(species)),
+      target = 0L,
+      proportion = amount.target
+    ),
+    expand.grid(
+      species = seq_len(nrow(species)),
+      target = seq(1L, length(attribute.spaces)),
+      proportion = space.target
+    )
+  )
   ## return object
-  return(RapData(pu = pu, species = species, targets = targets,
-                 pu.species.probabilities = pu.species.probabilities,
-                 attribute.spaces = attribute.spaces, boundary = boundary,
-                 polygons = geoPolygons, .cache = .cache))
+  RapData(
+    pu = pu,
+    species = species,
+    targets = targets,
+    pu.species.probabilities = pu.species.probabilities,
+    attribute.spaces = attribute.spaces,
+    boundary = boundary,
+    polygons = geoPolygons,
+    .cache = .cache
+  )
 }
 
 #' @rdname basemap
@@ -685,11 +864,17 @@ basemap.RapData <- function(x, basemap = "hybrid", grayscale = FALSE,
   }
   # fetch data from google or cache
   if (force.reset || !is.cached(x, callchar)) {
-    cache(x, callchar,
-          RgoogleMaps::GetMap.bbox(range(x@polygons[["X"]]),
-                                   range(x@polygons[["Y"]]),
-                                   destfile = tempfile(fileext =  ".png"),
-                                   maptype = basemap, GRAYSCALE = grayscale))
+    cache(
+      x,
+      callchar,
+      RgoogleMaps::GetMap.bbox(
+        range(x@polygons[["X"]]),
+        range(x@polygons[["Y"]]),
+        destfile = tempfile(fileext =  ".png"),
+        maptype = basemap,
+        GRAYSCALE = grayscale
+      )
+    )
   }
   return(cache(x, callchar))
 }
@@ -736,7 +921,6 @@ methods::setMethod("cache",
 methods::setMethod("cache",
   methods::signature(x = "RapData", name = "character", y = "missing"),
   function(x, name, y) return(x@.cache[[name]]))
-
 
 #' @rdname is.comparable
 #'
@@ -799,10 +983,15 @@ spp.subset.RapData <- function(x, species) {
   # update relative indices of targets to reflect new ordering of spaces
   targets$target <- as.integer(match(targets$target, as.pos) - 1)
   # return new object
-  return(RapData(pu = x@pu, species = x@species[species,, drop = FALSE],
-      targets = targets, pu.species.probabilities = pu.species.probabilities,
-      attribute.spaces = attribute.spaces, boundary = x@boundary,
-      polygons = x@polygons))
+  RapData(
+    pu = x@pu,
+    species = x@species[species,, drop = FALSE],
+    targets = targets,
+    pu.species.probabilities = pu.species.probabilities,
+    attribute.spaces = attribute.spaces,
+    boundary = x@boundary,
+    polygons = x@polygons
+  )
 }
 
 #' @rdname pu.subset
@@ -814,7 +1003,7 @@ pu.subset.RapData <- function(x, pu) {
   # check that all pus are valid
   assertthat::assert_that(is.integer(pu), all(is.finite(pu)),
     all(pu %in% seq_len(nrow(x@pu))),
-    msg = "argument to pu includes ids for non-existant planning units")
+    msg = "argument to pu includes ids for non-existent planning units")
   ## create objects
   # pu.species.probabilities
   pu.species.probabilities <- x@pu.species.probabilities[which(
@@ -840,24 +1029,32 @@ pu.subset.RapData <- function(x, pu) {
   polygons <- x@polygons[x@polygons$PID %in% pu, ]
   polygons$PID <- match(polygons$PID, pu)
   # return new object
-  return(RapData(pu = x@pu[pu,, drop = FALSE], species = x@species,
-                 targets = x@targets,
-                 pu.species.probabilities = pu.species.probabilities,
-                 attribute.spaces = lapply(x@attribute.spaces, function(z) {
-                   AttributeSpaces(spaces = lapply(z@spaces, function(y) {
-                     curr.ids <- stats::na.omit(match(
-                       y@planning.unit.points@ids, pu))
-                     attributes(curr.ids) <- NULL
-                     curr.pu <- pu[which(pu %in% y@planning.unit.points@ids)]
-                     AttributeSpace(
-                       planning.unit.points = PlanningUnitPoints(
-                         coords = y@planning.unit.points@coords[curr.pu,,
-                                                                drop = FALSE],
-                         ids = curr.ids),
-                       demand.points = y@demand.points,
-                       species = y@species)}),
-                  name = z@name)}),
-                boundary = boundary, polygons = polygons))
+  RapData(
+    pu = x@pu[pu,, drop = FALSE],
+    species = x@species,
+    targets = x@targets,
+    pu.species.probabilities = pu.species.probabilities,
+    attribute.spaces = lapply(x@attribute.spaces, function(z) {
+      AttributeSpaces(
+        spaces = lapply(z@spaces, function(y) {
+          curr.ids <- stats::na.omit(match(y@planning.unit.points@ids, pu))
+          attributes(curr.ids) <- NULL
+          curr.pu <- pu[which(pu %in% y@planning.unit.points@ids)]
+          AttributeSpace(
+            planning.unit.points = PlanningUnitPoints(
+              coords = y@planning.unit.points@coords[curr.pu,, drop = FALSE],
+              ids = curr.ids
+            ),
+            demand.points = y@demand.points,
+            species = y@species
+          )
+        }),
+        name = z@name
+      )
+    }),
+    boundary = boundary,
+    polygons = polygons
+  )
 }
 
 #' @rdname dp.subset
@@ -866,16 +1063,17 @@ pu.subset.RapData <- function(x, pu) {
 #'
 #' @export
 dp.subset.RapData <- function(x, space, species, points) {
-  assertthat::assert_that(inherits(space, c("integer", "numeric", "character")),
-                          inherits(species, c("integer", "numeric",
-                                              "character")),
-                          inherits(points, c("numeric", "integer")))
+  assertthat::assert_that(
+    inherits(space, c("integer", "numeric", "character")),
+    inherits(species, c("integer", "numeric", "character")),
+    inherits(points, c("numeric", "integer"))
+  )
   # coerce character arguments to ids
   if (is.character(space))
     space <- match(space, sapply(x@attribute.spaces, methods::slot, "name"))
   assertthat::assert_that(
     all(!is.na(space)), all(space %in% seq_along(x@attribute.spaces)),
-    msg = "argument to space contains name for non-existant space")
+    msg = "argument to space contains name for non-existent space")
   if (inherits(species, "character"))
     species <- match(species, x@species$name)
   assertthat::assert_that(
@@ -890,14 +1088,20 @@ dp.subset.RapData <- function(x, space, species, points) {
           attr.space[[space[[i]]]]@spaces[[species[[j]]]]@demand.points@
             coords[points, , drop = FALSE],
           attr.space[[space[[i]]]]@spaces[[species[[j]]]]@demand.points@
-            weights[points])
+            weights[points]
+        )
     }
   }
   # return new object
-  return(RapData(pu = x@pu, species = x@species, targets = x@targets,
-                 pu.species.probabilities = x@pu.species.probabilities,
-                 attribute.spaces = attr.space, boundary = x@boundary,
-                 polygons = x@polygons))
+  RapData(
+    pu = x@pu,
+    species = x@species,
+    targets = x@targets,
+    pu.species.probabilities = x@pu.species.probabilities,
+    attribute.spaces = attr.space,
+    boundary = x@boundary,
+    polygons = x@polygons
+  )
 }
 
 #' @rdname prob.subset
@@ -916,10 +1120,14 @@ prob.subset.RapData <- function(x, species, threshold) {
       pu.species.probs <- pu.species.probs[-rows,, drop = FALSE]
   }
   # return new object
-  return(RapData(pu = x@pu, species = x@species, targets = x@targets,
-                 pu.species.probabilities = pu.species.probs,
-                 attribute.spaces = x@attribute.spaces, boundary = x@boundary,
-                 polygons = x@polygons))
+  RapData(
+    pu = x@pu,
+    species = x@species,
+    targets = x@targets,
+    pu.species.probabilities = pu.species.probs,
+    attribute.spaces = x@attribute.spaces, boundary = x@boundary,
+    polygons = x@polygons
+  )
 }
 
 #' @rdname update
@@ -979,20 +1187,21 @@ spp.plot.RapData <- function(x, species, prob.color.palette = "YlGnBu",
                              basemap = "none",
                              alpha = ifelse(identical(basemap, "none"), 1, 0.7),
                              grayscale = FALSE, main = NULL,
-                             force.reset = FALSE,
-  ...
+                             force.reset = FALSE, ...
 ) {
   # validate inputs
-  assertthat::assert_that(assertthat::is.count(species) ||
-                          assertthat::is.string(species),
-                          assertthat::is.string(prob.color.palette),
-                          is.character(pu.color.palette),
-                          length(pu.color.palette) == 4,
-                          assertthat::is.string(basemap),
-                          assertthat::is.scalar(alpha),
-                          assertthat::is.flag(grayscale),
-                          is.null(main) || assertthat::is.string(main),
-                          assertthat::is.flag(force.reset))
+  assertthat::assert_that(
+    assertthat::is.count(species) || assertthat::is.string(species),
+    assertthat::is.string(prob.color.palette),
+    is.character(pu.color.palette),
+    length(pu.color.palette) == 4,
+    assertthat::is.string(basemap),
+    assertthat::is.scalar(alpha),
+    assertthat::is.flag(grayscale),
+    is.null(main) || assertthat::is.string(main),
+    assertthat::is.flag(force.reset),
+    assertthat::noNA(force.reset)
+  )
   if (nrow(x@polygons) == 0)
       stop("Spatial data for planning units not present in object")
   if (is.character(species)) {
@@ -1042,16 +1251,20 @@ spp.plot.RapData <- function(x, species, prob.color.palette = "YlGnBu",
   border.cols[which(x@pu$status == 2)] <- pu.color.palette[3]
   border.cols[which(x@pu$status == 3)] <- pu.color.palette[4]
   # make plot
-  prettyGeoplot(polygons = list(x@polygons[x@polygons$PID %in% unsel.pu.ids, ],
-                                x@polygons[x@polygons$PID %in% sel.pu.ids, ]),
-                col = list(cols[unsel.pu.ids], cols[sel.pu.ids]),
-                basemap, main = main,
-                continuousLegend(values, prob.color.palette,
-                                 posx = c(0.3, 0.4), posy = c(0.1, 0.9)),
-                beside = TRUE,
-                border = list(border.cols[unsel.pu.ids],
-                              border.cols[sel.pu.ids]),
-                lwd = list(1, 5))
+  prettyGeoplot(
+    polygons = list(
+      x@polygons[x@polygons$PID %in% unsel.pu.ids, ],
+      x@polygons[x@polygons$PID %in% sel.pu.ids, ]
+    ),
+    col = list(cols[unsel.pu.ids], cols[sel.pu.ids]),
+    basemap, main = main,
+    continuousLegend(values, prob.color.palette,
+                     posx = c(0.3, 0.4), posy = c(0.1, 0.9)),
+    beside = TRUE,
+    border = list(border.cols[unsel.pu.ids],
+                  border.cols[sel.pu.ids]),
+    lwd = list(1, 5)
+  )
 }
 
 #' @rdname space.plot
@@ -1103,10 +1316,17 @@ space.plot.RapData <- function(x, species, space = 1,
   dp$weights <- x@attribute.spaces[[space]]@spaces[[spp_pos]]@
                   demand.points@weights
   # make plots
-  do.call(paste0("spacePlot.",
-                 ncol(x@attribute.spaces[[space]]@spaces[[spp_pos]]@
-                        planning.unit.points@coords), "d"),
-    list(pu, dp, pu.color.palette, main))
+  do.call(
+    paste0(
+      "spacePlot.",
+       ncol(
+         x@attribute.spaces[[space]]@spaces[[spp_pos]]@
+          planning.unit.points@coords
+        ),
+        "d"
+    ),
+    list(pu, dp, pu.color.palette, main)
+  )
 }
 
 #' @rdname amount.target
@@ -1115,8 +1335,11 @@ space.plot.RapData <- function(x, species, space = 1,
 #'
 #' @export
 amount.target.RapData <- function(x, species = NULL) {
-  assertthat::assert_that(is.null(species) || is.character(species) ||
-                          is.numeric(species))
+  assertthat::assert_that(
+    is.null(species) ||
+      is.character(species) ||
+      is.numeric(species)
+  )
   if (is.null(species))
     return(structure(x@targets$proportion[which(x@targets$target == 0)],
            .Names = x@species$name[x@targets$species[which(x@targets$target ==
@@ -1133,8 +1356,11 @@ amount.target.RapData <- function(x, species = NULL) {
 #'
 #' @export
 `amount.target<-.RapData` <- function(x, species = NULL, value) {
-  assertthat::assert_that(is.null(species) || is.character(species) ||
-                          is.numeric(species), is.numeric(value))
+  assertthat::assert_that(
+    is.null(species) ||
+      is.character(species) ||
+      is.numeric(species),
+    is.numeric(value))
   if (is.null(species)) {
     x@targets$proportion[which(x@targets$target == 0)] <- value
   } else {
@@ -1157,9 +1383,13 @@ amount.target.RapData <- function(x, species = NULL) {
 #'
 #' @export
 space.target.RapData <- function(x, species = NULL, space = NULL) {
-  assertthat::assert_that(is.null(species) || is.character(species) ||
-                          is.numeric(species),
-                          is.null(space) || is.numeric(space))
+  assertthat::assert_that(
+    is.null(species) ||
+      is.character(species) ||
+      is.numeric(species),
+    is.null(space) ||
+      is.numeric(space)
+  )
   rows <- seq_len(nrow(x@targets))
   if (!is.null(species)) {
     if (is.character(species))

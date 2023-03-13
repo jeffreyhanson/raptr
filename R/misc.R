@@ -20,9 +20,42 @@ NULL
 #' # print cached status of installation
 #' options()$GurobiInstalled
 #' }
-#'
 #' @export
 is.GurobiInstalled <- function(verbose = TRUE) {
+  # check if gurobi installed
+  software_installed <- suppressWarnings(
+    system2("gurobi_cl", "-v", stdout = FALSE, stderr = FALSE)
+  ) == 0
+  pkg_installed <-
+    requireNamespace("gurobi", quietly = TRUE) &&
+    utils::packageVersion("gurobi") >= as.package_version("8.0.0")
+  # store result
+  options(
+    GurobiInstalled = list(
+      gurobi = isTRUE(software_installed) && isTRUE(pkg_installed)
+    )
+  )
+  # display messages if needed
+  if (verbose) {
+    if (!isTRUE(software_installed)) {
+      message(paste(gurobi_installation_message(), collapse = "\n\n"))
+    }
+    if (!isTRUE(pkg_installed)) {
+      message(paste(package_installation_message(), collapse = "\n\n"))
+    }
+  }
+  # return result
+  software_installed && pkg_installed
+}
+
+#' Gurobi installation message
+#'
+#' Create a message to display when the Gurobi suite is not available.
+#'
+#' @return A `character` value.
+#'
+#' @noRd
+gurobi_installation_message <- function() {
   # define installation instructions
   gurobiInstallationInstructions <- paste(
     "Follow these instructions to download the Gurobi software suite:\n  ",
@@ -31,7 +64,6 @@ is.GurobiInstalled <- function(verbose = TRUE) {
       "Windows" = "https://www.gurobi.com/documentation/9.5/quickstart_windows/software_installation_guid.html",
       "Darwin" = "https://www.gurobi.com/documentation/9.5/quickstart_mac/software_installation_guid.html"
     )[Sys.info()[["sysname"]]])
-
   rInstallationInstructions1 <- paste(
     "Follow these instructions to install the \"gurobi\" R package:\n  ",
     c(
@@ -39,90 +71,104 @@ is.GurobiInstalled <- function(verbose = TRUE) {
       "Windows" = "https://www.gurobi.com/documentation/6.5/quickstart_windows/r_installing_the_r_package.html",
       "Darwin" = "https://www.gurobi.com/documentation/6.5/quickstart_mac/r_installing_the_r_package.html"
     )[Sys.info()[["sysname"]]])
-
-  licenseInstructions <- paste0("The Gurobi R package requires a Gurobi ",
+  licenseInstructions <- paste0("The gurobi R package requires a Gurobi ",
     "license to work:\n  visit this web-page for an overview: \n    ",
     "https://www.gurobi.com/products/licensing-options/\n  academics can obtain a license at no cost ",
     "here:\n    https://www.gurobi.com/downloads/end-user-license-agreement-academic/")
+  c(
+    "The gurobi software is not installed",
+    gurobiInstallationInstructions,
+    licenseInstructions,
+    rInstallationInstructions1
+  )
+}
 
-  # check if gurobi installed
-  result <- suppressWarnings(system2("gurobi_cl", "-v", stdout = FALSE,
-                                     stderr = FALSE))
-  if (result != 0) {
-    if (verbose) {
-      message("The gorubi software is not installed")
-      message(gurobiInstallationInstructions, "\n\n", licenseInstructions,
-              "\n\n", rInstallationInstructions1)
-    }
-    options(GurobiInstalled = list(gurobi = FALSE))
-    return(FALSE)
-  }
-
-  # check if R packages installed
-  pkgs.installed <- list(gurobi =
-    requireNamespace("gurobi", quietly = TRUE) &&
-    utils::packageVersion("gurobi") >= as.package_version("8.0.0"))
-  if (!pkgs.installed[[1]]) {
-    if (verbose) {
-      message("The gorubi R package (version 8.0.0+) is not installed\n")
-      message(rInstallationInstructions1, "\n")
-    }
-  }
-  options(GurobiInstalled = pkgs.installed)
-  if (!pkgs.installed[[1]])
-    return(FALSE)
-  return(TRUE)
+#' Gurobi package installation message
+#'
+#' Create a message to display when the Gurobi package is not available.
+#'
+#' @return A `character` value.
+#'
+#' @noRd
+package_installation_message <- function() {
+  rInstallationInstructions1 <- paste(
+    "Follow these instructions to install the \"gurobi\" R package:\n  ",
+    c(
+      "Linux" = "https://www.gurobi.com/documentation/6.5/quickstart_linux/r_installing_the_r_package.html",
+      "Windows" = "https://www.gurobi.com/documentation/6.5/quickstart_windows/r_installing_the_r_package.html",
+      "Darwin" = "https://www.gurobi.com/documentation/6.5/quickstart_mac/r_installing_the_r_package.html"
+    )[Sys.info()[["sysname"]]])
+  c(
+    "The gurobi R package (version 8.0.0+) is not installed",
+    rInstallationInstructions1
+  )
 }
 
 #' Blank raster
 #'
-#' This functions creates a blank raster based on the spatial extent of a
-#' Spatial object.
+#' This functions creates a blank `SpatRaster` based on the spatial extent of a
+#' `sf` object.
 #'
-#' @param x [sp::Spatial-class] object.
+#' @param x [sf::st_sf()] object.
 #'
 #' @param res `numeric` `vector` specifying resolution of the output raster
 #'   in the x and y dimensions. If `vector` is of length one, then the
 #'   pixels are assumed to be square.
 #'
 #' @examples
-#' # make SpatialPolygons
+#' \dontrun{
+#' # make sf data
 #' polys <- sim.pus(225L)
 #'
-#' # make RasterLayer from SpatialPolygons
+#' # make raster from sf
 #' blank.raster(polys, 1)
-#'
+#' }
 #' @rdname blank.raster
 #'
 #' @export
 blank.raster <- function(x, res) {
-  assertthat::assert_that(inherits(x, "Spatial"), is.numeric(res),
-                          all(is.finite(res)), length(res) %in% c(1, 2))
+  assertthat::assert_that(
+    inherits(x, "sf"),
+    is.numeric(res),
+    assertthat::noNA(res),
+    length(res) %in% c(1, 2)
+  )
   # initialize resolution inputs
   if (length(res) == 1)
     res <- c(res, res)
+  # get bounding box data
+  bb <- sf::st_bbox(x)
   # extract coordinates
-  if ((raster::xmax(x) - raster::xmin(x)) <= res[1]) {
-    xpos <- c(raster::xmin(x), res[1])
+  if ((bb[["xmax"]] - bb[["xmin"]]) <= res[1]) {
+    xpos <- c(bb[["xmin"]], res[1])
   } else {
-    xpos <- seq(raster::xmin(x),
-                raster::xmax(x) + (res[1] * (((raster::xmax(x) -
-                  raster::xmin(x)) %% res[1]) != 0)),
-                res[1])
+    xpos <- seq(
+      bb[["xmin"]],
+      bb[["xmax"]] +
+        (res[1] * (((bb[["xmax"]] - bb[["xmin"]]) %% res[1]) != 0)),
+      res[1]
+    )
   }
-  if ((raster::ymax(x) - raster::ymin(x)) <= res[2]) {
-    ypos <- c(raster::ymin(x), res[2])
+  if ((bb[["ymax"]] - bb[["ymin"]]) <= res[2]) {
+    ypos <- c(bb[["ymin"]], res[2])
   } else {
-    ypos <- seq(raster::ymin(x),
-                raster::ymax(x) + (res[2] * (((raster::ymax(x) -
-                  raster::ymin(x)) %% res[2]) != 0)),
-                res[2])
+    ypos <- seq(
+      bb[["ymin"]],
+      bb[["ymax"]] +
+        (res[2] * (((bb[["ymax"]] - bb[["ymin"]]) %% res[2]) != 0)),
+      res[2]
+    )
   }
-  # generate raster from sp
-  rast <- raster::raster(xmn = min(xpos), xmx = max(xpos), ymn = min(ypos),
-                         ymx = max(ypos), nrow = length(ypos) - 1,
-                         ncol = length(xpos) - 1)
-  return(raster::setValues(rast, 1))
+  # generate raster
+  rast <- terra::rast(
+    xmin = min(xpos),
+    xmax = max(xpos),
+    ymin = min(ypos),
+    ymax = max(ypos),
+    nrow = length(ypos) - 1,
+    ncol = length(xpos) - 1
+  )
+  return(terra::setValues(rast, 1))
 }
 
 #' PolySet
@@ -165,12 +211,11 @@ methods::setClass("RapOpts",
 #' @exportClass SolverOpts
 methods::setClass("SolverOpts")
 
-#' Sample random points from a RasterLayer
+#' Sample random points from a SpatRaster
 #'
-#' This function generates random points in a [raster::raster()]
-#' object.
+#' This function generates random points in a [terra::rast()] object.
 #'
-#' @param mask [raster::raster()] object
+#' @param mask [terra::rast()] object
 #'
 #' @param n `integer` number of points to sample
 #'
@@ -183,6 +228,7 @@ methods::setClass("SolverOpts")
 #' @seealso This function is similar to `dismo::randomPoints`.
 #'
 #' @examples
+#' \dontrun{
 #' # simulate data
 #' sim_pus <- sim.pus(225L)
 #' sim_spp <- sim.species(sim_pus, model = "normal", n = 1, res = 0.25)
@@ -195,20 +241,30 @@ methods::setClass("SolverOpts")
 #' plot(sim_spp)
 #' points(pts1, col = "red")
 #' points(pts2, col = "black")
-#'
+#' }
 #' @export
 randomPoints <- function(mask, n, prob = FALSE) {
-  # check that data can be processed in memory
-  stopifnot(raster::canProcessInMemory(mask, n = 3))
+  # assert valid arguments
+  assertthat::assert_that(
+    inherits(mask, "SpatRaster"),
+    assertthat::is.count(n),
+    assertthat::noNA(n),
+    assertthat::is.flag(prob),
+    assertthat::noNA(prob)
+  )
   # extract cells
-  validPos <- which(is.finite(mask[]))
-  if (length(validPos) < n)
+  d <- terra::as.data.frame(sum(mask), cells = TRUE)
+  d <- d[is.finite(d[[2]]), , drop = FALSE]
+  if (nrow(d) < n) {
     stop("argument to n is greater than the number of cells with finite values")
+  }
   if (prob) {
-    randomCells <- sample(validPos, n, prob = mask[validPos], replace = FALSE)
+    randomCells <- sample(
+      d[[1]], n, prob = d[[2]], replace = FALSE
+    )
   } else {
-    randomCells <- sample(validPos, n, replace = FALSE)
+    randomCells <- sample(d[[1]], n, replace = FALSE)
   }
   # get coordinates of the cell centres
-  return(raster::xyFromCell(mask, randomCells))
+  terra::xyFromCell(mask, randomCells)
 }

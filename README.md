@@ -4,11 +4,11 @@
 # raptr: Representative and Adequate Prioritization Toolkit in R
 
 [![lifecycle](https://img.shields.io/badge/Lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
-[![R-CMD-check-Ubuntu](https://img.shields.io/github/workflow/status/jeffreyhanson/raptr/Ubuntu/master.svg?label=Ubuntu)](https://github.com/jeffreyhanson/raptr/actions)
-[![R-CMD-check-Windows](https://img.shields.io/github/workflow/status/jeffreyhanson/raptr/Windows/master.svg?label=Windows)](https://github.com/jeffreyhanson/raptr/actions)
-[![R-CMD-check-Mac-OSX](https://img.shields.io/github/workflow/status/jeffreyhanson/raptr/Mac%20OSX/master.svg?label=Mac%20OSX)](https://github.com/jeffreyhanson/raptr/actions)
-[![Coverage
-Status](http://codecov.io/github/jeffreyhanson/raptr/coverage.svg?branch=master)](https://codecov.io/github/jeffreyhanson/raptr?branch=master)
+[![R-CMD-check-Ubuntu](https://img.shields.io/github/actions/workflow/status/jeffreyhanson/raptr/R-CMD-check-ubuntu.yaml?branch=master&label=Ubuntu)](https://github.com/jeffreyhanson/raptr/actions)
+[![R-CMD-check-Windows](https://img.shields.io/github/actions/workflow/status/jeffreyhanson/raptr/R-CMD-check-windows.yaml?branch=master&label=Windows)](https://github.com/jeffreyhanson/raptr/actions)
+[![R-CMD-check-macOS](https://img.shields.io/github/actions/workflow/status/jeffreyhanson/raptr/R-CMD-check-macos.yaml?branch=master&label=macOS)](https://github.com/jeffreyhanson/raptr/actions)
+[![R-CMD-check-Fedora](https://img.shields.io/github/actions/workflow/status/jeffreyhanson/raptr/R-CMD-check-fedora.yaml?branch=master&label=Fedora)](https://github.com/jeffreyhanson/raptr/actions)
+[![Documentation](https://img.shields.io/github/actions/workflow/status/jeffreyhanson/raptr/documentation.yaml?branch=master&label=Documentation)](https://github.com/jeffreyhanson/raptr/actions)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/raptr)](https://CRAN.R-project.org/package=raptr)
 
 Biodiversity is in crisis. The overarching aim of conservation is to
@@ -40,7 +40,6 @@ Mac OSX users can install them using the code below.
 
     brew install Caskroom/cask/xquartz
     brew install gdal
-    Rscript -e "setRepositories(ind = 1:2); install.packages(c('rgdal', 'rgeos'))"
 
 To install the [latest official version on
 CRAN](https://CRAN.R-project.org/package=raptr), use the following R
@@ -55,9 +54,8 @@ GitHub](https://github.com/jeffreyhanson/raptr), use the following R
 code.
 
 ``` r
-if (!require("devtools"))
-  install.packages("devtools")
-devtools:::install_github("jeffreyhanson/raptr")
+if (!require("remotes")) install.packages("remotes")
+remotes:::install_github("jeffreyhanson/raptr")
 ```
 
 Once this package has been installed, you can read through the vignette

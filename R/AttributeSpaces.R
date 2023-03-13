@@ -23,16 +23,18 @@ methods::setClass("AttributeSpaces",
   methods::representation(spaces = "list", name = "character"),
   validity = function(object) {
     # check that all elements in the list are AttributeSpace objects
-    assertthat::assert_that(all(sapply(object@spaces, inherits,
-                                       what = "AttributeSpace")),
-                            msg = paste0("argument to object@spaces must be ",
-                                         "a list of AttributeSpace objects"))
-    # expect name is not NA
-    assertthat::assert_that(!is.na(object@name),
-                            msg = "argument to name must not be NA")
-    assertthat::assert_that(isTRUE(length(object@name) == 1),
-                            msg = paste0("argument to name must have a single ",
-                                         "element"))
+    assertthat::assert_that(
+      all(sapply(object@spaces, inherits, what = "AttributeSpace")),
+      msg = paste0(
+        "argument to object@spaces must be ",
+        "a list of AttributeSpace objects"
+      )
+    )
+    # expect name is a non-NA string
+    assertthat::assert_that(
+      assertthat::is.string(object@name),
+      assertthat::noNA(object@name)
+    )
     return(TRUE)
   }
 )
@@ -46,29 +48,38 @@ methods::setClass("AttributeSpaces",
 #'
 #' @param name `character` name to identify the attribute space.
 #'
+#' @return A new `AttributeSpaces` object.
+#'
 #' @seealso [AttributeSpace-class].
 #'
 #' @examples
+#' \dontrun{
 #' space1 <- AttributeSpace(
 #'   PlanningUnitPoints(
 #'     matrix(rnorm(100), ncol = 2),
-#'     seq_len(50)),
+#'     seq_len(50)
+#'   ),
 #'   DemandPoints(
 #'     matrix(rnorm(100), ncol = 2),
-#'     runif(50)),
-#'   species = 1L)
+#'     runif(50)
+#'   ),
+#'   species = 1L
+#' )
 #'
 #' space2 <- AttributeSpace(
 #'   PlanningUnitPoints(
 #'     matrix(rnorm(100), ncol = 2),
-#'     seq_len(50)),
+#'     seq_len(50)
+#'   ),
 #'   DemandPoints(
 #'     matrix(rnorm(100), ncol = 2),
-#'     runif(50)),
-#'   species = 2L)
+#'     runif(50)
+#'   ),
+#'   species = 2L
+#' )
 #'
 #' spaces <- AttributeSpaces(list(space1, space2), "spaces")
-#'
+#' }
 #' @export
 AttributeSpaces <- function(spaces, name) {
   asp <- methods::new("AttributeSpaces", spaces = spaces,

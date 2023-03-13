@@ -1,8 +1,8 @@
 citHeader("To cite the raptr package in publications, use:")
 
-citEntry(
-  entry = "Article",
-  author = personList(person(c("Jeffrey", "O"), "Hanson"),
+bibentry(
+  bibtype = "Article",
+  author = c(person(c("Jeffrey", "O"), "Hanson"),
                       person(c("Jonathan", "R"), "Rhodes"),
                       person(c("Hugh", "P"), "Possingham"),
                       person(c("Richard", "A"), "Fuller")),

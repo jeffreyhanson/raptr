@@ -4,6 +4,7 @@
 \alias{calcBoundaryData}
 \alias{calcBoundaryData.PolySet}
 \alias{calcBoundaryData.SpatialPolygons}
+\alias{calcBoundaryData.sf}
 \title{Calculate boundary data for planning units}
 \usage{
 calcBoundaryData(x, tol, length.factor, edge.factor)
@@ -11,11 +12,11 @@ calcBoundaryData(x, tol, length.factor, edge.factor)
 \method{calcBoundaryData}{PolySet}(x, tol = 0.001, length.factor = 1, edge.factor = 1)
 
 \method{calcBoundaryData}{SpatialPolygons}(x, tol = 0.001, length.factor = 1, edge.factor = 1)
+
+\method{calcBoundaryData}{sf}(x, tol = 0.001, length.factor = 1, edge.factor = 1)
 }
 \arguments{
-\item{x}{\code{\link[PBSmapping:PolySet]{PBSmapping::PolySet()}},
-\code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} or
-\code{\link[sp:SpatialPolygons]{sp::SpatialPolygonsDataFrame()}} object.}
+\item{x}{\code{\link[sf:sf]{sf::st_sf()}} or \code{PBSMapping::PolySet} object.}
 
 \item{tol}{\code{numeric} to specify precision of calculations. In other
 words, how far apart vertices have to be to be considered different?}
@@ -26,21 +27,17 @@ words, how far apart vertices have to be to be considered different?}
 do not have any neighbors, such as those that occur along the margins.}
 }
 \value{
-\code{data.frame} with 'id1' (\code{integer}), 'id2'
+A \code{data.frame} with 'id1' (\code{integer}), 'id2'
 (\code{integer}), and 'amount' (\code{numeric}) columns.
 }
 \description{
-This function calculates boundary length data for
-\code{\link[PBSmapping:PolySet]{PBSmapping::PolySet()}}, \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}}, and
-\code{\link[sp:SpatialPolygons]{sp::SpatialPolygonsDataFrame()}} objects. Be aware that this
+This function calculates boundary length data. Be aware that this
 function is designed with performance in mind, and as a consequence, if this
 function is used improperly then it may crash R. Furthermore, multipart
 polygons with touching edges will likely result in inaccuracies.
-If argument set to \code{\link[sp:SpatialPolygons]{sp::SpatialPolygons()}} or
-\code{\link[sp:SpatialPolygons]{sp::SpatialPolygonsDataFrame()}}, this will be converted to
-PolySet before processing.
 }
 \examples{
+\dontrun{
 # simulate planning units
 sim_pus <- sim.pus(225L)
 
@@ -49,7 +46,7 @@ bound.dat <- calcBoundaryData(sim_pus)
 
 # print summary of boundary data
 summary(bound.dat)
-
+}
 }
 \seealso{
 This function is based on the algorithm in QMARXAN

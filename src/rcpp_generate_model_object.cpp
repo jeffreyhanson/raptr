@@ -1,5 +1,5 @@
 #include <Rcpp.h>
-// [[Rcpp::plugins(cpp11)]]
+// [[Rcpp::plugins(cpp14)]]
 // [[Rcpp::depends(RcppEigen)]]
 // [[Rcpp::depends(BH)]]
 

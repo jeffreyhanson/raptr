@@ -87,7 +87,7 @@ methods::setMethod("solve",
       is.GurobiInstalled()
       if (!options()$GurobiInstalled$gurobi)
         stop(paste0("The Gurobi software package and the \"gurobi\" R package ",
-                    "must be intalled."))
+                    "must be installed."))
     }
     # generate model object
     model <- rcpp_generate_model_object(a@opts,

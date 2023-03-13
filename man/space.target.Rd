@@ -22,24 +22,22 @@ space.target(x, species, space) <- value
 \method{space.target}{RapUnsolOrSol}(x, species = NULL, space = NULL) <- value
 }
 \arguments{
-\item{x}{\code{\link[=RapData]{RapData()}}, \code{\link[=RapUnsolved]{RapUnsolved()}}, or
-\code{\link[=RapSolved]{RapSolved()}} object.}
+\item{x}{\code{\link[=RapData]{RapData()}}, \code{\link[=RapUnsolved]{RapUnsolved()}}, or \code{\link[=RapSolved]{RapSolved()}} object.}
 
-\item{species}{\code{NULL} for all species or \code{integer} indicating
-species.}
+\item{species}{\code{NULL} for all species or \code{integer} indicating species.}
 
-\item{space}{\code{NULL} for all spaces or \code{integer} indicating a
-specific space.}
+\item{space}{\code{NULL} for all spaces or \code{integer} indicating a space.}
 
 \item{value}{\code{numeric} new target.}
 }
 \value{
-\code{numeric} \code{matrix}.
+A \code{numeric} or \code{matrix} objects.
 }
 \description{
 This function sets or returns the attribute space targets for each species.
 }
 \examples{
+\dontrun{
 # load data
 data(sim_rs)
 
@@ -54,9 +52,8 @@ space.target(sim_rs, 1, 1)
 
 # set space targets for first species for first space
 space.target(sim_rs, 1, 1) <- 0.5
-
+}
 }
 \seealso{
-\code{\link[=RapData]{RapData()}}, \code{\link[=RapResults]{RapResults()}},
-\code{\link[=RapSolved]{RapSolved()}}.
+\code{\link[=RapData]{RapData()}}, \code{\link[=RapResults]{RapResults()}}, \code{\link[=RapSolved]{RapSolved()}}.
 }

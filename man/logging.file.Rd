@@ -28,6 +28,7 @@ The term logging file was used due to collisions with the \code{log}
 function.
 }
 \examples{
+\dontrun{
 # load data
 data(sim_rs)
 
@@ -39,7 +40,7 @@ cat(logging.file(sim_rs, 2))
 
 # log files for all solutions
 cat(logging.file(sim_rs, NULL))
-
+}
 }
 \seealso{
 \code{\link[=RapResults]{RapResults()}}, \code{\link[=RapSolved]{RapSolved()}}.

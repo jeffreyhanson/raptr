@@ -1,7 +1,7 @@
 Package: raptr
 Type: Package
 Title: Representative and Adequate Prioritization Toolkit in R
-Version: 0.2.2
+Version: 1.0.0.0
 Authors@R: c(person(c("Jeffrey", "O"), "Hanson",
     email="jeffrey.hanson@uqconnect.edu.au", role = c("aut", "cre")),
     person(c("Jonathan", "R"), "Rhodes", role = c("aut")),
@@ -23,7 +23,7 @@ Imports:
     stats,
     graphics,
     grDevices,
-    parallel,
+    sp (>= 1.4.6),
     Matrix (>= 1.4.1),
     assertthat (>= 0.2.1),
     boot (>= 1.3.28),
@@ -32,27 +32,15 @@ Imports:
     shape (>= 1.4.6),
     adehabitatHR (>= 0.4.19),
     RColorBrewer (>= 1.1.3),
-    ggplot2 (>= 3.3.5),
-    plyr (>= 1.8.7),
-    doParallel (>= 1.0.17),
-    rgeos (>= 0.5.9),
-    rgdal (>= 1.5.30),
+    ggplot2 (>= 3.4.0),
     hypervolume (>= 2.0.7),
     ks (>= 1.13.5),
     mvtnorm (>= 1.1.3),
     withr (>= 2.5.0),
 Depends:
-    R (>= 3.5.0),
-    sp (>= 1.4.6),
-    raster (>= 3.5.15)
-LinkingTo: Rcpp, RcppEigen, BH
-LazyData: true
-License: GPL-3
-Encoding: UTF-8
-Language: en-US
-URL: https://jeffrey-hanson.com/raptr/, https://github.com/jeffreyhanson/raptr
-BugReports: https://github.com/jeffreyhanson/raptr/issues
-VignetteBuilder: knitr
+    R (>= 4.1.0),
+    sf (>= 1.0.9),
+    terra (>= 1.6.47)
 Suggests:
     knitr,
     roxygen2,
@@ -63,10 +51,17 @@ Suggests:
     vegan (>= 2.6.2),
     gurobi (>= 8.0.0),
     gridExtra (>= 2.3),
-    rgl (>= 0.108.3),
-SystemRequirements: C++11
+    rgl (>= 1.0.1)
+LinkingTo: Rcpp, RcppEigen, BH
+LazyData: true
+License: GPL-3
+Encoding: UTF-8
+Language: en-US
+URL: https://jeffrey-hanson.com/raptr/, https://github.com/jeffreyhanson/raptr
+BugReports: https://github.com/jeffreyhanson/raptr/issues
+VignetteBuilder: knitr
+SystemRequirements: C++14
 Collate:
-    'dependencies.R'
     'RcppExports.R'
     'raptr-internal.R'
     'generics.R'
@@ -85,16 +80,17 @@ Collate:
     'RapUnreliableOpts.R'
     'RapUnsolved.R'
     'RapSolved.R'
-    'SpatialPolygons2PolySet.R'
+    'convert2PolySet.R'
     'data.R'
+    'deprecated.R'
+    'package.R'
     'rap.R'
-    'raptr.R'
     'rrap.proportion.held.R'
     'sim.pus.R'
     'sim.space.R'
     'sim.species.R'
     'urap.proportion.held.R'
     'zzz.R'
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 NeedsCompilation: yes
 Roxygen: list(markdown = TRUE)

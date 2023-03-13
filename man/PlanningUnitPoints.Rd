@@ -11,16 +11,20 @@ PlanningUnitPoints(coords, ids)
 
 \item{ids}{\code{integer} planning unit ids.}
 }
+\value{
+A new \code{PlanningUnitPoints} object.
+}
 \description{
 This function creates a new \code{PlanningUnitPoints} object.
 }
 \examples{
+\dontrun{
 # create PlanningUnitPoints object
 x <- PlanningUnitPoints(matrix(rnorm(150), ncol = 1), seq_len(150))
 
 # print object
 print(x)
-
+}
 }
 \seealso{
 \linkS4class{AttributeSpace}.

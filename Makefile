@@ -25,8 +25,18 @@ vigns:
 	R --slave -e "devtools::build_vignettes()"
 	cp -R doc inst/
 
+purl_vigns:
+	R --slave -e "lapply(dir('vignettes', '^.*\\\\.Rmd$$'), function(x) knitr::purl(file.path('vignettes', x), gsub('.Rmd', '.R', x, fixed = TRUE)))"
+	rm -f Rplots.pdf
+
+check_vigns:
+	R --slave -e "f <- sapply(dir('vignettes', '^.*\\\\.Rmd$$'), function(x) {p <- file.path(tempdir(), gsub('.Rmd', '.R', x, fixed = TRUE)); knitr::purl(file.path('vignettes', x), p); p}); for (i in f) {message('\n########################################\nstarting ', basename(i), '\n########################################\n'); source(i)}"
+	rm -f Rplots.pdf
+
 data:
-	Rscript --slave inst/extdata/data.R
+	rm -f data/sim_ru.rda
+	rm -f data/sim_rs.rda
+	Rscript --slave inst/scripts/data.R
 
 site:
 	R --slave -e "pkgdown::clean_site()"
@@ -71,10 +81,10 @@ build:
 	R --slave -e "devtools::build()"
 
 install:
-	R --slave -e "devtools::install_local('../raptr')"
+	R --slave -e "devtools::install_local()"
 
 examples:
-	R --slave -e "devtools::run_examples(run_donttest = TRUE, run_dontrun = TRUE);warnings()"  >> examples.log
+	R --slave -e "devtools::run_examples(run_donttest = TRUE, run_dontrun = TRUE);warnings()" >> examples.log 2>&1
 	rm -f Rplots.pdf
 
 .PHONY: initc clean docs readme contrib site test check checkwb solarischeck fedoracheck build install man data examples spellcheck urlcheck

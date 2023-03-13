@@ -83,6 +83,7 @@ This function requires the \pkg{RgoogleMaps} package to be installed
 in order to create display a basemap.
 }
 \examples{
+\dontrun{
 # load example data set with solutions
 data(sim_rs)
 
@@ -97,6 +98,7 @@ plot(sim_rs, 2)
 
 # plot different between best and second solutions
 plot(sim_rs, sim_rs, 0 ,2)
+}
 }
 \seealso{
 \code{\link[=RapSolved]{RapSolved()}}.

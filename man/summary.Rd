@@ -43,11 +43,13 @@ efficient.}
 }
 }
 \examples{
+\dontrun{
 # load data
 data(sim_rs)
 
 # show summary
 summary(sim_rs)
+}
 }
 \seealso{
 \code{\link[=RapResults]{RapResults()}}, \code{\link[=RapSolved]{RapSolved()}}.

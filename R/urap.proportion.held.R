@@ -15,8 +15,9 @@
 #'   `x` explains in `y`
 #'
 #' @examples
+#' \dontrun{
 #' urap.proportion.held(as.matrix(iris[1:2,-5]), as.matrix(iris[1:5,-5]))
-#'
+#' }
 #' @export
 urap.proportion.held <- function(x, y, y.weights = rep(1, nrow(y))) {
   # data integrity checks

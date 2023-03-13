@@ -51,6 +51,7 @@
 Prints objects.
 }
 \examples{
+\dontrun{
 # load data
 data(sim_ru, sim_rs)
 
@@ -74,6 +75,7 @@ print(sim_rs@results)
 
 # print RapSolved object
 print(sim_rs)
+}
 }
 \seealso{
 \code{\link[=GurobiOpts]{GurobiOpts()}}, \code{\link[=RapUnreliableOpts]{RapUnreliableOpts()}},

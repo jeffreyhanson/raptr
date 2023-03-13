@@ -162,97 +162,111 @@ test_that("spacePlot.3d", {
               pu.color.palette = c("grey30", "green", "black", "red"),
               main = "test 3d")
   # close rgl device
-  rgl::rgl.close()
+  rgl::close3d()
   expect_true(TRUE)
 })
 
 test_that("ZonalMean functions", {
-  purast <- raster::disaggregate(
-              raster::raster(matrix(2:10, ncol = 3)),
-              fact = 100)
-  species <- purast * abs(rnorm(ncell(purast)))
-  z1 <- raster::zonal(species, purast, fun = "mean")
-  z2 <- raptr:::zonalMean(purast, species[[1]])
-  z3 <- raptr:::zonalMean(purast, species[[1]], ncores = 2)
+  purast <- terra::rast(matrix(2:10, ncol = 3))
+  purast <- terra::disagg(purast, fact = 100)
+  species <- terra::setValues(
+    purast, terra::values(purast)[, 1] * abs(rnorm(terra::ncell(purast)))
+  )
+  z1 <- terra::zonal(species, purast, fun = "mean")
+  z2 <- raptr:::zonalMean(purast, species)
   expect_equal(round(z1[, 2], 10), round(z2[[3]], 10))
-  expect_equal(round(z1[, 2], 10), round(z3[[3]], 10))
 })
 
 test_that("calcSpeciesAverageInPus functions", {
-  template_raw <- raster::raster(matrix(2:10, ncol = 3), xmn = 0, xmx = 1,
-                                 ymn = 0, ymx = 1,
-                                 crs = sp::CRS(paste("+proj=merc +lon_0=0",
-                                                     "+k=1 +x_0=0 +y_0=0",
-                                                     "+ellps=WGS84",
-                                                     "+datum=WGS84 +units=m",
-                                                     "+no_defs")))
-  template <- raster::disaggregate(template_raw, fact = 5)
-  polys <- raster::rasterToPolygons(template_raw, n = 4)
-  polys <- polys[order(polys@data$layer), ]
-  species <- raster::setValues(template, round(runif(ncell(template))))
-  p1 <- raster::zonal(species, template, "mean")
+  template_raw <- terra::rast(
+    matrix(2:10, ncol = 3),
+    extent = terra::ext(0, 1, 0, 1),
+    crs = paste(
+      "+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0",
+      "+ellps=WGS84 +datum=WGS84 +units=m +no_defs")
+  )
+  names(template_raw) <- "layer"
+  template <- terra::disagg(template_raw, fact = 5)
+  polys <- sf::st_as_sf(terra::as.polygons(template_raw, dissolve = FALSE))
+  polys <- polys[order(polys$layer), ]
+  species <- terra::setValues(template, round(runif(ncell(template))))
+  p1 <- terra::zonal(species, template, "mean")
   p2 <- calcSpeciesAverageInPus(polys, species, field = "layer")
-  p3 <- calcSpeciesAverageInPus(polys, species, ncores = 2, field = "layer")
   expect_equal(round(p1[, 2], 10), round(p2[[3]], 10))
-  expect_equal(round(p1[, 2], 10), round(p3[[3]], 10))
 })
 
 test_that("PolySet conversion function", {
-  template <- raster::raster(matrix(1:9, ncol = 3), xmn = 0, xmx = 1, ymn = 0,
-                             ymx = 1,
-                             crs = sp::CRS(paste("+proj=merc +lon_0=0 +k=1",
-                                                 "+x_0=0 +y_0=0 +ellps=WGS84",
-                                                 "+datum=WGS84 +units=m",
-                                                 "+no_defs")))
-  polys <- raster::rasterToPolygons(template, n = 4)
+  template <- terra::rast(
+    matrix(1:9, ncol = 3),
+    extent = terra::ext(0, 1, 0, 1),
+    crs = paste(
+      "+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84",
+      "+datum=WGS84 +units=m +no_defs"
+    )
+  )
+  polys <- sf::st_as_sf(terra::as.polygons(template, dissolve = FALSE))
+  polys <- sf::as_Spatial(polys)
   pdf1 <- raptr:::rcpp_Polygons2PolySet(polys@polygons)
   pdf2 <- structure(list(
-    PID = c(1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 2L, 3L, 3L, 3L, 3L, 3L, 4L, 4L,
-            4L, 4L, 4L, 5L, 5L, 5L, 5L, 5L, 6L, 6L, 6L, 6L, 6L, 7L, 7L,
-            7L, 7L, 7L, 8L, 8L, 8L, 8L, 8L, 9L, 9L, 9L, 9L, 9L),
-    SID = c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
-            1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
-                 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L),
-    POS = c(1L, 2L, 3L, 4L, 5L, 1L, 2L, 3L, 4L, 5L, 1L, 2L, 3L, 4L, 5L, 1L, 2L,
-            3L, 4L, 5L, 1L, 2L, 3L, 4L, 5L, 1L, 2L, 3L, 4L, 5L, 1L, 2L,
-            3L, 4L, 5L, 1L, 2L, 3L, 4L, 5L, 1L, 2L, 3L, 4L, 5L),
-    X = c(0, 0.333333333333, 0.333333333333, 0, 0, 0.333333333333,
-          0.666666666667, 0.666666666667, 0.333333333333, 0.333333333333,
-          0.666666666667, 1, 1, 0.666666666667,  0.666666666667, 0,
-          0.333333333333, 0.333333333333, 0, 0, 0.333333333333,
-          0.666666666667, 0.666666666667, 0.333333333333, 0.333333333333,
-          0.666666666667, 1, 1, 0.666666666667, 0.666666666667, 0,
-          0.333333333333, 0.333333333333, 0, 0, 0.333333333333,
-          0.666666666667, 0.666666666667, 0.333333333333,
-          0.333333333333, 0.666666666667, 1, 1,  0.666666666667,
-          0.666666666667),
-    Y = c(1, 1, 0.666666666667, 0.666666666667, 1, 1, 1, 0.666666666667,
-          0.666666666667, 1, 1, 1, 0.666666666667, 0.666666666667, 1,
-          0.666666666667, 0.666666666667, 0.333333333333, 0.333333333333,
-          0.666666666667, 0.666666666667, 0.666666666667, 0.333333333333,
-          0.333333333333, 0.666666666667, 0.666666666667, 0.666666666667,
-          0.333333333333, 0.333333333333, 0.666666666667, 0.333333333333,
-          0.333333333333, 0, 0, 0.333333333333, 0.333333333333, 0.333333333333,
-          0, 0, 0.333333333333, 0.333333333333, 0.333333333333, 0, 0,
-          0.333333333333)),
-    .Names = c("PID", "SID", "POS", "X", "Y"),  row.names = c(NA, -45L),
-    class = c("PolySet", "data.frame"), projection = "1")
+    PID = c(1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 2L,
+            3L, 3L, 3L, 3L, 3L, 4L, 4L, 4L, 4L, 4L, 5L, 5L, 5L, 5L, 5L, 6L,
+            6L, 6L, 6L, 6L, 7L, 7L, 7L, 7L, 7L, 8L, 8L, 8L, 8L, 8L, 9L, 9L,
+            9L, 9L, 9L),
+    SID = c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
+            1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
+            1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
+            1L, 1L, 1L),
+    POS = c(1L, 2L, 3L, 4L, 5L, 1L, 2L, 3L, 4L, 5L,
+      1L, 2L, 3L, 4L, 5L, 1L, 2L, 3L, 4L, 5L, 1L, 2L, 3L, 4L, 5L, 1L,
+      2L, 3L, 4L, 5L, 1L, 2L, 3L, 4L, 5L, 1L, 2L, 3L, 4L, 5L, 1L, 2L,
+      3L, 4L, 5L),
+    X = c(0, 0, 0.333333333333333, 0.333333333333333,
+      0, 0.333333333333333, 0.333333333333333, 0.666666666666667,
+      0.666666666666667, 0.333333333333333, 0.666666666666667,
+      0.666666666666667, 1, 1, 0.666666666666667, 0, 0, 0.333333333333333,
+      0.333333333333333, 0, 0.333333333333333, 0.333333333333333,
+      0.666666666666667, 0.666666666666667, 0.333333333333333,
+      0.666666666666667, 0.666666666666667, 1, 1,
+      0.666666666666667, 0, 0, 0.333333333333333, 0.333333333333333,
+      0, 0.333333333333333, 0.333333333333333, 0.666666666666667,
+      0.666666666666667, 0.333333333333333, 0.666666666666667,
+      0.666666666666667, 1, 1, 0.666666666666667),
+    Y = c(0.666666666666667, 1, 1, 0.666666666666667,
+          0.666666666666667, 0.666666666666667, 1, 1, 0.666666666666667,
+          0.666666666666667, 0.666666666666667, 1, 1, 0.666666666666667,
+          0.666666666666667, 0.333333333333333, 0.666666666666667,
+          0.666666666666667, 0.333333333333333, 0.333333333333333,
+          0.333333333333333, 0.666666666666667, 0.666666666666667,
+          0.333333333333333, 0.333333333333333, 0.333333333333333,
+          0.666666666666667, 0.666666666666667, 0.333333333333333,
+          0.333333333333333, 5.55111512312578e-17, 0.333333333333333,
+          0.333333333333333, 5.55111512312578e-17,
+          5.55111512312578e-17, 5.55111512312578e-17, 0.333333333333333,
+          0.333333333333333, 5.55111512312578e-17, 5.55111512312578e-17,
+          5.55111512312578e-17, 0.333333333333333, 0.333333333333333,
+          5.55111512312578e-17, 5.55111512312578e-17)),
+    class = c("PolySet", "data.frame"), row.names = c(NA, -45L),
+    projection = "1"
+  )
   expect_is(pdf1, "PolySet")
-  expect_true(max(pdf1[[1]] - pdf2[[1]]) < 1e-5)
-  expect_true(max(pdf1[[2]] - pdf2[[2]]) < 1e-5)
-  expect_true(max(pdf1[[3]] - pdf2[[3]]) < 1e-5)
-  expect_true(max(pdf1[[4]] - pdf2[[4]]) < 1e-5)
-  expect_true(max(pdf1[[5]] - pdf2[[5]]) < 1e-5)
+  expect_equal(pdf1[[1]], pdf2[[1]], tolerance = 1e-5)
+  expect_equal(pdf1[[2]], pdf2[[2]], tolerance = 1e-5)
+  expect_equal(pdf1[[3]], pdf2[[3]], tolerance = 1e-5)
+  expect_equal(pdf1[[4]], pdf2[[4]], tolerance = 1e-5)
+  expect_equal(pdf1[[5]], pdf2[[5]], tolerance = 1e-5)
 })
 
 test_that("boundary length data functions", {
   # generate polygons
-  polys <- raster::rasterToPolygons(
-    raster::raster(matrix(1:9, ncol = 3), xmn = 0, xmx = 3, ymn = 0, ymx = 3,
-                   crs = sp::CRS(paste("+proj=merc +lon_0=0 +k=1 +x_0=0",
-                                       "+y_0=0 +ellps=WGS84 +datum=WGS84",
-                                       "+units=m +no_defs"))),
-    n = 4)
+  template <- terra::rast(
+    matrix(1:9, ncol = 3),
+    extent = terra::ext(0, 3, 0, 3),
+    crs = paste(
+      "+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84",
+      "+datum=WGS84 +units=m +no_defs"
+    )
+  )
+  polys <- sf::st_as_sf(terra::as.polygons(template, dissolve = TRUE))
   # make boundary length files
   bldf1 <- calcBoundaryData(polys)
   bldf2 <- structure(list(id1 = c(1L, 2L, 2L, 3L, 3L, 4L, 4L, 5L, 5L, 6L,

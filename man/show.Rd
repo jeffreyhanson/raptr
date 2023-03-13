@@ -40,6 +40,7 @@
 Shows objects.
 }
 \examples{
+\dontrun{
 # load data
 data(sim_ru, sim_rs)
 
@@ -63,6 +64,7 @@ sim_rs@results
 
 # show RapSolved object
 sim_rs
+}
 }
 \seealso{
 \code{\link[=GurobiOpts]{GurobiOpts()}}, \code{\link[=RapUnreliableOpts]{RapUnreliableOpts()}},

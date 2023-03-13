@@ -24,7 +24,6 @@ is.GurobiInstalled()
 # print cached status of installation
 options()$GurobiInstalled
 }
-
 }
 \seealso{
 \code{\link[base:options]{base::options()}}.

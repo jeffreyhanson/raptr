@@ -39,8 +39,7 @@ space.plot(x, species, space, ...)
 )
 }
 \arguments{
-\item{x}{\code{\link[=RapData]{RapData()}}, \code{\link[=RapUnsolved]{RapUnsolved()}}, or
-\code{\link[=RapSolved]{RapSolved()}} object.}
+\item{x}{\code{\link[=RapData]{RapData()}}, \code{\link[=RapUnsolved]{RapUnsolved()}}, or \code{\link[=RapSolved]{RapSolved()}} object.}
 
 \item{species}{\code{character} name of species, or \code{integer} index for
 species.}
@@ -66,6 +65,7 @@ Note that this function only works for attribute spaces with one, two, or
 three dimensions.
 }
 \examples{
+\dontrun{
 # load RapSolved objects
 data(sim_ru, sim_rs)
 
@@ -74,5 +74,5 @@ space.plot(sim_ru, 1, 1)
 
 # plot distribution of solutions for first species in first attribute space
 space.plot(sim_rs, 1, 1)
-
+}
 }

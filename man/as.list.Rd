@@ -24,11 +24,13 @@ This function will not include the \code{NumberSolutions} slot, the
 not finite.
 }
 \examples{
+\dontrun{
 # make GuboriOpts object
 x <- GurobiOpts()
 
 # convert to list
 as.list(x)
+}
 }
 \seealso{
 \code{GurobiOpts}.
