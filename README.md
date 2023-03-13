@@ -75,15 +75,15 @@ vignette("raptr", package = "raptr")
 citation("raptr")
 ```
 
-    ##
+    ## 
     ## To cite the raptr package in publications, use:
-    ##
+    ## 
     ##   Hanson JO, Rhodes JR, Possingham HP & Fuller RA (2018) raptr:
     ##   Representative and Adequate Prioritization Toolkit in R. Methods in
     ##   Ecology & Evolution, 9: 320--330. DOI: 10.1111/2041-210X.12862
-    ##
+    ## 
     ## A BibTeX entry for LaTeX users is
-    ##
+    ## 
     ##   @Article{,
     ##     author = {Jeffrey O Hanson and Jonathan R Rhodes and Hugh P Possingham and Richard A Fuller},
     ##     title = {raptr: Representative and adequate prioritization toolkit in R},
@@ -93,6 +93,6 @@ citation("raptr")
     ##     pages = {320--330},
     ##     doi = {10.1111/2041-210X.12862},
     ##   }
-    ##
+    ## 
     ## You may also want to cite the package version. Find it with
     ## "help(package=raptr)".

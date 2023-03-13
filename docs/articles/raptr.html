@@ -290,8 +290,8 @@
 <span></span>
 <span><span class="co"># solve problem to identify prioritization</span></span>
 <span><span class="va">sim_rs_s1_amount</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/solve.html">solve</a></span><span class="op">(</span><span class="va">sim_ru_s1</span>, Threads <span class="op">=</span> <span class="va">threads</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning in validityMethod(object): some species have space.held values less than</span></span>
-<span><span class="co">## 0, and thus are poorly represented</span></span></code></pre>
+<pre><code><span><span class="co">## Warning in validityMethod(object): some species have space.held values less</span></span>
+<span><span class="co">## than 0, and thus are poorly represented</span></span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## show summary</span></span>
 <span><span class="co"># note the format for this is similar to that used by Marxan</span></span>
@@ -410,7 +410,7 @@
 <pre><code><span><span class="co">##   Run_Number  Status Score Cost Planning_Units Connectivity_Total</span></span>
 <span><span class="co">## 1          1 OPTIMAL    20   20             20                220</span></span>
 <span><span class="co">##   Connectivity_In Connectivity_Edge Connectivity_Out Connectivity_In_Fraction</span></span>
-<span><span class="co">## 1              11               145               64                     0.05</span></span></code></pre>
+<span><span class="co">## 1              13               146               61               0.05909091</span></span></code></pre>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># show amount held</span></span>
 <span><span class="fu"><a href="../reference/amount.held.html">amount.held</a></span><span class="op">(</span><span class="va">sim_rs_s1_space</span><span class="op">)</span></span></code></pre></div>
@@ -420,7 +420,7 @@
 <code class="sourceCode R"><span><span class="co"># show space held</span></span>
 <span><span class="fu"><a href="../reference/space.held.html">space.held</a></span><span class="op">(</span><span class="va">sim_rs_s1_space</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   uniform (Space 1)</span></span>
-<span><span class="co">## 1          0.919394</span></span></code></pre>
+<span><span class="co">## 1         0.9133336</span></span></code></pre>
 <p>Let’s take a look at the prioritization for the uniform species with amount-based and space-based targets. Then, let’s compare the solutions for the amount-based prioritization with the new prioritization using both amount and space targets.</p>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot the prioritization and the uniform species' distribution</span></span>
@@ -554,31 +554,31 @@
 <pre><code><span><span class="co">##   Run_Number  Status Score Cost Planning_Units Connectivity_Total</span></span>
 <span><span class="co">## 1          1 OPTIMAL    20   20             20                220</span></span>
 <span><span class="co">##   Connectivity_In Connectivity_Edge Connectivity_Out Connectivity_In_Fraction</span></span>
-<span><span class="co">## 1              15               148               57               0.06818182</span></span></code></pre>
+<span><span class="co">## 1              12               146               62               0.05454545</span></span></code></pre>
 <div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/summary.html">summary</a></span><span class="op">(</span><span class="va">sim_mrs_space</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   Run_Number  Status Score Cost Planning_Units Connectivity_Total</span></span>
-<span><span class="co">## 1          1 OPTIMAL    21   21             21                220</span></span>
+<span><span class="co">## 1          1 OPTIMAL    20   20             20                220</span></span>
 <span><span class="co">##   Connectivity_In Connectivity_Edge Connectivity_Out Connectivity_In_Fraction</span></span>
-<span><span class="co">## 1              11               142               67                     0.05</span></span></code></pre>
+<span><span class="co">## 1               9               144               67               0.04090909</span></span></code></pre>
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># show amount held for each prioritization</span></span>
 <span><span class="fu"><a href="../reference/amount.held.html">amount.held</a></span><span class="op">(</span><span class="va">sim_mrs_amount</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##   uniform    normal   bimodal</span></span>
-<span><span class="co">## 1     0.2 0.2090691 0.2103058</span></span></code></pre>
+<pre><code><span><span class="co">##   uniform   normal   bimodal</span></span>
+<span><span class="co">## 1     0.2 0.219582 0.2481496</span></span></code></pre>
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/amount.held.html">amount.held</a></span><span class="op">(</span><span class="va">sim_mrs_space</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##   uniform    normal   bimodal</span></span>
-<span><span class="co">## 1    0.21 0.2365269 0.2237805</span></span></code></pre>
+<pre><code><span><span class="co">##   uniform    normal  bimodal</span></span>
+<span><span class="co">## 1     0.2 0.2126139 0.221204</span></span></code></pre>
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># show space held for each prioritization</span></span>
 <span><span class="fu"><a href="../reference/space.held.html">space.held</a></span><span class="op">(</span><span class="va">sim_mrs_amount</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   uniform (Space 1) normal (Space 1) bimodal (Space 1)</span></span>
-<span><span class="co">## 1         0.9024246         0.878777         0.8889304</span></span></code></pre>
+<span><span class="co">## 1         0.8642424        0.8215215         0.8978215</span></span></code></pre>
 <div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/space.held.html">space.held</a></span><span class="op">(</span><span class="va">sim_mrs_space</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   uniform (Space 1) normal (Space 1) bimodal (Space 1)</span></span>
-<span><span class="co">## 1          0.919394        0.9022846         0.9151601</span></span></code></pre>
+<span><span class="co">## 1         0.9345456        0.9082867         0.9279798</span></span></code></pre>
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot multi-species prioritization with amount-based targets</span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">sim_mrs_amount</span>, <span class="fl">1</span>, main <span class="op">=</span> <span class="st">"Amount-based targets"</span><span class="op">)</span></span></code></pre></div>
@@ -603,7 +603,7 @@
 _Difference between two multi-species prioritizations. See Figure 7 caption for conventions.)
 </p>
 </div>
-<p>Here we can see that the inclusion of space-based targets changes which planning units are selected for prioritization, but also the number of planning units that are selected. The amount-based prioritization is comprised of 20 units, and the space-based prioritization is comprised of 21 units. This result suggests that an adequate and representative prioritization can be achieved for only a minor increase in cost.</p>
+<p>Here we can see that the inclusion of space-based targets changes which planning units are selected for prioritization, but also the number of planning units that are selected. The amount-based prioritization is comprised of 20 units, and the space-based prioritization is comprised of 20 units. This result suggests that an adequate and representative prioritization can be achieved for only a minor increase in cost.</p>
 </div>
 <div class="section level4">
 <h4 id="uncertainty-in-species-distributions">Uncertainty in species’ distributions<a class="anchor" aria-label="anchor" href="#uncertainty-in-species-distributions"></a>
@@ -622,7 +622,7 @@ _Difference between two multi-species prioritizations. See Figure 7 caption for 
 <pre><code><span><span class="co">##   Run_Number  Status Score Cost Planning_Units Connectivity_Total</span></span>
 <span><span class="co">## 1          1 OPTIMAL    20   20             20                220</span></span>
 <span><span class="co">##   Connectivity_In Connectivity_Edge Connectivity_Out Connectivity_In_Fraction</span></span>
-<span><span class="co">## 1               9               145               66               0.04090909</span></span></code></pre>
+<span><span class="co">## 1               6               140               74               0.02727273</span></span></code></pre>
 <div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot prioritization</span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">sim_mrs_space2</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
@@ -656,8 +656,8 @@ _Difference between two multi-species prioritizations. See Figure 7 caption for 
 <span>  max.r.level <span class="op">=</span> <span class="fl">1L</span>, space.target <span class="op">=</span> <span class="op">-</span><span class="fl">1000</span>,</span>
 <span>  Threads <span class="op">=</span> <span class="va">threads</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning in validityMethod(object): some species have space.held values less than</span></span>
-<span><span class="co">## 0, and thus are poorly represented</span></span></code></pre>
+<pre><code><span><span class="co">## Warning in validityMethod(object): some species have space.held values less</span></span>
+<span><span class="co">## than 0, and thus are poorly represented</span></span></code></pre>
 <div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># show summary</span></span>
 <span><span class="fu"><a href="../reference/summary.html">summary</a></span><span class="op">(</span><span class="va">sim_mrs_space3</span><span class="op">)</span></span></code></pre></div>
@@ -681,7 +681,7 @@ _Difference between two multi-species prioritizations. See Figure 7 caption for 
 <em>Difference between two multi-species prioritizations. See Figure 7 caption for conventions.</em>
 </p>
 </div>
-<p>An additional planning unit was selected using the reliable formulation. The prioritization based on the unreliable formulation had 21 planning units, but the prioritization based on the reliable formulation has 20 planning units. This difference occurs because the reliable formulation needs to ensure that all selected planning units with a low chance of being occupied have a suitable backup planning unit. While the reliable formulation can deliver more robust prioritizations, it takes much longer to solve conservation planning problems expressed using this formulation than the unreliable formulation. As a consequence, the reliable formulation is only feasible for particularly small problems, such as those involving few features and less than several hundred planning units.</p>
+<p>An additional planning unit was selected using the reliable formulation. The prioritization based on the unreliable formulation had 20 planning units, but the prioritization based on the reliable formulation has 20 planning units. This difference occurs because the reliable formulation needs to ensure that all selected planning units with a low chance of being occupied have a suitable backup planning unit. While the reliable formulation can deliver more robust prioritizations, it takes much longer to solve conservation planning problems expressed using this formulation than the unreliable formulation. As a consequence, the reliable formulation is only feasible for particularly small problems, such as those involving few features and less than several hundred planning units.</p>
 </div>
 <div class="section level4">
 <h4 id="fragmentation">Fragmentation<a class="anchor" aria-label="anchor" href="#fragmentation"></a>
@@ -697,17 +697,17 @@ _Difference between two multi-species prioritizations. See Figure 7 caption for 
 <pre><code><span><span class="co">##   Run_Number  Status Score Cost Planning_Units Connectivity_Total</span></span>
 <span><span class="co">## 1          1 OPTIMAL   920   20             20                220</span></span>
 <span><span class="co">##   Connectivity_In Connectivity_Edge Connectivity_Out Connectivity_In_Fraction</span></span>
-<span><span class="co">## 1              35               171               14                0.1590909</span></span></code></pre>
+<span><span class="co">## 1              31               171               18                0.1409091</span></span></code></pre>
 <div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># show amount held for each prioritization</span></span>
 <span><span class="fu"><a href="../reference/amount.held.html">amount.held</a></span><span class="op">(</span><span class="va">sim_mrs_amount_blm</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   uniform    normal   bimodal</span></span>
-<span><span class="co">## 1     0.2 0.2645832 0.2095358</span></span></code></pre>
+<span><span class="co">## 1     0.2 0.3493277 0.2666368</span></span></code></pre>
 <div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># show space held for each prioritization</span></span>
 <span><span class="fu"><a href="../reference/space.held.html">space.held</a></span><span class="op">(</span><span class="va">sim_mrs_amount_blm</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   uniform (Space 1) normal (Space 1) bimodal (Space 1)</span></span>
-<span><span class="co">## 1          0.454547        0.4547916         0.5004217</span></span></code></pre>
+<span><span class="co">## 1         0.6727261          0.70973         0.7171741</span></span></code></pre>
 <div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot prioritization</span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">sim_mrs_amount_blm</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
@@ -884,7 +884,7 @@ _Planning units for the case-study examples. Polygons denote planning units. Yel
 <pre><code><span><span class="co">##   Run_Number  Status Score Cost Planning_Units Connectivity_Total</span></span>
 <span><span class="co">## 1          1 OPTIMAL   137  137            137           91758023</span></span>
 <span><span class="co">##   Connectivity_In Connectivity_Edge Connectivity_Out Connectivity_In_Fraction</span></span>
-<span><span class="co">## 1         9774052          74000879          7983092                0.1065199</span></span></code></pre>
+<span><span class="co">## 1         9824052          74050879          7883092                0.1070648</span></span></code></pre>
 <div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot prioritization</span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">cs_rs_space</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
@@ -920,8 +920,8 @@ _Planning units for the case-study examples. Polygons denote planning units. Yel
 <span></span>
 <span><span class="co"># create new object with Australia's network</span></span>
 <span><span class="va">cs_rs_aus</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/update.html">update</a></span><span class="op">(</span><span class="va">cs_rs_amount</span>, b <span class="op">=</span> <span class="va">aus_selections</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning in validityMethod(object): some species have space.held values less than</span></span>
-<span><span class="co">## 0, and thus are poorly represented</span></span></code></pre>
+<pre><code><span><span class="co">## Warning in validityMethod(object): some species have space.held values less</span></span>
+<span><span class="co">## than 0, and thus are poorly represented</span></span></code></pre>
 <p>Now, let’s plot the performance metrics for these prioritizations.</p>
 <div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># define standard error function</span></span>
