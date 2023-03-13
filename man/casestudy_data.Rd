@@ -36,7 +36,7 @@ protected areas.}
 \item{\code{"cs_spp.tif"}}{GeoTIFF file containing probability
 distribution map for the \emph{P. adscitus} clipped to
 Queensland, Australia. This map was derived from records
-obtained from The Atlas of Living Australia (\url{https://ala.org.au/})}.
+obtained from The Atlas of Living Australia.}
 \item{\code{"cs_space.tif"}}{GeoTIFF file describing broad-scale climate
 variation across Queensland
 (obtained from \url{https://worldclim.org/},

@@ -78,7 +78,7 @@ NULL
 #' \item{`"cs_spp.tif"`}{GeoTIFF file containing probability
 #' distribution map for the *P. adscitus* clipped to
 #' Queensland, Australia. This map was derived from records
-#' obtained from The Atlas of Living Australia (<https://ala.org.au/>)}.
+#' obtained from The Atlas of Living Australia.}
 #' \item{`"cs_space.tif"`}{GeoTIFF file describing broad-scale climate
 #' variation across Queensland
 #' (obtained from <https://worldclim.org/>,

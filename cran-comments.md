@@ -51,14 +51,6 @@ Jeff
 
   **I can confirm that these words are spelled correctly.**
 
-  Found the following (possibly) invalid URLs:
-    URL: https://ala.org.au/
-      From: man/casestudy_data.Rd
-      Status: Error
-      Message: SSL certificate problem: unable to get local issuer certificate
-
-  **I have verified that the URL is correct.**
-
 # Downstream dependencies
 
 There are no existing packages that depend on this package.
