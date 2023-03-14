@@ -1,4 +1,4 @@
-Dear CRAN maintainers,
+Dear CRAN volunteers,
 
 Thank you very much for reviewing this submission.
 
