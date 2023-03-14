@@ -31,7 +31,7 @@
 
 # raptr 0.2.0.0
 
-- The data simulation function has been updated such that the _RandomFileds_
+- The data simulation function has been updated such that the _RandomFields_
    package is no longer a dependency.
 - The `sim.space` and `sim.species` functions no longer accept _RandomFileds_
   objects as arguments. To simulate spatially auto-correlated data using
