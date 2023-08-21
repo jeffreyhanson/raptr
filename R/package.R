@@ -52,6 +52,7 @@ NULL
 #' **9**: 320--330. DOI: 10.1111/2041-210X.12862.
 #'
 #' @docType package
+#' @aliases raptr-package
 #' @name raptr
 NULL
 

@@ -3,6 +3,7 @@
 \docType{package}
 \name{raptr}
 \alias{raptr}
+\alias{raptr-package}
 \title{raptr: Representative and Adequate Prioritization Toolkit in R}
 \description{
 Biodiversity is in crisis. The overarching aim of conservation is to preserve
