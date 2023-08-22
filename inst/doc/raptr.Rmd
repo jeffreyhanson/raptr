@@ -642,7 +642,7 @@ PBSmapping::plotPolys(
 par(mar = c(5.1, 4.1, 4.1, 2.1))
 ```
 
-To map the distribution of environmental conditions across the species' range, 21 [bioclimatic layers](https://worldclim.org) were obtained. These layers were cropped to Australia and subject to [detrended correspondence analysis](https://www.rdocumentation.org/packages/vegan/versions/2.4-2/topics/decorana) to produce two new variables. These layers are stored in the `cs_space` object.
+To map the distribution of environmental conditions across the species' range, 21 [bioclimatic layers](https://worldclim.org) were obtained. These layers were cropped to Australia and subject to detrended correspondence analysis to produce two new variables. These layers are stored in the `cs_space` object.
 
 ```{r, fig.height=2.5, fig.width=7, fig.align='center', fig.cap="_Broad-scale environmental variation across Australia. The variable DC1 describes the transition from wet and cool to dry and hot conditions. The variable DC2 describes the transition from wet and hot to dry and cool conditions._"}
 # import data
