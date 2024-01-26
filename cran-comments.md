@@ -2,6 +2,8 @@ Dear CRAN volunteers,
 
 Thank you very much for reviewing this submission. This submission contains documentation updates to address the NOTEs on CRAN's checks. It also fixes the aliasing for the package overview help file.
 
+Cheers,
+
 Jeff
 
 # Test environments
