@@ -2,6 +2,8 @@
 % Please edit documentation in R/raptr-internal.R, R/RapData.R, R/RapResults.R
 \name{is.cached}
 \alias{is.cached}
+\alias{is.cached,RapData,character-method}
+\alias{is.cached,RapResults,character-method}
 \title{Test if hash is cached in a Rap object}
 \usage{
 is.cached(x, name)

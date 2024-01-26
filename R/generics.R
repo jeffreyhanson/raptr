@@ -718,7 +718,7 @@ amount.held <- function(x, y, species) UseMethod("amount.held")
 #'
 #' @param value `numeric` new target.
 #'
-#' @return code{numeric} vector.
+#' @return `numeric` vector.
 #'
 #' @seealso [RapData()], [RapResults()],
 #'   [RapSolved()].
@@ -769,7 +769,7 @@ amount.target <- function(x, species) UseMethod("amount.target")
 #' @param space `NULL` for all spaces or `integer` indicating a
 #'   specific space.
 #'
-#' @return code{matrix} object.
+#' @return `matrix` object.
 #'
 #' @seealso [RapResults()], [RapSolved()].
 #'

@@ -31,7 +31,7 @@ species.}
 \item{value}{\code{numeric} new target.}
 }
 \value{
-code{numeric} vector.
+\code{numeric} vector.
 }
 \description{
 This function sets or returns the target amounts for each species.

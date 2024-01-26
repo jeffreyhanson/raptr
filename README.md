@@ -75,7 +75,6 @@ vignette("raptr", package = "raptr")
 citation("raptr")
 ```
 
-    ## 
     ## To cite the raptr package in publications, use:
     ## 
     ##   Hanson JO, Rhodes JR, Possingham HP & Fuller RA (2018) raptr:

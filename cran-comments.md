@@ -1,10 +1,6 @@
 Dear CRAN volunteers,
 
-Thank you very much for reviewing this submission.
-
-This submission contains an update for the raptr package that is currently available on CRAN. It aims to address several of the NOTES and the ERROR detected by CRAN's automated checks on the CRAN's Fedora-clang platform (i.e., `r-devel-linux-x86_64-fedora-clang`). Specifically, it has updates that (i) replace dependencies for the rgdal and rgeos packages in anticipation of their retirement, (ii) fix package startup message issues, (iii) fix the CITATION file format, and (iv) removes the C++ specification because it is compatible with C++14 (following advice on R-pkg-devel emailing list, <https://stat.ethz.ch/pipermail/r-package-devel/2023q1/008870.html>). Additionally, it has updated examples and unit tests to address failing checks on CRAN's Fedora-clang platform.
-
-In case it is helpful, I will explain the steps and rationale taken to address the failing checks on CRAN's Fedora-clang platform. Although I have attempted to reproduce the failed check on a comparable platform (i.e., the R-hub Fedora Clang docker image, <https://hub.docker.com/r/rhub/fedora-clang-devel>) and other platforms (see test environments below), I am unable to reproduce the specific error detected on CRAN's Fedora-clang platform. As such, I have (i) encapsulated all examples within `dontrun{}` and (ii) ensured that unit tests are not run on Fedora platforms. This approach ensures that the examples and unit tests will not throw an error on CRAN's Fedora-clang platform. This approach also ensures that all unit tests are still run on other platforms (e.g., Windows, Debian, macOS). It is also worth noting that I cannot simply encapsulate the failing example and unit test detected on CRAN's Fedora-clang platform, because I cannot guarantee that there are not other examples that fail on this platform (since I cannot reproduce the error). Although this approach is not ideal, I believe that the CRAN volunteers' time is the most precious resource and this approach is the only way that I can think of that would avoid wasting their time with the possibility of multiple submissions. I hope that my explanation and approach is satisfactory.
+Thank you for reviewing this submission. This submission contains updates for the raptr package. Specifically, these updates include documentation fixes to address the NOTEs on CRAN's checks and the aliasing for the package overview help file.
 
 Cheers,
 
@@ -22,7 +18,7 @@ Jeff
 
 # R CMD check results
 
-0 errors | 0 warnings | 3 notes
+0 errors | 0 warnings | 2 notes
 
 # Notes
 
