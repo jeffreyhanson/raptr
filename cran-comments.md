@@ -1,6 +1,6 @@
 Dear CRAN volunteers,
 
-Thank you very much for reviewing this submission. This submission contains documentation updates to address the NOTEs on CRAN's checks.
+Thank you very much for reviewing this submission. This submission contains documentation updates to address the NOTEs on CRAN's checks. It also fixes the aliasing for the package overview help file.
 
 Jeff
 
@@ -16,7 +16,7 @@ Jeff
 
 # R CMD check results
 
-0 errors | 0 warnings | 3 notes
+0 errors | 0 warnings | 2 notes
 
 # Notes
 
