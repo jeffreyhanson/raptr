@@ -1,3 +1,12 @@
+# raptr 1.0.2
+
+- Fix usage sections in documentation.
+- Fix missing braces in documentation.
+
+# raptr 1.0.1
+
+- Fix aliasing for package manual entry (#15).
+
 # raptr 1.0.0
 
 - The package has been overhauled to support modern spatial data structures.

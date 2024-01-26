@@ -23,7 +23,7 @@ species.}
 specific space.}
 }
 \value{
-code{matrix} object.
+\code{matrix} object.
 }
 \description{
 This function returns the attribute space held for each species in a

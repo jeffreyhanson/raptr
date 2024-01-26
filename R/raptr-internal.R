@@ -460,6 +460,8 @@ basemap <- function(x, basemap = "hybrid", grayscale = FALSE,
 #' @keywords internal
 #'
 #' @name is.cached
+#'
+#' @aliases is.cached,RapData,character-method is.cached,RapResults,character-method
 methods::setGeneric("is.cached",
                     function(x, name) methods::standardGeneric("is.cached"))
 
@@ -482,6 +484,8 @@ methods::setGeneric("is.cached",
 #' @keywords internal
 #'
 #' @name cache
+#'
+#' @aliases cache,RapData,character,ANY-method cache,RapData,character,missing-method cache,RapResults,character,ANY-method cache,RapResults,character,missing-method
 methods::setGeneric("cache",
                     function(x, name, y) methods::standardGeneric("cache"))
 

@@ -3,6 +3,7 @@
 \docType{package}
 \name{raptr}
 \alias{raptr}
+\alias{raptr-package}
 \title{raptr: Representative and Adequate Prioritization Toolkit in R}
 \description{
 Biodiversity is in crisis. The overarching aim of conservation is to preserve
@@ -49,4 +50,24 @@ Hanson JO, Rhodes JR, Possingham HP & Fuller RA (2018)
 raptr: Representative and Adequate Prioritization",
 Toolkit in R. \emph{Methods in Ecology & Evolution},",
 \strong{9}: 320--330. DOI: 10.1111/2041-210X.12862.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://jeffrey-hanson.com/raptr/}
+  \item \url{https://github.com/jeffreyhanson/raptr}
+  \item Report bugs at \url{https://github.com/jeffreyhanson/raptr/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Jeffrey O Hanson \email{jeffrey.hanson@uqconnect.edu.au}
+
+Authors:
+\itemize{
+  \item Jonathan R Rhodes
+  \item Hugh P Possingham
+  \item Richard A Fuller
+}
+
 }
