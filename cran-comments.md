@@ -1,6 +1,6 @@
 Dear CRAN volunteers,
 
-Thank you very much for reviewing this submission. This submission contains documentation updates to address the NOTEs on CRAN's checks. It also fixes the aliasing for the package overview help file.
+Thank you for reviewing this submission. This submission contains updates for the raptr package. Specifically, these updates include documentation fixes to address the NOTEs on CRAN's checks and the aliasing for the package overview help file.
 
 Cheers,
 
