@@ -12,7 +12,7 @@ Jeff
 * [Ubuntu 20.04, R-devel](https://github.com/jeffreyhanson/raptr/actions?query=workflow%3AUbuntu)
 * [Fedora Linux 36, R-devel, clang version 14.0.5](https://hub.docker.com/r/rhub/fedora-clang-devel)
 * [macOS 10.15, R-release](https://github.com/jeffreyhanson/raptr/actions?query=workflow%3AmacOS)
-* [macOS 11.5.2 (arm64), R-devel (macOS builder)](https://mac.r-project.org/macbuilder/submit.html)
+* [macOS 11.5.2 (arm64), R-release (macOS builder)](https://mac.r-project.org/macbuilder/submit.html)
 * [Windows Server 2019, R-release](https://github.com/jeffreyhanson/raptr/actions?query=workflow%3AWindows)
 * [Windows Server 2008 (x64), R-devel (win-builder)](https://win-builder.r-project.org/)
 
